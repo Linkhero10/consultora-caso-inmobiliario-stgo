@@ -274,3 +274,18 @@ sources:
     license_review: CC0_for_catalog_only
     pii_risk: low
     responsible_arcs: [Felipe]
+  - source_id: F-19
+    name: "Diccionario de topónimos BCN (Biblioteca del Congreso Nacional)"
+    publisher: "Biblioteca del Congreso Nacional de Chile (BCN)"
+    primary_url: "https://www.bcn.cl/siit/mapas_vectoriales"
+    source_type: csv_gazetteer
+    priority: P1
+    status: pilot
+    evidence_role: geocoding_reference
+    spatial_unit: "punto (topónimo)"
+    temporal_unit: none
+    access: public_download
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Felipe]
+    notes: "41.358 topónimos con lat/lon, derivados de las capas vectoriales oficiales BCN (Toponimos_BCN, Areas_Pobladas_BCN) más nombres administrativos derivados. Reutilizado desde un proyecto propio anterior del usuario (build_geo_dictionary.py sobre shapefiles BCN); no se redistribuyen los shapefiles originales, solo el CSV derivado."
