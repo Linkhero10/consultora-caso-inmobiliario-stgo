@@ -18,13 +18,25 @@ tablas derivadas:
   caso ya lo resuelve `case_mention_geography` de forma determinista; pedirle
   lo mismo al gazetteer nacional es redundante y, por la duplicación de
   filas admin_comuna/Comuna/Ciudad que tiene el propio gazetteer para el
-  nombre de una comuna, casi siempre no es único.
+  nombre de una comuna, casi siempre no es único. La comuna preferida que se
+  le pasa al geocoder como contexto SIEMPRE viene de una comuna ya resuelta
+  de forma determinista (`case_mention.codigo_comuna_ine` o el backfill de
+  `case_mention_geography`), nunca del texto crudo del clasificador (que
+  puede ser compuesto, ej. "Ñuñoa y Providencia", y no sirve como filtro de
+  una sola comuna).
 - `geocoded_location_conflict`: relación (potencialmente muchos-a-muchos)
   entre un lugar geocodificado y los conflictos de los documentos donde
   aparece. Todo lo que produce este script se marca `relation_type =
   'contextual_location'` -- es evidencia geográfica citada en el documento,
   no una determinación curada de "este es el sitio focal del proyecto/
   conflicto"; esa distinción más fina queda para un trabajo posterior.
+  El warehouse no tiene hoy una resolución a nivel de case_mention hacia
+  project/conflict (`case_mention_document_project_candidates` está marcada
+  `relation_status='document_level_only'` en el 100% de sus filas), así que
+  el bridge solo se crea cuando el documento tiene un único conflicto
+  asociado -- si tiene varios, no hay forma de saber a cuál pertenece la
+  mención geográfica específica, y se prefiere no crear el vínculo antes
+  que inventar uno.
 """
 
 from __future__ import annotations
@@ -42,6 +54,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 
 _KNOWN_COMUNA_KEYS = {_key(name) for name in COMUNA_INE_CODES}
+_COMUNA_NAME_BY_CODE = {code: name for name, code in COMUNA_INE_CODES.items()}
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS case_mention_geography (
@@ -98,9 +111,11 @@ def backfill_case_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
     resolved = 0
     for row in rows:
         # El texto puede ser compuesto ("Quinta Normal y Maipú"): se resuelve
-        # solo cuando exactamente UNA de las partes cae dentro de las 32
-        # comunas del área de estudio -- si el texto describe genuinamente
-        # más de una comuna, no se elige una arbitrariamente.
+        # cuando existe EXACTAMENTE UNA comuna perteneciente al área de
+        # estudio entre las partes (las demás partes pueden estar fuera del
+        # área sin afectar la resolución -- no se exige que el texto entero
+        # sea una sola comuna, solo que dentro del área de estudio no haya
+        # ambigüedad).
         codes = {derive_ine_code(part) for part in _split_comuna_names(row["comuna"])}
         codes.discard("")
         if len(codes) != 1:
@@ -123,14 +138,32 @@ def _document_conflicts(con: sqlite3.Connection) -> dict[str, set[str]]:
     return out
 
 
+def _resolved_comuna_name_by_case_mention(con: sqlite3.Connection) -> dict[str, str]:
+    """case_mention_id -> nombre de comuna, SOLO cuando hay una comuna ya
+    resuelta de forma determinista (codigo_comuna_ine directo del case_mention,
+    o el backfill de case_mention_geography). Nunca el texto crudo del
+    clasificador (que puede ser compuesto, ej. "Ñuñoa y Providencia", y no
+    sirve como filtro de una sola comuna)."""
+    resolved: dict[str, str] = {}
+    for row in con.execute("SELECT case_mention_id, codigo_comuna_ine FROM case_mention"):
+        code = row["codigo_comuna_ine"]
+        if code and code in _COMUNA_NAME_BY_CODE:
+            resolved[row["case_mention_id"]] = _COMUNA_NAME_BY_CODE[code]
+    if _table_exists(con, "case_mention_geography"):
+        for row in con.execute("SELECT case_mention_id, codigo_comuna_ine FROM case_mention_geography"):
+            resolved.setdefault(row["case_mention_id"], _COMUNA_NAME_BY_CODE.get(row["codigo_comuna_ine"], ""))
+    return {k: v for k, v in resolved.items() if v}
+
+
+def _table_exists(con: sqlite3.Connection, name: str) -> bool:
+    return con.execute("SELECT 1 FROM sqlite_master WHERE name = ? AND type = 'table'", (name,)).fetchone() is not None
+
+
 def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
     con.execute("DELETE FROM geocoded_location")
     con.execute("DELETE FROM geocoded_location_conflict")
 
-    case_mention_comuna = {
-        row["case_mention_id"]: row["comuna"]
-        for row in con.execute("SELECT case_mention_id, comuna FROM case_mention")
-    }
+    case_mention_comuna = _resolved_comuna_name_by_case_mention(con)
     doc_conflicts = _document_conflicts(con)
 
     rows = con.execute(
@@ -142,6 +175,7 @@ def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
     n_skipped_bare_comuna = 0
     n_resolved = 0
     n_fuera_de_area = 0
+    n_bridge_omitido_multiconflicto = 0
     by_precision: dict[str, int] = {}
 
     for row in rows:
@@ -193,11 +227,25 @@ def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
                 result.source,
             ),
         )
-        for conflict_id in doc_conflicts.get(row["document_id"], ()):
+        # El warehouse no tiene hoy una resolucion a nivel de case_mention
+        # hacia project/conflict (case_mention_document_project_candidates
+        # esta marcada 'document_level_only' en el 100% de sus filas -- ver
+        # docstring del modulo). Vincular por document_id cuando el documento
+        # toca VARIOS conflictos reintroduciria el mismo producto cartesiano
+        # ya corregido en dashboard_data.py: un lugar de la mencion A podria
+        # quedar ligado tambien al conflicto B solo por compartir documento.
+        # Se crea el bridge unicamente cuando el documento tiene un unico
+        # conflicto asociado (ahi no hay ambiguedad posible); en cualquier
+        # otro caso se prefiere no crear el vinculo antes que inventar uno.
+        conflicts_for_doc = doc_conflicts.get(row["document_id"], set())
+        if len(conflicts_for_doc) == 1:
+            (conflict_id,) = conflicts_for_doc
             con.execute(
                 "INSERT OR IGNORE INTO geocoded_location_conflict (geocode_id, conflict_id, relation_type) VALUES (?, ?, 'contextual_location')",
                 (geocode_id, conflict_id),
             )
+        else:
+            n_bridge_omitido_multiconflicto += 1 if conflicts_for_doc else 0
 
     con.commit()
     return {
@@ -206,6 +254,7 @@ def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
         "n_intentadas": n_attempted,
         "n_descartadas_fuera_del_area_de_estudio": n_fuera_de_area,
         "n_resueltas": n_resolved,
+        "n_bridge_omitido_multiconflicto": n_bridge_omitido_multiconflicto,
         "tasa_resolucion": round(n_resolved / n_attempted, 3) if n_attempted else 0.0,
         "por_precision": by_precision,
     }

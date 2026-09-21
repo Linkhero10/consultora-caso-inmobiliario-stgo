@@ -185,12 +185,16 @@ def _lookup_unique(
     if n_before == 0:
         return None, 0, 0
 
-    filtered = candidates
     preferred = _norm(prefer_comuna)
     if preferred:
-        by_comuna = [row for row in candidates if _norm(row.get("comuna")) == preferred]
-        if by_comuna:
-            filtered = by_comuna
+        # Contexto duro: si se conoce la comuna esperada, el candidato DEBE
+        # pertenecer a ella. 0 candidatos en la comuna preferida es "no
+        # resuelto", nunca un fallback silencioso al universo nacional --
+        # aunque ese universo nacional tenga, por coincidencia, un único
+        # candidato en otra comuna.
+        filtered = [row for row in candidates if _norm(row.get("comuna")) == preferred]
+    else:
+        filtered = candidates
 
     n_after = len(filtered)
     if n_after != 1:

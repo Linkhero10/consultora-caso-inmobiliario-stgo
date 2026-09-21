@@ -92,6 +92,15 @@ def test_context_narrows_to_more_than_one_still_returns_none():
     assert target.resolve_location("Las Condes", prefer_comuna="Las Condes", index=index) is None
 
 
+def test_preferred_comuna_with_zero_candidates_does_not_fallback_elsewhere():
+    """Bug real encontrado en revisión externa: si se conoce la comuna
+    esperada pero NINGÚN candidato pertenece a ella, no se debe volver
+    silenciosamente al universo nacional aunque ahí quede un único
+    candidato en otra comuna. 0 candidatos en el contexto esperado = None."""
+    index = _build_index([_row("Lo Curro", "VITACURA")])
+    assert target.resolve_location("Lo Curro", prefer_comuna="Ñuñoa", index=index) is None
+
+
 def test_never_fuzzy_close_but_not_exact_name_does_not_match():
     index = _build_index([_row("Lo Curro", "VITACURA")])
     assert target.resolve_location("Lo Curr", index=index) is None

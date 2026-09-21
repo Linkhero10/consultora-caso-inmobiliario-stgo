@@ -36,6 +36,23 @@ def _build_fixture_db(path: Path) -> None:
         ],
     )
     con.execute("INSERT INTO document_conflict VALUES ('doc1','conflict:1','focal','{}','test','caso_unico')")
+
+    # Caso 5: comuna cruda compuesta ("Ñuñoa y Providencia") pero YA resuelta
+    # de forma determinista en case_mention_geography a Providencia -- el
+    # contexto del geocoder debe usar esa comuna resuelta, nunca el texto
+    # crudo compuesto (que ni siquiera calzaria como clave de comuna).
+    con.execute("INSERT INTO case_mention VALUES ('cm5','doc5',0,'Ñuñoa y Providencia','','edificio_residencial','include','include')")
+    con.execute("INSERT INTO evidence VALUES ('ev5','doc5','cm5','geografica',0,'Lo Curro',1)")
+    con.execute("INSERT INTO document_conflict VALUES ('doc5','conflict:2','focal','{}','test','caso_unico')")
+
+    # Caso 6: documento con DOS conflictos distintos -- el geocode debe
+    # crearse, pero el bridge a conflicto NO (no hay forma de saber a cual
+    # de los dos pertenece la mencion geografica especifica).
+    con.execute("INSERT INTO case_mention VALUES ('cm6','doc6',0,'Vitacura','13132','edificio_residencial','include','include')")
+    con.execute("INSERT INTO evidence VALUES ('ev6','doc6','cm6','geografica',0,'Lo Curro',1)")
+    con.execute("INSERT INTO document_conflict VALUES ('doc6','conflict:3','focal','{}','test','caso_unico')")
+    con.execute("INSERT INTO document_conflict VALUES ('doc6','conflict:4','co_focal','{}','test','caso_unico')")
+
     con.commit()
     con.close()
 
@@ -76,16 +93,65 @@ def test_geocode_evidence_locations_skips_bare_comuna_and_unverified(tmp_path):
     with patch.object(geocode_locations, "load_index", return_value=_fake_index()):
         report = target.geocode_evidence_locations(con)
 
-    located = list(con.execute("SELECT * FROM geocoded_location"))
+    located = list(con.execute("SELECT * FROM geocoded_location WHERE document_id = 'doc1'"))
     assert len(located) == 1
     assert located[0]["matched_name"] == "Lo Curro"
     assert located[0]["comuna"] == "VITACURA"
     # el bridge liga el geocode al conflicto del documento (contextual, no focal)
-    bridge = list(con.execute("SELECT * FROM geocoded_location_conflict"))
+    bridge = list(con.execute("SELECT * FROM geocoded_location_conflict WHERE geocode_id = ?", (located[0]["geocode_id"],)))
     assert bridge[0]["conflict_id"] == "conflict:1"
     assert bridge[0]["relation_type"] == "contextual_location"
     assert report["n_omitidas_por_ser_comuna_pura"] == 1  # "Ñuñoa"
-    assert report["n_evidencia_geografica_total"] == 2  # solo evidencia verified=1
+    assert report["n_evidencia_geografica_total"] == 4  # solo evidencia verified=1 (ev1,ev2,ev5,ev6)
+
+
+def test_geocode_context_uses_resolved_comuna_not_raw_compound_text(tmp_path):
+    """Bug real encontrado en revisión externa: el contexto de comuna debe
+    venir de una comuna ya resuelta (case_mention_geography), nunca del
+    texto crudo del clasificador ("Ñuñoa y Providencia"). cm5 se resuelve a
+    Providencia, pero el único "Lo Curro" del gazetteer de prueba está en
+    Vitacura -- con el contexto correcto (Providencia) no debe calzar
+    ninguno; el bug anterior habría ignorado el contexto (porque el texto
+    crudo compuesto no calza como clave de comuna) y habría caído al
+    fallback nacional, resolviendo incorrectamente a Vitacura."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    target.ensure_schema(con)
+    con.execute(
+        "INSERT INTO case_mention_geography VALUES ('cm5','13123','exact_comuna_lookup','comuna','alta_determinista')"
+    )
+    con.commit()
+
+    with patch.object(geocode_locations, "load_index", return_value=_fake_index()):
+        target.geocode_evidence_locations(con)
+
+    doc5_rows = list(con.execute("SELECT * FROM geocoded_location WHERE document_id = 'doc5'"))
+    assert doc5_rows == []
+
+
+def test_bridge_not_created_when_document_has_multiple_conflicts(tmp_path):
+    """Bug real encontrado en revisión externa: vincular por document_id a
+    TODOS los conflictos del documento reintroduce el mismo producto
+    cartesiano ya corregido en dashboard_data.py. El geocode debe existir,
+    pero sin bridge cuando hay más de un conflicto candidato."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    target.ensure_schema(con)
+
+    with patch.object(geocode_locations, "load_index", return_value=_fake_index()):
+        report = target.geocode_evidence_locations(con)
+
+    doc6_geocode = con.execute("SELECT geocode_id FROM geocoded_location WHERE document_id = 'doc6'").fetchone()
+    assert doc6_geocode is not None  # el geocode si se crea
+    bridge = con.execute(
+        "SELECT * FROM geocoded_location_conflict WHERE geocode_id = ?", (doc6_geocode["geocode_id"],)
+    ).fetchall()
+    assert bridge == []  # pero sin bridge, por ambigüedad de conflicto
+    assert report["n_bridge_omitido_multiconflicto"] == 1
 
 
 def test_geocode_evidence_locations_discards_out_of_area_homonyms(tmp_path):
