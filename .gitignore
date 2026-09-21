@@ -159,3 +159,8 @@ docs/superpowers/
 # Artefactos de respaldo/temporales (recuperacion de crashes, no son datos)
 *.pre_backfill_backup
 *.tmp.*
+
+# Subcarpeta de tests huerfanos (importaban scripts ya podados) y procedimiento historico
+Trabajo/scripts/tests/
+Trabajo/scripts/ORIGIN_CLEANUP_PROCEDURE.md
+Trabajo/sql/
