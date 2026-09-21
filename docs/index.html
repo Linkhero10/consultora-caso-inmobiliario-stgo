@@ -62,8 +62,8 @@ mismo objeto de disputa). La confianza de cada agrupación queda registrada expl
 <p>El detalle de cada conflicto (documentos, actores, línea de tiempo, evidencia) muestra por
 defecto solo las menciones con rol focal o co-principal sobre un caso único -- el mismo
 criterio "seguro" documentado en <code>docs/methodology.md</code>. Otras menciones del mismo
-conflicto (contextuales, panorámicas o sin revisar) se listan aparte, explícitamente marcadas
-como no verificadas, sin mezclarse con la evidencia principal.</p>
+conflicto (contextuales, panorámicas o sin revisar) se listan aparte y no aportan actores,
+eventos ni evidencia al detalle principal.</p>
 <p>Las comunas mostradas en el mapa corresponden a la Provincia de Santiago (32 comunas), con
 datos poblacionales y de hacinamiento del Censo 2024 (INE). Un conflicto solo se asocia a una
 comuna cuando al menos uno de sus documentos focales tiene una única comuna resuelta entre sus
@@ -189,7 +189,7 @@ function showConflictDetail(c) {
   const events = c.events.map(e => `<li>${e.fecha || 's/f'} — ${label('tipo_hito', e.tipo_hito)}: ${e.descripcion}</li>`).join('');
   const quotes = c.evidence_quotes_sample.map(q => `<div class="quote">"${q}"</div>`).join('');
   const docs = c.documents.map(d => `<li><a href="${d.url}" target="_blank" rel="noopener">${d.title || d.url}</a></li>`).join('') || '<li class="note">Sin documentos focales/co-principales para este conflicto</li>';
-  const others = c.other_mentions.map(d => `<li><a href="${d.url}" target="_blank" rel="noopener">${d.title || d.url}</a> <span class="note">(${label('document_conflict_role', d.role)}, no verificado)</span></li>`).join('');
+  const others = c.other_mentions.map(d => `<li><a href="${d.url}" target="_blank" rel="noopener">${d.title || d.url}</a> <span class="note">(${label('document_conflict_role', d.role)} · no utilizado como evidencia focal)</span></li>`).join('');
   el.innerHTML = `<h3>${c.label}</h3>
     <p class="note">Origen: ${label('conflict_origen', c.origen)} &middot; Confianza: ${label('conflict_confidence', c.confidence)} &middot; ${c.n_case_ids} caso(s)</p>
     <p><b>Proyectos:</b> ${projects}</p>
