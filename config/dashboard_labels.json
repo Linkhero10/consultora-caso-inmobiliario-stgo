@@ -1,0 +1,174 @@
+{
+  "decision": {
+    "include": "Incluido",
+    "exclude": "Excluido",
+    "uncertain": "Incierto",
+    "insufficient_content": "Contenido insuficiente"
+  },
+  "tipo_conflicto_norm": {
+    "vivienda_integracion": "Vivienda e integración social",
+    "densidad_altura": "Densidad y altura",
+    "permiso_edificacion": "Permiso de edificación",
+    "planificacion_urbana": "Planificación urbana",
+    "gentrificacion_desplazamiento": "Gentrificación y desplazamiento",
+    "patrimonio": "Patrimonio",
+    "ambiental_territorial": "Ambiental y territorial",
+    "movilidad_infraestructura": "Movilidad e infraestructura",
+    "ocupacion_propiedad": "Ocupación de propiedad",
+    "otro": "Otro",
+    "incierto": "Incierto",
+    "none": "Sin tipo de conflicto"
+  },
+  "tipo_objeto_norm": {
+    "edificio_residencial": "Edificio residencial",
+    "ds19": "Vivienda DS19",
+    "condominio": "Condominio",
+    "loteo_residencial": "Loteo residencial",
+    "uso_mixto_residencial": "Uso mixto residencial",
+    "instrumento_urbano_residencial": "Instrumento urbano residencial",
+    "centro_comercial": "Centro comercial",
+    "edificio_oficinas": "Edificio de oficinas",
+    "hotel": "Hotel",
+    "proyecto_industrial": "Proyecto industrial",
+    "equipamiento_urbano": "Equipamiento urbano",
+    "infraestructura_no_residencial": "Infraestructura no residencial",
+    "inmobiliario_privado_no_residencial": "Inmobiliario privado no residencial",
+    "instrumento_urbano_general": "Instrumento urbano general",
+    "objeto_no_determinado": "Objeto no determinado",
+    "none": "Sin objeto"
+  },
+  "via_legal_norm": {
+    "judicial": "Vía judicial",
+    "administrativa": "Vía administrativa",
+    "contraloria": "Contraloría",
+    "ambiental": "Vía ambiental",
+    "municipal": "Vía municipal",
+    "participacion_oposicion": "Participación y oposición ciudadana",
+    "sin_via_identificada": "Sin vía identificada",
+    "otra": "Otra vía",
+    "incierta": "Incierta",
+    "none": "Sin vía legal"
+  },
+  "precision_geografica": {
+    "proyecto_exacto": "Proyecto exacto",
+    "sector_barrio": "Sector o barrio",
+    "comuna": "Comuna",
+    "provincia_general": "Provincia (general)",
+    "fuera_de_area": "Fuera del área de estudio",
+    "ambigua": "Ambigua"
+  },
+  "rol_en_documento": {
+    "caso_principal": "Caso principal",
+    "caso_secundario_documentado": "Caso secundario documentado",
+    "mencion_tangencial": "Mención tangencial"
+  },
+  "profundidad_documentacion_caso": {
+    "caso_principal": "Caso principal",
+    "caso_secundario_documentado": "Caso secundario documentado",
+    "mencion_tangencial": "Mención tangencial",
+    "incierta": "Incierta"
+  },
+  "accion_contenciosa": {
+    "confirmada": "Confirmada",
+    "no": "No hay acción contenciosa",
+    "incierta": "Incierta"
+  },
+  "tipo_accion_contenciosa": {
+    "recurso_judicial": "Recurso judicial",
+    "reclamacion_administrativa": "Reclamación administrativa",
+    "denuncia_formal": "Denuncia formal",
+    "fiscalizacion_solicitada": "Fiscalización solicitada",
+    "protesta": "Protesta",
+    "movilizacion_vecinal": "Movilización vecinal",
+    "oposicion_organizada": "Oposición organizada",
+    "rechazo_institucional": "Rechazo institucional",
+    "impugnacion_normativa": "Impugnación normativa",
+    "otra_accion_verificable": "Otra acción verificable",
+    "ninguna": "Ninguna",
+    "incierta": "Incierta"
+  },
+  "relacion_inmobiliaria_urbana": {
+    "desarrollo_proyecto": "Desarrollo de proyecto",
+    "transformacion_regulacion_uso": "Transformación de regulación de uso",
+    "inmueble_existente_relevancia_urbana": "Inmueble existente con relevancia urbana",
+    "ocupacion_propiedad_sin_desarrollo": "Ocupación de propiedad sin desarrollo",
+    "incierta": "Incierta"
+  },
+  "entity_role_tipo_norm": {
+    "inmobiliaria": "Inmobiliaria",
+    "otro": "Otro",
+    "tribunal": "Tribunal",
+    "vecinos": "Vecinos",
+    "municipio": "Municipio",
+    "empresa": "Empresa",
+    "ong": "ONG",
+    "politico": "Político",
+    "organizacion_vecinal": "Organización vecinal",
+    "contraloria": "Contraloría",
+    "ministerio_seremi": "Ministerio / SEREMI",
+    "experto": "Experto",
+    "incierto": "Incierto"
+  },
+  "enrichment_actor_tipo": {
+    "concejal_politico": "Concejal o político",
+    "colectivo_vecinal": "Colectivo vecinal",
+    "otro": "Otro",
+    "ciudadano_individual": "Ciudadano individual",
+    "poder_judicial": "Poder judicial",
+    "inmobiliaria": "Inmobiliaria",
+    "municipio": "Municipio",
+    "contraloria": "Contraloría",
+    "seremi_minvu": "SEREMI MINVU",
+    "junta_vecinos": "Junta de vecinos",
+    "ong_patrimonial": "ONG patrimonial",
+    "consejo_monumentos_nacionales": "Consejo de Monumentos Nacionales"
+  },
+  "stance": {
+    "apoya": "Apoya",
+    "se_opone": "Se opone",
+    "no_determinable": "No determinable",
+    "neutral": "Neutral",
+    "mixto": "Mixto"
+  },
+  "nivel_involucramiento": {
+    "central": "Central",
+    "secundario": "Secundario"
+  },
+  "tipo_hito": {
+    "otro": "Otro",
+    "dictamen_resolucion": "Dictamen o resolución",
+    "querella_accion_judicial": "Querella o acción judicial",
+    "fiscalizacion_sumario": "Fiscalización o sumario",
+    "declaracion_publica": "Declaración pública",
+    "publicacion_prensa": "Publicación de prensa",
+    "permiso_autorizacion": "Permiso o autorización",
+    "denuncia_reclamo": "Denuncia o reclamo",
+    "sentencia_fallo_judicial": "Sentencia o fallo judicial",
+    "protesta_movilizacion": "Protesta o movilización"
+  },
+  "document_conflict_role": {
+    "focal": "Foco principal",
+    "co_focal": "Co-principal",
+    "contextual_mention": "Mención contextual",
+    "panoramic_mention": "Mención panorámica",
+    "mentioned_unreviewed": "Mencionado sin revisar"
+  },
+  "conflict_origen": {
+    "trivial_single_case": "Caso único",
+    "conflict_unit_63_evidence": "Agrupado por evidencia (revisión Sol)"
+  },
+  "conflict_confidence": {
+    "baja_derivado_mecanicamente": "Baja (derivado mecánicamente)",
+    "alta_revisado_por_sol": "Alta (revisado por Sol)"
+  },
+  "sentiment": {
+    "positivo": "Positivo",
+    "neutral": "Neutral",
+    "negativo": "Negativo"
+  },
+  "confidence": {
+    "alta": "Alta",
+    "media": "Media",
+    "baja": "Baja"
+  }
+}

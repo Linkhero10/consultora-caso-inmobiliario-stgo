@@ -3,7 +3,7 @@
 ## Datos propios
 
 Los esquemas, identidad resuelta (proyecto/caso/conflicto/actor), clasificaciones, anotaciones y
-análisis derivados en `src/`, `config/`, `data/`, `audit/` y `products/` son trabajo original de
+análisis derivados en `src/`, `config/`, `data/`, `audit/` y `docs/` son trabajo original de
 los autores. Ver [LICENSE](LICENSE).
 
 ## Datos de terceros

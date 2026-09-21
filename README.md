@@ -33,8 +33,7 @@ src/            pipeline: discovery -> classify -> enrich -> projects -> conflic
 config/         schemas y prompts vigentes
 tests/          tests automatizados, CI en cada push (ver .github/workflows/tests.yml)
 data/           warehouse.sqlite (base de datos de referencia, via Git LFS)
-docs/           arquitectura, metodología, showcase publicado en GitHub Pages
-products/       dashboard y piloto de integración
+docs/           dashboard único publicado en GitHub Pages (docs/index.html) + arquitectura/metodología en Markdown
 audit/          resumen de validación y calidad de datos
 ```
 
