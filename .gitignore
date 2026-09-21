@@ -155,3 +155,7 @@ Trabajo/config/pipeline_contract_v3_1.yaml
 Trabajo/config/protocolo_revision_multiagente.md
 Trabajo/config/stage_roadmap.yaml
 docs/superpowers/
+
+# Artefactos de respaldo/temporales (recuperacion de crashes, no son datos)
+*.pre_backfill_backup
+*.tmp.*
