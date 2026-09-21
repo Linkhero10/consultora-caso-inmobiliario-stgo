@@ -8,10 +8,10 @@ import hashlib
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).parents[1] / "src" / "_classify_pipeline"
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SCRIPT_DIR))
 
-import classify_v5_1 as v51  # noqa: E402
+import classify as v51  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).parents[1]
 
@@ -143,16 +143,16 @@ def test_incomplete_booleans_still_block_before_checking_fingerprint(tmp_path, m
 
 def test_extra_gate_files_are_verified(tmp_path, monkeypatch):
     """contract_fingerprint.extra_gate_files permite pinnear archivos
-    adicionales del camino de ejecucion (ej. los wrappers classify_v5_2_1.py
-    / classify_v5_2_2.py donde vivio el bypass real de hash-pinning)."""
+    adicionales del camino de ejecucion (ej. pipeline_lock.py, del que
+    classify.py depende para el locking real de la corrida)."""
     entry_script = Path(v51.__file__)
     sample_path = tmp_path / "sample.json"
     sample_path.write_text('{"ok": true}', encoding="utf-8")
     monkeypatch.setattr(sys, "argv", [str(entry_script)])
     fingerprint = _valid_fingerprint(entry_script, sample_path)
-    extra_file = PROJECT_ROOT / "src" / "_classify_pipeline" / "classify_v5_2_1.py"
+    extra_file = PROJECT_ROOT / "src" / "pipeline_lock.py"
     fingerprint["extra_gate_files"] = [
-        {"label": "gate v5.2.1 (_run real)", "path": _relpath(extra_file), "sha256": _sha(extra_file)},
+        {"label": "pipeline_lock (locking real de la corrida)", "path": _relpath(extra_file), "sha256": _sha(extra_file)},
     ]
     artifact = _base_artifact(fingerprint)
     assert v51.classification_release_allowed(artifact) is True
@@ -160,7 +160,7 @@ def test_extra_gate_files_are_verified(tmp_path, monkeypatch):
     fingerprint["extra_gate_files"][0]["sha256"] = "0" * 64
     assert v51.classification_release_allowed(artifact) is False
     reasons = v51.classification_release_reasons(artifact)
-    assert any("gate v5.2.1" in r and "hash vigente" in r for r in reasons)
+    assert any("pipeline_lock" in r and "hash vigente" in r for r in reasons)
 
 
 def test_missing_extra_gate_file_hash_blocks_release(tmp_path, monkeypatch):
@@ -169,7 +169,7 @@ def test_missing_extra_gate_file_hash_blocks_release(tmp_path, monkeypatch):
     sample_path.write_text('{"ok": true}', encoding="utf-8")
     monkeypatch.setattr(sys, "argv", [str(entry_script)])
     fingerprint = _valid_fingerprint(entry_script, sample_path)
-    fingerprint["extra_gate_files"] = [{"label": "incompleto", "path": "Trabajo/scripts/classify_v5_2_1.py"}]
+    fingerprint["extra_gate_files"] = [{"label": "incompleto", "path": "src/pipeline_lock.py"}]
     artifact = _base_artifact(fingerprint)
     assert v51.classification_release_allowed(artifact) is False
     reasons = v51.classification_release_reasons(artifact)

@@ -1,16 +1,18 @@
 import sys
 from pathlib import Path
 
-SCRIPT = Path(__file__).parents[1] / "src" / "_classify_pipeline" / "classify_v5_2_1.py"
+SCRIPT = Path(__file__).parents[1] / "src" / "classify.py"
 
 
-def test_v5_2_1_gate_module_exists_before_behavior_is_added():
-    """El gate-only debe existir como contrato separado de v5.2."""
-    assert SCRIPT.exists(), "falta classify_v5_2_1.py"
+def test_v5_2_1_gate_layer_exists_as_a_distinct_composition_step():
+    """La capa 3 (ex classify_v5_2_1.py) debe seguir existiendo como funcion
+    propia dentro de classify.py, separada de la capa final (apply_scope_gate)."""
+    assert SCRIPT.exists(), "falta classify.py"
+    assert hasattr(target, "_apply_scope_gate_v3")
 
 
 sys.path.insert(0, str(SCRIPT.parent))
-import classify_v5_2_1 as target  # noqa: E402
+import classify as target  # noqa: E402
 
 
 SOURCE = (
@@ -45,7 +47,7 @@ def _mention(**overrides):
 
 def test_one_valid_quote_and_one_invalid_quote_remains_include_with_quality_flag():
     mention = _mention(evidencia_geografica_quotes=["Se ubica en Vitacura", "en Santiago centro"])
-    result = target.apply_scope_gate(mention, SOURCE, "inmobiliaria_urbana_amplia")
+    result = target._apply_scope_gate_v3(mention, SOURCE, "inmobiliaria_urbana_amplia")
     assert result["decision_final"] == "include"
     assert result["case_evidence_sufficient"]["all"] is True
     assert result["quote_set_fully_clean"]["geography"] is False
@@ -56,7 +58,7 @@ def test_one_valid_quote_and_one_invalid_quote_remains_include_with_quality_flag
 def test_category_without_any_valid_quote_remains_uncertain():
     """La limpieza relajada no puede convertir evidencia ausente en include."""
     mention = _mention(evidencia_geografica_quotes=["una ubicación no citada"])
-    result = target.apply_scope_gate(mention, SOURCE, "inmobiliaria_urbana_amplia")
+    result = target._apply_scope_gate_v3(mention, SOURCE, "inmobiliaria_urbana_amplia")
     assert result["case_evidence_sufficient"]["geography"] is False
     assert result["decision_final"] == "uncertain"
     assert "evidencia_geografica_no_verificada" in result["gate_reasons"]
@@ -68,8 +70,8 @@ def test_broad_scope_accepts_explicit_project_without_subtype_but_residential_do
         tipo_objeto_norm="objeto_no_determinado",
         tipo_objeto_raw="proyecto inmobiliario con departamentos",
     )
-    broad = target.apply_scope_gate(mention, SOURCE, "inmobiliaria_urbana_amplia")
-    residential = target.apply_scope_gate(mention, SOURCE, "residencial")
+    broad = target._apply_scope_gate_v3(mention, SOURCE, "inmobiliaria_urbana_amplia")
+    residential = target._apply_scope_gate_v3(mention, SOURCE, "residencial")
     assert broad["decision_final"] == "include"
     assert broad["object_gate_exception"] == "broad_explicit_project_without_subtype"
     assert residential["decision_final"] == "uncertain"
@@ -78,7 +80,7 @@ def test_broad_scope_accepts_explicit_project_without_subtype_but_residential_do
 
 def test_uncertain_model_decision_is_preserved():
     mention = _mention(decision="uncertain")
-    result = target.apply_scope_gate(mention, SOURCE, "inmobiliaria_urbana_amplia")
+    result = target._apply_scope_gate_v3(mention, SOURCE, "inmobiliaria_urbana_amplia")
     assert result["decision_final"] == "uncertain"
 
 
@@ -91,6 +93,6 @@ def test_existing_property_boundary_remains_hard_exclude():
         tipo_objeto_raw="inmueble existente",
         evidencia_objeto_quotes=["contempla departamentos"],
     )
-    result = target.apply_scope_gate(mention, SOURCE, "inmobiliaria_urbana_amplia")
+    result = target._apply_scope_gate_v3(mention, SOURCE, "inmobiliaria_urbana_amplia")
     assert result["decision_final"] == "exclude"
     assert "inmueble_existente_sin_intervencion_urbana_formal" in result["gate_reasons"]

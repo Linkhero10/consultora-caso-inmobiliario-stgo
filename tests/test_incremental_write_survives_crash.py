@@ -14,10 +14,10 @@ import json
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).parents[1] / "src" / "_classify_pipeline"
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SCRIPT_DIR))
 
-import classify_v5_2_1 as target  # noqa: E402
+import classify as target  # noqa: E402
 
 
 def _fake_docs():
@@ -34,16 +34,16 @@ def test_first_record_persists_and_second_failure_is_logged_not_swallowed(tmp_pa
     fake_schema.write_text("{}", encoding="utf-8")
     fake_prompt = tmp_path / "fake_prompt.md"
     fake_prompt.write_text("prompt", encoding="utf-8")
-    monkeypatch.setattr(target.v51, "load_env", lambda _path: {"OPENROUTER_API_KEY": "fake-key"})
-    monkeypatch.setattr(target.v51, "load_classifiable_documents", lambda urls_filter=None: _fake_docs())
-    monkeypatch.setattr(target.v51, "already_classified_urls", lambda _path: set())
+    monkeypatch.setattr(target, "load_env", lambda _path: {"OPENROUTER_API_KEY": "fake-key"})
+    monkeypatch.setattr(target, "load_classifiable_documents", lambda urls_filter=None: _fake_docs())
+    monkeypatch.setattr(target, "already_classified_urls", lambda _path: set())
     monkeypatch.setattr(target, "SCHEMA_PATH", fake_schema)
     monkeypatch.setattr(target, "PROMPT_PATH", fake_prompt)
 
     def fake_classify_document(doc, api_key, prompt, schema):
         return {"parsed": {"url": doc["url"]}, "usage": {}, "reasoning": None, "reasoning_details": None}
 
-    monkeypatch.setattr(target.v51, "classify_document", fake_classify_document)
+    monkeypatch.setattr(target, "classify_document", fake_classify_document)
 
     call_count = {"n": 0}
 

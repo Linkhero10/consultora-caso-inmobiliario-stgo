@@ -6,11 +6,11 @@ import jsonschema
 import pytest
 
 
-SCRIPT = Path(__file__).parents[1] / "src" / "_classify_pipeline" / "classify_v5_1.py"
-spec = importlib.util.spec_from_file_location("classify_v5_1_under_test", SCRIPT)
-classify_v5_1 = importlib.util.module_from_spec(spec)
+SCRIPT = Path(__file__).parents[1] / "src" / "classify.py"
+spec = importlib.util.spec_from_file_location("classify_under_test_v5_1", SCRIPT)
+classify_module = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
-spec.loader.exec_module(classify_v5_1)
+spec.loader.exec_module(classify_module)
 
 
 def _base(**overrides):
@@ -48,7 +48,7 @@ def test_multiple_literal_quotes_are_verified_independently_and_include():
     mention = _base(
         evidencia_accion_quotes=["La junta interpuso un recurso judicial.", "La Corte suspendió las obras."],
     )
-    result = classify_v5_1.apply_scope_gate(
+    result = classify_module._apply_scope_gate_base(
         mention,
         "La junta interpuso un recurso judicial. La Corte suspendió las obras. El proyecto contempla viviendas. El proyecto se ubica en Peñalolén.",
         "residencial",
@@ -59,7 +59,7 @@ def test_multiple_literal_quotes_are_verified_independently_and_include():
 
 def test_invalid_extra_quote_is_exposed_without_discarding_valid_evidence():
     mention = _base(evidencia_accion_quotes=["La junta interpuso un recurso judicial.", "Texto inventado."])
-    result = classify_v5_1.apply_scope_gate(
+    result = classify_module._apply_scope_gate_base(
         mention,
         "La junta interpuso un recurso judicial. El proyecto contempla viviendas. El proyecto se ubica en Peñalolén.",
         "residencial",
@@ -74,7 +74,7 @@ def test_summary_is_not_used_as_literal_evidence():
         evidencia_accion_quotes=["La junta interpuso un recurso judicial."],
         evidence_summary="Síntesis inventada que no aparece literalmente.",
     )
-    result = classify_v5_1.apply_scope_gate(
+    result = classify_module._apply_scope_gate_base(
         mention,
         "La junta interpuso un recurso judicial. El proyecto contempla viviendas. El proyecto se ubica en Peñalolén.",
         "residencial",
@@ -83,7 +83,7 @@ def test_summary_is_not_used_as_literal_evidence():
 
 
 def test_ine_code_is_deterministic_and_existing_property_boundary_is_explicit():
-    assert classify_v5_1.derive_ine_code("San Joaquín") == "13129"
+    assert classify_module.derive_ine_code("San Joaquín") == "13129"
     mention = _base(
         es_proyecto_inmobiliario="si",
         es_proyecto_vivienda_inmobiliario="no",
@@ -91,7 +91,7 @@ def test_ine_code_is_deterministic_and_existing_property_boundary_is_explicit():
         relacion_inmobiliaria_urbana="ocupacion_propiedad_sin_desarrollo",
         evidencia_objeto_quotes=["Una casa colonial abandonada."],
     )
-    result = classify_v5_1.apply_scope_gate(
+    result = classify_module._apply_scope_gate_base(
         mention,
         "La junta interpuso un recurso judicial. Una casa colonial abandonada. El proyecto se ubica en Peñalolén.",
         "inmobiliaria_urbana_amplia",
@@ -101,7 +101,7 @@ def test_ine_code_is_deterministic_and_existing_property_boundary_is_explicit():
 
 
 def test_v5_1_schema_requires_arrays_and_summary():
-    schema_path = Path(__file__).parents[1] / "src" / "_classify_pipeline" / "schema_stage_v5_1.json"
+    schema_path = Path(__file__).parents[1] / "config" / "classification_schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))["schema"]
     mention = _base()
     payload = {

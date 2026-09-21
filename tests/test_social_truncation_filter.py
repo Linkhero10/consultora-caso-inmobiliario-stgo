@@ -6,10 +6,10 @@ enviar el documento al modelo."""
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).parents[1] / "src" / "_classify_pipeline"
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SCRIPT_DIR))
 
-import classify_luna as luna  # noqa: E402
+import classify as luna  # noqa: E402
 
 
 def test_login_wall_text_is_flagged():

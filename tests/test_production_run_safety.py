@@ -9,10 +9,8 @@ from pathlib import Path
 
 SRC_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SRC_DIR))
-sys.path.insert(0, str(SRC_DIR / "_classify_pipeline"))
 
-import classify_v5_2_1 as target  # noqa: E402
-import classify as v523  # noqa: E402
+import classify as target  # noqa: E402
 from pipeline_lock import StageSkipped  # noqa: E402
 
 
@@ -27,9 +25,9 @@ def _patch_common(monkeypatch, tmp_path, docs, output_path):
     fake_schema.write_text("{}", encoding="utf-8")
     fake_prompt = tmp_path / "fake_prompt.md"
     fake_prompt.write_text("prompt", encoding="utf-8")
-    monkeypatch.setattr(target.v51, "load_env", lambda _p: {"OPENROUTER_API_KEY": "fake-key"})
-    monkeypatch.setattr(target.v51, "load_classifiable_documents", lambda urls_filter=None: docs)
-    monkeypatch.setattr(target.v51, "already_classified_urls", lambda _p: set())
+    monkeypatch.setattr(target, "load_env", lambda _p: {"OPENROUTER_API_KEY": "fake-key"})
+    monkeypatch.setattr(target, "load_classifiable_documents", lambda urls_filter=None: docs)
+    monkeypatch.setattr(target, "already_classified_urls", lambda _p: set())
     monkeypatch.setattr(target, "SCHEMA_PATH", fake_schema)
     monkeypatch.setattr(target, "PROMPT_PATH", fake_prompt)
     monkeypatch.setattr(target, "postprocess_result", lambda doc, result: ("include", {"url": doc["url"], "decision_documento": "include"}))
@@ -45,7 +43,7 @@ def test_failed_document_is_recorded_in_errors_jsonl_not_silently_dropped(tmp_pa
             return {"error": "schema_validation_failed"}
         return {"parsed": {}, "usage": {}, "reasoning": None, "reasoning_details": None}
 
-    monkeypatch.setattr(target.v51, "classify_document", fake_classify)
+    monkeypatch.setattr(target, "classify_document", fake_classify)
     # urls_file acotado para que is_test=True explicitamente -- --output-file
     # solo ya no activa el modo prueba (fix del punto 1, ronda siguiente).
     urls_file = tmp_path / "urls.txt"
@@ -72,7 +70,7 @@ def test_dry_run_never_calls_the_api(tmp_path, monkeypatch):
     def explode_if_called(doc, api_key, prompt, schema):
         raise AssertionError("classify_document NO debe llamarse en --dry-run")
 
-    monkeypatch.setattr(target.v51, "classify_document", explode_if_called)
+    monkeypatch.setattr(target, "classify_document", explode_if_called)
     args = argparse.Namespace(limit=0, dry_run=True, urls_file="", output_file=str(output_path), workers=1)
     result = target._run(args)
 
@@ -83,7 +81,7 @@ def test_dry_run_never_calls_the_api(tmp_path, monkeypatch):
 def test_content_hash_is_present_and_correct_in_production_record():
     doc = {"url": "https://example.cl/x", "text": "El texto completo del articulo de prueba.", "lineage": {"query": "q"}}
     result = {"parsed": {"decision": "exclude", "case_mentions": [], "sentiment": "neutral", "source_type": "medio", "confidence": "alta"}, "usage": {}, "reasoning": None, "reasoning_details": None}
-    _, record = v523.postprocess_result(doc, result)
+    _, record = target.postprocess_result(doc, result)
 
     import hashlib
     expected = hashlib.sha256(doc["text"].encode("utf-8")).hexdigest()
@@ -119,7 +117,7 @@ def test_small_urls_file_still_bypasses_gate_for_legitimate_testing(tmp_path, mo
     output_path = tmp_path / "out.jsonl"
     docs = [{"url": "https://example.cl/uno", "text": "contenido", "lineage": {}}]
     _patch_common(monkeypatch, tmp_path, docs, output_path)
-    monkeypatch.setattr(target.v51, "classify_document", lambda *a, **k: {"parsed": {}, "usage": {}, "reasoning": None, "reasoning_details": None})
+    monkeypatch.setattr(target, "classify_document", lambda *a, **k: {"parsed": {}, "usage": {}, "reasoning": None, "reasoning_details": None})
 
     args = argparse.Namespace(limit=0, dry_run=False, urls_file=str(small_urls), output_file=str(output_path), workers=1)
     result = target._run(args)
@@ -158,7 +156,7 @@ def test_run_manifest_is_written_with_counts_and_cost(tmp_path, monkeypatch):
             return {"error": "schema_validation_failed"}
         return {"parsed": {}, "usage": {"cost": 0.0042}, "reasoning": None, "reasoning_details": None}
 
-    monkeypatch.setattr(target.v51, "classify_document", fake_classify)
+    monkeypatch.setattr(target, "classify_document", fake_classify)
     urls_file = tmp_path / "urls.txt"
     urls_file.write_text("\n".join(d["url"] for d in docs), encoding="utf-8")
     args = argparse.Namespace(limit=0, dry_run=False, urls_file=str(urls_file), output_file=str(output_path), workers=1)
@@ -198,7 +196,7 @@ def test_cost_of_a_schema_validation_failure_is_not_lost(tmp_path, monkeypatch):
     docs = _fake_docs(1)
     _patch_common(monkeypatch, tmp_path, docs, output_path)
 
-    monkeypatch.setattr(target.v51, "classify_document", lambda *a, **k: {
+    monkeypatch.setattr(target, "classify_document", lambda *a, **k: {
         "error": "schema_validation_failed", "usage": {"cost": 0.0071},
     })
     urls_file = tmp_path / "urls.txt"

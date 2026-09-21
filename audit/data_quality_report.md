@@ -45,8 +45,9 @@ Antes de resolver identidad de actor, "Contraloría" y "Contraloría General de 
 contaban como dos nodos distintos en la red (7 y 10 conflictos respectivamente). Al fusionar con
 evidencia verificada (29 variantes textuales reales del corpus, mapeadas a 6 instituciones
 nacionales sin ambigüedad de jurisdicción), la entidad consolidada llega a 17 conflictos —
-empatando con la Corte Suprema. La fragmentación no era ruido cosmético: escondía la centralidad
-real de la institución en la red.
+empatando con la Corte Suprema. La fragmentación nominal subestimaba la multiafiliación observada
+de la institución en la red actor–conflicto (grado bipartito, no una medida de centralidad como
+betweenness o eigenvector, todavía no calculadas).
 
 Quedan deliberadamente sin resolver (ambigüedad de jurisdicción real, no negligencia): Cortes de
 Apelaciones y Tribunales Ambientales sin sede identificada, Direcciones de Obras Municipales sin

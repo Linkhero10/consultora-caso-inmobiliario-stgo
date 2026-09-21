@@ -27,7 +27,7 @@
     "vinculos_no_resueltos_inconsistentes": 37
   },
   "pruebas_automatizadas": {
-    "descripcion": "165 tests correspondientes al pipeline vigente, incluidos casos de regresion sobre bugs reales encontrados en revision (ver tests/).",
-    "ci": "corre en cada push a main, ver .github/workflows/tests.yml"
+    "descripcion": "Tests correspondientes al pipeline vigente, incluidos casos de regresion sobre bugs reales encontrados en revision (ver tests/). Un numero de tests fijo aqui se desactualiza en cada cambio -- el conteo real y actualizado esta en el ultimo run de CI, no en este archivo.",
+    "ci": "corre en cada push a main, ver .github/workflows/tests.yml y la pestana Actions del repositorio para el resultado vigente"
   }
 }

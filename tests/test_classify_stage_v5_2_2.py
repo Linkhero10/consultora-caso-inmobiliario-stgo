@@ -7,10 +7,10 @@ determinista que debe ser seguro de recalcular sobre respuestas ya guardadas.
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).parents[1] / "src" / "_classify_pipeline"
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SCRIPT_DIR))
 
-import classify_v5_2_2 as target  # noqa: E402
+import classify as target  # noqa: E402
 
 
 SOURCE = (

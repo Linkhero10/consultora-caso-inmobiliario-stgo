@@ -11,160 +11,32 @@ FARO.md
 __pycache__/
 *.pyc
 .pytest_cache/
+**/.pytest_cache/
 *.egg-info/
+
+# Workspace de desarrollo local (versiones intermedias, auditorias, correcciones puntuales).
+# La release publica vive en src/config/tests/data/docs/products/audit; ver README.md.
+Trabajo/
+Auditoria/
+Productos/
 
 # Dataset externo CASEN (publico, pesado, no es corpus propio del proyecto)
 Fuentes/fuentes_externas/raw/F-03/
 
 # Texto completo y PDFs de fuentes de terceros -- ver DATA_NOTICE.md.
 # Solo se versiona metadata (url, fuente, fecha, hash, lineage), no la copia completa del contenido.
+Fuentes/fulltext_v1/
 Fuentes/fulltext_v2/content/
 Fuentes/literatura/pdf/
-
-# Artefactos intermedios de clasificacion/enrichment (superados por el warehouse final)
-Auditoria/clasificacion_luna_v5_2_3/classifications.jsonl
-Auditoria/enriquecimiento_v3_2_934/enrichment.jsonl
-Auditoria/enriquecimiento_v3_2_934/enrichment.pre_normalize_20260917T131104Z.jsonl
-
-# Versiones antiguas del warehouse (solo se versiona la vigente, ver .gitattributes)
-Auditoria/integracion_v1/warehouse_v1.sqlite
-Auditoria/integracion_v1/warehouse_v3_1.sqlite
-Auditoria/integracion_v1/warehouse_v3_2.sqlite
-Auditoria/integracion_v1/warehouse_v3_2_piloto10.sqlite
-
-# Copia duplicada del warehouse dentro de la carpeta de entrega (misma que integracion_v1/)
-Auditoria/integracion_v1/entrega_dario_2026-09-18/warehouse_v3_2_bridge.sqlite
-
-# Carpetas de cache de pytest anidadas
-**/.pytest_cache/
-
-# Scripts/tests/prompts/config historicos, fuera del alcance de v1.0 (ver docs/versions.md).
-# Siguen en disco local, deliberadamente no versionados para no volver por accidente.
-Trabajo/scripts/actor_second_pass_v1.py
-Trabajo/scripts/actor_second_pass_v2.py
-Trabajo/scripts/annotate_human_blind_review.py
-Trabajo/scripts/apply_conflict_unit_gate_decisions.py
-Trabajo/scripts/apply_sol_conflict_unit_classification.py
-Trabajo/scripts/apply_sol_document_corrections.py
-Trabajo/scripts/audit_caso_unico_documents_multiple_case_ids.py
-Trabajo/scripts/audit_multi_document_project_clusters.py
-Trabajo/scripts/backfill_actor_second_pass_lineage.py
-Trabajo/scripts/backfill_corpus_scope.py
-Trabajo/scripts/backfill_enrichment_v2_traceability.py
-Trabajo/scripts/backfill_enrichment_v3_1_traceability.py
-Trabajo/scripts/backfill_enrichment_v3_2_traceability.py
-Trabajo/scripts/backfill_query_hash.py
-Trabajo/scripts/backfill_truncation_flags_v3_1.py
-Trabajo/scripts/build_actor_second_pass_schema_v1.py
-Trabajo/scripts/build_actor_second_pass_v2_manifest.py
-Trabajo/scripts/build_actor_second_pass_v2_schema.py
-Trabajo/scripts/build_blind_sample_v5_2_1.py
-Trabajo/scripts/build_blind_v5_2_1_review_artifacts.py
-Trabajo/scripts/build_blind_v5_2_1_sol_bundle.py
-Trabajo/scripts/build_blind_v5_2_1_validation_report.py
-Trabajo/scripts/build_bridge_audit_package_for_sol.py
-Trabajo/scripts/build_case_warehouse_v1.py
-Trabajo/scripts/build_conflict_unit_review_package_for_sol.py
-Trabajo/scripts/build_context_dashboard_v1.py
-Trabajo/scripts/build_corpus_canonico_v1.py
-Trabajo/scripts/build_cost_ledger_v3_2_934.py
-Trabajo/scripts/build_enrichment_record_schema_v3.py
-Trabajo/scripts/build_enrichment_tables_v3_1.py
-Trabajo/scripts/build_entity_tables_v1.py
-Trabajo/scripts/build_event_table_v1.py
-Trabajo/scripts/build_full_enrichment_correction_package_for_sol.py
-Trabajo/scripts/build_human_review_html.py
-Trabajo/scripts/build_human_validation_sample_v3_2.py
-Trabajo/scripts/build_literature_registry_v2.py
-Trabajo/scripts/build_luna_felipe_disagreement_report.py
-Trabajo/scripts/build_phase_pairs_package_for_sol.py
-Trabajo/scripts/build_pilot_case_view_v1.py
-Trabajo/scripts/build_review_queue_package_for_sol.py
-Trabajo/scripts/build_sensitive_cases_bundle.py
-Trabajo/scripts/build_v5_1_review_artifacts.py
-Trabajo/scripts/build_v5_2_1_review_artifacts.py
-Trabajo/scripts/build_v5_2_1_sol_bundle.py
-Trabajo/scripts/build_v5_2_review_artifacts.py
-Trabajo/scripts/build_v5_2_sol_bundle.py
-Trabajo/scripts/build_v5_review_artifacts.py
-Trabajo/scripts/compare_effort.py
-Trabajo/scripts/compare_human_ai_blind_v5_2_1_50.py
-Trabajo/scripts/compare_human_v5_2_2_blind50.py
-Trabajo/scripts/dedupe_fulltext.py
-Trabajo/scripts/enrich_case.py
-Trabajo/scripts/enrich_case_v2.py
-Trabajo/scripts/export_conflict_registry_for_sol.py
-Trabajo/scripts/export_review_queue_resolution_context.py
-Trabajo/scripts/fulltext_acquisition.py
-Trabajo/scripts/fulltext_acquisition_v2.py
-Trabajo/scripts/fulltext_repair_pdf_and_fallback.py
-Trabajo/scripts/geocode_projects_v1.py
-Trabajo/scripts/ingest_literature_faro_v1.py
-Trabajo/scripts/normalize_enrichment_v3_2_934.py
-Trabajo/scripts/normalize_external_sources_v1.py
-Trabajo/scripts/normalize_official_wave2_v1.py
-Trabajo/scripts/rank_pilot_case_candidates_v1.py
-Trabajo/scripts/recalculate_v5_2_1.py
-Trabajo/scripts/recalculate_v5_2_2_blind50.py
-Trabajo/scripts/recalculate_v5_2_4_object_gate_blind50.py
-Trabajo/scripts/reconcile_actor_second_pass_manifests.py
-Trabajo/scripts/reconcile_classification_layer_with_v3_2.py
-Trabajo/scripts/reconcile_dedupe_current.py
-Trabajo/scripts/reconcile_discovery_log.py
-Trabajo/scripts/recover_quarantined_v3_2.py
-Trabajo/scripts/repair_fulltext_lineage.py
-Trabajo/scripts/select_v5_pilot.py
-Trabajo/scripts/snapshot_discovery.py
-Trabajo/scripts/stage_transition.py
-Trabajo/tests/test_actor_second_pass_v2.py
-Trabajo/tests/test_apply_conflict_unit_gate_decisions.py
-Trabajo/tests/test_apply_sol_conflict_unit_classification.py
-Trabajo/tests/test_audit_caso_unico_documents_multiple_case_ids.py
-Trabajo/tests/test_blind_sample_v5_2_1.py
-Trabajo/tests/test_bridge_audit_package_for_sol.py
-Trabajo/tests/test_build_entity_tables_v1.py
-Trabajo/tests/test_conflict_unit_review_package_for_sol.py
-Trabajo/tests/test_enrichment_record_schema_v3_in_sync.py
-Trabajo/tests/test_export_conflict_registry_for_sol.py
-Trabajo/tests/test_full_enrichment_correction_package_for_sol.py
-Trabajo/tests/test_phase_pairs_package_for_sol.py
-Trabajo/tests/test_reconcile_classification_layer_with_v3_2.py
-Trabajo/prompts/actor_second_pass_v1.md
-Trabajo/prompts/actor_second_pass_v2.md
-Trabajo/prompts/classifier_system_v1.md
-Trabajo/prompts/classifier_system_v2.md
-Trabajo/prompts/classifier_system_v3.md
-Trabajo/prompts/enrichment_system_v1.md
-Trabajo/prompts/enrichment_system_v2.md
-Trabajo/prompts/enrichment_system_v3.md
-Trabajo/config/actor_second_pass_schema_v1.json
-Trabajo/config/actor_second_pass_v2_schema.json
-Trabajo/config/backlog_estrategico_socioterritorial.md
-Trabajo/config/classification_schema_v1.json
-Trabajo/config/classification_schema_v2.json
-Trabajo/config/classification_schema_v3.json
-Trabajo/config/classification_schema_v3.notas.md
-Trabajo/config/enrichment_record_schema_v3.json
-Trabajo/config/enrichment_schema_v1.json
-Trabajo/config/enrichment_schema_v2.json
-Trabajo/config/enrichment_schema_v3.json
-Trabajo/config/pipeline_contract_v1.yaml
-Trabajo/config/pipeline_contract_v2.yaml
-Trabajo/config/pipeline_contract_v3.yaml
-Trabajo/config/pipeline_contract_v3_1.yaml
-Trabajo/config/protocolo_revision_multiagente.md
-Trabajo/config/stage_roadmap.yaml
-docs/superpowers/
 
 # Artefactos de respaldo/temporales (recuperacion de crashes, no son datos)
 *.pre_backfill_backup
 *.tmp.*
 
-# Subcarpeta de tests huerfanos (importaban scripts ya podados) y procedimiento historico
-Trabajo/scripts/tests/
-Trabajo/scripts/ORIGIN_CLEANUP_PROCEDURE.md
-Trabajo/sql/
-Productos/
-Auditoria/
-Trabajo/
+# Test huerfano: su archivo objetivo (herramienta de revision interna) no es parte de la release
 tests/test_blind_review_html.py
+
+# Planes de implementacion internos, no forman parte del producto
+docs/superpowers/
+tests/test_classify_stage_luna.py
+tests/test_classify_stage_v5.py

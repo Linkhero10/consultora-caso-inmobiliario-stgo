@@ -31,7 +31,7 @@ antes de clonar (`git lfs install`) para no recibir solo el puntero del archivo.
 ```text
 src/            pipeline: discovery -> classify -> enrich -> projects -> conflicts -> actors -> network
 config/         schemas y prompts vigentes
-tests/          164 tests automatizados (ver .github/workflows/tests.yml)
+tests/          tests automatizados, CI en cada push (ver .github/workflows/tests.yml)
 data/           warehouse.sqlite (base de datos de referencia, via Git LFS)
 docs/           arquitectura, metodología, showcase publicado en GitHub Pages
 products/       dashboard y piloto de integración
