@@ -109,6 +109,19 @@
     "experto": "Experto",
     "incierto": "Incierto"
   },
+  "enrichment_institution_tipo": {
+    "poder_judicial": "Poder judicial",
+    "otra": "Otra institución",
+    "municipio_alcaldia": "Municipio / Alcaldía",
+    "dom_municipal": "Dirección de Obras Municipales",
+    "contraloria_general": "Contraloría General",
+    "seremi_minvu": "SEREMI MINVU",
+    "sea": "Servicio de Evaluación Ambiental (SEA)",
+    "concejo_municipal": "Concejo Municipal",
+    "ministerio_medio_ambiente": "Ministerio del Medio Ambiente",
+    "sma": "Superintendencia del Medio Ambiente (SMA)",
+    "consejo_monumentos_nacionales": "Consejo de Monumentos Nacionales"
+  },
   "enrichment_actor_tipo": {
     "concejal_politico": "Concejal o político",
     "colectivo_vecinal": "Colectivo vecinal",
@@ -155,11 +168,11 @@
   },
   "conflict_origen": {
     "trivial_single_case": "Caso único",
-    "conflict_unit_63_evidence": "Agrupado por evidencia (revisión Sol)"
+    "conflict_unit_63_evidence": "Agrupado por evidencia revisada"
   },
   "conflict_confidence": {
     "baja_derivado_mecanicamente": "Baja (derivado mecánicamente)",
-    "alta_revisado_por_sol": "Alta (revisado por Sol)"
+    "alta_revisado_por_sol": "Alta (revisión manual)"
   },
   "sentiment": {
     "positivo": "Positivo",

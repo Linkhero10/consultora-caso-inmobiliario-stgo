@@ -29,14 +29,25 @@ METHODOLOGY_HTML = """
 <p>El corpus se construye en tres etapas verificables: descubrimiento de artículos de prensa
 (discovery), clasificación con un gate determinista que exige evidencia literal citada
 (classify), y enriquecimiento de actores/instituciones/hitos con citas verificadas
-(enrich). Cada campo mostrado en este dashboard proviene de una cita textual verificada
-contra el documento fuente -- no de una síntesis libre del modelo.</p>
+(enrich). Las afirmaciones documentales extraídas mediante LLM (actores, hitos, citas) se
+respaldan con evidencia verificada contra el documento fuente. Las métricas territoriales
+(población, hacinamiento) y las identidades de actor resueltas provienen de las capas
+estructuradas y fuentes externas documentadas del warehouse (Censo 2024 INE, registro de
+identidad de instituciones), no de una cita literal individual.</p>
 <p>Los conflictos se agrupan a partir de casos individuales cuando la evidencia documental
 permite establecer que corresponden al mismo fenómeno (mismo proyecto, mismos actores,
 mismo objeto de disputa). La confianza de cada agrupación queda registrada explícitamente
-(derivada mecánicamente vs. revisada manualmente).</p>
-<p>Las comunas mostradas en el mapa corresponden a la Provincia de Santiago (32 comunas),
-con datos poblacionales y de hacinamiento del Censo 2024 (INE).</p>
+(derivada mecánicamente vs. revisión manual).</p>
+<p>El detalle de cada conflicto (documentos, actores, línea de tiempo, evidencia) muestra por
+defecto solo las menciones con rol focal o co-principal sobre un caso único -- el mismo
+criterio "seguro" documentado en <code>docs/methodology.md</code>. Otras menciones del mismo
+conflicto (contextuales, panorámicas o sin revisar) se listan aparte, explícitamente marcadas
+como no verificadas, sin mezclarse con la evidencia principal.</p>
+<p>Las comunas mostradas en el mapa corresponden a la Provincia de Santiago (32 comunas), con
+datos poblacionales y de hacinamiento del Censo 2024 (INE). Un conflicto solo se asocia a una
+comuna cuando al menos uno de sus documentos focales tiene una única comuna resuelta entre sus
+menciones de caso; si un documento mezcla más de una comuna, no se le atribuye ninguna --se
+prefiere "sin comuna resuelta" antes que asignar por aproximación.</p>
 """
 
 ARCHITECTURE_HTML = """
@@ -213,17 +224,19 @@ function showConflictDetail(c) {{
   const el = document.getElementById('conflictDetail');
   el.style.display = 'block';
   const projects = c.projects.map(p => `<span class="pill">${{p.nombre}}</span>`).join('') || '<span class="note">Sin proyectos resueltos</span>';
-  const actors = c.actors.map(a => `<span class="pill">${{a.nombre}} (${{label('enrichment_actor_tipo', a.tipo)}}${{a.stance ? ', ' + label('stance', a.stance) : ''}})</span>`).join('') || '<span class="note">Sin actores registrados</span>';
+  const actors = c.actors.map(a => `<span class="pill">${{a.nombre}} (${{label(a.tipo_categoria, a.tipo)}}${{a.stance ? ', ' + label('stance', a.stance) : ''}})</span>`).join('') || '<span class="note">Sin actores verificados con rol focal/co-principal</span>';
   const events = c.events.map(e => `<li>${{e.fecha || 's/f'}} — ${{label('tipo_hito', e.tipo_hito)}}: ${{e.descripcion}}</li>`).join('');
   const quotes = c.evidence_quotes_sample.map(q => `<div class="quote">"${{q}}"</div>`).join('');
-  const docs = c.documents.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a></li>`).join('');
+  const docs = c.documents.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a></li>`).join('') || '<li class="note">Sin documentos focales/co-principales para este conflicto</li>';
+  const others = c.other_mentions.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a> <span class="note">(${{label('document_conflict_role', d.role)}}, no verificado)</span></li>`).join('');
   el.innerHTML = `<h3>${{c.label}}</h3>
     <p class="note">Origen: ${{label('conflict_origen', c.origen)}} &middot; Confianza: ${{label('conflict_confidence', c.confidence)}} &middot; ${{c.n_case_ids}} caso(s)</p>
     <p><b>Proyectos:</b> ${{projects}}</p>
-    <p><b>Actores:</b> ${{actors}}</p>
+    <p><b>Actores</b> <span class="note">(rol focal/co-principal, identidad resuelta cuando aplica)</span>: ${{actors}}</p>
     ${{events ? `<p><b>Línea de tiempo</b> (${{c.n_events_total}} hito(s)):</p><ul>${{events}}</ul>` : ''}}
     ${{quotes ? `<p><b>Evidencia citada:</b></p>${{quotes}}` : ''}}
-    <p><b>Documentos fuente:</b></p><ul>${{docs}}</ul>`;
+    <p><b>Documentos fuente (focal/co-principal):</b></p><ul>${{docs}}</ul>
+    ${{others ? `<p><b>Otras menciones</b> <span class="note">(contextuales o sin revisar -- no aportan actores/eventos a este detalle)</span>:</p><ul>${{others}}</ul>` : ''}}`;
 }}
 
 renderMetrics();

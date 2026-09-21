@@ -5,6 +5,25 @@ Construye, a partir de `data/warehouse.sqlite`, un objeto agregado y compacto
 listo para renderizar: toda la lógica de conteo/agrupación vive aquí (Python +
 SQL), no en el HTML/JS. El builder del dashboard (`build_dashboard.py`) solo
 presenta lo que esta capa produce.
+
+Reglas de precisión territorial y de rol (revisión externa, ronda 2):
+- Un documento solo aporta comuna cuando tiene una única comuna resuelta entre
+  sus case_mentions. Si un documento mezcla >1 comuna distinta, no se le
+  atribuye ninguna -- es preferible "sin comuna resuelta" que inventar
+  precisión por un join a nivel de documento.
+- La vista "principal" de cada conflicto (documentos, actores, eventos,
+  evidencia) usa solo documentos con rol focal/co_focal sobre un caso único
+  (`document_conflict_case_safe`, ya definida en el warehouse), igual que la
+  metodología pública documentada en docs/methodology.md. El resto de
+  menciones (contextuales, panorámicas, sin revisar) se listan aparte,
+  explícitamente marcadas como no verificadas.
+- Actores/instituciones/eventos del detalle de conflicto usan
+  `actor_event_project_link_conflict_safe` (resolution_status='resolved_explicit'),
+  no todo `enrichment_actor` del documento sin filtrar.
+- Los nombres de actor se normalizan contra `actor_registry`/`actor_alias`
+  cuando existe una entrada validada (ej. "Contraloría" ==
+  "Contraloría General de la República"); si no hay entrada, se usa el
+  nombre tal cual aparece en el texto.
 """
 
 from __future__ import annotations
@@ -18,8 +37,6 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 
-# Evidencia máxima citada por conflicto en el índice compacto -- el detalle
-# completo de un conflicto puntual se puede pedir aparte, no se embebe todo.
 MAX_EVIDENCE_QUOTES_PER_CONFLICT = 3
 MAX_EVENTS_PER_CONFLICT = 8
 
@@ -34,25 +51,93 @@ def _rows(con: sqlite3.Connection, sql: str, params: tuple = ()) -> list[dict[st
     return [dict(r) for r in con.execute(sql, params).fetchall()]
 
 
-def _document_comunas(con: sqlite3.Connection) -> dict[str, list[dict[str, str]]]:
-    """document_id -> lista de {comuna, codigo_comuna_ine} de sus case_mentions (sin vacíos)."""
-    out: dict[str, list[dict[str, str]]] = defaultdict(list)
+def _table_or_view_exists(con: sqlite3.Connection, name: str) -> bool:
+    return con.execute(
+        "SELECT 1 FROM sqlite_master WHERE name = ? AND type IN ('table','view')", (name,)
+    ).fetchone() is not None
+
+
+def _safe_document_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
+    """document_id/conflict_id con rol focal/co_focal sobre un caso único.
+
+    Usa la vista `document_conflict_case_safe` si existe en el warehouse
+    (fuente de verdad ya validada); si no, aplica el mismo filtro a mano
+    para que el módulo siga funcionando contra un warehouse más simple
+    (ej. en tests con una base fixture reducida).
+    """
+    if _table_or_view_exists(con, "document_conflict_case_safe"):
+        return _rows(con, "SELECT document_id, conflict_id, role FROM document_conflict_case_safe")
+    if not _table_or_view_exists(con, "document_case_unit"):
+        return _rows(
+            con,
+            "SELECT document_id, conflict_id, role FROM document_conflict WHERE role IN ('focal','co_focal')",
+        )
+    return _rows(
+        con,
+        """
+        SELECT dc.document_id, dc.conflict_id, dc.role
+        FROM document_conflict dc
+        JOIN document_case_unit u ON u.document_id = dc.document_id
+        WHERE dc.role IN ('focal', 'co_focal') AND u.unidad_caso_tipo = 'caso_unico'
+        """,
+    )
+
+
+def _all_document_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
+    return _rows(con, "SELECT document_id, conflict_id, role FROM document_conflict")
+
+
+def _document_single_comuna(con: sqlite3.Connection) -> dict[str, dict[str, str]]:
+    """document_id -> {comuna, codigo_comuna_ine} SOLO cuando el documento
+    tiene una única comuna resuelta entre sus case_mentions. Si mezcla >1
+    comuna distinta, el documento queda fuera (no se adivina cuál corresponde
+    a qué mención)."""
+    by_doc: dict[str, dict[str, str]] = defaultdict(dict)
     for row in _rows(
         con,
         "SELECT DISTINCT document_id, comuna, codigo_comuna_ine FROM case_mention "
         "WHERE codigo_comuna_ine != '' AND codigo_comuna_ine IS NOT NULL",
     ):
-        out[row["document_id"]].append({"comuna": row["comuna"], "codigo_comuna_ine": row["codigo_comuna_ine"]})
+        by_doc[row["document_id"]][row["codigo_comuna_ine"]] = row["comuna"]
+
+    resolved: dict[str, dict[str, str]] = {}
+    for document_id, codes in by_doc.items():
+        if len(codes) == 1:
+            (code, name), = codes.items()
+            resolved[document_id] = {"comuna": name, "codigo_comuna_ine": code}
+    return resolved
+
+
+def _actor_identity_map(con: sqlite3.Connection) -> dict[str, dict[str, str]]:
+    """nombre_norm (minusculas, tal como en actor_alias) -> identidad canónica."""
+    if not _table_or_view_exists(con, "actor_alias"):
+        return {}
+    out: dict[str, dict[str, str]] = {}
+    registry = {r["entity_id"]: r for r in _rows(con, "SELECT * FROM actor_registry")} if _table_or_view_exists(con, "actor_registry") else {}
+    for row in _rows(con, "SELECT nombre_norm, entity_id FROM actor_alias"):
+        entity = registry.get(row["entity_id"])
+        out[row["nombre_norm"]] = {
+            "entity_id": row["entity_id"],
+            "canonical_label": entity["canonical_label"] if entity else row["nombre_norm"],
+        }
     return out
+
+
+def _resolve_actor_name(raw_name: str, identity_map: dict[str, dict[str, str]]) -> dict[str, Any]:
+    key = " ".join(str(raw_name or "").strip().lower().split())
+    match = identity_map.get(key)
+    if match:
+        return {"nombre": match["canonical_label"], "nombre_raw": raw_name, "identity_resolved": True, "entity_id": match["entity_id"]}
+    return {"nombre": raw_name, "nombre_raw": raw_name, "identity_resolved": False, "entity_id": None}
 
 
 def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
     territories = _rows(con, "SELECT * FROM territory ORDER BY comuna")
-    doc_comunas = _document_comunas(con)
+    doc_comuna = _document_single_comuna(con)
 
-    conflict_docs = _rows(con, "SELECT conflict_id, document_id FROM document_conflict")
+    safe_links = _safe_document_conflicts(con)
     doc_to_conflicts: dict[str, set[str]] = defaultdict(set)
-    for row in conflict_docs:
+    for row in safe_links:
         doc_to_conflicts[row["document_id"]].add(row["conflict_id"])
 
     project_docs = _rows(con, "SELECT project_id, document_id FROM project_mention_resolved")
@@ -70,13 +155,12 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
     by_comuna_actors: dict[str, set[str]] = defaultdict(set)
     by_comuna_documents: dict[str, set[str]] = defaultdict(set)
 
-    for document_id, comunas in doc_comunas.items():
-        codes = {c["codigo_comuna_ine"] for c in comunas}
-        for code in codes:
-            by_comuna_documents[code].add(document_id)
-            by_comuna_conflicts[code].update(doc_to_conflicts.get(document_id, set()))
-            by_comuna_projects[code].update(doc_to_projects.get(document_id, set()))
-            by_comuna_actors[code].update(doc_to_actors.get(document_id, set()))
+    for document_id, entry in doc_comuna.items():
+        code = entry["codigo_comuna_ine"]
+        by_comuna_documents[code].add(document_id)
+        by_comuna_conflicts[code].update(doc_to_conflicts.get(document_id, set()))
+        by_comuna_projects[code].update(doc_to_projects.get(document_id, set()))
+        by_comuna_actors[code].update(doc_to_actors.get(document_id, set()))
 
     result = []
     for t in territories:
@@ -103,12 +187,88 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
     return result
 
 
+def _linked_actors_and_events(con: sqlite3.Connection, conflict_ids: set[str], identity_map: dict) -> tuple[dict[str, list], dict[str, list]]:
+    """Actores/instituciones y eventos resueltos (resolved_explicit, foco
+    focal/co-focal) por conflicto, vía actor_event_project_link_conflict_safe."""
+    actors_by_conflict: dict[str, dict[str, dict]] = defaultdict(dict)
+    events_by_conflict: dict[str, list[dict]] = defaultdict(list)
+
+    if not _table_or_view_exists(con, "actor_event_project_link_conflict_safe"):
+        return {}, {}
+
+    links = _rows(
+        con,
+        "SELECT conflict_id, source_table, source_id, nombre FROM actor_event_project_link_conflict_safe "
+        "WHERE resolution_status = 'resolved_explicit'",
+    )
+    actor_ids = [l["source_id"] for l in links if l["source_table"] == "enrichment_actor"]
+    institution_ids = [l["source_id"] for l in links if l["source_table"] == "enrichment_institution"]
+    event_ids = [l["source_id"] for l in links if l["source_table"] == "enrichment_event"]
+
+    def _fetch_by_ids(table: str, id_col: str, ids: list[str]) -> dict[str, dict]:
+        if not ids:
+            return {}
+        placeholders = ",".join("?" * len(ids))
+        return {r[id_col]: r for r in _rows(con, f"SELECT * FROM {table} WHERE {id_col} IN ({placeholders})", tuple(ids))}
+
+    actors_detail = _fetch_by_ids("enrichment_actor", "actor_id", actor_ids)
+    institutions_detail = _fetch_by_ids("enrichment_institution", "institucion_id", institution_ids)
+    events_detail = _fetch_by_ids("enrichment_event", "event_id", event_ids)
+
+    for link in links:
+        conflict_id = link["conflict_id"]
+        if conflict_id not in conflict_ids:
+            continue
+        if link["source_table"] == "enrichment_actor":
+            detail = actors_detail.get(link["source_id"])
+            if not detail:
+                continue
+            identity = _resolve_actor_name(detail["nombre"], identity_map)
+            key = identity["entity_id"] or identity["nombre"]
+            actors_by_conflict[conflict_id][key] = {
+                **identity,
+                "tipo": detail["tipo"],
+                "tipo_categoria": "enrichment_actor_tipo",
+                "stance": detail["stance"],
+                "nivel_involucramiento": detail["nivel_involucramiento"],
+            }
+        elif link["source_table"] == "enrichment_institution":
+            detail = institutions_detail.get(link["source_id"])
+            if not detail:
+                continue
+            identity = _resolve_actor_name(detail["nombre"], identity_map)
+            key = identity["entity_id"] or identity["nombre"]
+            actors_by_conflict[conflict_id][key] = {
+                **identity,
+                "tipo": detail["tipo_norm"],
+                "tipo_categoria": "enrichment_institution_tipo",
+                "stance": None,
+                "nivel_involucramiento": None,
+            }
+        elif link["source_table"] == "enrichment_event":
+            detail = events_detail.get(link["source_id"])
+            if not detail:
+                continue
+            events_by_conflict[conflict_id].append(
+                {"fecha": detail["fecha"], "descripcion": detail["descripcion"], "tipo_hito": detail["tipo_hito"]}
+            )
+
+    return {cid: list(v.values()) for cid, v in actors_by_conflict.items()}, dict(events_by_conflict)
+
+
 def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
     conflicts = _rows(con, "SELECT * FROM conflict ORDER BY n_case_ids DESC")
-    doc_links = _rows(con, "SELECT conflict_id, document_id, role FROM document_conflict")
-    conflict_to_docs: dict[str, list[dict[str, str]]] = defaultdict(list)
-    for row in doc_links:
-        conflict_to_docs[row["conflict_id"]].append({"document_id": row["document_id"], "role": row["role"]})
+    conflict_ids = {c["conflict_id"] for c in conflicts}
+
+    safe_links = _safe_document_conflicts(con)
+    all_links = _all_document_conflicts(con)
+    conflict_to_safe_docs: dict[str, set[str]] = defaultdict(set)
+    for row in safe_links:
+        conflict_to_safe_docs[row["conflict_id"]].add(row["document_id"])
+    conflict_to_other_docs: dict[str, dict[str, str]] = defaultdict(dict)
+    for row in all_links:
+        if row["document_id"] not in conflict_to_safe_docs.get(row["conflict_id"], set()):
+            conflict_to_other_docs[row["conflict_id"]][row["document_id"]] = row["role"]
 
     conflict_to_projects: dict[str, set[str]] = defaultdict(set)
     for row in _rows(con, "SELECT conflict_id, project_id FROM conflict_project"):
@@ -116,15 +276,10 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
 
     projects_by_id = {p["project_id"]: p for p in _rows(con, "SELECT * FROM project")}
     documents_by_id = {d["document_id"]: d for d in _rows(con, "SELECT * FROM document")}
-    doc_comunas = _document_comunas(con)
+    doc_comuna = _document_single_comuna(con)
 
-    actors_by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in _rows(con, "SELECT * FROM enrichment_actor"):
-        actors_by_doc[row["document_id"]].append(row)
-
-    events_by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in _rows(con, "SELECT * FROM event"):
-        events_by_doc[row["document_id"]].append(row)
+    identity_map = _actor_identity_map(con)
+    actors_by_conflict, events_by_conflict = _linked_actors_and_events(con, conflict_ids, identity_map)
 
     evidence_by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in _rows(con, "SELECT document_id, quote_role, quote_text FROM evidence WHERE verified = 1"):
@@ -133,12 +288,12 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
     result = []
     for c in conflicts:
         conflict_id = c["conflict_id"]
-        docs = conflict_to_docs.get(conflict_id, [])
-        doc_ids = [d["document_id"] for d in docs]
+        safe_doc_ids = sorted(conflict_to_safe_docs.get(conflict_id, ()))
 
         comunas_seen: dict[str, str] = {}
-        for doc_id in doc_ids:
-            for entry in doc_comunas.get(doc_id, []):
+        for doc_id in safe_doc_ids:
+            entry = doc_comuna.get(doc_id)
+            if entry:
                 comunas_seen[entry["codigo_comuna_ine"]] = entry["comuna"]
 
         projects = [
@@ -151,36 +306,27 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
             if pid in projects_by_id
         ]
 
-        actors: dict[str, dict[str, Any]] = {}
-        events: list[dict[str, Any]] = []
+        documents_out = [
+            {"document_id": doc_id, "url": documents_by_id[doc_id]["url"], "title": documents_by_id[doc_id]["title"]}
+            for doc_id in safe_doc_ids
+            if doc_id in documents_by_id
+        ]
+        other_mentions = [
+            {"document_id": doc_id, "url": documents_by_id[doc_id]["url"], "title": documents_by_id[doc_id]["title"], "role": role}
+            for doc_id, role in conflict_to_other_docs.get(conflict_id, {}).items()
+            if doc_id in documents_by_id
+        ]
+
         evidence_quotes: list[str] = []
-        documents_out = []
-        for doc_id in doc_ids:
-            doc = documents_by_id.get(doc_id)
-            if doc:
-                documents_out.append({"document_id": doc_id, "url": doc["url"], "title": doc["title"]})
-            for actor in actors_by_doc.get(doc_id, []):
-                key = actor["nombre"]
-                if key not in actors:
-                    actors[key] = {
-                        "nombre": actor["nombre"],
-                        "tipo": actor["tipo"],
-                        "stance": actor["stance"],
-                        "nivel_involucramiento": actor["nivel_involucramiento"],
-                    }
-            for ev in events_by_doc.get(doc_id, []):
-                events.append(
-                    {
-                        "fecha": ev["fecha"],
-                        "descripcion": ev["descripcion"],
-                        "tipo_hito": ev["tipo_hito"],
-                    }
-                )
-            if len(evidence_quotes) < MAX_EVIDENCE_QUOTES_PER_CONFLICT:
-                for ev in evidence_by_doc.get(doc_id, []):
-                    if len(evidence_quotes) >= MAX_EVIDENCE_QUOTES_PER_CONFLICT:
-                        break
-                    evidence_quotes.append(ev["quote_text"])
+        for doc_id in safe_doc_ids:
+            if len(evidence_quotes) >= MAX_EVIDENCE_QUOTES_PER_CONFLICT:
+                break
+            for ev in evidence_by_doc.get(doc_id, []):
+                if len(evidence_quotes) >= MAX_EVIDENCE_QUOTES_PER_CONFLICT:
+                    break
+                evidence_quotes.append(ev["quote_text"])
+
+        events = events_by_conflict.get(conflict_id, [])
 
         result.append(
             {
@@ -192,7 +338,8 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "comunas": [{"codigo_comuna_ine": k, "comuna": v} for k, v in sorted(comunas_seen.items())],
                 "projects": projects,
                 "documents": documents_out,
-                "actors": list(actors.values()),
+                "other_mentions": other_mentions,
+                "actors": actors_by_conflict.get(conflict_id, []),
                 "events": events[:MAX_EVENTS_PER_CONFLICT],
                 "n_events_total": len(events),
                 "evidence_quotes_sample": evidence_quotes,
@@ -202,27 +349,34 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
 
 
 def build_timeline(con: sqlite3.Connection, limit: int = 500) -> list[dict[str, Any]]:
-    rows = _rows(
+    return _rows(
         con,
         "SELECT fecha, descripcion, tipo_hito, nombre_proyecto, fecha_year_grounded FROM event "
         "WHERE fecha_year_grounded = 1 ORDER BY fecha LIMIT ?",
         (limit,),
     )
-    return rows
 
 
 def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], conflicts: list[dict[str, Any]]) -> dict[str, Any]:
     n_documents = con.execute("SELECT COUNT(*) FROM document").fetchone()[0]
     n_case_mentions = con.execute("SELECT COUNT(*) FROM case_mention").fetchone()[0]
     n_projects = con.execute("SELECT COUNT(*) FROM project").fetchone()[0]
-    n_actors = con.execute("SELECT COUNT(DISTINCT nombre) FROM enrichment_actor").fetchone()[0]
     n_evidence_verified = con.execute("SELECT COUNT(*) FROM evidence WHERE verified = 1").fetchone()[0]
+
+    # "Actores" cuenta identidades resueltas y verificadas (focal/co-focal,
+    # resolution_status='resolved_explicit'), no todo nombre crudo extraído
+    # por el LLM sin importar el rol del documento que lo menciona.
+    actor_keys: set[str] = set()
+    for conflict in conflicts:
+        for actor in conflict["actors"]:
+            actor_keys.add(actor["entity_id"] or actor["nombre"])
+
     return {
         "n_documents": n_documents,
         "n_case_mentions": n_case_mentions,
         "n_conflicts": len(conflicts),
         "n_projects": n_projects,
-        "n_actors": n_actors,
+        "n_actors": len(actor_keys),
         "n_evidence_verified": n_evidence_verified,
         "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts"] > 0),
     }
@@ -253,11 +407,14 @@ def enum_values_present(dataset: dict[str, Any]) -> dict[str, set[str]]:
         found["conflict_origen"].add(conflict["origen"])
         found["conflict_confidence"].add(conflict["confidence"])
         for actor in conflict["actors"]:
-            found["enrichment_actor_tipo"].add(actor["tipo"])
+            if actor["tipo"]:
+                found[actor["tipo_categoria"]].add(actor["tipo"])
             if actor["stance"]:
                 found["stance"].add(actor["stance"])
             if actor["nivel_involucramiento"]:
                 found["nivel_involucramiento"].add(actor["nivel_involucramiento"])
+        for other in conflict["other_mentions"]:
+            found["document_conflict_role"].add(other["role"])
         for event in conflict["events"]:
             found["tipo_hito"].add(event["tipo_hito"])
     return found
