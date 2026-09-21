@@ -4,9 +4,10 @@ from pathlib import Path
 SCRIPT = Path(__file__).parents[1] / "src" / "classify.py"
 
 
-def test_v5_2_1_gate_layer_exists_as_a_distinct_composition_step():
-    """La capa 3 (ex classify_v5_2_1.py) debe seguir existiendo como funcion
-    propia dentro de classify.py, separada de la capa final (apply_scope_gate)."""
+def test_quote_sufficiency_gate_layer_exists_as_a_distinct_composition_step():
+    """La capa de suficiencia/limpieza de citas debe seguir existiendo como
+    funcion propia dentro de classify.py, separada de la capa final
+    (apply_scope_gate)."""
     assert SCRIPT.exists(), "falta classify.py"
     assert hasattr(target, "_apply_scope_gate_v3")
 

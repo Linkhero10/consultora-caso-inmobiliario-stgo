@@ -1,4 +1,4 @@
-"""Regresiones v5.2.2: geografía compuesta y evidencia geográfica corta.
+"""Normalización geográfica: comunas compuestas y evidencia geográfica corta.
 
 Estos tests no llaman a la API. Cubren solamente el postprocesamiento
 determinista que debe ser seguro de recalcular sobre respuestas ya guardadas.

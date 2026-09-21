@@ -38,8 +38,8 @@ logger = logging.getLogger("enrich_case_v3")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ENV_PATH = PROJECT_ROOT / ".env"
-CONTENT_DIR = PROJECT_ROOT / "Fuentes" / "fulltext_v2" / "content"
-CLASSIFICATIONS_PATH = PROJECT_ROOT / "Auditoria" / "clasificacion_luna_v5_2_3" / "classifications.jsonl"
+CONTENT_DIR = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+CLASSIFICATIONS_PATH = PROJECT_ROOT / "Auditoria" / "clasificacion" / "classifications.jsonl"
 SCHEMA_PATH = PROJECT_ROOT / "config" / "enrichment_schema.json"
 # Fix v3.1 (hallazgo real de la revisión): el schema de arriba es el contrato de
 # RESPUESTA DEL LLM (additionalProperties: false), pero el registro que se

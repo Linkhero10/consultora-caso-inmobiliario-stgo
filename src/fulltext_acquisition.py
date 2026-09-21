@@ -133,7 +133,7 @@ def load_targets(registry_path: Path, source_ids: set[str]) -> list[dict]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--registry", type=Path, default=Path("Fuentes/fuentes_externas/source_registry_v1.yaml"))
+    parser.add_argument("--registry", type=Path, default=Path("Fuentes/fuentes_externas/source_registry.yaml"))
     parser.add_argument("--raw-root", type=Path, default=Path("Fuentes/fuentes_externas/raw"))
     parser.add_argument("--manifest", type=Path, default=Path("Auditoria/fuentes_externas/external_manifest_v1.jsonl"))
     parser.add_argument("--source-ids", required=True, help="IDs separados por coma; no se permite corrida implícita de todas las fuentes")

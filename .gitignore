@@ -26,7 +26,7 @@ Fuentes/fuentes_externas/raw/F-03/
 # Texto completo y PDFs de fuentes de terceros -- ver DATA_NOTICE.md.
 # Solo se versiona metadata (url, fuente, fecha, hash, lineage), no la copia completa del contenido.
 Fuentes/fulltext_v1/
-Fuentes/fulltext_v2/content/
+Fuentes/fulltext/content/
 Fuentes/literatura/pdf/
 
 # Artefactos de respaldo/temporales (recuperacion de crashes, no son datos)
@@ -38,5 +38,3 @@ tests/test_blind_review_html.py
 
 # Planes de implementacion internos, no forman parte del producto
 docs/superpowers/
-tests/test_classify_stage_luna.py
-tests/test_classify_stage_v5.py

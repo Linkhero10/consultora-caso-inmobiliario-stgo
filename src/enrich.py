@@ -21,7 +21,7 @@ PILOT_URLS) y el destino de escritura.
 Selecciona el universo asi (preflight verificable con --dry-run):
     classifications v5.2.3, decision_documento == include
     -> corpus_scope == temporal_v2 (unico scope real visto)
-    -> fulltext encontrado en Fuentes/fulltext_v2/content
+    -> fulltext encontrado en Fuentes/fulltext/content
     -> no enriquecido previamente (ya en enrichment.jsonl de produccion)
     -> 934 esperados (verificado 2026-09-16: 934/934 tienen fulltext)
 

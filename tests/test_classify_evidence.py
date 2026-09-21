@@ -7,7 +7,7 @@ import pytest
 
 
 SCRIPT = Path(__file__).parents[1] / "src" / "classify.py"
-spec = importlib.util.spec_from_file_location("classify_under_test_v5_1", SCRIPT)
+spec = importlib.util.spec_from_file_location("classify_under_test_evidence", SCRIPT)
 classify_module = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
 spec.loader.exec_module(classify_module)
@@ -100,7 +100,7 @@ def test_ine_code_is_deterministic_and_existing_property_boundary_is_explicit():
     assert "objeto_existente_sin_vinculo_urbano" in result["gate_reasons"]
 
 
-def test_v5_1_schema_requires_arrays_and_summary():
+def test_classification_schema_requires_arrays_and_summary():
     schema_path = Path(__file__).parents[1] / "config" / "classification_schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))["schema"]
     mention = _base()

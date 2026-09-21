@@ -46,7 +46,7 @@ logger = logging.getLogger("brightdata_discovery")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ENV_PATH = PROJECT_ROOT / ".env"
-FUENTES_DIR = PROJECT_ROOT / "Fuentes" / "brightdata_discovery_v1"
+FUENTES_DIR = PROJECT_ROOT / "Fuentes" / "brightdata_discovery"
 BRIGHTDATA_ENDPOINT = "https://api.brightdata.com/request"
 BRIGHTDATA_ZONE = "emprendimiento1"
 DISCOVERY_PLAN_VERSION = "discovery_plan_v2"

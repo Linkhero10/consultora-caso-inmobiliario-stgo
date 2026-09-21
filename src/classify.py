@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """Clasificación LLM de documentos (gate determinista + evidencia verificada).
 
-Contrato vigente: schema v5.2.3 (sin cambios recientes) + prompt v5.2.4 (frontera
-para actos simbólicos/conmemorativos/de nomenclatura, agregada tras un hallazgo real:
-una muestra ciega de 50 documentos encontró 2 artículos sobre un cambio de nombre de
-calle que quedaban `include` sin ser una intervención física real).
+El gate determinista se aplica en capas: cada capa reutiliza el resultado de la
+anterior y agrega una restricción adicional (evidencia literal citada, veto de
+inmueble existente sin intervención urbana, suficiencia de evidencia y limpieza
+de citas, normalización geográfica conservadora). La frontera de actos
+simbólicos/conmemorativos/de nomenclatura excluye explícitamente casos como un
+cambio de nombre de calle que no constituye una intervención física real.
 
-Este archivo es la consolidación de lo que antes eran 6 clasificadores incrementales
-(v4/luna, v5, v5.1, v5.2, v5.2.1, v5.2.2 → v5.2.3). Cada sección de más abajo
-corresponde a una capa real que se agregó sobre la anterior -- no se reescribió la
-lógica, se copió tal cual y se encadenó por llamada directa de función en vez de
-sobreescritura de atributos de módulo (que es como corría antes, cuando cada capa
-vivía en su propio archivo). El comportamiento es idéntico; cambia solo el empaquetado.
+Las capas se encadenan por llamada directa de función (cada función pública
+llama a la interna que construye sobre ella), no por reescritura de atributos
+de módulo en tiempo de ejecución.
 """
 
 from __future__ import annotations
@@ -54,17 +53,16 @@ ENV_PATH = PROJECT_ROOT / ".env"
 CONTRACT_VERSION = "v5.2.3"
 
 # ---------------------------------------------------------------------------
-# Utilidades de carga de corpus (capa base, sin cambios a través de las 6
-# iteraciones -- todas las versiones posteriores las reutilizaron tal cual).
+# Carga del corpus
 # ---------------------------------------------------------------------------
 
-CONTENT_DIR = PROJECT_ROOT / "Fuentes" / "fulltext_v2" / "content"
-DEDUPE_MANIFEST_PATH = PROJECT_ROOT / "Fuentes" / "fulltext_v2" / "dedupe_manifest_v2.jsonl"
-OUTPUT_DIR = PROJECT_ROOT / "Auditoria" / "clasificacion_luna_v5_2_3"
+CONTENT_DIR = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+DEDUPE_MANIFEST_PATH = PROJECT_ROOT / "Fuentes" / "fulltext" / "dedupe_manifest.jsonl"
+OUTPUT_DIR = PROJECT_ROOT / "Auditoria" / "clasificacion"
 CLASSIFICATIONS_PATH = OUTPUT_DIR / "classifications.jsonl"
-REVIEW_ARTIFACT_PATH = PROJECT_ROOT / "Auditoria" / "muestras_control" / "review_sample_v5_2_1_amplio.json"
+REVIEW_ARTIFACT_PATH = PROJECT_ROOT / "Auditoria" / "muestras_control" / "review_sample_classify.json"
 DOCUMENTOS_LARGOS_PATH = OUTPUT_DIR / "documentos_largos_apartados.jsonl"
-SOCIAL_TRUNCADO_PATH = PROJECT_ROOT / "Fuentes" / "fulltext_v2" / "social_truncado_apartados.jsonl"
+SOCIAL_TRUNCADO_PATH = PROJECT_ROOT / "Fuentes" / "fulltext" / "social_truncado_apartados.jsonl"
 
 MIN_TEXT_CHARS = 200
 MAX_TEXT_CHARS_FOR_PROMPT = 30000
@@ -229,7 +227,7 @@ def already_classified_urls(output_path: Path) -> set[str]:
 
 
 # ---------------------------------------------------------------------------
-# Geografía determinista (capa base): 32 comunas del área de estudio.
+# Normalización geográfica: 32 comunas del área de estudio.
 # ---------------------------------------------------------------------------
 
 COMUNA_INE_CODES = {
@@ -270,9 +268,8 @@ def _enrich_locations(mention: dict[str, Any]) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Gate determinista -- capa 1 (base, ex classify_v5_1.py): evidencia literal
-# por arreglos de citas y doble alcance (residencial / inmobiliaria urbana
-# amplia).
+# Validación de evidencia: verificación de citas literales por arreglos y
+# doble alcance (residencial / inmobiliaria urbana amplia).
 # ---------------------------------------------------------------------------
 
 RESIDENTIAL_OBJECTS = {
@@ -313,7 +310,7 @@ def _decision_for_scope(results: list[dict[str, Any]]) -> str:
 
 
 def _apply_scope_gate_base(parsed: dict[str, Any], source_text: str, scope: str) -> dict[str, Any]:
-    """Capa 1 (ex classify_v5_1.apply_scope_gate)."""
+    """Verifica evidencia literal citada y aplica el gate de alcance base."""
     if scope not in SCOPES:
         raise ValueError(f"scope no soportado: {scope}")
     result = deepcopy(parsed)
@@ -399,8 +396,7 @@ def _apply_scope_gate_base(parsed: dict[str, Any], source_text: str, scope: str)
 
 
 # ---------------------------------------------------------------------------
-# Gate determinista -- capa 2 (ex classify_v5_2.py): veto de inmueble
-# existente sin intervención urbana formal.
+# Gate de alcance: veto de inmueble existente sin intervención urbana formal.
 # ---------------------------------------------------------------------------
 
 def _existing_property_without_urban_intervention(mention: dict) -> bool:
@@ -415,7 +411,7 @@ def _existing_property_without_urban_intervention(mention: dict) -> bool:
 
 
 def _apply_scope_gate_v2(parsed: dict, source_text: str, scope: str) -> dict:
-    """Capa 2 (ex classify_v5_2.apply_scope_gate)."""
+    """Aplica el veto de inmueble existente sin intervención urbana sobre el gate base."""
     result = _apply_scope_gate_base(parsed, source_text, scope)
     if parsed.get("decision") == "include" and _existing_property_without_urban_intervention(parsed):
         reasons = list(result.get("gate_reasons", []))
@@ -431,8 +427,8 @@ def _apply_scope_gate_v2(parsed: dict, source_text: str, scope: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Gate determinista -- capa 3 (ex classify_v5_2_1.py): separa suficiencia de
-# evidencia y limpieza de citas; excepción de objeto amplio sin subtipo.
+# Gate de alcance: separa suficiencia de evidencia y limpieza de citas;
+# excepción de objeto amplio sin subtipo.
 # ---------------------------------------------------------------------------
 
 _CONTRACT_REASON_BY_LABEL = {
@@ -477,7 +473,7 @@ def _broad_unknown_object_is_admissible(parsed: dict, quality: dict) -> bool:
 
 
 def _apply_scope_gate_v3(parsed: dict, source_text: str, scope: str) -> dict:
-    """Capa 3 (ex classify_v5_2_1.apply_scope_gate)."""
+    """Aplica suficiencia/limpieza de citas y la excepción de objeto amplio sobre el gate anterior."""
     if scope not in SCOPES:
         raise ValueError(f"scope no soportado: {scope}")
 
@@ -549,8 +545,8 @@ def _apply_scope_gate_v3(parsed: dict, source_text: str, scope: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Gate determinista -- capa 4, vigente (ex classify_v5_2_2.py): normalización
-# geográfica conservadora (comunas compuestas, citas geográficas cortas).
+# Gate de alcance: normalización geográfica conservadora (comunas compuestas,
+# citas geográficas cortas).
 # ---------------------------------------------------------------------------
 
 def _split_comuna_names(value: str) -> list[str]:
@@ -672,9 +668,9 @@ def _reconcile_reasons(result: dict[str, Any], parsed: dict[str, Any], quality: 
 
 
 def apply_scope_gate(parsed: dict[str, Any], source_text: str, scope: str) -> dict[str, Any]:
-    """Gate vigente (capa 4, ex classify_v5_2_2.apply_scope_gate) -- envuelve
-    las 3 capas anteriores. Esta es la función pública que usa el resto del
-    pipeline."""
+    """Gate de alcance completo -- envuelve las capas anteriores con
+    normalización geográfica conservadora. Función pública usada por el
+    resto del pipeline."""
     result = _apply_scope_gate_v3(parsed, source_text, scope)
     quality = _quote_quality_v4(parsed, source_text)
     result["evidence_geo_quotes_verified"] = quality["geografica"]["flags"]
@@ -717,10 +713,7 @@ def derive_document_decisions(mentions: list[dict[str, Any]], source_text: str) 
 
 
 # ---------------------------------------------------------------------------
-# Llamada al modelo (ex classify_v5_1.classify_document -- es la función
-# realmente ejecutada en producción; classify_luna/v5 tenían sus propias
-# versiones, pero nunca corrían en la cadena real desde que v5.1 las
-# reemplazó).
+# Llamada al modelo
 # ---------------------------------------------------------------------------
 
 def validate_classification_payload(parsed: dict[str, Any], schema: dict[str, Any]) -> bool:
@@ -794,9 +787,9 @@ def _relpath(path: Path) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Gate de liberación de producción -- hash-pinning (ex classify_v5_1, la
-# versión que realmente se usa: verifica que el artefacto de aprobación
-# corresponda al prompt/schema/script ACTUALES, no solo a 3 booleanos).
+# Gate de liberación de producción -- hash-pinning: verifica que el artefacto
+# de aprobación corresponda al prompt/schema/script ACTUALES, no solo a 3
+# booleanos.
 # ---------------------------------------------------------------------------
 
 def classification_release_reasons(review_artifact: dict[str, Any]) -> list[str]:
@@ -868,8 +861,7 @@ def classification_release_allowed(review_artifact: dict[str, Any]) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Postprocesamiento y ejecución (ex classify.py + classify_v5_2_1._run,
-# encadenados por llamada directa en vez de sobreescritura de atributos).
+# Procesamiento del resultado y ejecución
 # ---------------------------------------------------------------------------
 
 def postprocess_result(doc: dict[str, Any], result: dict[str, Any]) -> tuple[str, dict[str, Any]]:
@@ -1026,7 +1018,7 @@ def _run(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Clasificación gate v5.2.2 + prompt v5.2.4 (frontera de actos simbólicos)")
+    parser = argparse.ArgumentParser(description="Clasificación de documentos con gate determinista y frontera de actos simbólicos")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--urls-file", default="")

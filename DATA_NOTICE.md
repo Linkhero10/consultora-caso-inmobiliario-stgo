@@ -15,7 +15,7 @@ literatura académica, fuentes DS19) mediante scraping para fines de investigaci
 completa de su contenido.** Por eso este repositorio **no versiona el texto completo ni los PDFs
 de fuentes de terceros**:
 
-- `Fuentes/fulltext_v2/content/` (texto completo extraído de artículos de prensa) y
+- `Fuentes/fulltext/content/` (texto completo extraído de artículos de prensa) y
   `Fuentes/literatura/pdf/` (documentos originales) están excluidos vía `.gitignore` — solo se
   versiona metadata (`document_id`, `url`, `fuente`, `fecha`, `hash`, `lineage`, etiquetas y citas
   breves), que sí vive en el warehouse y en los JSONL de clasificación/enriquecimiento versionados.

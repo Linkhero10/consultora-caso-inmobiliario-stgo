@@ -11,8 +11,8 @@ producto: enrichment_inmobiliario
 # contrato.
 estado: produccion_completa
 fuentes:
-  clasificacion: Auditoria/clasificacion_luna_v5_2_3/classifications.jsonl
-  fulltext: Fuentes/fulltext_v2/content
+  clasificacion: Auditoria/clasificacion/classifications.jsonl
+  fulltext: Fuentes/fulltext/content
   universo_congelado: Auditoria/enriquecimiento_v3_2_934/universo_congelado_934.json
 contratos:
   prompt: Trabajo/prompts/enrichment_system_v3_2.md
