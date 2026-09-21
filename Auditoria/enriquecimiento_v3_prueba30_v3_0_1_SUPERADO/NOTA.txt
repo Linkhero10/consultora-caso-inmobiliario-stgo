@@ -1,1 +1,0 @@
-SUPERADO por v3.1 (correcciones de Sol: revision estructurada, actores/hitos sin saturar el maximo, tipo_evidencia_fuente renombrado, instrumento_norm ampliado con patrones reales, triage_consistency_check)

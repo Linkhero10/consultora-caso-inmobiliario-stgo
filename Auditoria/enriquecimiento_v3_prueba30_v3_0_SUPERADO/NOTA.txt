@@ -1,1 +1,0 @@
-SUPERADO por v3.0.1 (correcciones de Sol: truncamiento 8000->30000, verificacion de citas en instituciones/objeto_disputa/hitos, maxItems 8->12 y 6->10)

@@ -28,4 +28,4 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["Trabajo/tests"]
+testpaths = ["tests"]

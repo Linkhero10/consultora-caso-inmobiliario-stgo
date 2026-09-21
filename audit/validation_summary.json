@@ -1,0 +1,33 @@
+{
+  "muestra_validacion_enrichment": {
+    "n": 50,
+    "metodo": "aleatorio estratificado por escala_conflicto x actores_posiblemente_truncados, semilla fija",
+    "resultado": {
+      "ok": 21,
+      "error_menor": 17,
+      "error_grave": 12
+    },
+    "criterio": "error_grave se reservo para errores que cambian la unidad analitica o mezclan conflictos distintos bajo un mismo registro; error_menor para fallas localizadas que no invalidan el nucleo del registro.",
+    "consecuencia": "El 24% de error_grave revelo que un documento no es de forma fiable la misma unidad que un conflicto -- motivo la capa posterior de gate y resolucion PROJECT -> CASE -> CONFLICT descrita en docs/architecture.md. No se trato como ruido aceptable; cambio el diseno del sistema."
+  },
+  "identidad_resuelta": {
+    "proyectos": 990,
+    "casos": 862,
+    "conflictos": 839,
+    "conflictos_multi_proyecto": 20,
+    "relaciones_pendientes_decision_humana": 1,
+    "entidades_actor_resueltas": 6,
+    "alias_actor_resueltos": 29
+  },
+  "integridad_base_datos": {
+    "archivo": "data/warehouse.sqlite",
+    "integrity_check": "ok",
+    "foreign_key_check_violaciones": 0,
+    "vinculos_actor_proyecto": 17227,
+    "vinculos_no_resueltos_inconsistentes": 37
+  },
+  "pruebas_automatizadas": {
+    "descripcion": "165 tests correspondientes al pipeline vigente, incluidos casos de regresion sobre bugs reales encontrados en revision (ver tests/).",
+    "ci": "corre en cada push a main, ver .github/workflows/tests.yml"
+  }
+}

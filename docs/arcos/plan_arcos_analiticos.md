@@ -1,15 +1,16 @@
 # Plan paso a paso — 3 arcos analíticos
 
-Base de datos disponible para los tres: `Auditoria/integracion_v1/warehouse_v3_2_bridge.sqlite`
+Base de datos disponible para los tres: `data/warehouse.sqlite`
 (990 `project_id` → 862 `case_id`, 839 conflictos, ~17.200 vínculos actor/institución/evento→proyecto).
-Ver el [README](../../README.md) y
-[`Auditoria/integracion_v1/entrega_dario_2026-09-18/ENTREGA_DARIO_red_actor_conflict.md`](../../Auditoria/integracion_v1/entrega_dario_2026-09-18/ENTREGA_DARIO_red_actor_conflict.md)
-para el detalle de tablas y vistas.
+Ver el [README](../../README.md) y [`docs/methodology.md`](../methodology.md) para el detalle de
+capas, tablas y vistas.
 
-Bloqueante común antes de sacar conclusiones publicables: **validación humana de una muestra del
-enrichment** (`Auditoria/validacion_humana_v3_2/muestra_validacion_humana_v3_2_n50_seed20260918.json`,
-generada, pendiente de revisión). Los tres arcos pueden empezar a construir metodología y código sobre
-los datos ya existentes, pero ningún hallazgo debería publicarse sin que esa validación esté hecha.
+Bloqueante común antes de sacar conclusiones publicables: la validación muestral del enrichment
+(ver [`audit/validation_summary.json`](../../audit/validation_summary.json), n=50: 21 ok, 17 error
+menor, 12 error grave) ya identificó errores reales de unidad de caso, motivando el gate
+documental descrito en la metodología. Una muestra más grande sobre el corpus completo sigue
+pendiente. Los tres arcos pueden empezar a construir metodología y código sobre los datos ya
+existentes, pero ningún hallazgo debería publicarse sin ampliar esa validación.
 
 Los tres arcos son estructuralmente paralelos — cada uno parte de una tabla distinta del mismo
 warehouse y ninguno necesita el resultado de otro para arrancar.
@@ -25,7 +26,7 @@ coincidan en el mismo caso?
 ### Paso a paso
 
 1. **Construir el grafo desde el warehouse, no desde cero.** Nodos = actores/instituciones
-   (`enrichment_actor_v3_2` + `enrichment_institucion_v3_2` + `actor_second_pass_v2` vía
+   (`enrichment_actor` + `enrichment_institution` + `actor_second_pass_v2` vía
    `actor_event_project_link`), aristas = co-ocurrencia en el mismo conflicto (`conflict_id`, no
    `project_id` fino, para no fragmentar artificialmente el mismo caso real en variantes de
    redacción). Usar `resolution_status` para decidir qué vínculos entran con certeza
@@ -45,7 +46,7 @@ coincidan en el mismo caso?
    actor↔actor. Al interpretar una comunidad detectada como una coalición real, verificar contra los
    metadatos del caso (no asumir alineación automática entre estructura topológica y significado
    sustantivo).
-5. **Dimensión temporal**: los eventos (`enrichment_evento_v3_2.fecha`) permiten construir la red
+5. **Dimensión temporal**: los eventos (`enrichment_event.fecha`) permiten construir la red
    como secuencia temporal, no solo agregada — un actor puede entrar/salir de un conflicto en
    momentos distintos. Útil si la pregunta de investigación es sobre velocidad de propagación o quién
    se involucra primero.
@@ -65,7 +66,7 @@ resultado, y hay patrones de captura regulatoria o vacíos normativos que se rep
 
 ### Paso a paso
 
-1. **Partir de `enrichment_document_v3_2`**: los campos `instrumento_norm`/`instrumento_raw`,
+1. **Partir de `enrichment_document`**: los campos `instrumento_norm`/`instrumento_raw`,
    `via_legal_norm`, `resultado_actuacion`, `institucion_decisora_segun_fuente` ya están extraídos por
    documento — no hace falta reprocesar nada, es agregación y análisis sobre lo que ya existe.
 2. **Cruzar con el crosswalk** `case_mention_project_crosswalk` para conectar la capa de
@@ -85,7 +86,7 @@ promesa declarativa vs. cumplimiento institucional vs. evidencia de desempeño r
 
 ### Paso a paso
 
-1. **Partir de las tablas de evidencia ya existentes**: `enrichment_evidence_v3_2` (citas, con
+1. **Partir de las tablas de evidencia ya existentes**: `enrichment_evidence` (citas, con
    `verified` = si la cita es substring literal de la fuente), `claim`/`evidence` de la capa de
    clasificación (con `quote_role`). Estas tablas ya implementan el nivel más básico de auditoría de
    evidencia (¿la cita es real?) — el trabajo de este arco es la capa siguiente: clasificar cada
@@ -101,10 +102,10 @@ promesa declarativa vs. cumplimiento institucional vs. evidencia de desempeño r
 
 ## Puente de integración (ya construido, no es tarea nueva)
 
-`Trabajo/scripts/build_case_project_bridge.py` + `resolve_project_review_queue.py` — ya corridos,
+`src/build_projects.py` + `resolve_project_review.py` — ya corridos,
 verificados, con tests. Los tres arcos consumen las mismas tablas (`project`,
 `project_mention_resolved`, `actor_event_project_link`, `case_mention_project_crosswalk`,
-`entity_actor_crosswalk`) ya materializadas en `warehouse_v3_2_bridge.sqlite`. No hace falta que
+`entity_actor_crosswalk`) ya materializadas en `warehouse.sqlite`. No hace falta que
 cada arco construya su propio puente.
 
 ## Huecos de capacidad conocidos

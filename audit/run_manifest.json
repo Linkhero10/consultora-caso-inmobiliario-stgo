@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-09-21",
+  "warehouse": {
+    "path": "data/warehouse.sqlite",
+    "sha256": "6b6f20da9cb5fbe87aaafe679402e1d7fc0dc507d9a6a288d78815aaee27244a",
+    "integrity_check": "ok",
+    "foreign_key_check_violations": 0,
+    "counts": {
+      "project": 990,
+      "conflict": 839,
+      "conflict_case": 862,
+      "conflict_project": 990,
+      "document_conflict": 1268,
+      "conflict_relation": 3,
+      "actor_registry": 6,
+      "actor_alias": 29,
+      "actor_event_project_link": 17227
+    }
+  },
+  "tests": {
+    "path": "tests/",
+    "ci_workflow": ".github/workflows/tests.yml",
+    "last_known_result": "165 passed, 0 failed"
+  },
+  "note": "build_commit se actualiza en cada release etiquetada; ver el historial de commits de main para la version exacta que produjo este manifiesto."
+}

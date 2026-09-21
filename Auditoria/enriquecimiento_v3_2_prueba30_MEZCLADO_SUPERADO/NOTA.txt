@@ -1,9 +1,0 @@
-Archivo historico -- esta carpeta mezclaba DOS corridas con prompts distintos
-(hallazgo real de Luna, confirmado): 10 registros con prompt_sha256=d1ca7eb9
-(version probada, limpia) + 8 registros con prompt_sha256=496f9e3a (version
-editada con la distincion "foco vs contextual", que correlaciono con 2/4
-fallas de generacion corrupta en actores saturados -- ver bitacora
-2026-09-17). Los 2 registros cuarentenados tambien quedan aqui.
-La regla 11 del prompt fue REVERTIDA a la version d1ca7eb9 (0 fallas en 7
-saturaciones). La carpeta activa Auditoria/enriquecimiento_v3_2_prueba30/ se
-limpia para una prueba nueva, limpia, con el prompt revertido.

@@ -34,27 +34,30 @@
   <h1>Arquitectura del pipeline</h1>
 
 <pre>FUENTE (prensa, actas, DS19)
-    │  scraping (brightdata_discovery.py, external_source_acquisition_v1.py)
+    │  scraping (src/discovery.py, src/fulltext_acquisition.py)
     ▼
-DOCUMENTO (3.884 documentos, con lineage y hash de origen)
-    │  clasificación LLM (classify_v5*.py)
+DOCUMENTO (con lineage y hash de origen)
+    │  clasificación LLM (src/classify.py)
     ▼
 EVIDENCIA (citas verificadas como substring literal de la fuente)
-    │  enriquecimiento LLM sobre el subconjunto incluido (enrich_case_v3*.py, 934 documentos)
+    │  enriquecimiento LLM sobre el subconjunto incluido (src/enrich.py)
     ▼
 MENCIÓN DE PROYECTO (nombre de proyecto tal como aparece en el texto)
-    │  resolución de identidad (build_case_project_bridge.py + resolve_project_review_queue.py)
+    │  resolución de identidad (src/build_projects.py + src/resolve_project_review.py)
     ▼
-PROYECTO / CASO (990 proyectos → 862 casos; homónimos y variantes de escritura fusionados con
-    │              evidencia revisada, nunca por coincidencia de substring)
-    │  agrupación sociológica (build_conflict_registry_v1.py)
+PROYECTO / CASO (homónimos y variantes de escritura fusionados solo con evidencia
+    │              revisada, nunca por coincidencia de substring)
+    │  agrupación sociológica (src/build_conflicts.py)
     ▼
-CONFLICTO (839 conflictos; puede agrupar 2+ casos cuando corresponde al mismo litigio,
+CONFLICTO (puede agrupar 2+ casos cuando corresponde al mismo litigio,
     │        nunca al revés — conflict_id es una función many-to-one de case_id)
-    │  resolución de identidad de actor (build_actor_registry_v1.py)
+    │  resolución de identidad de actor (src/build_actor_registry.py)
     ▼
 ACTOR / ENTIDAD (institución nacional consolidada cuando la evidencia lo permite;
                   el resto conserva su identidad textual sin resolver)</pre>
+
+  <p>Ver <a href="methodology.html">metodología</a> para los criterios de cada capa, el gate
+  documental y qué queda deliberadamente sin resolver.</p>
 
   <h2>Principios de diseño</h2>
   <ul>

@@ -1,8 +1,0 @@
-{
-  "total_combos_plan": 2336,
-  "con_resultados": 2310,
-  "cero_confirmado_sin_fallos_pendientes": 26,
-  "fallo_red_sin_resolver": 0,
-  "rondas_de_reintento": 3,
-  "nota": "Cierre final verificado 2026-09-13: todos los 2336 combos del plan quedaron resueltos -- ya sea con datos reales o con un resultado de busqueda exitosa que confirma cero resultados organicos. Ninguna consulta quedo sin resolver tras 3 rondas de reintento con backoff corregido (16s minimo, respetando el limite documentado de Bright Data)."
-}
