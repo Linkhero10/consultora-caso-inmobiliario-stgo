@@ -6,6 +6,7 @@
 # Infraestructura interna de proceso (bitacora, seguimiento de etapas)
 _FARO/
 FARO.md
+BITACORA.md
 
 # Cache de Python / pytest / metadata de instalacion editable
 __pycache__/
