@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DGNE8NYJ66"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DGNE8NYJ66');
+</script>
+	
+
+	
+	
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PXRHP55S');</script>
+<!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Permisos de Edificación &#8211; Centro de Estudios, Ciudad y Territorio</title>
+<meta name='robots' content='max-image-preview:large' />
+<link rel="alternate" type="application/rss+xml" title="Centro de Estudios, Ciudad y Territorio &raquo; Feed" href="https://centrodeestudios.minvu.gob.cl/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Centro de Estudios, Ciudad y Territorio &raquo; Feed de los comentarios" href="https://centrodeestudios.minvu.gob.cl/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Centro de Estudios, Ciudad y Territorio &raquo; Permisos de Edificación Categorías Feed" href="https://centrodeestudios.minvu.gob.cl/repositorio/categoria/permisos-de-edificacion/feed/" />
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/centrodeestudios.minvu.gob.cl\/wp-includes\/js\/wp-emoji-release.min.js?ver=dff9c4750c5cedb4e4f659e6fd947207"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css' href='https://centrodeestudios.minvu.gob.cl/wp-includes/css/dist/block-library/style.min.css?ver=dff9c4750c5cedb4e4f659e6fd947207' type='text/css' media='all' />
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://centrodeestudios.minvu.gob.cl/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='search-filter-plugin-styles-css' href='https://centrodeestudios.minvu.gob.cl/wp-content/plugins/search-filter-pro/public/assets/css/search-filter.min.css?ver=2.5.7' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap-css' href='https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/assets/css/bootstrap.min.css?ver=dff9c4750c5cedb4e4f659e6fd947207' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css' href='https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/assets/css/fontawesome.min.css?ver=dff9c4750c5cedb4e4f659e6fd947207' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-all-css' href='https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/assets/css/all.css?ver=dff9c4750c5cedb4e4f659e6fd947207' type='text/css' media='all' />
+<link rel='stylesheet' id='vega-wp-style-css' href='https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/style.css?ver=dff9c4750c5cedb4e4f659e6fd947207' type='text/css' media='all' />
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-includes/js/jquery/jquery.min.js?ver=3.6.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<link rel="https://api.w.org/" href="https://centrodeestudios.minvu.gob.cl/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://centrodeestudios.minvu.gob.cl/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://centrodeestudios.minvu.gob.cl/wp-includes/wlwmanifest.xml" />
+
+<link rel="icon" href="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2023/06/ico-navegador1.ico" sizes="32x32" />
+<link rel="icon" href="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2023/06/ico-navegador1.ico" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2023/06/ico-navegador1.ico" />
+<meta name="msapplication-TileImage" content="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2023/06/ico-navegador1.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+
+        <div class="container">
+            <div class="d-flex flex-wrap  flex-sm-nowrap py-4 align-items-center">
+
+                <div class="logo"><a class="navbar-brand" href="https://centrodeestudios.minvu.gob.cl/" title="Centro de Estudios, Ciudad y Territorio" rel="home">
+                        <img class="w-100" src="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2026/04/logo_centro-estudios-2026v2.png" alt="Centro de Estudios, Ciudad y Territorio">                    </a></div>
+
+                <div class="ms-auto">
+                    <form role="search" method="get" class="search-form d-flex" action="https://centrodeestudios.minvu.gob.cl/">
+    <input type="search" class="search-field form-control me-2" placeholder="Búsqueda..." value="" name="s" title="Search for:" />
+    <button class="btn btn-outline-success" name="submit" type="submit"><i class="glyphicon glyphicon-arrow-right"></i> Buscar</button>
+</form>                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
+                        <ul id="menu-menu-principal" class="navbar-nav"><li  id="nav-item-916" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home nav-item nav-item-916"><a href="https://centrodeestudios.minvu.gob.cl" class="nav-link "><i class="fa-solid fa-house"></i></a></li>
+<li  id="nav-item-1044" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1044"><a href="https://centrodeestudios.minvu.gob.cl/quienes-somos/" class="nav-link ">Quiénes somos</a></li>
+<li  id="nav-item-1041" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1041"><a href="https://centrodeestudios.minvu.gob.cl/planes-reguladores/" class="nav-link ">Planes Reguladores</a></li>
+<li  id="nav-item-1040" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1040"><a target="_blank" href="https://ide.minvu.cl/" class="nav-link ">Geoportal</a></li>
+<li  id="nav-item-1043" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1043"><a href="https://centrodeestudios.minvu.gob.cl/publicacion/" class="nav-link ">Publicaciones</a></li>
+<li  id="nav-item-1042" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1042"><a target="_blank" href="https://centrodeestudios.minvu.gob.cl/que-es-minvu-universidades/" class="nav-link ">Iniciativa MINVU-Universidades</a></li>
+<li  id="nav-item-1045" class="menu-item menu-item-type-post_type menu-item-object-page nav-item nav-item-1045"><a href="https://centrodeestudios.minvu.gob.cl/redes/" class="nav-link ">Revista REDES</a></li>
+</ul>                    </div>
+
+            </div>
+            </nav>
+        </div>
+
+    </header>
+    <nav class="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb"><li class="breadcrumb-item"><a href="https://centrodeestudios.minvu.gob.cl">Centro de Estudios, Ciudad y Territorio</a></li></ol>        </div>
+    </nav>
+<!-- ========== Page Content ========== -->
+<div class="section page-content bg-white">
+<div class="header-banner">
+	<div class="intro-documentos p-4">
+		<div class="content-site container">
+			
+		<img width="4274" height="1322" src="https://centrodeestudios.minvu.gob.cl/wp-content/uploads/2025/07/Parque-Santa-Monica-3-1.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" decoding="async" loading="lazy" />	<div class="mt-2">
+		<h1>
+				Publicaciones			</h1>
+		<!-- wp:paragraph -->
+<p>El Centro de Estudios de Ciudad y Territorio elabora distintas publicaciones de temas de vivienda, barrio y ciudad, con el fin de apoyar a la investigación y al mejoramiento de las políticas públicas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Nuestro compromiso con lo público implica que la información que se produce esté disponible a la ciudadanía y sirva de insumo para investigación. Por ello, desde 2023 nuestras publicaciones indican expresamente que se autoriza el uso de la información, citando la respectiva fuente, además de incluir una sugerencia de cita del documento en formato APA 7.</p>
+<!-- /wp:paragraph -->	</div>
+	</div>
+	</div>	
+		</div>
+	
+	
+  <div class="content-site container">
+
+	
+	  
+    <div class="row p-4">
+      <div class="col-12 col-sm-3 bg-light">
+        <form data-sf-form-id='1119' data-is-rtl='0' data-maintain-state='' data-results-url='https://centrodeestudios.minvu.gob.cl/resultados/' data-ajax-url='https://centrodeestudios.minvu.gob.cl/resultados/?sf_data=results' data-ajax-form-url='https://centrodeestudios.minvu.gob.cl/?sfid=1119&amp;sf_action=get_data&amp;sf_data=form' data-display-result-method='archive' data-use-history-api='1' data-template-loaded='0' data-lang-code='es' data-ajax='1' data-ajax-data-type='html' data-ajax-links-selector='.pagination a' data-ajax-target='#resultados' data-ajax-pagination-type='normal' data-update-ajax-url='1' data-only-results-ajax='1' data-scroll-to-pos='results' data-scroll-on-action='pagination' data-init-paged='1' data-auto-update='' action='https://centrodeestudios.minvu.gob.cl/resultados/' method='post' class='searchandfilter' id='search-filter-form-1119' autocomplete='off' data-instance-count='1'><ul><li class="sf-field-post_date" data-sf-field-name="_sf_post_date" data-sf-field-type="post_date" data-sf-field-input-type="daterange"><h4>Ingrese Fecha</h4><ul class="sf_date_field" data-date-format="dd/mm/yy" data-date-use-year-dropdown='1' data-date-use-month-dropdown='1'><li>		<span class='sf-date-prefix'>Desde</span><label><input class="sf-datepicker sf-input-date sf-input-text" name="_sf_post_date[]" type="text" value="" title=""></label>		</li><li>		<span class='sf-date-prefix'>Hasta</span><label><input class="sf-datepicker sf-input-date sf-input-text" name="_sf_post_date[]" type="text" value="" title=""></label>		</li></ul></li><li class="sf-field-taxonomy-categoria_repositorio" data-sf-field-name="_sft_categoria_repositorio" data-sf-field-type="taxonomy" data-sf-field-input-type="radio"><h4>Publicaciones</h4>		<ul class="">
+			
+			<li class="sf-level-0 sf-item-0" data-sf-count="0" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="" name="_sft_categoria_repositorio[]" id="sf-input-cdeabd1fc632704333b85b6d30470188"><label class="sf-label-radio" for="sf-input-cdeabd1fc632704333b85b6d30470188">Todas las publicaciones</label></li><li class="sf-level-0 sf-item-103" data-sf-count="9" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="catastros-y-encuestas" name="_sft_categoria_repositorio[]" id="sf-input-1ae595f300627dc9f4f1f623d75c25b8"><label class="sf-label-radio" for="sf-input-1ae595f300627dc9f4f1f623d75c25b8">Catastros y encuestas</label></li><li class="sf-level-0 sf-item-86" data-sf-count="39" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="estadisticas" name="_sft_categoria_repositorio[]" id="sf-input-b4a95c5d2ce920d333a7237e201f5263"><label class="sf-label-radio" for="sf-input-b4a95c5d2ce920d333a7237e201f5263">Estadísticas</label><ul class="children"><li class="sf-level-1 sf-item-92" data-sf-count="11" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="beneficiarios-de-subsidio" name="_sft_categoria_repositorio[]" id="sf-input-df9676df441c687dc5b3cfa6b831273c"><label class="sf-label-radio" for="sf-input-df9676df441c687dc5b3cfa6b831273c">Beneficiarios de Subsidio</label></li><li class="sf-level-1 sf-item-97" data-sf-count="7" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="demanda-y-deficit-habitacional" name="_sft_categoria_repositorio[]" id="sf-input-33980c5b2152e96ce36f1b60a0f9c560"><label class="sf-label-radio" for="sf-input-33980c5b2152e96ce36f1b60a0f9c560">Demanda y Déficit Habitacional</label></li><li class="sf-level-1 sf-item-96" data-sf-count="9" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="parque-habitacional" name="_sft_categoria_repositorio[]" id="sf-input-2a815201bd569e88eb91d0faae940435"><label class="sf-label-radio" for="sf-input-2a815201bd569e88eb91d0faae940435">Parque Habitacional</label></li><li class="sf-level-1 sf-item-95 sf-option-active" data-sf-count="7" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="permisos-de-edificacion" name="_sft_categoria_repositorio[]" checked="checked" id="sf-input-b8176ae11da336dbe2e4614f6c29de86"><label class="sf-label-radio" for="sf-input-b8176ae11da336dbe2e4614f6c29de86">Permisos de Edificación</label></li><li class="sf-level-1 sf-item-94" data-sf-count="1" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="precios" name="_sft_categoria_repositorio[]" id="sf-input-67593252e8bfc6745f8960828323d549"><label class="sf-label-radio" for="sf-input-67593252e8bfc6745f8960828323d549">Precios</label></li><li class="sf-level-1 sf-item-93" data-sf-count="5" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="subsidios" name="_sft_categoria_repositorio[]" id="sf-input-8b9602b2f5e06b3684579a7c478850cc"><label class="sf-label-radio" for="sf-input-8b9602b2f5e06b3684579a7c478850cc">Subsidios</label></li></ul></li><li class="sf-level-0 sf-item-87" data-sf-count="57" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="estudios-basicos" name="_sft_categoria_repositorio[]" id="sf-input-7650cdb2688d9d9d9486d0cfa79b438d"><label class="sf-label-radio" for="sf-input-7650cdb2688d9d9d9486d0cfa79b438d">Estudios Básicos</label><ul class="children"><li class="sf-level-1 sf-item-110" data-sf-count="3" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="barrio" name="_sft_categoria_repositorio[]" id="sf-input-818c0a73df3d2047ed7aa262c9e3ff67"><label class="sf-label-radio" for="sf-input-818c0a73df3d2047ed7aa262c9e3ff67">Barrio</label></li><li class="sf-level-1 sf-item-111" data-sf-count="8" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="ciudad" name="_sft_categoria_repositorio[]" id="sf-input-9ca02b7a085594ac985a65379847bde4"><label class="sf-label-radio" for="sf-input-9ca02b7a085594ac985a65379847bde4">Ciudad</label></li><li class="sf-level-1 sf-item-112" data-sf-count="5" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="infraestructura-urbana" name="_sft_categoria_repositorio[]" id="sf-input-36f95a7365842c40d0f215820cd697ed"><label class="sf-label-radio" for="sf-input-36f95a7365842c40d0f215820cd697ed">Infraestructura Urbana</label></li><li class="sf-level-1 sf-item-108" data-sf-count="4" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="sustentabilidad-estudios-basicos" name="_sft_categoria_repositorio[]" id="sf-input-d8e4e3c8c791af6dc90c5c16fd1eebeb"><label class="sf-label-radio" for="sf-input-d8e4e3c8c791af6dc90c5c16fd1eebeb">Sustentabilidad</label></li><li class="sf-level-1 sf-item-109" data-sf-count="45" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="vivienda" name="_sft_categoria_repositorio[]" id="sf-input-76d26b964ee45eaff32d562eaed69274"><label class="sf-label-radio" for="sf-input-76d26b964ee45eaff32d562eaed69274">Vivienda</label></li></ul></li><li class="sf-level-0 sf-item-104" data-sf-count="10" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="estudios-en-convenio" name="_sft_categoria_repositorio[]" id="sf-input-1cb7a7167feb4369a1dc6cde701147b5"><label class="sf-label-radio" for="sf-input-1cb7a7167feb4369a1dc6cde701147b5">Estudios en convenio</label></li><li class="sf-level-0 sf-item-88" data-sf-count="98" data-sf-depth="0"><input  class="sf-input-radio" type="radio" value="estudios-propios" name="_sft_categoria_repositorio[]" id="sf-input-fa5eeab0f3b8d4b35e2c75ae82d4807f"><label class="sf-label-radio" for="sf-input-fa5eeab0f3b8d4b35e2c75ae82d4807f">Estudios y Proyectos Propios</label><ul class="children"><li class="sf-level-1 sf-item-98" data-sf-count="31" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="ciudad-estudios-propios" name="_sft_categoria_repositorio[]" id="sf-input-e6b6b4823ee1dcfc60afa4cabe1ddce2"><label class="sf-label-radio" for="sf-input-e6b6b4823ee1dcfc60afa4cabe1ddce2">Ciudad</label></li><li class="sf-level-1 sf-item-90" data-sf-count="43" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="documentos-y-boletines" name="_sft_categoria_repositorio[]" id="sf-input-076c708cb721873b06907518bed23a96"><label class="sf-label-radio" for="sf-input-076c708cb721873b06907518bed23a96">Documentos de Trabajo y Boletines</label></li><li class="sf-level-1 sf-item-418" data-sf-count="16" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="inclusion" name="_sft_categoria_repositorio[]" id="sf-input-d4b74d13a2303debcc2cfd5f66dcccf1"><label class="sf-label-radio" for="sf-input-d4b74d13a2303debcc2cfd5f66dcccf1">Inclusión Social</label></li><li class="sf-level-1 sf-item-422" data-sf-count="31" data-sf-depth="1"><input  class="sf-input-radio" type="radio" value="vivienda-y-deficit" name="_sft_categoria_repositorio[]" id="sf-input-98c83cfb5035c24f28569855bd7e651f"><label class="sf-label-radio" for="sf-input-98c83cfb5035c24f28569855bd7e651f">Vivienda y Déficit Habitacional</label></li></ul></li>		</ul>
+		</li><li class="sf-field-submit" data-sf-field-name="submit" data-sf-field-type="submit" data-sf-field-input-type=""><input type="submit" name="_sf_submit" value="Buscar"></li><li class="sf-field-reset" data-sf-field-name="reset" data-sf-field-type="reset" data-sf-field-input-type="link"><a href="#" class="search-filter-reset" data-search-form-id="1119" data-sf-submit-form="auto">Limpiar Filtros</a></li></ul></form>
+      </div>
+      <div class="col-12 col-md-9" id="resultados">
+
+        
+          <header class="archive-header">
+<div class="link-volver">
+	<a href="/publicacion/" class="link">Volver a todas las publicaciones</a>
+</div>
+		
+			
+				<h1 class="titulos-publicaciones">Estadísticas</h1><p class="descripcion">Revisa series estadísticas relacionadas a la política habitacional, el mercado inmobiliario y las viviendas en Chile.</p>	
+			
+
+			 
+			    
+                          <div class="archive-meta"><p>Revisa series estadísticas relacionadas a la política habitacional, el mercado inmobiliario y las viviendas en Chile.</p>
+</div>
+                      </header>
+          <div class="list-group">
+                          <a title="Descargar - Viviendas unidades y superficie según año y comuna" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3Dadc446143de3847f7f66d3f93b83ddf3&biblionumber=25583" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Viviendas unidades y superficie según año y comuna</h5>
+                  <small>11-09-2026</small>
+                </div>
+                <p>Desde 2002 a julio 2026</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Viviendas unidades y superficie según mes y comuna" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3Dad000a7c7e64165f32b3d73d55e9df95&biblionumber=25584" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Viviendas unidades y superficie según mes y comuna</h5>
+                  <small>11-09-2026</small>
+                </div>
+                <p>Desde 2002 a julio 2026</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Total viviendas unidades y superficie según agrupamiento y comuna" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3De59c5d42ac075851b7c8fa193602ec4d&biblionumber=25585" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Total viviendas unidades y superficie según agrupamiento y comuna</h5>
+                  <small>11-03-2026</small>
+                </div>
+                <p>Desde 2002 a 2025 (actualizado en marzo 2026)</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Casas en unidades y tramo superficie según mes" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3D64ffdcd86f09c9db7e1ad1eb0bde8e6f&biblionumber=25586" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Casas en unidades y tramo superficie según mes</h5>
+                  <small>11-09-2026</small>
+                </div>
+                <p>Desde 2002 a julio 2026</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Departamentos en unidades y tramo superficie según mes" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3Db6981a856fa7235bfef4285facfa2811&biblionumber=25587" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Departamentos en unidades y tramo superficie según mes</h5>
+                  <small>11-09-2026</small>
+                </div>
+                <p>Desde 2002 a julio 2026</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Variación anual de unidades y superficie de viviendas" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3D83a4c4a0f8bd4a0a995d8c0b96c910bf&biblionumber=25589" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Variación anual de unidades y superficie de viviendas</h5>
+                  <small>11-03-2026</small>
+                </div>
+                <p>Desde 1990 a 2025 (actualizado en marzo 2026)</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+                          <a title="Descargar - Viviendas unidades y tramo de superficie según comuna" href="https://catalogo.minvu.cl/cgi-bin/koha/tracklinks.pl?uri=https%3A%2F%2Fcatalogo.minvu.cl%2Fcgi-bin%2Fkoha%2Fopac-retrieve-file.pl%3Fid%3D28a87e42691a1e07f01f1a8f65a38dfb&biblionumber=25590" target="_blank" class="list-group-item link-documento list-group-item-action py-4">
+                <div class="d-flex w-100 justify-content-between bd-callout bd-callout-info">
+                  <h5 class="mb-1"><i class="fa-solid fa-book"></i> Viviendas unidades y tramo de superficie según comuna</h5>
+                  <small>11-03-2026</small>
+                </div>
+                <p>Desde 2002 a 2025 (actualizado en marzo 2026)</p>
+                
+                <span class="badge rounded-pill text-bg-secondary me-auto">Permisos de Edificación </span>               </a>
+
+            			 
+				  			  
+			  <!-- Paginación Bootstrap -->
+					<div class="row my-3">
+						<div class="col-12">
+													</div>
+					</div>
+			  
+			
+         
+          </div>
+      </div>
+    </div>
+  
+</div>
+
+<!-- ========== /Page Content ========== -->
+
+
+ 
+<div class="menu-footer">
+            <div class="container">
+            <nav class="nav-footer">
+                
+
+                        <ul id="menu-menu-footer" class="menu-footer"><li id="menu-item-1070" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1070"><a href="https://centrodeestudios.minvu.gob.cl/quienes-somos/">Quiénes Somos</a>
+<ul class="sub-menu">
+	<li id="menu-item-1071" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1071"><a href="https://centrodeestudios.minvu.gob.cl/quienes-somos/areas-de-trabajo/">Áreas de Trabajo</a></li>
+	<li id="menu-item-1072" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1072"><a href="https://centrodeestudios.minvu.gob.cl/quienes-somos/compromisos-internacionales/">Compromisos Internacionales</a></li>
+	<li id="menu-item-1073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1073"><a href="https://centrodeestudios.minvu.gob.cl/quienes-somos/coordinacion-regional-e-interministerial/">Coordinación Regional e Interministerial</a></li>
+</ul>
+</li>
+<li id="menu-item-1061" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1061"><a href="https://centrodeestudios.minvu.gob.cl/planes-reguladores/">Planes Reguladores</a>
+<ul class="sub-menu">
+	<li id="menu-item-1136" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1136"><a target="_blank" rel="noopener" href="https://instrumentosdeplanificacion.minvu.cl/">Documentos IPT</a></li>
+	<li id="menu-item-1137" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1137"><a target="_blank" rel="noopener" href="https://ide.minvu.cl/pages/visores">Visores IPT</a></li>
+</ul>
+</li>
+<li id="menu-item-1058" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1058"><a href="https://ide.minvu.cl/">Geoportal</a>
+<ul class="sub-menu">
+	<li id="menu-item-1476" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1476"><a target="_blank" rel="noopener" href="https://ide.minvu.cl">Geoportal</a></li>
+</ul>
+</li>
+<li id="menu-item-1064" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1064"><a href="https://centrodeestudios.minvu.gob.cl/publicacion/">Publicaciones</a>
+<ul class="sub-menu">
+	<li id="menu-item-1130" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1130"><a href="https://centrodeestudios.minvu.gob.cl/?sfid=1119&#038;_sft_categoria_repositorio=estadisticas">Estadísticas</a></li>
+	<li id="menu-item-1131" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1131"><a href="https://centrodeestudios.minvu.gob.cl/?sfid=1119&#038;_sft_categoria_repositorio=estudios-basicos">Estudios Básicos</a></li>
+	<li id="menu-item-1132" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1132"><a href="https://centrodeestudios.minvu.gob.cl/?sfid=1119&#038;_sft_categoria_repositorio=estudios-propios">Estudios Propios</a></li>
+	<li id="menu-item-1129" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1129"><a href="https://centrodeestudios.minvu.gob.cl/?sfid=1119&#038;_sft_categoria_repositorio=herramientas-inclusivas">Herramientas Inclusivas</a></li>
+	<li id="menu-item-1133" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1133"><a href="https://centrodeestudios.minvu.gob.cl/?sfid=1119&#038;_sft_categoria_repositorio=minutas-y-boletines">Minutas y Boletines</a></li>
+</ul>
+</li>
+<li id="menu-item-1053" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1053"><a href="https://centrodeestudios.minvu.gob.cl/que-es-minvu-universidades/">Iniciativa MINVU-Universidades</a>
+<ul class="sub-menu">
+	<li id="menu-item-1057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1057"><a href="https://centrodeestudios.minvu.gob.cl/https-centrodeestudios-minvu-gob-cl-iniciativa-minvu-universidades-convocatoria-2024-2/">Iniciativa</a></li>
+</ul>
+</li>
+<li id="menu-item-1049" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1049"><a href="https://centrodeestudios.minvu.gob.cl/redes/">Revista Redes</a>
+<ul class="sub-menu">
+	<li id="menu-item-4936" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4936"><a href="https://centrodeestudios.minvu.gob.cl/redes/sexto-numero/">Sexto Número</a></li>
+	<li id="menu-item-1050" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1050"><a href="https://centrodeestudios.minvu.gob.cl/redes/">Números Anteriores</a></li>
+</ul>
+</li>
+</ul>                    
+                </div>
+            </nav>
+            </div>
+<!-- ========== Footer Nav and Copyright ========== -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 align-self-center">
+                                
+            <nav class="nav-footer-simple">
+                
+
+                <ul id="menu-menu-simple" class="menu-footer-simple"><li id="menu-item-1075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-1075"><a href="https://centrodeestudios.minvu.gob.cl/"><i class="fa-solid fa-house"></i> Centro de Estudios</a></li>
+<li id="menu-item-1076" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1076"><a target="_blank" rel="noopener" href="https://atencionciudadana.minvu.gob.cl/"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
+</ul>            </nav>  
+        
+       
+            </div>
+            <div class="col-md-5 address-footer info-foote">
+                <!-- MINVU credits-->
+				
+				
+                <div class="row">
+                
+<div class="col-8 text-end align-self-center">
+
+                  <p>
+                  <div id="block-2" class="widget widget_block widget_text">
+<p><strong>Ministerio de Vivienda y Urbanismo</strong><br>Alameda 924, Santiago, Chile<br>Teléfono <a rel="noreferrer noopener" href="tel:  600 901 11 11" data-type="tel" data-id="tel:  600 901 11 11" target="_blank">6009011111</a><br>Desde Celular <a href="tel:  02 2 901 11 11" data-type="tel" data-id="tel:  02 2 901 11 11">02 2 9011111</a></p>
+</div>  
+
+                  </p></div>
+<div class="col-4 align-self-center"><a href="http://www.minvu.cl" target="_blank" title="ir al MINVU"><img class="w-auto" src="https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/img/minvu-logo-footer.jpg" alt="Logo minvu" /></a></div>
+                  
+                  </div>
+               
+                  
+              
+            </ul>
+				
+                
+                <!-- / MINVU credits -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PXRHP55S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- ========== /Footer Nav and Copyright ========== -->
+
+
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-content/themes/obsevatorio-2023/assets/js/bootstrap.min.js?ver=dff9c4750c5cedb4e4f659e6fd947207' id='bootstrap-js'></script>
+<script type='text/javascript' id='search-filter-plugin-build-js-extra'>
+/* <![CDATA[ */
+var SF_LDATA = {"ajax_url":"https:\/\/centrodeestudios.minvu.gob.cl\/wp-admin\/admin-ajax.php","home_url":"https:\/\/centrodeestudios.minvu.gob.cl\/","extensions":[]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-content/plugins/search-filter-pro/public/assets/js/search-filter-build.min.js?ver=2.5.7' id='search-filter-plugin-build-js'></script>
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-content/plugins/search-filter-pro/public/assets/js/chosen.jquery.min.js?ver=2.5.7' id='search-filter-plugin-chosen-js'></script>
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2' id='jquery-ui-core-js'></script>
+<script type='text/javascript' src='https://centrodeestudios.minvu.gob.cl/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.13.2' id='jquery-ui-datepicker-js'></script>
+
+</body>
+</html>

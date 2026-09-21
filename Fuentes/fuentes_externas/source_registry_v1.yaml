@@ -1,0 +1,276 @@
+schema_version: 1
+project_id: consultora_caso_inmobiliario
+scope:
+  territory: "32 comunas de la Provincia de Santiago"
+  period: "2014-2026, conservando la cobertura real de cada fuente"
+  status: "inventario; ninguna fuente aceptada para producción"
+policy:
+  raw_root: "Fuentes/fuentes_externas/raw"
+  normalized_root: "Fuentes/fuentes_externas/normalized"
+  accepted_root: "Fuentes/fuentes_externas/accepted"
+  separate_from_press_snapshot: true
+  require_hash: true
+  require_license_review: true
+  require_human_sample: true
+sources:
+  - source_id: F-01
+    name: "INE Censo de Población y Vivienda 2024"
+    publisher: INE
+    primary_url: "https://censo2024.ine.gob.cl/resultados/"
+    source_type: web_visualizer
+    priority: P0
+    status: pilot
+    evidence_role: denominator_context
+    spatial_unit: "comuna, área, manzana-entidad"
+    temporal_unit: "corte 2024"
+    access: public
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Felipe, Christian]
+  - source_id: F-02
+    name: "INE permisos y recepciones geográficas"
+    publisher: INE
+    primary_url: "https://www.ine.gob.cl/herramientas/portal-de-mapas/geodatos-abiertos"
+    source_type: arcgis_or_download
+    priority: P0
+    status: candidate
+    evidence_role: event_context
+    spatial_unit: "obra/comuna/geometría según producto"
+    temporal_unit: "principalmente 2010-2020"
+    access: public
+    license_review: pending
+    pii_risk: high
+    responsible_arcs: [Felipe, Nicolas]
+    notes: "Página primaria verificada; enlaza visores ArcGIS y productos INE. Falta seleccionar capa histórica de permisos/recepciones y revisar licencia por producto."
+  - source_id: F-03
+    name: "CASEN 2024"
+    publisher: "Ministerio de Desarrollo Social y Familia"
+    primary_url: "https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2024"
+    source_type: stata_spss_rdata
+    priority: P1
+    status: pilot
+    evidence_role: denominator_context
+    spatial_unit: "hogar/persona; comuna/provincia según base"
+    temporal_unit: "levantamiento 2024-2025"
+    access: public_download
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Felipe, Christian]
+    notes: "Piloto capturado: tablas temáticas, base provincia/comuna y codebooks; microdatos nacionales grandes diferidos con exclusión explícita."
+  - source_id: F-04
+    name: "MINVU Portal de Instrumentos de Planificación Territorial"
+    publisher: MINVU
+    primary_url: "https://www.minvu.gob.cl/elementos-tecnicos/portal-de-instrumentos-de-planificacion-territorial/"
+    source_type: html_pdf_map
+    priority: P0
+    status: pilot
+    evidence_role: primary_event_object
+    spatial_unit: "instrumento/comuna/zona"
+    temporal_unit: "publicación, aprobación y modificación"
+    access: public
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Felipe, Nicolas]
+  - source_id: F-05
+    name: "MINVU permisos de edificación"
+    publisher: MINVU
+    primary_url: "https://centrodeestudios.minvu.gob.cl/repositorio/categoria/permisos-de-edificacion/"
+    source_type: xlsx
+    priority: P0
+    status: candidate
+    evidence_role: event_context
+    spatial_unit: "comuna"
+    temporal_unit: "mes/año"
+    access: public_download
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Felipe, Christian]
+  - source_id: F-06
+    name: "IDE Chile / Geoportal"
+    publisher: "IDE Chile / proveedores sectoriales"
+    primary_url: "https://www.ide.cl/"
+    source_type: ogc_catalog
+    priority: P0
+    status: pilot
+    evidence_role: territorial_context
+    spatial_unit: "capa/feature/polígono/punto"
+    temporal_unit: "versión de capa"
+    access: public
+    license_review: per_layer
+    pii_risk: low
+    responsible_arcs: [Felipe, Nicolas]
+  - source_id: F-07
+    name: "SEA / e-SEIA"
+    publisher: SEA
+    primary_url: "https://www.sea.gob.cl/evaluacion-ambiental/informacion-linea-base-eia"
+    source_type: arcgis_html_pdf
+    priority: P0
+    status: access_blocked_observed
+    evidence_role: primary_event_object
+    spatial_unit: "proyecto/expediente/comuna"
+    temporal_unit: "ingreso, evaluación, RCA, PAC"
+    access: public
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Felipe, Nicolas, Christian, Dario]
+    notes: "La ruta ArcGIS probada redirige a login; no se considera endpoint JSON público hasta hallar una ruta documentada."
+  - source_id: F-08
+    name: "SMA / SNIFA"
+    publisher: SMA
+    primary_url: "https://snifa.sma.gob.cl/DatosAbiertos"
+    source_type: web_download
+    priority: P1
+    status: candidate
+    evidence_role: primary_event
+    spatial_unit: "unidad fiscalizable/expediente"
+    temporal_unit: "fiscalización, cargo, sanción, seguimiento"
+    access: public
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Nicolas, Christian]
+  - source_id: F-09
+    name: "BCN LeyChile / datos.bcn.cl"
+    publisher: BCN
+    primary_url: "https://www.bcn.cl/leychile"
+    source_type: lod_rest_html
+    priority: P0
+    status: pilot
+    evidence_role: normative_primary
+    spatial_unit: "norma/organismo"
+    temporal_unit: "publicación/vigencia/versión"
+    access: public_or_keyed
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Nicolas, Christian]
+  - source_id: F-10
+    name: "Diario Oficial"
+    publisher: "Ministerio del Interior"
+    primary_url: "https://www.diariooficial.interior.gob.cl/presente/"
+    source_type: html_pdf
+    priority: P0
+    status: candidate
+    evidence_role: normative_primary
+    spatial_unit: "acto/edición"
+    temporal_unit: "fecha de publicación"
+    access: public
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Nicolas]
+  - source_id: F-11
+    name: "Transparencia municipal y DOM"
+    publisher: "Municipalidades / Portal de Transparencia"
+    primary_url: "https://www.portaltransparencia.cl/PortalPdT/"
+    source_type: html_pdf_xlsx_manual
+    priority: P0
+    status: access_blocked_observed
+    evidence_role: primary_event_object
+    spatial_unit: "municipio/expediente/proyecto"
+    temporal_unit: "acto, solicitud, respuesta, permiso"
+    access: public_or_request
+    license_review: per_document
+    pii_risk: high
+    responsible_arcs: [Nicolas, Felipe, Christian]
+    notes: "La captura pública sin credenciales devolvió HTTP 403; no se intenta evadir el bloqueo."
+  - source_id: F-12
+    name: "CMN / Geoportal de patrimonio"
+    publisher: CMN
+    primary_url: "https://www.monumentos.gob.cl/geoportal"
+    source_type: xlsx_kmz_feature_service
+    priority: P0
+    status: candidate
+    evidence_role: territorial_context
+    spatial_unit: "monumento/zona/polígono"
+    temporal_unit: "decreto/gestión"
+    access: public
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Felipe, Nicolas, Christian]
+  - source_id: F-13
+    name: "DTPM GTFS"
+    publisher: DTPM
+    primary_url: "https://dtpm.cl/index.php/gtfs-vigente"
+    source_type: gtfs
+    priority: P1
+    status: pilot
+    evidence_role: territorial_context
+    spatial_unit: "parada/ruta/servicio"
+    temporal_unit: "versión del feed/programa"
+    access: public
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Felipe]
+    notes: "Dos feeds GTFS capturados y resumidos; son versiones con ventanas temporales distintas, no un panel histórico comparable todavía."
+  - source_id: F-14
+    name: "ARClim"
+    publisher: MMA
+    primary_url: "https://arclim.mma.gob.cl/"
+    source_type: geojson_shp_geotiff_excel_api
+    priority: P1
+    status: pilot
+    evidence_role: territorial_context
+    spatial_unit: "comuna/ciudad/grilla/cadena de impacto"
+    temporal_unit: "histórico y escenarios"
+    access: public
+    license_review: pending
+    pii_risk: low
+    responsible_arcs: [Felipe, Christian]
+    notes: "API pública documentada capturada: 29 capas, 69 indicadores, atributos comunales y serie Santiago; capas base pueden provenir de IDE y no sustituyen la fuente primaria."
+  - source_id: F-15
+    name: "ChileCompra / Mercado Público"
+    publisher: ChileCompra
+    primary_url: "https://www.chilecompra.cl/api/"
+    source_type: api
+    priority: P1
+    status: candidate
+    evidence_role: institutional_context
+    spatial_unit: "organismo/proveedor/comuna"
+    temporal_unit: "licitación/orden/estado"
+    access: ticket_required
+    license_review: pending
+    pii_risk: medium
+    responsible_arcs: [Nicolas, Dario]
+    notes: "Página primaria verificada; la API declara licitaciones, órdenes, compradores y proveedores en tiempo real, con ticket/ClaveÚnica y condiciones de atribución."
+  - source_id: F-16
+    name: "Ley de Lobby"
+    publisher: "Gobierno de Chile"
+    primary_url: "https://www.leylobby.gob.cl/"
+    source_type: web_export_candidate
+    priority: P1
+    status: candidate
+    evidence_role: institutional_context
+    spatial_unit: "institución/sujeto/registro"
+    temporal_unit: "audiencia/viaje/donativo"
+    access: public_endpoint_pending
+    license_review: pending
+    pii_risk: high
+    responsible_arcs: [Dario, Nicolas]
+    notes: "Página y dos manuales públicos capturados; endpoint masivo aún no demostrado."
+  - source_id: F-17
+    name: "SINIM / SUBDERE"
+    publisher: SUBDERE
+    primary_url: "https://datos.sinim.gov.cl/datos_municipales.php"
+    source_type: xlsx_web
+    priority: P1
+    status: blocked_license_review
+    evidence_role: denominator_context
+    spatial_unit: "municipio"
+    temporal_unit: "indicador/año"
+    access: public_download
+    license_review: commercial_use_unclear
+    pii_risk: low
+    responsible_arcs: [Felipe, Nicolas]
+    notes: "Página declara uso sin fines comerciales y obligación de citar; bloqueada para comercialización hasta autorización o delimitación de uso."
+  - source_id: F-18
+    name: "Listado comunitario de APIs públicas"
+    publisher: "juanbrujo / comunidad"
+    primary_url: "https://github.com/juanbrujo/listado-apis-publicas-en-chile"
+    source_type: catalog
+    priority: P2
+    status: discovery_only
+    evidence_role: discovery_source
+    spatial_unit: none
+    temporal_unit: none
+    access: public
+    license_review: CC0_for_catalog_only
+    pii_risk: low
+    responsible_arcs: [Felipe]

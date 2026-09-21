@@ -1,0 +1,24 @@
+{
+  "artifact_version": "human-vs-ai-comparison-v5.2.5-social-filter-applied-1",
+  "note": "Recalculo sobre los mismos 50 documentos de la muestra ciega, excluyendo el unico caso (Alto Macul, x.com) que con el filtro social_truncado_apartados.jsonl activo ya no entra al pool clasificable -- queda insufficient_content por texto_cortado_a_mitad_de_frase, consistente (no contradice) el mantener_uncertain de Felipe. No se realizaron llamadas API nuevas.",
+  "api_call": false,
+  "rows_total_original": 50,
+  "rows_excluded_by_social_filter": 1,
+  "excluded": {
+    "url": "https://x.com/alto_macul/status/1237328657254879232?lang=ar-x-fm",
+    "reason": "texto_cortado_a_mitad_de_frase",
+    "human_verdict_previo": "mantener_uncertain",
+    "model_decision_previa": "include"
+  },
+  "rows_compared": 49,
+  "strict_agreement_n": 39,
+  "strict_agreement_rate": 0.7959,
+  "operational_agreement_n": 48,
+  "operational_agreement_rate": 0.9796,
+  "model_broad_include_n": 13,
+  "definite_model_include_false_positives_n": 0,
+  "model_include_not_approved_n": 0,
+  "zero_false_positive_gate_pass": true,
+  "desacuerdos_reales_restantes": 10,
+  "aclaracion_api_call": "api_call=false describe SOLO este recalculo (comparacion aritmetica sobre filas ya existentes, sin llamar al modelo). Los datos subyacentes (clasificacion_blind_v5_2_3_50.jsonl) SI vienen de una corrida real con API y tienen costo/usage reales (ver comparacion_gate_v5_2_3_vs_v5_2_4_blind50.json y active-context.md para el desglose de que rondas llamaron a la API y cuales fueron recalculo puro). Aclaracion agregada 2026-09-16 en respuesta a hallazgo de auditoria cruzada de Codex/Luna."
+}

@@ -1,0 +1,922 @@
+
+<!DOCTYPE html>
+<html lang="es" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class="h-100 active a11y-font-0">
+  <head>
+    <meta charset="utf-8" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-71711144-1"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag("js", new Date());gtag("set", "developer_id.dMDhkMT", true);gtag("config", "UA-71711144-1", {"groups":"default","anonymize_ip":true,"page_placeholder":"PLACEHOLDER_page_path"});</script>
+<link rel="canonical" href="https://www.sea.gob.cl/evaluacion-ambiental/informacion-linea-base-eia" />
+<link rel="image_src" href="https://www.sea.gob.cl/modules/custom/sea_core/images/sea-rss.png" />
+<meta property="og:site_name" content="SEA Chile" />
+<meta property="og:title" content="Información línea de base de EIA" />
+<meta property="og:image" content="https://www.sea.gob.cl/modules/custom/sea_core/images/sea-rss.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Información línea de base de EIA" />
+<meta name="twitter:image" content="https://www.sea.gob.cl/modules/custom/sea_core/images/sea-rss.png" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/themes/custom/sea_gob_cl/favicon.ico" type="image/vnd.microsoft.icon" />
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "#3C69B4";</script>
+
+    <title>Información línea de base de EIA | SEA Chile</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_JNMtOYhNvuQX9nGJ6-7BxUPNVop2E8iXksUdsJii4SE.css?delta=0&amp;language=es&amp;theme=sea_gob_cl&amp;include=eJxdiEEOwyAMBD9kYakfQgY7KZLBFYak-X2lhlMuuzNDzMOoXUgLwtatDchvc2nIfX5Iw20rRi0JbwzZHbKp9WRfZNlo6oDdUsyKu1oiBReKz6KSxwvXh1oa-OVDKiZygaPI6fjfUI2nyg_VKT-D" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_cmbyygaTrLtr0gPJZz3jTduwCNDkSSOc0lKExc_6cqo.css?delta=1&amp;language=es&amp;theme=sea_gob_cl&amp;include=eJxdiEEOwyAMBD9kYakfQgY7KZLBFYak-X2lhlMuuzNDzMOoXUgLwtatDchvc2nIfX5Iw20rRi0JbwzZHbKp9WRfZNlo6oDdUsyKu1oiBReKz6KSxwvXh1oa-OVDKiZygaPI6fjfUI2nyg_VKT-D" />
+
+    
+  </head>
+  <body class="no-sidebars has-featured-top path-node page-node-type-page    bg- d-flex flex-column h-100">
+        <a href="#main-content" class="visually-hidden focusable skip-link">
+      Pasar al contenido principal
+    </a>
+    
+      <div class="dialog-off-canvas-main-canvas d-flex flex-column h-100" data-off-canvas-main-canvas>
+    <div id="page-wrapper">
+  <div id="page">
+    <div class="navbar navbar_change_lenguaje navbar-expand-md justify-content-end">
+      <div class="gtranslate_wrapper"></div>
+    </div>
+    <header id="header" class="header" role="banner">
+      <section class="section layout-container clearfix">
+                  <div id="block-sea-gob-cl-branding">
+            <a href="/" title="Inicio"
+               rel="home" id="logo">
+              <img src="/themes/custom/sea_gob_cl/logo.svg" alt="Inicio"/>
+            </a>
+          </div>
+                  <div class="region region-header">
+    <div id="block-seacoreheadertoolbarkitgob" class="block block-sea-core block-sea-core-toolbar">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      <div class="toolbar">
+  <a class="toolbar-btn toolbar-behavior-contrast" href="#">
+    <i class="cl cl-contraste"></i>
+  </a>
+  <div class="toolbar-btn-group">
+    <a class="toolbar-btn toolbar-behavior-decrease" href="#">
+      <i class="cl cl-menos"></i>
+    </a>
+    <a class="toolbar-btn toolbar-behavior-increase" href="#">
+      <i class="cl cl-mas"></i>
+    </a>
+  </div>
+</div>
+
+    </div>
+    </div>
+</div>
+<div class="views-exposed-form block block-views block-views-exposed-filter-blockbuscador-page-1" data-drupal-selector="views-exposed-form-buscador-page-1" id="block-formularioexpuestobuscadorpage-1-2">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      <form action="/buscador" method="get" id="views-exposed-form-buscador-page-1" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-textfield form-item-search-api-fulltext js-form-item-search-api-fulltext">
+      <label for="edit-search-api-fulltext">Buscar</label>
+        
+  <input data-drupal-selector="edit-search-api-fulltext" type="text" id="edit-search-api-fulltext" name="search_api_fulltext" value="" size="30" maxlength="128" class="form-text form-control" />
+
+
+        </div>
+<div class="js-form-item form-item js-form-type-select form-item-sort-by js-form-item-sort-by">
+      <label for="edit-sort-by">Ordenar por</label>
+        <select data-drupal-selector="edit-sort-by" id="edit-sort-by" name="sort_by" class="form-select form-control">
+            <option value="changed" selected="selected">Fecha de modificación</option>
+                <option value="search_api_relevance">Relevancia</option>
+      </select>
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions">
+  <input data-drupal-selector="edit-submit-buscador" type="submit" id="edit-submit-buscador" value="Buscar" class="button js-form-submit form-submit btn btn-primary" />
+
+</div>
+
+
+</form>
+
+    </div>
+    </div>
+</div>
+<div id="block-seacoreheaderbotoningresoeseia" class="block block-sea-core block-sea-core-btn-seia">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      <a href="https://seia.sea.gob.cl/login.php" class="sea_core_btn_seia" target="_blank"><span>Ingresar a</span> e-SEIA</a>
+    </div>
+    </div>
+</div>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-main-menu-menu" id="block-sea-gob-cl-main-menu">
+  <div class="block-wrapper">
+                      
+    <h2 class="visually-hidden" id="block-sea-gob-cl-main-menu-menu">Main navigation</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/" data-drupal-link-system-path="&lt;front&gt;">Inicio</a>
+              </li>
+                      <li class="leaf expanded">
+        <a href="/que-hacemos" data-drupal-link-system-path="que-hacemos">Qué Hacemos</a>
+                                <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/que-es-el-seia-0" data-drupal-link-system-path="node/41">¿Qué es el SEIA?</a>
+              </li>
+                      <li class="leaf">
+        <a href="/quienes-somos" data-drupal-link-system-path="node/38">¿Quiénes Somos?</a>
+              </li>
+                      <li class="leaf">
+        <a href="/mision" data-drupal-link-system-path="node/39">Misión</a>
+              </li>
+                      <li class="leaf">
+        <a href="/sea/organigrama/director-ejecutivo" data-drupal-link-system-path="taxonomy/term/672">Autoridades</a>
+              </li>
+                      <li class="leaf">
+        <a href="/sea/organigrama" data-drupal-link-system-path="sea/organigrama">Organigrama</a>
+              </li>
+                      <li class="leaf">
+        <a href="/evaluacion-de-impacto-ambiental" data-drupal-link-system-path="procesos/717">Evaluación de Impacto Ambiental</a>
+              </li>
+                      <li class="leaf">
+        <a href="/participacion-ciudadana-y-consulta-indigena" data-drupal-link-system-path="procesos/718">Participación Ciudadana y Consulta Indígena</a>
+              </li>
+                      <li class="leaf">
+        <a href="/consulta-de-pertinencia" data-drupal-link-system-path="procesos/719">Consulta de Pertinencia</a>
+              </li>
+                      <li class="leaf">
+        <a href="/sea/declaracion-estudio-impacto-ambiental" data-drupal-link-system-path="node/42">Declaración o Estudio de Impacto Ambiental</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/modificacion-reglamento-seia" data-drupal-link-system-path="node/43">Modificación Reglamento SEIA</a>
+              </li>
+        </ul>
+      
+              </li>
+                      <li class="leaf expanded">
+        <a href="/documentacion" data-drupal-link-system-path="node/6170">Centro de Documentación</a>
+                                <ul class="menu">
+                                        <li class="leaf expanded first">
+        <a href="/documentacion/permisos-autorizaciones-ambientales" data-drupal-link-system-path="node/18">Permisos y Autorizaciones Ambientales</a>
+                                <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/normativa-ambiental-aplicable" data-drupal-link-system-path="node/20">Normativa Ambiental Aplicable</a>
+              </li>
+                      <li class="leaf">
+        <a href="/documentacion/permisos-autorizaciones-ambientales/permisos-pronunciamientos-ambientales-sectoriales" data-drupal-link-system-path="node/22">Permisos y Pronunciamientos Ambientales Sectoriales</a>
+              </li>
+                      <li class="leaf">
+        <a href="/pertinencia-de-ingreso-al-seia" data-drupal-link-system-path="node/23">Pertinencia de Ingreso al SEIA</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/silencio-administrativo" data-drupal-link-system-path="node/24">Silencio Administrativo</a>
+              </li>
+        </ul>
+      
+              </li>
+                      <li class="leaf">
+        <a href="/documentacion/reportes" data-drupal-link-system-path="documentacion/reportes">Reporte Estadístico Mensual de Proyectos en el SEIA</a>
+              </li>
+                      <li class="leaf">
+        <a href="/instructivos-para-la-evaluacion-del-impacto-ambiental" data-drupal-link-system-path="node/26">Instructivos para la Evaluación del Impacto Ambiental</a>
+              </li>
+                      <li class="leaf expanded">
+        <a href="/guias-para-la-evaluacion-de-impacto-ambiental" data-drupal-link-system-path="node/27">Guías para la Evaluación de Impacto Ambiental</a>
+                                <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/guias-de-descripcion-de-proyecto" data-drupal-link-system-path="node/28">Guías de Descripción de Proyecto</a>
+              </li>
+                      <li class="leaf">
+        <a href="/guias-relacionadas-al-articulo-11-de-la-ley-ndeg19300" data-drupal-link-system-path="node/29">Guías Relacionadas al Artículo 11 de la Ley N°19.300</a>
+              </li>
+                      <li class="leaf">
+        <a href="/guias-para-la-aplicacion-de-normas-y-reglamentos" data-drupal-link-system-path="node/30">Guías para la Aplicación de Normas y Reglamentos</a>
+              </li>
+                      <li class="leaf">
+        <a href="/guias-para-la-descripcion-del-area-de-influencia" data-drupal-link-system-path="node/31">Guías para la Descripción del Área de Influencia</a>
+              </li>
+                      <li class="leaf">
+        <a href="/guias-sobre-participacion-ciudadana-pac" data-drupal-link-system-path="node/32">Guías sobre Participación Ciudadana (PAC)</a>
+              </li>
+                      <li class="leaf">
+        <a href="/guias-sobre-metodologias-y-modelos" data-drupal-link-system-path="node/33">Guías sobre Metodologías y Modelos</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/guias-para-los-permisos-ambientales-sectoriales-pas" data-drupal-link-system-path="node/35">Guías para los Permisos Ambientales Sectoriales (PAS)</a>
+              </li>
+        </ul>
+      
+              </li>
+                      <li class="leaf">
+        <a href="/criterios-de-evaluacion-en-el-seia" data-drupal-link-system-path="node/4993">Criterio de Evaluación en el SEIA</a>
+              </li>
+                      <li class="leaf">
+        <a href="/manuales" data-drupal-link-system-path="node/13610">Manuales</a>
+              </li>
+                      <li class="leaf">
+        <a href="/documentos-no-vigentes" data-drupal-link-system-path="node/2184">Documentos No Vigentes</a>
+              </li>
+                      <li class="leaf">
+        <a href="/normas-de-calidad-y-valores-referenciales" data-drupal-link-system-path="node/36">Normas de Calidad y Valores Referenciales</a>
+              </li>
+                      <li class="leaf">
+        <a href="/documentos-de-interes" data-drupal-link-system-path="node/3354">Documentos de Interés</a>
+              </li>
+                      <li class="leaf">
+        <a href="/revista-tecnica" data-drupal-link-system-path="node/4532">Revista Técnica</a>
+              </li>
+                      <li class="leaf">
+        <a href="/documentos-en-elaboracion-y-publicaciones-de-extractos-en-el-diario-oficial" data-drupal-link-system-path="node/6134">Documentos en Elaboración</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://www.sea.gob.cl/documentacion/reportes/reporte-mensual-digital-del-sea">Reporte Mensual Digital SEA</a>
+              </li>
+        </ul>
+      
+              </li>
+                      <li class="leaf expanded">
+        <a href="/regiones" data-drupal-link-system-path="regiones">SEA en Regiones</a>
+                                <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/regiones/region-de-arica-y-parinacota" data-drupal-link-system-path="node/2168">Región de Arica y Parinacota</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-tarapaca" data-drupal-link-system-path="node/2169">Región de Tarapacá</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-antofagasta" data-drupal-link-system-path="node/2181">Región de Antofagasta</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-atacama" data-drupal-link-system-path="node/2170">Región de Atacama</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-coquimbo" data-drupal-link-system-path="node/2172">Región de Coquimbo</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-valparaiso" data-drupal-link-system-path="node/2174">Región de Valparaíso</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-metropolitana" data-drupal-link-system-path="node/2175">Región Metropolitana</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-del-libertador-general-bernardo-ohiggins" data-drupal-link-system-path="node/2177">Región del Libertador General Bernardo O&#039;Higgins</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-del-maule" data-drupal-link-system-path="node/2176">Región del Maule</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-nuble" data-drupal-link-system-path="node/3838">Región de Ñuble</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-del-biobio" data-drupal-link-system-path="node/2171">Región del Biobío</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-la-araucania" data-drupal-link-system-path="node/2178">Región de La Araucanía</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-los-rios" data-drupal-link-system-path="node/2173">Región de Los Ríos</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-los-lagos" data-drupal-link-system-path="node/2179">Región de Los Lagos</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones/region-de-aysen-del-general-carlos-ibanez-del-campo" data-drupal-link-system-path="node/2180">Región de Aysén del General Carlos Ibáñez del Campo</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/regiones/region-de-magallanes-y-de-la-antartica-chilena" data-drupal-link-system-path="node/331">Región de Magallanes y de la Antártica Chilena</a>
+              </li>
+        </ul>
+      
+              </li>
+                      <li class="leaf">
+        <a href="/noticias" data-drupal-link-system-path="noticias">Noticias</a>
+              </li>
+                      <li class="leaf">
+        <a href="/atencion-ciudadana" data-drupal-link-system-path="node/6171">Trámites en Línea</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/oficina-de-partes-virtual">Oficina de Partes Virtual</a>
+              </li>
+                                    <li class="leaf expanded last">
+        <a href="/contacto" data-drupal-link-system-path="node/6172">Centro de Ayuda</a>
+                                <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://contactoseagob.atlassian.net/servicedesk/customer/portal/4/group/4" class="contacto" target="_blank">Centro de Atención de Usuarios</a>
+              </li>
+                      <li class="leaf">
+        <a href="/oficina-de-informacion-reclamos-y-sugerencias-0" class="oirs" data-drupal-link-system-path="node/6">OIRS</a>
+              </li>
+                      <li class="leaf">
+        <a href="mailto:integridad@sea.gob.cl">Contacto Integridad</a>
+              </li>
+                      <li class="leaf">
+        <a href="/regiones" class="sea-en-regiones" data-drupal-link-system-path="regiones">SEA en regiones</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://twitter.com/SEA__gob" class="x-twitter" target="_blank">X</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.youtube.com/channel/UCNUJJj1CnP-vMli3nIBY21g" class="youtube" target="_blank">Youtube</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.facebook.com/Servicio-de-Evaluaci%C3%B3n-Ambiental-SEA-120054529852271/?modal=admin_todo_tour" class="facebook" target="_blank">Facebook</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.instagram.com/evaluacionambiental/?hl=es-la" class="instagram" target="_blank">Instagram</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.threads.net/@evaluacionambiental" class="threads" target="_blank">Threads</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.linkedin.com/company/1458997/admin/" class="linkedin" target="_blank">LinkedIn</a>
+              </li>
+                      <li class="leaf">
+        <a href="tel://+56226164000/" class="phone">+56 2 2616 4000</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/contacto" data-drupal-link-system-path="node/6172">Horario de Atención</a>
+              </li>
+        </ul>
+      
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<div id="block-sea-gob-cl-gtranslate" class="block block-g-translate block-gtranslate-block">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      
+<div class="gtranslate_wrapper"></div><script>window.gtranslateSettings = {"switcher_horizontal_position":"left","switcher_vertical_position":"bottom","horizontal_position":"inline","vertical_position":"inline","float_switcher_open_direction":"top","switcher_open_direction":"bottom","default_language":"es","native_language_names":1,"detect_browser_language":0,"add_new_line":1,"select_language_label":"Select Language","flag_size":16,"flag_style":"2d","globe_size":60,"alt_flags":[],"wrapper_selector":".gtranslate_wrapper","url_structure":"sub_directory","custom_domains":null,"languages":["en","es"],"custom_css":""}</script><script>(function(){var js = document.createElement('script');js.setAttribute('src', '/modules/contrib/gtranslate/js/ln.js');js.setAttribute('data-gt-orig-url', '/evaluacion-ambiental/informacion-linea-base-eia');js.setAttribute('data-gt-orig-domain', 'www.sea.gob.cl');document.body.appendChild(js);})();</script>
+    </div>
+    </div>
+</div>
+
+  </div>
+
+        <a href="#" id="toggle-mobile-main-menu">Menú principal</a>
+      </section>
+    </header>
+
+    
+          <div id="featured">
+        <section class="section clearfix">
+            <div class="region region-featured">
+    <div class="views-element-container block block-views block-views-blockpopup-block-1" id="block-panels-mini-popup-block">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      <div><div class="js-view-dom-id-95ad94186e58ece8e21f444861c262e07e996eb187d306420ba0e92a21cab3e5">
+  
+  
+  
+
+  
+  
+  
+
+    
+
+  
+  
+
+  
+  
+</div>
+</div>
+
+    </div>
+    </div>
+</div>
+<div id="block-sea-gob-cl-breadcrumbs" class="block block-system block-system-breadcrumb-block">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+        <nav aria-label="breadcrumb">
+    <h2 id="system-breadcrumb" class="visually-hidden">Sobrescribir enlaces de ayuda a la navegación</h2>
+    <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+                  <a href="/">Inicio</a>
+              </li>
+          <li class="breadcrumb-item">
+                  <a href="/tce/tabla-comision-de-evaluacion-region-de-o-higgins-7">Tabla Comisión de Evaluación Región de O&#039; Higgins</a>
+              </li>
+          <li class="breadcrumb-item">
+                  Información Línea de Base de EIA
+              </li>
+        </ol>
+  </nav>
+
+    </div>
+    </div>
+</div>
+<div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+
+        </section>
+      </div>
+        <div id="main-wrapper" class="layout-main-wrapper layout-container clearfix">
+      <div id="main" class="layout-main clearfix">
+        <div id="main-inner">
+          <main id="content" class="column main-content" role="main">
+            <section class="section">
+                            <a id="main-content" tabindex="-1"></a>
+              
+                <div class="region region-content">
+    <div id="block-sea-gob-cl-page-title" class="block block-core block-page-title-block">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      
+  <h1 class="page-title"><span property="schema:name" class="field field--name-title field--type-string field--label-hidden">Información línea de base de EIA</span>
+</h1>
+
+
+    </div>
+    </div>
+</div>
+<div id="block-sea-gob-cl-system-main" class="block block-system block-system-main-block">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      <article about="/evaluacion-ambiental/informacion-linea-base-eia" typeof="schema:WebPage" class="node node--type-page node--view-mode-full">
+
+  
+      <span property="schema:name" content="Información línea de base de EIA" class="hidden"></span>
+
+
+  
+  <div class="node__content">
+    
+            <div class="clearfix text-formatted field field-name-field-shared-bajada field--type-text-long field--label-hidden field__item"><div>
+<div>
+<div>El Servicio de Evaluación Ambiental (SEA) administra un sistema de información de líneas de bases de los proyectos sometidos al SEIA, georreferenciado y de acceso público.</div>
+</div>
+</div>
+</div>
+      
+            <div class="clearfix text-formatted field field-name-field-shared-body field--type-text-long field--label-hidden field__item"><p>La línea de base consiste en la descripción detallada del área de influencia de un proyecto o actividad, en forma previa a su ejecución. Constituye, además, uno de los contenidos mínimos exigidos por la Ley N° 19.300, sobre Bases Generales del Medio Ambiente, para la elaboración de Estudios de Impacto Ambiental, lo cual permite evaluar los impactos que pudiesen generarse o presentarse sobre los elementos del medio ambiente.</p>
+<p>Los elementos del medio ambiente que debe considerar una línea de base son, en síntesis, los siguientes, de acuerdo a lo establecido en el artículo 18 literal e), del Reglamento del SEIA:</p>
+<ul>
+<li>El medio físico, incluyendo, entre otros, la caracterización y análisis de los aspectos asociados a atmósfera (como clima y meteorología, calidad del aire, ruido, luminosidad, entre otros); a la litósfera (como geología, geomorfología, áreas de riesgo geomorfológico, caracterización del suelo, entre otros); la hidrósfera; los glaciares, calidad y cantidad del agua.</li>
+<li>Ecosistemas terrestres.</li>
+<li>Ecosistemas acuáticos continentales.</li>
+<li>Ecosistemas marinos.</li>
+<li>Elementos naturales y artificiales que componen el patrimonio histórico, arqueológico, paleontológico, religioso y en general, los que componen el patrimonio cultural, incluyendo la caracterización de los Monumentos Nacionales.</li>
+<li>El paisaje, incluyendo su visibilidad, calidad y tipo.</li>
+<li>Las áreas protegidas y sitios prioritarios para la conservación.</li>
+<li>Los atractivos naturales o culturales y sus interrelaciones, que atraen flujos de visitantes o turistas.</li>
+<li>El uso del territorio y su relación con la planificación territorial.</li>
+<li>El medio humano, incluyendo información y análisis de sus dimensiones geográfica, demográfica, antropológica, socioeconómica y de bienestar social básico. De existir presencia de grupos humanos pertenecientes a pueblos indígenas, se describirán con particular énfasis los usos y valoración de los recursos naturales; sus prácticas culturales; estructura organizacional; apropiación del medio ambiente; su patrimonio cultural; identidad grupal; ritos comunitarios.</li>
+<li>Los proyectos o actividades que cuenten con Resolución de Calificación Ambiental vigente, aun cuando no se encuentren operando.</li>
+</ul>
+<h4>Mapa de proyectos EIA con Líneas de Bases</h4>
+<p>La aplicación <strong>“Mapa de proyectos EIA con Líneas de bases”</strong>, responde a la necesidad de implementar un sistema de acuerdo a lo establecido en el artículo 81 de la Ley N° 19.300, modificada por la Ley N°20.417:</p>
+<p><em><strong>c) Administrar un sistema de información de líneas de bases de los proyectos sometidos al Sistema de Evaluación de Impacto Ambiental, de acceso público y georeferenciado.</strong></em></p>
+<p><a href="http://sig.sea.gob.cl/mapaLineasBaseEIA/"><strong>Ingreso a la aplicación “Mapa de líneas de bases”</strong></a></p>
+<p>&nbsp;</p>
+<p><u>La aplicación cuenta con las siguientes funcionalidades:</u></p>
+<p>1. Incluye sólo Estudios de Impacto Ambiental (EIA)</p>
+<p>2. Incluye todos los proyectos:</p>
+<ul>
+<li>EIA Aprobados: Proyectos o actividades (EIA) que cuentan con Resolución de Calificación Ambiental (RCA) favorable.</li>
+<li>EIA En Calificación: Proyectos o actividades (EIA) que se encuentran en trámite de evaluación ambiental.</li>
+<li>EIA Rechazados: Proyectos o actividades (EIA) que cuentan con Resolución de Calificación Ambiental (RCA) desfavorable.</li>
+<li>EIA en otros estados</li>
+</ul>
+<p>3. Cada proyecto o actividad se mostrará con el símbolo de bandera, diferenciado por colores de acuerdo al estado en que se encuentre.</p>
+<p>4. Al hacer click sobre la bandera desplegará información general del proyecto incluyendo el acceso directo a la información de línea de base asociada al proyecto (si esta existiera).</p>
+<p><u>Importante</u><em>:</em></p>
+<p>La información cartográfica (punto representativo del proyecto o actividad) desplegada en esta aplicación está en Datum WGS84 y es de carácter referencial, puesto que no corresponde a información generada por el Servicio de Evaluación Ambiental.</p>
+<p><u>Recomendaciones</u><em>:</em></p>
+<p>Utilizar ultima versión de los navegadores (browser)</p>
+<p>a. Sistema operativo Windows 7:</p>
+<ul>
+<li>Google Chrome 22.0 (última versión)</li>
+<li>Mozilla Firefox 16.0 (última versión)</li>
+<li>Internet Explorer 9.0 (última versión)</li>
+<li>Opera 12.02 (última versión)</li>
+<li>Safari 5.1 (última versión)</li>
+</ul>
+<p>b. Sistema operativo Red Hat 5:</p>
+<ul>
+<li>Mozilla Firefox 3.6 (versión antigua)</li>
+<li>Mozilla Firefox 10.0 (última versión)</li>
+</ul>
+</div>
+      
+  </div>
+
+</article>
+
+    </div>
+    </div>
+</div>
+
+  </div>
+
+            </section>
+          </main>
+                            </div>
+      </div>
+    </div>
+          <div class="footer-content">
+            <div class="region region-footer-content">
+    <div id="block-seiasearchform" class="block block-sea-core block-seia-search-form">
+  <div class="block-wrapper">
+  
+      <h2>Buscar y revisar proyectos</h2>
+    
+      <div class="content">
+      <form class="sea-core-seia-project-search-form" data-drupal-selector="sea-core-seia-project-search-form" action="/evaluacion-ambiental/informacion-linea-base-eia" method="post" id="sea-core-seia-project-search-form" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-textfield form-item-seia-project-name js-form-item-seia-project-name">
+      <label for="edit-seia-project-name">Nombre del proyecto</label>
+        
+  <input data-drupal-selector="edit-seia-project-name" type="text" id="edit-seia-project-name" name="seia_project_name" value="" size="60" maxlength="128" class="form-text form-control" />
+
+
+        </div>
+<div class="js-form-item form-item js-form-type-select form-item-seia-region js-form-item-seia-region">
+      <label for="edit-seia-region">Región</label>
+        <select data-drupal-selector="edit-seia-region" id="edit-seia-region" name="seia_region" class="form-select select2-widget form-control" data-select2-config="{&quot;multiple&quot;:false,&quot;placeholder&quot;:{&quot;id&quot;:&quot;&quot;,&quot;text&quot;:&quot;Buscar en todas las regiones&quot;},&quot;allowClear&quot;:true,&quot;dir&quot;:&quot;ltr&quot;,&quot;language&quot;:&quot;es&quot;,&quot;tags&quot;:false,&quot;theme&quot;:&quot;default&quot;,&quot;maximumSelectionLength&quot;:0,&quot;tokenSeparators&quot;:[],&quot;selectOnClose&quot;:false,&quot;width&quot;:&quot;270&quot;}">
+            <option value="" selected="selected"></option>
+                <option value="14">Interregional</option>
+                <option value="15">Región de Arica y Parinacota</option>
+                <option value="1">Región de Tarapacá</option>
+                <option value="2">Región de Antofagasta</option>
+                <option value="3">Región de Atacama</option>
+                <option value="4">Región de Coquimbo</option>
+                <option value="5">Región de Valparaíso</option>
+                <option value="13">Región Metropolitana</option>
+                <option value="6">Región del Libertador Gral. Bernardo O&#039;Higgins</option>
+                <option value="7">Región del Maule</option>
+                <option value="16">Región de Ñuble</option>
+                <option value="8">Región del Biobío</option>
+                <option value="9">Región de La Araucanía</option>
+                <option value="2420135">Región de Los Ríos</option>
+                <option value="10">Región de Los Lagos</option>
+                <option value="11">Región de Aysén del Gral. Carlos Ibáñez del Campo</option>
+                <option value="12">Región de Magallanes y Antártica Chilena</option>
+      </select>
+
+        </div>
+<div class="js-form-item form-item js-form-type-select form-item-seia-sector js-form-item-seia-sector">
+      <label for="edit-seia-sector">Sector</label>
+        <select data-drupal-selector="edit-seia-sector" id="edit-seia-sector" name="seia_sector" class="form-select select2-widget form-control" data-select2-config="{&quot;multiple&quot;:false,&quot;placeholder&quot;:{&quot;id&quot;:&quot;&quot;,&quot;text&quot;:&quot;Buscar en todos los sectores&quot;},&quot;allowClear&quot;:true,&quot;dir&quot;:&quot;ltr&quot;,&quot;language&quot;:&quot;es&quot;,&quot;tags&quot;:false,&quot;theme&quot;:&quot;default&quot;,&quot;maximumSelectionLength&quot;:0,&quot;tokenSeparators&quot;:[],&quot;selectOnClose&quot;:false,&quot;width&quot;:&quot;270&quot;}">
+            <option value="" selected="selected"></option>
+                <option value="18">Agropecuario</option>
+                <option value="7">Energía</option>
+                <option value="15">Equipamiento</option>
+                <option value="11">Forestal</option>
+                <option value="13">Infraestructura Hidráulica</option>
+                <option value="10">Infraestructura Portuaria</option>
+                <option value="14">Infraestructura de Transporte</option>
+                <option value="8">Inmobiliarios</option>
+                <option value="16">Instalaciones fabriles varias</option>
+                <option value="2">Minería</option>
+                <option value="5">Pesca y acuicultura</option>
+                <option value="12">Planificación territorial e Inmobiliarios en zonas</option>
+                <option value="6">Saneamiento ambiental</option>
+                <option value="17">Otros</option>
+      </select>
+
+        </div>
+<div class="checkboxes js-form-wrapper form-wrapper" data-drupal-selector="edit-checkboxes" id="edit-checkboxes"><div class="js-form-item form-item js-form-type-checkbox form-item-seia-eia js-form-item-seia-eia">
+        
+  <input data-drupal-selector="edit-seia-eia" type="checkbox" id="edit-seia-eia" name="seia_eia" value="1" class="form-checkbox form-control" />
+
+
+        <label for="edit-seia-eia" class="option">EIA</label>
+      </div>
+<div class="js-form-item form-item js-form-type-checkbox form-item-seia-dia js-form-item-seia-dia">
+        
+  <input data-drupal-selector="edit-seia-dia" type="checkbox" id="edit-seia-dia" name="seia_dia" value="1" class="form-checkbox form-control" />
+
+
+        <label for="edit-seia-dia" class="option">DIA</label>
+      </div>
+</div>
+
+  <input data-drupal-selector="edit-seia-submit" type="submit" id="edit-seia-submit" name="op" value="Buscar" class="button js-form-submit form-submit btn btn-primary" />
+
+
+  <input autocomplete="off" data-drupal-selector="form-l-krwvceihxe5d9e58sdhpqq0gxbuhhqixbozjrgyai" type="hidden" name="form_build_id" value="form-l_kRwvCEIHxE5d9E58sdhPQQ0GxbuhHQiXBOZJRgyAI" class="form-control" />
+
+
+  <input data-drupal-selector="edit-sea-core-seia-project-search-form" type="hidden" name="form_id" value="sea_core_seia_project_search_form" class="form-control" />
+
+
+</form>
+<a href="https://seia.sea.gob.cl/busqueda/buscarProyecto.php" target="_blank" class="button">Búsqueda avanzada ›</a>
+    </div>
+    </div>
+</div>
+
+  </div>
+
+      </div>
+            <div id="footer">
+      <section class="section">
+                  <div class="region region-footer">
+    <nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-otros-menu" id="block-sea-gob-cl-menu-menu-otros">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-otros-menu">Centro de Ayuda</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://www.sea.gob.cl/contacto">Horario de Atención</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/oficina-de-informacion-reclamos-y-sugerencias-0">OIRS (Oficinas de Información Reclamos y Sugerencias)</a>
+              </li>
+                      <li class="leaf">
+        <a href="tel://+56226164000">Teléfono (+56 2 2616 4000)</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://contacto.sea.gob.cl/">Centro de Atención de Usuarios</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/regiones">SEA en Regiones</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.leylobby.gob.cl/instituciones/AW004" target="_blank">Ley del Lobby SEA</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/accesibilidad" title="Accesibilidad">Accesibilidad</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="mailto:integridad@sea.gob.cl">Contacto Integridad</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-instituciones-medioambienta-menu" id="block-sea-gob-cl-menu-menu-instituciones-medioambienta">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-instituciones-medioambienta-menu">Instituciones Medioambientales</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://mma.gob.cl/">Ministerio del Medio Ambiente</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://portal.sma.gob.cl">Superintendencia del Medio Ambiente</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.1ta.cl/">Primer Tribunal Ambiental</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.tribunalambiental.cl/">Segundo Tribunal Ambiental</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://3ta.cl/">Tercer Tribunal Ambiental</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-que-hacemos-en-sea-menu" id="block-sea-gob-cl-menu-menu-que-hacemos-en-sea">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-que-hacemos-en-sea-menu">¿Qué Hacemos en SEA?</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://www.sea.gob.cl/que-es-el-seia-0">Acerca de</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/noticias">Noticias</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/documentacion">Centro de Documentación</a>
+              </li>
+                      <li class="leaf">
+        <a href="/consulta-de-pertinencia" data-drupal-link-system-path="procesos/719">Consulta de Pertinencia</a>
+              </li>
+                      <li class="leaf">
+        <a href="/evaluacion-de-impacto-ambiental" data-drupal-link-system-path="procesos/717">Evaluación de Impacto Ambiental</a>
+              </li>
+                      <li class="leaf">
+        <a href="/participacion-ciudadana-y-consulta-indigena" data-drupal-link-system-path="procesos/718">Participación Ciudadana y Consulta Indígena</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://www.sea.gob.cl/atencion-ciudadana">Trámites en Línea</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-sitios-relacionados-menu" id="block-sea-gob-cl-menu-menu-sitios-relacionados">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-sitios-relacionados-menu">Sitios Relacionados</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://www.sea.gob.cl/politicas-privacidad">Política de Privacidad</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/terminos-y-condiciones">Términos y Condiciones de Registro y Uso de los Sistemas del SEA</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://sea.gob.cl/sites/default/files/imce/archivos/2024/10/24/Pol%C3%ADtica%20General%20de%20Seguridad%20de%20La%20Informaci%C3%B3n%208.3.pdf">Política General de Seguridad de la Información</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://adp.serviciocivil.cl/concursos-spl/opencms">Concursos Alta Dirección Pública</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.empleospublicos.cl/">Empleos Públicos</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://www.sea.gob.cl/sites/default/files/imce/archivos/2024/10/14/Resoluci%C3%B3n%20N%C2%B0202499101812.pdf">Política de Gestión de la Calidad del SEA</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-contactenos-menu" id="block-sea-gob-cl-menu-menu-contactenos">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-contactenos-menu">Preguntas Frecuentes</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://www.sea.gob.cl/soporte/preguntas-frecuentes-seia">Preguntas Frecuentes SEIA</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/soporte/preguntas-frecuentes-e-seia">Preguntas Frecuentes e-SEIA</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/soporte/preguntas-frecuentes-ley-transparencia">Preguntas Frecuentes Ley de Transparencia</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.sea.gob.cl/soporte/preguntas-frecuentes-consultas-oirs">Preguntas Frecuentes Consultas OIRS</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://www.sea.gob.cl/preguntas-frecuentes-registro-de-consultores">Preguntas Frecuentes Registro de Consultores Certificados</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-menu-footer-ctro-soporte-menu" id="block-sea-gob-cl-menu-menu-menu-footer-ctro-soporte">
+  <div class="block-wrapper">
+            
+    <h2 id="block-sea-gob-cl-menu-menu-menu-footer-ctro-soporte-menu">Centro de Soporte</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="/soporte/firma-electronica" data-drupal-link-system-path="node/285">Firma Electrónica</a>
+              </li>
+                      <li class="leaf">
+        <a href="/manuales-de-usuarioa" data-drupal-link-system-path="node/411">Manuales</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="/soporte/software" data-drupal-link-system-path="node/463">Software</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+<div id="block-sea-core-sea-logos" class="block block-block-content block-block-content97dbaedf-a6e6-4e34-85d2-25d1f7421940">
+  <div class="block-wrapper">
+  
+    
+      <div class="content">
+      
+      <div class="field field-name-field-imagenes field--type-entity-reference field--label-hidden field__items">
+              <div class="field__item"><div>
+  
+  
+  <div class="field field-name-field-media-image field--type-image field--label-visually_hidden">
+    <div class="field__label visually-hidden">Image</div>
+              <div class="field__item">  <img loading="lazy" src="/sites/default/files/styles/large/public/2025-06/Logo-ISO-27001.png?itok=Ay1pD-4f" width="480" height="267" alt="Logo ISO" typeof="foaf:Image" class="image-style-large" />
+
+
+</div>
+          </div>
+
+</div>
+</div>
+              <div class="field__item"><div>
+  
+  
+  <div class="field field-name-field-media-image field--type-image field--label-visually_hidden">
+    <div class="field__label visually-hidden">Image</div>
+              <div class="field__item">  <img loading="lazy" src="/sites/default/files/styles/large/public/2024-11/ISO9001_v4.png?itok=zi2Hv_Eh" width="126" height="125" alt="Logo ISO 9001 " typeof="foaf:Image" class="image-style-large" />
+
+
+</div>
+          </div>
+
+</div>
+</div>
+          </div>
+  
+    </div>
+    </div>
+</div>
+<nav role="navigation" class="block block-menu" aria-labelledby="block-sea-gob-cl-menu-menu-redes-sociales-menu" id="block-sea-gob-cl-menu-menu-redes-sociales">
+  <div class="block-wrapper">
+                      
+    <h2 class="visually-hidden" id="block-sea-gob-cl-menu-menu-redes-sociales-menu">Redes Sociales</h2>
+    
+
+              
+              <div class="content">
+      <ul class="menu">
+                                        <li class="leaf first">
+        <a href="https://www.facebook.com/Servicio-de-Evaluaci%C3%B3n-Ambiental-SEA-120054529852271/?modal=admin_todo_tour" class="facebook">Facebook</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.instagram.com/evaluacionambiental/?hl=es-la" class="instagram">Instagram</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.linkedin.com/company/1458997/admin/" class="linkedin">LinkedIn</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://twitter.com/SEA__gob" class="x-twitter" target="_blank">X</a>
+              </li>
+                      <li class="leaf">
+        <a href="https://www.threads.net/@evaluacionambiental" class="threads" target="_blank">Threads</a>
+              </li>
+                                    <li class="leaf last">
+        <a href="https://www.youtube.com/channel/UCNUJJj1CnP-vMli3nIBY21g" class="youtube" target="_blank">Youtube</a>
+              </li>
+        </ul>
+          </div>
+      
+
+
+      </div>
+</nav>
+
+  </div>
+
+      </section>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/16","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"es"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"colorbox":{"opacity":"0.85","current":"{current} de {total}","previous":"\u00ab Anterior","next":"Siguiente \u00bb","close":"Close","maxWidth":"98%","maxHeight":"98%","fixed":true,"mobiledetect":true,"mobiledevicewidth":"480px"},"fitvids":{"selectors":"body","custom_vendors":["iframe[src^=\u0022https:\/\/youtu.be\u0022]"],"ignore_selectors":""},"google_analytics":{"account":"UA-71711144-1","trackOutbound":true,"trackMailto":true,"trackTel":true,"trackDownload":true,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|pdf|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip","trackColorbox":true},"ajaxTrustedUrl":{"form_action_p_pvdeGsVG5zNF_XLGPTvYSKCf43t8qZYSwcfZl2uzM":true,"\/buscador":true},"chosen":{"selector":"select:visible","minimum_single":0,"minimum_multiple":0,"minimum_width":200,"use_relative_width":false,"options":{"disable_search":false,"disable_search_threshold":0,"allow_single_deselect":false,"search_contains":false,"placeholder_text_multiple":"Choose some options","placeholder_text_single":"Choose an option","no_results_text":"No results match","max_shown_results":null,"inherit_select_classes":true}},"user":{"uid":0,"permissionsHash":"8a392735ba0aa342327ac00d12beb6f5fa8658bc79f73ebb194f49699bab9bc1"}}</script>
+<script src="/sites/default/files/js/js_3bowrjcCO0_3FPGSWOepFP5Y0mYFW8_qfk64sGHBYog.js?scope=footer&amp;delta=0&amp;language=es&amp;theme=sea_gob_cl&amp;include=eJxdjFsKAjEMRTdUGvTL3ZT0SYbYDE0UZ_eO0HHQn_s45AZzNsG-Ac7g65BuLgnLiPKCI5wkl4oPPk-C0n3lElgww0dcJXtSVpj-7dTJXJMYEkMUURu4hkUP1Fgi8t6k7e-wI29GSeEfOC0YfjdauCS7wnRPl1v3Rd_4hVXb"></script>
+<script src="https://static.addtoany.com/menu/page.js" defer></script>
+<script src="/sites/default/files/js/js_nj1D1M6cSAX044AKRB-xaQZKL61JO8rnFHVOQZXuoJU.js?scope=footer&amp;delta=2&amp;language=es&amp;theme=sea_gob_cl&amp;include=eJxdjFsKAjEMRTdUGvTL3ZT0SYbYDE0UZ_eO0HHQn_s45AZzNsG-Ac7g65BuLgnLiPKCI5wkl4oPPk-C0n3lElgww0dcJXtSVpj-7dTJXJMYEkMUURu4hkUP1Fgi8t6k7e-wI29GSeEfOC0YfjdauCS7wnRPl1v3Rd_4hVXb"></script>
+
+  </body>
+</html>

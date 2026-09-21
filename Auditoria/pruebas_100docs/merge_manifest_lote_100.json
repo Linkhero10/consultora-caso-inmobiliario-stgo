@@ -1,0 +1,24 @@
+{
+  "evento": "merge_lote_100_2026_09_16",
+  "ts": "2026-09-16T03:53:59.536561+00:00",
+  "origen": {
+    "path": "Auditoria\\pruebas_100docs\\test_100_lote1.jsonl",
+    "sha256": "a618f82bee7c11af9fbb3e81b7520aee90f1377d9141b8fab2812b99eb31005b",
+    "lineas": 100,
+    "run_manifest_origen": "Auditoria/pruebas_100docs/test_100.run_manifest.20260916_031814_152441.json",
+    "run_id_origen": "20260916_031814_152441",
+    "costo_usd_origen": 0.62674
+  },
+  "destino": {
+    "path": "Auditoria\\clasificacion_luna_v5_2_3\\classifications.jsonl",
+    "sha256_despues": "7d29b79e65a02f42ac97d2fc0c8e607e71d320350e40137174fb45316ecf1c50",
+    "lineas_antes": 50,
+    "lineas_despues": 150
+  },
+  "verificacion": {
+    "overlap_urls_origen_destino_antes": 0,
+    "todas_las_urls_origen_presentes_en_destino_despues": true,
+    "conteo_cuadra": true
+  },
+  "contexto": "Primera prueba a escala de 100 documentos (fuera de los 50 de semilla), revisada a mano por Claude y con segunda opinion de Luna/Codex (veredicto: proceder con condiciones, sin hallazgos bloqueantes). Se fusiona antes de lanzar la corrida sobre el resto del corpus pendiente para no reprocesar (y pagar dos veces) estos 100 documentos."
+}

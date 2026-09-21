@@ -1,0 +1,125 @@
+{
+  "manifest_version": 1,
+  "status": "current_postprocessed_bridge; see actor_identity_conflict_v1.run_manifest.json",
+  "updated_at": "2026-09-19T11:10:02-03:00",
+  "built_at": "2026-09-17T19:53:36.250354+00:00",
+  "api_call": false,
+  "input_hashes": {
+    "source_warehouse_sha256": "86ad7e05cda4b47e97bfef028c41d29365713e40f28f2693e2909ffdea1e1fa2",
+    "enrichment_jsonl_sha256": "039dccbb52335e4d4e4a2904026bd1010702e7762c4599156c73da3fb16bd5a4",
+    "actor_second_pass_jsonl_sha256": "34cd9a08c97da84ff397dc815226c8cedeb92c6a87a847f5da42ffbba151791e",
+    "review_queue_source_sha256": "7bb060a785ec4e7840457d7f283fed78227c0f1964bf876a3a309c1e9e0abad2",
+    "review_queue_resolved_sha256": "5404f64dabe906c03d026833b584c18558cf35a349044821cd3d3510a94ffc06",
+    "review_queue_resolved_context_sha256": "b61209fe11d4501e9c6f867b6ef1d877d5ecb684af6b40aad0ef3cf95a10d5e7",
+    "bridge_script_sha256": "14636f5db611f54cd1e3a83903ac1dbb20b140e9a8b04f8e5fd5018d656ded35",
+    "review_resolver_script_sha256": "1c630098c2c31b3d6fda61db1e632e24b36f16428c1eae8d545aecce297aea9b"
+  },
+  "output": {
+    "warehouse_path": "Auditoria/integracion_v1/warehouse_v3_2_bridge.sqlite",
+    "warehouse_sha256": "6b6f20da9cb5fbe87aaafe679402e1d7fc0dc507d9a6a288d78815aaee27244a",
+    "previous_warehouse_sha256_before_conflict_identity": "74056d0cbeea5e0304b1cbbe6e8a2429a884206ee4b8b015df9763824cbdad46",
+    "build_summary_path": "Auditoria/integracion_v1/warehouse_v3_2_bridge.build_summary.json",
+    "build_summary_sha256": "d6f16beb0e2412ad5314d3bad4f20ce6469657f2bdb368183c8fb205b49b4e92"
+  },
+  "post_processing": {
+    "performed": true,
+    "api_call": false,
+    "operation": "reconcile_classification_layer_with_v3_2 añadió tres tablas crosswalk al bridge existente; el warehouse principal no fue modificado",
+    "script_sha256": "b52cced8e4e4bf9482d1429ba57f029937eff71088fffdee0ad69024640df078",
+    "previous_warehouse_sha256": "73fc37bf34cb62d927d85716196c590565bc0ab2367047bd3ca0b1b8cb7a3c7f",
+    "current_warehouse_sha256": "74056d0cbeea5e0304b1cbbe6e8a2429a884206ee4b8b015df9763824cbdad46",
+    "crosswalk_counts": {
+      "entity_actor_crosswalk_total": 10608,
+      "entity_actor_crosswalk_enrichment_scope": 8215,
+      "case_mention_project_crosswalk": 5731,
+      "event_evento_v3_2_crosswalk": 38
+    }
+  },
+  "review_decision_context": {
+    "path": "Auditoria/integracion_v1/project_review_queue_resuelta_con_contexto.json",
+    "decision_count": 253,
+    "contains_project_ids_and_document_urls": true
+  },
+  "sol_review_package": {
+    "path": "Auditoria/integracion_v1/project_review_queue_para_revision_sol.json",
+    "manifest_path": "Auditoria/integracion_v1/project_review_queue_para_revision_sol.run_manifest.json",
+    "manifest_sha256": "470a495ed8f80048fc2b38baf8d96f238e0492f300513bd42e850980a300125a",
+    "decision_count": 253,
+    "requires_explicit_user_authorization": true
+  },
+  "counts": {
+    "projects": 997,
+    "project_mentions_resolved": 1405,
+    "review_candidates": 253,
+    "links_total": 20419,
+    "resolution_status": {
+      "resolved_explicit": 5281,
+      "resolved_single_project": 8447,
+      "unresolved_ambiguous": 2895,
+      "unresolved_no_project": 3796
+    },
+    "review_decisions": {
+      "merged": 128,
+      "kept_separate": 125,
+      "undecided": 0
+    }
+  },
+  "integrity": {
+    "pragma_integrity_check": "ok",
+    "foreign_key_check_rows": 0,
+    "note": "El decision log conserva la decisión y razón; el contexto por project_id/documento se reconstruye mediante el warehouse. No se infiere asociación ambigua."
+  },
+  "limitations": [
+    "La segunda pasada no está integrada al warehouse principal.",
+    "Las capas antiguas entity/entity_role/event requieren reconciliación separada.",
+    "Este manifiesto no convierte las decisiones humanas en una nueva revisión independiente."
+  ],
+  "current_state_2026_09_19": {
+    "manifest_for_current_sqlite": "Auditoria/integracion_v1/actor_identity_conflict_v1.run_manifest.json",
+    "operation": "Se reconstruyeron/materializaron capas CONFLICT y ACTOR_IDENTITY sobre el bridge; no se llamó a API.",
+    "warehouse_sha256": "6b6f20da9cb5fbe87aaafe679402e1d7fc0dc507d9a6a288d78815aaee27244a",
+    "build_summary_sha256_current": "5517079cbdf47a4d1bfb02648eeb81c917d871d0bcd03d22dfe5ff212d85db6b",
+    "input_hashes_current": {
+      "source_warehouse_sha256": "d07da2b309dba5a0d012562c79691b3926c48e26678b5dd54a4da8942b632768",
+      "enrichment_jsonl_sha256": "039dccbb52335e4d4e4a2904026bd1010702e7762c4599156c73da3fb16bd5a4",
+      "actor_second_pass_jsonl_sha256": "34cd9a08c97da84ff397dc815226c8cedeb92c6a87a847f5da42ffbba151791e",
+      "review_queue_source_sha256": "7bb060a785ec4e7840457d7f283fed78227c0f1964bf876a3a309c1e9e0abad2",
+      "review_queue_resolved_sha256": "f58fc0005e5b272869e14f216c72db1690c27b891b544bd62a296808f44d8cbc",
+      "review_queue_resolved_context_sha256": "b61209fe11d4501e9c6f867b6ef1d877d5ecb684af6b40aad0ef3cf95a10d5e7",
+      "bridge_script_sha256": "a13aa495b04ccca49b7c9160cc4627f7ffd9c976e55f4ce26583a0d29489b8a5",
+      "review_resolver_script_sha256": "e2d29d1893cd1e12b71daa0a5389838da9fb546449577a9627c90811f1984530"
+    },
+    "review_queue_current": {
+      "path": "Auditoria/integracion_v1/project_review_queue_resuelta.json",
+      "context_path": "Auditoria/integracion_v1/project_review_queue_resuelta_con_contexto.json",
+      "sha256": "f58fc0005e5b272869e14f216c72db1690c27b891b544bd62a296808f44d8cbc",
+      "decision_count": 260,
+      "merged": 140,
+      "kept_separate": 120,
+      "undecided": 0,
+      "note": "El paquete para revisión de Sol con 253 pares es histórico; no representa la cola actual de 260."
+    },
+    "counts": {
+      "project": 990,
+      "project_mention_resolved": 1393,
+      "project_review_queue": 260,
+      "actor_event_project_link": 17227,
+      "conflict": 839,
+      "conflict_case": 862,
+      "conflict_project": 990,
+      "document_conflict": 1268,
+      "conflict_relation": 3,
+      "actor_registry": 6,
+      "actor_alias": 29
+    },
+    "resolution_status_counts": {
+      "resolved_explicit": 4271,
+      "inferred_single_project": 7254,
+      "unresolved_ambiguous": 2313,
+      "unresolved_no_project": 3352,
+      "unresolved_inconsistent_association": 37
+    },
+    "integrity_check": "ok; foreign_key_check vacío",
+    "note": "Los hashes top-level de input_hashes y output.build_summary_sha256 describen construcciones históricas; build_summary_sha256_current e input_hashes_current fijan los archivos alineados con el SQLite actual. No mezclar ambos conjuntos de hashes."
+  }
+}

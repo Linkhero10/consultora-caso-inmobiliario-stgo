@@ -1,0 +1,39 @@
+{
+  "url": "https://www.facebook.com/MinvuChile/posts/seguimos-trabajando-para-cumplir-el-sue%C3%B1o-de-la-casa-propia-para-cientos-de-chil/1401227782049746/",
+  "extraction_method": "http_error_400",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 400,
+  "fetched_at": "2026-09-12T15:39:16.184238+00:00",
+  "lineage": {
+    "discovery_record_hash": "e29006552857facd942c1d5d479ab7f64f4a8588ed8baaa2c55a769bcdb445a4",
+    "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "vivienda social integración conflicto",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "e29006552857facd942c1d5d479ab7f64f4a8588ed8baaa2c55a769bcdb445a4",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "e29006552857facd942c1d5d479ab7f64f4a8588ed8baaa2c55a769bcdb445a4",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      }
+    ]
+  },
+  "discovery_title": "Seguimos trabajando para cumplir el sueño de la casa ..."
+}

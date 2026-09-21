@@ -1,0 +1,39 @@
+{
+  "url": "https://www.facebook.com/munilascondes/posts/en-reuni%C3%B3n-con-el-ministro-de-vivienda-y-urbanismo-iv%C3%A1n-poduje-se-defini%C3%B3-entre-/1435029001997768/",
+  "extraction_method": "http_error_400",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 400,
+  "fetched_at": "2026-09-12T15:38:18.566730+00:00",
+  "lineage": {
+    "discovery_record_hash": "99caed34a90783e6acc4ef5aaee531ecd6ba8bf63017b6d3504722954c317753",
+    "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "proyecto inmobiliario oposición",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "99caed34a90783e6acc4ef5aaee531ecd6ba8bf63017b6d3504722954c317753",
+        "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "proyecto inmobiliario oposición",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "99caed34a90783e6acc4ef5aaee531ecd6ba8bf63017b6d3504722954c317753",
+        "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "proyecto inmobiliario oposición",
+        "periodo": "",
+        "nivel": ""
+      }
+    ]
+  },
+  "discovery_title": "En reunión con el ministro de Vivienda y Urbanismo, Iván ..."
+}

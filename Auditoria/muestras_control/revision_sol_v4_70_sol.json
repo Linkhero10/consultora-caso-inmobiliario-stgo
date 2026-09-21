@@ -1,0 +1,164 @@
+{
+  "artifact_version": "ai-assisted-review-sol-1",
+  "generated_at": "2026-09-15T15:05:32.229278+00:00",
+  "source_html": "revision_humana_v4.html",
+  "source": {
+    "review": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\review_sample_v4_70.json",
+    "classification": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\clasificacion_sample_v4_70.jsonl",
+    "bundle": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\casos_sensibles_luna_v3_v4_bundle.json",
+    "fulltext_manifest": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\fulltext_v2\\fulltext_manifest_v2.jsonl"
+  },
+  "reviewer_type": "AI_assisted_review",
+  "reviewer": "GPT-5.6 Sol",
+  "status": "revision_asistida_completa_pendiente_decision_humana",
+  "human_review_completed": false,
+  "production_allowed": false,
+  "summary": {
+    "aprobar_include": 6,
+    "confirmar_exclude": 3,
+    "mantener_uncertain": 1,
+    "requiere_mas_revision": 1
+  },
+  "cases": [
+    {
+      "url": "http://cepapumahue.cl/1967/w3-article-93479.html",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar. El texto identifica un proyecto residencial concreto (El Carmen Oriente, 7 edificios/840 departamentos), ubicación exacta en Huechuraba y una acción colectiva verificable: coordinación de juntas de vecinos para participar en las instancias del proceso ambiental. La acción es más precisamente participación/oposición organizada que una vía judicial, pero supera el gate de acción.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://www.latercera.com/pulso-pm/noticia/la-desconocida-guerra-inmobiliaria-en-estacion-central/4TDSYWZNMZCX5CD5LGAMJDHK7E/",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar. Hay proyectos residenciales identificables en Estación Central (Placilla y Edificio Coronel Godoy), acciones judiciales concretas (recurso de protección y reclamo de ilegalidad) y conflicto administrativo por recepción final/permisos. Las tres condiciones sustantivas del gate están claramente documentadas.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://sintesischile.cl/especiales/estacion-central-seremi-acelera-proceso-de-revision-de-guetos-verticales-y-vecinos-acusan-montaje-de-constructoras/",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar. El documento trata cuatro megaedificios residenciales en Estación Central, con recepciones finales pendientes, sumarios/investigaciones, dictámenes de Contraloría y resoluciones judiciales, además de oposición vecinal explícita. Existe conflicto real, objeto residencial y geografía en alcance.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://es.linkedin.com/pulse/demoliendo-certezas-cu%C3%A1les-son-las-reglas-del-juego-torres-giagnoni",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar con reserva de calidad de fuente. El texto es una columna de LinkedIn, pero documenta dictámenes que determinaron irregularidades e invalidaron permisos de edificación en Estación Central, afectando proyectos en desarrollo y edificios ya habitados. La acción institucional y el carácter residencial son suficientes para el gate. Para análisis institucional posterior conviene contrastar los dictámenes originales.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://blog.toctoc.com/denominacion-de-guetos-verticales-reduciria-plusvalia-de-esas-viviendas/",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "confirmar_exclude",
+      "notes": "Excluir. El artículo describe una denuncia/crítica pública del intendente Claudio Orrego y la polémica discursiva posterior sobre los 'guetos verticales', pero no acredita una denuncia formal, recurso, reclamación, fiscalización solicitada, protesta organizada u otra acción contenciosa verificable. V4 etiquetó 'denuncia_formal' a partir del uso periodístico de la palabra 'denuncia'; eso reproduce el problema opinión/discurso ≠ acción.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://tribunalambiental.cl/audiencia-r-334-336-2022-proyecto-inmobiliario-hijuelas-quilin-penalolen/",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar. Caso principal, proyecto habitacional/mixto explícito (24 torres, 2.368 departamentos), ubicación exacta en Peñalolén y reclamaciones judiciales de la municipalidad y vecinos contra resoluciones del SEA. Es un caso inequívoco de inclusión.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://www.pressenza.com/es/2018/08/autentica-utopia-en-una-capital/",
+      "original_decision": "include",
+      "model_decision_v4": "include",
+      "gate_decision_v4": "include",
+      "verdict": "confirmar_exclude",
+      "notes": "Excluir. Hay ocupación de una casa colonial abandonada y reacción del propietario, pero el objeto no es un proyecto residencial/inmobiliario en desarrollo ni un instrumento urbano aplicado a vivienda. Que el inmueble sea usado como vivienda y que el dueño tenga una inmobiliaria no satisface el alcance. V4 confundió 'vivienda existente' con 'proyecto de vivienda'.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://www.t13.cl/noticia/nacional/proyecto-viviendas-sociales-divide-comunidad-ecologica-penalolen",
+      "original_decision": "uncertain",
+      "model_decision_v4": "uncertain",
+      "gate_decision_v4": "uncertain",
+      "verdict": "aprobar_include",
+      "notes": "Aprobar. El texto fuente sí contiene sustantivamente las tres premisas: proyecto de viviendas sociales Antupirén 10.001 para 360 familias, Peñalolén, y recurso de protección con orden de no innovar que paraliza el proyecto. Los flags de evidencia quedaron false por un problema de literalidad/formato de las citas (comillas añadidas), no por falta de soporte sustantivo.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://tribunalambiental.cl/sentencia-r-319-2022-humedal-urbano-tranque-la-poza-lo-barnechea/",
+      "original_decision": "uncertain",
+      "model_decision_v4": "uncertain",
+      "gate_decision_v4": "uncertain",
+      "verdict": "mantener_uncertain",
+      "notes": "Mantener uncertain. La reclamación judicial y la ubicación en Lo Barnechea están probadas, pero el texto no permite determinar qué uso/proyecto pretendía desarrollar Inmobiliaria de Deportes La Dehesa S.A. No se debe inferir vivienda desde la razón social ni excluir por ausencia de mención. Hace falta evidencia externa o expediente para resolver el alcance objetual.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://www.ciperchile.cl/2020/12/03/las-politicas-de-suelo-y-la-ley-de-integracion-social-y-urbana/",
+      "original_decision": "uncertain",
+      "model_decision_v4": "uncertain",
+      "gate_decision_v4": "uncertain",
+      "verdict": "confirmar_exclude",
+      "notes": "Excluir. Es una columna sobre una política/proyecto de ley nacional de integración social y urbana y su tramitación legislativa. La Pintana, Las Condes y Recoleta aparecen como ejemplos ilustrativos, no como un conflicto específico documentado en una comuna. Por tanto falta el caso territorial exigido por el corpus; no corresponde mantenerlo como uncertain.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    },
+    {
+      "url": "https://radio.uchile.cl/2016/04/07/la-ex-concertacion-ayudo-a-lucia-de-pinochet/",
+      "original_decision": "uncertain",
+      "model_decision_v4": "uncertain",
+      "gate_decision_v4": "uncertain",
+      "verdict": "requiere_mas_revision",
+      "notes": "Requiere decisión metodológica sobre temporalidad antes de clasificar. El texto publicado en 2016 documenta acciones reales (objeción ante Contraloría y recurso de protección), un instrumento urbano orientado a habilitar vivienda/proyectos inmobiliarios y ubicación en Pedro Aguirre Cerda; sin embargo, los eventos centrales ocurrieron en 1999-2000. El contrato dice 2014-2026 pero no define si el corte corresponde a fecha de publicación o fecha del evento. No conviene decidir include/exclude hasta fijar esa regla.",
+      "reviewed_at": "2026-09-15T15:05:32.229278+00:00",
+      "reviewer_type": "AI_assisted_review",
+      "reviewer": "GPT-5.6 Sol"
+    }
+  ],
+  "blocking_methodological_issue": {
+    "issue": "temporal_scope_ambiguous",
+    "affected_url": "https://radio.uchile.cl/2016/04/07/la-ex-concertacion-ayudo-a-lucia-de-pinochet/",
+    "description": "El documento fue publicado dentro de 2014-2026, pero los eventos contenciosos centrales son de 1999-2000. El contrato no define si el alcance temporal se aplica a publicación o evento."
+  },
+  "new_v4_failure_modes_detected": [
+    {
+      "type": "speech_public_denunciation_misread_as_formal_action",
+      "url": "https://blog.toctoc.com/denominacion-de-guetos-verticales-reduciria-plusvalia-de-esas-viviendas/"
+    },
+    {
+      "type": "existing_dwelling_misread_as_residential_development_project",
+      "url": "https://www.pressenza.com/es/2018/08/autentica-utopia-en-una-capital/"
+    },
+    {
+      "type": "national_policy_debate_without_specific_local_case",
+      "url": "https://www.ciperchile.cl/2020/12/03/las-politicas-de-suelo-y-la-ley-de-integracion-social-y-urbana/"
+    }
+  ]
+}

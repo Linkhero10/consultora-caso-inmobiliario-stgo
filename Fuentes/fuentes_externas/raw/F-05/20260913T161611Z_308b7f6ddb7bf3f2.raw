@@ -1,0 +1,283 @@
+<html lang="en">
+
+<head>
+<title>Layer: Catastro campamentos 2024 (ID: 0)</title>
+<link href="/server/rest/static/main.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+
+<table width="100%" class="userTable">
+ <tr>
+ <td class="titlecell">
+ ArcGIS REST Services Directory
+ </td>
+ <td align="right">
+   <a href="https://geoide.minvu.cl/server/login?returnUrl=https://geoide.minvu.cl/server/rest/services">Login</a>
+       </td>
+ </tr>
+</table>
+<table width="100%" class="navTable">
+<tr valign="top">
+<td class="breadcrumbs">
+<a href="/server/rest/services">Home</a>
+
+  &gt; <a href="/server/rest/services">services</a>
+  
+  &gt; <a href="/server/rest/services/Catastros">Catastros</a>
+  
+  &gt; <a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer">Catastros_campamentos (MapServer)</a>
+  
+  &gt; <a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0">Catastro campamentos 2024</a>
+  </td>
+<td align="right">
+<a href="https://geoide.minvu.cl/server/sdk/rest/02ss/02ss00000057000000.htm" target="_blank">Help</a> | <a href="https://geoide.minvu.cl/server/rest/services/Catastros/Catastros_campamentos/MapServer/0?f=help" target="_blank">API Reference</a>
+</td>
+</tr>
+</table><table>
+  <tr>
+  <td class="apiref">
+  <a href="?f=pjson" target="_blank">JSON</a>
+    </td>
+  </tr>
+  </table>
+  <h2>Layer: Catastro campamentos 2024 (ID: 0)</h2>
+
+<div class="rbody">
+
+<b>Name:</b> Catastro campamentos 2024<br/><br/>
+
+<b>Display Field:</b> NOMBRE<br/><br/>
+
+<b>Type: </b> Feature Layer<br/><br/>
+
+<b>Geometry Type:</b> esriGeometryPolygon<br/><br/>
+
+<b>Description: </b> Catastro de campamentos realizado entre enero y febrero de 2024 en base a informaci&oacute;n del INE, TECHO e informante claves como dirigentes, fuerzas armadas, carabineros, gobiernos regionales y municipalidades.<br/><br/>
+
+<b>Service Item Id: </b> d378e53142514cbfbf433b50801eed85<br/><br/>
+<b>Copyright Text: </b> Centro de Estudios de Ciudad y Territorio<br/><br/>
+
+<b>Default Visibility: true</b> <br/><br/>
+<b>MaxRecordCount: </b> 2000<br/><br/>
+<b>Supported Query Formats: </b> JSON, geoJSON, PBF<br/><br/>
+<b>Min Scale: </b> 0.0<br/><br/>
+<b>Max Scale: </b> 0.0<br/><br/>
+<b>Supports Advanced Queries: </b> true<br/><br/>
+<b>Supports Statistics: </b> true<br/><br/>
+<b>Has Labels: </b> false<br/><br/>
+<b>Can Modify Layer: </b> true<br/><br/>
+<b>Can Scale Symbols: </b> false<br/><br/>
+<b>Use Standardized Queries: </b> true<br/><br/>
+<b>Supports Datum Transformation: </b> true<br/><br/>
+<b>Extent:</b>
+<ul>
+
+
+XMin: -8217462.4407<br/>
+YMin: -7011169.402899999<br/>
+XMax: -7591704.6021<br/>
+YMax: -2081794.9334000014<br/>
+
+	Spatial Reference: 102100
+&nbsp;(3857)
+
+&nbsp;LatestVCSWkid(0)
+<br/><br/>
+	</ul>
+<br/>
+
+<b>Drawing Info: </b>
+<ul>
+<i>Renderer: </i>
+<ul><i>Simple Renderer:</i><br/>
+  <i>Symbol: </i> <ul><i>Style: </i> esriSFSSolid<br/>
+<i>Color: </i> 
+[252, 206, 181, 0] <br/>
+<i>Outline: </i>
+<ul>
+  <i>Style: </i> esriSLSSolid<br/>
+<i>Color: </i> 
+[230, 0, 169, 255] <br/>
+<i>Width: </i> 1</ul>
+</ul>
+<i>Label: </i> N/A<br/>
+<i>Description: </i> N/A</ul>
+<i>Transparency: </i> 0<br/>
+<i>Labeling Info: </i>
+<ul>
+</ul></ul>
+
+
+<b>Advanced Query Capabilities: </b>
+<ul>
+  
+
+Supports Statistics: true<br/>
+Supports OrderBy: true<br/>
+Supports Distinct: true<br/>
+Supports Pagination: true<br/>
+Supports TrueCurve: true<br/>
+Supports Returning Query Extent: true<br/>
+Supports Query With Distance: true<br/>
+Supports Sql Expression: true<br/>
+Supports Query With ResultType: false<br/>
+Supports Returning Geometry Centroid: false<br/>
+Supports Binning LOD: false<br/>
+Supports Query With LOD Spatial Reference: false<br/></ul>
+
+<br/>
+<b>HasZ: false</b><br/><br/>
+<b>HasM: false</b> <br/><br/>
+
+<b>Has Attachments: </b> false<br/><br/>
+
+<b>HTML Popup Type: </b> esriServerHTMLPopupTypeAsHTMLText<br/><br/>
+
+<b>Type ID Field: </b> null<br/><br/>
+
+<b>Fields: </b>
+<ul>
+<li>
+    OBJECTID_12<i>
+(
+type: esriFieldTypeOID, alias: OBJECTID_12
+)
+</i></li>
+  <li>
+    OBJECTID<i>
+(
+type: esriFieldTypeInteger, alias: OBJECTID
+)
+</i></li>
+  <li>
+    OBJECTID_1<i>
+(
+type: esriFieldTypeInteger, alias: OBJECTID_1
+)
+</i></li>
+  <li>
+    FOLIO<i>
+(
+type: esriFieldTypeDouble, alias: FOLIO
+)
+</i></li>
+  <li>
+    NOMBRE<i>
+(
+type: esriFieldTypeString, alias: NOMBRE, length: 254
+)
+</i></li>
+  <li>
+    REGION<i>
+(
+type: esriFieldTypeString, alias: REGION, length: 254
+)
+</i></li>
+  <li>
+    CUT_R<i>
+(
+type: esriFieldTypeString, alias: CUT_R, length: 254
+)
+</i></li>
+  <li>
+    PROVINCIA<i>
+(
+type: esriFieldTypeString, alias: PROVINCIA, length: 254
+)
+</i></li>
+  <li>
+    CUT_P<i>
+(
+type: esriFieldTypeString, alias: CUT_P, length: 254
+)
+</i></li>
+  <li>
+    CUT<i>
+(
+type: esriFieldTypeInteger, alias: CUT
+)
+</i></li>
+  <li>
+    COMUNA<i>
+(
+type: esriFieldTypeString, alias: COMUNA, length: 254
+)
+</i></li>
+  <li>
+    AN_CAT<i>
+(
+type: esriFieldTypeString, alias: AN_CAT, length: 254
+)
+</i></li>
+  <li>
+    N_HOG<i>
+(
+type: esriFieldTypeDouble, alias: N_HOG
+)
+</i></li>
+  <li>
+    FUENTE<i>
+(
+type: esriFieldTypeString, alias: FUENTE, length: 14
+)
+</i></li>
+  <li>
+    OBS<i>
+(
+type: esriFieldTypeString, alias: OBS, length: 254
+)
+</i></li>
+  <li>
+    HECTAREAS<i>
+(
+type: esriFieldTypeDouble, alias: HECTAREAS
+)
+</i></li>
+  <li>
+    Shape_Leng<i>
+(
+type: esriFieldTypeDouble, alias: Shape_Leng
+)
+</i></li>
+  <li>
+    Shape<i>
+(
+type: esriFieldTypeGeometry, alias: Shape
+)
+</i></li>
+  <li>
+    Shape.STArea()<i>
+(
+type: esriFieldTypeDouble, alias: Shape.STArea()
+)
+</i></li>
+  <li>
+    Shape.STLength()<i>
+(
+type: esriFieldTypeDouble, alias: Shape.STLength()
+)
+</i></li>
+  </ul></ul>
+
+<br/>
+
+<b>Supported Operations</b>:
+
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/query">Query</a>
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/queryAttachments">Query Attachments</a>
+
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/queryAnalytic">Query Analytic</a>
+
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/generateRenderer">Generate Renderer</a>
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0?f=pjson&returnUpdates=true&">Return Updates</a><br/><br/>
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/iteminfo">Iteminfo</a>
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/thumbnail">Thumbnail</a>
+&nbsp;&nbsp;<a href="/server/rest/services/Catastros/Catastros_campamentos/MapServer/0/metadata">Metadata</a>
+</div>
+
+<br/><br/>
+
+</body>
+
+</html>

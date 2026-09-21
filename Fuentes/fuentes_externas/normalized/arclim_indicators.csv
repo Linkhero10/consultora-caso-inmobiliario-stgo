@@ -1,0 +1,70 @@
+_source_sha256,code,delta_fn,description,name,units
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_days_over_25C,abs,Número de días que la temperatura máxima diaria supera 25 ºC durante 3 o más días seguidos,Olas de calor > 25ºC,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_days_over_28C,abs,Número de días que la temperatura máxima diaria supera 28 ºC durante 3 o más días seguidos,Olas de calor > 28ºC,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_days_over_30C,abs,Número de días que la temperatura máxima diaria supera 30 ºC durante 3 o más días seguidos,Olas de calor > 30ºC,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_summer_days,abs,"Número máximo de días consecutivos donde la temperatura máxima supera los 25°C, que da cuenta de la extensión del periodo cálido",Días consecutivos de verano,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,daily_temperature_range,abs,Valor medio de la amplitud térmica diaria (Tmax - Tmin).,Amplitud térmica,grados
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_above_15C,abs,Valor acumulada de la diferencia entre la temperatura media diaria y 15ºC.,Grados-dia sobre 15ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_above_20C,abs,Valor acumulada de la diferencia entre la temperatura media diaria y 20ºC,Grados-dia sobre 20ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_above_25,abs,Valor acumulada de la diferencia entre la temperatura media diaria y 25ºC,Grados-dia sobre 25ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_above_30,abs,Valor acumulada de la diferencia entre la temperatura media diaria y 30ºC,Grados-dia sobre 30ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,hot_days,abs,Número de días en que la temperatura máxima supera 30ºC.,Dias calurosos (>30ºC),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,hottest_day,abs,"Temperatura (en ºC) del día más cálido del periodo considerado (año, estación, mes)",Día más cálido,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,mean_temperature,abs,"Valor medio de la temperatura media diaria, calculado como 0.5*(Tmax + Tmin)",Temperatura media,grados
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,ola_calor_compuesto_dmc,abs,Ola de calor considerando la temperatura máxima y mínima. Se define como el número de días cuando TX y TN están bajo el percentil 10 por al menos 3 días consecutivos.,Ola de Calor compuesta,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,quite_hot_days,abs,Número de días en que la temperatura máxima supera 28ºC.,Dias relativamente cálidos (> 28ºC),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,summer_days,abs,Número de días en que la temperatura supera 25ºC,Días de verano (> 25ºC),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,tasmax_mean,abs,Promedio de la temperatura máxima diaria,Promedio de la temperatura máxima diaria,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,tropical_nights,abs,Número de días en que la temperatura mínima supera 20ºC,Noches tropicales,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,very_hot_days,abs,Número de días en que la temperatura supera 34ºC,Dias muy cálidos,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_days,abs,Número de días en que la temperatura supera el umbral definido como el percentil 90 de la temperatura diaria en el periodo de referencia (1980 a 2010).,Días cálidos,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warmest_night,abs,"Temperatura mínima en el día de mayor temperatura mínima durante el periodo considerado (año, estación, mes)",Noche más cálida,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_nights,abs,Número de días en que la temperatura mínima supera el umbral definido como el percentil 90 de la temperatura mínima diaria en el periodo de referencia (1980 a 2010).,Noches cálidas,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_nights_duration_index_long,abs,Numero de días consecutivos (en cadenas de al menos 6) que la temperatura mínima supera el percentil 90.,Duración de periodos de noches cálidas (> 6 dias),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_nights_duration_index_short,abs,Numero de días consecutivos (en cadenas de al menos 3) en que la temperatura mínima supera el percentil 90.,Duración de periodos de noches cálidas (> 3 dias),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_spell_duration_index_long,abs,Numero de dias con al menos 6 dias consecutivos en que la temperatura máxima supera el percentil 90.,Duración de episodios cálidos (> 6 dias),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,warm_spell_duration_index_short,abs,Numero de dias con al menos 3 dias consecutivos en que la temperatura máxima supera el percentil 90.,Duración de episodios cálidos (> 3 dias),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,coldest_day,abs,"Temperatura máxima del día más frió del periodo considerado (año, estación, mes)",Día más frío,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,coldest_night,abs,"Temperatura de la noche más fría (temperatura mínima) del periodo considerado (año, estación, mes)",Noche más fría,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,cold_spell_duration_index_long,abs,Numero de días con al menos 6 días consecutivos en que la temperatura mínima no supera el percentíl 10 de la temperatura mínima diaria en el periodo de referencia (1980 a 2010).,Duración de episodios fríos (> 6 días),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,cold_spell_duration_index_short,abs,Numero de días con al menos 6 días consecutivos en que la temperatura mínima no supera el percentíl 10 de la temperatura mínima diaria en el periodo de referencia (1980 a 2010).,Duración de episodios fríos (> 3 días),dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,cool_days,abs,Numero de días en que la temperatura máxima en menor que el percentíl 10.,Días fríos,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,cool_nights,abs,Numero de días en que la temperatura mínima en menor que el percentíl 10.,Noches frías,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_below_0c,abs,Valor acumulada de la diferencia entre 0°C y  temperatura media diaria,Grados-dia bajo 0ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_below_10C,abs,Valor acumulada de la diferencia entre 10°C y  temperatura media diaria,Grados-dia bajo 10ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_below_15C,abs,Valor acumulada de la diferencia entre 15°C y  temperatura media diaria,Grados-dia bajo 15ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_below_17_heating,abs,Suma entre la diferencia de la temperatura media y 17°C,Grados día de calefacción (17°C),grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,degdays_below_5C,abs,Valor acumulada de la diferencia entre 5°C y  temperatura media diaria,Grados-dia bajo 5ºC,grados-dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,frost_days,abs,Número de días en que la temperatura mínima es menor que 0ºC,Días de  escarcha,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,frost_days_below_minus_2_degrees,abs,Número de días de temperatura mínima bajo -2 °C.  Este umbral de temperatura corresponde a las heladas queman los cultivos,Días de heladas bajo -2°C,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,ice_days,abs,Número de días en que la temperatura máxima es menor que 0ºC,Días de hielo,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,max_consecutive_frost_days,rel,Número máximo de dias consecutivos de temperatura mínima menor a 0°C,Dias consecutivos de helada,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,ola_frio_compuesto_dmc,abs,Ola de frío considerando la temperatura máxima y mínima. Se define como el número de días cuando TX y TN superan el percentil 90 por al menos 3 días consecutivos.,Ola de Frío compuesta,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,tasmin_mean,abs,Promedio de la temperatura mínima diaria,Promedio de la temperatura mínima diaria,ºC
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_dry_days,rel,Número máximo de días consecutivos en que la precipitación diaria no supera 1 mm,Días secos consecutivos,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,consecutive_wet_days,rel,Número máximo de días consecutivos en que la precipitación diaria supera 1 mm,Días húmedos consecutivos,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,days_over_50mm,abs,"Número de días de precipitación sobre 50mm. Este índice es adecuado para impactos inundaciones, aumento de caudal, entre otros.",Días sobre 50 mm,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,drought_periods,abs,Frecuencia de periodos en que la precipitación acumulada es menor al 75% del promedio la precipitación acumulada en el periodo de referencia (1980 a 2010),Frecuencia de sequía,%
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,eto_mean,abs,"Evaportraspiración Potencial medio, calculado usado el metodo de Penman-Montieth (FAO56)",Evapotranspiración Potencial,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,martonne,abs,"El índice de aridez de Martonne clasifica el clima de una región según la precipitación anual (P) y la temperatura media anual (T). Su valor se calcula dividiendo la precipitación anual en mm entre la temperatura media anual en °C más 10. Un valor más alto indica un clima más húmedo, mientras que uno más bajo indica aridez.",Índice de aridez de Martonne,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,max_5day_precip,abs,Precipitación máxima acumulada en 5 días consecutivos,Precipitación máxima en 5 días,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,maximum_daily_precipitation,rel,Precipitación máxima diaria,Precipitación máxima diaria,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,number_of_heavy_precipitation_days,abs,Número de días en que la precipitación diaria supera 10 mm,Días de precipitación intensa,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,number_of_very_heavy_precipitation_days,abs,Número de días en que la precipitación diaria supera 20 mm,Días de precipitación muy intensa,dias
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,pr_sum,rel,Cantidad de precipitación (lluvia y nieve) acumulada,Precipitación acumulada,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,simple_precip_intensity_index,abs,Promedio de la precipitación diaria considerando sólo los días en que la precipitación supera 1mm/día,Indice simple de intensidad de precipitación,mm/día
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,spi,abs,Standadized Precipitation Index,Standadized Precipitation Index,Z
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,rain_max,rel,Valor máximo de la lluvia (agua liquida) acumulada en un día,Lluvia máxima diaria,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,rain_sum,rel,"Cantidad de lluvia (agua líquida) acumulada en milímetros durante el período (año, estación, o mes)",Lluvia acumulada,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,snow_max,rel,"Valor máximo de la nieve acumulada en un día,  expresada en mm de agua equivalente",Nieve máxima diaria,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,snow_sum,rel,"Cantidad de nieve acumulada, expresada en mm de agua equivalente",Nieve acumulada,mm
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,vel_max,rel,Valor medio del máximo diario de la magnitud del viento,Viento máximo diario,m/s
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,vel_mean,rel,Valor medio de la magnitud del viento,Viento medio,m/s
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,hursmax_mean,rel,Valor medio de la humedad relativa (%),Humedad relativa máxima diaria,%
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,hurs_mean,rel,Valor medio del máximo diario de la humedad relativa (%),Humedad relativa media diaria,%
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,hursmin_mean,rel,Valor medio del mínimo diario de la humedad relativa (%),Humedad relativa mínima diaria,%
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,huss_mean,rel,Valor medio de la humedad específica (g/Kg),Humedad específica,g/kg
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,rsds_max,abs,Valor máximo de la irradiación global horizontal diaria (W/m2),Insolación solar máxima diaria,W/m2
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,rsds_mean,abs,Valor medio de la irradiación global horizontal,Insolación solar diaria,W/m2
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,rsds_min,abs,Valor mínimo de la irradiación global horizontal diaria,Insolación solar mínima diaria,W/m2
+cac3a1114fa9747b1e98239c914b546544e12312051a01259e872acf4f7eebda,ps_mean,abs,Valor medio de la presión atmosférica en superficie,Presión atmosférica media,hPa

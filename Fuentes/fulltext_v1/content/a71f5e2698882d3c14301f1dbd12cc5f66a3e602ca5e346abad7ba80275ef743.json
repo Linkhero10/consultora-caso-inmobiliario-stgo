@@ -1,0 +1,14 @@
+{
+  "url": "https://bancoestado.enlaceinmobiliario.cl/listado/region-metropolitana/las-condes",
+  "extraction_method": "http_error_403",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 403,
+  "fetched_at": "2026-09-12T00:49:16.878098+00:00",
+  "comuna": "Las Condes",
+  "termino": "proyecto inmobiliario oposición",
+  "discovery_record_hash": "a71f5e2698882d3c14301f1dbd12cc5f66a3e602ca5e346abad7ba80275ef743",
+  "discovery_title": "Proyectos inmobiliarios en venta en Las Condes"
+}

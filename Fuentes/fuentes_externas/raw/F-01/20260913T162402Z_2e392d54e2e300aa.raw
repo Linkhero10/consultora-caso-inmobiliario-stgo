@@ -1,0 +1,414 @@
+<html lang="en">
+<head>
+  <title>Query: Limite_Urbano_CPV24 (ID: 8)</title>
+  <link href='/ESRI.ArcGIS.SDS.REST.css' rel='stylesheet' type='text/css'>
+  <link rel='SHORTCUT ICON' href='/favicon.ico'>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+</head>
+<body>
+<table width="100%" id="userTable" class="userTable">
+<tr>
+<td class="titlecell">ArcGIS REST Services Directory</td>
+</tr>
+</table>
+<table id="navTable" class="navTable" width="100%">
+<tbody>
+<tr valign="top">
+<td class="breadcrumbs">
+<span id="homeBreadcrumbs"><a href="/hUyD8u3TeZLKPe4T/ArcGIS/rest/services">Home</a> > <a href="/hUyD8u3TeZLKPe4T/ArcGIS/rest/services">services</a> </span>> <a href="/hUyD8u3TeZLKPe4T/ArcGIS/rest/services/Censo2024_v2/FeatureServer">Censo2024_v2 (FeatureServer)</a> > <a href="/hUyD8u3TeZLKPe4T/ArcGIS/rest/services/Censo2024_v2/FeatureServer/8">Limite_Urbano_CPV24</a> > <a href="/hUyD8u3TeZLKPe4T/ArcGIS/rest/services/Censo2024_v2/FeatureServer/8/query"><i>query</i></a> </td>
+<td align="right">
+ | <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/" target="_blank">API Reference</a></td>
+</tr>
+</tbody>
+</table>
+<div class='restHeader'>
+<h2>Query: Limite_Urbano_CPV24 (ID: 8)</h2>
+</div>
+<div class='restBody'>
+<form>
+<table class='formTable'>
+<tr>
+<td>
+Where:
+</td>
+<td>
+<input type="text" name="where" value="1=1&amp;returnCountOnly=true&amp;f=json" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Object IDs:
+</td>
+<td>
+<input type="text" name="objectIds" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>Input Geometry:</td>
+<td><textarea name='geometry' rows='5' cols='55' ></textarea></td>
+</tr>
+<tr>
+<td>Geometry Type:</td>
+<td>
+<select name="geometryType">
+<option value="esriGeometryEnvelope" selected='true'>Envelope</option>
+<option value="esriGeometryPoint">Point</option>
+<option value="esriGeometryPolyline">Polyline</option>
+<option value="esriGeometryPolygon">Polygon</option>
+<option value="esriGeometryMultipoint">Multipoint</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Input Spatial Reference:
+</td>
+<td>
+<input type="text" name="inSR" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>Spatial Relationship:</td>
+<td>
+<select name="spatialRel">
+<option value="esriSpatialRelIntersects" selected='true'>Intersects</option>
+<option value="esriSpatialRelContains">Contains</option>
+<option value="esriSpatialRelCrosses">Crosses</option>
+<option value="esriSpatialRelEnvelopeIntersects">Envelope Intersects</option>
+<option value="esriSpatialRelIndexIntersects">Index Intersects</option>
+<option value="esriSpatialRelOverlaps">Overlaps</option>
+<option value="esriSpatialRelTouches">Touches</option>
+<option value="esriSpatialRelWithin">Within</option>
+<option value="esriSpatialRelDisjoint">Disjoint</option>
+<option value="esriSpatialRelRelation">Relation</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Result Type: </td>
+<td>
+<select name="resultType">
+<option value="none" selected='true'>None</option>
+<option value="standard">Standard</option>
+<option value="tile">Tile</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Distance:
+</td>
+<td>
+<input type="text" name="distance" value="0.0" size="30" />
+</td>
+</tr>
+<tr>
+<td>Units:</td>
+<td>
+<select name="units">
+<option value="esriSRUnit_Meter" selected='true'>Meters</option>
+<option value="esriSRUnit_StatuteMile">Miles</option>
+<option value="esriSRUnit_Foot">Feet</option>
+<option value="esriSRUnit_Kilometer">Kilometers</option>
+<option value="esriSRUnit_NauticalMile">Nautical Miles</option>
+<option value="esriSRUnit_USNauticalMile">US NauticalMiles</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Out Distance:</td>
+<td><textarea name='outDistance' rows='5' cols='55' ></textarea></td>
+</tr>
+<tr>
+<td>
+Relation:
+</td>
+<td>
+<input type="text" name="relationParam" value="" size="30" />
+</td>
+</tr>
+<tr>
+<td>Return Geodetic:</td>
+<td>
+<input type="radio" name="returnGeodetic" value="true"/>True&nbsp;
+<input type="radio" name="returnGeodetic" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>
+Out Fields:
+</td>
+<td>
+<input type="text" name="outFields" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>Return Geometry:</td>
+<td>
+<input type="radio" name="returnGeometry" value="true" checked='true'/>True&nbsp;
+<input type="radio" name="returnGeometry" value="false"/>False</td>
+</tr>
+<tr>
+<td>Return Centroid:</td>
+<td>
+<input type="radio" name="returnCentroid" value="true"/>True&nbsp;
+<input type="radio" name="returnCentroid" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Envelope:</td>
+<td>
+<input type="radio" name="returnEnvelope" value="true"/>True&nbsp;
+<input type="radio" name="returnEnvelope" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Feature Encoding:</td>
+<td>
+<select name="featureEncoding">
+<option value="esriDefault" selected="true">esriDefault</option>
+<option value="esriCompressedShapeBuffer">esriCompressedShapeBuffer</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Geometry MultiPatch Option:</td>
+<td>
+<select name="multipatchOption">
+<option value="none" >None</option>
+<option value="xyFootprint" selected="true">xyFootprint</option>
+<option value="stripMaterials" >stripMaterials</option>
+<option value="embedMaterials" >embedMaterials</option>
+<option value="externalizeTextures" >externalizeTextures</option>
+<option value="extent" >extent</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Max Allowable Offset:
+</td>
+<td>
+<input type="text" name="maxAllowableOffset" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Geometry Precision:
+</td>
+<td>
+<input type="text" name="geometryPrecision" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Output Spatial Reference:
+</td>
+<td>
+<input type="text" name="outSR" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Default Spatial Reference:
+</td>
+<td>
+<input type="text" name="defaultSR" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Datum Transformation:
+</td>
+<td>
+<input type="text" name="datumTransformation" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>Apply VCS Projection:</td>
+<td>
+<input type="radio" name="applyVCSProjection" value="true"/>True&nbsp;
+<input type="radio" name="applyVCSProjection" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return IDs Only:</td>
+<td>
+<input type="radio" name="returnIdsOnly" value="true"/>True&nbsp;
+<input type="radio" name="returnIdsOnly" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Unique IDs Only:</td>
+<td>
+<input type="radio" name="returnUniqueIdsOnly" value="true"/>True&nbsp;
+<input type="radio" name="returnUniqueIdsOnly" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Count Only:</td>
+<td>
+<input type="radio" name="returnCountOnly" value="true"/>True&nbsp;
+<input type="radio" name="returnCountOnly" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Extent Only:</td>
+<td>
+<input type="radio" name="returnExtentOnly" value="true"/>True&nbsp;
+<input type="radio" name="returnExtentOnly" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Query Geometry:</td>
+<td>
+<input type="radio" name="returnQueryGeometry" value="true"/>True&nbsp;
+<input type="radio" name="returnQueryGeometry" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Distinct Values:</td>
+<td>
+<input type="radio" name="returnDistinctValues" value="true"/>True&nbsp;
+<input type="radio" name="returnDistinctValues" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Cache Hint</td>
+<td>
+<input type="radio" name="cacheHint" value="true"/>True&nbsp;
+<input type="radio" name="cacheHint" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>
+Collation:
+</td>
+<td>
+<input type="text" name="collation" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Order By Fields:
+</td>
+<td>
+<input type="text" name="orderByFields" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Group By Fields (For Statistics):
+</td>
+<td>
+<input type="text" name="groupByFieldsForStatistics" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>Return Aggregate Ids:</td>
+<td>
+<input type="radio" name="returnAggIds" value="true"/>True&nbsp;
+<input type="radio" name="returnAggIds" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Output Statistics:</td>
+<td><textarea name='outStatistics' rows='5' cols='55' ></textarea></td>
+</tr>
+<tr>
+<td>
+Having:
+</td>
+<td>
+<input type="text" name="having" value="" size="75" />
+</td>
+</tr>
+<tr>
+<td>
+Result Offset:
+</td>
+<td>
+<input type="text" name="resultOffset" value="" size="30" />
+</td>
+</tr>
+<tr>
+<td>
+Result Record Count:
+</td>
+<td>
+<input type="text" name="resultRecordCount" value="" size="30" />
+</td>
+</tr>
+<tr>
+<td>ReturnZ:</td>
+<td>
+<input type="radio" name="returnZ" value="true"/>True&nbsp;
+<input type="radio" name="returnZ" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>ReturnM:</td>
+<td>
+<input type="radio" name="returnM" value="true"/>True&nbsp;
+<input type="radio" name="returnM" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return True Curves:</td>
+<td>
+<input type="radio" name="returnTrueCurves" value="true"/>True&nbsp;
+<input type="radio" name="returnTrueCurves" value="false" checked='true'/>False</td>
+</tr>
+<tr>
+<td>Return Exceeded Limit Features:</td>
+<td>
+<input type="radio" name="returnExceededLimitFeatures" value="true" checked='true'/>True&nbsp;
+<input type="radio" name="returnExceededLimitFeatures" value="false"/>False</td>
+</tr>
+<tr>
+<td>Return Exceeded Limit Geometries:</td>
+<td>
+<input type="radio" name="returnExceededLimitGeometries" value="true" checked='true'/>True&nbsp;
+<input type="radio" name="returnExceededLimitGeometries" value="false"/>False</td>
+</tr>
+<tr>
+<td>Quantization Parameters:</td>
+<td><textarea name='quantizationParameters' rows='5' cols='55' ></textarea></td>
+</tr>
+<tr>
+<td>SQL Format:</td>
+<td>
+<select name="sqlFormat">
+<option value="none" >none</option>
+<option value="standard" >standard</option>
+<option value="native" >native</option>
+</select>
+</td>
+</tr>
+<tr id="formatComboRow">
+<td>Format: </td>
+<td>
+<select name="f">
+<option value="html" selected='true'>HTML</option>
+<option value="pjson">JSON</option>
+<option value="pgeojson">GEOJSON</option>
+<option value="pbf">PBF</option>
+</select>
+</td>
+</tr>
+<tr><td colspan='2' align='left'>
+<input type='submit' value='Query (GET)' />
+<input type='submit' onclick='this.form.method = "post";' value='Query (POST)' />
+</td></tr>
+</table>
+<input type="hidden" id="token" name="token" value="" />
+</form>
+<script>
+function removeElement(id) {
+element = document.getElementById(id);
+if (element != null) {
+element.parentNode.removeChild(element);
+}}
+if ( window.location !== window.parent.location ){
+removeElement('homeBreadcrumbs');
+removeElement('servicesBreadcrumb');
+removeElement('viewInSection');
+jsonLinkTable = document.getElementById('jsonLinkTable'); 
+if (jsonLinkTable != null) {
+jsonLinkTable.innerHTML = '<table><tr><td class="apiref"><a href="?f=pjson&token=" target="_self">JSON</a></td></tr></table>'; 
+}
+removeElement('userTable');
+}
+</script>
+<div class="restErrors">
+'where' parameter is invalid<br/>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "url": "https://www.facebook.com/LasUltimasNoticias/posts/corte-suprema-puso-fin-a-megaproyecto-de-27-edificios-en-las-condes-caduc%C3%B3-el-pe/1234631002025946/",
+  "extraction_method": "http_error_400",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 400,
+  "fetched_at": "2026-09-12T00:50:26.678964+00:00",
+  "comuna": "Las Condes",
+  "termino": "edificio altura densidad reclamo",
+  "discovery_record_hash": "a7e760a26765c5659b4ce77b228060f8b6173308876ba7aa1b2596e929d675d8",
+  "discovery_title": "Corte Suprema puso fin a megaproyecto de 27 edificios en ..."
+}

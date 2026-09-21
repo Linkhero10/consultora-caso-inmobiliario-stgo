@@ -1,0 +1,43 @@
+{
+  "nota": "Geocodificacion automatica via Nominatim/OpenStreetMap, con clasificacion de confianza real y separacion explicita de los no resueltos -- ningun resultado se fuerza ni se aproxima con un centroide generico.",
+  "generado_por": "Trabajo/scripts/geocode_projects_v1.py",
+  "resueltos": [
+    {
+      "project_id": "proyecto_coronel_souper_4160_v1",
+      "direccion_query": "Coronel Souper 4160, Estación Central, Santiago, Chile",
+      "confianza": "alta",
+      "lat": "-33.4573985",
+      "lon": "-70.6919057",
+      "display_name_nominatim": "4160, Coronel Souper, Barrio Pila del Ganso, Estación Central, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile",
+      "tipo_nominatim": "house"
+    },
+    {
+      "project_id": "proyecto_edificio_santa_petronila_v1",
+      "direccion_query": "Santa Petronila, Estación Central, Santiago, Chile",
+      "confianza": "media",
+      "lat": "-33.4506661",
+      "lon": "-70.7048167",
+      "display_name_nominatim": "Santa Petronila, Villa Las Mercedes, Estación Central, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile",
+      "tipo_nominatim": "residential"
+    }
+  ],
+  "no_resueltos": [
+    {
+      "project_id": "proyecto_edificio_las_rejas_v1",
+      "direccion_query": "Pudahuel esquina Las Rejas, Estación Central, Santiago, Chile",
+      "nota_caso_a_caso": "reintento con la interseccion exacta citada en el articulo (Pudahuel con Las Rejas), no solo 'Avenida Las Rejas' generico",
+      "razon": "sin resultados de Nominatim para esta consulta"
+    },
+    {
+      "project_id": "proyecto_edificio_titan_v1",
+      "direccion_query": "Hospital El Pino, Estación Central, Santiago, Chile",
+      "nota_caso_a_caso": "el articulo dice 'al sur del Hospital del Profesor' -- Nominatim no reconoce ese nombre; se intenta anclar por el hospital mas conocido de la zona como referencia aproximada, NO como ubicacion exacta del edificio",
+      "razon": "sin resultados de Nominatim para esta consulta"
+    },
+    {
+      "project_id": "proyecto_suksa_esquina_de_los_circos_v1",
+      "direccion_query": "(no aplicable)",
+      "razon": "'esquina de los circos' es un apodo periodistico del lugar, no un toponimo real -- no existe consulta de geocodificacion valida para este caso sin mas informacion (ej. una direccion catastral del permiso de edificacion, ver solicitud de expediente oficial)."
+    }
+  ]
+}

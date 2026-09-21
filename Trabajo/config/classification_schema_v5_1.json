@@ -1,0 +1,77 @@
+{
+  "name": "clasificacion_conflicto_inmobiliario_v5_1",
+  "strict": true,
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "decision": {"type": "string", "enum": ["include", "exclude", "uncertain", "insufficient_content"]},
+      "decision_reason": {"type": "string"},
+      "case_mentions": {
+        "type": "array",
+        "maxItems": 12,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rol_en_documento": {"type": "string", "enum": ["caso_principal", "caso_secundario_documentado", "mencion_tangencial"]},
+            "decision": {"type": "string", "enum": ["include", "exclude", "uncertain", "insufficient_content"]},
+            "decision_reason": {"type": "string"},
+            "accion_contenciosa": {"type": "string", "enum": ["confirmada", "no", "incierta"]},
+            "tipo_accion_contenciosa": {"type": "string", "enum": ["recurso_judicial", "reclamacion_administrativa", "denuncia_formal", "fiscalizacion_solicitada", "protesta", "movilizacion_vecinal", "oposicion_organizada", "rechazo_institucional", "impugnacion_normativa", "otra_accion_verificable", "ninguna", "incierta"]},
+            "profundidad_documentacion_caso": {"type": "string", "enum": ["caso_principal", "caso_secundario_documentado", "mencion_tangencial", "incierta"]},
+            "es_proyecto_inmobiliario": {"type": "string", "enum": ["si", "no", "incierto"]},
+            "es_proyecto_vivienda_inmobiliario": {"type": "string", "enum": ["si", "no", "incierto"]},
+            "relacion_inmobiliaria_urbana": {"type": "string", "enum": ["desarrollo_proyecto", "transformacion_regulacion_uso", "inmueble_existente_relevancia_urbana", "ocupacion_propiedad_sin_desarrollo", "incierta"]},
+            "tipo_objeto_norm": {"type": "string", "enum": ["edificio_residencial", "ds19", "condominio", "loteo_residencial", "uso_mixto_residencial", "instrumento_urbano_residencial", "centro_comercial", "edificio_oficinas", "hotel", "proyecto_industrial", "equipamiento_urbano", "infraestructura_no_residencial", "inmobiliario_privado_no_residencial", "instrumento_urbano_general", "objeto_no_determinado", "none"]},
+            "tipo_objeto_raw": {"type": "string"},
+            "precision_geografica": {"type": "string", "enum": ["proyecto_exacto", "sector_barrio", "comuna", "provincia_general", "fuera_de_area", "ambigua"]},
+            "comuna": {"type": "string"},
+            "tipo_conflicto_norm": {"type": "string", "enum": ["vivienda_integracion", "densidad_altura", "permiso_edificacion", "planificacion_urbana", "gentrificacion_desplazamiento", "patrimonio", "ambiental_territorial", "movilidad_infraestructura", "ocupacion_propiedad", "otro", "incierto", "none"]},
+            "tipo_conflicto_raw": {"type": "string"},
+            "via_legal_norm": {"type": "string", "enum": ["judicial", "administrativa", "contraloria", "ambiental", "municipal", "participacion_oposicion", "sin_via_identificada", "otra", "incierta", "none"]},
+            "via_legal_raw": {"type": "string"},
+            "lugares_mencionados": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "nombre": {"type": "string"},
+                  "tipo": {"type": "string", "enum": ["comuna", "barrio", "proyecto", "calle", "ciudad", "region", "otro"]}
+                },
+                "required": ["nombre", "tipo"]
+              }
+            },
+            "actores": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "nombre": {"type": "string"},
+                  "tipo_norm": {"type": "string", "enum": ["vecinos", "organizacion_vecinal", "inmobiliaria", "empresa", "municipio", "ministerio_seremi", "tribunal", "contraloria", "ong", "politico", "experto", "otro", "incierto"]},
+                  "tipo_raw": {"type": "string"},
+                  "rol": {"type": "string"}
+                },
+                "required": ["nombre", "tipo_norm", "tipo_raw", "rol"]
+              }
+            },
+            "evidencia_accion_quotes": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+            "evidencia_objeto_quotes": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+            "evidencia_geografica_quotes": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+            "evidence_summary": {"type": "string"},
+            "confidence": {"type": "string", "enum": ["alta", "media", "baja"]}
+          },
+          "required": ["rol_en_documento", "decision", "decision_reason", "accion_contenciosa", "tipo_accion_contenciosa", "profundidad_documentacion_caso", "es_proyecto_inmobiliario", "es_proyecto_vivienda_inmobiliario", "relacion_inmobiliaria_urbana", "tipo_objeto_norm", "tipo_objeto_raw", "precision_geografica", "comuna", "tipo_conflicto_norm", "tipo_conflicto_raw", "via_legal_norm", "via_legal_raw", "lugares_mencionados", "actores", "evidencia_accion_quotes", "evidencia_objeto_quotes", "evidencia_geografica_quotes", "evidence_summary", "confidence"]
+        }
+      },
+      "sentiment": {"type": "string", "enum": ["positivo", "neutral", "negativo"]},
+      "source_type": {"type": "string"},
+      "confidence": {"type": "string", "enum": ["alta", "media", "baja"]}
+    },
+    "required": ["decision", "decision_reason", "case_mentions", "sentiment", "source_type", "confidence"]
+  },
+  "derived_fields": ["decision_modelo", "decision_residencial", "decision_inmobiliaria_urbana_amplia", "decision_documento", "gate_residencial", "gate_inmobiliaria_urbana_amplia", "evidence_action_quotes_verified", "evidence_object_quotes_verified", "evidence_geo_quotes_verified", "codigo_comuna_ine", "lugares_mencionados.codigo_comuna_ine", "lugares_mencionados.en_area_estudio"],
+  "contract_note": "El modelo extrae premisas y citas literales en arreglos; el código verifica cada cita, deriva scopes y añade códigos INE/area por lookup determinista. evidence_summary nunca se usa como cita."
+}

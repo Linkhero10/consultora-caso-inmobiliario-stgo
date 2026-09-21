@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+
+
+    <head>
+        <meta charset="utf-8">
+        <title>Diario Oficial &#8211; República de Chile</title>
+
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/jquery.numeric.js"></script>
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/modernizr.2.5.3.min.js"></script>
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/jquery.bxslider.min.js"></script>
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/jquery.fancybox.pack.js"></script>
+        <script type="text/javascript" src="https://www.diariooficial.interior.gob.cl/assets/js/pagevideos.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://www.diariooficial.interior.gob.cl/assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="https://www.diariooficial.interior.gob.cl/assets/css/jquery.fancybox.css" />
+        <link rel="stylesheet" type="text/css" href="https://www.diariooficial.interior.gob.cl/assets/css/jquery.bxslider.css" />
+        <link rel="stylesheet" type="text/css" href="https://www.diariooficial.interior.gob.cl/assets/css/pagevideos.css" />
+
+
+        <script>
+            $(document).ready(function (e) {
+
+                $(".cve").numeric();
+
+
+                $('#audio').fancybox({
+                    fitToView: false,
+                    width: '680',
+                    height: '72',
+                    autoSize: true,
+                    closeClick: true
+                });
+
+                $("#latest").fancybox({
+                    maxWidth: 9999,
+                    maxHeight: 9999,
+                    fitToView: true,
+                    width: '100%',
+                    height: '100%',
+                    autoSize: false,
+                    closeClick: false
+                });
+
+                $(".audio").fancybox({
+                    fitToView: false,
+                    width: '670',
+                    height: '72',
+                    autoSize: true,
+                    closeClick: true
+                });
+
+            });
+
+            function g(id) {
+                return document.getElementById(id);
+            }
+            function valor(indice) {
+                return formatear_numero(arrValores[indice].valor2);
+            }
+
+            window.onload = function () {
+
+                var uf = 4, utm = 5;
+                if (typeof (arrValores) != "undefined") {
+                    //g('uf').innerHTML=valor(uf);
+                    //g('utm').innerHTML=valor(utm);
+                }
+            }
+
+            var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+            var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+            var f = new Date();
+
+
+        </script>
+
+    </head>
+
+    <body>
+        <!-- <div style="text-align: center; padding: 5px;"><a href="http://www.boletinoficialdemineria.cl/"><img src="/assets/modal/image/BANNERBOM-800.gif" alt=""> </a></div> -->
+        <span id="thread"></span>
+        <div id="wrapper">
+            <div id="content">
+                <header> 
+                    <a href="https://www.diariooficial.interior.gob.cl" id="logo-gob"><img src="https://www.diariooficial.interior.gob.cl/assets/images/logo_gob.png" height="91"  width="100"/> </a> 
+                    <a href="https://www.diariooficial.interior.gob.cl" id="logo-do"> <img src="https://www.diariooficial.interior.gob.cl/assets/images/logo_do.jpg"/> </a>
+                    <!--<div class="redes-top">
+                        <a href="//twitter.com/DiarioOficialCL" target="_blank"><span class="icon-twitter"></span></a>
+                        <a href="//www.youtube.com/channel/UCBAfM4NppebwzzxIhJvLsZg" target="_blank"><span class="icon-youtube"></span></a>
+                    </div>-->
+                    <div class="callcenter" style="height:50px;">
+                        <a title="Contacto" href="/contacto/">
+                            <span class="icon" style="float: left;margin-top: 0px;"></span>
+                            <!--<span style="font-size: 80%;display: block">600 712 0001</span>-->
+                            <span style="font-size: 80%;display: block">600 613 5700</span>
+                        </a>
+                    </div>
+                    
+                    <!--<div class="callcenter" style="height:50px;">
+                        <a title="Contacto" href="/contacto/">
+    						<span class="icon" style="float: left;margin-top: 10px;"></span>
+    						<span style="font-size: 80%;display: block">224863628</span>
+    						<span style="font-size: 80%;display: block">224863666</span>
+						</a>
+                        <a title="Contacto" href="/contacto/"><span>224863600</span><span class="icon"></span></a>
+                    </div>-->
+                    <div class="login_btns">
+                        <a class="btn btn_red" title="Trámites en Línea" href="http://pagos.diarioficial.cl"><span><i class="icon"></i>Publicar en Línea</span></a>
+                    </div>
+                    <div class="indicadores">
+                        <span id="fecha">
+                            <script>
+                                document.write(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+                            </script>
+                        </span>
+                    </div>
+                    <nav id="nav-superior" style="text-align: center">
+                        <ul>
+                            <!--<li><img src="https://www.diariooficial.interior.gob.cl/assets/images/inicio.png" style="float:left; margin: 10px -10px 0 10px"/><a href="https://www.diariooficial.interior.gob.cl/"   >Publicar</a></li>-->
+                            <li><a href="https://www.diariooficial.interior.gob.cl/quienes-somos/"  >¿Quiénes Somos?<br/>&nbsp;</a></li>
+                            <li><a href="https://www.diariooficial.interior.gob.cl/versiones-anteriores" title="Ver ediciones desde 01/03/1877 al 16/08/2016" >EDICIÓN IMPRESA<br/>&nbsp;</a></li>
+                            <li><a href="https://www.diariooficial.interior.gob.cl/edicionelectronica/" title="Ver ediciones desde 17/08/2016" >EDICIÓN ELECTRÓNICA <br/>&nbsp;</a></li>
+                            <li><a href="https://www.diariooficial.interior.gob.cl/verificacion/"  >Verificar Publicación<br/> con su CVE</a></li>
+                            <li><a href="https://www.boletinoficialdemineria.cl/"  >Boletín Oficial<br/> de Minería</a> </li>
+                            <li><a href="https://pagos.diarioficial.cl/BuscarBoleta/" target="_blank">Boleta<br/> Electrónica</a> </li>
+                            <li style="border:none;"><a href="https://www.diariooficial.interior.gob.cl/contacto/"  >Contacto</a></li>
+
+                        </ul>
+                    </nav>		
+                </header>
+                <div id="divMain">
+	
+	<p>Por mandato de los artículos 75 de la Constitución Política de la República de Chile y 7º del Código Civil, “la publicación de las leyes se hará mediante su inserción en el Diario Oficial y desde la fecha de ésta se entenderá conocida de todos y será obligatoria”.</p>
+<p>En consecuencia, el Diario Oficial de la República de Chile tiene como función primordial ser el medio a través del cual se publican las leyes, decretos y demás normas jurídicas dictadas por los tres Poderes del Estado, a saber, Poder Ejecutivo, Poder Legislativo y Poder Judicial, haciéndolas conocidas y obligatorias para toda la ciudadanía.</p>
+<p>Asimismo, el Diario Oficial cumple con la obligación establecida por el legislador de publicar todos aquellos actos jurídicos y contratos que celebren particulares, y algunas solicitudes que se realicen a organismos del Estado, que por la importancia que implican en la vida jurídica, económica, comercial, financiera y social del país, deban cumplir con esta solemnidad.</p>
+<p>Actualmente, y por mandato del D.F.L. Nº 7.912, de 1927, corresponde su administración al Ministerio del Interior, a través de su División Jurídica, siendo su Directora la abogada doña Carmen Cecilia Power Helfmann.</p>
+<p>La edición del Diario Oficial se realiza mediante dos formatos:</p>
+<p>&#8211; Papel: En el caso de leyes, decretos, resoluciones, marcas y publicaciones judiciales. Con un tiraje de 2000 ejemplares.</p>
+<p>&#8211; Electrónico, vía internet, tratándose de extractos de sociedades.</p>
+<p>La periodicidad de su publicación es de lunes a sábado.</p>
+	
+<style>
+	p small a{
+		display: block;
+		float: right;
+		text-decoration: none;
+		color: #626262 !important;
+		text-align: right;
+		margin: 0px;
+		font-size: 10px;
+	}
+	iframe{
+	border: #CCC 1px solid;
+	}
+</style>
+	
+<link rel="stylesheet" type="text/css" href="/assets/modal/css/style.css">
+<!-- <a href="#openModalLey" id="click" class="textclh">.</a>-->
+<div id="openModal" class="modalDialog">
+        <div>
+          <a href="#close" title="Close" class="close">X</a>
+          <img src="/assets/modal/image/fondo.png" alt="">
+          <div class="btn">
+            <a class="pdf" href="/assets/modal/Constituciones1810-2015.pdf" target="_blank">PDF</a>
+            <a class="epub" href="/assets/modal/Constituciones1810-2015.epub">EPUB</a>
+          </div>
+        </div>
+</div>
+<div id="openModalLHDO" class="modalDialog">
+        <div>
+          <a href="#close" title="Close" class="close">X</a>
+          <img src="/assets/modal/image/banner-libro-historia.png" alt="">
+          <div class="btn">
+            <a class="pdf" href="/assets/modal/LibroHDO.pdf" target="_blank">PDF</a>
+            <a class="epub" href="/assets/modal/LibroHDO.epub">EPUB</a>
+          </div>
+        </div>
+</div>
+
+<div id="openModalLibrosDO" class="modalDialog"  >
+        <div style="width:30%;height:80%" >
+            <a href="#close" title="Close" class="close">X</a>
+            <div >
+            <div>
+                <img src="/assets/modal/image/banner-libro-historia.png" alt="" width="80%" height="80%">
+                <div style="position: absolute; left: 63%; top: 20%;">
+                    <a href="/assets/modal/LibroHDO.pdf" target="_blank"><img src="/assets/modal/image/pdfcolor.png" alt="PDF" width="40px"></a>
+                    <a href="/assets/modal/LibroHDO.epub"><img src="/assets/modal/image/epubcolor.png" alt="epub" width="45px"></a>
+                </div>
+            </div>
+            <div>
+                <img src="/assets/modal/image/fondo.png" alt=""  width="80%" height="80%">
+                <div style="position: absolute; left: 63%; top: 50%;">
+                    <a href="/assets/modal/Constituciones1810-2015.pdf" target="_blank"><img src="/assets/modal/image/pdfcolor.png" alt="PDF" width="40px"></a>
+                    <a href="/assets/modal/Constituciones1810-2015.epub"><img src="/assets/modal/image/epubcolor.png" alt="epub" width="45px"></a>
+                </div>                
+                <!--<div class="btn" >
+                    <a class="pdf" href="/assets/modal/Constituciones1810-2015.pdf" target="_blank">PDF</a>
+                    <a class="epub" href="/assets/modal/Constituciones1810-2015.epub">EPUB</a>
+                </div>                -->
+            </div>
+            <div>
+                <img src="/assets/modal/image/banner-suplementos.png" alt=""  width="80%" height="80%" href="/suplementos/">
+                <div style="position: absolute; left: 63%; top: 80%;">
+                    <a href="/suplementos/" ><img src="/assets/images/icon-ver.png" alt="PDF" width="50px"></a>
+
+                </div>                 
+            </div>
+            </div>
+            
+        </div>
+</div>
+
+<aside id="banners">
+    <ul>
+                <!--<li><a class="bt_foot bt_verifica" href="/verificacion/"></a></li>-->
+        <li><a class="bt_foot bt_tarifas" href="/tarifas/"></a></li>
+        <li><a class="bt_foot bt_reglamentos" href="/normativa/"></a></li>
+        <!--<li><a class="bt_foot bt_boleta" href="https://pagos.diarioficial.cl/BuscarBoleta/" target="_blank"></a></li>-->
+        
+        <!--<li><a class="bt_foot bt_suplementos" href="/suplementos/"></a></li>-->
+        <li><a class="bt_foot bt_lib_historia" href="#openModalLibrosDO"></a></li><!--<li><a class="bt_foot bt_lib_historia" href="#openModalLHDO"></a></li>-->
+        <!--<li><a class="bt_foot bt_librocons" href="#openModal"></a></li>-->
+        
+        <!---->
+        <li><a class="bt_foot bt_estadistica" href="/informe/"></a></li>
+        <li><a class="bt_foot bt_memoria" href="/documentos/"></a></li>
+        <!--<li><a class="bt_foot bt_boletin" href="http://www.boletinoficialdemineria.cl/" target="_blank"></a></li>-->
+        
+    </ul>
+</aside>
+<!-- end banners -->
+<div id="logofooterDiv">
+    <span class="destacado">MESA DE AYUDA</span> 600 613 5700 | HORARIO DE ATENCIÓN: De Lunes a Jueves de 9:00 a 14:00 hrs y de 15:00 a 17:00 hrs. Viernes de 9:00 a 14:00 hrs y de 15:00 a 16:00 hrs.
+    <div style="text-align:center; margin-top: 10px;" ><a href="/politica/" style="color:#808080;">Política de Tratamiento de Datos Personales</a> | <a href="/condiciones/" style="color:#808080;">Condiciones de Uso de Publicaciones</a></div>
+</div>
+
+</div>
+<!-- end divMain -->
+</div>
+<!-- end content -->
+<footer>
+    <div id="footerDiv">
+        <div id="address"> <a>Dirección: Dr. Torres Boonen 511, Providencia, Santiago</a> </div>
+    </div>
+    <!-- end footerDiv -->
+</footer>
+<!-- end footer -->
+</div>
+<!-- end wrapper -->
+<style>
+    img{border:none !important}			
+    .descarga { width: 70px; display: block; float: left; position: absolute; z-index: 2; padding-top: 20px; padding-left: 30px; height: 70px; }
+    .pagos { width: 51px; display: block; float: left; position: absolute; z-index: 1; padding-top: 100px; padding-left: 40px; height: 59px; }
+    .instrucciones { width: 80px; display: block; position: absolute; z-index: 1; padding-top: 5px; padding-right: 130px; height: 60px; right: 0; }
+    .instrucciones img { box-shadow: none !important; -webkit-box-shadow: none !important; }			
+    .instrucciones a#info{ float: left; margin-left: 12px; display: block; }
+    .instrucciones div#info-div{ width: 230px; background-color: #FFF; margin: 0; padding: 0px 20px 0px 20px; float: left; font-family: 'gobCL', Verdana, Arial; margin-top:15px; }
+    .instrucciones div#info-div img#info-up{ display: block; float: left; margin-top: -11px; }
+    .instrucciones div#info-div ol { margin: 0; padding: 0px 0px 15px 15px; }
+    .instrucciones div#info-div ol li{ font-size: 12px !important; margin-bottom: 10px; margin-top: 10px; }
+</style>
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-43680279-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>

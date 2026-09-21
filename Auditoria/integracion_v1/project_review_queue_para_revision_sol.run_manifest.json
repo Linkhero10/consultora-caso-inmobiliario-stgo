@@ -1,0 +1,24 @@
+{
+  "manifest_version": 1,
+  "status": "review_input_pending",
+  "generated_at": "2026-09-17T21:15:15+00:00",
+  "api_call": false,
+  "artifact_path": "Auditoria/integracion_v1/project_review_queue_para_revision_sol.json",
+  "artifact_sha256": "12349d4ab6b7863599608cba745bd2abe440380300faa525e07c630411f6ef97",
+  "artifact_format": "json",
+  "pair_count": 253,
+  "unique_pair_count": 253,
+  "source_hashes": {
+    "review_queue_source_sha256": "7bb060a785ec4e7840457d7f283fed78227c0f1964bf876a3a309c1e9e0abad2",
+    "review_queue_resolved_sha256": "5404f64dabe906c03d026833b584c18558cf35a349044821cd3d3510a94ffc06",
+    "package_builder_script_sha256": "1c744f78887948997fd1a2b788d35ca0d17777f3b6319f7bf2e2fdb76739ab5e",
+    "bridge_build_summary_sha256": "d6f16beb0e2412ad5314d3bad4f20ce6469657f2bdb368183c8fb205b49b4e92"
+  },
+  "review_policy": {
+    "model": "gpt-5.6-sol",
+    "requires_explicit_user_authorization": true,
+    "model_output_is_advisory": true,
+    "human_decision_remains_final": true
+  },
+  "note": "Paquete autocontenido para revisión de Sol. No constituye una llamada a Sol, aprobación ni integración automática de decisiones. El JSON original y la cola resuelta se preservan sin sobrescritura."
+}

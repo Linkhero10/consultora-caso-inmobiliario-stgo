@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conflictividad inmobiliaria en Santiago — portafolio técnico</title>
+<style>
+  :root{
+    --bg:#f5f6f1; --surface:#fff; --ink:#1a2422; --ink-soft:#51615c; --ink-faint:#8a9994;
+    --accent:#0e7a6e; --accent-strong:#0a5c53; --border:#dce0d8; --stripe:#eff2eb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#111917; --surface:#161f1d; --ink:#e7ece9; --ink-soft:#a6b4af; --ink-faint:#6c7b76;
+      --accent:#4fd1c0; --accent-strong:#7be0d2; --border:#2a3532; --stripe:#1a2422;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .page{max-width:880px;margin:0 auto;padding:56px 24px 96px}
+  h1{font-size:clamp(28px,4vw,38px);line-height:1.15;margin:0 0 12px}
+  h2{font-size:22px;margin:0 0 14px}
+  .lede{color:var(--ink-soft);font-size:18px;max-width:64ch;margin:0 0 40px}
+  section{margin-bottom:48px}
+  .step{display:flex;gap:16px;align-items:flex-start;margin-bottom:28px}
+  .step-num{font:600 13px/1 "SF Mono",Consolas,monospace;color:var(--accent-strong);
+    background:var(--stripe);border:1px solid var(--border);border-radius:6px;
+    width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-body b{display:block;margin-bottom:4px;font-size:16.5px}
+  .step-body span{color:var(--ink-soft);font-size:15px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
+  .card b{display:block;margin-bottom:6px;font-size:15.5px}
+  .card span{color:var(--ink-soft);font-size:14.5px}
+  .finding{border-left:3px solid var(--accent);padding:4px 0 4px 16px;margin-bottom:18px}
+  .finding b{display:block;margin-bottom:4px}
+  .finding span{color:var(--ink-soft);font-size:15px}
+  a.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;
+    padding:10px 18px;border-radius:6px;font-size:14.5px;font-weight:600;margin:4px 8px 4px 0}
+  a.btn.secondary{background:transparent;color:var(--accent-strong);border:1px solid var(--border)}
+  code{background:var(--stripe);padding:2px 6px;border-radius:4px;font-size:14px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--ink-faint);font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Conflictividad inmobiliaria en Santiago</h1>
+  <p class="lede">
+    Pipeline de investigación de acquisition→LLM structured extraction→data contracts→lineage→QA→
+    resolución de identidad→red analizable, aplicado a 3.884 documentos sobre conflictos
+    inmobiliarios y urbanos en las 32 comunas de la Provincia de Santiago (2014–2026).
+  </p>
+
+  <section>
+    <h2>Qué problema resolvemos</h2>
+    <p>
+      La prensa y los registros públicos hablan de "proyectos" y "conflictos" como si fueran la
+      misma unidad, y mencionan a los mismos actores con decenas de variantes de redacción. Eso
+      hace casi imposible construir una red de actores confiable directamente sobre el texto: un
+      mismo litigio termina fragmentado en varios nodos, y una misma institución aparece contada
+      varias veces. Este proyecto construye, con evidencia verificable en cada paso, la capa de
+      identidad que hace falta antes de poder analizar la red.
+    </p>
+  </section>
+
+  <section>
+    <h2>Ver el resultado</h2>
+    <div class="cards">
+      <div class="card">
+        <b>Contexto y evidencia del corpus</b>
+        <span>Dashboard de exploración del corpus clasificado, con evidencia citada por caso.</span>
+        <div style="margin-top:10px"><a class="btn" href="showcase/dashboard_contexto.html">Abrir dashboard</a></div>
+      </div>
+      <div class="card">
+        <b>Piloto de integración: Estación Central</b>
+        <span>Caso de prueba de extremo a extremo — de la evidencia documental al conflicto resuelto.</span>
+        <div style="margin-top:10px"><a class="btn" href="showcase/piloto_integracion.html">Abrir piloto</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tres hallazgos de ejemplo</h2>
+    <div class="finding">
+      <b>Un mismo litigio, tres proyectos distintos</b>
+      <span>El conflicto entre un cementerio y el trazado de un teleférico sobre su terreno involucra
+        3 <code>project_id</code> distintos con nombres de fase/expansión diferentes. La capa
+        <code>CONFLICT</code> los reconoce como un solo litigio con evidencia documental cruzada,
+        no por coincidencia de texto.</span>
+    </div>
+    <div class="finding">
+      <b>La fragmentación textual escondía multiafiliación real</b>
+      <span>"Contraloría" y "Contraloría General de la República" contaban como dos actores
+        distintos (7 y 10 conflictos). Al resolver identidad, la entidad consolidada llega a 17,
+        empatando con la Corte Suprema — la fragmentación nominal subestimaba su multiafiliación
+        observada en la red actor–conflicto (no una medida de centralidad como betweenness o
+        eigenvector, todavía no calculadas).</span>
+    </div>
+    <div class="finding">
+      <b>Cuándo NO fusionar, documentado explícitamente</b>
+      <span>Población La Victoria sostiene una toma de terreno de 1957 y, décadas después, una
+        protesta contra un proyecto ferroviario. En vez de decidir con la sola estructura del dato,
+        queda registrado como relación pendiente de decisión humana — abierto a que un análisis de
+        trayectorias lo resuelva mejor.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Arquitectura de datos</h2>
+    <p>Cada capa de identidad (documento → proyecto → caso → conflicto → actor) se construye sobre
+      la anterior, nunca las colapsa en una sola. Ver el diagrama completo y los principios de
+      diseño en <a href="architecture.html">docs/architecture</a>.</p>
+  </section>
+
+  <section>
+    <h2>Cómo auditamos el uso de LLMs</h2>
+    <p>
+      Cada extracción con LLM pasa por un contrato de esquema versionado, hash-pinning de
+      prompt/schema para detectar cambios silenciosos, preflight antes de gastar presupuesto, y
+      distinción explícita entre evidencia <em>reportada</em> por el modelo y evidencia
+      <em>verificada</em> (la cita existe literal en la fuente). Las decisiones de fusión/separación
+      de identidad quedan en una cola de revisión con razón explícita, nunca en un script que
+      decide en silencio.
+    </p>
+  </section>
+
+  <section>
+    <h2>Repositorio técnico</h2>
+    <p>Código, tests (35+ archivos), contratos de pipeline y la base de datos completa.</p>
+    <a class="btn secondary" href="https://github.com/Linkhero10/consultora-caso-inmobiliario-stgo">Ver en GitHub</a>
+  </section>
+
+  <footer>Felipe Muñoz, Darío Briceño, Nicolás Gajardo, Christian Nass — Santiago, Chile, 2026.</footer>
+
+</div>
+</body>
+</html>

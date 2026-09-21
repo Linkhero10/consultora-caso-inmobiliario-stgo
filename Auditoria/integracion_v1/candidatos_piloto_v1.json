@@ -1,0 +1,251 @@
+{
+  "nota": "Propuesta algoritmica, NO adjudicacion. El usuario elige el caso piloto entre estos candidatos.",
+  "criterio_filtro": "case_mentions con gate_inmobiliaria_urbana_amplia.decision_final == 'include' (decision final del gate determinista, no decision_modelo cruda del LLM)",
+  "criterio_agrupacion": "misma comuna + mismo tipo_objeto_norm + solapamiento de al menos 1 entidad proponente (inmobiliaria/empresa, nombre normalizado). Se probo con cualquier entidad no institucional pero encadenaba transitivamente clusters de decenas de documentos no relacionados (vecinos/organizaciones activas en muchos casos de la misma comuna); el proponente del proyecto es el vinculo mas especifico a un conflicto concreto.",
+  "total_clusters_encontrados": 109,
+  "top_candidatos": [
+    {
+      "comuna": "Ñuñoa",
+      "tipo_objeto_norm": "uso_mixto_residencial",
+      "n_documentos": 28,
+      "n_entidades_unicas": 92,
+      "n_citas_verificadas": 202,
+      "n_fechas_publicacion_distintas": 25,
+      "composicion_fuentes": {
+        "medio_de_prensa": 27,
+        "fuente_oficial": 1
+      },
+      "urls": [
+        "http://www.economiaynegocios.cl/noticias/noticias.asp?id=438845",
+        "https://contrapoderchile.cl/por-la-trama-tras-fundamenta-y-vivanco-el-exministro-sergio-munoz-debe-volver-a-la-tercera-sala-de-la-corte-suprema/",
+        "https://interferencia.cl/articulos/fundamenta-denuncian-en-contraloria-estudio-de-sombras-de-controvertido-proyecto-de-cuatro",
+        "https://interferencia.cl/articulos/trabajadores-se-toman-municipalidad-de-nunoa-en-favor-de-proyecto-inmobiliario-y",
+        "https://lavozdelosquesobran.cl/opinion/corrupcion-inmobiliaria-en-nunoa-fundamenta-los-abogados-lagos-vargas-silber-y-la-jueza-vivanco-en-un-entremado-que-huele-mal/20072026",
+        "https://lavozdelosquesobran.cl/opinion/cuales-seran-las-alturas-de-cuatro-torres-del-proyecto-inmobiliario-paralizado-en-nunoa/11012023",
+        "https://opinion.cooperativa.cl/opinion/urbanismo/inmobiliaria-fundamenta-y-los-abogados-lagos-vargas-y-silber/2026-08-03/075034.html",
+        "https://radio.uchile.cl/2023/03/02/corte-suprema-fallo-a-favor-de-proyecto-de-fundamenta-frente-a-mall-plaza-egana/",
+        "https://radio.uchile.cl/2026/04/04/proyecto-en-nunoa-exsupremo-sergio-munoz-tenia-la-razon/",
+        "https://segreader.emol.cl/2022/04/21/A/GN449AUI/light?gt=173001",
+        "https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/",
+        "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2018/03/23/vecinos-de-nunoa-podran-opinar-en-participacion-ciudadana-por-proyecto-torres-plaza-egana.shtml",
+        "https://www.df.cl/df-mas/por-dentro/us-91-millones-vendidos-y-una-millonaria-demanda-contra-el-fisco",
+        "https://www.df.cl/empresas/construccion/inmobiliaria-fundamenta-se-abre-a-modificar-proyecto-paralizado-en",
+        "https://www.df.cl/empresas/construccion/segundo-tribunal-ambiental-anulo-parcialmente-aprobacion-ambiental-del",
+        "https://www.df.cl/empresas/infraestructura-inmobiliaria/megaproyecto-en-plaza-egana-recibe-permiso-de-edificacion-y-se-alista",
+        "https://www.diarioconstitucional.cl/cartas-al-director/el-ex-juez-sergio-munoz-debe-volver-a-la-3a-sala-de-la-corte-suprema/",
+        "https://www.elperiodista.cl/2025/11/los-tentaculos-de-eco-egana-pagos-millonarios-presion-judicial-y-aportes-a-campanas-marcan-el-avance-del-polemico-proyecto-inmobiliario/",
+        "https://www.emol.com/noticias/Economia/2022/11/14/1078308/sea-permite-proyecto-plaza-egana.html",
+        "https://www.latercera.com/nacional/noticia/obreros-protestan-en-plaza-egana-por-paralizacion-en-una-construccion-inmobiliaria/5K4TUTVZ4VD7NKRZI2EOHDRV4A/",
+        "https://www.latercera.com/pulso-pm/noticia/la-nueva-arremetida-de-fundamenta-por-polemico-proyecto-en-plaza-egana-y-las-gestiones-de-su-dueno-con-vecinos-de-nunoa/2YI4SDG5PZBAFOQASY6JZZJ3NU/",
+        "https://www.latercera.com/pulso-pm/noticia/los-argumentos-de-fundamenta-para-defender-proyecto-en-plaza-egana-antes-de-crucial-alegato-en-la-corte-suprema/2NQHIMHO7NG7HGMUHS53WXEUDQ/",
+        "https://www.latercera.com/pulso/noticia/fundamenta-presenta-reclamacion-por-rechazo-a-proyecto-inmobiliario-en-nunoa-y-denuncia-motivos-politicos/TORJ7OV77VFHRNOJKTSCSK3N7A/",
+        "https://www.meganoticias.cl/nacional/484463-megaproyecto-inmobiliario-nunoa-de-que-se-trata-pdp-07-05-2025.html",
+        "https://www.paiscircular.cl/radar-legal/sea-admitio-a-tramite-recurso-de-reclamacion-presentado-por-proyecto-inmobiliario-egana-comunidad-sustentable/",
+        "https://www.pauta.cl/ciudad/2023/01/20/reactivacion-de-megaproyecto-de-fundamenta-en-plaza-egana-controversia.html",
+        "https://www.pauta.cl/economia/2022/04/11/alfredo-palominos-fundamenta-rechazo-megaproyecto-inmobiliario-nunoa.html",
+        "https://www.unconunoa.cl/no-al-mega-proyecto-plaza-egana-convoca-a-segunda-protesta/"
+      ]
+    },
+    {
+      "comuna": "Quilicura",
+      "tipo_objeto_norm": "instrumento_urbano_general",
+      "n_documentos": 13,
+      "n_entidades_unicas": 36,
+      "n_citas_verificadas": 100,
+      "n_fechas_publicacion_distintas": 11,
+      "composicion_fuentes": {
+        "medio_de_prensa": 10,
+        "enciclopedia_colaborativa": 1,
+        "fuente_oficial": 2
+      },
+      "urls": [
+        "https://eldesconcierto.cl/medio-ambiente/inmobiliarias-buscan-anular-proteccion-humedal-quilicura-segunda-vez-vecinos-enfrentan-juicio-clave-n5458773",
+        "https://elpais.com/america-futura/2025-01-09/humedal-de-quilicura-un-espacio-vital-para-la-comunidad-y-la-supervivencia-humana.html",
+        "https://es.wikipedia.org/wiki/Humedal_de_Quilicura",
+        "https://interferencia.cl/articulos/decision-de-recuperar-estatus-de-humedal-urbano-en-quilicura-queda-en-manos-de-ministra",
+        "https://resumen.cl/articulos/inmobiliarias-se-oponen-al-reconocimiento-oficial-de-los-humedales-de-quilicura",
+        "https://resumen.cl/articulos/negocio-inmobiliario-una-de-las-amenazas-que-afectan-al-humedal-quilicura-el-mas-grande-de-la-region-metropolitana",
+        "https://tribunalambiental.cl/sentencia-humedal-urbano-quilicura-mma-r-297-298-299-2021/",
+        "https://tribunalambiental.cl/visita-inspectiva-r-397-398-399-humedal-urbano-quilicura/",
+        "https://www.elmostrador.cl/noticias/pais/2023/02/02/la-triple-amenaza-al-humedal-urbano-mas-grande-del-pais/",
+        "https://www.emol.com/noticias/Economia/2022/10/25/1076597/tribunal-ambiental-retrotrae-humedal-quilicura.html",
+        "https://www.paiscircular.cl/radar-legal/ordenan-retrotraer-procedimiento-de-declaracion-del-humedal-urbano-de-quilicura-dictado-por-el-mma/",
+        "https://www.terram.cl/inmobiliarias-buscan-anular-proteccion-de-humedal-de-quilicura-por-segunda-vez-vecinos-enfrentan-juicio-clave/",
+        "https://www.terram.cl/negocio-inmobiliario-una-de-las-amenazas-que-afectan-al-humedal-quilicura-el-mas-grande-de-la-region-metropolitana/"
+      ]
+    },
+    {
+      "comuna": "Estación Central",
+      "tipo_objeto_norm": "edificio_residencial",
+      "n_documentos": 11,
+      "n_entidades_unicas": 43,
+      "n_citas_verificadas": 72,
+      "n_fechas_publicacion_distintas": 11,
+      "composicion_fuentes": {
+        "medio_de_prensa": 11
+      },
+      "urls": [
+        "https://elpais.com/chile/2025-09-17/la-vida-comprimida-en-los-guetos-verticales-de-estacion-central.html",
+        "https://elquintopoder.cl/ciudad/la-unica-solucion-para-los-guetos-verticales-en-estacion-central/",
+        "https://radio.uchile.cl/2021/05/23/estacion-central-un-recorrido-por-la-comuna-a-cinco-anos-del-boom-de-los-guetos-verticales/",
+        "https://transportevertical.org/sitio/guetos-verticales-en-santiago/",
+        "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2022/08/09/el-presente-de-15-guetos-verticales-de-estacion-central-no-son-habitados-por-falta-de-recepcion.shtml",
+        "https://www.elciudadano.com/reportaje-investigacion/estacion-central-administracion-de-rodrigo-delgado-recaudo-5-mil-millones-por-polemicos-proyectos-inmobiliarios/03/23/",
+        "https://www.elciudadano.com/reportaje-investigacion/las-nuevas-callampas-boom-inmobiliario-en-estacion-central/04/07/",
+        "https://www.eldinamo.cl/opinion/2017/07/31/guetos-verticales-miente-miente-que-algo-queda/",
+        "https://www.eldinamo.cl/opinion/2017/09/04/guetos-verticales-todos-los-analizados-por-la-autoridad-son-ilegales/",
+        "https://www.hogardecristo.cl/entrevistas/alejandro-verdugo-demolamos-al-menos-una-megatorre/",
+        "https://www.latercera.com/pulso-pm/noticia/estacion-central-y-los-edificios-fantasma-tres-proyectos-paralizados-por-presiones-politicas-y-perdidas-millonarias/"
+      ]
+    },
+    {
+      "comuna": "Estación Central",
+      "tipo_objeto_norm": "edificio_residencial",
+      "n_documentos": 10,
+      "n_entidades_unicas": 51,
+      "n_citas_verificadas": 57,
+      "n_fechas_publicacion_distintas": 8,
+      "composicion_fuentes": {
+        "medio_de_prensa": 10
+      },
+      "urls": [
+        "https://radio.uchile.cl/2025/06/21/estacion-central-al-borde-del-colapso-el-lobby-que-impulsa-la-aprobacion-de-nuevos-guetos-verticales/",
+        "https://segreader.emol.cl/2019/01/29/A/2S3HSK4H/light?gt=180001",
+        "https://www.chilevision.cl/noticias/reportajes/cronicas/suprema-falla-contra-proyecto-inmobiliario-de-dos-edificios-con-mas-de-mil-departamentos-en-estacion-central/",
+        "https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/",
+        "https://www.cooperativa.cl/noticias/pais/vivienda/inmobiliaria-de-los-guetos-verticales-dice-que-estos-son-una-solucion/2017-05-04/161607.html",
+        "https://www.df.cl/df-mas/por-dentro/inmobiliarias-vs-municipalidad-la-batalla-por-las-recepciones-en",
+        "https://www.infraestructurapublica.cl/guetos-verticales-tipo-ciudad-queremos-alberto-undurraga/",
+        "https://www.latercera.com/pulso-pm/noticia/la-desconocida-guerra-inmobiliaria-en-estacion-central/4TDSYWZNMZCX5CD5LGAMJDHK7E/",
+        "https://www.latercera.com/pulso-pm/noticia/otra-constructora-en-crisis-upc-que-levanto-32-edificios-en-10-anos-pide-su-reorganizacion-y-registra-deudas-por-casi-10-mil-millones/Z43T42D6NNADVGW6WJAOFTSQPI/",
+        "https://www.latercera.com/pulso/noticia/inmobiliaria-va-al-tc-dictamen-contraloria-invalido-permisos-estacion-central/725708/"
+      ]
+    },
+    {
+      "comuna": "Vitacura",
+      "tipo_objeto_norm": "uso_mixto_residencial",
+      "n_documentos": 9,
+      "n_entidades_unicas": 31,
+      "n_citas_verificadas": 64,
+      "n_fechas_publicacion_distintas": 7,
+      "composicion_fuentes": {
+        "medio_de_prensa": 9
+      },
+      "urls": [
+        "https://radio.uchile.cl/2021/03/17/paulmann-solicita-a-vitacura-eximirse-del-cumplimiento-de-la-ley/",
+        "https://www.ciperchile.cl/2016/07/27/ardides-para-violar-las-reglas-del-mercado-inmobiliario-en-vitacura-y-vina-del-mar/",
+        "https://www.ciperchile.cl/2017/04/28/la-batalla-legal-entre-vitacura-y-cencosud-que-tiene-con-pena-a-paulmann/",
+        "https://www.df.cl/empresas/construccion/alto-las-condes-2-van-casi-dos-anos-y-vitacura-aun-no-define-si-permiso",
+        "https://www.df.cl/empresas/construccion/cencosud-tira-la-esponja-y-decide-reformular-proyecto-alto-las-condes-2",
+        "https://www.emol.com/noticias/Economia/2017/07/17/867189/Alto-Las-Condes-II-la-construccion-que-tiene-enfrentados-a-Paulmann-y-al-alcalde-de-Vitacura.html",
+        "https://www.latercera.com/pulso/noticia/cencosud-shopping-decide-reformular-proyecto-alto-las-condes-norte-en-vitacura/XLZORH2O45F47PSVQEQMMHSOAI/",
+        "https://www.meganoticias.cl/nacional/414211-proyecto-alto-las-condes-2-cencosud-conflicto-municipalidad-vitacura-dom-pdp-16-5-2023.html",
+        "https://www.theclinic.cl/2023/05/16/conflicto-cencosud-municipalidad-vitacura-mall-alto-las-condes-2/"
+      ]
+    },
+    {
+      "comuna": "Vitacura",
+      "tipo_objeto_norm": "centro_comercial",
+      "n_documentos": 9,
+      "n_entidades_unicas": 29,
+      "n_citas_verificadas": 49,
+      "n_fechas_publicacion_distintas": 6,
+      "composicion_fuentes": {
+        "medio_de_prensa": 9
+      },
+      "urls": [
+        "https://es.linkedin.com/posts/rodrigoandreucciabogado_matrizderiesgo-vitacura-alcaldesa-activity-7398783595907129344-5orB",
+        "https://vitacura.cl/noticias/comunicado-respecto-al-proceso-de-invalidacion-del-imiv-del-proyecto-cencomalls/",
+        "https://www.defendamoslaciudad.cl/noticias/item/4749-contraloria-acogio-presentacion-de-defendamos-la-ciudad-estableciendo-la-caducidad-de-antiguos-permisos-de-edificacion",
+        "https://www.df.cl/empresas/retail/alcaldesa-de-vitacura-y-proyecto-de-cencosud-bienvenida-la-inversion",
+        "https://www.df.cl/empresas/retail/cencosud-suspende-tramitacion-ambiental-de-mall-en-vitacura-tras",
+        "https://www.eldinamo.cl/opinion/2017/02/06/un-fallo-judicial-a-gusto-del-interesado/",
+        "https://www.ex-ante.cl/economia/cenco-malls-se-ve-obligado-a-no-continuar-con-el-proyecto-cencosud-tira-la-toalla-y-cancela-mall-en-vitacura/",
+        "https://www.ex-ante.cl/economia/el-abogado-que-lidera-el-seremi-de-transportes-el-organismo-que-complica-el-mall-de-cencosud-en-vitacura/",
+        "https://www.t13.cl/noticia/ex-ante/negocios/cenco-malls-no-continuar-proyecto-cencosud-tira-toalla-cancela-mall-vitacura-2-12-2025"
+      ]
+    },
+    {
+      "comuna": "Estación Central",
+      "tipo_objeto_norm": "edificio_residencial",
+      "n_documentos": 8,
+      "n_entidades_unicas": 45,
+      "n_citas_verificadas": 58,
+      "n_fechas_publicacion_distintas": 6,
+      "composicion_fuentes": {
+        "medio_de_prensa": 8
+      },
+      "urls": [
+        "https://criticaurbana.com/wp-content/uploads/2019/03/CU5-Almendra-G%C3%B3mez.pdf",
+        "https://elquintopoder.cl/ciudad/por-que-existen-los-guetos-verticales-ilegales-en-estacion-central/",
+        "https://interferencia.cl/articulos/guetos-verticales-tc-asesta-duro-golpe-inmobiliarias",
+        "https://www.biobiochile.cl/noticias/artes-y-cultura/actualidad-cultural/2018/12/21/guetos-verticales-las-disputas-entre-los-arquitectos-miguel-lawner-y-humberto-eliash.shtml",
+        "https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2020/10/28/continuara-la-impunidad-para-los-guetos-verticales-con-una-constitucion-de-verdad.shtml",
+        "https://www.ciperchile.cl/2017/05/05/edificios-super-densos-en-estacion-central-la-normalizacion-del-descriterio/",
+        "https://www.doe.cl/alerta/25102022/202210253005",
+        "https://www.latercera.com/pulso/noticia/corte-suprema-ratifica-invalidacion-de-permisos-de-edificacion-a-proyectos-de-departamentos-en-estacion-central/HJM3ZUZSSVBHLNO5WRQM5XPU74/"
+      ]
+    },
+    {
+      "comuna": "Peñalolén",
+      "tipo_objeto_norm": "uso_mixto_residencial",
+      "n_documentos": 8,
+      "n_entidades_unicas": 31,
+      "n_citas_verificadas": 57,
+      "n_fechas_publicacion_distintas": 6,
+      "composicion_fuentes": {
+        "medio_de_prensa": 6,
+        "fuente_oficial": 2
+      },
+      "urls": [
+        "https://lavozdelosquesobran.cl/opinion/la-municipalidad-de-penalolen-obedecio-a-un-miembro-de-la-elite/24042025",
+        "https://radio.uchile.cl/2025/04/16/un-alcalde-del-frente-amplio-debil-de-caracter/",
+        "https://tribunalambiental.cl/audiencia-r-334-336-2022-proyecto-inmobiliario-hijuelas-quilin-penalolen/",
+        "https://tribunalambiental.cl/sentencia-evaluacion-sea-proyecto-hijuelas-quilin-penalolen-r-334-336-2022/",
+        "https://www.cooperativa.cl/noticias/pais/vivienda/tribunal-ambiental-dejo-sin-efecto-aprobacion-del-proyecto-hijuelas/2023-07-19/195542.html",
+        "https://www.elciudadano.com/chile/la-ciudad-no-se-vende-vecinos-de-penalolen-se-rebelan-contra-megaproyecto-aprobado-entre-cuatro-paredes/05/02/",
+        "https://www.elmostrador.cl/cultura/2023/07/19/tribunal-ambiental-deja-sin-efecto-proyecto-inmobiliario-de-24-torres-en-penalolen/",
+        "https://www.elperiodista.cl/2025/05/municipalidad-de-penalolen-en-la-mira-de-contraloria-por-millonario-proyecto-inmobiliario/"
+      ]
+    },
+    {
+      "comuna": "Las Condes",
+      "tipo_objeto_norm": "uso_mixto_residencial",
+      "n_documentos": 7,
+      "n_entidades_unicas": 36,
+      "n_citas_verificadas": 62,
+      "n_fechas_publicacion_distintas": 6,
+      "composicion_fuentes": {
+        "medio_de_prensa": 7
+      },
+      "urls": [
+        "https://radio.uchile.cl/2023/08/06/el-exalcalde-lavin-cometia-errores/",
+        "https://segreader.emol.cl/2018/01/04/A/LN3A61SV/light?gt=133501",
+        "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2020/01/15/justicia-fallo-en-contra-de-municipio-de-las-condes-y-dio-luz-verde-a-construccion-de-edificios.shtml",
+        "https://www.df.cl/empresas/industria/switch-vespucio-345-el-polemico-proyecto-inmobiliario-de-las-condes-que",
+        "https://www.elmostrador.cl/noticias/pais/2017/10/18/la-ultima-pataleta-de-los-vecinos-de-pinochet-se-oponen-a-llegada-de-nuevos-residentes-al-sector-de-presidente-errazuriz/",
+        "https://www.elmostrador.cl/noticias/pais/2017/10/31/felipe-alessandri-presenta-recurso-contra-municipio-de-lavin-para-defender-su-casa-en-el-barrio-donde-vivio-pinochet/",
+        "https://www.latercera.com/la-tercera-pm/noticia/batacazo-de-inmobiliaria-nueva-el-golf-municipio-de-las-condes-debera-pagar-casi-10-mil-millones-tras-error-en-apelacion-ante-la-corte/TGGDFUBKBJGMJK2VG22XBIV6KU/"
+      ]
+    },
+    {
+      "comuna": "Recoleta",
+      "tipo_objeto_norm": "uso_mixto_residencial",
+      "n_documentos": 6,
+      "n_entidades_unicas": 31,
+      "n_citas_verificadas": 41,
+      "n_fechas_publicacion_distintas": 5,
+      "composicion_fuentes": {
+        "medio_de_prensa": 6
+      },
+      "urls": [
+        "https://eldesconcierto.cl/2026/03/10/el-minvu-se-opuso-a-un-perdonazo-para-un-edificio-ilegal-en-recoleta",
+        "https://elquintopoder.cl/ciudad/no-se-demolera-y-tampoco-tendra-recepcion-municipal-un-edificio-ilegal-en-recoleta/",
+        "https://interferencia.cl/articulos/cual-sera-el-epilogo-respecto-de-un-antiguo-conflicto-inmobiliario-en-recoleta",
+        "https://radio.uchile.cl/2026/03/10/el-minvu-rechazo-un-perdonazo-para-edificio-ilegal-de-la-universidad-san-sebastian/",
+        "https://www.latercera.com/nacional/noticia/pide-demolicion-pisos-universidad-chile-demanda-inmobiliaria-responsable-edificios-sede-la-u-san-sebastian-bellavista/603498/",
+        "https://www.theclinic.cl/2023/08/26/edificio-barrio-bellavista-10-anos-sin-entregarse-recoleta-demolido/"
+      ]
+    }
+  ]
+}

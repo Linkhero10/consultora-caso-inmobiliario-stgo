@@ -1,0 +1,144 @@
+{
+  "artifact_version": "human-review-release-gate-v5.2.4-frozen-1",
+  "generated_at": "2026-09-16T03:12:11.644190+00:00",
+  "status": "aprobado_revision_humana",
+  "resumen": "Gate de produccion aprobado. CONTRATO CONGELADO 2026-09-16: prompt v5.2.4 (classifier_system_v5_2_4.md, agrega frontera de actos simbolicos/de nomenclatura), schema v5.2.3 (sin cambios de campos), gate v5.2.2 (geografia compuesta/citas cortas) + fix de objeto 2026-09-15 (BROAD_NON_REAL_ESTATE_OBJECTS) + filtro social de X/Twitter truncado. Script de produccion: Trabajo/scripts/classify_v5_2_3.py. Base humana: revision ciega real de Felipe sobre 50 documentos (revision_humana_blind_v5_2_1_50_felipe.json). El fix de nomenclatura (Namur) fue validado con API real sobre una muestra ALEATORIA DISTINTA de 50 documentos nunca antes clasificados (clasificacion_random_v5_2_4_prompt_50.jsonl): 0 regresiones, 0 casos nuevos hacia include. Esa muestra aleatoria de 50 NO tuvo revision humana caso por caso (fue una verificacion automatica de regresion por Claude, comparando contra la corrida anterior sin el fix) -- la aprobacion humana formal del gate sigue basandose en la revision ciega de Felipe sobre los 50 documentos originales. Hash-pinning implementado en classify_v5_1.py (classification_release_reasons()) verifica que este artefacto corresponda exactamente al prompt/schema/script/muestra vigentes -- ver contract_fingerprint arriba.",
+  "cadena_de_verificacion": [
+    {
+      "paso": "1. Piloto v3 (70 docs)",
+      "resultado": "2 falsos positivos confirmados (Costanera Center, Cambio21/Pajaritos), 1 caso limite (Humedal La Poza)"
+    },
+    {
+      "paso": "2. Gate determinista v4",
+      "resultado": "corrige el problema estructural del v3 (evidencia separada de accion/objeto/geografia); 70/70 sin errores"
+    },
+    {
+      "paso": "3. v5/v5.1/v5.2",
+      "resultado": "case_mentions multiples, frontera de inmueble existente sin intervencion urbana formal"
+    },
+    {
+      "paso": "4. v5.2.1",
+      "resultado": "separa suficiencia de evidencia (any) de limpieza completa (all) de citas"
+    },
+    {
+      "paso": "5. Muestra ciega de 50 (revision de Felipe)",
+      "resultado": "13 aprobar_include, 35 confirmar_exclude, 1 mantener_uncertain, 1 requiere_mas_revision -- encontro 2 falsos positivos semanticos (SciELO, Cambio21/Santa Laura) y 4 falsos negativos geograficos"
+    },
+    {
+      "paso": "6. Prueba dirigida 2 docs (API real) con prompt v5.2.3",
+      "resultado": "SciELO -> uncertain, Cambio21 -> exclude; ambos falsos positivos resueltos"
+    },
+    {
+      "paso": "7. Corrida ciega completa 50 docs (API real, v5.2.3)",
+      "resultado": "0 falsos positivos definidos, acuerdo estricto 76% (38/50)"
+    },
+    {
+      "paso": "8. Bug de gate de objeto encontrado y corregido (Quilicura)",
+      "resultado": "recalculo sin API: acuerdo estricto 78% (39/50), 0 human_include_overrides pendientes"
+    },
+    {
+      "paso": "9. Filtro social (posts X/Twitter truncados o con muro de login)",
+      "resultado": "Alto Macul (unico desacuerdo real restante) queda apartado mecanicamente, consistente con mantener_uncertain de Felipe"
+    },
+    {
+      "paso": "10. revista180.udp.cl reextraido",
+      "resultado": "61.242 caracteres reales recuperados (antes solo 442, pagina Vista de OJS sin el articulo), pero supera el limite de 30.000 -- Felipe decidio dejarlo fuera de este piloto por ahora"
+    }
+  ],
+  "resultado_final_verificado": {
+    "muestra_base": "blind_sample_v5_2_1_50 (50 documentos, 10 estratos, sin overlap con pilotos previos)",
+    "documentos_comparables_tras_filtros": 49,
+    "documentos_excluidos_de_la_comparacion": [
+      {
+        "url": "https://x.com/alto_macul/status/1237328657254879232?lang=ar-x-fm",
+        "motivo": "filtro social deterministico: texto_cortado_a_mitad_de_frase; consistente con mantener_uncertain de Felipe, no contradice ningun veredicto humano"
+      }
+    ],
+    "falsos_positivos_definidos": 0,
+    "includes_sin_aprobar_pendientes": 0,
+    "acuerdo_estricto": "39/49 (79.6%)",
+    "acuerdo_operacional": "48/49 (97.96%) -- revista180.udp.cl ES la unica fila en desacuerdo operacional dentro de estas 49 (no fue excluida de esta comparacion, es la causa del desacuerdo). Felipe decidio dejarla fuera de la CLASIFICACION/PRODUCCION por ahora (apartada por longitud, requiere_mas_revision), pero sigue contando en el denominador de esta comparacion de 49 filas.",
+    "nota_sobre_desacuerdos_de_etiqueta_restantes": "Los desacuerdos que quedan entre acuerdo estricto y operacional son casi todos insufficient_content (gate) vs exclude/confirmar_exclude (Felipe) -- misma accion segura (el documento no entra al corpus incluido en ningun caso), etiqueta distinta. Ya aceptado explicitamente en diferencias_luna_vs_felipe_blind_v5_2_1_50.md como no problematico para el criterio de 0 falsos positivos. [Correccion 2026-09-16, hallazgo de Codex/Luna en auditoria cruzada: una version anterior de este texto decia incorrectamente 48/49 tras excluir revista180.udp.cl, lo cual es contradictorio -- si se excluyera, el denominador seria 48, no 49. Corregido.]"
+  },
+  "verificacion_tecnica": {
+    "tests": "82/82 en el entorno de Claude (Trabajo/tests + Trabajo/scripts/tests), verificado por ultima vez 2026-09-16 tras la ronda de autoauditoria (fix de costo perdido en fallos de postprocesamiento y metadata de lock desincronizada). Incluye 3 regresiones del fix de objeto, 6 del filtro social, 7 del hash-pinning base, 2 de extra_gate_files, 5 de seguridad operacional (gate/dry-run/errores), 3 de integracion del gate real en el entrypoint, y las demas suites historicas (v4/v5/v5.1/v5.2/v5.2.1/v5.2.2, discovery, locks). NOTA: Codex/Luna reporta resultados distintos en su propio entorno por fallos de permisos en D:/Temp/felip al usar tempfile -- no reproducible desde este lado; el directorio existe y es escribible en el entorno donde se ejecuta esta clasificacion. No se afirma 82/82 como cifra universal, solo como resultado verificado en el entorno de ejecucion real, re-confirmado en cada ronda.",
+    "api_calls_esta_ronda": "2 (prueba dirigida SciELO+Cambio21) + 50 (corrida ciega completa v5.2.3) = 52 llamadas reales; todos los recalculos posteriores (v5.2.4, filtro social) fueron sin API",
+    "revision_independiente": "Claude (Sonnet 5) audito el trabajo de Codex/Luna paso a paso, encontro y corrigio 1 bug de codigo (gate de objeto) no detectado previamente, y corrigio una afirmacion propia imprecisa en la bitacora (turn-20260916-000346-ed28e7)"
+  },
+  "revision_humana_base": {
+    "reviewer": "Felipe",
+    "review_type": "human_blind_review",
+    "human_review_completed": true,
+    "blind_to_ai_outputs": true,
+    "reviewed_at_original": "2026-09-15T21:37:42.663892+00:00",
+    "source_file": "Auditoria\\muestras_control\\revision_humana_blind_v5_2_1_50_felipe.json",
+    "source_sha256": "932cc27dc9ba4e0b5735faa96b68eff8f92f86b492308bfaed1ddbd2daff4800"
+  },
+  "aprobacion_de_felipe": {
+    "cuando": "2026-09-16T00:14:09.370801+00:00",
+    "que_aprobo": "Felipe realizo la revision humana ciega de los 50 casos (2026-09-15), confirmo explicitamente que fue ciega a las salidas de las IAs (bitacora turn-20260915-224441-9674db), y autorizo expresamente la construccion de este artefacto de liberacion tras revisar en el chat el resultado final verificado arriba.",
+    "cita_textual_verificable": "Claude pregunto en el chat: Quieres que arme el artefacto de liberacion ahora para desbloquear produccion, o prefieres revisar algo mas antes? Felipe respondio textualmente: Si, armalo. Esta es la unica base de autorizacion; registrado en bitacora turn-20260916-010956-b4be31 en respuesta al hallazgo de auditoria cruzada de Codex/Luna, que correctamente senalo que la version anterior de este campo solo parafraseaba la autorizacion sin cita verificable."
+  },
+  "contrato_vigente_para_produccion": {
+    "script_produccion": "Trabajo/scripts/classify_v5_2_3.py (sin --urls-file/--output-file/--dry-run)",
+    "prompt": "Trabajo/prompts/classifier_system_v5_2_4.md",
+    "prompt_sha256": "6b794ba988f8d161458cea04380dbc0880c6633f9a3e1e0f9895e5848462de64",
+    "schema": "Trabajo/config/classification_schema_v5_2_3.json",
+    "schema_sha256": "86f7fc51572b2c7cc133c35d49099d3172115e18997e2ed9a8ba69b83e495f31",
+    "gate_object_fix": "Trabajo/scripts/classify_v5_1.py (BROAD_NON_REAL_ESTATE_OBJECTS, 2026-09-15)",
+    "social_filter": "Trabajo/scripts/classify_luna.py (_is_incomplete_social_post, 2026-09-15)",
+    "nomenclatura_fix": "Trabajo/prompts/classifier_system_v5_2_4.md (frontera de actos simbolicos/de nomenclatura, 2026-09-15)",
+    "workers_recomendados": 50,
+    "output_produccion": "Auditoria/clasificacion_luna_v5_2_3/classifications.jsonl",
+    "nota_correccion_2026_09_16": "Este campo describia el contrato ANTERIOR a congelar v5.2.4 (decia classify_v5_2_2.py / classifier_system_v5_2_3.md / clasificacion_luna_v5_2_2) -- desactualizado desde que se congelo el contrato, aunque contract_fingerprint arriba ya apuntaba correctamente a v5.2.4/v5.2.3. Corregido tras hallazgo de auditoria cruzada de Codex/Luna (punto 2): un lector podia copiar el comando equivocado de aqui aunque el gate tecnico igual autorizara el contrato correcto."
+  },
+  "artefactos_de_soporte": [
+    "Auditoria/muestras_control/revision_humana_blind_v5_2_1_50_felipe.json",
+    "Auditoria/muestras_control/diferencias_luna_vs_felipe_blind_v5_2_1_50.md",
+    "Auditoria/muestras_control/comparison_human_vs_ai_blind_v5_2_5_social_filtered_49.json",
+    "Auditoria/muestras_control/caso_alto_macul_expediente.json",
+    "Auditoria/muestras_control/comparacion_gate_v5_2_3_vs_v5_2_4_blind50.json",
+    "Auditoria/muestras_control/PLAN_REPRUEBA_CIEGA_v5_2_3.md",
+    "Fuentes/fulltext_v2/social_truncado_apartados.jsonl",
+    "Trabajo/tests/test_classification_gate_v5_2_2.py",
+    "Trabajo/tests/test_social_truncation_filter.py"
+  ],
+  "review_policy": {
+    "human_review_completed": true,
+    "production_allowed": true,
+    "reviewer": "Felipe",
+    "basis": "blind_review_50_docs_2026-09-15",
+    "codex_preliminary_review_is_not_human_review": true,
+    "condiciones_de_reapertura": "Si una futura version del prompt/schema o del gate cambia decisiones sobre casos ya revisados, este artefacto debe marcarse superado y no reutilizarse para justificar produccion sin una nueva revision humana. Igualmente, si se decide reincorporar revista180.udp.cl u otros documentos apartados por longitud, requiere su propia revision antes de contar como aprobado.",
+    "contract_frozen_as": "v5.2.4-nomenclatura",
+    "hash_pinning_enforced": true
+  },
+  "contract_fingerprint": {
+    "prompt_path": "Trabajo/prompts/classifier_system_v5_2_4.md",
+    "prompt_sha256": "6b794ba988f8d161458cea04380dbc0880c6633f9a3e1e0f9895e5848462de64",
+    "schema_path": "Trabajo/config/classification_schema_v5_2_3.json",
+    "schema_sha256": "86f7fc51572b2c7cc133c35d49099d3172115e18997e2ed9a8ba69b83e495f31",
+    "entry_script_path": "Trabajo/scripts/classify_v5_2_3.py",
+    "entry_script_sha256": "201116575003670e5de83b4a6ada4e6b4ff7c9d91151727ecad2c049e8e11a32",
+    "base_gate_path": "Trabajo/scripts/classify_v5_1.py",
+    "base_gate_sha256": "29a753b78fd4f8b7c0de61d3433e4b80226f97b721f25003963197df9e2f6b6d",
+    "human_review_sample_path": "Auditoria/muestras_control/revision_humana_blind_v5_2_1_50_felipe.json",
+    "human_review_sample_sha256": "932cc27dc9ba4e0b5735faa96b68eff8f92f86b492308bfaed1ddbd2daff4800",
+    "extra_gate_files": [
+      {
+        "label": "gate v5.2.1 (_run real, ejecutor de produccion; historicamente el punto del bypass de hash-pinning)",
+        "path": "Trabajo/scripts/classify_v5_2_1.py",
+        "sha256": "7798c4912e301c6111af2b5a45f281b8b05a1b95964a94be61a66aba2baaf939"
+      },
+      {
+        "label": "gate v5.2.2 (derive_document_decisions/apply_scope_gate reales usados por postprocess_result)",
+        "path": "Trabajo/scripts/classify_v5_2_2.py",
+        "sha256": "2a59eb880b420470310c138cd5fea1c56e5921c6fb4adeaef692c9c2ebccafb3"
+      }
+    ],
+    "frozen_at": "2026-09-16T03:12:11.643653+00:00",
+    "frozen_contract_name": "v5.2.4-nomenclatura-incremental-write-full-fingerprint"
+  },
+  "nota_sobre_muestra_aleatoria_de_generalizacion": "clasificacion_random_v5_2_5_50.jsonl (prompt v5.2.3, sin el fix) y clasificacion_random_v5_2_4_prompt_50.jsonl (prompt v5.2.4, con el fix) son sobre 50 documentos NUNCA antes usados en ningun piloto, muestreados al azar (seed 20260916) de un pool de 3076 elegibles virgenes. Sirvieron para: (a) descubrir el patron de falso positivo de nomenclatura que ningun piloto anterior habia cubierto, y (b) confirmar que el fix no introduce regresiones. NO constituyen una segunda revision humana -- la aprobacion humana formal sigue siendo la revision ciega de Felipe sobre los 50 documentos de blind_sample_v5_2_1_50.",
+  "nota_incremental_write_2026_09_16": "classify_v5_2_1.py _run() ahora escribe cada registro apenas su future termina (flush+fsync por linea) en vez de acumular todo en memoria y escribir al final -- hallazgo de auditoria de punta a punta antes de la primera corrida real a escala (3835 documentos): con el comportamiento anterior, un crash/corte de red a mitad de la corrida perdia TODOS los resultados ya pagados. Verificado con test_incremental_write_survives_crash.py (simula un crash real a mitad de la corrida y confirma que el primer resultado sobrevive en disco)."
+}

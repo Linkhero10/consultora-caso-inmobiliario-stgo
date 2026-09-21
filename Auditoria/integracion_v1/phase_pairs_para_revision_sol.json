@@ -1,0 +1,1065 @@
+{
+  "generado_para": "clasificacion_de_sol_sobre_los_26_pares_de_fusion_por_fase",
+  "contexto": "El modelo de 3 niveles (PROJECT/PROJECT_PHASE/CASE) usa is_phase_type_merge() -- un regex -- para decidir que pares fusionados son 'la misma fase de construccion de un desarrollo' (nivel PROJECT_PHASE) en vez de solo 'el mismo caso por otra razon' (nivel CASE). Claude encontro, revisando casos al azar, que el regex confunde numeros de DIRECCION/BLOQUE con numeros de ETAPA real (ej. 'Block 73' quedo marcado como fase por el numero 73, que en realidad es un numero de bloque, no una etapa de construccion).",
+  "instrucciones": "Para cada par, clasificar 'clasificacion_sol' con uno de: 'fase_real' (es genuinamente una etapa/fase de construccion distinta del mismo desarrollo), 'mismo_referente_numero_no_es_fase' (el numero es una direccion, bloque, o identificador que no indica una fase -- son literalmente la misma cosa, no fases distintas), 'otra_razon_no_es_fase' (se fusionaron por alias, mismo actor, u otra razon sin relacion con numerales). Llenar 'razon_sol' con la evidencia (ubicacion_especifica, direccion) que respalda la clasificacion.",
+  "n_pares": 26,
+  "pares": [
+    {
+      "project_id_a": "231f1e87d33d59539c58631c",
+      "canonical_name_a": "Urbanya Etapa I",
+      "project_id_b": "dec2a1b623540f6024038698",
+      "canonical_name_b": "Urbanya",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 36] Debería ser 'merged'. Urbanya Etapa I y Urbanya corresponden al mismo desarrollo en El Noviciado, Pudahuel, y al mismo conflicto. La etiqueta de etapa no justifica separar el caso de su proyecto matriz en esta capa de resolución de casos.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "5edffc6acaa4705588dfc9d380cd8320f8ac861173a05fcbb808642cb85e2e9a",
+          "url": "https://es.linkedin.com/posts/rodrigoandreucciabogado_los-opositores-de-urbanya-acuden-a-la-justicia-activity-7493663907572752384-73b_",
+          "title": "Los opositores de Urbanya acuden a la justicia y piden revocar permiso de proyecto inmobiliario en Pudahuel - La Tercera | Rodrigo Andreucci",
+          "raw_nombre_proyecto": "Urbanya Etapa I",
+          "ubicacion_especifica": "Pudahuel"
+        },
+        {
+          "document_id": "4708863664aff1e9841dd4eb5ffb8c544fe14435ec6301810ef8e0369f2d086d",
+          "url": "https://www.latercera.com/pulso/noticia/los-opositores-de-urbanya-acuden-a-la-justicia-y-piden-revocar-permiso-de-proyecto-inmobiliario-en-pudahuel/",
+          "title": "Los opositores de Urbanya acuden a la justicia y piden revocar permiso de proyecto inmobiliario en Pudahuel - La Tercera",
+          "raw_nombre_proyecto": "Urbanya Etapa I",
+          "ubicacion_especifica": "sector El Noviciado, comuna de Pudahuel"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "c48e772910b25f014578bcad7cadaa558a8b4b1e58b7fff9804d8edf1389cb3f",
+          "url": "https://www.latercera.com/pulso/noticia/urbanya-inmobiliaria-de-familia-santa-cruz-rechaza-criticas-por-millonario-proyecto-en-pudahuel/",
+          "title": "Urbanya: inmobiliaria de familia Santa Cruz rechaza críticas por millonario proyecto en Pudahuel - La Tercera",
+          "raw_nombre_proyecto": "Urbanya",
+          "ubicacion_especifica": "El Noviciado y Avenida El Noviciado, comuna de Pudahuel"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "c2c192c775e76900a5a6e05a",
+      "canonical_name_a": "Mina Panales 1/54",
+      "project_id_b": "e91503802a4b21857e33135f",
+      "canonical_name_b": "Explotación de la Mina Panales 1 a 54",
+      "razon_de_la_fusion_original": "misma mina",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "ea168f21350f1a860125a76535308fc9ae85c06770755ddf0ca8b4ef7ee3f588",
+          "url": "https://tribunalambiental.cl/tribunal-ambiental-de-santiago-autorizo-clausura-temporal-de-proyecto-de-minera-espanola-en-maipu/",
+          "title": "Tribunal Ambiental de Santiago autorizó clausura temporal de proyecto de Minera Española Chile Ltda. en Maipú",
+          "raw_nombre_proyecto": "Mina Panales 1/54",
+          "ubicacion_especifica": "sector Cerro El Roble, del fundo Rinconada de Lo Espejo de Maipú"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "2f18d2ee8252ce0384d0b61d23988e19212d15de9b46b09f335c2e2061ec0c25",
+          "url": "https://www.tribunalambiental.cl/wp-content/uploads/2015/06/D-15-2015-06-01-2017-Sentencia.pdf",
+          "title": "Santiago, seis de enero de dos mil diecisiete",
+          "raw_nombre_proyecto": "Explotación de la Mina Panales 1 a 54",
+          "ubicacion_especifica": "Quebrada de La Plata, zona del cerro El Roble, comuna de Maipú"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "c2c192c775e76900a5a6e05a",
+      "canonical_name_a": "Mina Panales 1/54",
+      "project_id_b": "985cba68b4d01947ca8e0938",
+      "canonical_name_b": "Panales",
+      "razon_de_la_fusion_original": "misma mina, forma corta",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "ea168f21350f1a860125a76535308fc9ae85c06770755ddf0ca8b4ef7ee3f588",
+          "url": "https://tribunalambiental.cl/tribunal-ambiental-de-santiago-autorizo-clausura-temporal-de-proyecto-de-minera-espanola-en-maipu/",
+          "title": "Tribunal Ambiental de Santiago autorizó clausura temporal de proyecto de Minera Española Chile Ltda. en Maipú",
+          "raw_nombre_proyecto": "Mina Panales 1/54",
+          "ubicacion_especifica": "sector Cerro El Roble, del fundo Rinconada de Lo Espejo de Maipú"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "d3f32fdfee90b6bbb03cf4c47d0e37a7200c75e572da3ef0b0fda2350be06099",
+          "url": "https://uchile.cl/noticias/98614/u-de-chile-logra-fallo-favorable-ante-faena-minera-en-rinconada",
+          "title": "U. de Chile logra fallo favorable ante faena minera en Rinconada de Maipú",
+          "raw_nombre_proyecto": "Panales",
+          "ubicacion_especifica": "Quebrada de la Plata, Rinconada de Maipú, Maipú"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "0a7420a2f224e2831f8d5788",
+      "canonical_name_a": "Edificio Pajaritos",
+      "project_id_b": "e8195cc466bc9d0e3251d426",
+      "canonical_name_b": "Pajaritos 4600",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 13] Debería ser 'merged'. Edificio Pajaritos y Pajaritos 4600 son el mismo proyecto: varias fuentes de A lo ubican explícitamente en Avenida Pajaritos 4600, junto a Metro Monte Tabor, que coincide con B. El numeral es la dirección.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-por-trato-directo-del-alcalde-vodanovic-con-ong-vinculada-al-fa-para-frenar-inversion-inmobiliaria/",
+          "title": "Los contratos por trato directo del alcalde Vodanovic con ONG vinculada al FA para frenar inversión inmobiliaria - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "Maipú"
+        },
+        {
+          "document_id": "74ff8f147c648db79ce775497ad5c81deea967bd421d251bdc33149d57332250",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-con-el-estado-de-fima-la-ong-favorita-del-frente-amplio/",
+          "title": "Los contratos con el Estado de FIMA, la ONG favorita del Frente Amplio - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "Maipú, Cerrillos, San Bernardo, Quilicura, Ñuñoa y Valparaíso"
+        },
+        {
+          "document_id": "1a8868138b4b5e7fc7a078b55f0e79cce30c7616c1a38c8ead2128ffa4f92f3c",
+          "url": "https://www.theclinic.cl/2023/09/20/municipalidad-maipu-congela-permisos-megaproyectos-guetos-verticales/",
+          "title": "Maipú congela permisos a nuevos megaproyectos inmobiliarios: \"Cerramos la puerta con candado a los guetos verticales\" | The Clinic",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "junto a la estación Monte Tabor"
+        },
+        {
+          "document_id": "a8593a97752ddc270c9bfa57e346fce6372b5eb67ac2d6bc732f94229e261f93",
+          "url": "https://www.municipalidadmaipu.cl/noticias/publicacion/771/alcalde-vodanovic-congela-permisos-para-nuevos-megaproyectos-inmobiliarios-le-cerramos-la-puerta-con-candado-a-los-guetos-verticales-en-maipu",
+          "title": "Ilustre Municipalidad de Maipú.",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "Ejes de las avenidas Pajaritos, Américo Vespucio y 5 de Abril; Edificio Pajaritos junto a la estación de metro Monte Tabor"
+        },
+        {
+          "document_id": "1883c7216c83a6e84b735de9193499b7468f1526d5e4194ca9ca8f75a9aaf217",
+          "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2023/06/02/polemica-por-edificios-en-maipu-inmobiliaria-descarta-repetir-guetos-verticales-de-estacion-central.shtml",
+          "title": "Polémica por edificios en Maipú: inmobiliaria descarta repetir guetos verticales de Estación Central",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "avenida Pajaritos con Santa Elena"
+        },
+        {
+          "document_id": "d7762e8fed5e1b42e18bc3037e2e8d0b58f2390838499e6455e4a1916b2af804",
+          "url": "https://www.df.cl/empresas/construccion/alcalde-de-maipu-congela-permisos-de-nuevas-construcciones-para-evitar",
+          "title": "Maipú congela la entrega de permisos a megaproyectos para evitar desarrollo de “guetos verticales” | Diario Financiero",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "avenidas Pajaritos, Américo Vespucio y 5 de Abril; junto a la estación de Metro Monte Tabor"
+        },
+        {
+          "document_id": "420c22c032ead90ff637724cf1d1039fcc01b7d1476b59350f4443d32fbc5899",
+          "url": "https://tribunalambiental.cl/sentencia-r-404-2023-municipalidad-maipu-sea-edificio-pajaritos",
+          "title": "Tribunal rechazó reclamación de la Municipalidad de Maipú en contra de la aprobación del proyecto “Edificio Pajaritos”",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "Avenida Pajaritos 4.600, comuna de Maipú"
+        },
+        {
+          "document_id": "a54e1d5e50675544323e5c62d77218e50445f09219defc1f1363d0a731c87706",
+          "url": "https://www.latercera.com/pulso/noticia/reves-para-vodanovic-tribunal-ambiental-rechaza-reclamacion-en-contra-de-aprobacion-de-proyecto-edificio-pajaritos/YEMADTCMPBEP5KCFG2FTFGBGBQ/",
+          "title": "Tomás Vodanovic sufre revés por el proyecto “Edificio Pajaritos” en Maipú y recurrirá a la Corte Suprema - La Tercera",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": ""
+        },
+        {
+          "document_id": "24cc5a587b727e6f7e7ed0ee3a6523b6e9700711d25e2055b36c97e980ee7fa3",
+          "url": "https://www.pauta.cl/ciudad/2023/05/26/proyecto-pajaritos-la-polemica-por-tres-torres-que-podrian-construirse.html",
+          "title": "Proyecto Pajaritos: la polémica por tres torres que podrían construirse en la principal arteria de Maipú",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "avenida Pajaritos 4600, barrio Longitudinal"
+        },
+        {
+          "document_id": "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75",
+          "url": "https://www.ex-ante.cl/politica/la-tematica-urbana-en-las-elecciones-municipales-2024-de-la-rm-primera-parte-por-jonathan-orrego/",
+          "title": "La temática urbana en las elecciones municipales 2024 de la RM (Primera parte). Por Jonathan Orrego - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Edificio Pajaritos",
+          "ubicacion_especifica": "Comunas de Ñuñoa, Maipú, San Miguel, Cerrillos y San Joaquín; sectores Ciudad del Niño, Barrio Buzeta, Lo Errázuriz y ex-aeropuerto."
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "2b4c521fd381120487a1eefda2429212dfbb5ac3d04bcafba70a0f458f961198",
+          "url": "https://lavozdemaipu.cl/polemico-proyecto-pajaritos-que-se-esta-haciendo/",
+          "title": "Polémico proyecto en Pajaritos: ¿Qué se está haciendo al respecto?",
+          "raw_nombre_proyecto": "Pajaritos 4600",
+          "ubicacion_especifica": "Pajaritos 4600, sector de la estación de Metro Monte Tabor"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "044c20f0e13a1bae6c68978c",
+      "canonical_name_a": "General Amengual",
+      "project_id_b": "506de01b09f335809ac2221a",
+      "canonical_name_b": "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 4] Debería ser 'merged'. La evidencia apunta al mismo edificio: en proyecto A aparece 'Edificio General Amengual' y la ubicación exacta calle General Amengual 480; proyecto B describe el edificio de 38 pisos en esa misma dirección. El 480 es una dirección, no una etapa o fase.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+          "url": "https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/",
+          "title": "Aunque mega edificios han colapsado servicios públicos y alcantarillado: Estación Central enfrenta lobby para aprobar nuevos “guetos verticales” - CIPER Chile",
+          "raw_nombre_proyecto": "General Amengual",
+          "ubicacion_especifica": "Estación Central; Villa Las Américas; General Amengual; sector Toro Mazzotte; calles Recreo, Placilla y Coronel Souper; pasaje Guernica"
+        },
+        {
+          "document_id": "b83e45226eb0060d383463a61625896bc60bbfcd8c75e176e08c42a133774d5f",
+          "url": "https://interferencia.cl/articulos/detienen-obra-de-gueto-vertical-en-estacion-central-por-invadir-casa-particular",
+          "title": "Detienen obra de gueto vertical en Estación Central por invadir casa particular",
+          "raw_nombre_proyecto": "Edificio General Amengual",
+          "ubicacion_especifica": "calle General Amengual 480"
+        },
+        {
+          "document_id": "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+          "url": "https://www.elmostrador.cl/noticias/2023/05/06/los-vinculos-del-candidato-delgado-con-torrealba-en-la-construccion-de-los-guetos-verticales/",
+          "title": "Los vínculos del candidato Rodrigo Delgado con exalcalde Torrealba en los “guetos verticales”",
+          "raw_nombre_proyecto": "General Amengual",
+          "ubicacion_especifica": "Estación Central; edificios de General Amengual y Recreo; sector de la plaza Lo Castillo y Alonso de Córdova, Vitacura"
+        },
+        {
+          "document_id": "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+          "url": "https://interferencia.cl/articulos/el-intenso-lobby-del-cunado-de-torrealba-por-su-ksa-una-de-las-inmobiliarias-del-proyecto",
+          "title": "El intenso lobby del cuñado de Torrealba por Su Ksa, una de las inmobiliarias del Proyecto Zoccalo de Vitacura",
+          "raw_nombre_proyecto": "General Amengual",
+          "ubicacion_especifica": "calle Alonso de Córdoba, Vitacura; Estación Central"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "b3285315e92b4c7b946eaf2aa6c1a59e51f62414ffd5ef7b5463652b7a6e169b",
+          "url": "https://interferencia.cl/articulos/corte-suprema-dictamina-ilegalidad-de-4-guetos-verticales-en-estacion-central",
+          "title": "Corte Suprema dictamina ilegalidad de 4 guetos verticales en Estación Central",
+          "raw_nombre_proyecto": "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480",
+          "ubicacion_especifica": "calle Toro Mazotte; calle General Amengual 480"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "0a9d6730e059f72c2cdec2d8",
+      "canonical_name_a": "Recreo",
+      "project_id_b": "d191d5d75ef69b3ecc647d8b",
+      "canonical_name_b": "Recreo N° 321",
+      "razon_de_la_fusion_original": "mismo desarrollo, direccion especifica",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+          "url": "https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/",
+          "title": "Aunque mega edificios han colapsado servicios públicos y alcantarillado: Estación Central enfrenta lobby para aprobar nuevos “guetos verticales” - CIPER Chile",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "Estación Central; Villa Las Américas; General Amengual; sector Toro Mazzotte; calles Recreo, Placilla y Coronel Souper; pasaje Guernica"
+        },
+        {
+          "document_id": "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+          "url": "https://www.elmostrador.cl/noticias/2023/05/06/los-vinculos-del-candidato-delgado-con-torrealba-en-la-construccion-de-los-guetos-verticales/",
+          "title": "Los vínculos del candidato Rodrigo Delgado con exalcalde Torrealba en los “guetos verticales”",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "Estación Central; edificios de General Amengual y Recreo; sector de la plaza Lo Castillo y Alonso de Córdova, Vitacura"
+        },
+        {
+          "document_id": "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+          "url": "https://interferencia.cl/articulos/el-intenso-lobby-del-cunado-de-torrealba-por-su-ksa-una-de-las-inmobiliarias-del-proyecto",
+          "title": "El intenso lobby del cuñado de Torrealba por Su Ksa, una de las inmobiliarias del Proyecto Zoccalo de Vitacura",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "calle Alonso de Córdoba, Vitacura; Estación Central"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673",
+          "url": "https://www.diarioconstitucional.cl/2019/09/06/cs-rechaza-reclamos-de-ilegalidad-por-limites-a-construccion-de-edificios-en-estacion-central/",
+          "title": "Corte Suprema rechaza reclamos de ilegalidad por límites a construcción de edificios en Estación Central",
+          "raw_nombre_proyecto": "Recreo N° 321",
+          "ubicacion_especifica": "Toro Mazote N° 315; Toro Mazote N° 304; Avenida Libertador Bernardo O'Higgins N° 3.901; Recreo N° 321, Estación Central"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "0a9d6730e059f72c2cdec2d8",
+      "canonical_name_a": "Recreo",
+      "project_id_b": "15448afc0cfadb9a6e38f542",
+      "canonical_name_b": "Recreo 321",
+      "razon_de_la_fusion_original": "mismo desarrollo, direccion especifica",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+          "url": "https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/",
+          "title": "Aunque mega edificios han colapsado servicios públicos y alcantarillado: Estación Central enfrenta lobby para aprobar nuevos “guetos verticales” - CIPER Chile",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "Estación Central; Villa Las Américas; General Amengual; sector Toro Mazzotte; calles Recreo, Placilla y Coronel Souper; pasaje Guernica"
+        },
+        {
+          "document_id": "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+          "url": "https://www.elmostrador.cl/noticias/2023/05/06/los-vinculos-del-candidato-delgado-con-torrealba-en-la-construccion-de-los-guetos-verticales/",
+          "title": "Los vínculos del candidato Rodrigo Delgado con exalcalde Torrealba en los “guetos verticales”",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "Estación Central; edificios de General Amengual y Recreo; sector de la plaza Lo Castillo y Alonso de Córdova, Vitacura"
+        },
+        {
+          "document_id": "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+          "url": "https://interferencia.cl/articulos/el-intenso-lobby-del-cunado-de-torrealba-por-su-ksa-una-de-las-inmobiliarias-del-proyecto",
+          "title": "El intenso lobby del cuñado de Torrealba por Su Ksa, una de las inmobiliarias del Proyecto Zoccalo de Vitacura",
+          "raw_nombre_proyecto": "Recreo",
+          "ubicacion_especifica": "calle Alonso de Córdoba, Vitacura; Estación Central"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "url": "https://www.latercera.com/politica/noticia/que-hay-detras-de-la-trama-sobre-los-edificios-fantasmas-en-estacion-central/",
+          "title": "Qué hay detrás de los “edificios fantasmas” en Estación Central - La Tercera",
+          "raw_nombre_proyecto": "Recreo 321",
+          "ubicacion_especifica": "calle Federico Scotto, Estación Central"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "url": "https://www.theclinic.cl/2024/06/13/edificios-fantasma-estacion-central-inmobiliaria-busca-solucion-ante-trabas-municipales/",
+          "title": "La disputa entre inmobiliaria y el director de obras municipales (s) de Estación Central por \"edificios fantasmas\" | The Clinic",
+          "raw_nombre_proyecto": "Recreo 321",
+          "ubicacion_especifica": "Estación Central; calle Federico Scotto"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "f98ce4cc38f10a31f72d3b35",
+      "canonical_name_a": "Monjitas 565",
+      "project_id_b": "75b4cfebad7e31ba40d2331b",
+      "canonical_name_b": "torre de 13 pisos en la calle Monjitas 565",
+      "razon_de_la_fusion_original": "misma direccion exacta",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "05d94a1f09390daaffbff673a27e52b7d00fbb968492cfcb5413ae91d4ccb96a",
+          "url": "https://opinion.cooperativa.cl/opinion/ciudadania/patrimonio-en-riesgo-en-la-comuna-de-santiago/2014-07-17/120323.html",
+          "title": "Columna de - Patricio Herman - Patrimonio en riesgo en la comuna de Santiago | Cooperativa",
+          "raw_nombre_proyecto": "Monjitas 565",
+          "ubicacion_especifica": "calle Monjitas 565; calle Miraflores; calle Morandé entre Rosas y Santo Domingo; esquina de Morandé con Rosas"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "c2b0b2a3746eb7799595b42e60b775b8a39f07b68f4e2b21498ec9befc26ae0b",
+          "url": "https://defendamoslaciudad.cl/noticias/itemlist/user/908-908?start=4430",
+          "title": "908",
+          "raw_nombre_proyecto": "torre de 13 pisos en la calle Monjitas 565",
+          "ubicacion_especifica": "avenida Presidente Riesco, comuna de Las Condes; calle Monjitas 565; Barrio Yungay; V Región"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "15e845503c3fdfd9ff115304",
+      "canonical_name_a": "Mall Vivo Santiago Etapa II",
+      "project_id_b": "250846ef44a9320599c622ca",
+      "canonical_name_b": "Mall Vivo",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 28] Debería ser 'merged'. La evidencia del nombre genérico 'Mall Vivo' en el corpus lo sitúa en Ñuñoa, Vicuña Mackenna/Carlos Dittborn, y la contraparte corresponde al mismo proyecto Mall Vivo Santiago/Etapa II. En este corpus la mención genérica está contextualizada al mismo caso.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "74ff8f147c648db79ce775497ad5c81deea967bd421d251bdc33149d57332250",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-con-el-estado-de-fima-la-ong-favorita-del-frente-amplio/",
+          "title": "Los contratos con el Estado de FIMA, la ONG favorita del Frente Amplio - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Maipú, Cerrillos, San Bernardo, Quilicura, Ñuñoa y Valparaíso"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "2ae7d177f988cd2b30e4a7ac22c76c1c6c91060c507db761710018540181d124",
+          "url": "https://opinion.cooperativa.cl/opinion/ciudades/nunoa-de-intereses-y-de-afectos/2018-04-09/124246.html",
+          "title": "Columna de - Alvaro Sallés - Ñuñoa, de intereses y de afectos | Cooperativa",
+          "raw_nombre_proyecto": "Mall Vivo",
+          "ubicacion_especifica": "Barrio Suárez Mujica, al norte del Estadio Nacional; Plaza Egaña; Carlos Dittborn y Vicuña Mackenna"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "15e845503c3fdfd9ff115304",
+      "canonical_name_a": "Mall Vivo Santiago Etapa II",
+      "project_id_b": "fcda5f17d8f9a5aca734f967",
+      "canonical_name_b": "Mall Vivo Santiago",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 30] Debería ser 'merged'. Mall Vivo Santiago y Mall Vivo Santiago Etapa II remiten al mismo proyecto en Ñuñoa, en los ex terrenos de Copesa/Vicuña Mackenna-Carlos Dittborn, y al mismo conflicto ambiental. 'Etapa II' funciona aquí como denominación formal/fase del mismo caso, no como proyecto independiente.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "74ff8f147c648db79ce775497ad5c81deea967bd421d251bdc33149d57332250",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-con-el-estado-de-fima-la-ong-favorita-del-frente-amplio/",
+          "title": "Los contratos con el Estado de FIMA, la ONG favorita del Frente Amplio - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Maipú, Cerrillos, San Bernardo, Quilicura, Ñuñoa y Valparaíso"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "604c45c2f206ff9fe2aeb5d59704ea5d45657ce2bd2f44052a97975f6df18c39",
+          "url": "https://www.meganoticias.cl/nacional/479520-proyecto-nuevo-mall-nunoa-vivo-santiago-pdp-20-03-2025.html",
+          "title": "Proyecto de mall en Ñuñoa suma nuevo socio para impulsar millonaria inversión: ¿Dónde estará ubicado?",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Avenida Vicuña Mackenna con Carlos Dittborn, en Ñuñoa, en las inmediaciones de la estación Ñuble del Metro."
+        },
+        {
+          "document_id": "0812b370e628cfaeef8f89d95ffc3b420d5d359dfbe42449cc716376b4bf7de4",
+          "url": "https://www.emol.com/noticias/Economia/2025/06/05/1168408/tribunal-ambiental-mall-nunoa.html",
+          "title": "Tribunal Ambiental rechaza reclamo de vecinos y confirma aprobación de proyecto de Mall Vivo en Ñuñoa",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Exterrenos de Copesa, avenida Vicuña Mackenna; predio limitado por avenida Vicuña Mackenna, avenida Carlos Dittborn y las líneas 5 y 6 del Metro, en Ñuñoa."
+        },
+        {
+          "document_id": "c540e7cba4b0de7a01d284982a2c1b7eb975957271962ab4d20d0848b7fdf27e",
+          "url": "https://www.elmostrador.cl/noticias/pais/2019/01/11/mall-copesa-el-proximo-dolor-de-cabeza-de-la-ministra-schmidt/",
+          "title": "Mall Copesa: el próximo dolor de cabeza de la ministra Schmidt",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Vicuña Mackenna con Carlos Dittborn, barrio Ñuble, junto a Villa La Portada de Ñuñoa"
+        },
+        {
+          "document_id": "137762ea96e6861950f9e5a78d845ad4552fb10838031433590174b29b518d9c",
+          "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2021/12/06/nunoa-presenta-recurso-contra-mall-vivo-santiago-por-considerar-que-sea-rechazo-observaciones.shtml",
+          "title": "Ñuñoa presenta recurso contra Mall Vivo Santiago por considerar que SEA rechazó observaciones",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "comuna de Ñuñoa"
+        },
+        {
+          "document_id": "2d57e661c8cdb330d1257879424e9c0ec285bef77f39475fcf1fa7bcdb56842d",
+          "url": "https://www.elmostrador.cl/cultura/2021/07/29/vecinos-de-nunoa-protestan-contra-proyecto-mall-vivo/",
+          "title": "Vecinos de Ñuñoa protestan contra proyecto Mall Vivo",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "inmediaciones del Metro Ñuble, terrenos del ex edificio COPESA"
+        },
+        {
+          "document_id": "2f4a0ba1b55978653de3bdb5f99acd5f783b74df145ad34ea8ada06bc093c64c",
+          "url": "https://eldesconcierto.cl/2020/02/11/vecinos-de-nunoa-en-pie-de-guerra-contra-proyecto-inmobiliario-de-alvaro-saieh",
+          "title": "Vecinos de Ñuñoa en pie de guerra contra proyecto inmobiliario de Álvaro Saieh",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "villa La Portada, en la comuna de Ñuñoa, en las inmediaciones del metro Ñuble"
+        },
+        {
+          "document_id": "b260e777c2c53777c2374ee7a65dc24b75cde81f40918263ff9d5876ffbc87ba",
+          "url": "https://www.elmostrador.cl/dia/2021/04/05/el-polemico-proyecto-inmobiliario-que-afecta-el-parque-bustamante-en-nunoa/",
+          "title": "El polémico proyecto inmobiliario que afecta el Parque Bustamante en Ñuñoa",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Entre las avenidas Matta, Irarrázaval, San Eugenio y General Bustamante, en una sección del Parque Bustamante"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "15e845503c3fdfd9ff115304",
+      "canonical_name_a": "Mall Vivo Santiago Etapa II",
+      "project_id_b": "28b6a35d1906a0f07957d979",
+      "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+      "razon_de_la_fusion_original": "misma etapa II, nombre completo",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "74ff8f147c648db79ce775497ad5c81deea967bd421d251bdc33149d57332250",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-con-el-estado-de-fima-la-ong-favorita-del-frente-amplio/",
+          "title": "Los contratos con el Estado de FIMA, la ONG favorita del Frente Amplio - Ex-Ante | Las noticias que importan",
+          "raw_nombre_proyecto": "Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Maipú, Cerrillos, San Bernardo, Quilicura, Ñuñoa y Valparaíso"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "52d8f2e646e6f7bd4ac856075e7ee13221d4e3ba8a4b5b035f7cb8e63a913ad1",
+          "url": "https://tribunalambiental.cl/audiencia-r-347-2022_r-439-2023-mall-vivo-santiago",
+          "title": "Tribunal realizó audiencia en dos reclamaciones que buscan anular la RCA que aprobó al proyecto “Centro Comercial Mall Vivo Santiago Etapa II”",
+          "raw_nombre_proyecto": "Centro Comercial Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Villa Olímpica, barrio Matta Sur y Estadio Nacional, comuna de Ñuñoa; sectores mencionados en la discusión del área de influencia"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "8d0a7e39ae5737220a9922c8",
+      "canonical_name_a": "Fase IV",
+      "project_id_b": "5155cde8dd90387a2a95dc88",
+      "canonical_name_b": "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2",
+      "razon_de_la_fusion_original": "[Claude 2026-09-18] merged -- hallazgo real adicional (no reportado por Sol, encontrado por Claude al reverificar los pares gobernados por la regla de numeral suelto): A esta en 'Sector de ENEA (Pudahuel)', B es literalmente 'Enea Fase IV' -- mismo sector, misma fase. La regla anterior los separaba por error porque el numeral romano 'iv' de A no coincidia token a token con el resto de numeros de B (14080, 3E-2).",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "0aa617d5e301c5f76b19c62b373f29860ada858f6c051892973db367e353e530",
+          "url": "https://www.ciperchile.cl/2019/01/11/pudahuel-municipalidad-entrego-permisos-de-edificacion-en-terrenos-destinados-a-parques-y-areas-verdes/",
+          "title": "Pudahuel: municipalidad entregó permisos de edificación en terrenos destinados a parques y áreas verdes - CIPER Chile",
+          "raw_nombre_proyecto": "Fase IV",
+          "ubicacion_especifica": "Sector de ENEA (Pudahuel); Parque Intercomunal El Tranque; Parque Intercomunal Lo Prado, a ambos costados de la Ruta 68; avenida Teniente Cruz, calle Claudio Arrau y la intersección de Teniente Cruz con San Francisco."
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "e3d15cd9a8d79f9d0c571cde637b1dc5aa2a6d895a6a3c30abe2957c43bcb5e5",
+          "url": "https://www.bcn.cl/leychile/navegar?idNorma=1199238",
+          "title": "Ley Chile - Biblioteca del Congreso Nacional",
+          "raw_nombre_proyecto": "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2",
+          "ubicacion_especifica": "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2, Rol de Avalúo Nº 1095-2"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "2bece610a052e2cb3df8e01d",
+      "canonical_name_a": "Línea 8",
+      "project_id_b": "6eb707c5c00a6f5646130a21",
+      "canonical_name_b": "linea 8 del metro",
+      "razon_de_la_fusion_original": "misma linea, variante de mayusculas",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "fb61a0bd62fe3358b6ec432fd00d6e9862771ec5087c2a12d9dc55e4eb01f9ca",
+          "url": "https://www.usach.cl/tags/transporte",
+          "title": "Transporte",
+          "raw_nombre_proyecto": "Línea 8",
+          "ubicacion_especifica": "Santiago; comunas de Las Condes, Vitacura, Lo Barnechea, Quilicura, Conchalí, Independencia, Santiago, Ñuñoa y La Reina"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "76b393591136cdefbf068364faac0dd004e776e8590790f243a62c1c8eb195e3",
+          "url": "https://www.reddit.com/r/chile/comments/1fnx83i/existe_la_gentrificaci%C3%B3n_en_chile/",
+          "title": "Reddit",
+          "raw_nombre_proyecto": "linea 8 del metro",
+          "ubicacion_especifica": "Macul cerca de la futura Línea 8, La Florida, Peñalolén, Ñuñoa, Barrio Yungay, Barrio Italia, Barrio Lastarria, Barrio Brasil, Persa Bio Bio, Chiloé, Ensenada, cuenca del Lago Llanquihue, Valdivia y Concón"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "56029c529c4c61cb488f342c",
+      "canonical_name_a": "Vespucio 345",
+      "project_id_b": "5e8bc3f7a3fc027b5a062246",
+      "canonical_name_b": "Switch Vespucio 345",
+      "razon_de_la_fusion_original": "misma direccion",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "4aeb26821495bf607c4d11a9f52569e553edbfc657700f7ddad1ef220fada06b",
+          "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2020/01/15/justicia-fallo-en-contra-de-municipio-de-las-condes-y-dio-luz-verde-a-construccion-de-edificios.shtml",
+          "title": "Justicia falló en contra de municipio de Las Condes y dio luz verde a construcción de edificios",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "esquina de Américo Vespucio con Renato Sánchez"
+        },
+        {
+          "document_id": "b741354d64aac1e6cf208c60f8ecd2a40cbbe472bfc786813cf77575e16407b5",
+          "url": "https://www.latercera.com/pulso/noticia/corte-suprema-confirma-validez-actuacion-inmobiliaria-nueva-golf-disputa-vecinos-municipalidad-las-condes/973821/",
+          "title": "Corte Suprema confirma validez de actuación de Inmobiliaria Nueva El Golf en disputa con vecinos y Municipalidad de Las Condes - La Tercera",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "esquina de Américo Vespucio con Renato Sánchez"
+        },
+        {
+          "document_id": "851535fde5a750a7dfe8af5e75510a3e042d557c8cf7a356b018543198264be7",
+          "url": "https://www.elmostrador.cl/noticias/pais/2017/10/18/la-ultima-pataleta-de-los-vecinos-de-pinochet-se-oponen-a-llegada-de-nuevos-residentes-al-sector-de-presidente-errazuriz/",
+          "title": "La última pataleta de los vecinos de Pinochet: se oponen a llegada de nuevos residentes al sector de Presidente Errázuriz",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "eje Américo Vespucio-Renato Sánchez-Asturias, sector Presidente Errázuriz-El Golf"
+        },
+        {
+          "document_id": "691d2b5285e3ef038c912b04627deca1ddb5c4fa69e8a871e1031d6a0197b7a0",
+          "url": "https://www.pauta.cl/ciudad/2020/05/04/bernardo-echeverria-las-autoridades-no-pueden-actuar-arbitrariamente.html",
+          "title": "Bernardo Echeverría: ”Las autoridades no pueden actuar arbitrariamente”",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "calle Dardignac, comuna de Recoleta"
+        },
+        {
+          "document_id": "353cb6cd2f043a99bdcd62819e6420c59d84f9e06a7aa868be67ecee37915839",
+          "url": "https://segreader.emol.cl/2018/01/04/A/LN3A61SV/light?gt=133501",
+          "title": "Expertos analizan irrupción judicial en la industria inmobiliaria.",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "Vespucio 345, Las Condes"
+        },
+        {
+          "document_id": "9a78e6271f5a18f6cfb2e59426eadde1d40d9c15e78cda0fa7190e73dbac474b",
+          "url": "https://www.df.cl/empresas/construccion/abogados-de-vespucio-345-la-suprema-marca-precedente-de-la-oportunidad",
+          "title": "Abogados de Vespucio 345: “La Suprema marca precedente de la oportunidad para impugnar permisos” | Diario Financiero",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "Vespucio 345, Las Condes"
+        },
+        {
+          "document_id": "fc6318280085341ad3f02ef1a118acbaf68b0ccf26ef430f9192d843d2fde8bb",
+          "url": "https://www.lanacion.cl/alcaldesa-san-martin-apunta-a-joaquin-lavin-tras-pagar-deuda-por-us-10-millones/",
+          "title": "Alcaldesa San Martín apunta a Joaquín Lavín tras pagar deuda por US$ 10 millones - La Nación",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "Vespucio 345, sector de El Golf"
+        },
+        {
+          "document_id": "72ad65bfbf4c22f3baa8ff06218c261d86c4f298c153dcecbf4dc543256cf9b5",
+          "url": "https://www.latercera.com/nacional/noticia/alcaldesa-san-martin-apunta-a-joaquin-lavin-tras-saldar-deuda-por-us-10-millones-con-inmobiliaria-nueva-el-golf/",
+          "title": "Alcaldesa San Martín apunta a Joaquín Lavín tras saldar deuda por US$ 10 millones con Inmobiliaria Nueva El Golf - La Tercera",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "sector de El Golf, Las Condes"
+        },
+        {
+          "document_id": "9cb57787afc9b998a99cddbed7db5aa26cffd99783526d51783ddc8961e6e9d2",
+          "url": "https://www.latercera.com/la-tercera-pm/noticia/batacazo-de-inmobiliaria-nueva-el-golf-municipio-de-las-condes-debera-pagar-casi-10-mil-millones-tras-error-en-apelacion-ante-la-corte/TGGDFUBKBJGMJK2VG22XBIV6KU/",
+          "title": "Batacazo de Inmobiliaria Nueva El Golf: municipio de Las Condes deberá pagar casi $10 mil millones tras error en apelación ante la Corte - La Tercera",
+          "raw_nombre_proyecto": "Vespucio 345",
+          "ubicacion_especifica": "Avenida Américo Vespucio esquina Renato Sánchez, pleno barrio El Golf"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "d7f40edc46bad0f90467efd58785f8981dcc9dfb0f8f1526eca2db9b38f8cda2",
+          "url": "https://www.df.cl/empresas/industria/switch-vespucio-345-el-polemico-proyecto-inmobiliario-de-las-condes-que",
+          "title": "Switch Vespucio 345: El polémico proyecto inmobiliario de Las Condes que al fin ve la luz | Diario Financiero",
+          "raw_nombre_proyecto": "Switch Vespucio 345",
+          "ubicacion_especifica": "Américo Vespucio Sur 345, barrio El Golf, a metros del Metro Escuela Militar; terreno ubicado en calle Asturias 400"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "250846ef44a9320599c622ca",
+      "canonical_name_a": "Mall Vivo",
+      "project_id_b": "28b6a35d1906a0f07957d979",
+      "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 38] Debería ser 'merged'. La fase 'Etapa de Demolición, Excavación y Socalzados' pertenece al mismo Mall Vivo Santiago en Ñuñoa; es una fase constructiva del mismo proyecto/caso, no un proyecto autónomo.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "2ae7d177f988cd2b30e4a7ac22c76c1c6c91060c507db761710018540181d124",
+          "url": "https://opinion.cooperativa.cl/opinion/ciudades/nunoa-de-intereses-y-de-afectos/2018-04-09/124246.html",
+          "title": "Columna de - Alvaro Sallés - Ñuñoa, de intereses y de afectos | Cooperativa",
+          "raw_nombre_proyecto": "Mall Vivo",
+          "ubicacion_especifica": "Barrio Suárez Mujica, al norte del Estadio Nacional; Plaza Egaña; Carlos Dittborn y Vicuña Mackenna"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "52d8f2e646e6f7bd4ac856075e7ee13221d4e3ba8a4b5b035f7cb8e63a913ad1",
+          "url": "https://tribunalambiental.cl/audiencia-r-347-2022_r-439-2023-mall-vivo-santiago",
+          "title": "Tribunal realizó audiencia en dos reclamaciones que buscan anular la RCA que aprobó al proyecto “Centro Comercial Mall Vivo Santiago Etapa II”",
+          "raw_nombre_proyecto": "Centro Comercial Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Villa Olímpica, barrio Matta Sur y Estadio Nacional, comuna de Ñuñoa; sectores mencionados en la discusión del área de influencia"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "fcda5f17d8f9a5aca734f967",
+      "canonical_name_a": "Mall Vivo Santiago",
+      "project_id_b": "28b6a35d1906a0f07957d979",
+      "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 248] Debería ser 'merged'. Mall Vivo Santiago y Centro Comercial Mall Vivo Santiago Etapa II comparten emplazamiento y conflicto en Ñuñoa. La denominación de Etapa II no justifica un case_id separado en esta capa.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "604c45c2f206ff9fe2aeb5d59704ea5d45657ce2bd2f44052a97975f6df18c39",
+          "url": "https://www.meganoticias.cl/nacional/479520-proyecto-nuevo-mall-nunoa-vivo-santiago-pdp-20-03-2025.html",
+          "title": "Proyecto de mall en Ñuñoa suma nuevo socio para impulsar millonaria inversión: ¿Dónde estará ubicado?",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Avenida Vicuña Mackenna con Carlos Dittborn, en Ñuñoa, en las inmediaciones de la estación Ñuble del Metro."
+        },
+        {
+          "document_id": "0812b370e628cfaeef8f89d95ffc3b420d5d359dfbe42449cc716376b4bf7de4",
+          "url": "https://www.emol.com/noticias/Economia/2025/06/05/1168408/tribunal-ambiental-mall-nunoa.html",
+          "title": "Tribunal Ambiental rechaza reclamo de vecinos y confirma aprobación de proyecto de Mall Vivo en Ñuñoa",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Exterrenos de Copesa, avenida Vicuña Mackenna; predio limitado por avenida Vicuña Mackenna, avenida Carlos Dittborn y las líneas 5 y 6 del Metro, en Ñuñoa."
+        },
+        {
+          "document_id": "c540e7cba4b0de7a01d284982a2c1b7eb975957271962ab4d20d0848b7fdf27e",
+          "url": "https://www.elmostrador.cl/noticias/pais/2019/01/11/mall-copesa-el-proximo-dolor-de-cabeza-de-la-ministra-schmidt/",
+          "title": "Mall Copesa: el próximo dolor de cabeza de la ministra Schmidt",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Vicuña Mackenna con Carlos Dittborn, barrio Ñuble, junto a Villa La Portada de Ñuñoa"
+        },
+        {
+          "document_id": "137762ea96e6861950f9e5a78d845ad4552fb10838031433590174b29b518d9c",
+          "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2021/12/06/nunoa-presenta-recurso-contra-mall-vivo-santiago-por-considerar-que-sea-rechazo-observaciones.shtml",
+          "title": "Ñuñoa presenta recurso contra Mall Vivo Santiago por considerar que SEA rechazó observaciones",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "comuna de Ñuñoa"
+        },
+        {
+          "document_id": "2d57e661c8cdb330d1257879424e9c0ec285bef77f39475fcf1fa7bcdb56842d",
+          "url": "https://www.elmostrador.cl/cultura/2021/07/29/vecinos-de-nunoa-protestan-contra-proyecto-mall-vivo/",
+          "title": "Vecinos de Ñuñoa protestan contra proyecto Mall Vivo",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "inmediaciones del Metro Ñuble, terrenos del ex edificio COPESA"
+        },
+        {
+          "document_id": "2f4a0ba1b55978653de3bdb5f99acd5f783b74df145ad34ea8ada06bc093c64c",
+          "url": "https://eldesconcierto.cl/2020/02/11/vecinos-de-nunoa-en-pie-de-guerra-contra-proyecto-inmobiliario-de-alvaro-saieh",
+          "title": "Vecinos de Ñuñoa en pie de guerra contra proyecto inmobiliario de Álvaro Saieh",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "villa La Portada, en la comuna de Ñuñoa, en las inmediaciones del metro Ñuble"
+        },
+        {
+          "document_id": "b260e777c2c53777c2374ee7a65dc24b75cde81f40918263ff9d5876ffbc87ba",
+          "url": "https://www.elmostrador.cl/dia/2021/04/05/el-polemico-proyecto-inmobiliario-que-afecta-el-parque-bustamante-en-nunoa/",
+          "title": "El polémico proyecto inmobiliario que afecta el Parque Bustamante en Ñuñoa",
+          "raw_nombre_proyecto": "Mall Vivo Santiago",
+          "ubicacion_especifica": "Entre las avenidas Matta, Irarrázaval, San Eugenio y General Bustamante, en una sección del Parque Bustamante"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "52d8f2e646e6f7bd4ac856075e7ee13221d4e3ba8a4b5b035f7cb8e63a913ad1",
+          "url": "https://tribunalambiental.cl/audiencia-r-347-2022_r-439-2023-mall-vivo-santiago",
+          "title": "Tribunal realizó audiencia en dos reclamaciones que buscan anular la RCA que aprobó al proyecto “Centro Comercial Mall Vivo Santiago Etapa II”",
+          "raw_nombre_proyecto": "Centro Comercial Mall Vivo Santiago Etapa II",
+          "ubicacion_especifica": "Villa Olímpica, barrio Matta Sur y Estadio Nacional, comuna de Ñuñoa; sectores mencionados en la discusión del área de influencia"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "008d2f365c67d75ec7b3e30a",
+      "canonical_name_a": "Alto Las Condes 2",
+      "project_id_b": "5f33de46702f3740e762506d",
+      "canonical_name_b": "Mall Alto Las Condes 2",
+      "razon_de_la_fusion_original": "misma expansion, ambos comparten el numeral 2",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "694adeaea5ef9c52e7b6007f9005f06befe5e98890801a9a70803833bef3dbaa",
+          "url": "https://www.latercera.com/pulso/noticia/cencosud-shopping-decide-reformular-proyecto-alto-las-condes-norte-en-vitacura/XLZORH2O45F47PSVQEQMMHSOAI/",
+          "title": "Cencosud desiste de vía legal y opta por reformular proyecto Alto Las Condes 2 en Vitacura - La Tercera",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "comuna de Vitacura"
+        },
+        {
+          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+          "url": "https://www.df.cl/empresas/construccion/cencosud-tira-la-esponja-y-decide-reformular-proyecto-alto-las-condes-2",
+          "title": "Cencosud tira la esponja y decide “reformular” proyecto Alto Las Condes 2 | Diario Financiero",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "terreno de 22.500 m2 justo frente al Alto Las Condes"
+        },
+        {
+          "document_id": "759699192d2fb6a57d7c6f3658d9aa000b13a1f97b5eed517ed05894ca8f81a5",
+          "url": "https://www.latercera.com/pulso/noticia/informe-de-exjuez-daniel-calvo-recomienda-rechazar-reclamo-de-cencosud-por-alto-las-condes-2/4IPIFSACANHDVHMFNL7TTXBFR4/",
+          "title": "Informe de exjuez Daniel Calvo recomienda rechazar reclamo de Cencosud por Alto Las Condes 2 - La Tercera",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": ""
+        },
+        {
+          "document_id": "7765d45503ecfb4d7ba4722549e1c0f4aa029faaede885bd06a0bb3318cedf00",
+          "url": "https://www.meganoticias.cl/nacional/414211-proyecto-alto-las-condes-2-cencosud-conflicto-municipalidad-vitacura-dom-pdp-16-5-2023.html",
+          "title": "¿Dónde quiere construir Cencosud el \"Alto Las Condes 2\" y por qué está en conflicto con la municipalidad de Vitacura?",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "Paño de 25 mil metros cuadrados ubicado en Vitacura, en la zona oriente de la Región Metropolitana."
+        },
+        {
+          "document_id": "de66812d7fcfd6366ecdf59531f3ec185612134b8eb0a8f3f80d1b1b9e5c55ba",
+          "url": "https://www.biobiochile.cl/noticias/opinion/tu-voz/2023/04/10/cencosud-de-paulmann-dice-que-en-pedir-no-hay-engano.shtml",
+          "title": "Columna de Patricio Herman: Cencosud de Paulmann dice que",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "Esquina de las avenidas Kennedy y Padre Hurtado, Vitacura"
+        },
+        {
+          "document_id": "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c",
+          "url": "https://www.df.cl/empresas/construccion/alto-las-condes-2-van-casi-dos-anos-y-vitacura-aun-no-define-si-permiso",
+          "title": "Alto Las Condes 2: van casi dos años y Vitacura aún no define si permiso de edificación sigue vigente | Diario Financiero",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "Av. Kennedy 8950, comuna de Vitacura"
+        },
+        {
+          "document_id": "a3fd98f337c6e4ca4b55164cd61f24618a020ad6d0f57ad4e1b58e71abb34160",
+          "url": "https://www.theclinic.cl/2023/05/16/conflicto-cencosud-municipalidad-vitacura-mall-alto-las-condes-2/",
+          "title": "El conflicto entre Cencosud y la Municipalidad de Vitacura por la construcción del mall \"Alto Las Condes 2\" | The Clinic",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "comuna de Vitacura, zona oriente de la Región Metropolitana"
+        },
+        {
+          "document_id": "e459c1721c99fa676bd50a60bf613d46fdb0df93e52c2ebd283a4afb3a486ad5",
+          "url": "https://www.ciperchile.cl/2017/04/28/la-batalla-legal-entre-vitacura-y-cencosud-que-tiene-con-pena-a-paulmann/",
+          "title": "La batalla legal entre Vitacura y Cencosud que tiene con pena a Paulmann - CIPER Chile",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "Esquina de avenida Kennedy con Padre Hurtado; avenida Kennedy 8950"
+        },
+        {
+          "document_id": "4c0cccf40e5138d2148aaff53c413924b9b42be75fd82b9ef57842dbcf629533",
+          "url": "https://radio.uchile.cl/2021/03/17/paulmann-solicita-a-vitacura-eximirse-del-cumplimiento-de-la-ley/",
+          "title": "Paulmann solicita a Vitacura eximirse del cumplimiento de la ley - Diario y Radio Universidad Chile",
+          "raw_nombre_proyecto": "Alto Las Condes 2",
+          "ubicacion_especifica": "avenida Kennedy 8950"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "6ad99015d22c74f65e33c3e731b38d85edd8fd91ce7c4ca10fd7e90199de3c44",
+          "url": "https://www.ciperchile.cl/2016/07/27/ardides-para-violar-las-reglas-del-mercado-inmobiliario-en-vitacura-y-vina-del-mar/",
+          "title": "Ardides para violar las reglas del mercado inmobiliario en Vitacura y Viña del Mar - CIPER Chile",
+          "raw_nombre_proyecto": "Mall Alto Las Condes 2",
+          "ubicacion_especifica": ""
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "21ef01a5f5ea1b84eb392920",
+      "canonical_name_a": "Block 73 de Villa Olímpica",
+      "project_id_b": "b3598144e407c901162cb878",
+      "canonical_name_b": "Block 73",
+      "razon_de_la_fusion_original": "mismo bloque, forma corta",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "2df46157fb12b6e884595e61a04f87658b5c27665ba58f73125bed8c3e13a0e6",
+          "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2018/08/31/que-tienen-estos-departamentos-que-cuestan-desde-los-1-200-millones-de-pesos.shtml",
+          "title": "¿Qué tienen estos departamentos que cuestan desde los 1.200 millones de pesos?",
+          "raw_nombre_proyecto": "Block 73 de Villa Olímpica",
+          "ubicacion_especifica": "Las Condes, Rotonda Atenas; Block 73 de Villa Olímpica, Ñuñoa; San José de la Sierra, Las Condes; San Miguel, sector Lo Vial; Vicuña Mackenna, estación Ñuble"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "1f120a939cb5b7d109238c9e7fe98212957bbe7fd36020f072d0da9b49ea9cb3",
+          "url": "https://www.elciudadano.com/organizacion-social/234293/11/23/",
+          "title": "Block 73: el conflicto entre vecinos de Villa Olímpica y la FACh",
+          "raw_nombre_proyecto": "Block 73",
+          "ubicacion_especifica": "calle Los Jazmines #1506 de la Villa Olímpica de Ñuñoa"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "4e57b0670e563f4d39ae7164",
+      "canonical_name_a": "calle Vital Apoquindo 1.400-1.450-1.500",
+      "project_id_b": "fe0f38566717aa34de32376a",
+      "canonical_name_b": "Vital Apoquindo",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 68] Debería ser 'merged'. Vital Apoquindo y la variante con numeración corresponden al mismo desarrollo: la evidencia ubica el proyecto en el tramo 1400-1500 de Vital Apoquindo. Los números son direcciones, no fases.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "07196391a3c1bc51a80d5ed3c48acd2b283babf657e8d9b0ec9629fc76b702e8",
+          "url": "https://elquintopoder.cl/ciudadania/los-dictamenes-atrasados-de-la-contraloria-no-sirven-de-nada/",
+          "title": "Los dictámenes atrasados de la Contraloría no sirven de nada",
+          "raw_nombre_proyecto": "calle Vital Apoquindo 1.400-1.450-1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo 1.400-1.450-1.500, comuna de Las Condes"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "e465290dbe2906b691481d3235a277b9a98d2fbabd5a8c20d7631f291f91a25a",
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "title": "Proyecto Vital Apoquindo demanda a Municipalidad de Las Condes para recuperar permiso de construcción",
+          "raw_nombre_proyecto": "Vital Apoquindo",
+          "ubicacion_especifica": "calle Vital Apoquindo 1400 al 1500"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "e91503802a4b21857e33135f",
+      "canonical_name_a": "Explotación de la Mina Panales 1 a 54",
+      "project_id_b": "985cba68b4d01947ca8e0938",
+      "canonical_name_b": "Panales",
+      "razon_de_la_fusion_original": "misma mina, forma corta",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "2f18d2ee8252ce0384d0b61d23988e19212d15de9b46b09f335c2e2061ec0c25",
+          "url": "https://www.tribunalambiental.cl/wp-content/uploads/2015/06/D-15-2015-06-01-2017-Sentencia.pdf",
+          "title": "Santiago, seis de enero de dos mil diecisiete",
+          "raw_nombre_proyecto": "Explotación de la Mina Panales 1 a 54",
+          "ubicacion_especifica": "Quebrada de La Plata, zona del cerro El Roble, comuna de Maipú"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "d3f32fdfee90b6bbb03cf4c47d0e37a7200c75e572da3ef0b0fda2350be06099",
+          "url": "https://uchile.cl/noticias/98614/u-de-chile-logra-fallo-favorable-ante-faena-minera-en-rinconada",
+          "title": "U. de Chile logra fallo favorable ante faena minera en Rinconada de Maipú",
+          "raw_nombre_proyecto": "Panales",
+          "ubicacion_especifica": "Quebrada de la Plata, Rinconada de Maipú, Maipú"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "fe0f38566717aa34de32376a",
+      "canonical_name_a": "Vital Apoquindo",
+      "project_id_b": "c5e14c0c21e5f47cd8988b3b",
+      "canonical_name_b": "Vital Apoquindo números 1.400, 1450 y 1.500",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 251] Debería ser 'merged'. Vital Apoquindo y la variante 1450/1500 corresponden al mismo desarrollo; la evidencia espacial las integra en el mismo proyecto/caso.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "e465290dbe2906b691481d3235a277b9a98d2fbabd5a8c20d7631f291f91a25a",
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "title": "Proyecto Vital Apoquindo demanda a Municipalidad de Las Condes para recuperar permiso de construcción",
+          "raw_nombre_proyecto": "Vital Apoquindo",
+          "ubicacion_especifica": "calle Vital Apoquindo 1400 al 1500"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+          "url": "https://www.elperiodista.cl/2020/12/las-condes-25-edificios-en-altura-ilegales-y-conflictos-de-interes/",
+          "title": "Las Condes: 25 edificios en altura ilegales y conflictos de interés",
+          "raw_nombre_proyecto": "Vital Apoquindo números 1.400, 1450 y 1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "fe0f38566717aa34de32376a",
+      "canonical_name_a": "Vital Apoquindo",
+      "project_id_b": "5fd6d26afc0da9705016abeb",
+      "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+      "razon_de_la_fusion_original": "[Sol+Claude 2026-09-18, idx original 250] Debería ser 'merged'. Vital Apoquindo y la variante 1400 corresponden al mismo desarrollo en el tramo 1400-1500. El numeral es dirección.",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "e465290dbe2906b691481d3235a277b9a98d2fbabd5a8c20d7631f291f91a25a",
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "title": "Proyecto Vital Apoquindo demanda a Municipalidad de Las Condes para recuperar permiso de construcción",
+          "raw_nombre_proyecto": "Vital Apoquindo",
+          "ubicacion_especifica": "calle Vital Apoquindo 1400 al 1500"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+          "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+          "title": "¿Qué sucederá con los 25 edificios ilegales en Las Condes? - El Clarin de Chile",
+          "raw_nombre_proyecto": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, Las Condes"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "fc5029643189e41aef17b23c",
+      "canonical_name_a": "Vicuña Mackenna 385",
+      "project_id_b": "34dfed845b909bed9ca77737",
+      "canonical_name_b": "edificio de 14 pisos en Vicuña Mackenna 385",
+      "razon_de_la_fusion_original": "misma direccion exacta",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "476fba30b51d8b46e27b56b5e343a546ab334c9ab868c187642c0826b9809c5d",
+          "url": "https://www.ciperchile.cl/2018/01/15/nueva-ley-blanquea-permisos-de-edificacion-viciados-y-anula-dictamenes-de-contraloria/",
+          "title": "Nueva ley “blanquea” permisos de edificación viciados y anula dictámenes de Contraloría - CIPER Chile",
+          "raw_nombre_proyecto": "Vicuña Mackenna 385",
+          "ubicacion_especifica": "Isidora Goyenechea 2917; Vespucio Sur, Renato Sánchez y Asturias; Vicuña Mackenna 385"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+          "url": "https://www.elmostrador.cl/noticias/pais/2017/10/31/felipe-alessandri-presenta-recurso-contra-municipio-de-lavin-para-defender-su-casa-en-el-barrio-donde-vivio-pinochet/",
+          "title": "Felipe Alessandri presenta recurso contra municipio de Lavín para defender su casa en el barrio donde vivió Pinochet",
+          "raw_nombre_proyecto": "edificio de 14 pisos en Vicuña Mackenna 385",
+          "ubicacion_especifica": "barrio Presidente Errázuriz, El Golf, Las Condes"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "c5e14c0c21e5f47cd8988b3b",
+      "canonical_name_a": "Vital Apoquindo números 1.400, 1450 y 1.500",
+      "project_id_b": "5fd6d26afc0da9705016abeb",
+      "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+      "razon_de_la_fusion_original": "mismas direcciones exactas, mismo proyecto de 25 edificios",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+          "url": "https://www.elperiodista.cl/2020/12/las-condes-25-edificios-en-altura-ilegales-y-conflictos-de-interes/",
+          "title": "Las Condes: 25 edificios en altura ilegales y conflictos de interés",
+          "raw_nombre_proyecto": "Vital Apoquindo números 1.400, 1450 y 1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+          "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+          "title": "¿Qué sucederá con los 25 edificios ilegales en Las Condes? - El Clarin de Chile",
+          "raw_nombre_proyecto": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, Las Condes"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "e986c115668629af6342f449",
+      "canonical_name_a": "proyecto de 25 edificios en la calle Vital Apoquindo",
+      "project_id_b": "5fd6d26afc0da9705016abeb",
+      "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+      "razon_de_la_fusion_original": "mismo proyecto, direccion especifica agregada",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8",
+          "url": "https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2021/05/10/graves-ilegalidades-contenidas-en-el-permiso-del-edificio-institucional-de-la-cchc-en-las-condes.shtml",
+          "title": "Graves ilegalidades contenidas en el permiso del edificio institucional de la CCHC en Las Condes",
+          "raw_nombre_proyecto": "proyecto de 25 edificios en la calle Vital Apoquindo",
+          "ubicacion_especifica": "Av. Las Condes N° 6761"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+          "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+          "title": "¿Qué sucederá con los 25 edificios ilegales en Las Condes? - El Clarin de Chile",
+          "raw_nombre_proyecto": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+          "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, Las Condes"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    },
+    {
+      "project_id_a": "124a6f29f9096a46e6117ed7",
+      "canonical_name_a": "Lote 18",
+      "project_id_b": "23c289bbc0d09a3d0b71a6aa",
+      "canonical_name_b": "Lote 18-A1",
+      "razon_de_la_fusion_original": "mismo lote, sub-parcela especifica",
+      "por_que_llego_aqui": "El regex de Claude (is_phase_type_merge) detecto un patron de Etapa/Fase o un numeral suelto en alguno de los dos nombres y lo clasifico como 'fusion por fase'.",
+      "documentos_a": [
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/",
+          "title": "Villa San Luis: ¿Más que viviendas sociales, un Monumento Nacional? - La Tercera",
+          "raw_nombre_proyecto": "Lote 18",
+          "ubicacion_especifica": "Presidente Riesco, comuna de Las Condes"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/",
+          "title": "Villa San Luis: ¿Más que viviendas sociales, un Monumento Nacional? - La Tercera",
+          "raw_nombre_proyecto": "Lote 18-A",
+          "ubicacion_especifica": "Presidente Riesco, comuna de Las Condes"
+        }
+      ],
+      "documentos_b": [
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/",
+          "title": "Villa San Luis: ¿Más que viviendas sociales, un Monumento Nacional? - La Tercera",
+          "raw_nombre_proyecto": "Lote 18-A1",
+          "ubicacion_especifica": "Presidente Riesco, comuna de Las Condes"
+        }
+      ],
+      "clasificacion_sol": null,
+      "razon_sol": null
+    }
+  ]
+}

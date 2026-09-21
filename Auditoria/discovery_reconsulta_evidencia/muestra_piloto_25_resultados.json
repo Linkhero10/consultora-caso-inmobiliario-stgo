@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "run_at": "2026-09-13",
+  "combos_solicitados": 25,
+  "resultados_detallados": [
+    {
+      "query": "\"denuncia contraloría edificación\" \"San Ramón\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"densificación vecinos reclamo\" \"San Ramón\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 8
+    },
+    {
+      "query": "\"megaproyecto inmobiliario oposición\" \"Renca\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"vivienda social integración conflicto\" \"comuna de Recoleta\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"edificio altura densidad reclamo\" \"comuna de Recoleta\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "fallo_agoto_reintentos"
+    },
+    {
+      "query": "\"oposición vecinal edificio\" \"Quinta Normal\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"megaproyecto inmobiliario oposición\" \"Pudahuel\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"reclamo de ilegalidad\" \"Peñalolén\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"junta de vecinos inmobiliaria\" \"Peñalolén\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"edificio altura densidad reclamo\" \"Maipú\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"denuncia contraloría edificación\" \"Maipú\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"gentrificación\" \"Lo Prado\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"junta de vecinos inmobiliaria\" \"Lo Barnechea\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"densificación vecinos reclamo\" \"La Pintana\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"invalidación de permisos de edificación\" \"comuna de La Florida\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"vivienda social integración conflicto\" \"La Cisterna\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"recurso de protección\" \"El Bosque\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"densificación vecinos reclamo\" \"Conchalí\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"vivienda social integración conflicto\" \"Cerro Navia\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"denuncia contraloría edificación\" \"Barrio Italia Ñuñoa\"",
+      "resultado": "fallo_agoto_reintentos"
+    },
+    {
+      "query": "\"recurso de protección\" \"Bellavista Providencia\"",
+      "resultado": "ok",
+      "n_resultados": 9
+    },
+    {
+      "query": "\"guetos verticales\" \"Bellavista Providencia\"",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"denuncia contraloría edificación\" \"Santa Isabel Providencia\"",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"reclamo de ilegalidad\" \"Los Naranjos Providencia\"",
+      "resultado": "ok",
+      "n_resultados": 10
+    },
+    {
+      "query": "\"megaproyecto inmobiliario oposición\" \"Los Naranjos Providencia\"",
+      "resultado": "ok",
+      "n_resultados": 10
+    }
+  ],
+  "ok": 23,
+  "fallos": 2,
+  "log_fuente": "Auditoria/discovery_reconsulta_evidencia/muestra_piloto_25_log.txt"
+}

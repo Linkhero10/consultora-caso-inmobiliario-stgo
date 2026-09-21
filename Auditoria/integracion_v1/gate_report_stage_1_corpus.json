@@ -1,0 +1,32 @@
+{
+  "stage_id": "stage_1_corpus",
+  "generated_at": "2026-09-16",
+  "generated_by": "claude-sonnet-5 (claude-code)",
+  "gates": [
+    {
+      "id": "discovery_closed",
+      "status": "passed",
+      "evidence": "Discovery detenido, snapshot_run_id 20260913_220528_781 referenciado en el lineage de todo el corpus clasificado. discovery_closure_report_final.json en Auditoria/."
+    },
+    {
+      "id": "snapshot_v3_validated",
+      "status": "passed",
+      "evidence": "fulltext_v2 (10.498 documentos, fulltext_manifest_v2.jsonl con 12.217 lineas) separado de fulltext_v1 legacy (67 docs), nunca mezclados."
+    },
+    {
+      "id": "corpus_outputs_verified",
+      "status": "passed",
+      "evidence": "Clasificacion v5.2.3 completa: 3.885/3.885 documentos, 0 errores, manifest classifications.run_manifest.20260916_035752_047799.json con hashes de prompt/schema/entry_script/base_gate pinneados. Dedupe reconciliado por Luna y verificado por Claude: 5.421 canonicos / 301 duplicados exactos / 4.776 no elegibles / 31 candidatos, ver Auditoria/integracion_v1/reconciliacion_dedupe_2026-09-16.md. Corpus canonico materializado: Auditoria/integracion_v1/corpus_canonico_v1.json (3.884 documentos, 1 excluido -- duplicado CEACGR, insufficient_content)."
+    },
+    {
+      "id": "classification_gate_v4_piloted",
+      "status": "passed",
+      "evidence": "classification_schema_v4/classifier_system_v4/apply_deterministic_gate() probados sobre muestra de 70 (historico), Auditoria/muestras_control/clasificacion_sample_v4_70.jsonl."
+    },
+    {
+      "id": "classification_scope_v5_piloted",
+      "status": "passed",
+      "evidence": "Universo amplio v5.2.x vigente, gate hash-pinned (release_gate_hash_pinning), 82/82 tests en el entorno de Claude, classification_release_allowed() verificado True via invocacion real, corrida de produccion completa (3.885/3.885, ~USD 25.95, segunda opinion de Luna sin hallazgos bloqueantes en 100 docs de prueba)."
+    }
+  ]
+}

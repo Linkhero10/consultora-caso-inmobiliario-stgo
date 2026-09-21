@@ -1,0 +1,39 @@
+{
+  "url": "https://radio.uchile.cl/2018/07/07/viviendas-sociales-en-las-condes-un-pequeno-paso-a-la-integracion/",
+  "extraction_method": "error",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": null,
+  "fetched_at": "2026-09-12T15:38:43.835741+00:00",
+  "lineage": {
+    "discovery_record_hash": "add3752dda07ca5074d6e4803006fcf626816e8509682c8a618cfe240eb57b14",
+    "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "vivienda social integración conflicto",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "add3752dda07ca5074d6e4803006fcf626816e8509682c8a618cfe240eb57b14",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "add3752dda07ca5074d6e4803006fcf626816e8509682c8a618cfe240eb57b14",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      }
+    ]
+  },
+  "discovery_title": "Viviendas sociales en Las Condes: Un pequeño paso a la ..."
+}

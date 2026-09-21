@@ -1,0 +1,1807 @@
+[
+  {
+    "url": "https://lavozdelosquesobran.cl/opinion/las-condes-25-edificios-en-altura-ilegales-y-conflictos-de-interes/16122020",
+    "cost_high": 0.00698928,
+    "cost_xhigh": 0.01611288,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": false,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "mega proyecto inmobiliario de 25 edificios en altura",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, reproche y alarma frente a las presuntas ilegalidades urbanísticas, la falta de actuación municipal y los eventuales conflictos de interés.",
+      "actores": [
+        {
+          "nombre": "Fundación Defendamos la Ciudad",
+          "tipo": "ong_patrimonial",
+          "rol": "demandante",
+          "cita": "la fundación Defendamos la Ciudad lo denunció en noviembre de 2018 en la Contraloría General de la República",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Contraloría General de la República",
+          "tipo": "contraloria",
+          "rol": "autoridad_decisora",
+          "cita": "Cómo era lógico dicha Contraloría, en dictamen E58945 del 11/12/20, lo declaró ilegal por varias razones.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM) de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mal autorizado por la Directora de Obras Municipales (DOM) de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "DOM de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la DOM debe abstenerse de seguir aplicándola para otros casos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "demandado",
+          "cita": "La Contraloría también instruyó a esa municipalidad para que regularice",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Mirador Oriente S.A.",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a nombre de la Inmobiliaria Mirador Oriente S.A.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "alcalde Lavín",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "sin que el alcalde Lavín haya hecho nada concreto al respecto",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "arquitecto José Luis Ugarte",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Quien firmó el permiso es el arquitecto José Luis Ugarte.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2018-03-29",
+      "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, comuna de Las Condes",
+      "explicacion_tipo_conflicto": "El texto describe un conflicto por la autorización de un proyecto inmobiliario presuntamente incompatible con el PRC, las normas urbanísticas y la evaluación ambiental, además de cuestionar eventuales conflictos de interés.",
+      "explicacion_actores": "La Fundación Defendamos la Ciudad presenta la denuncia; la DOM y la Municipalidad de Las Condes aparecen vinculadas a la autorización y aplicación de las normas; la Contraloría emite el dictamen; la inmobiliaria y los arquitectos aparecen relacionados con el proyecto y los eventuales conflictos de interés.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo mezcla varias etapas contenciosas —permiso de 2018, denuncia de noviembre de 2018 y dictamen de 2020— y deja cierta ambigüedad sobre si la institución decisora principal debe ser la DOM, la Municipalidad o la Contraloría."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "local",
+      "tono_emocional": "Tono crítico, acusatorio e indignado. El artículo denuncia ilegalidades urbanísticas, inacción municipal y eventuales conflictos de interés en torno al proyecto.",
+      "actores": [
+        {
+          "nombre": "fundación Defendamos la Ciudad",
+          "tipo": "ong_patrimonial",
+          "rol": "demandante",
+          "cita": "la fundación Defendamos la Ciudad lo denunció en noviembre de 2018 en la Contraloría General de la República",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Contraloría General de la República",
+          "tipo": "contraloria",
+          "rol": "autoridad_decisora",
+          "cita": "dicha Contraloría, en dictamen E58945 del 11/12/20, lo declaró ilegal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM) de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mal autorizado por la Directora de Obras Municipales (DOM) de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Municipalidad de Las Condes preparó hace un año la modificación N° 11 de su PRC",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Mirador Oriente S.A.",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a nombre de la Inmobiliaria Mirador Oriente S.A.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "alcalde Lavín",
+          "tipo": "concejal_politico",
+          "rol": "mencionado",
+          "cita": "sin que el alcalde Lavín haya hecho nada concreto al respecto",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "José Luis Ugarte",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "Quien firmó el permiso es el arquitecto José Luis Ugarte.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "la funcionaria municipal",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "",
+          "cita_verificada": false
+        }
+      ],
+      "institucion_decisora": "contraloria_general",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2020-12-11",
+      "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, comuna de Las Condes",
+      "explicacion_tipo_conflicto": "El texto describe una disputa por la legalidad del permiso de edificación N° 37 y por disposiciones del PRC que permitirían una densidad y constructibilidad contrarias a la normativa, junto con alegaciones de conflictos de interés.",
+      "explicacion_actores": "La Fundación Defendamos la Ciudad aparece como denunciante; la Contraloría como autoridad que emitió el dictamen; la DOM y la Municipalidad como autoridades vinculadas al permiso y al PRC; y la inmobiliaria, arquitectos, asociaciones gremiales y autoridades nacionales como sujetos beneficiarios, cuestionados o mencionados por sus vínculos con el caso.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "Hay dos centros institucionales relevantes —la DOM que otorgó el permiso y la Contraloría que declaró su ilegalidad—, varias fechas posibles del hecho contencioso y alegaciones de conflictos de interés que no están plenamente verificadas."
+    }
+  },
+  {
+    "url": "https://www.defendamoslaciudad.cl/noticias/item/1068-vecinos-se-oponen-a-construccion-de-edificio-en-la-reina",
+    "cost_high": 0.0057509,
+    "cost_xhigh": 0.0163253,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "protesta_manifestacion",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, molestia y determinación de los vecinos frente a la construcción del edificio, la eventual vulneración de las normas urbanísticas y la actuación de las autoridades.",
+      "actores": [
+        {
+          "nombre": "Comité La Reina Comuna parque y No parque de edificios",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Un grupo de vecinos que integran el Comité La Reina Comuna parque y No parque de edificios",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Los afectados",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Los afectados indicaron que las normas de edificación del sector",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Claudia Paris",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "Claudia Paris, vecina del sector, dijo que",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Dirección de Obras de La Reina",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "aceptaremos que la Dirección de Obras de La Reina otorgue el permiso de edificación",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria DSE Limitada",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "el permiso de edificación que ha solicitado la Inmobiliaria DSE Limitada",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Daniel Schapira Eskenazi",
+          "tipo": "otro",
+          "rol": "demandado",
+          "cita": "del empresario Daniel Schapira Eskenazi",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "empresa constructora",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "si la empresa constructora no desea edificar casas en su terreno",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda y Urbanismo",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "introducida arteramente por el Ministerio de Vivienda y Urbanismo en la respectiva Ordenanza",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Sector de Príncipe de Gales, comuna de La Reina; barrio afectado por el cono de aproximación del aeródromo Eulogio Sánchez.",
+      "explicacion_tipo_conflicto": "El conflicto se origina en la oposición vecinal a la construcción de un edificio que, según los vecinos, excede la altura permitida, contraviene el Plan Regulador Comunal y carece de permiso de edificación.",
+      "explicacion_actores": "El comité, los vecinos y Claudia Paris actúan como opositores; la Inmobiliaria DSE, su empresario vinculado y la empresa constructora aparecen como responsables del proyecto; y la Dirección de Obras de La Reina es la autoridad municipal que debe resolver el permiso, mientras el Ministerio es mencionado por su incidencia regulatoria.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El texto no permite determinar la fecha del hecho sin confundirla con la fecha de publicación y presenta como alegaciones vecinales la ilegalidad del inicio de obras y la falta de permiso."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "protesta_manifestacion",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, desconfianza y firmeza defensiva; los vecinos denuncian un supuesto incumplimiento de las normas urbanísticas y rechazan la priorización del lucro inmobiliario sobre su calidad de vida.",
+      "actores": [
+        {
+          "nombre": "Comité La Reina Comuna parque y No parque de edificios",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Un grupo de vecinos que integran el Comité La Reina Comuna parque y No parque de edificios rechazaron el ilegal inicio de obras",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Claudia Paris",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "Claudia Paris, vecina del sector, dijo que",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria DSE Limitada",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "la Inmobiliaria DSE Limitada del empresario Daniel Schapira Eskenazi",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Daniel Schapira Eskenazi",
+          "tipo": "ciudadano_individual",
+          "rol": "demandado",
+          "cita": "la Inmobiliaria DSE Limitada del empresario Daniel Schapira Eskenazi",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "la empresa constructora",
+          "tipo": "otro",
+          "rol": "demandado",
+          "cita": "si la empresa constructora no desea edificar casas en su terreno",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Dirección de Obras de La Reina",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Dirección de Obras de La Reina otorgue el permiso de edificación",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Luis Montt",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "un llamado no sólo al alcalde Luis Montt",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda y Urbanismo",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "introducida arteramente por el Ministerio de Vivienda y Urbanismo en la respectiva Ordenanza",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Príncipe de Gales, comuna de La Reina",
+      "explicacion_tipo_conflicto": "La disputa se refiere a la oposición vecinal a la ejecución y eventual autorización de un edificio que los actores consideran incompatible con la altura permitida, el Plan Regulador Comunal y la restricción del cono de aproximación.",
+      "explicacion_actores": "El Comité y Claudia Paris articulan la oposición vecinal; la Inmobiliaria DSE Limitada, Daniel Schapira Eskenazi y una empresa constructora aparecen como la contraparte promotora, mientras la Dirección de Obras de La Reina es el órgano que debe resolver el permiso y las autoridades nacionales, el gobierno, la Fundación y Patricio Herman son mencionados o emiten críticas.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "No se informa la fecha del inicio de obras ni de la manifestación y la supuesta ilegalidad se presenta como alegación, mientras el texto también indica que el permiso fue solicitado; se requiere verificación documental de la situación jurídica."
+    }
+  },
+  {
+    "url": "https://www.latercera.com/diario-impreso/la-reina-inicia-debate-por-cambios-a-edificacion-en-altura-de-nuevo-plan-regulador/",
+    "cost_high": 0.0056602,
+    "cost_xhigh": 0.0104242,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 7,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "participacion_proceso_ambiental",
+      "escala_conflicto": "local",
+      "tono_emocional": "Preocupación, oposición y desconfianza vecinal ante la falta de información y participación; también hay determinación de autoridades y organizaciones para discutir los cambios de altura.",
+      "actores": [
+        {
+          "nombre": "Luis Montt",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "el alcalde de La Reina, Luis Montt, espera concretar en el nuevo plano regulador comunal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "concejo municipal",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "cuya discusión ya se inició en el concejo municipal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "los vecinos de La Reina",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "en abril de 2006 los vecinos rechazaran la propuesta de modificar la normativa",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "coordinadora vecinal de La Reina",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Pedro Davis, que lidera la coordinadora vecinal de La Reina",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Pedro Davis",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "Pedro Davis, que lidera la coordinadora vecinal de La Reina, dijo estar preocupado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "organizaciones de La Reina",
+          "tipo": "otro",
+          "rol": "demandante",
+          "cita": "los vecinos y organizaciones de La Reina se reunirán a fin de establecer las medidas a seguir",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Francisco Olea",
+          "tipo": "concejal_politico",
+          "rol": "demandante",
+          "cita": "El concejal Francisco Olea dijo que, si bien concuerda con el carácter residencial de la comuna",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "2006-04",
+      "ubicacion_especifica": "La Reina; Plaza Egaña; avenida Ossa con Simón Bolívar; siete sectores de acceso denominados puertas",
+      "explicacion_tipo_conflicto": "Es un conflicto de planificación urbana y densificación, centrado en limitar la altura de las edificaciones, modificar las zonas de acceso o puertas y definir el carácter residencial de La Reina mediante el nuevo plano regulador.",
+      "explicacion_actores": "El alcalde y el concejo municipal impulsan y tramitan el nuevo plano regulador, mientras vecinos, la coordinadora vecinal, organizaciones locales y el concejal Francisco Olea expresan oposición o reparos a la ampliación de las zonas habilitadas para edificios en altura.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "La fecha de abril de 2006 corresponde al rechazo de una propuesta anterior, mientras que el debate principal y la reunión del 27 de julio no tienen año explícito; además, la categoría de participación ambiental es una aproximación para un proceso de planificación urbana."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "otro",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Preocupación, desconfianza y oposición vecinal por la falta de información y participación, junto con temor a la congestión vehicular; las autoridades muestran voluntad de regular las alturas de edificación.",
+      "actores": [
+        {
+          "nombre": "Luis Montt",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Ese es el objetivo que el alcalde de La Reina, Luis Montt, espera concretar en el nuevo plano regulador comunal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "concejo municipal",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "cuya discusión ya se inició en el concejo municipal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Pedro Davis",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "Pedro Davis, que lidera la coordinadora vecinal de La Reina, dijo estar preocupado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "coordinadora vecinal de La Reina",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Pedro Davis, que lidera la coordinadora vecinal de La Reina, dijo estar preocupado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "vecinos",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los vecinos rechazaran la propuesta de modificar la normativa que se encuentra vigente desde 2001",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "organizaciones de La Reina",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los vecinos y organizaciones de La Reina se reunirán a fin de establecer las medidas a seguir",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Francisco Olea",
+          "tipo": "concejal_politico",
+          "rol": "autoridad_decisora",
+          "cita": "El concejal Francisco Olea dijo que",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "sectores que se oponen a ella",
+          "tipo": "otro",
+          "rol": "demandante",
+          "cita": "ya hay sectores que se oponen a ella",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Plaza Egaña; Avenida Ossa con Simón Bolívar; Av. Ossa y Plaza Egaña",
+      "explicacion_tipo_conflicto": "La controversia se centra en la modificación del plano regulador comunal para regular la altura de las edificaciones y ampliar las zonas de acceso de Plaza Egaña y Avenida Ossa, frente a la oposición vecinal por la congestión y la falta de participación.",
+      "explicacion_actores": "El alcalde, el concejo municipal y el concejal aparecen como autoridades proponentes o vinculadas a la decisión, mientras Pedro Davis, la coordinadora vecinal, los vecinos y las organizaciones expresan oposición y reclamos de participación.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El debate actual no tiene fecha ni año explícitos y la acción descrita es una discusión urbanística con una reunión futura, por lo que no encaja inequívocamente en una categoría de acción; además, las cifras mencionadas no están respaldadas por una fuente oficial en el texto."
+    }
+  },
+  {
+    "url": "https://www.elperiodista.cl/2020/09/vecinos-de-las-condes-piden-desechar-proyecto-inmobiliario-de-lavin/",
+    "cost_high": 0.0074401,
+    "cost_xhigh": 0.0136165,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": false,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Parque Metropolitano Adulto Mayor",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Preocupación, indignación y determinación frente a la pérdida de áreas verdes, la densificación y la falta de claridad de las autoridades municipales.",
+      "actores": [
+        {
+          "nombre": "agrupación de vecinos de Las Condes",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Una agrupación de vecinos de Las Condes emplazó al alcalde de esa comuna, Joaquín Lavín, a impulsar el “Parque Metropolitano Adulto Mayor” y a cancelar el proyecto inmobiliario",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "plataforma que agrupa a un millar de vecinos que viven en los alrededores del Parque Araucano",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Organizados en torno a una plataforma que agrupa a un millar de vecinos que viven en los alrededores del Parque Araucano",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "residentes de la comuna de Las Condes",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los residentes de la comuna de Las Condes expresaron nuevamente su oposición a la idea de levantar cuatro torres de 15 pisos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "la comunidad",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "a costa de un área verde donde la comunidad pretende materializar un viejo anhelo",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "concejal_politico",
+          "rol": "autoridad_decisora",
+          "cita": "alcalde de esa comuna, Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Municipalidad de Las Condes cuenta con recursos para que vecinos de otras comunas puedan venir a disfrutar del parque metropolitano",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda y Urbanismo",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "el Ministerio de Vivienda y Urbanismo pretenden materializar en el terreno de 40.277 metros cuadrados",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Federación de Tenis de Chile",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el paño utilizado en los últimos años por la Federación de Tenis de Chile.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Terreno de 40.277 metros cuadrados entre las avenidas Vespucio, Alonso de Córdova y Cerro Colorado, como continuación del Parque Araucano; paño utilizado por la Federación de Tenis de Chile.",
+      "explicacion_tipo_conflicto": "El conflicto se centra en la oposición vecinal a un proyecto inmobiliario de cuatro torres y 340 viviendas que ocuparía un área verde junto al Parque Araucano, frente a una propuesta alternativa de parque para adultos mayores.",
+      "explicacion_actores": "Se identifican como demandantes la agrupación y plataforma vecinal, los residentes y los vecinos organizadores Luis Filippi, María Cristina Dittborn y Claudio Figueroa; como autoridades impulsoras o decisoras, el alcalde, la Municipalidad de Las Condes y el Ministerio de Vivienda y Urbanismo; y como actores mencionados, la Federación de Tenis de Chile y otros grupos beneficiarios o afectados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no identifica el trámite administrativo específico que determinaría si la decisión corresponde a la DOM, al concejo municipal o a una autoridad del MINVU, y solo entrega el día y mes del anuncio vecinal sin indicar el año."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, preocupación y desconfianza frente al municipio y al proyecto, junto con determinación para defender las áreas verdes y promover un parque para adultos mayores.",
+      "actores": [
+        {
+          "nombre": "Una agrupación de vecinos de Las Condes",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Una agrupación de vecinos de Las Condes emplazó al alcalde de esa comuna, Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "demandado",
+          "cita": "al alcalde de esa comuna, Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Municipalidad de Las Condes cuenta con recursos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda y Urbanismo",
+          "tipo": "otro",
+          "rol": "demandado",
+          "cita": "el Ministerio de Vivienda y Urbanismo pretenden materializar",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Plataforma que agrupa a un millar de vecinos de los alrededores del Parque Araucano",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "una plataforma que agrupa a un millar de vecinos que viven en los alrededores del Parque Araucano",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Residentes de la comuna de Las Condes",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los residentes de la comuna de Las Condes expresaron nuevamente su oposición",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Luis Filippi",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "uno de los vecinos organizadores, Luis Filippi",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "María Cristina Dittborn",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "la vecina María Cristina Dittborn.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Terreno de 40.277 metros cuadrados entre las avenidas Vespucio, Alonso de Córdova y Cerro Colorado, como continuación del Parque Araucano; corresponde al paño utilizado en los últimos años por la Federación de Tenis de Chile.",
+      "explicacion_tipo_conflicto": "La disputa se centra en la oposición vecinal a un proyecto municipal y del Ministerio de Vivienda y Urbanismo que contempla cuatro torres y 340 viviendas en un área verde junto al Parque Araucano, frente a la propuesta de crear un parque para adultos mayores.",
+      "explicacion_actores": "Los vecinos organizados y sus voceros actúan como demandantes, mientras Joaquín Lavín, la Municipalidad de Las Condes y el Ministerio de Vivienda y Urbanismo aparecen como impulsores o destinatarios de la oposición vecinal.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El texto no identifica el órgano formal ni el acto administrativo que resolvería la materialización o cancelación del proyecto, y solo indica que la presentación ocurrió un domingo 27 de septiembre sin especificar el año."
+    }
+  },
+  {
+    "url": "https://www.infraestructurapublica.cl/fin-del-conflicto-las-condes-recibira-dinero-para-viviendas-sociales-y-vitacura-tendra-parque/",
+    "cost_high": 0.00505405,
+    "cost_xhigh": 0.01471165,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "otro",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Tono conciliador y pragmático: la discrepancia entre ambos municipios se presenta como superada mediante negociación y mediación ministerial, aunque persisten aspectos financieros por resolver.",
+      "actores": [
+        {
+          "nombre": "Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Las Condes pretendía construir viviendas sociales para sus residentes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Vitacura",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mientras que Vitacura proyectaba hacer un parque",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "concejal_politico",
+          "rol": "autoridad_decisora",
+          "cita": "los respectivos jefes comunales, Joaquín Lavín y Raúl Torrealba, llegaron a un acuerdo",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Raúl Torrealba",
+          "tipo": "concejal_politico",
+          "rol": "autoridad_decisora",
+          "cita": "los respectivos jefes comunales, Joaquín Lavín y Raúl Torrealba, llegaron a un acuerdo",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cristián Monckeberg",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "El ministro Monckeberg, quien convocó a ambos alcaldes a una mesa de trabajo para buscar un acuerdo",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda y Urbanismo",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "desde abril de este año medió el ministro de Vivienda y Urbanismo, Cristián Monckeberg",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "residentes de Las Condes",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "Las Condes pretendía construir viviendas sociales para sus residentes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "los vecinos de esa comuna",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "el parque que construirá Vitacura será para toda la ciudad, no solo para los vecinos de esa comuna",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "2018-07-04",
+      "ubicacion_especifica": "Terreno de 28 mil m² ubicado en la ribera sur del río Mapocho, al oriente de la conexión de Costanera Norte con Tabancura, en Vitacura; el proyecto de viviendas sociales se analizaría en un sector aledaño a la Rotonda Atenas, en Las Condes.",
+      "explicacion_tipo_conflicto": "El conflicto corresponde a una disputa urbana intermunicipal por el destino de un terreno de 28 mil m²: Las Condes pretendía construir viviendas sociales y Vitacura proyectaba construir un parque.",
+      "explicacion_actores": "Las Condes y Vitacura son los municipios directamente involucrados, sus alcaldes actúan como autoridades negociadoras, el ministro de Vivienda y Urbanismo media el acuerdo y los residentes y vecinos aparecen como grupos beneficiarios o afectados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El acuerdo se encontraba en proceso de formalización, la transferencia y el precio aún no estaban completamente resueltos y el artículo no identifica expresamente la aprobación institucional final del convenio."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "provincial",
+      "tono_emocional": "Tono institucional y conciliador, con una tensión previa entre municipios y énfasis posterior en la integración social y la búsqueda de un acuerdo.",
+      "actores": [
+        {
+          "nombre": "Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Las Condes pretendía construir viviendas sociales para sus residentes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Vitacura",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mientras que Vitacura proyectaba hacer un parque.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "los respectivos jefes comunales, Joaquín Lavín y Raúl Torrealba, llegaron a un acuerdo.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Raúl Torrealba",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "los respectivos jefes comunales, Joaquín Lavín y Raúl Torrealba, llegaron a un acuerdo.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cristián Monckeberg",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "el ministro de Vivienda y Urbanismo, Cristián Monckeberg",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "sus residentes",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Las Condes pretendía construir viviendas sociales para sus residentes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "vecinos de esa comuna",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el parque que construirá Vitacura será para toda la ciudad, no solo para los vecinos de esa comuna",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "cercanos a la negociación",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Ahora, cercanos a la negociación cuentan que el precio que ha estado en conversación por la mitad del paño estaría alrededor de los US$ 15 millones, aunque todavía no está totalmente resuelto.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "2018-07-04",
+      "ubicacion_especifica": "Terreno de 28 mil m² en la ribera sur del río Mapocho, al oriente de la conexión de Costanera Norte con Tabancura; para el proyecto de viviendas sociales se menciona un sector aledaño a la Rotonda Atenas.",
+      "explicacion_tipo_conflicto": "La clasificación previa no asignó tipo_conflicto; el texto describe una discrepancia intermunicipal sobre el uso y la transferencia de un terreno, contraponiendo viviendas sociales y un parque.",
+      "explicacion_actores": "Se identifican las dos municipalidades y sus alcaldes como autoridades y partes del acuerdo, al ministro como mediador, y a residentes, vecinos y fuentes cercanas a la negociación como grupos o fuentes mencionados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "La nota describe simultáneamente una discrepancia pública y una negociación con un convenio aún por firmarse, y no identifica expresamente qué concejos municipales aprobarán la transferencia ni aporta el documento del acuerdo."
+    }
+  },
+  {
+    "url": "https://www.biobiochile.cl/noticias/2012/10/20/vecinos-de-providencia-se-manifiestan-en-rechazo-a-proyectos-inmobiliarios-de-altura-en-el-sector.shtml",
+    "cost_high": 0.00501525,
+    "cost_xhigh": 0.00728205,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 4,
+      "n_xhigh": 3,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "protesta_manifestacion",
+      "escala_conflicto": "local",
+      "tono_emocional": "Rechazo e inquietud, expresados con determinación mediante una marcha vecinal y la exigencia de revisar el Plan Regulador Comunal.",
+      "actores": [
+        {
+          "nombre": "los venicos del denominado Barrio de las Flores",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los venicos del denominado Barrio de las Flores, ubicados entre las calles Tobalaba, Pocuro, Jorge Matta y Francisco Bilbao",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "municipio",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Los vecinos también le exigen al municipio la revisión del Plan Regulador Comunal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "inmobiliarias",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "residencias que han sido compradas por inmobiliarias",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "las empresas",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "las casas que ya han sido compradas por las empresas",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Barrio de las Flores, entre las calles Tobalaba, Pocuro, Jorge Matta y Francisco Bilbao, comuna de Providencia",
+      "explicacion_tipo_conflicto": "El conflicto se centra en el rechazo vecinal a proyectos inmobiliarios en altura, incluidos edificios de más de 12 pisos, y en la exigencia de revisar el Plan Regulador Comunal de un sector considerado de conservación histórica.",
+      "explicacion_actores": "El colectivo vecinal realiza la marcha y exige cambios regulatorios; el municipio aparece como autoridad destinataria de la exigencia, mientras las inmobiliarias y empresas son mencionadas como adquirentes de viviendas y potenciales desarrolladoras de los proyectos.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no identifica la fecha del evento ni el órgano municipal específico que tramita la revisión del plan, y combina una descripción concreta de la manifestación con afirmaciones vecinales no verificadas sobre compras y proyectos."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "protesta_manifestacion",
+      "escala_conflicto": "local",
+      "tono_emocional": "Rechazo y preocupación frente al avance de edificios en altura, expresados mediante una marcha vecinal y la exigencia de revisar la normativa urbana.",
+      "actores": [
+        {
+          "nombre": "vecinos del denominado Barrio de las Flores",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "los venicos del denominado Barrio de las Flores, ubicados entre las calles Tobalaba, Pocuro, Jorge Matta y Francisco Bilbao",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "municipio",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "le exigen al municipio la revisión del Plan Regulador Comunal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "inmobiliarias",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "ya existen residencias que han sido compradas por inmobiliarias",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Barrio de las Flores, entre las calles Tobalaba, Pocuro, Jorge Matta y Francisco Bilbao, comuna de Providencia",
+      "explicacion_tipo_conflicto": "El texto describe un conflicto urbano-inmobiliario por el avance de proyectos residenciales y de oficinas en altura y por sus posibles efectos sobre un barrio de conservación histórica.",
+      "explicacion_actores": "Los vecinos actúan como demandantes al manifestarse y exigir la revisión del Plan Regulador Comunal; el municipio aparece como autoridad pública interpelada y las inmobiliarias como la contraparte vinculada a la compra de viviendas y a los proyectos cuestionados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no entrega una fecha calendario ni precisa el procedimiento normativo en curso, y la mención genérica al municipio requiere verificar si la decisión concreta corresponde al Concejo Municipal o a otra instancia municipal; además, la cifra de asistentes y los proyectos de más de 12 pisos no cuentan con verificación independiente en el texto."
+    }
+  },
+  {
+    "url": "https://radio.uchile.cl/2018/07/07/viviendas-sociales-en-las-condes-un-pequeno-paso-a-la-integracion/",
+    "cost_high": 0.0050866,
+    "cost_xhigh": 0.0085318,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Viviendas sociales de Rotonda Atenas",
+      "tipo_accion": "otro",
+      "escala_conflicto": "local",
+      "tono_emocional": "Oposición y confrontación entre autoridades municipales, seguida de una resolución negociada y de una valoración positiva pero cautelosa sobre sus efectos en la integración social.",
+      "actores": [
+        {
+          "nombre": "Municipalidad de Vitacura",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "Municipalidad de Vitacura",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Municipalidad de Las Condes lo dona a Vitacura",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Raúl Torrealba",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "los alcaldes Raúl Torrealba y Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "los alcaldes Raúl Torrealba y Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "la mediación del Ministerio de Vivienda",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cristián Monckeberg",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "el ministro (Cristián) Monckeberg",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Yolanda Acevedo",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Yolanda Acevedo, arquitecta y magíster en desarrollo urbano",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Volker Gutiérrez",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Volker Gutiérrez quien ve en el hecho un gran paso hacia la integración, sin embargo, aclaró que este es un acontecimiento aislado",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "A pasos de la Rotonda Atenas, comuna de Las Condes; el terreno se encontraba físicamente en Vitacura y pertenecía a Las Condes",
+      "explicacion_tipo_conflicto": "Conflicto por la localización de viviendas sociales en un terreno vinculado a Las Condes y situado en Vitacura, debido a la oposición del alcalde de Vitacura al proyecto impulsado por Las Condes.",
+      "explicacion_actores": "El conflicto enfrenta a las municipalidades y sus alcaldes, con el Ministerio de Vivienda y el ministro Cristián Monckeberg como mediadores; Yolanda Acevedo y Volker Gutiérrez aparecen como especialistas que evalúan la integración social.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no precisa la fecha del acuerdo ni identifica formalmente si la decisión jurídica correspondió a los concejos municipales, a las alcaldías o a otro órgano municipal; además, la clasificación de acción no encaja claramente en una categoría específica."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "Viviendas sociales de Rotonda Atenas",
+      "tipo_accion": "otro",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Oposición frontal inicial de la Municipalidad de Vitacura y su alcalde, seguida por satisfacción y optimismo por el acuerdo alcanzado, aunque con una valoración cautelosa de sus alcances para la integración social.",
+      "actores": [
+        {
+          "nombre": "Municipalidad de Vitacura",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la Municipalidad de Vitacura",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "La Municipalidad de Las Condes lo dona a Vitacura",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Raúl Torrealba",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "los alcaldes Raúl Torrealba y Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "Joaquín Lavín explicó que el dinero de la venta se invertirá de igual manera en viviendas sociales",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Ministerio de Vivienda",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "La mediación del Ministerio de Vivienda",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cristián Monckeberg",
+          "tipo": "otro",
+          "rol": "mediador",
+          "cita": "el ministro (Cristián) Monckeberg",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Yolanda Acevedo",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Yolanda Acevedo, arquitecta y magíster en desarrollo urbano",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Volker Gutiérrez",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el profesor de Historia y Geografía de la Pontificia Universidad Católica y experto en asuntos de urbanismo, Volker Gutiérrez quien ve en el hecho un gran paso hacia la integración",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "concejo_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Proyecto a solo pasos de la Rotonda Atenas, en Las Condes; el terreno originalmente disputado estaba en Vitacura y pertenecía a Las Condes.",
+      "explicacion_tipo_conflicto": "El texto describe un conflicto intermunicipal por el uso y destino de un terreno, debido a la oposición de Vitacura a la construcción de viviendas sociales impulsada por Las Condes, que terminó en una compraventa, donación y acuerdo entre autoridades.",
+      "explicacion_actores": "La nota identifica a las municipalidades y sus alcaldes como las autoridades directamente enfrentadas, al Ministerio de Vivienda y al ministro Cristián Monckeberg como mediadores, y a Yolanda Acevedo y Volker Gutiérrez como especialistas que evalúan el proyecto.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no precisa la fecha del conflicto ni el órgano formal que aprobó la compraventa y donación, por lo que la identificación del concejo municipal como institución decisora y la clasificación de la negociación intermunicipal como acción requieren validación."
+    }
+  },
+  {
+    "url": "https://www.pauta.cl/actualidad/2026/04/14/gobierno-impulsa-plan-de-viviendas-sociales-en-el-sector-oriente-con-proyectos-en-las-condes-la-reina-y-la-dehesa.html",
+    "cost_high": 0.0072014,
+    "cost_xhigh": 0.0146858,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": false,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Proyecto de viviendas sociales en Cerro Colorado",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Controversia e inquietud vecinal. El Gobierno presenta el proyecto como una medida de integración urbana, mientras vecinos y residentes expresan rechazo por la posible pérdida de áreas verdes y el aumento de densidad poblacional.",
+      "actores": [
+        {
+          "nombre": "Gobierno",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "El Gobierno anunció proyectos en comunas del sector oriente",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Iván Poduje",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "El ministro de Vivienda, Iván Poduje, delineó este martes una estrategia",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Serviu",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "que pertenece al Serviu",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Minvu",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Desde el Minvu sostienen que, pese a ese uso, se trata de un espacio fiscal subutilizado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "club de tenis",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "En ese lugar actualmente funciona un club de tenis",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Federación Nacional de Tenis",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "La Federación Nacional de Tenis no concretó la desocupación del lugar",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Familias provenientes del Cerro 18",
+          "tipo": "colectivo_vecinal",
+          "rol": "mencionado",
+          "cita": "beneficiar a unas 500 familias provenientes del Cerro 18 y del Movimiento por la Dignidad",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Movimiento por la Dignidad",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "beneficiar a unas 500 familias provenientes del Cerro 18 y del Movimiento por la Dignidad.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "2024-11",
+      "ubicacion_especifica": "Terreno fiscal del Serviu en calle Cerro Colorado, cercano al Parque Arauco, comuna de Las Condes; el terreno tiene cerca de cuatro hectáreas e incluye áreas habilitadas como parque.",
+      "explicacion_tipo_conflicto": "La conflictividad se expresa en la oposición de vecinos y residentes a un proyecto de viviendas sociales que consideran incompatible con las áreas verdes y la capacidad del sector, frente al impulso del Gobierno.",
+      "explicacion_actores": "Se identifican autoridades y organismos de Vivienda, el Serviu como propietario del terreno, la Federación Nacional de Tenis y su club como ocupantes, además de grupos beneficiarios y vecinos que manifiestan oposición al proyecto.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no informa una resolución, permiso de construcción ni la fecha exacta del anuncio principal; la DOM municipal se asigna provisionalmente como autoridad sobre la aprobación urbanística y 2024-11 corresponde solo al antecedente de la solicitud de desalojo de Carlos Montes."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "proyecto en Cerro Colorado",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Preocupación y rechazo vecinal ante la pérdida potencial de áreas verdes y el aumento de densidad poblacional, en contraste con el discurso gubernamental de integración urbana.",
+      "actores": [
+        {
+          "nombre": "Gobierno",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "El Gobierno anunció proyectos en comunas del sector oriente, incluyendo un plan en Las Condes sobre un terreno fiscal en Cerro Colorado.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Iván Poduje",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "El ministro de Vivienda, Iván Poduje, delineó este martes una estrategia",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Serviu",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "que pertenece al Serviu.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Minvu",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "Desde el Minvu sostienen que, pese a ese uso, se trata de un espacio fiscal subutilizado.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "club de tenis",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "En ese lugar actualmente funciona un club de tenis, el cual deberá dejar el espacio para dar paso a la construcción de viviendas.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Federación Nacional de Tenis",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "El terreno ha sido ocupado por más de 12 años por el club de tenis de la Federación Nacional de Tenis e incluye también áreas habilitadas como parque.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "vecinos del sector",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Cuando la iniciativa se dio a conocer, vecinos del sector manifestaron su rechazo al proyecto.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "unas 500 familias provenientes del Cerro 18",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Allí se contempla beneficiar a unas 500 familias provenientes del Cerro 18 y del Movimiento por la Dignidad.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "otra",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "2024-11",
+      "ubicacion_especifica": "Calle Cerro Colorado, cercano al Parque Arauco, Las Condes, Santiago",
+      "explicacion_tipo_conflicto": "La controversia se centra en instalar viviendas sociales en un terreno fiscal ocupado por un club de tenis, con oposición vecinal por la eventual pérdida de áreas verdes y el aumento de densidad.",
+      "explicacion_actores": "El texto presenta al Gobierno, Minvu, sus ministros y al Serviu como promotores o autoridades; al club y la Federación Nacional de Tenis como ocupantes; y a los vecinos como el colectivo que expresa el rechazo, además de mencionar a grupos beneficiarios.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo mezcla un plan anunciado para varias comunas con el conflicto específico de Cerro Colorado, no identifica el acto administrativo final ni fecha la oposición vecinal, y no permite confirmar documentalmente si la decisión definitiva corresponde al Serviu u otra autoridad."
+    }
+  },
+  {
+    "url": "https://www.adnradio.cl/2026/07/27/edificio-en-las-condes-promocionado-por-influencers-sufre-denuncias-por-insalubridad-nos-sentimos-estafados/",
+    "cost_high": 0.0035245,
+    "cost_xhigh": 0.0077113,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 5,
+      "within_tolerance": false,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Somma Las Clarisas",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Frustración, indignación y sensación de engaño. Los residentes expresan sentirse estafados por la brecha entre la promesa de un arriendo de alto estándar y los problemas de habitabilidad denunciados.",
+      "actores": [
+        {
+          "nombre": "Residentes del edificio Somma Las Clarisas",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Residentes del edificio Somma Las Clarisas, ubicado en Las Condes y operado por Greystar, denunciaron una serie de problemas de habitabilidad",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "36 vecinos",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "un reclamo formal respaldado por 36 vecinos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "un residente afectado",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "señaló un residente afectado al citado medio",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "uno de los vecinos",
+          "tipo": "ciudadano_individual",
+          "rol": "demandante",
+          "cita": "Según el testimonio de uno de los vecinos, los arriendos pueden superar $1,5 millones en los departamentos más grandes y estar por sobre los $700 mil en las unidades más pequeñas.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Greystar",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "Desde Greystar respondieron al citado medio que se trata de hechos aislados y que los reclamos fueron atendidos.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inna Moll",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cata Vallejos",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Juan Francisco Matamala",
+          "tipo": "ciudadano_individual",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "no_aplica",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Edificio Somma Las Clarisas, Las Condes",
+      "explicacion_tipo_conflicto": "El conflicto se origina en denuncias de residentes por problemas de habitabilidad, insalubridad, filtraciones, olores, deficiencias de infraestructura y cobros asociados al arriendo del edificio.",
+      "explicacion_actores": "Los residentes y vecinos aparecen como denunciantes, Greystar como empresa operadora y parte cuestionada, y los tres influencers como figuras mencionadas por la promoción del proyecto; no se identifica una autoridad pública involucrada en la decisión.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El texto no permite determinar la fecha del hecho ni identifica una autoridad, resolución o procedimiento administrativo específico que determine la controversia."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "Edificio Somma Las Clarisas",
+      "tipo_accion": "declaracion_publica_carta",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, frustración y sensación de engaño entre los residentes, quienes dicen sentirse estafados; Greystar responde en un tono defensivo y conciliador, anunciando acciones correctivas.",
+      "actores": [
+        {
+          "nombre": "Residentes del edificio Somma Las Clarisas",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Residentes del edificio Somma Las Clarisas, ubicado en Las Condes y operado por Greystar, denunciaron una serie de problemas de habitabilidad",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Greystar",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "Desde Greystar respondieron al citado medio que se trata de hechos aislados y que los reclamos fueron atendidos.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inna Moll",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Cata Vallejos",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Juan Francisco Matamala",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "La situación fue expuesta luego de que el inmueble también fuera promocionado en redes sociales por figuras como Inna Moll, Cata Vallejos y Juan Francisco Matamala.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "no_aplica",
+      "tipo_evidencia": "declarativa",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Edificio Somma Las Clarisas, Las Condes",
+      "explicacion_tipo_conflicto": "Se mantiene tipo_conflicto=None según la clasificación previa; el texto documenta reclamos de habitabilidad, filtraciones, olores, aseo y cobros en el edificio.",
+      "explicacion_actores": "Los residentes aparecen como denunciantes y Greystar como operador y destinatario de los reclamos; los tres influencers son mencionados por la promoción del inmueble, sin que el texto los presente como responsables directos de las fallas.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo no permite determinar la fecha del hecho ni identifica una autoridad o decisión formal, y las fallas denunciadas y la respuesta de Greystar aparecen como afirmaciones contrapuestas no verificadas."
+    }
+  },
+  {
+    "url": "https://eldesconcierto.cl/2025/07/15/otra-irregularidad-en-las-condes-un-edificio-de-22-pisos-en-una-zona-que-permite-una-altura-de-6",
+    "cost_high": 0.00656965,
+    "cost_xhigh": 0.01732165,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Edificio de 22 pisos en Isidora Goyenechea 2915",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, censura y sospecha frente a presuntas irregularidades municipales, la desobediencia de dictámenes y la falta de rendición de cuentas de las autoridades.",
+      "actores": [
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "la Municipalidad de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Nueva El Golf SpA",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a la Inmobiliaria Nueva El Golf SpA",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Román Pino",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el jefe de control de esa corporación de derecho público, Román Pino",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "al alcalde Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Los 10 concejales de Las Condes",
+          "tipo": "concejal_politico",
+          "rol": "mencionado",
+          "cita": "a los 10 concejales",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Secretario municipal",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "al secretario municipal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Dirección de Obras Municipales de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "la DOM de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Funcionaria que otorgó el permiso",
+          "tipo": "otro",
+          "rol": "autoridad_decisora",
+          "cita": "",
+          "cita_verificada": false
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2017-11-21",
+      "ubicacion_especifica": "Isidora Goyenechea 2915, comuna de Las Condes, Santiago",
+      "explicacion_tipo_conflicto": "La disputa gira en torno a la presunta ilegalidad de un permiso de edificación municipal que permitió construir un edificio de 22 pisos en un sector donde, según el artículo, correspondían aproximadamente 6 pisos.",
+      "explicacion_actores": "Se identifican como actores centrales la DOM y el municipio por el otorgamiento y eventual invalidación del permiso, Defendamos la Ciudad como denunciante, la Contraloría como órgano fiscalizador y Copec, Banco Santander y los demás funcionarios y autoridades mencionados en relación con el permiso y sus consecuencias.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo de opinión mezcla dos episodios distintos, contiene apreciaciones no verificadas y menciona varias fechas relevantes —permiso de 2013, dictamen de 2017, oficio de 2018 y modificación normativa de 2021—, por lo que debe validarse el caso principal y la fecha seleccionada."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Indignación, censura y sospecha; el texto acusa negligencia municipal, silencio de autoridades y una posible concertación entre el municipio y privados.",
+      "actores": [
+        {
+          "nombre": "unos medios de prensa",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "unos medios de prensa han informado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "Municipalidad de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Nueva El Golf SpA",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a la Inmobiliaria Nueva El Golf SpA",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Román Pino",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "jefe de control de esa corporación de derecho público, Román Pino",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Joaquín Lavín",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "al alcalde Joaquín Lavín",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Dirección de Obras Municipales (DOM)",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Dirección de Obras Municipales (DOM)",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "los 10 concejales",
+          "tipo": "concejal_politico",
+          "rol": "mencionado",
+          "cita": "copia a los 10 concejales",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "secretario municipal",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "y al secretario municipal, los que misteriosamente han mantenido durante todos estos 7 años un silencio sepulcral.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2017-11-21",
+      "ubicacion_especifica": "Isidora Goyenechea 2915, Las Condes",
+      "explicacion_tipo_conflicto": "El conflicto descrito versa sobre la legalidad de un permiso de edificación y el incumplimiento de las reglas de altura y agrupamiento del PRC y la OGUC, con cuestionamientos a la actuación municipal.",
+      "explicacion_actores": "El texto identifica explícitamente a la Fundación Defendamos la Ciudad como denunciante, a la DOM y al municipio como órganos vinculados al permiso, a la Contraloría y la Seremi por sus funciones fiscalizadoras o instructivas, y a las empresas y funcionarios involucrados o mencionados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo mezcla al menos dos episodios distintos —la indemnización a Inmobiliaria Nueva El Golf SpA y el edificio de Copec— y presenta varias fechas, por lo que la delimitación del caso principal y la fecha del evento requieren verificación."
+    }
+  },
+  {
+    "url": "https://interferencia.cl/articulos/altura-de-edificios-en-nunoa-vecinos-logran-fallo-que-demuestra-vicios-en-la",
+    "cost_high": 0.0051486,
+    "cost_xhigh": 0.0113106,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 1
+    },
+    "high_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "recurso_judicial",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, desconfianza y determinación. Los vecinos denuncian prácticas municipales arbitrarias y exigen que se restablezcan las restricciones de altura y se cumpla la sentencia judicial.",
+      "actores": [
+        {
+          "nombre": "un grupo de vecinos",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "el reclamo de ilegalidad interpuesto por un grupo de vecinos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "comunidad organizada de Ñuñoa",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "la comunidad organizada de Ñuñoa logró un triunfo contra las malas prácticas de la institucionalidad municipal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "vecinos del sector",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Vecinos del sector, al percatarse de la situación, ingresaron el reclamo respectivo ante la Corte de Apelaciones de Santiago",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "vecinas, vecinos, dirigentas, dirigentes de base territorial",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "la inagotable porfía de vecinas, vecinos, dirigentas, dirigentes de base territorial",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Corte de Apelaciones de Santiago",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "la Corte de Apelaciones de Santiago acogió el reclamo de ilegalidad interpuesto por un grupo de vecinos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Primera Sala del tribunal de alzada",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "la Primera Sala del tribunal de alzada, integrada por las ministras Marisol Rojas, Inelie Durán y el abogado (i) José Ramón Gutiérrez",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Marisol Rojas",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "las ministras Marisol Rojas",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inelie Durán",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "",
+          "cita_verificada": false
+        }
+      ],
+      "institucion_decisora": "poder_judicial",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Comuna de Ñuñoa; barrios, calles y pasajes con un ancho de 12 metros o menos",
+      "explicacion_tipo_conflicto": "El conflicto se origina en la modificación del plan regulador de Ñuñoa, específicamente en la eliminación de restricciones de altura, y se expresa mediante un reclamo judicial por falta de participación ciudadana y presunta ilegalidad del decreto alcaldicio.",
+      "explicacion_actores": "Los vecinos y organizaciones territoriales aparecen como reclamantes; la Corte de Apelaciones como órgano que resolvió; la Municipalidad, el ex alcalde, el DOM y la alcaldesa como autoridades vinculadas a la actuación impugnada; y la Seremi, el Concejo Comunal, el COSOC, asesores y abogados como actores institucionales o de apoyo mencionados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "La fecha del fallo solo aparece como “el pasado viernes 13 de enero”, sin año, mientras que la fecha de ingreso indicada como 31 de noviembre de 2019 es inválida; además, el texto termina truncado y contiene alegaciones contrapuestas sobre las responsabilidades institucionales."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "recurso_judicial",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación y combatividad de los vecinos, junto con satisfacción por el triunfo judicial y la percepción de haber sido ignorados por autoridades municipales; el municipio responde con cautela técnica.",
+      "actores": [
+        {
+          "nombre": "un grupo de vecinos",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "interpuesto por un grupo de vecinos",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "la comunidad organizada de Ñuñoa",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "la comunidad organizada de Ñuñoa logró un triunfo contra las malas prácticas",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Vecinos del sector",
+          "tipo": "colectivo_vecinal",
+          "rol": "demandante",
+          "cita": "Vecinos del sector, al percatarse de la situación, ingresaron el reclamo respectivo",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Corte de Apelaciones de Santiago",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "la Corte de Apelaciones de Santiago acogió el reclamo de ilegalidad",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Primera Sala del tribunal de alzada",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "la Primera Sala del tribunal de alzada, integrada por las ministras Marisol Rojas, Inelie Durán y el abogado (i) José Ramón Gutiérrez",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Marisol Rojas",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "las ministras Marisol Rojas, Inelie Durán",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inelie Durán",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "las ministras Marisol Rojas, Inelie Durán",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "José Ramón Gutiérrez",
+          "tipo": "poder_judicial",
+          "rol": "autoridad_decisora",
+          "cita": "el abogado (i) José Ramón Gutiérrez, estableció que la administración del ex alcalde Andrés Zarhi (Ind-RN)",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "poder_judicial",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "",
+      "ubicacion_especifica": "Ñuñoa, especialmente barrios y pasajes cuyas calles tienen 12 metros o menos de ancho",
+      "explicacion_tipo_conflicto": "La controversia se refiere a la modificación del Plan Regulador Comunal de Ñuñoa, la eliminación de restricciones de altura y la falta de participación ciudadana, en el contexto de la actividad inmobiliaria de la comuna.",
+      "explicacion_actores": "El grupo de vecinos y la comunidad organizada aparecen como reclamantes; la Municipalidad de Ñuñoa como parte demandada; la Corte de Apelaciones y su Primera Sala como autoridades decisoras; y autoridades municipales, la Seremi, el Concejo Comunal, asesores, abogados e inmobiliarias como actores mencionados o vinculados al conflicto.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El año del fallo indicado como ocurrido el 13 de enero no está informado, la fecha de presentación aparece como '31 de noviembre de 2019', que es una fecha inválida, y el artículo termina truncado; además, debe distinguirse entre la potestad judicial sobre el reclamo y las competencias municipales posteriores sobre el plan regulador."
+    }
+  },
+  {
+    "url": "https://radio.uchile.cl/2017/11/06/en-las-condes-se-repiten-las-equivocaciones-urbanisticas/",
+    "cost_high": 0.00989305,
+    "cost_xhigh": 0.01496545,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Permiso Nº 40 de Inmobiliaria Mixto El Bosque SpA",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación, tono acusatorio y fuerte desconfianza hacia la DOM de Las Condes, el Seremi y la inmobiliaria, a quienes se atribuyen irregularidades, favoritismo y decisiones contrarias a derecho.",
+      "actores": [
+        {
+          "nombre": "una empresa inmobiliaria",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "cometido por una empresa inmobiliaria para obtener mayores m2 a construir en sus 2 torres",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM)",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "con la gentil complacencia de la Directora de Obras Municipales (DOM)",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "filial de la Universidad Mayor",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "7 terrenos que le pertenecían a una filial de la Universidad Mayor",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Idiem de la Universidad de Chile (UCH)",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el caso llegó al Idiem de la Universidad de Chile (UCH) con el propósito de que allí se determine la efectiva superficie del predio",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Alcalde Lavín",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Alcalde Lavín señaló que proyecto sería modificado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Mixto El Bosque SpA",
+          "tipo": "inmobiliaria",
+          "rol": "demandante",
+          "cita": "aprueba el 10/04/13 el permiso Nº 40 a favor de la Inmobiliaria Mixto El Bosque SpA",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Banco Santander",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "filial del Banco Santander",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "grupo Angelini",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "fue comprado por el grupo Angelini para que opere como centro de operaciones de todas sus empresas.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2016-03-07",
+      "ubicacion_especifica": "Sector Américo Vespucio Sur, Renato Sánchez y Asturias; y calles Isidora Goyenechea y El Bosque Norte, comuna de Las Condes.",
+      "explicacion_tipo_conflicto": "La controversia es urbanística e inmobiliaria porque cuestiona permisos de edificación, fusiones prediales, coeficientes de constructibilidad y la aplicación de beneficios del Plan Regulador Comunal de Las Condes.",
+      "explicacion_actores": "La fundación Defendamos la Ciudad presenta el reclamo administrativo; la DOM de Las Condes aparece como autoridad que otorgó el permiso; el Seremi interviene resolviendo el reclamo y los recursos; y las inmobiliarias, propietarios y entidades técnicas o de control son mencionados como beneficiarios, afectados o participantes del conflicto.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El texto mezcla al menos dos proyectos inmobiliarios y formula conclusiones jurídicas controvertidas, por lo que debe verificarse si corresponden a un mismo caso y si la potestad decisoria final recae en la DOM o en el Seremi."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Indignación, desconfianza y tono acusatorio hacia la inmobiliaria y las autoridades urbanísticas, acompañado de sarcasmo y frustración por la presunta falta de fiscalización.",
+      "actores": [
+        {
+          "nombre": "empresa inmobiliaria",
+          "tipo": "inmobiliaria",
+          "rol": "demandado",
+          "cita": "cometido por una empresa inmobiliaria para obtener mayores m2 a construir",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "filial de la Universidad Mayor",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "una filial de la Universidad Mayor",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM)",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "Directora de Obras Municipales (DOM)",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Alcalde Lavín",
+          "tipo": "concejal_politico",
+          "rol": "mencionado",
+          "cita": "Alcalde Lavín señaló que proyecto sería modificado",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Idiem de la Universidad de Chile (UCH)",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el caso llegó al Idiem de la Universidad de Chile (UCH)",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Universidad de Chile (UCH)",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Idiem de la Universidad de Chile (UCH)",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "titular del proyecto",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "el titular del proyecto expresó",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "DOM de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "",
+          "cita_verificada": false
+        }
+      ],
+      "institucion_decisora": "dom_municipal",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2016-03-07",
+      "ubicacion_especifica": "Sector Américo Vespucio Sur, Renato Sánchez y Asturias; calles Isidora Goyenechea y El Bosque Norte, comuna de Las Condes.",
+      "explicacion_tipo_conflicto": "El conflicto versa sobre presuntas irregularidades en permisos de edificación y en la aplicación acumulada de beneficios de constructibilidad, enfrentando a una fundación denunciante con inmobiliarias y autoridades urbanísticas.",
+      "explicacion_actores": "La Fundación Defendamos la Ciudad aparece como denunciante; la inmobiliaria y la empresa beneficiaria del permiso como contraparte; la DOM y el Seremi como autoridades que otorgaron o revisaron actos administrativos; y Contraloría, el grupo comprador y otros actores como fiscalizadores o mencionados.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo mezcla al menos dos proyectos ubicados en sectores distintos, varias actuaciones administrativas entre 2013 y 2017, y roles procesales superpuestos entre la DOM, el Seremi y la Contraloría."
+    }
+  }
+]

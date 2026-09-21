@@ -1,0 +1,3 @@
+calendar.txt,calendar_dates.txt,feed_feed_end_date,feed_feed_lang,feed_feed_publisher_name,feed_feed_publisher_url,feed_feed_start_date,feed_feed_version,feed_info.txt,requested_url,routes.txt,sha256,stop_times.txt,stops.txt,trips.txt
+6,18,20261231,es,Red Metropolitana,http://www.red.cl,20260829,V167.20260829,1,https://dtpm.cl/descargas/gtfs/GTFS_20260829.zip,427,08f88e08037eeb23be70b523639c340ea8aef430c13e9b0f95add4deb7e0fd8d,1097285,18445,26137
+4,8,20260131,es,Red Metropolitana,http://www.red.cl,20251213,V150.20251213,1,https://dtpm.cl/descargas/gtfs/GTFS%20PO06dic+2vuelta.zip,428,1fc4ac987d5e1f155459b4e67bf319df4b2d57992995ba9ccd0a9040dd2f98a0,1168426,13054,20293

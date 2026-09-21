@@ -1,0 +1,193 @@
+{
+  "total_combos_plan": 2336,
+  "total_clasificado": 2336,
+  "resumen": {
+    "resultados_validos": 1700,
+    "fallo_red_sin_resultado": 610,
+    "cero_confirmado": 26
+  },
+  "fallo_red_sin_resultado_ejemplos": [
+    {
+      "comuna": "Santiago",
+      "termino": "guetos verticales",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Santiago",
+      "termino": "oposición vecinal edificio",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Santiago",
+      "termino": "concejo municipal rechaza permiso edificación",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Santiago",
+      "termino": "densificación vecinos reclamo",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Santiago",
+      "termino": "densificación vecinos reclamo",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "reclamo de ilegalidad",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "megaproyecto inmobiliario oposición",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "gentrificación",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "vivienda social integración conflicto",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "junta de vecinos inmobiliaria",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "corte de apelaciones proyecto inmobiliario",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "corte de apelaciones proyecto inmobiliario",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "impugnación plan regulador",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Vitacura",
+      "termino": "impugnación plan regulador",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "reclamo de ilegalidad",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "invalidación de permisos de edificación",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "invalidación de permisos de edificación",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "guetos verticales",
+      "periodo": "2014_2017",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "guetos verticales",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "San Ramón",
+      "termino": "megaproyecto inmobiliario oposición",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    }
+  ],
+  "cero_confirmado_ejemplos": [
+    {
+      "comuna": "San Miguel",
+      "termino": "junta de vecinos inmobiliaria",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Recoleta",
+      "termino": "oposición vecinal edificio",
+      "periodo": "2014_2017",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Recoleta",
+      "termino": "concejo municipal rechaza permiso edificación",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Providencia",
+      "termino": "densificación vecinos reclamo",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Peñalolén",
+      "termino": "edificio altura densidad reclamo",
+      "periodo": "2014_2017",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Maipú",
+      "termino": "guetos verticales",
+      "periodo": "2014_2017",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Maipú",
+      "termino": "megaproyecto inmobiliario oposición",
+      "periodo": "2021_2023",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Macul",
+      "termino": "rechazo proyecto inmobiliario",
+      "periodo": "2018_2020",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Lo Espejo",
+      "termino": "invalidación de permisos de edificación",
+      "periodo": "2014_2017",
+      "nivel": "comuna"
+    },
+    {
+      "comuna": "Lo Espejo",
+      "termino": "megaproyecto inmobiliario oposición",
+      "periodo": "2024_2026",
+      "nivel": "comuna"
+    }
+  ]
+}

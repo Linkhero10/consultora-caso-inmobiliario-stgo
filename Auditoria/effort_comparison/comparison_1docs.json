@@ -1,0 +1,160 @@
+[
+  {
+    "url": "https://lavozdelosquesobran.cl/opinion/las-condes-25-edificios-en-altura-ilegales-y-conflictos-de-interes/16122020",
+    "cost_high": 0.00662985,
+    "cost_xhigh": 0.01738305,
+    "same_requiere_revision_manual": true,
+    "same_institucion_decisora": true,
+    "same_tipo_evidencia": true,
+    "actores": {
+      "n_high": 8,
+      "n_xhigh": 8,
+      "within_tolerance": true,
+      "high_unverified_regressions": 0
+    },
+    "high_full": {
+      "nombre_proyecto": "Mega proyecto inmobiliario de 25 edificios en altura de calle Vital Apoquindo (permiso de edificación N° 37)",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "local",
+      "tono_emocional": "Indignación y fuerte tono crítico frente a la supuesta ilegalidad del permiso, la inacción municipal y los eventuales conflictos de interés entre autoridades, arquitectos y actores inmobiliarios.",
+      "actores": [
+        {
+          "nombre": "Fundación Defendamos la Ciudad",
+          "tipo": "otro",
+          "rol": "demandante",
+          "cita": "la fundación Defendamos la Ciudad lo denunció en noviembre de 2018 en la Contraloría General de la República",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Contraloría General de la República",
+          "tipo": "contraloria",
+          "rol": "autoridad_decisora",
+          "cita": "dicha Contraloría, en dictamen E58945 del 11/12/20, lo declaró ilegal por varias razones",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM) de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mal autorizado por la Directora de Obras Municipales (DOM) de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Municipalidad de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "La Contraloría también instruyó a esa municipalidad para que regularice",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Mirador Oriente S.A.",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a nombre de la Inmobiliaria Mirador Oriente S.A.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "José Luis Ugarte",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Quien firmó el permiso es el arquitecto José Luis Ugarte.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "la arquitecta revisora",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "sino también por la arquitecta revisora",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Superintendente del Medio Ambiente (SMA)",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "poner en conocimiento del Superintendente del Medio Ambiente (SMA, a fin de que esta última entidad pondere la necesidad de ejercer la atribución que le confiere el artículo 3°, letra j), de su ley orgánica.",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "contraloria_general",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2020-12-11",
+      "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, Las Condes",
+      "explicacion_tipo_conflicto": "El conflicto se origina en la supuesta vulneración de normas de densidad, altura, uso de suelo, estacionamientos y carga de ocupación asociadas al permiso de edificación N° 37 para un proyecto de 25 edificios.",
+      "explicacion_actores": "Se identifican la fundación denunciante, la Contraloría que emitió el dictamen, la municipalidad y su DOM como autoridades vinculadas al permiso, la inmobiliaria beneficiaria, profesionales responsables y la autoridad ambiental mencionada.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El artículo mezcla una denuncia de 2018, un permiso de 2018 y un dictamen de 2020, además de formular acusaciones de conflicto de interés cuyos roles jurídicos formales no siempre están determinados."
+    },
+    "xhigh_full": {
+      "nombre_proyecto": "",
+      "tipo_accion": "denuncia_autoridades",
+      "escala_conflicto": "comunal",
+      "tono_emocional": "Indignación y tono acusatorio. El texto denuncia ilegalidades urbanísticas, inacción municipal y posibles conflictos de interés en la aprobación y modificación del instrumento regulador.",
+      "actores": [
+        {
+          "nombre": "alcalde Lavín",
+          "tipo": "concejal_politico",
+          "rol": "mencionado",
+          "cita": "sin que el alcalde Lavín haya hecho nada concreto al respecto",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Directora de Obras Municipales (DOM) de Las Condes",
+          "tipo": "municipio",
+          "rol": "autoridad_decisora",
+          "cita": "mal autorizado por la Directora de Obras Municipales (DOM) de Las Condes",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Inmobiliaria Mirador Oriente S.A.",
+          "tipo": "inmobiliaria",
+          "rol": "mencionado",
+          "cita": "a nombre de la Inmobiliaria Mirador Oriente S.A.",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "fundación Defendamos la Ciudad",
+          "tipo": "ong_patrimonial",
+          "rol": "demandante",
+          "cita": "la fundación Defendamos la Ciudad lo denunció en noviembre de 2018 en la Contraloría General de la República",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Contraloría General de la República",
+          "tipo": "contraloria",
+          "rol": "autoridad_decisora",
+          "cita": "dicha Contraloría, en dictamen E58945 del 11/12/20, lo declaró ilegal",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "arquitecto José Luis Ugarte",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "Quien firmó el permiso es el arquitecto José Luis Ugarte",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "Superintendente del Medio Ambiente",
+          "tipo": "otro",
+          "rol": "mencionado",
+          "cita": "del Superintendente del Medio Ambiente (SMA, a fin de que esta última entidad pondere la necesidad",
+          "cita_verificada": true
+        },
+        {
+          "nombre": "funcionaria municipal",
+          "tipo": "municipio",
+          "rol": "mencionado",
+          "cita": "por parte de la funcionaria municipal, sino también por la arquitecta revisora",
+          "cita_verificada": true
+        }
+      ],
+      "institucion_decisora": "contraloria_general",
+      "tipo_evidencia": "mixta",
+      "fecha_evento": "2018-11",
+      "ubicacion_especifica": "calle Vital Apoquindo números 1.400, 1450 y 1.500, Las Condes",
+      "explicacion_tipo_conflicto": "Se clasifica como conflicto de densidad y altura porque el proyecto contempla 25 edificios en altura y el texto denuncia incumplimientos de las normas de densidad máxima, constructibilidad y carga de ocupación del PRC de Las Condes.",
+      "explicacion_actores": "La Fundación Defendamos la Ciudad denunció el permiso de la Inmobiliaria Mirador Oriente S.A.; la DOM y la Municipalidad de Las Condes aparecen como autoridades vinculadas a su otorgamiento y regularización, mientras la Contraloría resolvió la objeción de legalidad mediante el dictamen citado; también se mencionan arquitectos, asociaciones profesionales, el Minvu y autoridades nacionales.",
+      "requiere_revision_manual": true,
+      "motivo_revision_manual": "El texto mezcla varios hitos —otorgamiento del permiso el 29 de marzo de 2018, denuncia en noviembre de 2018 y dictamen de la Contraloría del 11 de diciembre de 2020— y formula acusaciones de conflicto de interés cuya comprobación y distribución exacta de responsabilidades requieren revisión humana."
+    }
+  }
+]

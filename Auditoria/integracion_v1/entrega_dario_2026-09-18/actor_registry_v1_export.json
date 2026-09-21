@@ -1,0 +1,356 @@
+{
+  "contexto": "actor_registry/actor_alias v1 -- resolucion conservadora de identidad de actor para instituciones nacionales con identidad verificable. Ver docstring de build_actor_registry_v1.py para el criterio de fusion y lo que deliberadamente queda sin resolver (Corte de Apelaciones/Tribunal Ambiental sin sede, DOM/SEREMI sin comuna/region, personas, terminos genericos).",
+  "resumen": {
+    "n_entidades": 6,
+    "n_alias_totales": 29,
+    "cobertura": [
+      {
+        "canonical_label": "Servicio de Evaluación Ambiental (SEA)",
+        "entity_key": "cl_sea",
+        "alias": [
+          "sea",
+          "servicio de evaluación ambiental",
+          "servicio de evaluación ambiental (sea)",
+          "servicio de evaluación ambiental sea",
+          "servicio de evaluación ambiental, sea"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 96,
+          "n_rows_institucion_v3_2": 119,
+          "n_rows_second_pass": 12,
+          "n_documentos_unicos": 121
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 18,
+          "n_conflictos_unicos": 12
+        }
+      },
+      {
+        "canonical_label": "Consejo de Monumentos Nacionales (CMN)",
+        "entity_key": "cl_cmn",
+        "alias": [
+          "cmn",
+          "consejo de monumentos",
+          "consejo de monumentos nacionales",
+          "consejo de monumentos nacionales (cmn)",
+          "consejo nacional de monumentos (cmn)"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 42,
+          "n_rows_institucion_v3_2": 46,
+          "n_rows_second_pass": 2,
+          "n_documentos_unicos": 48
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 10,
+          "n_conflictos_unicos": 8
+        }
+      },
+      {
+        "canonical_label": "Consejo de Defensa del Estado (CDE)",
+        "entity_key": "cl_cde",
+        "alias": [
+          "cde",
+          "consejo de defensa del estado",
+          "consejo de defensa del estado (cde)"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 32,
+          "n_rows_institucion_v3_2": 48,
+          "n_rows_second_pass": 15,
+          "n_documentos_unicos": 54
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 6,
+          "n_conflictos_unicos": 6
+        }
+      },
+      {
+        "canonical_label": "Superintendencia del Medio Ambiente (SMA)",
+        "entity_key": "cl_sma",
+        "alias": [
+          "sma",
+          "superintendencia de medio ambiente (sma)",
+          "superintendencia del medio ambiente",
+          "superintendencia del medio ambiente (sma)"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 47,
+          "n_rows_institucion_v3_2": 53,
+          "n_rows_second_pass": 3,
+          "n_documentos_unicos": 54
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 6,
+          "n_conflictos_unicos": 6
+        }
+      },
+      {
+        "canonical_label": "Ministerio de Vivienda y Urbanismo (MINVU)",
+        "entity_key": "cl_minvu",
+        "alias": [
+          "el minvu",
+          "ministerio de vivienda",
+          "ministerio de vivienda (minvu)",
+          "ministerio de vivienda y urbanismo",
+          "ministerio de vivienda y urbanismo (minvu)",
+          "minvu"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 80,
+          "n_rows_institucion_v3_2": 130,
+          "n_rows_second_pass": 27,
+          "n_documentos_unicos": 136
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 15,
+          "n_conflictos_unicos": 14
+        }
+      },
+      {
+        "canonical_label": "Contraloría General de la República",
+        "entity_key": "cl_contraloria",
+        "alias": [
+          "contraloria general de la republica",
+          "contraloría",
+          "contraloría general",
+          "contraloría general de la república",
+          "contraloría general de la república (cgr)",
+          "la contraloría"
+        ],
+        "cobertura_corpus": {
+          "n_rows_actor_v3_2": 194,
+          "n_rows_institucion_v3_2": 254,
+          "n_rows_second_pass": 31,
+          "n_documentos_unicos": 249
+        },
+        "cobertura_network_safe": {
+          "n_documentos_unicos": 21,
+          "n_conflictos_unicos": 17
+        }
+      }
+    ],
+    "integrity_check": "ok",
+    "foreign_key_check_issues": 0
+  },
+  "registry": [
+    {
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "entity_key": "cl_sea",
+      "canonical_label": "Servicio de Evaluación Ambiental (SEA)",
+      "n_alias": 5,
+      "tipo": "institucion_nacional_verificada"
+    },
+    {
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "entity_key": "cl_cmn",
+      "canonical_label": "Consejo de Monumentos Nacionales (CMN)",
+      "n_alias": 5,
+      "tipo": "institucion_nacional_verificada"
+    },
+    {
+      "entity_id": "entity:db6b74e21e4e426e2d2e8e3a",
+      "entity_key": "cl_cde",
+      "canonical_label": "Consejo de Defensa del Estado (CDE)",
+      "n_alias": 3,
+      "tipo": "institucion_nacional_verificada"
+    },
+    {
+      "entity_id": "entity:f72e2ad6a64df52dbcaa913f",
+      "entity_key": "cl_sma",
+      "canonical_label": "Superintendencia del Medio Ambiente (SMA)",
+      "n_alias": 4,
+      "tipo": "institucion_nacional_verificada"
+    },
+    {
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "entity_key": "cl_minvu",
+      "canonical_label": "Ministerio de Vivienda y Urbanismo (MINVU)",
+      "n_alias": 6,
+      "tipo": "institucion_nacional_verificada"
+    },
+    {
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "entity_key": "cl_contraloria",
+      "canonical_label": "Contraloría General de la República",
+      "n_alias": 6,
+      "tipo": "institucion_nacional_verificada"
+    }
+  ],
+  "alias": [
+    {
+      "nombre_norm": "sea",
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): 'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de nombre completo seguido de sigla, sin ambiguedad."
+    },
+    {
+      "nombre_norm": "servicio de evaluación ambiental",
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): 'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de nombre completo seguido de sigla, sin ambiguedad."
+    },
+    {
+      "nombre_norm": "servicio de evaluación ambiental (sea)",
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): 'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de nombre completo seguido de sigla, sin ambiguedad."
+    },
+    {
+      "nombre_norm": "servicio de evaluación ambiental sea",
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): 'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de nombre completo seguido de sigla, sin ambiguedad."
+    },
+    {
+      "nombre_norm": "servicio de evaluación ambiental, sea",
+      "entity_id": "entity:115efcb9c86f3a123d16ffe8",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): 'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de nombre completo seguido de sigla, sin ambiguedad."
+    },
+    {
+      "nombre_norm": "cmn",
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). [Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de palabras con la misma sigla explicita)."
+    },
+    {
+      "nombre_norm": "consejo de monumentos",
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). [Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de palabras con la misma sigla explicita)."
+    },
+    {
+      "nombre_norm": "consejo de monumentos nacionales",
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). [Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de palabras con la misma sigla explicita)."
+    },
+    {
+      "nombre_norm": "consejo de monumentos nacionales (cmn)",
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). [Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de palabras con la misma sigla explicita)."
+    },
+    {
+      "nombre_norm": "consejo nacional de monumentos (cmn)",
+      "entity_id": "entity:3acb8f131414ddd8b9e363ea",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). [Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de palabras con la misma sigla explicita)."
+    },
+    {
+      "nombre_norm": "cde",
+      "entity_id": "entity:db6b74e21e4e426e2d2e8e3a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico."
+    },
+    {
+      "nombre_norm": "consejo de defensa del estado",
+      "entity_id": "entity:db6b74e21e4e426e2d2e8e3a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico."
+    },
+    {
+      "nombre_norm": "consejo de defensa del estado (cde)",
+      "entity_id": "entity:db6b74e21e4e426e2d2e8e3a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico."
+    },
+    {
+      "nombre_norm": "sma",
+      "entity_id": "entity:f72e2ad6a64df52dbcaa913f",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico. [Ronda 2, hallazgo de Sol] agregada 'Superintendencia de Medio Ambiente (SMA)' (sin 'del', con 'de') -- variante de preposicion con 23 ocurrencias en el corpus real, verificada contra citas ('lo que fue denunciado ante la Superintendencia de Medio Ambiente (SMA)') que confirman que es la misma SMA nacional, no una entidad distinta."
+    },
+    {
+      "nombre_norm": "superintendencia de medio ambiente (sma)",
+      "entity_id": "entity:f72e2ad6a64df52dbcaa913f",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico. [Ronda 2, hallazgo de Sol] agregada 'Superintendencia de Medio Ambiente (SMA)' (sin 'del', con 'de') -- variante de preposicion con 23 ocurrencias en el corpus real, verificada contra citas ('lo que fue denunciado ante la Superintendencia de Medio Ambiente (SMA)') que confirman que es la misma SMA nacional, no una entidad distinta."
+    },
+    {
+      "nombre_norm": "superintendencia del medio ambiente",
+      "entity_id": "entity:f72e2ad6a64df52dbcaa913f",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico. [Ronda 2, hallazgo de Sol] agregada 'Superintendencia de Medio Ambiente (SMA)' (sin 'del', con 'de') -- variante de preposicion con 23 ocurrencias en el corpus real, verificada contra citas ('lo que fue denunciado ante la Superintendencia de Medio Ambiente (SMA)') que confirman que es la misma SMA nacional, no una entidad distinta."
+    },
+    {
+      "nombre_norm": "superintendencia del medio ambiente (sma)",
+      "entity_id": "entity:f72e2ad6a64df52dbcaa913f",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla, organismo nacional unico. [Ronda 2, hallazgo de Sol] agregada 'Superintendencia de Medio Ambiente (SMA)' (sin 'del', con 'de') -- variante de preposicion con 23 ocurrencias en el corpus real, verificada contra citas ('lo que fue denunciado ante la Superintendencia de Medio Ambiente (SMA)') que confirman que es la misma SMA nacional, no una entidad distinta."
+    },
+    {
+      "nombre_norm": "el minvu",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "ministerio de vivienda",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "ministerio de vivienda (minvu)",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "ministerio de vivienda y urbanismo",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "ministerio de vivienda y urbanismo (minvu)",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "minvu",
+      "entity_id": "entity:73114d8fb58e9b3d044f0c6a",
+      "fuente": "manual_v1",
+      "razon": "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
+    },
+    {
+      "nombre_norm": "contraloria general de la republica",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    },
+    {
+      "nombre_norm": "contraloría",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    },
+    {
+      "nombre_norm": "contraloría general",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    },
+    {
+      "nombre_norm": "contraloría general de la república",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    },
+    {
+      "nombre_norm": "contraloría general de la república (cgr)",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    },
+    {
+      "nombre_norm": "la contraloría",
+      "entity_id": "entity:cc5029464aa9abadd4a9d98a",
+      "fuente": "manual_v1",
+      "razon": "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas 'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria General manifesto...', 'se debera concurrir a la contraloria') y 'contraloria general de la republica' (variante sin tildes, mismo texto)."
+    }
+  ]
+}

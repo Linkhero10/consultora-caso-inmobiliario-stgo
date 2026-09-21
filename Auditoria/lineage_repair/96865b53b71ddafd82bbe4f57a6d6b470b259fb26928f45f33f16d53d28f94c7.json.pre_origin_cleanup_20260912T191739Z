@@ -1,0 +1,39 @@
+{
+  "url": "https://eldesconcierto.cl/actualidad/ivan-poduje-anuncia-viviendas-sociales-las-condes-la-reina-y-la-dehesa-algunas-seran-miembros-del-ejercito-n5458055",
+  "extraction_method": "trafilatura",
+  "title": "Iván Poduje anuncia viviendas sociales en Las Condes, La Reina y La Dehesa: Algunas serán a miembros del Ejército",
+  "text": "El ministro de Vivienda y Urbanismo, Iván Poduje, dio a conocer un ambicioso  plan de integración social que contempla la construcción de al menos 500 viviendas sociales en tres comunas del sector alto de la Región Metropolitana: Las Condes, La Reina y Lo Barnechea.\n \n\t\t  Según el anuncio, los proyectos se levantarán en terrenos estatales ubicados estratégicamente: Uno cerca del mall Parque Arauco en Las Condes y otro en La Dehesa, a pasos del prestigioso colegio Nido de Águilas.\n \n    \n  Iván Poduje anuncia viviendas sociales en sector alto\n  Las iniciativas beneficiarán a familias vulnerables de comités de allegados, así como a funcionarios del Ejército y Carabineros que ya han sido priorizados en programas habitacionales.\n \n\t\t\n “Eso está en un terreno donde hay un club de tenis, al que se les va a pedir que se vayan porque ese es terreno de Serviu y se van a hacer viviendas sociales”, declaró el ministro Poduje en radio Universo.\n   \n Además de Las Condes y La Dehesa, el plan incluye la entrega de viviendas en comunas como La Reina y Peñalolén, con el objetivo de avanzar en la integración social en sectores de mayores ingresos.\n \n  “El presidente Sebastián Piñera los transfirió al Serviu, el terreno es hermoso y ahí vamos a tener a 500 familias del Cerro 18 y el Movimiento por la Dignidad”, comentó el secretario de Estado.\n Finalmente, y en relación a los terrenos de la otrora toma de San Antonio, Poduje confirmó que las familias que vivieron por años en la toma, no serán prioridad.\n “Vamos a priorizar a los comités que llevan 18 años esperando. Las familias de la toma irán a la fila según su antigüedad y vulnerabilidad”, sentenció.",
+  "char_count": 1663,
+  "date": "2026-04-14",
+  "http_status": 200,
+  "fetched_at": "2026-09-12T15:39:19.293041+00:00",
+  "lineage": {
+    "discovery_record_hash": "96865b53b71ddafd82bbe4f57a6d6b470b259fb26928f45f33f16d53d28f94c7",
+    "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "vivienda social integración conflicto",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "96865b53b71ddafd82bbe4f57a6d6b470b259fb26928f45f33f16d53d28f94c7",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "96865b53b71ddafd82bbe4f57a6d6b470b259fb26928f45f33f16d53d28f94c7",
+        "query": "\"vivienda social integración conflicto\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "vivienda social integración conflicto",
+        "periodo": "",
+        "nivel": ""
+      }
+    ]
+  },
+  "discovery_title": "Iván Poduje anuncia viviendas sociales en Las Condes, La ..."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-13",
+  "source_id": "F-03",
+  "policy_note": "Captura bruta aislada; no se integra al pipeline ni se usa para inferencia antes de definir variables, ponderadores, licencia y control de privacidad.",
+  "files": [
+    {
+      "format": "stata",
+      "path": "Fuentes/fuentes_externas/raw/F-03/casen_2024_national.dta",
+      "bytes": 1608073353,
+      "sha256": "5509B7462C3FF965AE7F88799ECE4AC57CD2960F4BE79CECD42D650CD8C54C75",
+      "url": "https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/casen/2024/casen_2024.dta"
+    },
+    {
+      "format": "spss",
+      "path": "Fuentes/fuentes_externas/raw/F-03/casen_2024_national.sav",
+      "bytes": 749656107,
+      "sha256": "AC2D48B5C0B17F6E9C9744DD55853D1021248E2D985D173871338ABFE3C8758F",
+      "url": "https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/casen/2024/casen_2024.sav"
+    },
+    {
+      "format": "rdata",
+      "path": "Fuentes/fuentes_externas/raw/F-03/casen_2024_national.RData",
+      "bytes": 1548841010,
+      "sha256": "02D8F2D92886B90E212081755F377EB7748AC9EDA33E51A3DD05E69AC597AD14",
+      "url": "https://observatorio.ministeriodesarrollosocial.gob.cl/storage/docs/casen/2024/casen_2024.RData"
+    }
+  ]
+}

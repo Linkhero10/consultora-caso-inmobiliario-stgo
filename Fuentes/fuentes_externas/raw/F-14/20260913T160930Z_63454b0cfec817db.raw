@@ -1,0 +1,1607 @@
+
+<!DOCTYPE html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <link rel="shortcut icon" href="/media/favicon/iconified/favicon.ico" type="image/x-icon" />
+
+         <!-- UIKIT core CSS -->
+        <link href="/static/home/libs/uikit/css/uikit.min.css" rel="stylesheet">
+
+         <!-- Font Awesome -->
+        <!--link rel="stylesheet" href="/static/home/libs/fontawesome/font-awesome.min.css"-->
+        <link rel="stylesheet" href="/static/home/libs/fontawesome-pro-5.11.2-web/css/all.min.css">
+
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="/static/home/libs/leaflet/leaflet.css">
+
+        <!-- Tabulator -->
+        
+            <link rel="stylesheet" href="/static/home/libs/tabulator/tabulator-master/dist/css/tabulator_simple.min.css">
+        
+        
+        
+
+        <link rel="stylesheet" href="/static/home/base.css">
+
+        
+        
+
+        <!-- Local CSS -->
+        <style>
+            
+
+#arclim_search_text {
+    height: 50px;
+    width: 400px;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: solid 1px lightgray;
+    color: #553333;
+    font-size:  16px;
+}
+#arclim_search_text:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+#arclim_search_icon {
+    height: 50px;
+    line-height: 50px;
+    font-size: 36px;
+    padding: 5px 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-top: solid 1px lightgray;
+    border-right: solid 1px lightgray;
+    border-bottom: solid 1px lightgray;
+}
+#arclim_search_icon:hover {
+    background-color: rgba(255, 255, 255, 1.0);
+}
+
+#arclim_background_image {
+padding: 0px; 
+margin: 0px; 
+min-height: 800px; 
+background-size: cover; 
+background-position: 50%;
+background-image:  linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.7)),
+                   linear-gradient(rgba(40,30,150,0.1), rgba(220,220,255,0.6), rgba(255,255,255,0.9)),
+                   linear-gradient(rgba(0,0,100,0.9), rgba(0,0,100,0.5), rgba(255,255,255,0.0)),
+/*                   linear-gradient(rgba(0,0,100,0.9), rgba(220,220,255,0.0), rgba(255,255,255,0.0)), */
+/*                   url(https://www.cambioclimaticochile.cl/wp-content/uploads/2018/01/desiertodeatacama.jpg) */
+                   url(/media/shutterstock/w1200/shutterstock_96292022.jpg)
+    
+}
+
+#arclim_footer {
+padding: 0px;
+margin: 0px;
+background-size: cover;
+background-position: 50%;
+background-image:  linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.7)),
+                   linear-gradient(rgba(40,30,150,0.1), rgba(220,220,255,0.6), rgba(255,255,255,0.9)),
+                   linear-gradient(rgba(0,0,100,0.9), rgba(0,0,100,0.5), rgba(255,255,255,0.0)),
+                   url(/media/shutterstock/w1200/shutterstock_96292022.jpg);
+color: white;
+}
+
+#arclim_search_container {
+    height: 120px;
+}
+#arclim_search_results_container {
+    height: 200px;
+    display: flex;
+    overflow-x: scroll;
+    justify-content: left;
+    background-color: rgba(255,255,255, 0.5);
+}
+
+.atlas_map_result {
+    margin: 15px;
+    display:flex;
+    flex-direction: column; 
+    min-width: 180px;
+    max-width: 180px;
+    background-size: cover;
+    background-position: 50%;
+    justify-content: center;
+    box-shadow: 0px 0px 10px gray;
+    opacity: 0.8;
+}
+
+.atlas_map_result:hover {
+    margin-bottom: 25px;
+    margin-top: 5px;
+    opacity: 1;
+}
+
+.atlas_map_icon {
+    font-size: 56px;
+    text-align: center;
+    color: rgba(255,255,255, 0.8); 
+}
+
+.atlas_map_text {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+    line-height: 1.25;
+    overflow: hidden;
+}
+
+.atlas_map_link {
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    line-height: 1;
+}
+
+#arclim_links_container {
+    color:white;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px gray;
+    padding: 15px;
+}
+.arclim_link:hover {
+    color: dodgerblue;
+}
+.upper-link {
+color: white;
+text-decoration: none;
+}
+
+.upper-link:hover {
+color: white;
+text-decoration: none;
+text-shadow: 0px 0px 3px white;
+}
+
+.arclim_sector_image {
+    height: 200px;
+    background-size: cover;
+    background-position: 50%;
+    line-height: 200px; 
+    font-size: 72px; 
+    color: rgba(255,255,255,0.7);
+    width:100%;
+}
+.arclim_sector_image:hover {
+    color: rgba(255,255,255,0.9);
+    
+}
+.arclim_card_title {
+    color: #666666;
+}
+.arclim_card_title:hover {
+    color: dodgerblue;
+    text-decoration:none; 
+    cursor:pointer;  
+    height:50px;
+}
+
+.intro_text{
+color:white;
+padding-top: 30px;
+padding-left: 100px;
+padding-right: 100px;
+text-shadow: 0px 0px 3px black;
+font-size: 18px;
+text-align: justify;
+}
+
+        </style>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5NF77L6S6"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-X5NF77L6S6');
+        </script>
+</head>
+
+<body>
+
+    <!--i class="fas fa-tree" style="font-size: 48px;"> </i--> 
+    
+
+
+
+
+
+<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; show-on-up: true; bottom: #transparent-sticky-navbar">
+
+<div class="uk-navbar-container uk-navbar-transparent" style="background-color: white; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);" uk-navbar>
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="" uk-toggle="target: #offcanvas-overlay"></a>
+
+       <a href="https://mma.gob.cl"> <img src="https://mma.gob.cl/wp-content/uploads/2018/11/xlogo-mma2x.png.pagespeed.ic.h35A5BtAlN.webp" class="nav-logo hide-very-small" style="height: 80px;"> </img></a>
+        <a class="uk-navbar-item uk-logo" href="/"> <i class="fas fa-triangle"></i>RCLIM</a>
+
+        <div class="uk-navbar-item hide-small" style="font-size: 18px; overflow: visible; flex-grow: 1; white-space: nowrap">
+             
+        </div>
+    </div>
+    <div class="uk-navbar-right">
+        <div class="uk-navbar-item">
+            <a href="http://www.cr2.cl/"> <img src="/media/logos/cr2.png" class="nav-logo hide-large" style="height: 60px;margin-left: 10px;"> </img></a>
+            <a href="https://cambioglobal.uc.cl/"> <img src="/media/logos/logo_centro_cambio_global.png" class="nav-logo hide-large" style="height: 60px;margin-left: 10px;"> </img> </a>
+        </div>
+
+        
+
+        
+
+        <div class="uk-navbar-item">
+            
+            <div><a href="/home/login">Login</a></div>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <a class="uk-navbar-item uk-logo" href="/"> <i class="fas fa-triangle"></i>RCLIM</a>
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+
+        <ul class="uk-nav uk-nav-default">
+
+            <li class="uk-nav-header">Amenazas Climáticas</li>
+            <ul class="uk-nav-sub">
+                <li> <a href="/amenazas/"> <i class="fad fa-exclamation-triangle"></i> Explorador de Amenazas Climáticas </a></li>
+                <li> <a href="/features/repositorio/"> <i class="fad fa-database"></i> Repositorio de Archivos </a></li>
+                <li> <a href="/atlas/api/"> i<i class="fad fa-server"></i> API de Datos Climáticos</a></li>
+            </ul>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">  Mapas de Riesgo  </li>
+            <li class="uk-parent">
+                <a href="/atlas/index/"> <i class="fas fa-address-book"></i> Índice del Atlas </a> 
+                <ul class="uk-nav-sub">
+                    
+                        <li><a href="/atlas/sector_index/agricultura/"> <i class="fas fa-tractor"></i> Agricultura </a></li>
+                    
+                        <li><a href="/atlas/sector_index/salud_humano/"> <i class="fas fa-users-medical"></i> Salud y Bienestar Humano </a></li>
+                    
+                        <li><a href="/atlas/sector_index/bosques/"> <i class="fas fa-tree-alt"></i> Bosques Nativos </a></li>
+                    
+                        <li><a href="/atlas/sector_index/acuicultura/"> <i class="fas fa-fish"></i> Acuicultura </a></li>
+                    
+                        <li><a href="/atlas/sector_index/infrestrutura_costera/"> <i class="fas fa-ship"></i> Infraestructura Costera </a></li>
+                    
+                        <li><a href="/atlas/sector_index/recursos_hidricos/"> <i class="fas fa-raindrops"></i> Recursos Hidricos </a></li>
+                    
+                        <li><a href="/atlas/sector_index/turismo/"> <i class="fas fa-camera"></i> Turismo </a></li>
+                    
+                        <li><a href="/atlas/sector_index/pesca_artesanl/"> <i class="fas fa-fish"></i> Pesca Artesanal </a></li>
+                    
+                        <li><a href="/atlas/sector_index/biodiversidad/"> <i class="fas fa-paw"></i> Biodiversidad </a></li>
+                    
+                        <li><a href="/atlas/sector_index/silvicultura/"> <i class="fas fa-trees"></i> Plantaciones Forestales </a></li>
+                    
+                        <li><a href="/atlas/sector_index/mineria/"> <i class="fas fa-truck-monster"></i> Minería (en revisión) </a></li>
+                    
+                        <li><a href="/atlas/sector_index/infraestructura_energia/"> <i class="fas fa-bolt"></i> Energía Eléctrica </a></li>
+                    
+                </ul>
+                <!--a href="/atlas/working_groups/"> <i class="fas fa-address-book"></i> Grupos de trabajo</a-->
+            </li>
+
+            <li class="uk-parent">
+                <a href="/atlas/parcc_index/"> <i class="fas fa-address-book"></i> PARCC </a>
+                <ul class="uk-nav-sub">
+                    <li><a href="/atlas/parcc_index?region=coquimbo"> <i class="far fa-file-chart-line"></i> Coquimbo </a></li>
+                    <li><a href="/atlas/parcc_index?region=aysen"> <i class="far fa-file-chart-line"></i> Aysén </a></li>
+                    
+                </ul>
+            </li>
+
+            <li class="uk-parent">
+                <a href=""> <i class="fas fa-address-book"></i> Productos Avanzados </a>
+                <ul class="uk-nav-sub">
+                    <!--li> <a href="/atlas/cdi_index/"> <i class="far fa-atlas"></i> Nueva visualización de CDI </a></li-->
+                    <li> <a href="/parcc/resumen_regional/"> <i class="far fa-list"></i> Resumen regional </a></li>
+                    <li> <a href="/atlas/cdi_attribute_table/"> <i class="far fa-list"></i> Base de datos consolidada </a></li>
+                </ul>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Biodiversidad</li>
+            <ul class="uk-nav-sub">
+                <li> <a href="/biodiversity/home/"> <i class="fad fa-frog"></i> Mapas de especies </a></li>
+            </ul>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Información</li>
+            <ul class="uk-nav-sub">
+                <li class=""> <a href="/atlas/about/"> <i class="fad fa-question-circle"></i> Acerca de ARClim</a></li>
+                <li class=""> <a href="/atlas/aprendizaje/"> <i class="fas fa-info-circle"></i> Aprendizaje</a></li>
+                <li class=""> <a href="/atlas/quienes_somos/"> <i class="fas fa-users"></i> Quienes somos</a></li>
+            </ul>
+
+            
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Área adminsitración</li>
+            <ul class="uk-nav-sub">
+                <li><a href="/home/login">Login</a></li>
+            </ul>
+            
+        </ul>
+
+
+    </div>
+</div>
+
+
+
+
+<div class="uk-container uk-container-expand" style="padding: 0px; margin: 0px;">
+    <div id="arclim_background_image" class="uk-width-1-1">
+            <div class="uk-container">
+                <div id="arclim_links_container">
+                    <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+                        <div class="arclim_link">
+                            <a class="upper-link" href="/index"> MAPAS DE RIESGO </a>
+                        </div>
+                        <div class="arclim_link">
+                            <a class="upper-link" href="/amenazas"> EXPLORADOR DE AMENAZAS </a>
+                        </div>
+                        <div class="arclim_link">
+                            <a class="upper-link" href="/about"> ACERCA DE ARCLIM </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content: center; width: 100%;margin-top: 100px;">
+                    <div class="hide-small" style="font-size: 64px; color: rgba(255,255,255,0.7)">
+                       <!--span class="fa-stack fa-2x">
+                        <i class="fad fa-triangle fa-stack-2x "></i> 
+                        <i class="fal fa-thermometer-full fa-stack-1x fa-inverse" style="color: darkorange; margin-top: 90px;"></i> 
+                        </span-->
+
+<!-- ARCLIM LOGO HARDCODED -->
+<svg style="width: 100%; height: 100%;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+<path class="fa-secondary" fill="rgba(255,255,255,0.4)" d="M569.54 440l-240-416c-18.4-32-64.68-32-83.18 0L6.48 440c-18.41 31.91 4.59 72 41.59 72h479.87c36.91 0 60-40 41.6-72zm-124.68 8H131.15a32 32 0 0 1-27.72-48l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.72 48z"></path>
+<path class="fa-primary" fill="rgba(255,255,255,0.8)" d="M103.43 400l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.71 48H131.15c-24.62 0-40.02-26.65-27.72-48z"></path>
+<path fill="darkorange" transform="translate(224 170) scale(0.5)" d="M224 96c0-53.019-42.981-96-96-96S32 42.981 32 96v203.347C12.225 321.756.166 351.136.002 383.333c-.359 70.303 56.787 128.176 127.089 128.664.299.002.61.003.909.003 70.698 0 128-57.304 128-128 0-32.459-12.088-62.09-32-84.653V96zm-96 384l-.687-.002c-52.693-.366-95.581-43.795-95.312-96.501.202-39.467 22.532-61.321 31.999-72.05V96c0-35.29 28.71-64 64-64s64 28.71 64 64v215.447c9.186 10.409 32 32.659 32 72.553 0 52.935-43.065 96-96 96zm48-96c0 26.51-21.49 48-48 48s-48-21.49-48-48c0-20.898 13.359-38.667 32-45.258V96c0-8.837 7.164-16 16-16 8.837 0 16 7.163 16 16v242.742c18.641 6.591 32 24.36 32 45.258z"></path>
+</svg>
+
+                    </div>
+                    <div style="padding-left: 20px; font-size: 64px; color: white; text-shadow: 0px 0px 15px #333333;">
+                        <span style="color:darkorange;">A</span>TLAS DE
+                        <br>
+                         <span style="color:darkorange;">R</span>IESGOS
+                        <br>
+                         <span style="color:darkorange;">CLIM</span>ÁTICOS
+                    </div>
+                </div>
+                <div class="intro_text hide-very-small">
+                    Bienvenidos a ARClim, el Atlas de Riesgos Climáticos para Chile, un proyecto del <a href="https://mma.gob.cl/" class="uk-link-text">Ministerio del Medio Ambiente del Gobierno de Chile</a>, desarrollado por el <a href="http://www.cr2.cl/" class="uk-link-text"> Centro de Investigación del Clima y la Resiliencia (CR2)</a> y el <a href="https://cambioglobal.uc.cl/" class="uk-link-text">Centro de Cambio Global </a> (CCG-Universidad Católica de Chile) con la colaboración de otras instituciones nacionales e internacionales. ARCLim fue apoyado por el Programa Mundial de Evaluación y Gestión de Riesgos para la Adaptación al Cambio Climático (Pérdidas y Daños) por encargo del Ministerio Federal de Cooperación Económica y Desarrollo (BMZ) de Alemania. La plataforma Web de ARCLim fue desarrollado por <a class="uk-link-text" href="https://meteodata.cl">Meteodata</a>.
+                </div>
+                <div id="arclim_search_container" style="display: flex; justify-content: center;margin-top: 100px;">
+                        <input id="arclim_search_text" style="" placeholder="Buscar mapa de riesgo climático">
+                        </input>
+                        <div id="arclim_search_icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                </div>
+
+            </div>
+
+            <div style="position: relative; padding-bottom: 15px;">
+                <div id="arclim_search_results_container" style="margin-bottom: 30px; position: relative;">
+                    
+                    <div class="atlas_map_result" data-text="Cambio de productividadcultivo de vid cepa Chardonnay" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/vinos.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-wine-bottle"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/productividad_chardonnay_addcbit/" class="atlas_map_link">Cambio de productividadcultivo de vid cepa Chardonnay</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impacto de la altapluviometría en relaves mineros" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/relaves.png);">
+                        <div class="atlas_map_icon"> <i class="fad fa-cloud-showers"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/relaves_pluviometria_addcbit/" class="atlas_map_link">Impacto de la altapluviometría en relaves mineros</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia de yunquito por aumento en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Yunco_Marcelo-Flores.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-duck"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_yunco/" class="atlas_map_link">Cambios en la presencia de yunquito por aumento en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Maíz" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1321914161.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-corn"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_maiz/" class="atlas_map_link">Cambio de Productividad Cultivo de Maíz</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Efectos de la Isla de Calor Urbana" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/DSC_0417.JPG);">
+                        <div class="atlas_map_icon"> <i class="fad fa-sun-haze"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/isla_calor_urbana/" class="atlas_map_link">Efectos de la Isla de Calor Urbana</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impacto de sequía en faenas mineras" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Screen_Shot_2020-08-18_at_15.49.28_fHk5Uxh.png);">
+                        <div class="atlas_map_icon"> <i class="fad fa-tint"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/mineria_sequia_cbit/" class="atlas_map_link">Impacto de sequía en faenas mineras</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Aumento de downtime en caletas de pescadores" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/caletas01.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-fish-cooked"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/caletas_pescadores/" class="atlas_map_link">Aumento de downtime en caletas de pescadores</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de atractivo turístico invernal en centros de alta montaña" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1059377900.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-skiing"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/centros_esqui/" class="atlas_map_link">Pérdida de atractivo turístico invernal en centros de alta montaña</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Aumento de downtime en puertos estatales" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/puertos11.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-ship"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/puertos_cbit/" class="atlas_map_link">Aumento de downtime en puertos estatales</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de biomasa semilla de mejillones por aumento de salinidad" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/2007-06-14_16.42.22_UzFnewC.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_mejillones_semilla/" class="atlas_map_link">Pérdida de biomasa semilla de mejillones por aumento de salinidad</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Aumento en morbilidad por aumento de temperaturas y olas de calor" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/graveyard___getty_QjXhVBq.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-ambulance"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/aumento_mortalidad_calor_addcbit/" class="atlas_map_link">Aumento en morbilidad por aumento de temperaturas y olas de calor</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida uva pisquera por aumento en la frecuencia de sequias" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen-del-valle-del-elqui-y-sus-plantaciones-de-uva_aH96pQd.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-hand-holding-droplet"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_aguasuelo_pisco_sequia/" class="atlas_map_link">Pérdida uva pisquera por aumento en la frecuencia de sequias</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Perdida de flora por cambios de precipitación" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1129672838.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-tree-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/biodiversidad_flora_precip/" class="atlas_map_link">Perdida de flora por cambios de precipitación</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia del delfín de nariz de botella por aumento de temperatura del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Fauna_0522019065118.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-whale"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_delfin_narizdebotella/" class="atlas_map_link">Cambios en la presencia del delfín de nariz de botella por aumento de temperatura del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Perdida de flora por cambios de temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1176103843_sfqftYi.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-tree-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/biodiversidad_flora_temperatura/" class="atlas_map_link">Perdida de flora por cambios de temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida uva pisquera por aumento en la frecuencia de olas de calor" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen-del-valle-del-elqui-y-sus-plantaciones-de-uva_PDEmcVx.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fa fa-seedling"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_aguasuelo_pisco_olascalor/" class="atlas_map_link">Pérdida uva pisquera por aumento en la frecuencia de olas de calor</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de biomasa de salmones por FAN" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/20190515_114610_smaller_WA4tYUK.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-disease"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_f_salmon_fan/" class="atlas_map_link">Pérdida de biomasa de salmones por FAN</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Papa en Secano" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1438089410.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_papa_secano/" class="atlas_map_link">Cambio de Productividad Cultivo de Papa en Secano</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia de la ballena azul por aumento de temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Anim1754_-_Flickr_-_NOAA_Photo_Library.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-whale"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_ballenaazul/" class="atlas_map_link">Cambios en la presencia de la ballena azul por aumento de temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Efecto olas de calor en salud humana" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen_fondo_Asentamientos_M5hRCxP.png);">
+                        <div class="atlas_map_icon"> <i class="fad fa-head-side-medical"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/calor_extremo_salud_humana/" class="atlas_map_link">Efecto olas de calor en salud humana</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Perdida de fauna por cambios de temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_240183229_rQY1q7z.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-paw"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/biodiversidad_fauna_temperatura_cbit/" class="atlas_map_link">Perdida de fauna por cambios de temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Incendios en Plantaciones Forestales" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Plantaciones_Carlos_Zamorano-Elgueta_USH2Xob.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fire-smoke"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/incendios_plantaciones_forestales/" class="atlas_map_link">Incendios en Plantaciones Forestales</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Inundaciones" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Lluvia-2_Propietario_Agencia_Uno.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-house-flood"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/asentamientos_inundaciones/" class="atlas_map_link">Inundaciones</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de desembarque de la pesquería artesanal de la macha por cambios en la temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/la-macha_9XvaPZ8.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_zona_costera_macha_tsm/" class="atlas_map_link">Pérdida de desembarque de la pesquería artesanal de la macha por cambios en la temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Almendro" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_259790567.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-acorn"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_almendra/" class="atlas_map_link">Cambio de Productividad Cultivo de Almendro</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Manzano rojo" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_292140977.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-apple-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_manzana_roja/" class="atlas_map_link">Cambio de Productividad Cultivo de Manzano rojo</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Mortalidad prematura neta por cambio de temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/graveyard___getty.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-users-medical"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/aumento_mortalidad_premadura/" class="atlas_map_link">Mortalidad prematura neta por cambio de temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Seguridad hídrica doméstica urbana" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen_fondo_Asentamientos_ADSUAUM.png);">
+                        <div class="atlas_map_icon"> <i class="fad fa-hand-holding-water"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/seguridad_hidrica_domestica_urbana/" class="atlas_map_link">Seguridad hídrica doméstica urbana</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Incendios en Bosques Nativos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/BosquesNativos_ClaudiaSutulov_w2000_dsh62P5.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fire-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/incendios_bosques_nativos/" class="atlas_map_link">Incendios en Bosques Nativos</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Disconfort Térmico Ambiental" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/DSC_0323.JPG);">
+                        <div class="atlas_map_icon"> <i class="fad fa-temperature-hot"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/ciudades_confort_termico_cbit/" class="atlas_map_link">Disconfort Térmico Ambiental</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de biomasa de salmones por aumento de parásitos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/20190515_114610_smaller.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-bug"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_f_salmon_para/" class="atlas_map_link">Pérdida de biomasa de salmones por aumento de parásitos</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Degradación de humedales costeros" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/joshua-gaunt-lc1m2gP72iQ-unsplash_VjRccOb.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-trees"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/humedales_costeros_addcbit/" class="atlas_map_link">Degradación de humedales costeros</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Frejol" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1693190722.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-seedling"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_frejol/" class="atlas_map_link">Cambio de Productividad Cultivo de Frejol</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de desembarque pesquero artesanal" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Pesca-artesanal-Fuente-Editec-768x512.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fish-cooked"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_pesca_artesenal_cbit/" class="atlas_map_link">Pérdida de desembarque pesquero artesanal</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio en la Capacidad de Carga de Bovinos de Carne" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_596515157.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-steak"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_bovino_carne/" class="atlas_map_link">Cambio en la Capacidad de Carga de Bovinos de Carne</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Sequías Hidrológicas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Sequia-foto-RadioUChile.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-sun-dust"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/sequias_hidrologicas/" class="atlas_map_link">Sequías Hidrológicas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdidas de atractivo turístico por incendios forestales" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_707141569.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fire-smoke"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/incendios_patrimonio_turistico/" class="atlas_map_link">Pérdidas de atractivo turístico por incendios forestales</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Downtime de puertos de descarga de combustible" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/puertos11.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-ship"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/puertos_combustibles_addcbit/" class="atlas_map_link">Downtime de puertos de descarga de combustible</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Inundaciones en zonas urbanas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Lluvia-4_Propietario_Agencia_Uno.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-house-flood"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/inundaciones_urbanas/" class="atlas_map_link">Inundaciones en zonas urbanas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Efectos de las Heladas en Ciudades" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/DSC05901.JPG);">
+                        <div class="atlas_map_icon"> <i class="fad fa-snowflake"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/cuidades_heladas/" class="atlas_map_link">Efectos de las Heladas en Ciudades</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de turismo en destinos de sol y playa por aumento de marejadas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1228830895_9073zDZ.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-wave-sine"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/turismo_playa_marejadas_addcbit/" class="atlas_map_link">Pérdida de turismo en destinos de sol y playa por aumento de marejadas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Papa bajo Riego" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1155281779.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_papa_riego/" class="atlas_map_link">Cambio de Productividad Cultivo de Papa bajo Riego</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Erosión de playas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_96392051.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-water-rise"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/playas/" class="atlas_map_link">Erosión de playas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de producción acuícola del ostión por cambios en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Ostion_02__1_.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_zona_costera_ostion_tsm/" class="atlas_map_link">Pérdida de producción acuícola del ostión por cambios en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impacto de Disminución del Recurso Eólico" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/eolico.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-wind-turbine"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/energia_generacion_eolica/" class="atlas_map_link">Impacto de Disminución del Recurso Eólico</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Reducción de las praderas de algas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/algas.png);">
+                        <div class="atlas_map_icon"> <i class="fas fa-leaf-oak"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/praderas_algas_addcbit/" class="atlas_map_link">Reducción de las praderas de algas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Perdida de fauna por cambios de precipitación" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1628909806.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-paw-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/biodiversidad_fauna_precip/" class="atlas_map_link">Perdida de fauna por cambios de precipitación</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio en la Capacidad de Carga de Bovinos de Leche" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_615080747.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-cow"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_bovino_leche/" class="atlas_map_link">Cambio en la Capacidad de Carga de Bovinos de Leche</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio en la Productividad de Praderas" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_424442488.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-leaf"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_pradera/" class="atlas_map_link">Cambio en la Productividad de Praderas</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de producción acuícola del ostión por cambios en lel regimen de surgencia" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Ostion_02__1__bFDhFhx.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_zona_costera_ostion_surgencia/" class="atlas_map_link">Pérdida de producción acuícola del ostión por cambios en lel regimen de surgencia</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Mortalidad prematura por calor" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/graveyard___getty_QjXhVBq.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-ambulance"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/aumento_mortalidad_prematura_calor_cbit/" class="atlas_map_link">Mortalidad prematura por calor</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Verdor en Plantaciones Forestales" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Plantaciones_Carlos_Zamorano-Elgueta.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-trees"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/verdor_plantaciones_forestales/" class="atlas_map_link">Verdor en Plantaciones Forestales</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio en la Capacidad de Carga de Ovinos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1398804227.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-sheep"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_ovino/" class="atlas_map_link">Cambio en la Capacidad de Carga de Ovinos</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Salmonicultura: Pérdida de producción por menor provisón de agua dulce" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/gettyimages-1183648598.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fish"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_cuencas_aguadulce/" class="atlas_map_link">Salmonicultura: Pérdida de producción por menor provisón de agua dulce</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia del cachalote por aumento en la temperatura del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Mother_and_baby_sperm_whale.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-whale"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_cachalote/" class="atlas_map_link">Cambios en la presencia del cachalote por aumento en la temperatura del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia del pingüino de Humboldt por aumento en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Pinguinos-Humboldt_Isla_Choros_Chile_6tvxwqZ.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-duck"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_pinguinodeHumboldt/" class="atlas_map_link">Cambios en la presencia del pingüino de Humboldt por aumento en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la diversidad funcional por aumento en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/paarc_coquimbo_biodiversidad_diversidad_riqueza_CLXk8Ct.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fish"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_diversidad_funcional/" class="atlas_map_link">Cambios en la diversidad funcional por aumento en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Incremento de presencia de fragata portuguesa por aumento en la temperatura del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/fragata-portuguesa.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-disease"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_ciudad_fragataportuguesa/" class="atlas_map_link">Incremento de presencia de fragata portuguesa por aumento en la temperatura del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la riqueza de especies marinas por aumento en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/paarc_coquimbo_biodiversidad_diversidad_riqueza.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fish"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_diversidad_riqueza/" class="atlas_map_link">Cambios en la riqueza de especies marinas por aumento en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Trigo bajo Riego" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1705315225.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-wheat"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_trigo_riego_cbit/" class="atlas_map_link">Cambio de Productividad Cultivo de Trigo bajo Riego</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Inundaciones por Desbordes de Ríos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/IMG-20200905-WA0008.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-water-rise"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/desbordes_rios_cbit/" class="atlas_map_link">Inundaciones por Desbordes de Ríos</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Anegamientos de asentamientos costeros" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/vina05.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-water-rise"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/asentamientos_costeros/" class="atlas_map_link">Anegamientos de asentamientos costeros</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Incremento de presencia de medusas (aguaviva) por aumento en la temperatura del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Wrda_-_taking_the_ride_by-sa.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-disease"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_ciudad_aguaviva/" class="atlas_map_link">Incremento de presencia de medusas (aguaviva) por aumento en la temperatura del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impacto del Cambio en Radiación Solar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/energia_solar.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-solar-panel"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/energia_generacion_solar/" class="atlas_map_link">Impacto del Cambio en Radiación Solar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Riesgo en el Aprovechamiento de Agua Superficial en Riego" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1784404466.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-raindrops"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/recursos_hidricos_riego_cbit/" class="atlas_map_link">Riesgo en el Aprovechamiento de Agua Superficial en Riego</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impactos de Disminución del Recurso Hídrico" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/energia_hidro.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-water-lower"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/cambio_generacion_hidrica_cbit/" class="atlas_map_link">Impactos de Disminución del Recurso Hídrico</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Cerezo" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_91347101.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-apple-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_cereza/" class="atlas_map_link">Cambio de Productividad Cultivo de Cerezo</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Impacto de Aumento de Temperatura sobre Líneas de Transmisión" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/transmision.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-temperature-hot"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/energiaelectrica_menor_capacidad_flujo/" class="atlas_map_link">Impacto de Aumento de Temperatura sobre Líneas de Transmisión</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de agua potable en los Servicios Sanitarios Rurales por deficir de precipitacion" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen-del-valle-del-elqui-y-sus-plantaciones-de-uva.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-hand-holding-droplet"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_ciudad_SSR/" class="atlas_map_link">Pérdida de agua potable en los Servicios Sanitarios Rurales por deficir de precipitacion</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Riesgo en la disponibilidad de agua superficial para fines ambientales" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1784404466.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-raindrops"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/recursos_hidricos_ambiental_addcbit/" class="atlas_map_link">Riesgo en la disponibilidad de agua superficial para fines ambientales</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Seguridad hídrica doméstica rural" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Imagen_fondo_Asentamientos_ADSUAUM.png);">
+                        <div class="atlas_map_icon"> <i class="fad fa-hand-holding-seedling"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/seguridad_hidrica_zonas_rurales/" class="atlas_map_link">Seguridad hídrica doméstica rural</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Perdida de biomasa de mejillones en fase engorda por FAN" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/2007-06-14_16.42.22.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg-fried"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/acuicultura_mejillones_engorda/" class="atlas_map_link">Perdida de biomasa de mejillones en fase engorda por FAN</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de atractivo turístico en los destinos de sol y playa" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1228830895_9073zDZ.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-umbrella-beach"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/turismo_playa_cbit/" class="atlas_map_link">Pérdida de atractivo turístico en los destinos de sol y playa</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Pérdida de desembarque de la pesquería artesanal de la macha por cambios de la surgencia" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/la-macha_MNGAsR6.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-egg"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_zona_costera_macha_surgencia/" class="atlas_map_link">Pérdida de desembarque de la pesquería artesanal de la macha por cambios de la surgencia</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la presencia de la ballena jorobada por aumento de temperatura" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/Humpback_Whale_blowholes.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-whale"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_ballenajorobada/" class="atlas_map_link">Cambios en la presencia de la ballena jorobada por aumento de temperatura</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Verdor en Bosques Nativos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/BosquesNativos_ClaudiaSutulov_w2000.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-tree-alt"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/verdor_bosques_nativos/" class="atlas_map_link">Verdor en Bosques Nativos</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Trigo en Secano" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1168128835.jpg);">
+                        <div class="atlas_map_icon"> <i class="fal fa-wheat"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_trigo_secano/" class="atlas_map_link">Cambio de Productividad Cultivo de Trigo en Secano</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambios en la composición de especies por aumento en la temperatura superficial del mar" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/paarc_coquimbo_biodiversidad_diversidad_riqueza_7BmGUmF.jpeg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fish"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/paarc_coquimbo_biodiversidad_diversidad_composicion/" class="atlas_map_link">Cambios en la composición de especies por aumento en la temperatura superficial del mar</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Cambio de Productividad Cultivo de Nueces" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_1009160293.jpg);">
+                        <div class="atlas_map_icon"> <i class="fas fa-acorn"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/agricultura_nuez/" class="atlas_map_link">Cambio de Productividad Cultivo de Nueces</a> </div>
+                    </div>
+                    
+                    <div class="atlas_map_result" data-text="Incendios en asentamientos urbanos" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/media/images/atlas/w400/shutterstock_707141569.jpg);">
+                        <div class="atlas_map_icon"> <i class="fad fa-fire-smoke"></i> </div>
+                        <div class="atlas_map_text"> <a href="/atlas/view/ciudades_incendios_addcbit/" class="atlas_map_link">Incendios en asentamientos urbanos</a> </div>
+                    </div>
+                    
+                </div>
+                <div style="position: absolute; width: 50px;height: 100%;left:0px;top:0px; background-image: linear-gradient(to right, rgba(230,230,230,1), rgba(230,230,230,0));z-index: 10;"></div>
+                <div style="position: absolute; width: 50px;height: 100%;right:0px;top:0px; background-image: linear-gradient(to right, rgba(230,230,230,0), rgba(255,100,0, 0.7));z-index: 10;"></div>
+            </div>
+    </div>
+
+    <div id="atlas" class="uk-container">
+        <div class="uk-padding uk-margin">
+        <h1 class="uk-text-center"> Mapas de Riesgo</h1>
+        <p style="text-align: center;">  </p>
+
+        <p> En esta colección de mapas usted tendrá acceso a un conjunto de  <b>cadenas de impacto</b> organizadas en 12 <b>sectores</b> (como Agricultura). Para cada cadena se despliegan mapas de la <b>amenaza climática (A), exposición (E) y sensibilidad (S)</b> del sistema afectado (como la producción de maíz). Los mapas tienen cobertura nacional y resolución comunal (o puntual en ciertas cadenas). Las tres variables (A, E, S) se combinan para determinar el <b>riesgo debido al cambio climático</b> sobre el sistema en cuestión. Al explorar estos resultados tenga presente que:</p>
+        <ul class="uk-list uk-list-disc uk-list-bullet uk-list-primary">
+        <li>Dos lugares con <b>igual amenaza </b> pueden tener niveles de <b>riesgo muy distinto</b> dependiendo de su exposición (tamaño del sistema afectado) y sensibilidad (factores no climáticos, como estructuras sociales, que influyen en la respuesta frente al clima)</li>
+
+        <li>Los valores y colores desplegados en los mapas de riesgo representan un ordenamiento de lugares en que el sistema en cuestión enfrenta un mayor o menor riesgo. Se trata entonces de una medida <b>riesgo relativo</b> del sistema frente al cambio climático. </li>
+
+        <li>Dado el carácter relativo del riesgo que se presenta en ARClim, <b>no es posible agregar los resultados de las diferentes cadenas de impacto</b></li>
+
+        <li>Las amenazas son obtenidas a partir del cambio que experimentara las variables climáticas entre el pasado reciente (1980-2010) y el futuro mediano (2035-2065). El clima en ambos periodos es obtenido de <b>simulaciones</b> climáticas. En el pasado reciente se ha verificado que estas simulaciones reproduzcan el clima observado. <b>El clima futuro no es una predicción sino una proyección</b> basada en un escenario de intensas emisiones de gases con efecto invernadero (RCP8.5). </li>
+        </ul>
+
+        <h3 class="ui-text-center" style="text-align: center;width: 100%;"> EXPLORAR EL ATLAS DE RIESGOS </h3>
+
+        <a href="/atlas/index/" class="uk-text-center"  style="text-align: center;width: 100%;display:block;padding-bottom: 15px;"> Índice de mapas </a>
+
+        <div class="uk-grid-column-small uk-grid-row-large uk-child-width-1-4@s uk-text-center uk-grid-match" uk-grid>
+            
+            <div>
+                <a href="/atlas/sector_index/agricultura/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/shutterstock_1156402210.jpg);      
+                        ">
+                            <i class="fas fa-tractor"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Agricultura
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/salud_humano/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/DSC_0325.JPG);      
+                        ">
+                            <i class="fas fa-users-medical"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Salud y Bienestar Humano
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/bosques/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/BosquesNativos_ClaudiaSutulov_w2000_Eic62UA.jpeg);      
+                        ">
+                            <i class="fas fa-tree-alt"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Bosques Nativos
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/acuicultura/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/20190515_114610_smaller_NfRq6QR.jpg);      
+                        ">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Acuicultura
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/infrestrutura_costera/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/DSC_0015.JPG);      
+                        ">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Infraestructura Costera
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/recursos_hidricos/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/Sequia-foto-RadioUChile_TyGoHFZ.jpeg);      
+                        ">
+                            <i class="fas fa-raindrops"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Recursos Hidricos
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/turismo/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/que-ver-en-chile-turismo_iu8Chhx.jpg);      
+                        ">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Turismo
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/pesca_artesanl/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/Pesca-artesanal-Fuente-Editec-768x512_YZ9DBHT.jpg);      
+                        ">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Pesca Artesanal
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/biodiversidad/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/img_biodiversidad.jpeg);      
+                        ">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Biodiversidad
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/silvicultura/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/Plantaciones_Carlos_Zamorano-Elgueta_1wwwMT5.jpeg);      
+                        ">
+                            <i class="fas fa-trees"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Plantaciones Forestales
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/mineria/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/foto_copper_mine.jpeg);      
+                        ">
+                            <i class="fas fa-truck-monster"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Minería (en revisión)
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            <div>
+                <a href="/atlas/sector_index/infraestructura_energia/">
+                 <div class="uk-card uk-card-default uk-card-hover">
+                    <div class="uk-card-media-top">
+                        
+                        <div class="arclim_sector_image" style="
+                            background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.5)),
+                            linear-gradient(rgba(0,0,50,0.1), rgba(0,0,80,0.2), rgba(0,0,90,0.6)), url(/media/images/category/w400/transmission_lines_Y8hORdg.jpg);      
+                        ">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        
+                    </div>
+                 <div class="uk-card-body uk-padding-small" style="height: 50px;">
+                        <div class="arclim_card_title">
+                            Energía Eléctrica
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+        
+    <div class="uk-container-expand" style="background-size: cover; background-image:  linear-gradient(rgba(155,155,155,0.6),rgba(0,0,0,0.2)), url(/media/shutterstock/w1200/shutterstock_1124541077.jpg), linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.2));">
+        <div class="uk-container">
+        <div id="explorador_amenazas" class="uk-padding uk-margin">
+            <!-- EXPLORADOR DE AMENAZAS -->
+            <h1 class="uk-text-center" style="color:white;text-shadow: 0px 0px 10px black;"> Explorador de Amenazas</h1>
+            <div class="uk-grid-match" uk-grid>
+                <p class="uk-text-large" style="color:white; text-shadow: 0px 0px 5px black;">Explorador las Amenzas Climáticas que afectarán a Chile durante los próximos 50 años </p>
+                <div class="uk-width-2-3 hide-small">
+                    <div>
+                    <img src="/media/images/photo_explorador_amenazas.png" style="width:100%;border-radius: 10px;"> </img>
+                    </div>
+                </div>
+                <div class="uk-width-expand" style="color:white;">
+                    <div class="uk-padding uk-padding-small" style="background-color: rgba(0,0,0,0.5);">
+                    <ul>
+                        <li> Datos regionalizados de 5 km de resolución </li>
+                        <li> Proyecciones de 1970 hasta 2070 </li>
+                        <li> Visualizar mapas de más de 50 índices climáticos </li>
+                        <li> Obtener datos en unidades territoriales útiles (comunas, cuencas, ciudades, etcetera)  </li>
+                        <li> Ver graficos </li>
+                        <li> Exportar datos </li>
+                        <li> y mucho más... </li>
+                    <ul>
+                    <a class="uk-button uk-button-primary uk-button-large" href="/amenazas/" style="margin: auto;"> EXPLORAR </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+    <div class="uk-container-expand" style="background-size: cover; background-image:  linear-gradient(rgba(155,155,155,0.6),rgba(0,0,0,0.2)), url(/media/shutterstock/w1200/shutterstock_1628909806.jpg), linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.2)); background-position: 50%;margin-top: 60px;">
+        <div class="uk-container">
+        <div id="explorador_amenazas" class="uk-padding uk-margin">
+            <!-- EXPLORADOR DE BIODIVERSIDAD -->
+            <h1 class="uk-text-center" style="color:white;text-shadow: 0px 0px 10px black;"> 
+                <i class="fas fa-leaf"></i>
+                MAPAS DE ESPECIES
+                <i class="fas fa-paw"></i>
+            </h1>
+            <div class="uk-grid-match" uk-grid>
+                <p class="" style="color:white; text-shadow: 0px 0px 5px black; margin-bottom: 30px;">
+
+Con esta herramienta usted podrá visualizar y descargar modelos de distribución para especies de flora y fauna nativas y endémicas presentes en Chile continental para un periodo histórico (1980-2010) y futuro (2035-2065) en un escenario de intensas emisiones de gases con efecto invernadero. Los mapas muestran la probabilidad de presencia por especie obtenidas de un modelo estadístico que emplea un conjunto de variables ambientales (incluyendo el clima) y observaciones georeferenciadas. La herramienta dispone resultados para 440 especies de flora y 110 especies de fauna.
+                </p>
+                <a class="uk-button uk-button-primary uk-button-large" href="/biodiversity/home/" style="margin: auto;"> VER LOS MAPAS </a>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+    <div id="about" class="uk-container-expand uk-padding" style="background-size: cover; background-position: 50%; background-image:  linear-gradient(rgba(155,155,155,0.6),rgba(0,0,0,0.2)), url(/media/shutterstock/w1200/shutterstock_1714241074.jpg), linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.2)); margin-top: 60px;">
+        <h1 class="uk-text-center" style="color:white;text-shadow: 0px 0px 10px black;"> Metodología ARClim </h1>
+    </div>
+    <div class="uk-container">
+    <div class="uk-padding uk-margin">
+    <p>
+    El objetivo general de ARClim es desarrollar un conjunto de mapas de riesgos relacionados con el cambio climático para Chile empleando un marco conceptual común y una base de datos consistente. ARClim incluye diversos sectores con cobertura nacional y detalle comunal o puntual, convirtiéndose así en una herramienta importante para el diseño de políticas públicas y la implementación de medidas de adaptación.
+    </p>
+    <p>
+    El proyecto ha sido elaborado siguiendo la guía del Quinto Reporte (AR5) del grupo de trabajo II del Panel Intergubernamental del Cambio Climático (WGII-IPCC). La evaluación del riesgo al cambio climático se realiza en forma individual para sectores sociales, ambientales y productivos. El riesgo climático es un indicador de la magnitud del daño que podría experimentar frente a un cambio en las condiciones climáticas. La estimación del riesgo para un sector requiere conocer su exposición, sensibilidad y el cambio en el elemento climático al cual puede reaccionar, al que denominaremos amenaza (ver figura). La exposición y amenaza son evaluadas en la condición actual. La amenaza considera el cambio del clima entre el pasado reciente (1980-2010) y el futuro mediano (2035-2065) bajo un escenario pesimista de emisiones de gases con efecto invernadero (RCP8.5). 
+    </p>
+
+    <div style="width: 100%;text-align: center;">
+    <img src="/media/learning/Diagrama_Riesgo.png" style="width: 60%;margin:auto;"></img>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; width:100%;">
+        <a href="/atlas/about/"> Acerca de ARCLim </a>
+        <a href="/media/learning/Metodologia_ARCLIM.pdf" target="_blank"> Leer más sobre la metodología ARClim </a>
+    </div>
+
+    </div>
+    </div>
+
+    <div class="uk-container">
+            <!-- INSITITUTIONES -->
+        <div class="uk-padding">
+            <h1 id="instituciones" class="uk-text-center">Instituciones </h1>
+            <p> ARClim es un proyecto del Ministerio del Medio Ambiente del Gobierno de Chile apoyado por el Programa Mundial de Evaluación y Gestión de Riesgos para la Adaptación al Cambio Climático (Pérdidas y Daños) por encargo del Ministerio Federal de Cooperación Económica y Desarrollo (BMZ) y desarrollado por el Centro de Investigación del Clima y la Resiliencia (CR2) y el Centro de Cambio Global (CCG-Universidad Católica de Chile) con la colaboración de diversas instituciones nacionales y internacionales. </p>
+            <div class="uk-grid-column-small uk-grid-row-large uk-child-width-1-4@s uk-text-center" uk-grid>               
+                <div class="uk-first-column">
+                    <img src="/media/logos/cr2.png" style="max-width:100%; max-height:160px">
+                </div>
+                <div>
+                    <img src="/media/logos/logo_centro_cambio_global.png" style="max-width:100%; max-height:160px">
+                </div>
+                <div class="uk-first-column">
+                    <img src="/media/logos/logo-mma.jpg" style="max-width:100%; max-height:160px">
+                </div>
+                <div>
+                    <img src="/media/logos/LogoGIZ.png" style="max-width:100%; max-height:160px">
+                </div>
+                
+            </div>
+       </div>
+    </div>
+
+    <!-- GROUPS DE TRABAJO -->
+    <div class="uk-container">
+        <div class="uk-padding uk-margin" style="background-color: #f1f9ff;">
+            <h1 class="uk-text-center">Colaboradores </h1>
+            <p class="uk-text-center"> 
+            Participaron en ARCLim 14 grupos de trabajo de diversas universidades y centros de investigacion de todo el páis. 
+            </p>
+            <div class="uk-width-1-1">
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <h4 class="uk-text-center"> Grupos de Trabajo </h4>
+                        <div class="uk-column-1-3">
+                        
+                            <a href="/atlas/work_package/acuicultura"> <div style="padding: 10px;"> <span> <i class="fad fa-fish"></i> </span>  <span> Acuicultura </span> </div></a>
+                        
+                            <a href="/atlas/work_package/AdaptaClim"> <div style="padding: 10px;"> <span> <i class="fad fa-bug"></i> </span>  <span> AdaptaClim </span> </div></a>
+                        
+                            <a href="/atlas/work_package/agricultura"> <div style="padding: 10px;"> <span> <i class="fal fa-tractor"></i> </span>  <span> Agricultura </span> </div></a>
+                        
+                            <a href="/atlas/work_package/asentamientos_humanos"> <div style="padding: 10px;"> <span> <i class="fad fa-users"></i> </span>  <span> Asentamientos humanos </span> </div></a>
+                        
+                            <a href="/atlas/work_package/biodiversidad"> <div style="padding: 10px;"> <span> <i class="fad fa-frog"></i> </span>  <span> Biodiversidad </span> </div></a>
+                        
+                            <a href="/atlas/work_package/bosques"> <div style="padding: 10px;"> <span> <i class="fad fa-tree-alt"></i> <i class="fas fa-trees"></i> </span>  <span> Bosques y Plantaciones </span> </div></a>
+                        
+                            <a href="/atlas/work_package/ciudades"> <div style="padding: 10px;"> <span> <i class="fad fa-city"></i> </span>  <span> Ciudades </span> </div></a>
+                        
+                            <a href="/atlas/work_package/costas"> <div style="padding: 10px;"> <span> <i class="fad fa-ship"></i> </span>  <span> Costas </span> </div></a>
+                        
+                            <a href="/atlas/work_package/energia_electrica"> <div style="padding: 10px;"> <span> <i class="fad fa-bolt"></i> </span>  <span> Energía Eléctrica </span> </div></a>
+                        
+                            <a href="/atlas/work_package/hidrologia"> <div style="padding: 10px;"> <span> <i class="fas fa-dewpoint"></i> </span>  <span> Hidrología </span> </div></a>
+                        
+                            <a href="/atlas/work_package/mineria"> <div style="padding: 10px;"> <span> <i class="fad fa-construction"></i> </span>  <span> Minería </span> </div></a>
+                        
+                            <a href="/atlas/work_package/pesca_artesanal"> <div style="padding: 10px;"> <span> <i class="fad fa-fish"></i> </span>  <span> Pesca Artesanal </span> </div></a>
+                        
+                            <a href="/atlas/work_package/recursos_hidricos"> <div style="padding: 10px;"> <span> <i class="fad fa-hand-holding-water"></i> </span>  <span> Recursos hídricos </span> </div></a>
+                        
+                            <a href="/atlas/work_package/salud"> <div style="padding: 10px;"> <span> <i class="fad fa-first-aid"></i> </span>  <span> Salud </span> </div></a>
+                        
+                            <a href="/atlas/work_package/turismo"> <div style="padding: 10px;"> <span> <i class="fad fa-image-polaroid"></i> </span>  <span> Turismo </span> </div></a>
+                        
+                        </div>
+                    </div>
+            </div>
+
+            <div class="uk-grid-match" style="padding-top: 30px;" uk-grid>
+                <div class="uk-width-1-1"> 
+                    <div class="uk-grid uk-grid-small uk-child-width-1-5@s" uk-grid="masonry: true">
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/copas.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/crhiam.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/Dictuc.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/ENEAS.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/fcfm.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/IFOP.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_uc.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/incar.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/Intemit.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/isci.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_ulagos.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/NEST.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_udd.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/pucv.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_upancha.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/RedPE.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uach.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uc_conce.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uchile.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uconce.gif" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/ufro.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/UQ-ICEChile.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uqueen.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/uvalpo.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_umaule.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_agronomia_uc.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/logo_dgf.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/Akuterra.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/CEDEUS.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/cenergia.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/cisger.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/AdaptaClimLogo.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/CEAZA_logo.png" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                            <div class="uk-padding uk-padding-small">
+                                <img src="/media/logos/promasa.jpg" style="filter: grayscale(100%); opacity: 0.7;"></img>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+    </div>
+
+
+    <div class="uk-container">
+        <div class="uk-width-1-1">
+            <div style="text-align: center; padding-top: 30px;">
+                Base de datos de simulaciones climáticas y plataforma web desarollado y implementado por Meteodata:
+                <img src="media/logos/logo-meteodata.png" style="max-width: 400px; margin: 30px;"> </img>
+            </div>
+        </div>
+    </div>
+
+    
+<div id="arclim_footer" class="uk-container-extend" style="
+display: ;
+padding: 0px;
+margin: 0px;
+background-size: cover;
+background-position: 50%;
+background-image:  linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.7)),
+                   linear-gradient(rgba(40,30,150,0.1), rgba(220,220,255,0.6), rgba(255,255,255,0.9)),
+                   linear-gradient(rgba(0,0,100,0.9), rgba(0,0,100,0.5), rgba(255,255,255,0.0)),
+                   url(/media/shutterstock/w1200/shutterstock_96292022.jpg);
+color: white;
+    ">
+    <div class="uk-container">
+        <div class="uk-padding uk-margin">
+            <!-- FOOTER -->
+                <div class="uk-width-1-1">
+                    <div class="uk-grid-column-small uk-grid-row-large uk-child-width-1-6@m" uk-grid>
+                        <div>
+                            <div style="font-size: 32px; color: rgba(255,255,255,0.7); text-align: center;">
+
+                            <!--span class="fa-stack fa-2x">
+                            <i class="fad fa-triangle fa-stack-2x "></i>
+                            <i class="fal fa-thermometer-full fa-stack-1x fa-inverse" style="color: white; margin-top: 45px;"></i>
+                            </span-->
+
+<!-- ARCLIM LOGO HARDCODED -->
+<svg style="width: 100%; height: 100%;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+<path class="fa-secondary" fill="rgba(255,255,255,0.3)" d="M569.54 440l-240-416c-18.4-32-64.68-32-83.18 0L6.48 440c-18.41 31.91 4.59 72 41.59 72h479.87c36.91 0 60-40 41.6-72zm-124.68 8H131.15a32 32 0 0 1-27.72-48l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.72 48z"></path>
+<path class="fa-primary" fill="rgba(255,255,255,0.7)" d="M103.43 400l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.71 48H131.15c-24.62 0-40.02-26.65-27.72-48z"></path>
+<path fill="white" transform="translate(224 170) scale(0.5)" d="M224 96c0-53.019-42.981-96-96-96S32 42.981 32 96v203.347C12.225 321.756.166 351.136.002 383.333c-.359 70.303 56.787 128.176 127.089 128.664.299.002.61.003.909.003 70.698 0 128-57.304 128-128 0-32.459-12.088-62.09-32-84.653V96zm-96 384l-.687-.002c-52.693-.366-95.581-43.795-95.312-96.501.202-39.467 22.532-61.321 31.999-72.05V96c0-35.29 28.71-64 64-64s64 28.71 64 64v215.447c9.186 10.409 32 32.659 32 72.553 0 52.935-43.065 96-96 96zm48-96c0 26.51-21.49 48-48 48s-48-21.49-48-48c0-20.898 13.359-38.667 32-45.258V96c0-8.837 7.164-16 16-16 8.837 0 16 7.163 16 16v242.742c18.641 6.591 32 24.36 32 45.258z"></path>
+</svg>
+
+                            </div>
+                            <div class="uk-text-center" style="padding-top: 30px;"> <a href="/" class="uk-link-text"><b> ATLAS DE RIESGOS CLIMÁTICOS</b> </a> </div>
+                        </div>
+                        <div>
+                        <h4 style="color:white;"> MAPAS DE RIESGO </h4>
+                        <ul class="uk-list" >
+                            <li> <a href="/atlas/index" class="uk-link-text"> Indice de mapas </a> </li>
+                            <li> <a href="/atlas/working_groups" class="uk-link-text"> Grupos de trabajo </a> </li>
+                        </ul>
+                        </div>
+                        <div>
+                        <h4 style="color:white;">BASE DE DATOS </h4>
+                        <ul class="uk-list">
+                            <li> <a href="/amenazas/" class="uk-link-text"> Explorador de Amenazas </a> </li>
+                            <li> <a href="/features/repositorio/" class="uk-link-text"> Repositorio de Datos Climáticos </a></li>
+                            <li> <a href="/biodiversity/home/" class="uk-link-text"> Mapas de Especies </a></li>
+                            <li> <a href="/atlas/api/" class="uk-link-text"> API </a></li>
+                        </ul>
+                        </div>
+                        <div>
+                        <h4 style="color:white;">INFORMACIÓN </h4>
+                        <ul class="uk-list">
+                            <li> <a href="/atlas/about/" class="uk-link-text"> Acerca de ARClim </a> </li>
+                            <li> <a href="/atlas/aprendizaje/" class="uk-link-text"> Aprendizaje </a></li>
+                            <li> <a href="/atlas/quienes_somos/" class="uk-link-text"> Quienes somos</a></li>
+                        </ul>
+                        </div>
+                        <div style="background-color: white; padding: 10px; opacity: 0.8; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <img src="/media/logos/logo-mma.jpg" style="max-width:100%; max-height:160px; ">
+                            <img src="/media/logos/cr2.png" style="max-width:100%; max-height:160px">
+                        </div>
+                        <div style="background-color: white; padding: 10px; opacity: 0.8; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                            <img src="/media/logos/LogoGIZ.png" style="max-width:100%; max-height:160px; padding: 10px;">
+                            <img src="/media/logos/logo_centro_cambio_global.png" style="max-width:100%; max-height:160px; padding: 10px;">
+                            <div style="color: lightgray;font-size: 12px; text-align: right;"> Implementado por: </div>
+                            <div style="text-align: right;font-family: arial-black; font-weight: bold; font-size: 24px;"> <span style="color: dodgerblue">meteo</span><span style="color:darkorange;">data</span> </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="uk-width-1-1 uk-text-center">
+                    © 2020 Ministerio de Medio Ambiente, Gobierno de Chile
+                </div>
+        </div>
+     </div>
+</div>
+</div>
+
+
+</div>
+
+
+
+</body>
+
+<!-- JAVASCRIPT -->
+
+    <!-- JQuery -->
+    <script src="/static/home/libs/jquery/jquery-3.5.1.min.js"></script>
+
+    <!-- UI Kit -->
+    <script src="/static/home/libs/uikit/js/uikit.min.js"></script>
+    <script src="/static/home/libs/uikit/js/uikit-icons.min.js"></script>
+
+    <!-- Font Awesome -->
+    
+    <script src="/static/home/libs/fontawesome-pro-5.11.2-web/js/all.js"></script>
+    
+
+    <!-- Highcharts -->
+    <script src="/static/home/libs/highcharts/highcharts/code/highcharts.js"> </script>
+    <script src="/static/home/libs/highcharts/highcharts/code/highcharts-more.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/boost.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/exporting.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/export-data.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/offline-exporting.js"></script>
+
+    <!-- Moment.js -->
+    <script src="/static/home/libs/momentjs/moment.min.js"></script>
+    <script src="/static/home/libs/momentjs/es.js"></script>
+
+    <!-- Google Maps -->
+    <!-- script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCs_DN1N78-H9aMjdE7QqBC7pnnUhPLXus"></script-->
+
+    <!-- Leaflet -->
+    <script src="/static/home/libs/leaflet/leaflet.js"></script>
+
+    <!-- TinyMCE -->
+    <!-- script src="https://cdn.tiny.cloud/1/cezlt4hk0j94k5pkchgf4x55q66p87vetu6fr47yijoo13jj/tinymce/5/tinymce.min.js"></script-->
+    <!-- script src="https://cdn.tiny.cloud/1/cezlt4hk0j94k5pkchgf4x55q66p87vetu6fr47yijoo13jj/tinymce/5/jquery.tinymce.min.js"></script-->
+
+    <!--- HandleBars -->
+    <script src="/static/home/libs/handlebars/handlebars-v4.7.7.min.js"></script>
+
+    <!--- Tabulator -->
+    
+        <script src="/static/home/libs/tabulator/tabulator-master/dist/js/tabulator.min.js"></script>
+    
+
+    
+
+
+    <script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+    
+    
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            
+
+$("#arclim_search_text").keyup( ()=>{
+        var filter = $("#arclim_search_text").val().toUpperCase();
+
+        if (filter.trim().length==0) {
+            $(".search_element").show();
+        }
+
+        $(".atlas_map_result").each( (i,elem)=>{
+            var elem = $(elem);
+            if (elem.data("text").toUpperCase().search(filter) > -1) {
+                elem.show(200);
+            } else {
+                elem.hide();
+            }
+        });
+});
+
+
+        });
+    </script>
+
+
+
+</html>

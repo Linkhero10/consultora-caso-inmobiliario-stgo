@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-09-13T00:30:22.535270+00:00",
+  "apply": true,
+  "input_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\clasificacion_luna_v2\\classifications.jsonl",
+  "rows": 783,
+  "rows_changed": 783,
+  "scope_counts": {
+    "temporal_v2": 747,
+    "legacy_sin_ventana": 34,
+    "temporal_v2_mixed_legacy": 2
+  },
+  "before_sha256": "c3dc940407a268973543aca4b55001755512819ce5d4660598412af9839c0f2e",
+  "after_sha256": "21664cb6cce0c83f5815064a9215d2f39ad11978de2d633ac08d29cda1941788",
+  "report_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\corpus_scope_backfill\\scope_backfill_20260913T003022Z.json"
+}

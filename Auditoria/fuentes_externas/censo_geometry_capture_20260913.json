@@ -1,0 +1,15 @@
+{
+  "source_id": "F-01",
+  "requested_url": "https://services5.arcgis.com/hUyD8u3TeZLKPe4T/arcgis/rest/services/Censo2024_v2/FeatureServer/11/query?where=COD_PROVINCIA%3D131&outFields=COD_PROVINCIA%2CCUT%2CCOMUNA%2Cn_per%2Cn_inmigrantes%2Cn_viv_hacinadas%2Cn_viv_irrecuperables&returnGeometry=true&outSR=4326&f=geojson",
+  "retrieved_at": "2026-09-13",
+  "scope": "32 comunas de la provincia de Santiago, capa Comunal_CPV24",
+  "raw_path": "Fuentes/fuentes_externas/raw/F-01/censo2024_provincia_santiago_geometry.geojson",
+  "bytes": 2610627,
+  "sha256": "35FD54ABFD7F9190EA158947EFAEB313ECF7FB9AFB34D84F3D7189D4C5050954",
+  "status": "ok",
+  "use": "Mapa piloto; geometria comunal, no ubicacion exacta de proyectos",
+  "limitations": [
+    "No representa puntos de conflicto ni direcciones de proyectos.",
+    "Los atributos son del Censo 2024 y no constituyen evidencia causal."
+  ]
+}

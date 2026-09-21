@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GM07K9DZBD"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag("js", new Date());gtag("set", "developer_id.dMDhkMT", true);gtag("config", "G-GM07K9DZBD", {"groups":"default","page_placeholder":"PLACEHOLDER_page_location"});</script>
+<meta name="description" content="CMNGeoportal es una aplicación web que visualiza la información territorial del Consejo de Monumentos Nacionales (CMN). Esta aplicación permite interactuar con la información georreferenciada de los Monumentos Nacionales con protección oficial según la Ley N° 17.288, en las categorías de Monumentos Históricos, Zonas Típicas, Santuarios de la Naturaleza, Monumentos Arqueológicos, Monumentos Paleontológicos y Monumentos Públicos." />
+<link rel="canonical" href="https://www.monumentos.gob.cl/geoportal" />
+<meta property="og:url" content="https://www.monumentos.gob.cl/geoportal" />
+<meta property="og:title" content="Geoportal" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Geoportal" />
+<meta name="twitter:url" content="https://www.monumentos.gob.cl/geoportal" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/themes/custom/theme_snpc/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="alternate" hreflang="es" href="https://www.monumentos.gob.cl/geoportal" />
+
+    <title>Geoportal | Consejo de Monumentos Nacionales de Chile</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_gMyDBBH81Wimd2UpXQ8R7mk3OzPjs2BY57qidv51qfE.css?delta=0&amp;language=es&amp;theme=snpc&amp;include=eJxNjVEKAyEMBS_k6pFC1LBNVxMxWdjevksrtPBgZr4ePvGCplhpJvx59MfUnGmGjOUA13sj_TlwUQl0eWM5Up3nwBZXBpNRUumyGTutMgOq7Dq_vTfN2D4OJ6fFKFrJAGtnCfYyp36fGr0BI65Amg" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_e7PZm_XMmn3o_yQwa7rsS4eEUt9jDVtoMWKLIjQwWa0.css?delta=1&amp;language=es&amp;theme=snpc&amp;include=eJxNjVEKAyEMBS_k6pFC1LBNVxMxWdjevksrtPBgZr4ePvGCplhpJvx59MfUnGmGjOUA13sj_TlwUQl0eWM5Up3nwBZXBpNRUumyGTutMgOq7Dq_vTfN2D4OJ6fFKFrJAGtnCfYyp36fGr0BI65Amg" />
+
+    
+  </head>
+  <body class="path-node page-node-type-pagina-cmn snpc-color-alizarin-crimson">
+    <a href="#main-content" class="visually-hidden focusable">
+      Pasar al contenido principal
+    </a>
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+
+
+
+<div  class="layout-container">
+            <header class="header">
+    
+
+<figure
+   id="block-sitebranding" class="logo"
+>
+      <a  class="logo__link" href="https://www.monumentos.gob.cl/">
+                
+  
+<picture
+   class="logo__image"
+>
+      
+
+  <img
+     class="logo__img"
+            src="/sites/default/files/logo-cmn.jpeg"
+          alt="Consejo de Monumentos Nacionales de Chile"
+            />
+
+  </picture>
+                  </a>
+  
+  </figure>
+
+
+<div  data-drupal-selector="views-exposed-form-solr-localhost-searching-block" id="block-snpc-searching-block" class="block views-exposed-form">
+  <div>
+    
+        
+          <form action="/buscar" method="get" id="views-exposed-form-solr-localhost-searching-block" accept-charset="UTF-8">
+  <div class="js-form-item form-item">
+        <input placeholder="Busca" data-drupal-selector="edit-texto" type="text" id="edit-texto" name="texto" value="" size="30" maxlength="128" class="form-text form-item__textfield" />
+
+        </div>
+
+
+</form>
+
+      </div>
+</div>
+
+  
+
+<h2  id="block-mainnavigation" class="h2">
+      
+  </h2>
+
+  
+
+<div class="main-menu-nav">
+  <nav class="main-menu-wrapper">
+    <a href="#" id="toggle-expand" class="toggle-expand">
+      <span class="toggle-expand__open">
+        <span class="toggle-expand__text">Menú principal</span>
+      </span>
+      <span class="toggle-expand__close">
+        <span class="toggle-expand__text">Cerrar</span>
+      </span>
+    </a>
+    <div id="main-nav" class="main-nav">
+      
+
+
+    
+                          
+    
+<ul  class="main-menu">
+            
+<li  class="main-menu__item">
+                <a href="/" class="main-menu__link" data-drupal-link-system-path="&lt;front&gt;">Inicio</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/acerca-de-0" class="main-menu__link main-menu__link--with-sub">Acerca de</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/quienes-somos" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/41">Quiénes somos</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/consejeros-y-consejeras" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/19">Consejeros y consejeras</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/secretaria-tecnica" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/43">Secretaría Técnica</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/oficinas-regionales" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/60">Oficinas Regionales</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/organigrama" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/44">Organigrama</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/iniciativas" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/79">Iniciativas</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/areas-stcmn" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Secciones de la Secretaría Técnica</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/monumentos-0" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="node/7228">Monumentos</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/monumentos" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="monumentos">Monumentos Nacionales</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/patrimonio-mundial/lista-actual" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/108">Patrimonio Mundial</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/indicadores-sobre-monumentos-nacionales" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/7309">Indicadores sobre Monumentos Nacionales</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/servicios-0" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="node/7229">Servicios</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/portales-y-visores-cmn" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/54">Portales y visores CMN</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/participacion-ciudadana" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="participacion-ciudadana">Participaciones ciudadanas</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/licitaciones-y-concursos-publicos" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/53">Licitaciones y Concursos Públicos</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/consulta-indigena" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/7235">Consulta Indígena</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item">
+                <a href="/tramites" class="main-menu__link" data-drupal-link-system-path="node/88">Trámites</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/documentos-0" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="node/7230">Documentos</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/documentos/formularios" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/105">Formularios</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/documentos/decretos" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="documentos/decretos">Decretos</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/documentos/actas" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="documentos/actas">Actas</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/documentos/normas" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/106">Normas de Intervención</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/documentos/resoluciones" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="documentos/resoluciones">Resoluciones</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/noticias" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="noticias">Noticias</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/noticias" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="noticias">Noticias</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/cartelera" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="cartelera">Eventos</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/recursos-y-multimedia" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="node/7253">Recursos y multimedia</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/transmision-de-sesiones" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Transmisión de sesiones</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/multimedia/videos/index" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Audiovisual</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/libros-y-publicaciones" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Libros y publicaciones</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/publicaciones/listado?tipo=articulos" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Artículos y estudios</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/publicaciones/listado?tipo=material_educativo" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Material Educativo</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.monumentos.gob.cl/galerias/index" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Galerías</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="main-menu__item main-menu__item--with-sub">
+                <a href="/contacto" class="main-menu__link main-menu__link--with-sub" data-drupal-link-system-path="node/7231">Contacto</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="main-menu main-menu--sub main-menu--sub-1">
+            
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/faq" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="faq">Preguntas frecuentes</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="https://www.leylobby.gob.cl/solicitud/audiencia" class="main-menu__link main-menu__link--sub main-menu__link--sub-1">Ley del Lobby</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/contacto-siac" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/85">Contacto SIAC</a>
+          </li>
+          
+<li  class="main-menu__item main-menu__item--sub main-menu__item--sub-1">
+                <a href="/nuestras-redes" class="main-menu__link main-menu__link--sub main-menu__link--sub-1" data-drupal-link-system-path="node/86">Nuestras Redes</a>
+          </li>
+      </ul>
+  
+      </li>
+      </ul>
+  
+
+      
+    </div>
+  </nav>
+</div>
+
+
+
+<div  id="block-snpc-breadcrumbs" class="block">
+  <div>
+    
+        
+          
+  <nav role="navigation" aria-labelledby="system-breadcrumb">
+    <h2 class="visually-hidden">Ruta de navegación</h2>
+    <ol class="breadcrumb">
+          <li class="breadcrumb__item">
+                  <a class="breadcrumb__link" href="/">Inicio</a>
+              </li>
+          <li class="breadcrumb__item">
+                  Geoportal
+              </li>
+        </ol>
+  </nav>
+
+      </div>
+</div>
+
+
+<div  id="block-snpc-page-title" class="block">
+  <div>
+    
+        
+          
+
+  
+<h1  class="h1">
+      <span>Geoportal</span>
+
+  </h1>
+
+      </div>
+</div>
+<span><div data-drupal-messages-fallback class="hidden"></div></span>
+
+</header>
+
+      
+      
+    
+    
+    
+  
+  <main role="main"  class="main">
+    <a id="main-content" tabindex="-1"></a>
+    
+    <div  class="main-content">
+            <div class="region region-content">
+    
+
+<div  id="block-snpc-content" class="block">
+  <div>
+    
+        
+          
+
+<article  class="node node--pagina_cmn node--55 node--full available-to-copy snpc-node-id-55 snpc-node-type-pagina_cmn">
+
+  
+    
+
+    <div>
+    
+
+
+            <div  class="field field--hidden field--type-image field--name-field-image" >  <img loading="lazy" src="/sites/default/files/styles/full_1140_auto_/public/2024-12/captura_de_pantalla_2024-09-10_a_las_10.02.06_a._m.png?itok=6WhMcdt_" width="1140" height="641" alt="geoportal" />
+
+
+</div>
+      
+
+
+            <div  class="field field--hidden field--type-string-long field--name-field-texto-destacado" >Esta aplicación permite interactuar con la información georreferenciada de los Monumentos Nacionales con protección oficial según la Ley N° 17.288, en las categorías de Monumentos Históricos, Zonas Típicas, Santuarios de la Naturaleza, Monumentos Arqueológicos y Monumentos Públicos.</div>
+      
+
+            <div class="text-long"><p>CMNGeoportal es una aplicación web que visualiza la información territorial del Consejo de Monumentos Nacionales (CMN). Esta aplicación permite interactuar con la información georreferenciada de los Monumentos Nacionales con protección oficial según la Ley N° 17.288, en las categorías de Monumentos Históricos, Zonas Típicas, Santuarios de la Naturaleza, Monumentos Arqueológicos, Monumentos Paleontológicos y Monumentos Públicos.</p>
+<p>El CMNGeoportal es parte de las nuevas Tecnologías de Información Geográficas (TIG) que permiten el descubrimiento, acceso y visualización de los datos geoespaciales de manera intuitiva; posibilitando la integración, la interoperabilidad y el acceso a la información territorial que elabora el CMN. La utilización de esta aplicación presenta una gran oportunidad para el manejo del patrimonio, ya que es una herramienta que permite planificar y apoyar el proceso de intervención y supervisión del patrimonio protegido, y al mismo tiempo, establecer las relaciones necesarias entre las distintas categorías de protección.</p>
+<h2>Geovisor</h2>
+<p>Es una herramienta del CMNGeoportal que representa las coberturas, a nivel de puntos, de los Monumentos Históricos Inmuebles, Zonas Típicas y Santuarios de la Naturaleza. Las consultas despliegan información para cada Monumento Nacional, y los vínculos a su decreto, cuando corresponda, planimetría oficial, fotografías y material audiovisual disponible.</p>
+<h3><strong><u><a href="https://experience.arcgis.com/experience/a88a85de5c22442a9dc42eaa94a94f87/?draft=true">Acceso directo al Geovisor</a></u></strong></h3>
+</div>
+      
+  </div>
+</article>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+
+  </main>
+
+            <footer class="footer">
+  <div  class="footer__top">
+      <nav role="navigation" aria-labelledby="block-piedepagina-menu" id="block-piedepagina">
+            
+  <h2 class="visually-hidden" id="block-piedepagina-menu">Pie de página</h2>
+  
+
+        
+
+<div class="grilla-menus grid-nav">
+  <nav class="menu">
+      
+
+
+    
+                          
+    
+<ul  class="grilla-menu">
+            
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Acerca de CMN</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/secretaria-tecnica" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/43">Secretaría técnica</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/acerca-de" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/7227">Consejeros y consejeras</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/quienes-somos" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/41">¿Quienes somos?</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/faq" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="faq">Preguntas frecuentes</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/historia" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/7146">Historia</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/organigrama" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/44">Organigrama</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/oficinas-regionales" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/60">Oficinas regionales</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/contacto-siac" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/85">Contacto SIAC</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Monumentos</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=102&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;102&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Monumentos historicos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=119&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;119&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Monumentos públicos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=109&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;109&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Zonas típicas</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=220&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;220&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Monumentos arquelógicos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=460&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;460&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Monumentos paleontológicos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/monumentos?search_api_fulltext=&amp;field_category_1=72&amp;field_localizacion=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;field_category_1&quot;:&quot;72&quot;,&quot;field_localizacion&quot;:&quot;All&quot;,&quot;search_api_fulltext&quot;:&quot;&quot;}" data-drupal-link-system-path="monumentos">Santuarios de la naturaleza</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Servicios</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/hallazgos-arqueologicos-en-el-proyecto-central-hidroelectrica" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/52">Consulta Indígena</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/licitaciones-y-concursos-publicos" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/53">Licitaciones y concursos públicos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/portales-y-visores-cmn" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/54">Portales CMN</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Recursos y multimedia</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/libros-y-publicaciones" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="libros-y-publicaciones">Libros y publicaciones</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/publicaciones/listado?tipo=articulos" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;tipo&quot;:&quot;articulos&quot;}" data-drupal-link-system-path="publicaciones/listado">Artículos y estudios</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/publicaciones/listado?tipo=cartillas_y_folletos" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;tipo&quot;:&quot;cartillas_y_folletos&quot;}" data-drupal-link-system-path="publicaciones/listado">Cartillas y folletos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/publicaciones/listado?search=&amp;tipo=material_educativo&amp;categoria=All" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-query="{&quot;categoria&quot;:&quot;All&quot;,&quot;search&quot;:&quot;&quot;,&quot;tipo&quot;:&quot;material_educativo&quot;}" data-drupal-link-system-path="publicaciones/listado">Material educativo</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Prensa</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/cartelera" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="cartelera">Eventos</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/noticias" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="noticias">Noticias</a>
+          </li>
+      </ul>
+  
+      </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--with-sub">
+                <a href="" class="grilla-menu__link grilla-menu__link--with-sub">Patrimonio mundial</a>
+              <span class="expand-sub"></span>
+          
+                                    
+    
+<ul  class="grilla-menu grilla-menu--sub grilla-menu--sub-1">
+            
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/antecedentes" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/45">Antecedentes</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/lista-actual" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/108">Lista actual</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/lista-tentativa" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/109">Lista tentativa</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/trafico-ilicito" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/51">Tráfico Ilícito</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/unesco-y-sus-convenciones" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/49">UNESCO y sus convenciones</a>
+          </li>
+          
+<li  class="grilla-menu__item grilla-menu__item--sub grilla-menu__item--sub-1">
+                <a href="/patrimonio-mundial/valor-universal-excepcional" class="grilla-menu__link grilla-menu__link--sub grilla-menu__link--sub-1" data-drupal-link-system-path="node/50">Valor universal excepcional</a>
+          </li>
+      </ul>
+  
+      </li>
+      </ul>
+  
+  </nav>
+</div>
+
+  </nav>
+
+
+<div  id="block-redessocialesblock" class="block">
+  <div>
+    
+        
+          
+
+<div  class="block block--no-title block--redes-sociales" >
+  <div class="inner-block">
+          <h2 class="h2">Redes sociales</h2>
+    
+        <ul>
+          <li>
+        <a href="https://www.instagram.com/monumentos_cl/">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+      </li>
+          <li>
+        <a href="https://www.facebook.com/ConsejodeMonumentos/">
+          <i class="fab fa-facebook-f"></i>
+          <span>Facebook</span>
+        </a>
+      </li>
+          <li>
+        <a href="https://x.com/Monumentos_cl">
+          <i class="fab fa-twitter"></i>
+          <span>Twitter</span>
+        </a>
+      </li>
+          <li>
+        <a href="https://www.youtube.com/@ConsejodeMonumentosNacionales">
+          <i class="fab fa-youtube"></i>
+          <span>Youtube</span>
+        </a>
+      </li>
+      </ul>
+    </div>
+</div>
+
+      </div>
+</div>
+
+
+<div  id="block-bannersobligatioriosblock" class="block block--no-title block--banners-obligatorios" >
+  <div class="inner-block">
+          <h2 class="h2">Banners obligatiorios block</h2>
+    
+          
+  <div class="grid grid--columns-4">
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/614/w3-propertyvalue-40755.html">Sistema Integral de Atención Ciudadana (SIAC)</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/aviso-importante-sobre-ley-del-lobby">Ley del Lobby</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/614/w3-propertyvalue-123781.html">Estados Financieros</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="http://www.mercadopublico.cl/Portal/FeedOrg.aspx?qs=6YL18o2afRApDMClFTeotg==">Participe en nuestras licitaciones</a>
+      </div>
+    
+    
+    
+  </div>
+  <div class="grid grid--columns-4">
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/sites/www.patrimoniocultural.gob.cl/files/2024-07/CPP_Serpat2024.pdf">Cuenta Pública</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="http://transparenciaactiva.dibam.cl/Paginas/ACGI.aspx">Compromisos de Gestión Institucional</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="http://www.empleospublicos.cl/">Portal de Empleos Públicos</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/614/w3-propertyvalue-109731.html">Convenios de Colaboración</a>
+      </div>
+    
+    
+    
+  </div>
+  <div class="grid grid--columns-4">
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=BC003">Gobierno Transparente</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.portaltransparencia.cl/PortalPdT/web/guest/directorio-de-organismos-regulados?p_p_id=pdtorganismos_WAR_pdtorganismosportlet&amp;orgcode=f93b307e4f1d95ca5d0972d14d47e4cf">Solicitud de Información de Ley de Transparencia</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://tramites.patrimoniocultural.gob.cl/">Trámites en línea</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/fondo-de-emergencia-transitorio-covid-19">Fondo de Emergencia Transitorio COVID-19</a>
+      </div>
+    
+    
+    
+  </div>
+  <div class="grid grid--columns-4">
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/ley-de-inclusion-en-el-serpat">Ley de inclusión en el Serpat</a>
+      </div>
+          <div class="b-require banner banner--obligatorio grid__item">
+        <a class="link--banner" href="https://www.patrimoniocultural.gob.cl/desviaciones-del-plan-de-compras">Desviaciones del Plan de Compras </a>
+      </div>
+    
+    
+                  <div class="b-require grid__item"></div>
+              <div class="b-require grid__item"></div>
+          
+  </div>
+
+      </div>
+</div>
+
+  </div>
+</footer>
+
+              <div  class="footer__bottom">
+  <div  class="footer__bottom-content">
+      
+
+<div  id="block-snpcbrandingfooterblock" class="block">
+  <div>
+    
+        
+          <div class="clear-both">
+  <div  class="footer__content footer__content--container clear-both">
+    <div class="footer__bottom--left-column footer__bottom--column">
+      
+<figure
+   class="figure"
+>
+      <a  class="figure__link" href="/">
+                
+  
+<picture
+   class="figure__image"
+>
+      
+
+  <img
+     class="figure__img"
+            src="https://www.monumentos.gob.cl/sites/default/files/snpc-footer-images/serpat-footer.png"
+          alt="Logo"
+            />
+
+  </picture>
+                  </a>
+  
+  </figure>
+    </div>
+    <div class="footer__bottom--right-column footer__bottom--column">
+      <p>Dirección: <strong>Huérfanos 1515, Santiago, Chile.</strong>&nbsp;<a href="https://www.google.com/maps/place/Hu%C3%A9rfanos+1515,+Santiago,+Regi%C3%B3n+Metropolitana/@-33.440267,-70.6604437,17z/data=!4m13!1m7!3m6!1s0x9662c5af6848ade3:0x93427aefd40eb3ed!2sHu%C3%A9rfanos+1515,+Santiago,+Regi%C3%B3n+Metropolitana!3b1!8m2!3d-33.440267!4d-70.658255!3m4!1s0x9662c5af6848ade3:0x93427aefd40eb3ed!8m2!3d-33.440267!4d-70.658255">Ver mapa</a></p>
+<p>Tel:&nbsp;<a href="tel://+56223605272">+56229978600</a></p>
+<p><strong>Oficina de Partes:</strong> Atención presencial de lunes a viernes, de 09:00 a 14:00 horas</p>
+<p>E-mail Oficina de Partes:&nbsp;<a href="mailto:oficinadepartes@monumentos.gob.cl">oficinadepartes@monumentos.gob.cl</a></p>
+<p><a href="https://www.patrimoniocultural.gob.cl/sistema-integral-de-informacion-y-atencion-ciudadana-siac">Atención Ciudadana</a>&nbsp;|&nbsp;<a href="https://www.patrimoniocultural.gob.cl/terminos-legales-y-condiciones-generales-de-uso-del-portal-web-serpat">Términos y condiciones de uso</a></p>
+<p><a href="https://www.patrimoniocultural.gob.cl/">Servicio Nacional del Patrimonio Cultural</a></p>
+
+    </div>
+  </div>
+  <div class="site-end">
+    <p>© Servicio Nacional del Patrimonio Cultural</p>
+  </div>
+</div>
+
+      </div>
+</div>
+
+  </div>
+</div>
+
+      </div>
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/55","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"es"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJx1jlEKhDAMRC9U7ZFC2gY3mibSVNDbr6yCy8JCYN6b-QnOuIMYFmoRHx77q1lK1ELCvEC389b4xcDZ9O84e6C9C-sSS9tWlPHWMJlNQoCKcnTOHn-L4LrmmKsOzp1ucwcq3K1dPokllIsrsg6VdPsobBzvHNUKOWCprMEP71TPH53eCtledA","theme":"snpc","theme_token":null},"ajaxTrustedUrl":{"\/buscar":true},"ajaxLoader":{"markup":"\u003Cdiv class=\u0022ajax-throbber sk-flow\u0022\u003E\n              \u003Cdiv class=\u0022sk-flow-dot\u0022\u003E\u003C\/div\u003E\n              \u003Cdiv class=\u0022sk-flow-dot\u0022\u003E\u003C\/div\u003E\n              \u003Cdiv class=\u0022sk-flow-dot\u0022\u003E\u003C\/div\u003E\n            \u003C\/div\u003E","hideAjaxMessage":false,"alwaysFullscreen":false,"throbberPosition":"body"},"back_to_top":{"back_to_top_button_trigger":100,"back_to_top_speed":1200,"back_to_top_prevent_on_mobile":true,"back_to_top_prevent_in_admin":true,"back_to_top_button_type":"image","back_to_top_button_text":"Volver arriba"},"google_analytics":{"account":"G-GM07K9DZBD","trackOutbound":true,"trackMailto":true,"trackTel":true,"trackDownload":true,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"},"data":{"extlink":{"extTarget":true,"extTargetNoOverride":true,"extNofollow":false,"extNoreferrer":true,"extFollowNoOverride":false,"extClass":"ext","extLabel":"(link is external)","extImgClass":false,"extSubdomains":true,"extExclude":"","extInclude":"","extCssExclude":"","extCssExplicit":".text-long,.option-container","extAlert":false,"extAlertText":"This link will take you to an external web site. We are not responsible for their content.","mailtoClass":"mailto","mailtoLabel":"(link sends email)","extUseFontAwesome":true,"extIconPlacement":"append","extFaLinkClasses":"fa fa-external-link","extFaMailtoClasses":"fa fa-envelope-o","whitelistedDomains":[]}},"user":{"uid":0,"permissionsHash":"eaf98485300ecbe3eddaead4dec405919c83bf7e28ac3b89a5898f9f30285109"}}</script>
+<script src="/sites/default/files/js/js_I-ukscxHU0gheId8JrkS2tnDtJXdylxww4T7OKSq_wg.js?scope=footer&amp;delta=0&amp;language=es&amp;theme=snpc&amp;include=eJxdiAsKAyEMBS_kmiNJ1GCzGxPxA9vbt3QXWgoPZubhjmcQw0wd8Ot-PrrFSN1FTEeY9l6DHw_7cHROYT0g99VQ_J2umBWhgIrynJwG_B9uaEuQqm6DJ11VxCLK5RVZt0q6PhkWw02vlmkEzJX1BViySC4"></script>
+
+  </body>
+</html>

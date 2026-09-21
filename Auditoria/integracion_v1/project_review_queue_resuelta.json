@@ -1,0 +1,2602 @@
+[
+  {
+    "project_id_a": "69daf84c98731696f403b9da",
+    "canonical_name_a": "Parque Padre Hurtado",
+    "project_id_b": "17f3b690577f9fd996b9c4bd",
+    "canonical_name_b": "laguna artificial en el Parque Padre Hurtado",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma laguna dentro del mismo parque, mismas fechas 2018-10",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "231f1e87d33d59539c58631c",
+    "canonical_name_a": "Urbanya Etapa I",
+    "project_id_b": "dec2a1b623540f6024038698",
+    "canonical_name_b": "Urbanya",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 36] Debería ser 'merged'. Urbanya Etapa I y Urbanya corresponden al mismo desarrollo en El Noviciado, Pudahuel, y al mismo conflicto. La etiqueta de etapa no justifica separar el caso de su proyecto matriz en esta capa de resolución de casos.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c3ad664d3fd620721405c962",
+    "canonical_name_a": "edificio de 13 pisos",
+    "project_id_b": "75b4cfebad7e31ba40d2331b",
+    "canonical_name_b": "torre de 13 pisos en la calle Monjitas 565",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado: A esta en avenida Lo Ovalle, B en un batiburrillo de ubicaciones (Las Condes/Monjitas 565/Barrio Yungay/V Region) que no coincide con Lo Ovalle. Coincidencia de '13 pisos' es casual, no de ubicacion.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c3ad664d3fd620721405c962",
+    "canonical_name_a": "edificio de 13 pisos",
+    "project_id_b": "fdfe9a8a770865cab1142bb6",
+    "canonical_name_b": "torre de oficinas de 13 pisos, con 107 estacionamientos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "ubicaciones distintas (La Florida vs Viña del Mar/Vitacura/Santiago)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c3ad664d3fd620721405c962",
+    "canonical_name_a": "edificio de 13 pisos",
+    "project_id_b": "24f5b7e98abd0343bbd0fef9",
+    "canonical_name_b": "edificio de 13 pisos junto al pasaje El Almendral",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "sin evidencia de ser el mismo edificio de La Florida",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c824698f5351192c7f1550b4",
+    "canonical_name_a": "Conjunto Armónico Portezuelo",
+    "project_id_b": "b514ae15ec31cf4b2bb17353",
+    "canonical_name_b": "Portezuelo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, Vitacura",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "06cac2c4b094ac1ed38ac40b",
+    "canonical_name_a": "Rotonda Atenas",
+    "project_id_b": "623ed9e19dc274ad6b3ae8dd",
+    "canonical_name_b": "edificio con 85 viviendas sociales en plena rotonda Atenas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto Rotonda Atenas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "06cac2c4b094ac1ed38ac40b",
+    "canonical_name_a": "Rotonda Atenas",
+    "project_id_b": "f436ad53e16eea31c2d7d23a",
+    "canonical_name_b": "departamentos de Rotonda Atenas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto Rotonda Atenas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "06cac2c4b094ac1ed38ac40b",
+    "canonical_name_a": "Rotonda Atenas",
+    "project_id_b": "7e66e9745e63138bdbdf2c76",
+    "canonical_name_b": "proyecto de viviendas sociales en Las Condes, en Rotonda Atenas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "descripcion del mismo proyecto Rotonda Atenas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "06cac2c4b094ac1ed38ac40b",
+    "canonical_name_a": "Rotonda Atenas",
+    "project_id_b": "2e8579a96f08a3329f336707",
+    "canonical_name_b": "proyecto social de 2023 de la rotonda Atenas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 6] Debería ser 'kept_separate'. La evidencia distingue dos proyectos de vivienda social en Las Condes: el caso histórico Rotonda Atenas/Manquehue-Nueva Delhi y otro proyecto de 2023 en Cerro Colorado 4661, cerca de Parque Arauco. No deben fusionarse por compartir la referencia genérica a Rotonda Atenas.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "20d0dbd33b855377a948aa31",
+    "canonical_name_a": "torre Bellavista",
+    "project_id_b": "7a4072da49c6decfd6df3f01",
+    "canonical_name_b": "proyecto Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo Universidad San Sebastian, Recoleta -- ya investigado a fondo antes en esta sesion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0c411864bb77a1c65e85e196",
+    "canonical_name_a": "Centro Comunitario Padre Hurtado",
+    "project_id_b": "022c09549847326dc607c2b5",
+    "canonical_name_b": "Edificación Centro Comunitario Padre Hurtado",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo centro",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "bfccc2aaade8650742980e81",
+    "canonical_name_a": "Teleférico Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario es marca generica usada en multiples proyectos distintos del corpus",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a8855dddf7a534310bf297a1",
+    "canonical_name_a": "cementerio Parque Santiago de Huechuraba",
+    "project_id_b": "92ddfd13158c1f43afb3e7c9",
+    "canonical_name_b": "Cementerio Parque Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo cementerio, Huechuraba",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a2c7532ba5e3c22b36192ce9",
+    "canonical_name_a": "El Rincón",
+    "project_id_b": "5eb2668a2301c8070c50b5f7",
+    "canonical_name_b": "loteo El Rincón",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo loteo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a2c7532ba5e3c22b36192ce9",
+    "canonical_name_a": "El Rincón",
+    "project_id_b": "8d77972de786c1010578e905",
+    "canonical_name_b": "Central Hidroeléctrica de Pasada El Rincón",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "tipo de proyecto distinto, sin evidencia de ser el mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a2c7532ba5e3c22b36192ce9",
+    "canonical_name_a": "El Rincón",
+    "project_id_b": "fc6b5cc78a01bb9169ac12fb",
+    "canonical_name_b": "Habilitación Corredor de Transporte Público Eje Vial Rinconada Maipú",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Rinconada Maipu es un lugar distinto a El Rincon",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c5e8517e04e172dc1753e708",
+    "canonical_name_a": "Canal El Bollo",
+    "project_id_b": "8422bdb22b4201e49a0d0c60",
+    "canonical_name_b": "Parque Canal El Bollo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo canal/parque",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1cab4a257b1d65edcc59847a",
+    "canonical_name_a": "Lomas de Peñalolén",
+    "project_id_b": "3300551f194156f8fbc3da1b",
+    "canonical_name_b": "Condominio Lomas de Peñalolén",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo condominio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a812c5dd74897808e543d008",
+    "canonical_name_a": "Conjunto Armónico Bellavista",
+    "project_id_b": "7a4072da49c6decfd6df3f01",
+    "canonical_name_b": "proyecto Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo Universidad San Sebastian",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a812c5dd74897808e543d008",
+    "canonical_name_a": "Conjunto Armónico Bellavista",
+    "project_id_b": "3c3c53234cbce2dea5c38efc",
+    "canonical_name_b": "Proyecto Armónico Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "variante de escritura del mismo nombre",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a812c5dd74897808e543d008",
+    "canonical_name_a": "Conjunto Armónico Bellavista",
+    "project_id_b": "2b5185b9ab9e659ddc404ae9",
+    "canonical_name_b": "Conjunto Armónico Bellavista (CAB)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "sigla del mismo nombre",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "993cffe9909379cb2878c651",
+    "canonical_name_a": "Cenco Malls",
+    "project_id_b": "d836b79f2a3c8c188c918018",
+    "canonical_name_b": "Centro Comercial Cenco Malls en Vitacura y acceso terreno Holy Cross",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo mall",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "95c9c45b6f131f90f0b7934e",
+    "canonical_name_a": "Edificio ilegal de la Universidad San Sebastián",
+    "project_id_b": "a4b4fa4310ae14b2aab7fca3",
+    "canonical_name_b": "Universidad San Sebastián",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Universidad San Sebastian es la institucion (actor), no un nombre de proyecto especifico por si solo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7f586494a8a75577e20dbcbb",
+    "canonical_name_a": "subdivisión del resto del Lote C",
+    "project_id_b": "df460c60b8334968790ee638",
+    "canonical_name_b": "resto del Lote C",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo lote",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0152a61c89e0c5542cfd854e",
+    "canonical_name_a": "Liceo Javiera Carrera",
+    "project_id_b": "540f61bd77747111c8262792",
+    "canonical_name_b": "Proyecto de Conservación Liceo Javiera Carrera",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo liceo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ba2bad7634b8d4731a8d74c6",
+    "canonical_name_a": "Eco Egaña Comunidad Sustentable",
+    "project_id_b": "a502f0079a094cb3bd90cc60",
+    "canonical_name_b": "Egaña Comunidad Sustentable",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto Ñuñoa, prefijo Eco- opcional",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ba2bad7634b8d4731a8d74c6",
+    "canonical_name_a": "Eco Egaña Comunidad Sustentable",
+    "project_id_b": "3fa82bcc9bd6c8bffba57d08",
+    "canonical_name_b": "Eco Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "44598b79177f378212cf10e4",
+    "canonical_name_a": "Bosque Panul",
+    "project_id_b": "a6811f8738f0d36de648a860",
+    "canonical_name_b": "proyecto de subdivisión del Bosque Panul",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma subdivision",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "36bd93d333d00c28f2e840a2",
+    "canonical_name_a": "Estadio Nacional",
+    "project_id_b": "110ebd10474eedb9e991174b",
+    "canonical_name_b": "Estadio Nacional Julio Martínez Pradanos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "nombre oficial completo del mismo estadio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "36bd93d333d00c28f2e840a2",
+    "canonical_name_a": "Estadio Nacional",
+    "project_id_b": "ad9b26c608d619590d7c857f",
+    "canonical_name_b": "Parque Deportivo Estadio Nacional",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "instalacion especifica dentro del complejo, no el estadio mismo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "36bd93d333d00c28f2e840a2",
+    "canonical_name_a": "Estadio Nacional",
+    "project_id_b": "ba96a35216f3b3fe00fb1a47",
+    "canonical_name_b": "Centro de Entrenamiento de Hockey Césped del Estadio Nacional",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "instalacion especifica dentro del complejo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ddbf6472a958cffddd2d5fa5",
+    "canonical_name_a": "Helipuerto Santiago SpA",
+    "project_id_b": "740105190d88fffa8e1daa1b",
+    "canonical_name_b": "Helipuerto Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo helipuerto, sufijo de razon social",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e00461382d7c31b32142a55b",
+    "canonical_name_a": "Parque Bicentenario Cerrillos",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e00461382d7c31b32142a55b",
+    "canonical_name_a": "Parque Bicentenario Cerrillos",
+    "project_id_b": "173cac3bef57ca62781f56fb",
+    "canonical_name_b": "Parque Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 194] Debería ser 'kept_separate'. Parque Bicentenario Cerrillos y el Parque Bicentenario de Vitacura son espacios distintos. La evidencia de B lo ubica en la ribera sur del Mapocho/Tabancura, incompatible con el ex aeropuerto de Cerrillos.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "96d6e7e07e71dcf3d5c5ce48",
+    "canonical_name_a": "Ciudad Portal Bicentenario",
+    "project_id_b": "08960f92ad216bbb3341c52b",
+    "canonical_name_b": "Portal Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "96d6e7e07e71dcf3d5c5ce48",
+    "canonical_name_a": "Ciudad Portal Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "baf46ad33aee9158fa9b1e54",
+    "canonical_name_a": "Centro Cívico del Portal Bicentenario",
+    "project_id_b": "08960f92ad216bbb3341c52b",
+    "canonical_name_b": "Portal Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "componente especifico dentro del proyecto mayor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "baf46ad33aee9158fa9b1e54",
+    "canonical_name_a": "Centro Cívico del Portal Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico + sub-instalacion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eb3643e037326f2ddbd80f9f",
+    "canonical_name_a": "Villa Panamericana",
+    "project_id_b": "f4cef477adb06d2e318077cf",
+    "canonical_name_b": "Villa Panamericana de Cerrillos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, comuna agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eb3643e037326f2ddbd80f9f",
+    "canonical_name_a": "Villa Panamericana",
+    "project_id_b": "4596755c20f8748af47457ab",
+    "canonical_name_b": "Villa Panamericana-Lote B",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "lote especifico dentro del proyecto mayor, probable permiso distinto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "b1efb2d50d7ddb51e7c2bace",
+    "canonical_name_a": "dos torres en los terrenos del Hotel Sheraton",
+    "project_id_b": "803496aefc68167d7a9c2f7b",
+    "canonical_name_b": "Hotel Sheraton",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "proyecto de construccion nuevo distinto al hotel existente",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "803496aefc68167d7a9c2f7b",
+    "canonical_name_a": "Hotel Sheraton",
+    "project_id_b": "ef049159dfe5868bd2b22e9d",
+    "canonical_name_b": "Hotel Sheraton Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo hotel",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "803496aefc68167d7a9c2f7b",
+    "canonical_name_a": "Hotel Sheraton",
+    "project_id_b": "6a8b4fcf92ca3eb521134778",
+    "canonical_name_b": "Hotel Sheraton San Cristóbal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "posible hotel/torre especifica distinta, sin evidencia suficiente",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "803496aefc68167d7a9c2f7b",
+    "canonical_name_a": "Hotel Sheraton",
+    "project_id_b": "87bcc9ec3c0d06c7d1d8aa9d",
+    "canonical_name_b": "proyecto de construcción en perímetro del Hotel Sheraton Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "proyecto de construccion distinto, adyacente al hotel",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "551ec7253929cef47f30ad94",
+    "canonical_name_a": "Intercontinental",
+    "project_id_b": "7093ec87742ef2ec73726eb0",
+    "canonical_name_b": "Hotel Intercontinental Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo hotel",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c94e195649f71281c978e0ec",
+    "canonical_name_a": "Crowne Plaza",
+    "project_id_b": "9df5478112a6c203c5da1b16",
+    "canonical_name_b": "Galería de los Músicos del Crowne Plaza",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "instalacion especifica dentro del hotel",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "01d6668a9dc5aba908f81090",
+    "canonical_name_a": "Reserva La Dehesa",
+    "project_id_b": "5194147fd32056956ed8d507",
+    "canonical_name_b": "Reserva La Dehesa (ex Chaguay)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, nombre anterior entre parentesis",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a3fd34b29ae683ac95ed2703",
+    "canonical_name_a": "Desnitrificador SCR para Caldera de Ciclo Combinado de Central Nueva Renca",
+    "project_id_b": "bc201650ac1061c83985c180",
+    "canonical_name_b": "Nueva Renca",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "obra especifica en la misma central",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "13720e94b943ba21eff3a93f",
+    "canonical_name_a": "Alameda-Providencia",
+    "project_id_b": "e64cb33f7422d75ed07769f9",
+    "canonical_name_b": "Nueva Alameda Providencia",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto de corredor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "13720e94b943ba21eff3a93f",
+    "canonical_name_a": "Alameda-Providencia",
+    "project_id_b": "8bd124387f08d8b887d706ca",
+    "canonical_name_b": "Eje Alameda-Providencia",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo corredor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "803b8601f7f58a2b25f694cd",
+    "canonical_name_a": "Chaguay",
+    "project_id_b": "57441ff3d7d81631c6d5e803",
+    "canonical_name_b": "Habilitación de caminos de acceso e instalaciones complementarias de la subdivisión agrícola Chaguay",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma subdivision Chaguay",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "803b8601f7f58a2b25f694cd",
+    "canonical_name_a": "Chaguay",
+    "project_id_b": "5194147fd32056956ed8d507",
+    "canonical_name_b": "Reserva La Dehesa (ex Chaguay)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "Chaguay es el nombre anterior del mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ec64e74978f3e2ed9258902b",
+    "canonical_name_a": "Eco Egaña Sustentable",
+    "project_id_b": "3fa82bcc9bd6c8bffba57d08",
+    "canonical_name_b": "Eco Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ec64e74978f3e2ed9258902b",
+    "canonical_name_a": "Eco Egaña Sustentable",
+    "project_id_b": "2396059a776af42c809a7195",
+    "canonical_name_b": "Egaña Sustentable",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a4b4fa4310ae14b2aab7fca3",
+    "canonical_name_a": "Universidad San Sebastián",
+    "project_id_b": "78371facd00f8c26e6fb9536",
+    "canonical_name_b": "Proyecto de la Universidad San Sebastián en la manzana delimitada por las calles Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 139] Debería ser 'kept_separate'. 'Universidad San Sebastián' es una institución/actor; el otro nombre es un proyecto físico específico de la USS en Bellavista. No conviene fusionar la entidad institucional con el proyecto.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1261f2937bace054f9142b78",
+    "canonical_name_a": "La Farfana",
+    "project_id_b": "d7d099d4709579e1d3f14d85",
+    "canonical_name_b": "Planta de Tratamiento de Aguas Servidas en La Farfana",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma planta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f92527d1583efd71e18fcdcd",
+    "canonical_name_a": "Lo Aguirre",
+    "project_id_b": "35ebcc65370313ea0b363614",
+    "canonical_name_b": "Izarra de Lo Aguirre",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Lo Aguirre es un sector con multiples desarrollos distintos, no un solo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f92527d1583efd71e18fcdcd",
+    "canonical_name_a": "Lo Aguirre",
+    "project_id_b": "7618ffa4ecad89ea9b34b978",
+    "canonical_name_b": "PDUC Ciudad Lo Aguirre",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "sector con multiples desarrollos distintos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f92527d1583efd71e18fcdcd",
+    "canonical_name_a": "Lo Aguirre",
+    "project_id_b": "ea5d8ac70a737f8dbcdcb939",
+    "canonical_name_b": "Centro de Distribución Lo Aguirre",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "desarrollo especifico dentro del sector",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f92527d1583efd71e18fcdcd",
+    "canonical_name_a": "Lo Aguirre",
+    "project_id_b": "fd88453f2676612306c9086a",
+    "canonical_name_b": "Lomas de Lo Aguirre",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "desarrollo especifico dentro del sector",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f92527d1583efd71e18fcdcd",
+    "canonical_name_a": "Lo Aguirre",
+    "project_id_b": "1d98f9cb8fe195a3c0c3fe81",
+    "canonical_name_b": "Centro Logístico Lo Aguirre de Bodegas San Francisco",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "desarrollo especifico dentro del sector",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "d73af24dd0ce7b45889f3360",
+    "canonical_name_b": "Jardines de Vespucio",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Vespucio es nombre de avenida/sector, no un proyecto especifico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "0bb1b98025890eb322a5a8b1",
+    "canonical_name_b": "Autopista Vespucio Oriente (AVO)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "56029c529c4c61cb488f342c",
+    "canonical_name_b": "Vespucio 345",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "c81799f769f704acbc71e31a",
+    "canonical_name_b": "Vespucio Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "35f9ae13c61eeb96a6b6915d",
+    "canonical_name_b": "proyecto de departamentos ubicado en avenida Américo Vespucio, en la esquina de Renato Sánchez",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "687ed0eacba953f8423b7c99",
+    "canonical_name_b": "Vespucio Oriente II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "5e8bc3f7a3fc027b5a062246",
+    "canonical_name_b": "Switch Vespucio 345",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "24a3fbb99141dc0a2b2017ff",
+    "canonical_name_b": "Autopista Vespucio Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "9acea8af27fce634a313f06b",
+    "canonical_name_b": "proyecto Avda. Vespucio con Renato Sanchez Fontecilla y Asturias",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "58194ff3f9ce4c8a8ab2a58f",
+    "canonical_name_b": "edificio de 17 pisos localizado en la calle Américo Vespucio 7550",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "a4c932634612138738971b5d",
+    "canonical_name_b": "nuevo edificio en la esquina de Vespucio con Santa Rosa",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "ce2339c9c8060e788149ac58",
+    "canonical_name_b": "Vespucio Sur, Renato Sánchez y Asturias",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "574950495c485db9352bbde9",
+    "canonical_name_b": "Renato Sanchez, Asturias y Américo Vespucio",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "e219cdacd3ae3c141a5be8bf",
+    "canonical_name_b": "Américo Vespucio Oriente (AVO)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f357731ca824936be23891c8",
+    "canonical_name_a": "Vespucio",
+    "project_id_b": "b460111bee3acf897b3bc9a3",
+    "canonical_name_b": "estación Intermodal Vespucio Norte",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e2b790c760bf99c8d604d154",
+    "canonical_name_a": "globos de televigilancia",
+    "project_id_b": "de7f02a03b79d3bfe6a7f7ab",
+    "canonical_name_b": "globos de televigilancia en Las Condes y Lo Barnechea",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma iniciativa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e1c30745abde8086367a9640",
+    "canonical_name_a": "Ciudad de Los Valles",
+    "project_id_b": "6c80accab1cdea5ac54c41c4",
+    "canonical_name_b": "supermercado Express de Líder en Ciudad de Los Valles",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "tienda especifica dentro del desarrollo mayor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e1c30745abde8086367a9640",
+    "canonical_name_a": "Ciudad de Los Valles",
+    "project_id_b": "9e27334439621705513045b6",
+    "canonical_name_b": "Líder de Ciudad de Los Valles",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "tienda especifica dentro del desarrollo mayor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c2c192c775e76900a5a6e05a",
+    "canonical_name_a": "Mina Panales 1/54",
+    "project_id_b": "e91503802a4b21857e33135f",
+    "canonical_name_b": "Explotación de la Mina Panales 1 a 54",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma mina",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c2c192c775e76900a5a6e05a",
+    "canonical_name_a": "Mina Panales 1/54",
+    "project_id_b": "985cba68b4d01947ca8e0938",
+    "canonical_name_b": "Panales",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma mina, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "56e38026f850dc7badd03854",
+    "canonical_name_a": "Ciudad del Niño",
+    "project_id_b": "a6f02232859c0fa1123cda54",
+    "canonical_name_b": "megaproyecto de 23 torres en Ciudad del Niño",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "descripcion del mismo desarrollo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "56e38026f850dc7badd03854",
+    "canonical_name_a": "Ciudad del Niño",
+    "project_id_b": "11693429984c7a39a3f190da",
+    "canonical_name_b": "ex Ciudad del Niño",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, nombre historico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f2b35a9177216ae2baa577ab",
+    "canonical_name_a": "ex Escuela Rebeca Catalán Vargas",
+    "project_id_b": "b9138f1cb242ae8bb68f8434",
+    "canonical_name_b": "ex Escuela Rebeca Catalán",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma escuela, nombre truncado",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0a7420a2f224e2831f8d5788",
+    "canonical_name_a": "Edificio Pajaritos",
+    "project_id_b": "e8195cc466bc9d0e3251d426",
+    "canonical_name_b": "Pajaritos 4600",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 13] Debería ser 'merged'. Edificio Pajaritos y Pajaritos 4600 son el mismo proyecto: varias fuentes de A lo ubican explícitamente en Avenida Pajaritos 4600, junto a Metro Monte Tabor, que coincide con B. El numeral es la dirección.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0a7420a2f224e2831f8d5788",
+    "canonical_name_a": "Edificio Pajaritos",
+    "project_id_b": "f87660904f409c7e3c2d2302",
+    "canonical_name_b": "Habilitación del corredor de transporte público Pedro Aguirre Cerda — Tramo Alameda Pajaritos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "tipo de proyecto distinto: edificio vs corredor de transporte",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "044c20f0e13a1bae6c68978c",
+    "canonical_name_a": "General Amengual",
+    "project_id_b": "506de01b09f335809ac2221a",
+    "canonical_name_b": "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 4] Debería ser 'merged'. La evidencia apunta al mismo edificio: en proyecto A aparece 'Edificio General Amengual' y la ubicación exacta calle General Amengual 480; proyecto B describe el edificio de 38 pisos en esa misma dirección. El 480 es una dirección, no una etapa o fase.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0a9d6730e059f72c2cdec2d8",
+    "canonical_name_a": "Recreo",
+    "project_id_b": "d191d5d75ef69b3ecc647d8b",
+    "canonical_name_b": "Recreo N° 321",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo desarrollo, direccion especifica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0a9d6730e059f72c2cdec2d8",
+    "canonical_name_a": "Recreo",
+    "project_id_b": "15448afc0cfadb9a6e38f542",
+    "canonical_name_b": "Recreo 321",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo desarrollo, direccion especifica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ed19cf4f9892c1fdb1ae823b",
+    "canonical_name_a": "Hospital del Salvador",
+    "project_id_b": "3ec7dd0b0990b886c761cec1",
+    "canonical_name_b": "hospital El Salvador de Providencia",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo hospital",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ed19cf4f9892c1fdb1ae823b",
+    "canonical_name_a": "Hospital del Salvador",
+    "project_id_b": "a12b4664006ea0eb9aa21fbe",
+    "canonical_name_b": "nuevo Hospital del Salvador",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 212] Debería ser 'kept_separate'. La evidencia disponible no sostiene que el 'nuevo Hospital del Salvador' de B sea el mismo proyecto de A; B lo ubica en Grecia/Los Jardines en un contexto distinto. La fusión es demasiado agresiva.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fb4d1bfb86e26154fcd78b3d",
+    "canonical_name_a": "La Florida",
+    "project_id_b": "d280521884f7613bf38e33a3",
+    "canonical_name_b": "Florida Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "La Florida es la comuna, demasiado generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fb4d1bfb86e26154fcd78b3d",
+    "canonical_name_a": "La Florida",
+    "project_id_b": "f148a1628c2b7fdbb88af6b3",
+    "canonical_name_b": "Automac de McDonald’s en La Florida",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "comuna generica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fb4d1bfb86e26154fcd78b3d",
+    "canonical_name_a": "La Florida",
+    "project_id_b": "a685556468f115bbb9b3ba4f",
+    "canonical_name_b": "Portal La Florida",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "comuna generica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fb4d1bfb86e26154fcd78b3d",
+    "canonical_name_a": "La Florida",
+    "project_id_b": "b7d51c1d615e9ad376c6bd4f",
+    "canonical_name_b": "inmueble de La Florida (ubicado en calle Millalongo)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "comuna generica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f98ce4cc38f10a31f72d3b35",
+    "canonical_name_a": "Monjitas 565",
+    "project_id_b": "75b4cfebad7e31ba40d2331b",
+    "canonical_name_b": "torre de 13 pisos en la calle Monjitas 565",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma direccion exacta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "acd271a346ba73d9c4bba96a",
+    "canonical_name_a": "PDUC Urbanya",
+    "project_id_b": "dec2a1b623540f6024038698",
+    "canonical_name_b": "Urbanya",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "PDUC es el instrumento de planificacion del mismo proyecto Urbanya",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6f5a7267b402f19352f4bf54",
+    "canonical_name_a": "Data Center de Google",
+    "project_id_b": "ac866e9e2fa798fbf4272e1c",
+    "canonical_name_b": "Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Data Center es termino generico, multiples proyectos distintos en el corpus",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "15e845503c3fdfd9ff115304",
+    "canonical_name_a": "Mall Vivo Santiago Etapa II",
+    "project_id_b": "250846ef44a9320599c622ca",
+    "canonical_name_b": "Mall Vivo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 28] Debería ser 'merged'. La evidencia del nombre genérico 'Mall Vivo' en el corpus lo sitúa en Ñuñoa, Vicuña Mackenna/Carlos Dittborn, y la contraparte corresponde al mismo proyecto Mall Vivo Santiago/Etapa II. En este corpus la mención genérica está contextualizada al mismo caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "15e845503c3fdfd9ff115304",
+    "canonical_name_a": "Mall Vivo Santiago Etapa II",
+    "project_id_b": "fcda5f17d8f9a5aca734f967",
+    "canonical_name_b": "Mall Vivo Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 30] Debería ser 'merged'. Mall Vivo Santiago y Mall Vivo Santiago Etapa II remiten al mismo proyecto en Ñuñoa, en los ex terrenos de Copesa/Vicuña Mackenna-Carlos Dittborn, y al mismo conflicto ambiental. 'Etapa II' funciona aquí como denominación formal/fase del mismo caso, no como proyecto independiente.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "15e845503c3fdfd9ff115304",
+    "canonical_name_a": "Mall Vivo Santiago Etapa II",
+    "project_id_b": "28b6a35d1906a0f07957d979",
+    "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma etapa II, nombre completo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a8a6f6783e298ceda8a16db7",
+    "canonical_name_a": "Barrio Maestranza 1",
+    "project_id_b": "79bd439d4af500f5546d2af6",
+    "canonical_name_b": "barrio Maestranza",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 145] Debería ser 'kept_separate'. 'Barrio Maestranza' es demasiado genérico y la evidencia apunta a sectores distintos (Santiago Watt/Exposición versus San Eugenio y eje Santiago-Pedro Aguirre Cerda). No hay identidad de proyecto demostrada.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "708353b6e07226824317b02d",
+    "canonical_name_a": "proyecto de Inmobiliaria Nueva El Golf",
+    "project_id_b": "a71127327712c32eb584b209",
+    "canonical_name_b": "Nueva El Golf",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 86] Debería ser 'kept_separate'. 'Nueva El Golf' funciona como nombre de la inmobiliaria/desarrollador y no como un proyecto único. La evidencia abarca desarrollos distintos, por lo que no debe usarse como alias de un caso específico.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "708353b6e07226824317b02d",
+    "canonical_name_a": "proyecto de Inmobiliaria Nueva El Golf",
+    "project_id_b": "8efd4a4bbd70a38291e41ef8",
+    "canonical_name_b": "proyecto que impulsa la inmobiliaria Nueva El Golf",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 85] Debería ser 'kept_separate'. La relación común es la inmobiliaria Nueva El Golf, no necesariamente el mismo proyecto. La evidencia contiene proyectos en ubicaciones distintas; fusionarlos convertiría identidad del desarrollador en identidad del proyecto.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8d0a7e39ae5737220a9922c8",
+    "canonical_name_a": "Fase IV",
+    "project_id_b": "5155cde8dd90387a2a95dc88",
+    "canonical_name_b": "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18] merged -- hallazgo real adicional (no reportado por Sol, encontrado por Claude al reverificar los pares gobernados por la regla de numeral suelto): A esta en 'Sector de ENEA (Pudahuel)', B es literalmente 'Enea Fase IV' -- mismo sector, misma fase. La regla anterior los separaba por error porque el numeral romano 'iv' de A no coincidia token a token con el resto de numeros de B (14080, 3E-2).",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "bc89b63f9a1f489b8da8d739",
+    "canonical_name_a": "Centro de Eventos",
+    "project_id_b": "41b14f6271d3d186a59caef9",
+    "canonical_name_b": "Centro de Eventos Espacio Riesco",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Centro de Eventos es termino generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "82e47af4deaa8615cff8ef60",
+    "canonical_name_a": "supermercado Lider",
+    "project_id_b": "0913ce433cf7906fb082e70c",
+    "canonical_name_b": "supermercado Líder San Francisco",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Lider es cadena generica con multiples locales distintos en el corpus",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d4231579d75e9f9807c2006f",
+    "canonical_name_a": "estacionamientos de Alonso de Córdova",
+    "project_id_b": "878254fdfae301a8573ed762",
+    "canonical_name_b": "Concesionaria de Estacionamientos Alonso de Córdova (Zoccalo)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma concesion de estacionamientos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0bb1b98025890eb322a5a8b1",
+    "canonical_name_a": "Autopista Vespucio Oriente (AVO)",
+    "project_id_b": "c81799f769f704acbc71e31a",
+    "canonical_name_b": "Vespucio Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma autopista, sigla",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0bb1b98025890eb322a5a8b1",
+    "canonical_name_a": "Autopista Vespucio Oriente (AVO)",
+    "project_id_b": "24a3fbb99141dc0a2b2017ff",
+    "canonical_name_b": "Autopista Vespucio Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo nombre sin sigla",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "3c3c53234cbce2dea5c38efc",
+    "canonical_name_b": "Proyecto Armónico Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo Universidad San Sebastian",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "5072bb81116307703651bd30",
+    "canonical_name_b": "casa de dos pisos de calle Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "propiedad pequeña sin relacion evidente con el proyecto de torres",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "2b5185b9ab9e659ddc404ae9",
+    "canonical_name_b": "Conjunto Armónico Bellavista (CAB)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "017a50eba17125b1fb0f4af0",
+    "canonical_name_b": "torres en el barrio Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "coincide con las tres torres del complejo Universidad San Sebastian",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "e3c940df347987a8e6f9693b",
+    "canonical_name_b": "proyecto de Inmobiliaria Bellavista en calle Dardignac",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo, calle Dardignac coincide con la investigacion previa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "80119ee1c677f9875d29c4b3",
+    "canonical_name_b": "edificio de Desarrollo Inmobiliario Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "Desarrollo Inmobiliario Bellavista S.A. es la empresa del mismo proyecto, ya identificada en esta sesion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "c5b8bdaf1fc61ea33af5d1c7",
+    "canonical_name_b": "proyecto del terreno en Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "descripcion generica del mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "5fc1929629635e3c71603bda",
+    "canonical_name_b": "una especie de mall del Fondo de Inversión Inmobiliaria Cimenta en el barrio Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "desarrollador y tipo de proyecto distintos (Fondo Cimenta, no Desarrollo Inmobiliario Bellavista)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "78371facd00f8c26e6fb9536",
+    "canonical_name_b": "Proyecto de la Universidad San Sebastián en la manzana delimitada por las calles Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "descripcion completa del mismo complejo ya investigado a fondo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a4072da49c6decfd6df3f01",
+    "canonical_name_a": "proyecto Bellavista",
+    "project_id_b": "fb49a4d680834035f4a33276",
+    "canonical_name_b": "Conjunto Inmobiliario Bellavista",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6adefbac34725abb9c46b40c",
+    "canonical_name_a": "ex clínica Sierra Bella",
+    "project_id_b": "b5da5dadfd479fed61b36726",
+    "canonical_name_b": "Sierra Bella",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "565a49993327ef48de398208",
+    "canonical_name_a": "Parque Las Américas",
+    "project_id_b": "50ef2250295c9bf7588ab540",
+    "canonical_name_b": "Las Américas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ac9ee854bc305a5bca934aef",
+    "canonical_name_a": "Villa Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fb512a54a688cc0dcdaf69a3",
+    "canonical_name_a": "Edificio Parque San Cristóbal",
+    "project_id_b": "0e1a62aee759526f24cb9bc5",
+    "canonical_name_b": "Edificio San Cristóbal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo edificio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ef049159dfe5868bd2b22e9d",
+    "canonical_name_a": "Hotel Sheraton Santiago",
+    "project_id_b": "87bcc9ec3c0d06c7d1d8aa9d",
+    "canonical_name_b": "proyecto de construcción en perímetro del Hotel Sheraton Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "proyecto de construccion distinto, adyacente",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d7d05bfea7e473f2770fa7b1",
+    "canonical_name_a": "San Cristóbal Tower",
+    "project_id_b": "0e1a62aee759526f24cb9bc5",
+    "canonical_name_b": "Edificio San Cristóbal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo edificio, nombre en ingles",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "aee6f5fa97792a0322da7a0c",
+    "canonical_name_a": "proyecto de la Inmobiliaria Mirador Oriente S.A. a emplazarse en su terreno de calle Vital Apoquindo",
+    "project_id_b": "fe0f38566717aa34de32376a",
+    "canonical_name_b": "Vital Apoquindo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Vital Apoquindo es la calle, con multiples proyectos distintos encima",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3ce6d0d030381374a3c026f7",
+    "canonical_name_a": "Ciudad Parque Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3ce6d0d030381374a3c026f7",
+    "canonical_name_a": "Ciudad Parque Bicentenario",
+    "project_id_b": "173cac3bef57ca62781f56fb",
+    "canonical_name_b": "Parque Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Ciudad Parque Bicentenario (Huechuraba) y Parque Bicentenario Cerrillos son desarrollos distintos y conocidos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "aef943251b1be918370edf5d",
+    "canonical_name_a": "Villa Olímpica",
+    "project_id_b": "21ef01a5f5ea1b84eb392920",
+    "canonical_name_b": "Block 73 de Villa Olímpica",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "bloque especifico dentro del complejo historico, caso propio de demolicion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8a529b2462116b2091a15767",
+    "canonical_name_a": "Unidad Vecinal Providencia",
+    "project_id_b": "2cd3e904849035547f1afeb1",
+    "canonical_name_b": "Proyecto Vecinal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Proyecto Vecinal es termino generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9bcb4cd691cf1a862287033c",
+    "canonical_name_a": "Proyecto de las 54 Casas",
+    "project_id_b": "9fecc1b649c23a654df089df",
+    "canonical_name_b": "Loteo 54 casas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto de 54 casas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9bcb4cd691cf1a862287033c",
+    "canonical_name_a": "Proyecto de las 54 Casas",
+    "project_id_b": "d34f64679c99e18902597d3d",
+    "canonical_name_b": "54 casas del Cerro del Medio",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto de 54 casas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "b91485b8bf199c62d36d9924",
+    "canonical_name_a": "Tranque La Poza",
+    "project_id_b": "a1df7a044f464301dcedda37",
+    "canonical_name_b": "Humedal Urbano Tranque La Poza",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo humedal, designacion oficial agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e833a979107986776b1e8bff",
+    "canonical_name_a": "El Castillo",
+    "project_id_b": "9c6dac063d0e373e95a9fbf2",
+    "canonical_name_b": "Plan de regeneración urbana para la población El Castillo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo caso, el plan describe la misma poblacion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e833a979107986776b1e8bff",
+    "canonical_name_a": "El Castillo",
+    "project_id_b": "8c053fa664e944c16437beb0",
+    "canonical_name_b": "Castillo Hidalgo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombres distintos, sin evidencia de ser el mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9591afa706e538915f77891d",
+    "canonical_name_a": "Granja Educativa Terra Viva",
+    "project_id_b": "b5984a0245ab4bc8418035fb",
+    "canonical_name_b": "La Granja",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "La Granja es la comuna, generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c958453bb34d87f0fdcc6142",
+    "canonical_name_a": "una cochera y un taller para la Línea 7 del Metro",
+    "project_id_b": "1116e5a6a061a1bd4fe3499b",
+    "canonical_name_b": "Línea 7 del Metro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "instalacion especifica de la linea, no la linea completa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "067c692a86314501b606ad33",
+    "canonical_name_a": "el pique que se hará en el Parque Forestal",
+    "project_id_b": "0e1ad62b8315f0e58d2dd1c8",
+    "canonical_name_b": "Parque Forestal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Parque Forestal es un lugar con multiples intervenciones especificas distintas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "51a8b044e39aac5f75cfa5c1",
+    "canonical_name_a": "Remodelación San Borja",
+    "project_id_b": "db5ca48365c7bc415d4e6161",
+    "canonical_name_b": "Remodelacion San Borja de Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, variante de acento y comuna agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e8fd7b147a07358cd8e129e9",
+    "canonical_name_a": "Costanera Center",
+    "project_id_b": "0d5398db0f9609d950f507e7",
+    "canonical_name_b": "mall Costanera Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo mall",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7c32e9abaeffba0db8f616b4",
+    "canonical_name_a": "planta de tratamiento de aguas servidas de la Empresa San Isidro",
+    "project_id_b": "b8776536b091c9592aae937e",
+    "canonical_name_b": "San Isidro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 101] Debería ser 'kept_separate'. 'San Isidro' es ambiguo. Un lado refiere a una planta de tratamiento de aguas servidas/Empresa San Isidro y el otro contiene menciones que no prueban que se trate de esa misma planta. No hay evidencia suficiente para fusionar.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7c32e9abaeffba0db8f616b4",
+    "canonical_name_a": "planta de tratamiento de aguas servidas de la Empresa San Isidro",
+    "project_id_b": "7870612a937c31e81aedb226",
+    "canonical_name_b": "proyecto San Isidro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, tras split del homonimo San Isidro] merged: 'proyecto San Isidro' quedo, tras separar el homonimo de Toro Mazotte, unicamente con el documento de Quilicura/Estero Las Cruces -- mismo emplazamiento que la planta de tratamiento de aguas servidas de la Empresa San Isidro.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "78a738016ed2fc76ff4fa288",
+    "canonical_name_b": "Villa San Luis de Las Condes",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo caso historico Villa San Luis",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "551969b516160b4b9a823149",
+    "canonical_name_b": "Villa Ministro Carlos Cortés (Villa San Luis de Las Condes)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "Villa Ministro Carlos Cortes es el nombre oficial original del mismo caso",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "1a22563d52bdf48d4409bb5d",
+    "canonical_name_b": "Villa Compañero Ministro Carlos Cortés (Villa San Luis)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo caso historico Villa San Luis",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "9340e0affcfabb6aaaf677af",
+    "canonical_name_b": "Museo Memorial Villa San Luis",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "museo sobre el mismo caso historico, parte de la misma narrativa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "8387fe20a75980fd3e29aa11",
+    "canonical_name_b": "ex Villa San Luis",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, prefijo ex-",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "78a738016ed2fc76ff4fa288",
+    "canonical_name_a": "Villa San Luis de Las Condes",
+    "project_id_b": "551969b516160b4b9a823149",
+    "canonical_name_b": "Villa Ministro Carlos Cortés (Villa San Luis de Las Condes)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo caso",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3fa82bcc9bd6c8bffba57d08",
+    "canonical_name_a": "Eco Egaña",
+    "project_id_b": "fdbfa9caacd35c44ad184538",
+    "canonical_name_b": "Eco Egaña Poniente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 60] Debería ser 'merged'. Eco Egaña y Eco Egaña Poniente aparecen como variantes del mismo conflicto/proyecto de Fundamenta en el entorno de Plaza Egaña. La evidencia no documenta dos proyectos independientes.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "07f2e2ce4fe660358aba5d28",
+    "canonical_name_a": "Mall Sport",
+    "project_id_b": "b83676a1dfc657fda2fe2305",
+    "canonical_name_b": "Mall Sport de Las Condes",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo mall, comuna agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2bece610a052e2cb3df8e01d",
+    "canonical_name_a": "Línea 8",
+    "project_id_b": "6eb707c5c00a6f5646130a21",
+    "canonical_name_b": "linea 8 del metro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma linea, variante de mayusculas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1116e5a6a061a1bd4fe3499b",
+    "canonical_name_a": "Línea 7 del Metro",
+    "project_id_b": "c0aec03825e1cfe75d8db6c1",
+    "canonical_name_b": "Talleres de la Línea 7 del Metro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "instalacion especifica (talleres), no la linea completa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1116e5a6a061a1bd4fe3499b",
+    "canonical_name_a": "Línea 7 del Metro",
+    "project_id_b": "93603cea8a12ec5ef4edbcb2",
+    "canonical_name_b": "Línea 7 Metro de Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma linea, variante de orden de palabras",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e456549a9815284f66aeb631",
+    "canonical_name_a": "Línea 3 del Metro",
+    "project_id_b": "c842b3fe450afe684c1bfb14",
+    "canonical_name_b": "Línea 3 del Metro de Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma linea, comuna/ciudad agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "56029c529c4c61cb488f342c",
+    "canonical_name_a": "Vespucio 345",
+    "project_id_b": "5e8bc3f7a3fc027b5a062246",
+    "canonical_name_b": "Switch Vespucio 345",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma direccion",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3c3c53234cbce2dea5c38efc",
+    "canonical_name_a": "Proyecto Armónico Bellavista",
+    "project_id_b": "2b5185b9ab9e659ddc404ae9",
+    "canonical_name_b": "Conjunto Armónico Bellavista (CAB)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo complejo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "250846ef44a9320599c622ca",
+    "canonical_name_a": "Mall Vivo",
+    "project_id_b": "fcda5f17d8f9a5aca734f967",
+    "canonical_name_b": "Mall Vivo Santiago",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 41] Debería ser 'merged'. Mall Vivo y Mall Vivo Santiago, dentro de la evidencia disponible, apuntan al mismo proyecto de Ñuñoa en Vicuña Mackenna/Carlos Dittborn. La separación por nombre genérico produciría duplicación del mismo caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "250846ef44a9320599c622ca",
+    "canonical_name_a": "Mall Vivo",
+    "project_id_b": "28b6a35d1906a0f07957d979",
+    "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 38] Debería ser 'merged'. La fase 'Etapa de Demolición, Excavación y Socalzados' pertenece al mismo Mall Vivo Santiago en Ñuñoa; es una fase constructiva del mismo proyecto/caso, no un proyecto autónomo.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "250846ef44a9320599c622ca",
+    "canonical_name_a": "Mall Vivo",
+    "project_id_b": "55fa84eba03ac162dcefd342",
+    "canonical_name_b": "Mall Vivo Santiago: Etapa de Demolición, Excavación y Socalzados",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 39] Debería ser 'merged'. El 'Mall Vivo' genérico está contextualizado en el mismo emplazamiento de Ñuñoa; la denominación formal de Etapa II no constituye evidencia suficiente de un proyecto distinto.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "250846ef44a9320599c622ca",
+    "canonical_name_a": "Mall Vivo",
+    "project_id_b": "d184ac6f9190cfa8a094f5d9",
+    "canonical_name_b": "Mall Vivo Los Trapenses",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "local distinto de la misma cadena",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "250846ef44a9320599c622ca",
+    "canonical_name_a": "Mall Vivo",
+    "project_id_b": "2565c68a3f0d32bc7f340c21",
+    "canonical_name_b": "Mall Vivo Ñuñoa",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 37] Debería ser 'merged'. El 'Mall Vivo' genérico de la evidencia está contextualizado en Ñuñoa y coincide con el mismo Mall Vivo Santiago. Separarlo solo por el uso abreviado del nombre fragmenta un mismo caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a71127327712c32eb584b209",
+    "canonical_name_a": "Nueva El Golf",
+    "project_id_b": "8efd4a4bbd70a38291e41ef8",
+    "canonical_name_b": "proyecto que impulsa la inmobiliaria Nueva El Golf",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 140] Debería ser 'kept_separate'. 'Nueva El Golf' es la inmobiliaria/desarrollador, mientras el otro nombre refiere a un proyecto impulsado por esa empresa. Actor y proyecto deben mantenerse separados.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "b1b327da87473d5fe318d5b8",
+    "canonical_name_a": "nuevo edificio de la Cámara Chilena de la Construcción en Las Condes",
+    "project_id_b": "4acc6611fad8c55f8f538bcf",
+    "canonical_name_b": "nuevo edificio de la Cámara Chilena de la Construcción",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo edificio, comuna agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f3971dafbee7d68d88518821",
+    "canonical_name_a": "Centro Comercial Cencosud Shopping en Vitacura",
+    "project_id_b": "8aeb5bda1c1a653db5abef0e",
+    "canonical_name_b": "Cencosud Shopping Vitacura",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo centro comercial",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f812606363c1da5d45545a98",
+    "canonical_name_a": "La Molina",
+    "project_id_b": "b660f526418e762a81c58061",
+    "canonical_name_b": "Población Abate Molina",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombres distintos, sin evidencia de ser el mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2cfcdb67a6274db8af9377f6",
+    "canonical_name_a": "Alto Las Condes",
+    "project_id_b": "008d2f365c67d75ec7b3e30a",
+    "canonical_name_b": "Alto Las Condes 2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "expansion numerada, fase distinta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2cfcdb67a6274db8af9377f6",
+    "canonical_name_a": "Alto Las Condes",
+    "project_id_b": "e6cb0dc75e5923505b8c84ea",
+    "canonical_name_b": "mall Alto Las Condes",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo mall, sin numeral",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2cfcdb67a6274db8af9377f6",
+    "canonical_name_a": "Alto Las Condes",
+    "project_id_b": "7d5048d0367a8d31a6884eb1",
+    "canonical_name_b": "Alto Las Condes II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "expansion numerada, fase distinta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2cfcdb67a6274db8af9377f6",
+    "canonical_name_a": "Alto Las Condes",
+    "project_id_b": "5f33de46702f3740e762506d",
+    "canonical_name_b": "Mall Alto Las Condes 2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado: decision original deliberada (numero '2' indica fase/expansion distinta del mall existente, documentado ya en el patron 'Alto Las Condes vs Alto Las Condes 2' de la primera ronda de revision), B sin evidencia de ubicacion propia que la contradiga.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "551969b516160b4b9a823149",
+    "canonical_name_a": "Villa Ministro Carlos Cortés (Villa San Luis de Las Condes)",
+    "project_id_b": "4553cd3635fd0a76e87dc714",
+    "canonical_name_b": "Villa Ministro Carlos Cortés",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo nombre, sin la aclaracion parentetica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eeeec3a4d4a8d6ec34db6a23",
+    "canonical_name_a": "Las Pircas Norte",
+    "project_id_b": "a5e4f23a2c3cf81036e1c663",
+    "canonical_name_b": "Condominio El Pórtico Las Pircas Norte",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo condominio en el mismo sector",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "08960f92ad216bbb3341c52b",
+    "canonical_name_a": "Portal Bicentenario",
+    "project_id_b": "adfb19558de9f772aad491a5",
+    "canonical_name_b": "Proyecto Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fcda5f17d8f9a5aca734f967",
+    "canonical_name_a": "Mall Vivo Santiago",
+    "project_id_b": "28b6a35d1906a0f07957d979",
+    "canonical_name_b": "Centro Comercial Mall Vivo Santiago Etapa II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 248] Debería ser 'merged'. Mall Vivo Santiago y Centro Comercial Mall Vivo Santiago Etapa II comparten emplazamiento y conflicto en Ñuñoa. La denominación de Etapa II no justifica un case_id separado en esta capa.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fcda5f17d8f9a5aca734f967",
+    "canonical_name_a": "Mall Vivo Santiago",
+    "project_id_b": "55fa84eba03ac162dcefd342",
+    "canonical_name_b": "Mall Vivo Santiago: Etapa de Demolición, Excavación y Socalzados",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "describe una actividad del mismo proceso, no una etapa numerada distinta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d90568870bb67c522a87cd54",
+    "canonical_name_a": "Espacio Riesco",
+    "project_id_b": "41b14f6271d3d186a59caef9",
+    "canonical_name_b": "Centro de Eventos Espacio Riesco",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo recinto, nombre completo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a8f8192169f11ceeed845c76",
+    "canonical_name_a": "nuevo teleférico",
+    "project_id_b": "dbd13b54a507a13e0677200c",
+    "canonical_name_b": "nuevo teleférico que unirá Huechuraba con Providencia",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma iniciativa, descripcion agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eac82a27f8e7a9b515684e1e",
+    "canonical_name_a": "Proyecto de Cencosud en San Isidro",
+    "project_id_b": "b8776536b091c9592aae937e",
+    "canonical_name_b": "San Isidro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate: 'San Isidro' aqui es un barrio de Buenos Aires, Argentina (proyecto de Cencosud) -- geograficamente incompatible con 'San Isidro' de Toro Mazotte/Estacion Central, Chile.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eac82a27f8e7a9b515684e1e",
+    "canonical_name_a": "Proyecto de Cencosud en San Isidro",
+    "project_id_b": "7870612a937c31e81aedb226",
+    "canonical_name_b": "proyecto San Isidro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate: mismo razonamiento -- San Isidro, Buenos Aires, Argentina no tiene relacion con 'proyecto San Isidro' (planta de tratamiento de aguas servidas, Quilicura, Chile).",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "bf0918dd51fc2ab49181863a",
+    "canonical_name_a": "Edificio de viviendas de siete pisos en Toledo Nº 1950, 1960 y 1966",
+    "project_id_b": "6afefbbe4f00c704d21e8127",
+    "canonical_name_b": "Toledo​￼?",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado: el nombre B esta corrupto (texto basura con caracteres invisibles/de reemplazo, mismo patron de degeneracion de texto ya diagnosticado en otras partes del pipeline) y su evidencia real (Balmaceda/Santiago/Hualpen/Concepcion/Vina del Mar/Macul/Maipu) no tiene relacion con Toledo/Providencia de A.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "00a49b2fac5c7887f0c4f628",
+    "canonical_name_a": "edificio de la estrecha calle Santa Petronila",
+    "project_id_b": "14537e43f763c717791c5b90",
+    "canonical_name_b": "edificio Santa Petronila",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo edificio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "26f6b767ab873001b6a725b0",
+    "canonical_name_a": "Cerrillos Data Center",
+    "project_id_b": "7a29cc8b18fb605446037733",
+    "canonical_name_b": "Modificación del Proyecto Cerrillos Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "modificacion del mismo proyecto especifico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "26f6b767ab873001b6a725b0",
+    "canonical_name_a": "Cerrillos Data Center",
+    "project_id_b": "ac866e9e2fa798fbf4272e1c",
+    "canonical_name_b": "Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Data Center es termino generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7a29cc8b18fb605446037733",
+    "canonical_name_a": "Modificación del Proyecto Cerrillos Data Center",
+    "project_id_b": "ac866e9e2fa798fbf4272e1c",
+    "canonical_name_b": "Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Data Center es termino generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9669a78a07de32dc53a9cefd",
+    "canonical_name_a": "proyecto inmobiliario de Fundamenta en Ñuñoa",
+    "project_id_b": "bb5755a35f19ada504ca13a4",
+    "canonical_name_b": "proyecto inmobiliario de Fundamenta",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 124] Debería ser 'kept_separate'. La coincidencia es principalmente el desarrollador Fundamenta. La evidencia de B identifica un proyecto en Simón Bolívar/Suecia/José Artigas/Sucre, y el corpus contiene otros proyectos de Fundamenta; no basta para fusionar con un proyecto genérico de Ñuñoa.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "008d2f365c67d75ec7b3e30a",
+    "canonical_name_a": "Alto Las Condes 2",
+    "project_id_b": "5f33de46702f3740e762506d",
+    "canonical_name_b": "Mall Alto Las Condes 2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma expansion, ambos comparten el numeral 2",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c81799f769f704acbc71e31a",
+    "canonical_name_a": "Vespucio Oriente",
+    "project_id_b": "687ed0eacba953f8423b7c99",
+    "canonical_name_b": "Vespucio Oriente II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "expansion numerada, fase distinta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c81799f769f704acbc71e31a",
+    "canonical_name_a": "Vespucio Oriente",
+    "project_id_b": "24a3fbb99141dc0a2b2017ff",
+    "canonical_name_b": "Autopista Vespucio Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma autopista",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c81799f769f704acbc71e31a",
+    "canonical_name_a": "Vespucio Oriente",
+    "project_id_b": "e219cdacd3ae3c141a5be8bf",
+    "canonical_name_b": "Américo Vespucio Oriente (AVO)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma autopista, nombre oficial completo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1a22563d52bdf48d4409bb5d",
+    "canonical_name_a": "Villa Compañero Ministro Carlos Cortés (Villa San Luis)",
+    "project_id_b": "1f44e66d31c41174eed3c165",
+    "canonical_name_b": "Villa Compañero Ministro Carlos Cortés",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo nombre sin la aclaracion parentetica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "91f2112803222891bec22245",
+    "canonical_name_a": "Carlos Valdovinos",
+    "project_id_b": "f7d6ad8c044247d2be5e72c1",
+    "canonical_name_b": "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 121] Debería ser 'kept_separate'. Hay una contradicción geográfica fuerte: la evidencia de B sitúa las torres en Presidente Errázuriz/El Golf, Las Condes, mientras A corresponde al proyecto Carlos Valdovinos en otro contexto. Deben mantenerse separados.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "91f2112803222891bec22245",
+    "canonical_name_a": "Carlos Valdovinos",
+    "project_id_b": "7db9ae7a5b073147df95ebdd",
+    "canonical_name_b": "Carlos Valdovinos 3017",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado: la evidencia de A (Parque Las Moscas; Alonso de Cordoba, Vitacura/Estacion Central) nunca confirma que A este realmente en la calle Carlos Valdovinos -- coherente con el hallazgo ya verificado en el par 'Carlos Valdovinos' vs 'tres torres...' (contradiccion geografica fuerte, El Golf/Las Condes). B (3017/3015/3005, sector Especial E2 del PRC de Santiago) es un desarrollo real y especifico distinto.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "91f2112803222891bec22245",
+    "canonical_name_a": "Carlos Valdovinos",
+    "project_id_b": "927308fe4981d49355adfae0",
+    "canonical_name_b": "Carlos Valdovinos 3015",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "91f2112803222891bec22245",
+    "canonical_name_a": "Carlos Valdovinos",
+    "project_id_b": "b2376dec52d5432767c0f3a5",
+    "canonical_name_b": "Carlos Valdovinos 3005",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7f778f98de67ebafc9a85c5f",
+    "canonical_name_a": "calle Toro Mazotte",
+    "project_id_b": "3b16f0ad34bb2713a609fe6f",
+    "canonical_name_b": "cuatro megaedificios ubicados en calle Toro Mazotte",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 104] Debería ser 'kept_separate'. 'Toro Mazotte' es una calle/sector y no identifica por sí solo un proyecto. Compartir la calle con cuatro megaedificios no prueba que las menciones sean el mismo caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3a46f8636e7195cc2ab227b7",
+    "canonical_name_a": "Edificio Capital",
+    "project_id_b": "ba4bb902243d25c888389073",
+    "canonical_name_b": "Condominio Eco Capital",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 55] Debería ser 'merged'. Edificio Capital y Condominio Eco Capital aparecen en el mismo artículo y en la misma dirección, Conde de Maule N°4106. La evidencia favorece fuertemente que sean variantes del mismo proyecto.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "3a46f8636e7195cc2ab227b7",
+    "canonical_name_a": "Edificio Capital",
+    "project_id_b": "fcf789ab26ef76918b9b492d",
+    "canonical_name_b": "Parque Capital",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombres y tipo de desarrollo distintos, incierto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c02681922f8ee50bb9a7a0c5",
+    "canonical_name_a": "Parque Cousiño Macul",
+    "project_id_b": "6ba1e354072926892ccc131d",
+    "canonical_name_b": "Parque Cousiño Macul, Loteo S1 y S2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo parque, lotes especificos del mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "de3f1c92de27d2bdbafd6749",
+    "canonical_name_a": "Torres Plaza Egaña",
+    "project_id_b": "22d824710f8ffc9983e081e5",
+    "canonical_name_b": "Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña es un lugar/interseccion generica con multiples desarrollos distintos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "de3f1c92de27d2bdbafd6749",
+    "canonical_name_a": "Torres Plaza Egaña",
+    "project_id_b": "cf65c362a0dd71489735dc57",
+    "canonical_name_b": "Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña es un lugar/interseccion generica con multiples desarrollos distintos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d11dadd52ba266d7f249de3c",
+    "canonical_name_a": "Los Damascos",
+    "project_id_b": "d9ca030b7757a4462de1640f",
+    "canonical_name_b": "Nueva los Damascos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, version actualizada del nombre",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "21ef01a5f5ea1b84eb392920",
+    "canonical_name_a": "Block 73 de Villa Olímpica",
+    "project_id_b": "b3598144e407c901162cb878",
+    "canonical_name_b": "Block 73",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo bloque, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a14a156e7f8ef5ccc71cb287",
+    "canonical_name_a": "La Cumbre",
+    "project_id_b": "d26f43aed7a79063ed46ba8f",
+    "canonical_name_b": "Cumbre Mirador",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre distinto, incierto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "a14a156e7f8ef5ccc71cb287",
+    "canonical_name_a": "La Cumbre",
+    "project_id_b": "f75bc700291ac9a2c9c45235",
+    "canonical_name_b": "La Cumbre Oriente",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "sub-sector especifico, incierto si es el mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f3e46ec3e21227d310b6b663",
+    "canonical_name_a": "Hacienda Guay Guay",
+    "project_id_b": "06ef3400716b3929892e23c4",
+    "canonical_name_b": "Guay Guay",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6a062112d1d850795a57ce67",
+    "canonical_name_a": "Proyecto Zoccalo de Vitacura",
+    "project_id_b": "b2d5e037f8dfb338f97313e7",
+    "canonical_name_b": "Zoccalo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma concesionaria/proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "adfb19558de9f772aad491a5",
+    "canonical_name_a": "Proyecto Bicentenario",
+    "project_id_b": "2cc87ba1d55ab621804c00fa",
+    "canonical_name_b": "clínica Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "adfb19558de9f772aad491a5",
+    "canonical_name_a": "Proyecto Bicentenario",
+    "project_id_b": "173cac3bef57ca62781f56fb",
+    "canonical_name_b": "Parque Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "adfb19558de9f772aad491a5",
+    "canonical_name_a": "Proyecto Bicentenario",
+    "project_id_b": "6bf348ffa4baa30fed8272e9",
+    "canonical_name_b": "Moneda Bicentenario",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Bicentenario generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6802eb97ec3f72e304b12592",
+    "canonical_name_a": "Seccional La Platina",
+    "project_id_b": "bc91dff975e756ec1d964ec3",
+    "canonical_name_b": "La Platina",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo sitio, instrumento de planificacion en el nombre largo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "33206c7d074ac3b7cfcf1a98",
+    "canonical_name_a": "Parque Cerro Colorado",
+    "project_id_b": "d1ee3a47c97f9b1579224e9b",
+    "canonical_name_b": "El Colorado",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "El Colorado es un centro de ski conocido, no el mismo sitio",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e084bdfa705cdbe742b0a2eb",
+    "canonical_name_a": "Curtidos BAS",
+    "project_id_b": "c1210d7f77f28ec81101ee8d",
+    "canonical_name_b": "Curtidos Bas S.A.",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma empresa/sitio, razon social completa",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "4e57b0670e563f4d39ae7164",
+    "canonical_name_a": "calle Vital Apoquindo 1.400-1.450-1.500",
+    "project_id_b": "fe0f38566717aa34de32376a",
+    "canonical_name_b": "Vital Apoquindo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 68] Debería ser 'merged'. Vital Apoquindo y la variante con numeración corresponden al mismo desarrollo: la evidencia ubica el proyecto en el tramo 1400-1500 de Vital Apoquindo. Los números son direcciones, no fases.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6a8b4fcf92ca3eb521134778",
+    "canonical_name_a": "Hotel Sheraton San Cristóbal",
+    "project_id_b": "0e1a62aee759526f24cb9bc5",
+    "canonical_name_b": "Edificio San Cristóbal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "edificios distintos",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "b2d5e037f8dfb338f97313e7",
+    "canonical_name_a": "Zoccalo",
+    "project_id_b": "878254fdfae301a8573ed762",
+    "canonical_name_b": "Concesionaria de Estacionamientos Alonso de Córdova (Zoccalo)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "Zoccalo es el nombre corto de la misma concesionaria",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d38b895603900dfb8523e121",
+    "canonical_name_a": "nuevo proyecto para el Museo de Arte Contemporáneo y ensanche del Parque Forestal",
+    "project_id_b": "0e1ad62b8315f0e58d2dd1c8",
+    "canonical_name_b": "Parque Forestal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Parque Forestal generico, multiples intervenciones distintas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "4458b3a6f32e89250993421f",
+    "canonical_name_a": "Centro de Salud Familiar (Cesfam)",
+    "project_id_b": "cf1d620d80045e870e995d34",
+    "canonical_name_b": "tercer Centro de Salud Familiar (Cesfam) de Las Condes",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 61] Debería ser 'merged'. El CESFAM genérico está ubicado en calle Nueva Delhi y el 'tercer CESFAM de Las Condes' en Manquehue con Nueva Delhi, dentro del mismo conflicto por el inmueble/paño. La coincidencia espacial y contextual apoya la fusión.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "1a21825c6c2162888b9dba85",
+    "canonical_name_a": "Hospital Militar",
+    "project_id_b": "7b438494907461bfb7c011b3",
+    "canonical_name_b": "Hospital Metropolitano, ex Hospital Militar",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo hospital, renombrado",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "786754689e6aea8e0a4243cd",
+    "canonical_name_a": "Centro de Estudios Nucleares",
+    "project_id_b": "df69eaf1f4544acc3f10798c",
+    "canonical_name_b": "Centro de Estudios Nucleares de La Reina",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo centro, comuna agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d978cec1d9baac2b41b00bfe",
+    "canonical_name_a": "Barrio Parque",
+    "project_id_b": "12decc7c3181ac53784e44da",
+    "canonical_name_b": "Barrio Parque de Quinta Normal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 192] Debería ser 'kept_separate'. Las ubicaciones corresponden a barrios/proyectos distintos: uno en el entorno Alameda-San Alberto Hurtado/Las Rejas y otro en Quinta Normal (Carrascal/Poeta Pedro Prado). El nombre genérico 'Barrio Parque' no basta para fusionarlos.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "aba6d9974fca8b82ae5c0f18",
+    "canonical_name_a": "Rancagua Express",
+    "project_id_b": "51e44358f119f13da08889fb",
+    "canonical_name_b": "Proyecto Metro Tren Santiago-Nos (Rancagua Express)",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto de tren",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0e1a62aee759526f24cb9bc5",
+    "canonical_name_a": "Edificio San Cristóbal",
+    "project_id_b": "45e59cd6b17dcc4228417411",
+    "canonical_name_b": "Túnel San Cristóbal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "tipo de proyecto distinto: edificio vs tunel",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0e1ad62b8315f0e58d2dd1c8",
+    "canonical_name_a": "Parque Forestal",
+    "project_id_b": "16fde55eef61f2c60cb01510",
+    "canonical_name_b": "“Castillito” Parque Forestal",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Parque Forestal generico, Castillito es una instalacion especifica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e91503802a4b21857e33135f",
+    "canonical_name_a": "Explotación de la Mina Panales 1 a 54",
+    "project_id_b": "985cba68b4d01947ca8e0938",
+    "canonical_name_b": "Panales",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma mina, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e6cb0dc75e5923505b8c84ea",
+    "canonical_name_a": "mall Alto Las Condes",
+    "project_id_b": "5f33de46702f3740e762506d",
+    "canonical_name_b": "Mall Alto Las Condes 2",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que 'Alto Las Condes' vs 'Mall Alto Las Condes 2'.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "22d824710f8ffc9983e081e5",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "99981a28a47c0a06ef007b3f",
+    "canonical_name_b": "Mega Proyecto Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "22d824710f8ffc9983e081e5",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "8416f3d0b56c1118da6630a8",
+    "canonical_name_b": "Mall Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico, posible desarrollo distinto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "22d824710f8ffc9983e081e5",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "4f733c142eac50b37619ff33",
+    "canonical_name_b": "nueva Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "50ef2250295c9bf7588ab540",
+    "canonical_name_a": "Las Américas",
+    "project_id_b": "e8c4f629903b052e94c7fd74",
+    "canonical_name_b": "Colegio Las Américas",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 69] Debería ser 'merged'. Las Américas y Colegio Las Américas refieren al mismo inmueble/proyecto en el sector Larraín-María Monvel/Aldea del Encuentro. La forma corta queda suficientemente contextualizada por ubicación.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9e16d7742253574dd77d20cf",
+    "canonical_name_a": "Aldea del Encuentro",
+    "project_id_b": "84f6ce44c7a37b143b0f11f1",
+    "canonical_name_b": "El encuentro",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombres distintos, incierto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "cf65c362a0dd71489735dc57",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "99981a28a47c0a06ef007b3f",
+    "canonical_name_b": "Mega Proyecto Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "cf65c362a0dd71489735dc57",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "8416f3d0b56c1118da6630a8",
+    "canonical_name_b": "Mall Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico, posible desarrollo distinto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "cf65c362a0dd71489735dc57",
+    "canonical_name_a": "Plaza Egaña",
+    "project_id_b": "4f733c142eac50b37619ff33",
+    "canonical_name_b": "nueva Plaza Egaña",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Plaza Egaña generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7306b821b774d90de7b686ef",
+    "canonical_name_a": "Cerro Colorado 4661",
+    "project_id_b": "d1ee3a47c97f9b1579224e9b",
+    "canonical_name_b": "El Colorado",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "[Claude 2026-09-18] kept_separate confirmado: 'El Colorado' es el centro de ski (ya establecido en 2 decisiones manuales previas de esta misma lista), 'Cerro Colorado 4661' es una direccion real en Las Condes (el proyecto social 2023 de la rotonda Atenas, ya identificado en el par 'Rotonda Atenas' vs 'proyecto social de 2023').",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "f209ef28bb3a37881a979990",
+    "canonical_name_a": "proyecto en calle Cerro Colorado",
+    "project_id_b": "d1ee3a47c97f9b1579224e9b",
+    "canonical_name_b": "El Colorado",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "El Colorado es el centro de ski, no la calle Cerro Colorado",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6f065f8be1c5aadf81d6cd66",
+    "canonical_name_a": "Data Center de Entel",
+    "project_id_b": "ac866e9e2fa798fbf4272e1c",
+    "canonical_name_b": "Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fe0f38566717aa34de32376a",
+    "canonical_name_a": "Vital Apoquindo",
+    "project_id_b": "c5e14c0c21e5f47cd8988b3b",
+    "canonical_name_b": "Vital Apoquindo números 1.400, 1450 y 1.500",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 251] Debería ser 'merged'. Vital Apoquindo y la variante 1450/1500 corresponden al mismo desarrollo; la evidencia espacial las integra en el mismo proyecto/caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fe0f38566717aa34de32376a",
+    "canonical_name_a": "Vital Apoquindo",
+    "project_id_b": "e986c115668629af6342f449",
+    "canonical_name_b": "proyecto de 25 edificios en la calle Vital Apoquindo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 252] Debería ser 'merged'. La descripción 'proyecto de 25 edificios en la calle Vital Apoquindo' pertenece al mismo conjunto de aliases Vital Apoquindo ya enlazado por direcciones 1400-1500. Mantenerlo separado rompería la coherencia transitiva del cluster.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fe0f38566717aa34de32376a",
+    "canonical_name_a": "Vital Apoquindo",
+    "project_id_b": "5fd6d26afc0da9705016abeb",
+    "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "[Sol+Claude 2026-09-18, idx original 250] Debería ser 'merged'. Vital Apoquindo y la variante 1400 corresponden al mismo desarrollo en el tramo 1400-1500. El numeral es dirección.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "ad0e12be4604d79d6cc8ab39",
+    "canonical_name_a": "Desarrollo Urbano Habitacional Maratué de Puchuncaví",
+    "project_id_b": "2f70e25a04f0b6d44346e021",
+    "canonical_name_b": "Maratué",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "7e3e003e31c01c5e62da5393",
+    "canonical_name_a": "Distrito Cordillera I",
+    "project_id_b": "6ce84d4aec96f048c10f5cf5",
+    "canonical_name_b": "Distrito Cordillera II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "etapas numeradas distintas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "99fc59abeb785415d1ccca1a",
+    "canonical_name_a": "La Maestranza I",
+    "project_id_b": "ef9374fd3346cf43b2a2c17a",
+    "canonical_name_b": "La Maestranza II",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "etapas numeradas distintas",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "fc5029643189e41aef17b23c",
+    "canonical_name_a": "Vicuña Mackenna 385",
+    "project_id_b": "34dfed845b909bed9ca77737",
+    "canonical_name_b": "edificio de 14 pisos en Vicuña Mackenna 385",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma direccion exacta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "eeef6c8c4be7926442897a15",
+    "canonical_name_a": "primer data center de América Latina",
+    "project_id_b": "ac866e9e2fa798fbf4272e1c",
+    "canonical_name_b": "Data Center",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Data Center es termino generico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "c5e14c0c21e5f47cd8988b3b",
+    "canonical_name_a": "Vital Apoquindo números 1.400, 1450 y 1.500",
+    "project_id_b": "5fd6d26afc0da9705016abeb",
+    "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismas direcciones exactas, mismo proyecto de 25 edificios",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "d4a9a680433e6789b64de3b5",
+    "canonical_name_a": "Conjunto Inmobiliario Portezuelo",
+    "project_id_b": "b514ae15ec31cf4b2bb17353",
+    "canonical_name_b": "Portezuelo",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto Portezuelo",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "34e4ce191c585081135de9aa",
+    "canonical_name_a": "Carpa de Ciudad Empresarial",
+    "project_id_b": "17607c5d20f7449c92d5f511",
+    "canonical_name_b": "Ciudad Empresarial",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "Ciudad Empresarial es un parque de negocios con multiples edificios, no un proyecto unico",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "0913ce433cf7906fb082e70c",
+    "canonical_name_a": "supermercado Líder San Francisco",
+    "project_id_b": "def195cd47ccf42bb0e8b381",
+    "canonical_name_b": "Líder San Francisco",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma tienda, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "6c80accab1cdea5ac54c41c4",
+    "canonical_name_a": "supermercado Express de Líder en Ciudad de Los Valles",
+    "project_id_b": "9e27334439621705513045b6",
+    "canonical_name_b": "Líder de Ciudad de Los Valles",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "misma tienda especifica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "e986c115668629af6342f449",
+    "canonical_name_a": "proyecto de 25 edificios en la calle Vital Apoquindo",
+    "project_id_b": "5fd6d26afc0da9705016abeb",
+    "canonical_name_b": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, direccion especifica agregada",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "4596755c20f8748af47457ab",
+    "canonical_name_a": "Villa Panamericana-Lote B",
+    "project_id_b": "6a82b68223a8c41f15122f31",
+    "canonical_name_b": "Lote B",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo lote, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "298ec0707c6d389dfdbbd5e2",
+    "canonical_name_a": "torre C del complejo Puerto de Palos",
+    "project_id_b": "35ba5e4d5460183e0c7edf49",
+    "canonical_name_b": "Puerto de Palos",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "kept_separate",
+    "decision_reason": "torre especifica dentro del complejo mayor",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "9b8f814f47c35c901d0a7b0c",
+    "canonical_name_a": "construcciones Antígona",
+    "project_id_b": "d1ad31d3f49285bb82d61c4d",
+    "canonical_name_b": "Antígona",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo proyecto, forma corta",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "124a6f29f9096a46e6117ed7",
+    "canonical_name_a": "Lote 18",
+    "project_id_b": "23c289bbc0d09a3d0b71a6aa",
+    "canonical_name_b": "Lote 18-A1",
+    "motivo_cola": "substring_match_not_auto_merged",
+    "decision": "merged",
+    "decision_reason": "mismo lote, sub-parcela especifica",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "8f276ad881cff4c732236787",
+    "canonical_name_a": "Villa San Luis",
+    "project_id_b": "742d36041d2c2e798bbfec70",
+    "canonical_name_b": "Villa Carlos Cortés",
+    "motivo_cola": "conflict_unit_63_sol_alias",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, conflict_unit_63] merged: 2 documentos independientes (The Clinic, El Mostrador) describen a 'Villa Carlos Cortes'/'Villa Ministro Carlos Cortes' como el nombre historico original del mismo conjunto habitacional que hoy se conoce como Villa San Luis -- mismos actores (Miguel Lawner, CORMU, Ejercito, Inmobiliaria Parque San Luis), misma ubicacion Las Condes, misma trayectoria de demolicion/proteccion patrimonial. Ademas ya existian en el project_review_queue original 5 pares 'merged' que fusionan variantes con 'Ministro'/'Compañero Ministro' Carlos Cortes -- esta bare 'Villa Carlos Cortes' es la misma familia de alias que esas, solo que find_review_candidates() no la detecto por no compartir substring con 'Villa San Luis'.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "148a7960ed520bda06f4155d",
+    "canonical_name_a": "Club de Golf Hacienda Santa Martina Nature - Lo Barnechea",
+    "project_id_b": "b45ee646207c2ade2f9fb18a",
+    "canonical_name_b": "Hacienda Santa Martina, Nature Club & Golf",
+    "motivo_cola": "conflict_unit_63_sol_alias",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, conflict_unit_63] merged: ambos nombres refieren al mismo proyecto sujeto a la misma denuncia ambiental ante la Superintendencia del Medio Ambiente -- mismo actor (Inmobiliaria Santa Martina S.A.), misma Municipalidad de Lo Barnechea. Es la misma resolucion exenta citando el proyecto con 2 formas de titulo distintas.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "2666d97c7125f5a178d41c3b",
+    "canonical_name_a": "Egaña Eco Sustentable",
+    "project_id_b": "3fa82bcc9bd6c8bffba57d08",
+    "canonical_name_b": "Eco Egaña",
+    "motivo_cola": "conflict_unit_63_sol_alias",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, conflict_unit_63] merged: mismo actor (Inmobiliaria Fundamenta, Pablo Medina), misma causa judicial de recusacion contra el ministro Sergio Muñoz por intervencion de su hija -- 'Eco Egaña' es la forma abreviada de 'Egaña Eco Sustentable' dentro del mismo articulo/caso.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "41fb53e6335113c4be27d7a4",
+    "canonical_name_a": "LA PLANTA DE CACA",
+    "project_id_b": "c2f17625bd6fe43791373e86",
+    "canonical_name_b": "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas",
+    "motivo_cola": "conflict_unit_63_sol_alias",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, conflict_unit_63] merged: 'LA PLANTA DE CACA' es el apodo coloquial que la comunidad (Accion Vecinal, Resistencia Socioambiental Quilicura) usa para la misma planta de tratamiento de aguas servidas cuyo nombre formal en el SEA es 'Solucion transitoria para la provision de los servicios de tratamiento y disposicion de Aguas Servidas' -- mismo emplazamiento, mismos actores comunitarios opositores, mismo tramite ante el SEA.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  },
+  {
+    "project_id_a": "008d2f365c67d75ec7b3e30a",
+    "canonical_name_a": "Alto Las Condes 2",
+    "project_id_b": "a05fdf045aeb8721bd7664b4",
+    "canonical_name_b": "Alto Norte",
+    "motivo_cola": "conflict_unit_63_sol_alias",
+    "decision": "merged",
+    "decision_reason": "[Claude 2026-09-18, conflict_unit_63] merged: la nota de Diario Financiero es explicita en que el desarrollo se denomina 'Alto Las Condes 2' en la prensa/negocio pero el litigio y el permiso municipal lo refieren como 'Alto Norte' -- mismo actor (Cencosud Shopping), mismo permiso impugnado ante la Municipalidad de Vitacura y la Corte Suprema.",
+    "decided_by": "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol"
+  }
+]

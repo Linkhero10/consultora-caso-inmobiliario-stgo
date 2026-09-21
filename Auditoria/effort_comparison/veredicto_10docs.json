@@ -1,0 +1,17 @@
+{
+  "veredicto": "REQUIERE_ADJUDICACION_MANUAL",
+  "razon": "institucion_decisora en desacuerdo en 1/10 casos -- no se puede saber automaticamente si es error grave o diferencia de granularidad sin leer el texto fuente. URLs en desacuerdo: ['https://www.elperiodista.cl/2020/09/vecinos-de-las-condes-piden-desechar-proyecto-inmobiliario-de-lavin/']",
+  "n_documentos": 10,
+  "agreement": {
+    "requiere_revision_manual": 1.0,
+    "institucion_decisora": 0.9,
+    "tipo_evidencia": 0.9,
+    "actores_within_tolerance": 1.0
+  },
+  "total_regressions": 0,
+  "urls_desacuerdo_institucion": [
+    "https://www.elperiodista.cl/2020/09/vecinos-de-las-condes-piden-desechar-proyecto-inmobiliario-de-lavin/"
+  ],
+  "costo_total_high": 0.05739582,
+  "costo_total_xhigh": 0.13521942
+}

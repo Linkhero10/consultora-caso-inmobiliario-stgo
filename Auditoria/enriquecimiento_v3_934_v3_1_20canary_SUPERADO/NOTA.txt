@@ -1,0 +1,9 @@
+Archivo historico -- canary de produccion de 20 documentos reales (de los
+934), enriquecidos bajo schema v3.1 con --confirm-production-run,
+costo real $0.438, 0 errores. Corrido ANTES de agregar
+proyecto_asociado/proyectos_mencionados en v3.2 (hallazgo real de Luna).
+Preservado integro, no se borra. La carpeta activa
+Auditoria/enriquecimiento_v3_934/ se limpia para la nueva prueba v3.2.
+universo_congelado_934.json NO se archiva -- el universo de documentos
+(clasificacion Etapa 1) no cambio, solo el schema de enrichment; se
+regenera in-place con los hashes de prompt/schema nuevos.

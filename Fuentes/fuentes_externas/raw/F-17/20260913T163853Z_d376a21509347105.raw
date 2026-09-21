@@ -1,0 +1,1492 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+                <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JX6PNWSEYQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JX6PNWSEYQ');
+</script>		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Sistema Nacional de Información Municipal</title>
+
+		<link type="text/css" href="assets/css/style.css" rel="stylesheet" media="screen, projection" />
+		<link type="application/rss+xml" href="http://www.gob.cl/feed/" rel="alternate" title="RSS 2.0" />
+		<link href="assets/css/featured-list.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="/assets/css/chosen.css"/>
+		<link rel="stylesheet" href="assets/js/fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
+
+		<script type="text/javascript" src="/assets/js/jquery-1.6.4.min.js"></script>
+		<!--<script type="text/javascript" src="assets/js/jquery-1.4.2.min.js"></script>-->
+		<script type="text/javascript" src="assets/js/base.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.featureList-1.0.js"></script>
+		<script type="text/javascript" src="assets/js/jquery-latest.js" ></script>
+		<script type="text/javascript" src="assets/js/jquery.bxSlider.min.js" ></script>
+		<!-- <script type="text/javascript" src="assets/js/jquery.pin.js" ></script> -->
+		<script type="text/javascript" src="assets/js/jquery.sticky.js" ></script>
+		<!-- Sticky Element -->
+		<!--script type="text/javascript" src="assets/js/jquery.sticky.js" ></script-->
+		<script type="text/javascript" src="/assets/js/chosen.jquery.js"></script>
+		<script type="text/javascript" src="assets/js/fancybox/source/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript" src="/assets/js/jquery.printPage.js"></script>
+
+		<script type="text/javascript">
+			//PAGINACION: Datos para controlar la paginacion
+			var cantidadTotalColumnas = 6; //Cantidad de datos a extraer de la base de datos
+			var cantidadTotalFilas = 100; //Cantidad de filas a mostrar
+
+			var pagActualDatos = 1;
+			var pagActualValores = 1;
+			var pagActualPeriodos = 1;
+			var bloqueActualMunicipios = 1;
+
+			var graIndicadores = "";
+			var graAnios = "";
+			var graMunicipios = "";
+
+			var pagTotalDatos = 0;
+			var pagTolalValores = 0;
+			var pagTotalPeriodos = 0;
+
+			var firstElementHTML = '';
+
+			var ordenCampoMunicipio = "id_legal";
+			var ordenTipo = 'ASC';
+			var setFactor = false; // Si es necesario realizar el cambio monetario
+
+			var arrPeriodos = [];
+			var arrDatos = [];
+			var arrColumnas = [];
+			var arrColPagina =[];
+			var arrMunicipios = [];
+			var arrValores = [];
+			var arrVariables = [];
+
+			var isLoadMore = 0;
+			var argGraficos = '';
+			var grafDisable = false;
+
+			var customClassName = 'is-sticky';
+			var customWrapperClassName = 'sticky-wrapper';
+
+
+			$(function(){
+
+				$("#header_resultados").hide();
+				$("#resultados").hide();
+				$("#bredcrumb_busqueda").hide();
+				$("#MensajeCarga").hide();
+				$("#MensajeCarga2").hide();
+
+				$.fn.getCallBack = function(callback){
+					if(callback !== undefined){
+						callback();
+					}
+				}
+				$.fn.toggleSticky = function() {
+					if ($("#sticker").hasClass(customClassName)) {
+						$("#sticker").sticky('destroy').sticky({ className: customClassName, wrapperClassName: customWrapperClassName });
+					} else {
+						$("#sticker").sticky({ className: customClassName, wrapperClassName: customWrapperClassName });
+					}
+				}
+
+				$.fn.reloadIdColumnasValores = function(){
+					$.each(arrColumnas, function(i,o){
+						if(pagActualDatos == i)
+						{
+							arrColPagina = o;
+							return;
+						}
+					});
+				}
+
+				$.fn.setCambioMonetario = function(){
+					// Ok: Setear si se realiza o no la correccion monetaria
+					if(setFactor){						 
+						$("#descripcion_corr").text("Aplicar factor de actualización monetaria"); 
+						setFactor = 0;
+					}else{
+						$("#descripcion_corr").text("Quitar factor de actualización monetaria");
+						setFactor = 1;
+					}
+				}
+
+				$.fn.getFichaLigthBoxContent = function(){
+					$.each($('div.dato a'), function(i, o){
+						if($(o).prop('id') != ''){
+
+							$.post("/datos_municipales/obtener_datos.php", { dato: $(o).prop('id') },
+							function(data) {
+								var id = $(o).prop('id').split('-');
+								$('#section_'+id[0]).html(data);
+							});
+						}
+
+					});
+				}
+
+				$.fn.getContenidoValores = function(callback){
+										
+					$.post("/datos_municipales/obtener_valores.php",{variables: arrVariables, municipios: arrMunicipios.textos, pagina: pagActualDatos, corrmon: setFactor},
+						(function(valores) {
+
+						// OK: Obtenemos los datos desde la base de datos y los guardamos dentro de un arreglo para realizar precarga
+						var arrValoresPag;
+						var contador = 1;
+						arrValoresPag = '';
+						arrValoresPag = [];
+
+						$.each(valores.textos, function(i,o){
+							$('#inner-' + o.col + '-' + o.municipio).html(o.valor);
+							arrValoresPag.push({'idElement':'#inner-' + o.col + '-' + o.municipio,'valor':o.valor});
+							if(contador == 1){
+								firstElementContent = '#inner-' + o.col + '-' + o.municipio;
+								contador = 2;
+							}
+
+						});
+						arrValores[pagActualDatos] = {'contenido':arrValoresPag , 'isFull':true, 'firstElementContent': firstElementContent};
+						if(callback !== undefined){
+							callback();
+						}
+
+					}),"json");
+				
+				}
+
+				$.fn.getListaMunicipios = function(callback){
+					$.post("/datos_municipales/obtener_municipios.php",{region: $('#regiones').val(), municipio: $('#municipios').val(), limit: cantidadTotalFilas, campo: ordenCampoMunicipio, orden: ordenTipo, pagina: 1},
+						(function(data) {						
+						$('.resultado_municipios').html('');
+
+						var classCol = '';
+						var classSpam = '';
+						arrMunicipios = '';
+						arrMunicipios = data;
+						graMunicipios = data.municipios;
+
+						if(data.graf.flag == 0){
+							$('#message-graf').html(data.graf.texto);
+							$('#graficar_indicador').css('display','none');
+							$('#message-graf').addClass('message-text');
+							grafDisable = true;
+						}else{
+							$('#message-graf').html('');
+						 	$('#graficar_indicador').css('display','');
+							$('#message-graf').removeClass('message-text');
+							grafDisable = false;
+						}
+
+						if(arrMunicipios.paginas[2] == undefined )
+						{
+							$('#more-towns-wrap').hide();
+						}else{
+							$('#more-towns-wrap').show();
+						}
+						
+						$.each(arrMunicipios.textos, function(i,o){
+
+							if(o.tipoCol == 'par'){
+								classCol = 'par';
+								classSpam = 'cod_mun_impar';
+							}else{
+								classCol = 'impar';
+								classSpam = 'cod_mun_par';
+							}
+							// OK : Cambio de variable id por idLegal para obtener los codigos Legales
+							// OK : Nombres largos tendran fuente mas pequeña
+							var nombreMunicipio = o.municipio;
+							nombreMunicipio = '<span title="' + nombreMunicipio + '" id="Muni-' + o.idLegal + '"  class="item_large" >' + nombreMunicipio + '</span>';
+							var divdato ='<div id="'+o.idLegal+'" class="item_municipio ' + classCol + '""><span class="' + classSpam + '">'+ o.idLegal +'</span> ' + nombreMunicipio + '</div>';
+							$('.resultado_municipios').append(divdato);
+						});
+						if(callback !== undefined){
+							callback();
+						}
+					}), "json");
+				}
+
+				$.fn.createHTMLValuesContent = function(){
+					//@arrColPagina --> Arreglo con los datos para crear los contenedores personalizados
+					$.each(arrColPagina, function(i,o){
+						$(".resultado_dato_wrap #valores li").append('<div id="' + o + '" class="resultado_dato"></div>');
+						$("#" + o).html('');
+						//Recorremos el arreglo de municipios con los datos para crear las celdas
+						var contador = 1;
+						$.each(arrMunicipios.textos, function(x,value){
+							if(value.tipoCol == 'par'){
+								classCol = 'par';
+							}else{
+								classCol = 'impar';
+							}
+							$("#" + o).append('<div id="inner-' + o + '-' + value.id_municipio + '" class="item_dato ' + classCol + '""></div>');
+							if(contador == 1){
+								firstElementHTML = '#inner-7-'+ value.id_municipio;
+								contador = 2;
+							}
+						});
+					});
+				}
+
+				$.fn.clearSearchGrill = function(){
+					$("#header_resultados").fadeOut('slow');
+					$("#resultados").fadeOut('slow');
+					$("#links").fadeIn('slow');
+					$("#top").fadeIn('slow');
+					$("#bredcrumb_busqueda").fadeOut('slow');
+					$(".introduccion").fadeIn('slow');
+					$(this).toggleSticky();
+				}
+
+				$.fn.OpenSearchGrill = function(){
+					$("#header_resultados").fadeIn('slow');
+					$("#resultados").fadeIn('slow');
+					$("#links").fadeOut('slow');
+					$("#top").fadeOut('slow');
+					$("#bredcrumb_busqueda").fadeIn('slow');
+					$(".introduccion").fadeOut();
+					$(this).toggleSticky();
+				}
+
+				// OK: Agregar onbtencion de datos segun vaya navegando
+				/***** Navegacion de la paginacion *****/
+				$('#go-prev').click(function(e){
+					e.stopPropagation();
+
+					if(parseInt(pagActualDatos) > 1){
+						arrMunicipios.textos = arrMunicipios.paginas[1];
+						pagActualDatos--;
+						bloqueActualMunicipios = 2;
+						var texto = 'Mostrando ' + pagActualDatos + ' de ' + arrDatos.length;
+
+						if(isLoadMore){
+							arrValores = [];
+							$('.resultado_municipios').getListaMunicipios();
+						}
+
+
+						$('.paginacion p').html(texto);
+						$('.slide_datos_wrap ul#datos_cols').html(arrDatos[pagActualDatos - 1]);
+						$('.slide_datos_wrap ul#periodos_header').html(arrPeriodos[pagActualDatos - 1]);
+
+						// Se obtienen los datos para asignarle el contenido del fancybox
+						$('div.dato').getFichaLigthBoxContent();
+						if (arrValores[pagActualDatos]) {
+							//Inicializamos el contenedor de datos y variables
+							$("#MensajeCarga").show();
+							$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores()
+							$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+							if($(arrValores[pagActualDatos].firstElementContent).length > 0){
+								var arrValoresPag = [];
+								$.each(arrValores[pagActualDatos].contenido, function(i,o){
+									$(o.idElement).html(o.valor);
+								});
+								
+							}else{
+								$("#MensajeCarga").show();
+								$(".resultado_dato_wrap #valores li").getContenidoValores(function(){
+									$("#MensajeCarga").hide();
+								});
+							}
+							
+
+						}else{
+
+							//Inicializamos el contenedor de datos y variables
+
+							$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+							$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+							$("#MensajeCarga").show();
+							$(".resultado_dato_wrap #valores li").getContenidoValores(function(){
+									$("#MensajeCarga").hide();
+								});
+						}
+						$("#MensajeCarga").hide();
+					}
+
+					return false;
+				});
+
+   
+				$('#go-next').click(function(e){
+					e.stopPropagation();
+
+					if(parseInt(pagActualDatos) < arrDatos.length){
+						arrMunicipios.textos = arrMunicipios.paginas[1];
+						pagActualDatos++;
+						bloqueActualMunicipios = 2;
+						var texto = 'Mostrando ' + pagActualDatos + ' de ' + arrDatos.length;
+						
+						if(isLoadMore == 1){
+							arrValores = [];
+							$('.resultado_municipios').getListaMunicipios(); // Agrega los minucipios
+							isLoadMore == 0;
+						}
+
+						$('.paginacion p').html(texto); //Texto con los datos de la paginacion. Indicando pagina actual y el total de estas
+						$('.slide_datos_wrap ul#datos_cols').html(arrDatos[pagActualDatos - 1]); // Agregamos los datos de cabecera (Titulos)
+						$('.slide_datos_wrap ul#periodos_header').html(arrPeriodos[pagActualDatos - 1]); // Agregamos los datos de cabecera (Fechas)
+
+						// Se obtienen los datos para asignarle el contenido del fancybox
+						$('div.dato').getFichaLigthBoxContent();
+						
+						if (arrValores[pagActualDatos]) {
+							//Inicializamos el contenedor de datos y variables
+							$("#MensajeCarga").show();
+							$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+							$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+							if($(arrValores[pagActualDatos].firstElementContent).length > 0){
+								var arrValoresPag = [];
+								
+								$.each(arrValores[pagActualDatos].contenido, function(i,o){
+									$(o.idElement).html(o.valor);
+								});
+									
+							}else{
+								$("#MensajeCarga").show();
+								$(".resultado_dato_wrap #valores li").getContenidoValores(function(){
+									$("#MensajeCarga").hide();
+								});
+							}
+							
+						}else{
+							
+							//Inicializamos el contenedor de datos y variables
+							$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+							$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+							$("#MensajeCarga").show();
+							$(".resultado_dato_wrap #valores li").getContenidoValores(function(){
+									$("#MensajeCarga").hide();
+								});
+
+						}
+						
+							
+					}
+				
+					return false;
+				});
+				/***** Fin Navegacion de la paginacion *****/
+
+				//Setear si ajax Funciona asincronicamente o no
+				$.ajaxSetup({
+					async: true
+				});
+
+				// OK : Crear Metodo para validar flujo de selección de filtros
+				/*** Validaciones ***/
+				var validar =(function(o){
+
+					// OK : validar la clase inicial
+					if($(o).attr('class') != 'sel_area') {
+
+						if($("#dato_area").val() == null) {
+							alert("Debe seleccionar al menos un Área");
+							return false;
+						}
+
+						if($("#dato_subarea").val() == null) {
+							alert("Debe seleccionar al menos una Sub-Área");
+							return false;
+						}
+
+						if($(o).attr('class') != 'sel_consulta') {
+
+							if($("#variables").val() == null) {
+								alert("Debe seleccionar al menos una Variable o Indicador");
+								return false;
+							}
+
+							if($(o).attr('class') != 'sel_periodo') {
+
+								if($("#periodos").val() == null) {
+									alert("Debe seleccionar al menos un Año");
+									return false;
+								}
+
+								if($(o).attr('class') != 'sel_region') {
+
+									if($("#regiones").val() == null) {
+										alert("Debe seleccionar al menos una Región");
+										return false;
+									}
+
+									if($(o).attr('class') != 'sel_municipio') {
+
+										if($("#municipios").val() == null) {
+											alert("Debe seleccionar al menos un Municipio");
+											return false;
+										}
+									}
+
+								}
+
+							}
+
+						}
+
+					}
+
+					return true;
+				});
+				/*** Fin Validaciones ***/
+
+				//Dropdown en menú de búsqueda de datos
+				/*** Menú de busqueda Dropdown ***/
+				$.fn.fixedMenu = function () {
+				  return this.each(function () {
+					var menu = $(this);
+
+					menu.find('ul li > a').bind('click', function () {
+						// Validación de selección de filtros
+						if(validar($(this))) {
+							//check whether the particular link has a dropdown
+							if (!$(this).parent().hasClass('single-link') && !$(this).parent().hasClass('current')) {
+								//Esconde el dropdown menú cuando es clickeado nuevamente
+								if ($(this).parent().hasClass('active2')) {
+									$(this).parent().removeClass('active2');
+								} else {
+									//Muestra el dropdown menú
+									$(this).parent().parent().find('.active2').removeClass('active2');
+									$(this).parent().addClass('active2');
+								}
+							} else {
+								//Oculta el dropdown menú cuando otro link es clickeado
+								$(this).parent().parent().find('.active2').removeClass('active2');
+							}
+						}
+					});
+
+					$(document).click(function(e){
+					  if(e.target !== menu.get(0) && menu.find($(e.target)).length === 0)
+						  menu.find('.active2').removeClass('active2');
+					});
+				  });
+				}
+
+				$(".menu_busqueda").fixedMenu();
+
+				// Chosen
+				$(".chzn-select").chosen();
+				$(".chzn-select-limit").chosen( { max_selected_options: 6 });
+				$(".chzn-select-deselect").chosen({allow_single_deselect:true});
+				/*** Fin Menú de busqueda Dropdown ***/
+
+				//Dropdown Orden de los municipios
+				/*** Orden de municipios (Opciones) ***/
+				$("#orden_wrap").click(function(e) {
+
+					var $target = $(e.target);
+					var isModalBox = (e.target.className == 'modal-box');
+
+					if (!isModalBox) {
+						$('.modal-box:visible').animate({
+							"margin-top": "-15px"
+						}, 75, function() {
+							$(this).fadeOut(75);
+						});
+					}
+				});
+				/*** Fin Orden de municipios (Opciones) ***/
+
+				$('#temp-button').click(function(e) {
+					e.preventDefault();
+					$('.modal-box').toggle().animate({
+						"margin-top": "0px"
+					}, 75);
+				});
+
+				//Fancybox
+				$(".fancybox").fancybox();
+
+				// OK : obtener las variables asociadas a las areas seleccionadas
+				$("#dato_area").change(function() {
+					$('#dato_subarea').find('option:not(:first)').remove().end();
+					$('#dato_subarea').trigger("liszt:updated");
+					$('#dato_subarea').append($("<option></option>").val('T').text('TODAS LAS SUBÁREAS'));
+
+					var areas = [];
+					$('#bredcrumb_busqueda .bcrum_areas').text('');
+					$('#bredcrumb_busqueda .bcrum_subarea').text('');
+					if($(this).val() != null) {							
+						$.post("/datos_municipales/obtener_datos_filtros.php", { dato_area: $(this).val() },
+						function(data) {
+
+							$.each(data, function (index) {
+								var optgroup = $('<optgroup>');
+								optgroup.attr('label', index);
+
+								$.each(data[index], function (i, o) {
+									var option = $("<option></option>");
+									option.val(o.id_subarea);
+									option.text(o.nombre_subarea);
+
+									optgroup.append(option);
+								});
+								$('#dato_subarea').append(optgroup);
+							});
+
+							$('#dato_subarea').trigger("liszt:updated");
+
+						}, "json");
+
+						$('#dato_area option:selected').each(function(index, value) {
+							areas.push($(value).text());
+						});
+						$('#bredcrumb_busqueda .bcrum_areas').append(areas.join(', '));
+
+					}else{
+						$(this).clearSearchGrill();
+					}
+				});
+
+				// OK : obtener las variables asociadas a las areas seleccionadas
+				$("#dato_subarea").change(function() {
+					$('#variables').find('option:not(:first)').remove().end();
+					$('#variables').trigger("liszt:updated");
+					$('#variables').append($("<option></option>").val('T').text('TODOS LOS DATOS'));
+
+					var subareas = [];
+					$('#bredcrumb_busqueda .bcrum_subarea').text('');
+					$('#bredcrumb_busqueda .bcrum_variables').text('');					
+					if($(this).val() != null) {							
+						$.post("/datos_municipales/obtener_datos_filtros.php", { dato_area: $("#dato_area").val(), dato_subarea: $(this).val() },
+						function(data) {
+
+							$.each(data, function (index) {
+								var optgroup = $('<optgroup>');
+								optgroup.attr('label', index);
+
+								$.each(data[index], function (i, o) {
+									var option = $("<option></option>");
+									option.val(o.id_dato);
+									option.text(o.mtro_datos_codigo + ' - ' +o.mtro_datos_nombre);
+
+									optgroup.append(option);
+								});
+								$('#variables').append(optgroup);
+							});
+
+							$('#variables').trigger("liszt:updated");
+
+						}, "json");
+						$('#dato_subarea option:selected').each(function(index, value) {subareas.push($(value).text());});
+						$('#bredcrumb_busqueda .bcrum_subarea').append(subareas.join(', '));
+					}else{
+						$(this).clearSearchGrill();
+					}
+				});
+
+				$('#variables').change(function(){
+
+					$("#bredcrumb_busqueda .bcrum_variables .itemb").remove();
+					$("#bredcrumb_busqueda .bcrum_variables .ico_mas").remove();
+					$("#bredcrumb_busqueda .bcrum_variables .space").remove();
+
+					if($(this).val() != null) {
+
+						$('#bredcrumb_busqueda .bcrum_variables span').append('<span class="ico_mas">+</span>');
+						$('#variables option:selected').each(function(index, value) {
+							var span = $('<span></span>').addClass('preview_dato itemb').text($(value).text());
+							$('#bredcrumb_busqueda .bcrum_variables').append(span);
+							$('#bredcrumb_busqueda .bcrum_variables').append('<i class="space">&nbsp;</i>');
+						});
+					}else{
+						// $("#header_resultados").fadeOut();
+						// $("#resultados").fadeOut();
+						$(this).clearSearchGrill();
+					}
+				});
+
+				$('#periodos').change(function(){
+
+					$("#bredcrumb_busqueda .bcrum_anios .itemb").remove();
+					$("#bredcrumb_busqueda .bcrum_anios .ico_mas").remove();
+					$("#bredcrumb_busqueda .bcrum_anios .space").remove();
+
+					if($(this).val() != null) {
+
+						$('#bredcrumb_busqueda .bcrum_anios span').append('<span class="ico_mas">+</span>');
+						$('#periodos option:selected').each(function(index, value) {
+							var span = $('<span></span>').addClass('preview_periodo itemb').text($(value).text());
+							$('#bredcrumb_busqueda .bcrum_anios').append(span);
+							$('#bredcrumb_busqueda .bcrum_anios').append('<i class="space">&nbsp;</i>');
+						});
+					}else{
+						$(this).clearSearchGrill();
+					}
+				});
+
+				$('#regiones').change(function(){
+
+					$('#municipios').find('option:not(:first)').remove().end();
+					$('#municipios').trigger("liszt:updated");
+					$('#municipios').append($("<option></option>").val('T').text('TODOS LOS MUNICIPIOS'));
+
+					$("#bredcrumb_busqueda .bcrum_regiones .itemb").remove();
+					$("#bredcrumb_busqueda .bcrum_regiones .ico_mas").remove();
+					$("#bredcrumb_busqueda .bcrum_regiones .space").remove();
+
+					$("#bredcrumb_busqueda .bcrum_municipios .itemb").remove();
+					$("#bredcrumb_busqueda .bcrum_municipios .ico_mas").remove();
+					$("#bredcrumb_busqueda .bcrum_municipios .space").remove();
+
+					if($(this).val() != null) {
+
+						$.post("/datos_municipales/obtener_datos_filtros.php", { region: $(this).val() },
+						function(data) {
+
+							$.each(data, function (i, o) {
+								var option = $("<option></option>");
+								option.val(o.id);
+								option.text(o.municipio);
+
+								$('#municipios').append(option);
+							});
+
+							$('#municipios').trigger("liszt:updated");
+
+						}, "json");
+
+						$('#bredcrumb_busqueda .bcrum_regiones span').append('<span class="ico_mas">+</span>');
+						$('#regiones option:selected').each(function(index, value) {
+							var span = $('<span></span>').addClass('preview_region itemb').text($(value).text());
+							$('#bredcrumb_busqueda .bcrum_regiones').append(span);
+							$('#bredcrumb_busqueda .bcrum_regiones').append('<i class="space">&nbsp;</i>');
+						});
+					} else {
+						$('.resultado_municipios').html('');
+						$(this).clearSearchGrill();
+					}
+				});
+
+
+				$('#municipios').change(function(){
+					$("#bredcrumb_busqueda .bcrum_municipios .itemb").remove();
+					$("#bredcrumb_busqueda .bcrum_municipios .ico_mas").remove();
+					$("#bredcrumb_busqueda .bcrum_municipios .space").remove();
+					if($(this).val() != null) {
+						$('#bredcrumb_busqueda .bcrum_municipios span').append('<span class="ico_mas">+</span>');
+						$('#municipios option:selected').each(function(index, value) {
+							var span = $('<span></span>').addClass('preview_municipio itemb').text($(value).text());
+							$('#bredcrumb_busqueda .bcrum_municipios').append(span);
+							$('#bredcrumb_busqueda .bcrum_municipios').append('<i class="space">&nbsp;</i>');
+						});
+					} else {
+						$(this).clearSearchGrill();
+					}
+
+
+				});
+				$('#ver-resultado').click(function(e){
+					e.preventDefault();
+					$(".sinfinescomerciales").hide();
+//VER
+					// OK : Validar los campos
+					if($('#dato_area').val() !== null && $('#dato_subarea').val() !== null && $('#variables').val() !== null && $('#periodos').val() !== null && $('#regiones').val() !== null && $('#municipios').val() !== null){
+						$("#MensajeCarga2").show(); //Show Mensaje de Carga
+						// OK : obtener el listado de municipios
+						// OK : Crear Paginador - Con control de paginación
+						cantidadTotalColumnas = 6;
+						grafDisable = false;
+						//setTimeout(function(){$('.resultado_municipios').getListaMunicipios()},1)
+						$('.resultado_municipios').getListaMunicipios(function(){						
+						// TODO :  Indentificar los años y enviar los textos para eliminar una consulta a BD
+						// OK :  gatillar llamada para busqueda de datos
+						var argumentos = {area: $('#dato_area').val()
+										, subarea: $('#dato_subarea').val()
+										, variables: $('#variables').val()
+										, periodos: $('#periodos').val()
+										, region: $('#regiones').val()
+										, municipio: $('#municipios').val() }
+
+						$.post("/datos_municipales/obtener_cabecera.php", argumentos ,
+						(function(data) {
+
+							// Inicializar datos
+							pagActualDatos = 1;
+							pagActualValores = 1;
+							pagActualPeriodos = 1;
+							bloqueActualMunicipios = 2;
+
+							pagTotalDatos = 0;
+							pagTolalValores = 0;
+							pagTotalPeriodos = 0;
+
+							arrPeriodos = [];
+							arrDatos = [];
+							arrValores = [];
+							arrColumnas = [];
+							arrVariables = [];
+							cantColumnas = 0;
+
+							graIndicadores = data.indicadores;
+							graAnios = data.anios;
+
+
+							arrColumnas = data.columnas;
+							arrVariables = data.paginas;							
+							if(data.exportar.flag == 0){
+								$('#message').html(data.exportar.texto);
+								$('#planilla_excel').css('display','none');
+								if(grafDisable){
+									$('.municipio').addClass('margintop93');
+									$('.municipio').removeClass('margintop64');
+									$('.municipio').removeClass('margintop35');
+								}else{
+									$('.municipio').addClass('margintop64');
+									$('.municipio').removeClass('margintop93');
+									$('.municipio').removeClass('margintop35');
+									// $('.municipio').removeClass('margintop64'	);
+								}
+								$('#message').addClass('message-text');
+							}else{
+								$('#message').html('');
+								$('#planilla_excel').css('display','');
+								if(grafDisable){
+									$('.municipio').addClass('margintop64');
+									$('.municipio').removeClass('margintop93');
+									$('.municipio').removeClass('margintop35');
+								}else{
+									$('.municipio').addClass('margintop64');
+									$('.municipio').removeClass('margintop93');
+									$('.municipio').removeClass('margintop64');
+								}
+								$('#message').removeClass('message-text');
+							}
+
+							$(".resultado_dato_wrap #valores li").html('')
+							$('.slide_datos_wrap ul#datos_cols li').remove();
+							$('.slide_datos_wrap ul#periodos_header li').remove();
+
+							var divtextos = $('<div></div>').addClass('dato_wrap');
+							var divperiodos = $('<div></div>').addClass('periodo_wrap');
+
+							// Se recorren los datos
+							var cerrar = true;
+							var cantidadTitulos = 6;
+
+							$.each(data.textos, function(i, o){
+								var divdato = $('<div></div>').addClass('dato');
+								var dato = o.id_dato + '-' + o.id_subarea;
+								var adato = $('<a></a>').prop('href', '#dato_'+o.id_dato).prop('id', dato).addClass('fancybox');
+								var sdato = $('<section></section>').prop('id', 'section_'+o.id_dato);
+
+								if((i%6) == 0) {
+									cerrar = true;
+									divtextos.empty();
+								}
+
+								if((i%6) <= 5) {
+									cantidadTitulos--;
+									adato.html(o.mtro_datos_nombre + '<br><span class="mtro_datos_codigo"><strong>(' + o.unidad_medida_simbolo + ')<br>' + o.mtro_datos_codigo + '</strong></span>');
+									divdato.append(adato);
+									divdato.append(sdato);
+									divtextos.append(divdato);
+								}
+
+								if((i%6) == 5) {
+									cerrar = false;
+									arrDatos.push($('<li>').append(divtextos.html()));
+									cantidadTitulos = 6
+								}
+								cantColumnas++;
+							});
+							if(cerrar){
+								//arrDatos.push($('<li>').append(divtextos.html()));
+								if(cantidadTitulos > 0){
+									for (var i = 1; i <= cantidadTitulos; i++) {
+										var divdato = $('<div></div>').addClass('dato');
+										//var dato = o.id_dato + '-' + o.id_subarea;
+										var adato = $('<a></a>');
+										var sdato = $('<section></section>').prop('id', 'section_Sin_valor');
+										adato.text('');
+										divdato.addClass('sn-data');
+										divdato.append(adato);
+										divdato.append(sdato);
+										divtextos.append(divdato);
+									};
+								}
+								arrDatos.push($('<li>').append(divtextos.html()));
+							}
+							$('.slide_datos_wrap ul#datos_cols').append(arrDatos[0]);
+
+
+							// Se recorren los periodos
+							var cerrar = true
+							var cantidadTitulos = 6;
+
+							$.each(data.periodos, function(i, o){
+
+
+								var divperiodo = $('<div></div>').addClass('periodo');
+
+								if((i%6) == 0) {
+									cerrar = true;
+									divperiodos.empty();
+								}
+
+								if((i%6) <= 5) {
+									cantidadTitulos--;
+									divperiodo.append(o.anio);
+									divperiodos.append(divperiodo);
+								}
+
+								if((i%6) == 5) {
+									arrPeriodos.push($('<li>').append(divperiodos.html()));
+									cerrar = false;
+								}
+
+							});
+							if(cerrar){
+								if(cantidadTitulos > 0){
+									for (var i = 1; i <= cantidadTitulos; i++) {
+										var divperiodo = $('<div></div>').addClass('periodo');
+										divperiodo.addClass('sn-data');
+										divperiodo.append('&nbsp;');
+										divperiodos.append(divperiodo);
+									};
+								}
+								arrPeriodos.push($('<li>').append(divperiodos.html()));
+							}
+							$('.slide_datos_wrap ul#periodos_header').append(arrPeriodos[0]);
+
+							// Se obtienen los datos para asignarle el contenido del fancybox
+							$('div.dato').getFichaLigthBoxContent();
+
+							//OK: Mostramos el total de paginas de la cabecera y guardamos en una variable global
+							$('.paginacion p').html('Mostrando 1 de ' + arrDatos.length);
+							pagTotalDatos = arrDatos.length;
+							pagTotalPeriodos = arrPeriodos.length;
+
+							//Inicializamos el contenedor de datos y variables
+							$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+							$(".resultado_dato_wrap #valores li").createHTMLValuesContent()
+							$(this).toggleSticky();
+							$("#MensajeCarga").show();
+							$(".resultado_dato_wrap #valores li").getContenidoValores(function(){
+								$("#MensajeCarga").hide();
+								$(".introduccion").fadeOut();
+								$("#header_resultados").fadeIn('slow');
+								$("#resultados").fadeIn('slow');
+								$("#links").fadeOut('slow');
+								$("#top").fadeOut('slow');
+								// $("#bredcrumb_busqueda").fadeIn('slow');
+								$(this).toggleSticky();
+							});
+							$("#MensajeCarga2").hide(); //Hide Mensaje de Carga
+						}), "json");});
+						
+
+					}else{
+						$(".sinfinescomerciales").show();
+						$(this).clearSearchGrill();
+						alert('Complete el filtro para realizar la busqueda');
+					}
+
+				});
+				/*** Modal Box ***/
+
+				$('#modal-box-1 #opcion1').click(function(e) {
+					e.preventDefault();
+					bloqueActualMunicipios = 1;
+					if (ordenTipo == 'DESC')
+						ordenTipo = 'ASC';
+					else
+						ordenTipo = 'DESC';
+
+					if(ordenCampoMunicipio == 'municipio')
+					{
+						ordenCampoMunicipio = "id_legal";
+						ordenTipo = 'ASC';
+					}
+
+					arrValores = [];
+					$('.resultado_municipios').getListaMunicipios(function(){
+						$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+						$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+						$(".resultado_dato_wrap #valores li").getContenidoValores();
+					});
+					bloqueActualMunicipios = 2;
+					$('.modal-box').toggle().animate({
+						"margin-top": "0px"
+					}, 75);
+				});
+
+				$('#modal-box-1 #opcion2').click(function(e) {
+					e.preventDefault();
+					bloqueActualMunicipios = 1;
+					if (ordenTipo == 'DESC')
+						ordenTipo = 'ASC';
+					else
+						ordenTipo = 'DESC';
+
+					if(ordenCampoMunicipio == 'id_legal')
+					{
+						ordenCampoMunicipio = "municipio";
+						ordenTipo = 'ASC';
+					}
+					arrValores = [];
+					$('.resultado_municipios').getListaMunicipios(function(){
+						$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+						$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+						$(".resultado_dato_wrap #valores li").getContenidoValores();
+					});
+					bloqueActualMunicipios = 2;
+					$('.modal-box').toggle().animate({
+						"margin-top": "0px"
+					}, 75);
+				});
+
+				/*** Fin Modal Box ***/
+
+				/*** Funciones Excel y Corrector Monetario ***/
+				$('#Corrector_monetario').click(function(e){
+					e.preventDefault();
+					$(this).setCambioMonetario();
+					arrValores = [];
+					$(".resultado_dato_wrap #valores li").html('').reloadIdColumnasValores();
+					$(".resultado_dato_wrap #valores li").createHTMLValuesContent();
+					$(".resultado_dato_wrap #valores li").getContenidoValores();
+				});
+
+				$("#planilla_excel").click(function(e){
+					e.preventDefault();
+					var getvar ="area[]="+$('#dato_area').val();
+					getvar +="&subarea[]="+$('#dato_subarea').val();
+					getvar +="&variables[]="+$("#variables").val();
+					getvar +="&periodos[]="+$('#periodos').val();
+					getvar +="&regiones[]="+$('#regiones').val();
+					getvar +="&municipios[]="+$('#municipios').val();
+					getvar +="&corrmon="+setFactor;
+					window.open("/datos_municipales/obtener_datos_municipales.php?"+getvar,'_blank');
+				});
+
+				$('#graficar_indicador').click(function(e){
+					e.preventDefault();
+					window.open("/datos_municipales/graficar_indicador.php?indicadores="+graIndicadores+"&anios="+graAnios+"&municipios="+graMunicipios+"&correccion="+setFactor,'_blank');
+				});
+				
+
+				/*** Funciones Excel y Corrector Monetario ***/
+
+				/*** Funcion para obtener los siguientes registros***/
+
+				$('a#next').click(function(e){
+					e.preventDefault();
+					if(arrMunicipios.paginas[bloqueActualMunicipios] != undefined )
+					{
+						isLoadMore = 1;
+						arrNextMunicipio = arrMunicipios.paginas[bloqueActualMunicipios];
+						bloqueActualMunicipios++;
+						$.each(arrNextMunicipio, function(i,o){
+							if(o.tipoCol == 'par'){
+								classCol = 'par';
+								classSpam = 'cod_mun_impar';
+							}else{
+								classCol = 'impar';
+								classSpam = 'cod_mun_par';
+							}
+							// OK : Cambio de variable id por idLegal para obtener los codigos Legales
+							// OK : Nombres largos tendran fuente mas pequeña
+							var nombreMunicipio = o.municipio;
+							// if(nombreMunicipio.length > 14){
+							nombreMunicipio = '<span title="' + nombreMunicipio + '" id="Muni-' + o.idLegal + '" class="item_large" >' + nombreMunicipio + '</span>';
+							// }
+							var divdato ='<div id="'+o.idLegal+'" class="item_municipio ' + classCol + '""><span class="' + classSpam + '">'+ o.idLegal +'</span> ' + nombreMunicipio + '</div>';
+							$('.resultado_municipios').append(divdato);
+							arrMunicipios.textos.push(o);
+						});
+
+						arrValores = [];
+							$("#MensajeCarga").show();
+						$.each(arrColPagina, function(i,o){
+							var contador = 1;
+							$.each(arrNextMunicipio, function(x,value){
+								if(value.tipoCol == 'par'){
+									classCol = 'par';
+								}else{
+									classCol = 'impar';
+								}
+								$("#" + o).append('<div id="inner-' + o + '-' + value.id_municipio + '" class="item_dato ' + classCol + '"></div>');
+								if(contador == 1){
+									firstElementHTML = '#inner-7-'+ value.id_municipio;
+									contador = 2;
+								}
+							});
+						});
+						
+						$.post("/datos_municipales/obtener_valores.php",{variables: arrVariables, municipios: arrMunicipios.textos, pagina: pagActualDatos, corrmon: setFactor},
+						(function(valores) {
+							// OK: Obtenemos los datos desde la base de datos y los guardamos dentro de un arreglo para realizar precarga
+							var arrValoresPag;
+							var contador = 1;
+							arrValoresPag = [];
+							$.each(valores.textos, function(i,o){
+								$('#inner-' + o.col + '-' + o.municipio).html(o.valor);
+								arrValoresPag.push({'idElement':'#inner-' + o.col + '-' + o.municipio,'valor':o.valor});
+								if(contador == 1){
+									firstElementContent = '#inner-' + o.col + '-' + o.municipio;
+									contador = 2;
+								}
+							});
+							$("#MensajeCarga").hide();
+						}),"json");
+						
+
+						if(arrMunicipios.paginas[bloqueActualMunicipios] == undefined )
+						{
+							$('#more-towns-wrap').hide();
+						}else{
+							$('#more-towns-wrap').show();
+						}
+
+					}
+
+				});
+
+			});
+		</script>
+
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico"  />
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+	</head>
+
+
+	<body>
+
+		<section id="main" class="default">
+
+			                   <header id="top">
+
+                <h1 class="logo"><a href="index.php">Gobierno de Chile</a></h1>
+
+                <nav id="menu">
+                    <ul>
+						<li class="first"><a href="index.php">Inicio</a></li>
+                        <li class="first"><a href="/datos_municipales.php">Datos Municipales</a></li>
+                        <li><a href="/ficha_comunal.php">Ficha Comunal</a> </li>                
+                        
+                        <li><a href="/clasificador_presupuestario.php">Clasificador presupuestario</a></li>
+                        <li class="last"><a href="/evolucion_presupuestaria.php">Evolución presupuestaria</a></li>
+                    </ul>
+                </nav>
+
+               <div id="tools">
+                    <!-- <form action="/search/" method="get" class="search-site">
+                        <input type="text" name="s" id="keywords" value="Buscador" />
+                        <button class="image">Buscar</button>
+                    </form>-->
+                </div>
+
+            </header>
+			<section class="container_12">
+				<div class="sinfinescomerciales" >
+					Se autoriza utilizar la información contenida en este sitio para fines que estime pertinentes, sin fines comerciales, manteniendo la obligación de citar como fuente a Sistema Nacional de Información Municipal (SINIM), SUBDERE, Ministerio del Interior.<br>
+					</div></br>
+				<h3 class="title_section">Datos Municipales</h3>
+
+				<p class="volver"><a href="/informacion_municipal.php">Volver a Información Municipal</a></p>
+				<div class="clear"></div>
+
+				<div id="sticker" class="otra-clase"><!-- div wrapper para la posición fija -->
+									<!-- Barra principal de búsqueda -->
+				<form id="formulario_area" action="" method="post">
+				<div id="bar">
+					<nav>
+
+						<div class="menu_busqueda">
+
+						<ul>
+							<!-- Seleccione el Área -->
+							<li>
+								<a href="javascript:void(0)" class="sel_area"><span class="item">Área</span><span class=""></span></a>
+								<ul>
+									<li>
+										<div>
+											<div class="side-by-side clearfix">
+												<div id="area">
+												<select id="dato_area" name="dato_area[]" data-placeholder="Seleccione..." class="chzn-select" multiple="true" style="width:600px;" tabindex="4">
+												<option value=""></option>
+												<option value="T">TODAS LAS ÁREAS</option>
+																								<option value="715">-</option>
+																								<option value="1">01.  ADMINISTRACION Y FINANZAS MUNICIPALES</option>
+																								<option value="608">02.  RECURSOS HUMANOS MUNICIPAL</option>
+																								<option value="3">03.  EDUCACION MUNICIPAL</option>
+																								<option value="2">04.  SALUD MUNICIPAL</option>
+																								<option value="5">05.  SOCIAL Y COMUNITARIA</option>
+																								<option value="4">06.  DESARROLLO Y GESTION TERRITORIAL</option>
+																								<option value="6">07.  CARACTERIZACION COMUNAL</option>
+																								<option value="7">08.  GENERO</option>
+																								<option value="570">09. CEMENTERIO</option>
+																								</select>
+												</div>
+											</div>
+										</div>
+
+										<div>
+											<div class="side-by-side clearfix">
+												<div id="subarea" class="no_padd_top">
+												<select id="dato_subarea" name="dato_subarea[]" data-placeholder="Seleccione..." class="chzn-select" multiple="true" style="width:600px;" tabindex="5">
+												<option value=""></option>
+												</select>
+												</div>
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+
+							<!-- Consulte -->
+							<li>
+							<a href="javascript:void(0)" class="sel_consulta"><span class="item">Variables e Indicadores</span><span class=""></span></a>
+								<ul>
+									<li>
+										<div>
+										<!-- <form action="" method=""> -->
+											<div class="side-by-side clearfix">
+												<div id="consulte">
+												<select id="variables" name="variables" data-placeholder="Seleccione..." style="width:600px;" class="chzn-select" multiple tabindex="6">
+												  <option value=""></option>
+												</select>
+												</div>
+											</div>
+										<!-- </form> -->
+										</div>
+									</li>
+
+								</ul>
+							</li>
+
+							<!-- Seleccione el Año -->
+							<li>
+							<a href="javascript:void(0)" class="sel_periodo"><span class="item">Año</span><span class=""></span></a>
+								<ul>
+									<li>
+										<div>
+										<!-- <form action="" method=""> -->
+											<div class="side-by-side clearfix">
+												<div id="periodo">
+												<select id="periodos" data-placeholder="Seleccione..." class="chzn-select-limit" multiple style="width:250px;" tabindex="7">
+												<option value=""></option>
+																								<option value="26">Año 2025</option>
+																								<option value="25">Año 2024</option>
+																								<option value="24">Año 2023</option>
+																								<option value="23">Año 2022</option>
+																								<option value="22">Año 2021</option>
+																								<option value="21">Año 2020</option>
+																								<option value="20">Año 2019</option>
+																								<option value="19">Año 2018</option>
+																								<option value="18">Año 2017</option>
+																								<option value="17">Año 2016</option>
+																								<option value="16">Año 2015</option>
+																								<option value="15">Año 2014</option>
+																								<option value="14">Año 2013</option>
+																								<option value="13">Año 2012</option>
+																								<option value="12">Año 2011</option>
+																								<option value="11">Año 2010</option>
+																								<option value="10">Año 2009</option>
+																								<option value="9">Año 2008</option>
+																								<option value="8">Año 2007</option>
+																								<option value="7">Año 2006</option>
+																								<option value="6">Año 2005</option>
+																								<option value="5">Año 2004</option>
+																								<option value="4">Año 2003</option>
+																								<option value="3">Año 2002</option>
+																								<option value="2">Año 2001</option>
+																								</select>
+												</div>
+											</div>
+										<!-- </form> -->
+										</div>
+									</li>
+
+								</ul>
+							</li>
+
+							<!-- Seleccione la Región -->
+							<li>
+							<a href="javascript:void(0)" class="sel_region"><span class="item">Región</span><span class=""></span></a>
+								<ul>
+									<li>
+										<div>
+										<!-- <form action="" method=""> -->
+											<div class="side-by-side clearfix">
+												<div id="region">
+												<select id="regiones" data-placeholder="Seleccione..." class="chzn-select" multiple style="width:350px;" tabindex="8">
+												<option value=""></option>
+												<option value="T">TODAS LAS REGIONES</option>
+																								<option value="120">ANTOFAGASTA</option>
+																								<option value="531">ARICA Y PARINACOTA</option>
+																								<option value="121">ATACAMA</option>
+																								<option value="129">AYSÉN DEL GRAL. CARLOS IBÁÑEZ DEL CAMPO</option>
+																								<option value="122">COQUIMBO</option>
+																								<option value="127">DE LA ARAUCANÍA</option>
+																								<option value="126">DEL BIOBIO</option>
+																								<option value="124">DEL LIBERTADOR GRAL. BERNARDO O´HIGGINS</option>
+																								<option value="125">DEL MAULE</option>
+																								<option value="128">DE LOS LAGOS</option>
+																								<option value="530">LOS RíOS</option>
+																								<option value="130">MAGALLANES Y DE LA ANTÁRTICA CHILENA</option>
+																								<option value="131">METROPOLITANA</option>
+																								<option value="119">TARAPACÁ</option>
+																								<option value="707">ÑUBLE</option>
+																								<option value="123">VALPARAÍSO</option>
+																								</select>
+												</div>
+											</div>
+										<!-- </form> -->
+										</div>
+									</li>
+								</ul>
+							</li>
+
+
+							<!-- Seleccione el Municipio -->
+							<li>
+							<a href="javascript:void(0)" class="sel_municipio"><span class="item">Municipio</span><span class=""></span></a>
+								<ul>
+									<li>
+										<div>
+										<!-- <form action="" method=""> -->
+											<div class="side-by-side clearfix">
+												<div id="municipio">
+												<select id="municipios" data-placeholder="Seleccione..." class="chzn-select" multiple style="width:270px;" tabindex="9">
+												<option value=""></option>
+																								</select>
+												</div>
+											</div>
+										<!-- </form> -->
+										</div>
+									</li>
+								</ul>
+							</li>
+
+						</ul>
+						</div><!-- /-menu_busqueda -->
+						<h4 class="ver-resultado"><a id="ver-resultado" href="#">Ver</a></h4>
+						<h4 class="ver-resultado"><a href="/datos_municipales.php">Limpiar Búsqueda</a></h4>
+						<!-- Glosario -->
+						<div class="glosario">
+							<a href="#info_glosario" class="fancybox icon_glosario tip-info">
+								<span>Ver Glosario</span>
+							</a>
+
+							<!-- Lightbox que detalla la información del dato (variable o indicador) -->
+								<section>
+									<div id="info_glosario" class="dato_detalle" style="display:none;">
+
+										<div class="titulo">
+											<h3>Glosario</h3>
+										</div>
+
+										<div class="contenido_detalle">
+												<dl>
+													<dt>Costo fijo:</dt>
+														<dd>La comuna posee menos de 3.500 inscritos validados por FONASA en salud municipalizada, y por tanto, recibe un aporte fijo mensual (por cada inscrito validado) desde el <abbr title="Ministerio de Salud">MINSAL</abbr>.</dd>
+													<dt>No aplica:</dt>
+														<dd>Significa que no corresponde aplicar el indicador, porque la actividad medida no se presenta o no está cuantificada para ese período.</dd>
+													<dt>No recepcionado:</dt>
+														<dd>El municipio u otras fuentes no entregan información para ese período.</dd>
+													<dt>Sin servicio:</dt>
+														<dd>El municipio no posee servicio para ese sector.</dd>
+													<dt>Sin dato oficial:</dt>
+														<dd>La fuente no cuenta con dato estadístico oficial para ese período.</dd>
+													<dt>Descontinuado:</dt>
+														<dd>El dato queda descontinuado.</dd>
+													<dt>No Representativo:</dt>
+														<dd>Los resultados <abbr title="Sistema de Medición de Calidad de la Educación">SIMCE</abbr> no son representativos de la región o comuna, debido a que un bajo porcentaje de estudiantes municipales rindieron las pruebas.</dd>
+													<dt>Indicadores de Pobreza:</dt>
+														<dd>Los datos utilizados para el cálculo de los años 2001 al 2003, corresponden a Encuesta Casen 2000. Para los indicadores de pobreza del año 2004, 2005 se utilizó la Encuesta Casen 2003, y para los años 2006, 2007, 2008 y 2009 se utilizó la Encuesta Casen 2006 (Mideplan) sobre un total de 330 comunas. Para los indicadores del año 2010 , el <abbr title="Sistema de Información Municipal">SINIM</abbr>, publica las estimaciones del Total de Personas Pobres, desarrolladas por el Ministerio de Desarrollo Social en base a las estimaciones de Porcentaje de Personas Pobres 2009 y las Proyecciones de Población Total al 30 de Noviembre de 2009. Y para el año 2011, <abbr title="Sistema de Información Municipal">SINIM</abbr> publica las estimaciones del Total de Personas Pobres, desarrolladas por el Ministerio de Desarrollo Social, en base a las estimaciones de Porcentaje de Personas Pobres 2009 y las proyecciones de Población Total al 30 de junio de 2012.</dd>
+
+												</dl>
+												<div class="clear"></div>
+
+										</div><!-- /.contenido_detalle -->
+
+									</div><!-- /#dato_detalle -->
+								</section><!-- fin del lightbox -->
+
+						</div><!-- /.glosario -->
+
+					</nav>
+				</div><!-- /#bar -->
+				</form>
+					<!-- Texto de introducción -->
+					<div class="introduccion">.
+</div>
+
+					<!-- Breadcrumb de la búsqueda -->
+					<div id="bredcrumb_busqueda">
+						<span class="title_busqueda">Mi B&uacute;squeda:</span>
+						<span class="bcrum_areas">
+							<span></span>
+						</span>
+						<span class="bcrum_subarea">
+							<span></span>
+						</span>
+						<span class="bcrum_variables">
+							<span></span>
+						</span>
+						<span class="bcrum_anios">
+							<span></span>
+						</span>
+						<span class="bcrum_regiones">
+							<span></span>
+						</span>
+						<span class="bcrum_municipios">
+							<span></span>
+						</span>
+
+					</div>
+					<div class="clear"></div>
+
+					<!-- Header Resultado -->
+					<div id="header_resultados">
+						<!-- TODO : Crear un texto para mostrar mensaje -->
+						<span id='message' class="message-text"></span>
+						<span id='message-graf' class="message-text"></span>
+						<div class="clear"></div>
+						<div class="contenedor-icon">
+							<a id="Corrector_monetario" href="#" class="correccion"><span class="correccion-datosMun" id="descripcion_corr">Aplicar factor de actualización monetaria</span></a>
+							<div class="Iconos">								
+									<a id="planilla_excel" href="#" target="_blank"><span class="excel">Descargar planilla Excel</span></a>				
+								
+									<a id="graficar_indicador" href="#" target="_blank"><span class="grafico">Grafico de Variables o Indicadores</span></a>
+								
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div id="bar_info">
+
+							<p class="tit_consultas"> Consultas realizadas</p>
+							<div class="paginacion">
+								<p>Mostrando 6 de 12</p>
+								<a href="#" id="go-prev"><span class="paginador_ant">Anterior</span></a>
+								<a href="#" id="go-next"><span class="paginador_sig">Siguiente</span></a>
+							</div>
+						</div><!-- /#bar_info -->
+						<div class="clear">
+						</div>
+
+
+						<!-- Opción de descarga de planilla electrónica o aplicación de factor monetario -->
+						<div class="opciones" >							
+							<div class="clear"></div>
+
+							<!-- Título "Municipios" -->
+							<div class="municipio">
+								<span class="titulo_municipios"><a href="#" class="tip">Cod.<span>Código Territorial</span></a></span>
+								<span class="titulo_municipios">Municipios</span>
+
+								<!-- Dropdown de opciones para ordenar la información -->
+								<div class="orden_wrap">
+
+									<a id="temp-button" href="#"><span class="orden">Ordenar por</span></a>
+
+									<div id="modal-box-1" class="modal-box">
+										<p><a id='opcion1' href="#">Orden por código territorial</a></p>
+										<p><a id='opcion2' href="#">Orden alfabético</a></p>
+									</div>
+								</div>
+
+							</div><!-- /.municipio -->
+
+						</div>
+
+						<div class="slide_datos_wrap">
+							<ul id="datos_cols">
+								<li>
+									<!-- <div class="dato_wrap"><div class="dato"><a href="#"></a></div> -->
+								</li>
+							</ul>
+							<ul id="periodos_header">
+								<li>
+									<div class="periodo_wrap">
+										<!-- <div class="periodo">2011</div> -->
+									</div>
+								</li>
+							</ul>
+						</div><!-- /.slide_datos_wrap -->
+
+						<div class="clear"></div>
+
+						<!-- Años seleccionados -->
+						<div class="slide_periodo_wrap"></div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div><!-- end div wrapper para la posición fija -->
+				<div class="clear"></div>
+								<div id="MensajeCarga2">
+								<span>Cargando!...</span>
+								</div>
+						
+				<!-- Resultados de la búsqueda -->
+				<div id="resultados">
+						<!-- ******* Despliegue de resultados, valores, etc. ******* -->
+							
+						<div class="despliegue_wrap">
+							
+							<!-- Resultados de los municipios seleccionados -->
+							<div class="resultado_municipios">
+								<!--  -->
+							</div>
+
+							<div class="resultado_dato_wrap">
+								<div id="MensajeCarga">
+								<span>Cargando!...</span>
+								</div>
+								<ul id="valores">
+									<li></li>
+								</ul>
+							</div><!-- /resultado_dato_wrap -->
+
+						</div><!-- /.despliegue_wrap -->
+						<div class='despliegue_wrap clear' id="more-towns-wrap"><a id="next" href="#">Mostrar Más Municipios</a></div>
+						<div class="clear"></div>
+
+				</div><!-- /#resultados -->
+
+			</section><!-- end container_12 -->
+
+
+
+			<!-- footer -->
+			            <!-- footer -->
+            <footer>
+
+                <div id="links" class="equal-height"></div>
+
+                <div id="bottommenu">
+
+                    <address>Subsecretaría de Desarrollo Regional y Administrativo, Teatinos 92, Pisos 2 y 3. Santiago -Chile, Teléfono Mesa Central: (2) 2 636 36 00</address>
+							
+                    <nav>
+                        <a rel="external" href="http://validator.w3.org/check?uri=referer" title="HTML versión 5">HTML 5</a> |
+                        <a rel="external" href="http://jigsaw.w3.org/css-validator/check/referer/?profile=css3" title="CSS versión 3">CSS 3</a> |
+                        <a rel="external" href="http://creativecommons.org/licenses/by/2.0/cl/" title="Creative Commons">CC</a>
+                    </nav>
+
+                </div>
+
+                <div id="ribbon">
+                    <a href="#top">Ir arriba</a>
+                </div>
+
+            </footer>
+		</section>
+
+	</body>
+
+</html>

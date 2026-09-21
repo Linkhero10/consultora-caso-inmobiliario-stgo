@@ -1,0 +1,21 @@
+{
+  "lote": "sample_20",
+  "sha256_lista_urls": "1bbeae034910721e54aff18225e24137032083a6bd73684f502d5ffe982b94fe",
+  "salida_clasificacion": "Auditoria/muestras_control/clasificacion_sample_20.jsonl",
+  "revisado_por": "claude-sonnet-5",
+  "revisado_at": "2026-09-12T15:17:30-04:00",
+  "resumen": "Corrida con prompt ya corregido (regla 10 de classifier_system_v2.md, ver review_sample_10.json). 20/20 sin error. 4 include, 14 exclude, 1 uncertain, 1 insufficient_content. Costo real: $0.01797 USD. Las 10 URLs de sample_10 se re-verifican identicas (el caso de la carcel sigue exclude tras el fix). Los 10 nuevos casos se revisaron campo por campo contra el texto/razon/cita.",
+  "casos_nuevos": [
+    {"url": "https://dialnet.unirioja.es/servlet/articulo?codigo=8762349", "decision": "exclude", "veredicto": "ok", "observacion": "Estudio academico sobre Mexico, fuera de alcance geografico y sin accion contenciosa. Correcto."},
+    {"url": "https://www.scielo.cl/scielo.php?script=sci_arttext&pid=S0719-26812021000100225", "decision": "exclude", "veredicto": "ok", "observacion": "Vivienda social en Arica, fuera de las 32 comunas objetivo. Correcto."},
+    {"url": "https://docpopcorn.cl/nuestros-locales/", "decision": "exclude", "veredicto": "ok", "observacion": "Listado comercial sin relacion. Correcto."},
+    {"url": "https://www.diarioconstitucional.cl/2026/04/09/corte-suprema-delimita-alcance-del-recurso-...", "decision": "exclude", "veredicto": "ok", "observacion": "Recurso laboral municipal en Vina del Mar, no inmobiliario. Correcto."},
+    {"url": "https://www.scielo.org.ar/scielo.php?script=sci_arttext&pid=S1852-42652014000200003", "decision": "exclude", "veredicto": "ok", "observacion": "Bahia Blanca, Argentina, fuera de alcance geografico. Correcto."},
+    {"url": "https://www.elmercurio.com/legal/movil/detalle.aspx?Id=904407&Path=/0D/CC/", "decision": "exclude", "veredicto": "ok", "observacion": "Proteccion de honra, no inmobiliario. Correcto."},
+    {"url": "https://www.latercera.com/nacional/noticia/gobierno-presenta-plan-de-desalojo-de-megatoma-...", "decision": "exclude", "veredicto": "ok", "observacion": "Megatoma de San Antonio -- San Antonio esta fuera de las 32 comunas de la Provincia de Santiago. Exclusion geografica correcta, aunque el caso en si (desalojo + proyecto habitacional) seria relevante si ocurriera dentro del alcance. Sin accion requerida."},
+    {"url": "https://www.elmostrador.cl/noticias/pais/2019/07/10/lo-barnechea-en-conflicto-proyecto-inm...", "decision": "include", "veredicto": "ok", "observacion": "Cita verificable, caso real y especifico: 54 viviendas en Cerro del Medio, oposicion vecinal + fiscalizacion de Contraloria, inmobiliaria Reserva La Dehesa nombrada. Campos coherentes."},
+    {"url": "https://www.lemondediplomatique.cl/si-a-las-viviendas-sociales-en-las-condes-pero-como-pol...", "decision": "uncertain", "veredicto": "ok_mecanismo_funciono", "observacion": "El modelo cito el texto con una elipsis interna ('...'), lo que correctamente fallo la verificacion de substring literal y degrado include->uncertain via el gate de evidence_quote (classify_luna.py). El caso (proyecto Rotonda Atenas, Las Condes, DS19) es probablemente un include real, pero el pipeline lo dejo para revision humana en vez de aceptar una cita no verificada -- comportamiento de diseno correcto, no un bug."},
+    {"url": "https://radio.uchile.cl/2019/10/12/san-miguel-en-alerta-vecinos-denuncian-indiscriminada-c...", "decision": "include", "veredicto": "ok", "observacion": "Cita verificable, 29 edificios habitacionales en San Miguel, oposicion organizada de vecinos, preparacion de acciones legales. Campos coherentes."}
+  ],
+  "conclusion": "Sample_20 confirma que el fix del prompt (regla 10) no genero efectos secundarios negativos sobre las 10 URLs originales ni sobre las 10 nuevas. El gate de evidence_quote (verificacion de substring literal) se observo funcionando en produccion real por primera vez, degradando correctamente un caso con cita no verificable. No se encontraron nuevos huecos de diseno en este lote. Listo para escalar a triage de produccion completo sobre los 783 canonicos."
+}

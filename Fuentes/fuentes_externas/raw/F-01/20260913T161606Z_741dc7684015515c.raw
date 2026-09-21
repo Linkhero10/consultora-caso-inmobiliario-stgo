@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Instituto Nacional de Estad&iacute;sticas | REDATAM Procesamiento y diseminaci&oacute;n</title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="author" content="Redatam Development Centre">
+  <meta name="copyright" content="CELADE, Population Division of ECLAC - United Nations">
+  <meta name="description" content="Redatam for On-Line Data Processing">
+  <meta name="keywords" content="Redatam, R+SP, Redatam+SP, Redatam7, Red7, Celade, Cepal, Eclac, Statistics, Estadísticas, Census, Censos, Population, Población, Data Processing, Procesamiento de Datos, tabulados, table, gráficos, graphs, mapas, maps, censos, census, encuestas, surveys, frecuencias, frequencies, cruces, crosstabs, conteos, counts, estadísticas, statistics, celade, cepal, eclac, unfpa, naciones unidas, united nations, indicadores, indicators, población, population, economía, ine, one, inec, cso, nis, nsb">
+
+  <link type="image/x-icon" rel="shortcut icon" href="/images/favicon.ico" />
+
+  <link rel="stylesheet" type="text/css" href="/common/css/w3/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="/common/css/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu" />
+
+    <link rel="stylesheet" type="text/css" href="/css/red.portal.main.css" />
+
+</head>
+<script>
+   // EN LA PÁGINA PRINCIPAL - Responder a solicitudes
+	window.addEventListener('message', function(event) {
+		console.log('📨 Main recibió mensaje:', event.data);
+		
+		if (event.data.type === 'solicitarTitulo') {
+			console.log('🔁 Enviando título al iframe...');
+			
+			// Obtener el título del header
+			const headerIframe = document.getElementsByName('Header')[0];
+			const titulo = headerIframe.contentDocument.getElementById('titulo').textContent.trim();
+			
+			// Enviar al iframe que solicitó
+			event.source.postMessage({
+				type: 'tituloHeader',
+				value: titulo
+			}, event.origin);
+			
+			console.log('✅ Título enviado:', titulo);
+		}
+	});
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.querySelector('iframe[name="Output"]');
+    if (iframe) {
+      iframe.style.height = '1200px';
+    }
+  });
+</script>
+
+<body >
+
+<!-- Top -->
+<header class="w3-top">
+		<iframe name="Header" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554661.htm&amp;TYPE=TMP" scrolling="no" style="height: 10px;" ></iframe>
+</header>
+
+<!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-collapse w3-animate-left" style="z-index:3; width: 310px;" id="mySidebar">
+	<button class="w3-bar-item w3-button w3-hide-large" onclick="w3_close()">Close &times;</button>
+	<!--<iframe name="Index" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554662.htm&amp;TYPE=TMP" scrolling="auto" ></iframe>-->
+	<iframe name="Index" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554662.htm&amp;TYPE=TMP?subtitulo=<#SUBTITLE>" scrolling="auto" ></iframe>
+</div>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 270 pixels when the sidebar is visible -->
+<div class="w3-main" style="margin-left:310px; margin-top:10px; height: 100%;" id="myMain" >
+
+	<div class="w3-blue" style="background: #1D336B !important;">
+  	<button class="w3-button w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+	</div>
+
+	<!--<div id="Cont-central" class="w3-container w3-card-2 w3-padding-large ">
+		<iframe name="Output" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554663.htm&amp;TYPE=TMP" scrolling="auto" style="min-height: 860px;"></iframe>
+	</div> version anterior-->
+
+	<div id="Cont-central" class="">
+		<iframe name="Output" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554663.htm&amp;TYPE=TMP" scrolling="auto" style="min-height: 860px;"></iframe>
+	</div>
+	
+	<!-- esconder footer -->
+	<div>
+	<footer class="w3-container w3-card-4 w3-padding-small w3-center" >
+		<iframe name="Footer" src="https://redatam.ine.gob.cl/redbin/RpWebUtilities.exe/Text?LFN=RpBases\Tempo\55466\~tmp_554664.htm&amp;TYPE=TMP" scrolling="auto" style="height: <#ROWF>px;" ></iframe>
+		<p style="font-size: 0.7em"> 
+			Powered by <a href="http://www.cepal.org/en/topics/redatam" target="_blank">REDATAM</a> |
+			&copy; 2018 | CELADE - Divisi&oacute;n de Poblaci&oacute;n de la CEPAL - Naciones Unidas. Todos los derechos reservados.
+		</p>
+		<p style="font-size: 0.7em">Sitio optimizado para <a href="https://www.google.com/chrome/index.html" target="_blank">Google Chrome</a> y <a href="https://www.mozilla.org" target="_blank">Mozilla Firefox</a></p>
+	</footer>
+	</div>
+	<!-- esconder footer -->
+	
+<!-- END MAIN -->
+</div>
+
+<script>
+function w3_open()
+{
+	document.getElementById("mySidebar").style.display = "block";
+	document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() 
+{
+	document.getElementById("mySidebar").style.display = "none";
+	document.getElementById("myOverlay").style.display = "none";
+}
+
+</script>
+<style>
+/* SOLUCIÓN NUCLEAR - ELIMINAR SCROLL HORIZONTAL COMPLETAMENTE */
+@media (max-width: 768px) {
+    /* Bloquear scroll horizontal a nivel de raíz */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        position: relative !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Forzar a todos los elementos a no exceder el ancho */
+    body * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Contenedores principales */
+    .w3-main, 
+    #myMain {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* El menú puede tener scroll interno PERO no afectar el body */
+    #divMenu {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow: visible !important;
+    }
+    
+    #root {
+        width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+    }
+    
+    /* Botón visible */
+    .w3-button.w3-xlarge.w3-hide-large {
+        display: inline-block !important;
+    }
+    
+    #Cont-central,
+    iframe[name="Output"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Bloquear cualquier posibilidad de scroll horizontal */
+    .w3-main *,
+    #myMain *,
+    #Cont-central * {
+        overflow-x: hidden !important;
+        max-width: 100% !important;
+    }
+}
+</style>
+</body>
+
+</html>

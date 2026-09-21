@@ -1,0 +1,33 @@
+{
+  "artifact_version": "blind-sample-v5.2.1-1",
+  "generated_at": "2026-09-15T20:26:28.738381+00:00",
+  "sample_size": 50,
+  "selection_seed": "blind-v5.2.1-20260915",
+  "blind": true,
+  "model_labels_used": false,
+  "api_call": false,
+  "sample_basis": "terms de discovery, señales lexicales declaradas y char_count; no usa salidas de clasificación",
+  "stratum_target": 5,
+  "stratum_counts": {
+    "administrative_permit": 5,
+    "community": 5,
+    "existing_property": 5,
+    "gentrification": 5,
+    "judicial": 5,
+    "large_project": 5,
+    "non_residential_signal": 5,
+    "outside_area_signal": 5,
+    "regulatory_instrument": 5,
+    "residential_density": 5
+  },
+  "eligible_documents_before_selection": 3784,
+  "prior_urls_excluded": 122,
+  "duplicate_urls_excluded": 300,
+  "source": {
+    "content_dir": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\fulltext_v2\\content",
+    "dedupe_manifest": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\fulltext_v2\\dedupe_manifest_v2.jsonl"
+  },
+  "records_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\blind_sample_v5_2_1_50.jsonl",
+  "urls_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\blind_sample_v5_2_1_50_urls.txt",
+  "status": "fixture_ready_pending_api_and_human_review"
+}

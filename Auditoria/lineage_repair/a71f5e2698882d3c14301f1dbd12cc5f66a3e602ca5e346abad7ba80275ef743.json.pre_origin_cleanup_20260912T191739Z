@@ -1,0 +1,39 @@
+{
+  "url": "https://bancoestado.enlaceinmobiliario.cl/listado/region-metropolitana/las-condes",
+  "extraction_method": "http_error_403",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 403,
+  "fetched_at": "2026-09-12T15:37:50.559415+00:00",
+  "lineage": {
+    "discovery_record_hash": "a71f5e2698882d3c14301f1dbd12cc5f66a3e602ca5e346abad7ba80275ef743",
+    "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "proyecto inmobiliario oposición",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "a71f5e2698882d3c14301f1dbd12cc5f66a3e602ca5e346abad7ba80275ef743",
+        "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "proyecto inmobiliario oposición",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "a71f5e2698882d3c14301f1dbd12cc5f66a3e602ca5e346abad7ba80275ef743",
+        "query": "\"proyecto inmobiliario oposición\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "proyecto inmobiliario oposición",
+        "periodo": "",
+        "nivel": ""
+      }
+    ]
+  },
+  "discovery_title": "Proyectos inmobiliarios en venta en Las Condes"
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "20260917_020821_190195",
+  "preflight": {
+    "expected_include": 934,
+    "classifications_include_all_scopes": 934,
+    "temporal_v2_include": 934,
+    "excluded_other_scopes": 0,
+    "fulltext_found": 934,
+    "missing_fulltext": 0,
+    "already_enriched": 65,
+    "pending_total": 869,
+    "limit": null,
+    "pending_selected": 869,
+    "reintentos_de_cuarentena_en_pending_selected": 3,
+    "universe_sha256": "3e3689eb73bb683d5ffdaa0e341a196b755422b005444f621f17c549007ce325",
+    "universe_freeze_ok": true,
+    "universe_freeze_motivo": "",
+    "schema_version": "v3.2",
+    "prompt_sha256": "d1ca7eb934826ceb6764112235c219da1a6ac609eef74b480e6470a52f149b96",
+    "schema_sha256": "714a79cd1c79be429ae2f99d81434318329eccbdb4857b228efec005812e52d1",
+    "record_schema_sha256": "9f70519a3cc6b1b53f70751e44631b7e8e56ca1bcebf59338d72e261e068f945",
+    "cost_per_doc_usd_estimado_desde_piloto": 0.02395,
+    "estimated_cost_usd_pending_total": 20.81,
+    "estimated_cost_usd_selected": 20.81,
+    "workers": 50,
+    "effort": "xhigh"
+  },
+  "started_pending": 869,
+  "written": 801,
+  "errors": 68,
+  "counts_consistent": true,
+  "total_cost_usd": 18.892874569999986,
+  "hitos_linea_tiempo": 2503,
+  "revision_niveles": {
+    "ninguno": 430,
+    "campo": 259,
+    "caso": 109,
+    "bloqueante": 3
+  },
+  "triage_consistency_flags": 5,
+  "record_schema_validation_failures": 68,
+  "finished_at": "2026-09-17T03:32:44.646895+00:00"
+}

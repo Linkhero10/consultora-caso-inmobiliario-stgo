@@ -1,0 +1,6 @@
+Archivo historico -- 30 documentos de prueba enriquecidos bajo schema v3.1
+(antes de agregar proyecto_asociado/proyectos_mencionados en v3.2, hallazgo
+real de Luna: nombre_proyecto era un solo campo por documento, perdia la
+asociacion evento->proyecto en documentos que mezclan varios proyectos).
+Preservado integro, no se borra ni se sobreescribe. Ver Auditoria/
+enriquecimiento_v3_prueba30/ para la carpeta activa (v3.2 en adelante).

@@ -1,0 +1,118 @@
+version: v3.2
+producto: enrichment_inmobiliario
+# ACTUALIZADO 2026-09-17 tarde: corrida completa de produccion terminada
+# (934/934, ver Auditoria/enriquecimiento_v3_2_934/) y warehouse materializado
+# (Auditoria/integracion_v1/warehouse_v3_2.sqlite: 3884 documentos del corpus
+# clasificado completo en la tabla `document`, de los cuales 934 son los
+# `include` con capa enriquecida v3.2 en `enrichment_document_v3_2` -- ver
+# aclaracion completa en `salidas` mas abajo). El gate de integracion
+# (stage_2_arcos, source_inventory_reviewed / arcs_*) sigue sin cerrarse --
+# eso es una decision humana de Felipe, no un pendiente tecnico de este
+# contrato.
+estado: produccion_completa
+fuentes:
+  clasificacion: Auditoria/clasificacion_luna_v5_2_3/classifications.jsonl
+  fulltext: Fuentes/fulltext_v2/content
+  universo_congelado: Auditoria/enriquecimiento_v3_2_934/universo_congelado_934.json
+contratos:
+  prompt: Trabajo/prompts/enrichment_system_v3_2.md
+  llm_schema: Trabajo/config/enrichment_schema_v3_2.json
+  record_schema: Trabajo/config/enrichment_record_schema_v3_2.json
+  runner_piloto: Trabajo/scripts/enrich_case_v3.py
+  runner_produccion: Trabajo/scripts/enrich_case_v3_production.py
+  etl: Trabajo/scripts/build_enrichment_tables_v3_2.py
+salidas:
+  piloto: Auditoria/enriquecimiento_v3_2_prueba30
+  produccion: Auditoria/enriquecimiento_v3_2_934
+  warehouse: Auditoria/integracion_v1/warehouse_v3_2.sqlite
+  warehouse_piloto: Auditoria/integracion_v1/warehouse_v3_2_piloto10.sqlite
+  # ACLARACION 2026-09-17 (hallazgo de Luna): el warehouse tiene DOS capas
+  # de tamano distinto en la misma base. La tabla `document` tiene 3884 filas
+  # (todo el corpus canonico clasificado: include/exclude/uncertain/
+  # insufficient_content). La tabla `enrichment_document_v3_2` tiene 934 filas
+  # -- solo los documentos decision_documento=='include', que son los unicos
+  # que pasaron por el enrichment v3.2. Esto es por diseno, no un error: no
+  # confundir "corpus clasificado" (3884) con "corpus enriquecido" (934).
+invariantes:
+  - proyecto_asociado_vacio_o_listado_en_proyectos_mencionados
+  - revision_ninguno_implica_campos_afectados_y_motivo_vacios
+  - cita_verificada_implica_cita_no_vacia
+  - evidencia_hito_verificada_implica_evidencia_hito_no_vacia
+  - content_sha256_y_hashes_de_contrato_persistidos
+  - warehouse_v1_intacto
+decisiones:
+  actor_max_items: 12
+  actor_saturado_requiere_revision_o_segunda_pasada: true
+  asociacion_proyecto_no_se_infiere: true
+  nombre_proyecto_puede_ser_vacio_con_proyectos_contextuales: true
+  llamadas_api_produccion_requieren_confirm_production_run: true
+pendientes:
+  - ampliar_crosswalk_project_id_licencia_pii_cobertura
+  - arrancar_arcos_analiticos_dario_nicolas_christian
+  - decidir_gate_documento_a_unidad_de_caso_propuesto_por_sol
+  - decidir_modelo_project_phase_case_propuesto_por_sol
+# [ACTUALIZADO 2026-09-18] validacion_humana_de_muestra_nueva_antes_de_liberacion_final SE EJECUTO
+# (ya no es "pendiente de hacer" -- Sol/GPT-5.6 reviso los 50 documentos de
+# Auditoria/validacion_humana_v3_2/muestra_validacion_humana_v3_2_n50_seed20260918.json contra el texto
+# fuente real) pero el RESULTADO abre 2 pendientes nuevos, mas serios: 21/50 ok (42%), 17/50 error_menor
+# (34%), 12/50 error_grave (24%). Verificado por Claude (3/12 error_grave chequeados directamente contra
+# enrichment_document_v3_2 y el titulo real del articulo, los 3 confirmaron el hallazgo). El problema NO
+# es que el extractor invente citas (grounding funciona razonablemente bien) sino que no existe ningun
+# gate que decida, antes de extraer, que tipo de UNIDAD DE CASO es el documento -- 4 familias de error:
+# documentos panoramicos/comparativos tratados como un caso unico, casos secundarios capturados como
+# caso focal, actores/comunidades confundidos con "proyecto", caso focal fuera del universo de Santiago.
+# Sol propone explicitamente NO tocar el extractor de actores -- el gate debe ir un nivel arriba, antes
+# de la extraccion. Ver Auditoria/validacion_humana_v3_2/INFORME_auditorias_sol_2026-09-18.md para el
+# detalle completo y las categorias de gate propuestas. validacion_humana_opcional_del_log_de_253_
+# decisiones_de_fusion_de_proyectos tambien se ejecuto (Sol audito los 253 completos, no una muestra:
+# confirmo 222/253, refuto 31/253 -- las 31 fueron reverificadas por Claude contra evidencia real y
+# aplicadas, ver resolve_project_review_queue.py, resultado final 133 fusionados/120 separados).
+# [ACTUALIZADO 2026-09-18] reconciliar_capas_antiguas_entity_case_mention_event_con_capa_v3_2
+# quedo CERRADA: Trabajo/scripts/reconcile_classification_layer_with_v3_2.py agrego 3
+# tablas nuevas a warehouse_v3_2_bridge.sqlite (nunca se toco warehouse_v3_2.sqlite):
+# entity_actor_crosswalk (entity_role de Fase B <-> enrichment_actor_v3_2/
+# institucion_v3_2, por coincidencia EXACTA de nombre normalizado dentro del MISMO
+# documento: 5143/8215 = 62.6% exacto, +320 candidatos por prefijo NO confirmados
+# automaticamente -- caso real encontrado: v3.2 embebe el cargo en el nombre,
+# "Sergio Ventura" vs "Sergio Ventura, Director de Obras..."), case_mention_project_
+# crosswalk (5731 case_mention vinculados a nivel de DOCUMENTO a los project_id del
+# puente, nunca a nivel de mencion individual porque case_mention no tiene nombre de
+# proyecto propio: 1606/5731 con al menos 1 proyecto), y event_evento_v3_2_crosswalk
+# (las 38 filas del piloto vestigial de 10 documentos: 0 matches exactos, verificado
+# que es por parafraseo real del modelo entre corridas, no un bug -- ambas versiones
+# se preservan intactas, sin auto-fusionar). Los 1814/3884 documentos exclude/
+# uncertain/insufficient_content con entity_role pero SIN capa v3.2 quedan
+# explicitamente fuera de alcance (nunca pasaron por enrichment profundo). integrity_
+# check=ok, foreign_key_check vacio, 5 tests nuevos (test_reconcile_classification_
+# layer_with_v3_2.py), suite 140/140. Resumen en Auditoria/integracion_v1/
+# reconciliation_classification_v3_2.summary.json.
+# [ACTUALIZADO 2026-09-17 noche] decision_sobre_escalar_segunda_pasada_actor_only_a_los_241_restantes
+# quedo CERRADA (ya no es pendiente): los 241 documentos restantes se corrieron
+# (241/241 escritos, 0 errores, USD 8.2493), se encontraron y sanitizaron 71/5491
+# actores con proyecto_asociado corrupto, y se diseno/construyo el puente
+# documento->proyecto/caso->actor/evento (Trabajo/scripts/build_case_project_bridge.py,
+# base nueva Auditoria/integracion_v1/warehouse_v3_2_bridge.sqlite, sin tocar
+# warehouse_v3_2.sqlite). La cola de 253 candidatos de fusion de proyectos que
+# genero el puente tambien quedo resuelta por revision humana
+# (Trabajo/scripts/resolve_project_review_queue.py: 128 fusionados, 125
+# mantenidos separados, 0 pendientes). Ver _FARO/memory-bank/stage_state.json
+# -> last_audit_2026-09-17_noche_bridge_y_cola_resuelta para el detalle completo.
+# Hallazgo real de Luna (segunda auditoria, read-only): esta lista de pendientes
+# y el last_audit anterior en stage_state.json seguian describiendo esto como
+# pendiente despues de haberse cerrado -- corregido aqui, sin editar el
+# last_audit historico (append-only, nunca se reescribe).
+deuda_de_reproducibilidad:
+  # Hallazgo real de Luna (2026-09-17, segunda auditoria post-normalizacion):
+  # el record schema tuvo 3 versiones distintas en vivo durante la corrida.
+  # enrichment.jsonl y warehouse_v3_2.sqlite preservan el HASH de la version
+  # con la que cada registro fue generado originalmente
+  # (record_schema_sha256_at_generation), pero el CONTENIDO de esas 2
+  # versiones antiguas del schema no quedo archivado en ningun lado --
+  # Trabajo/config/enrichment_record_schema_v3_2.json solo tiene la version
+  # vigente. El proyecto no es un repositorio git (sin historial de commits),
+  # asi que esas 2 versiones no se pueden reconstruir con certeza. No es
+  # corrupcion de datos (los 934 registros validan contra el schema vigente),
+  # pero es una limitacion real de auditabilidad retroactiva a nivel de
+  # schema completo, solo mitigada a nivel de hash.
+  estado: aceptado_como_limitacion_conocida
+  mitigacion_futura: "archivar copia del record schema en _SUPERADO/ cada vez que cambie durante una corrida en curso, no solo al final"

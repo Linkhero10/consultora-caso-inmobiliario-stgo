@@ -1,0 +1,81 @@
+{
+  "artifact_version": "expediente-caso-alto-macul-v1",
+  "generado_por": "Claude (Sonnet 5), auditoría independiente 2026-09-15",
+  "url": "https://x.com/alto_macul/status/1237328657254879232?lang=ar-x-fm",
+  "estrato_muestra_ciega": "community",
+  "proposito": "Documentar a detalle el único desacuerdo restante entre la revisión humana ciega de Felipe y el gate v5.2.4 sobre la muestra ciega de 50 documentos, para que Felipe decida el caso con toda la evidencia junta.",
+
+  "texto_fuente_completo": "@MuniLaFlorida @isinergia_inmob @CamaraChilenaC @portal_inmob CONSTRUYAN EL SEGUNDO PUENTE Y DEJEN DE DARSE VUELTAS. Hubo un compromiso el 20 de enero de entregar a la JJVV los cinco puntos que conectarían hacia Peñalolén. se insistió todo el verano con Fernando Sarmiento y Nada",
+  "nota_sobre_el_texto": "279 caracteres. Es un post de X/Twitter, truncado (termina en 'y Nada'). No hay más contexto recuperado en el corpus para esta URL -- es todo lo que existe del documento.",
+
+  "cronologia_de_decisiones": {
+    "v5_2_1_lo_que_revisó_Felipe_en_su_revisión_ciega": {
+      "decision_documento": "uncertain",
+      "profundidad_documentacion_caso": "caso_principal",
+      "tipo_accion_contenciosa": "movilizacion_vecinal",
+      "evidencia_geografica_quotes": ["Alto Macul", "@MuniLaFlorida", "Peñalolén"],
+      "evidence_geo_quotes_verified": [false, false, false],
+      "gate_amplia_decision_final": "uncertain",
+      "gate_amplia_reasons": ["evidencia_geografica_no_verificada"],
+      "explicacion": "Las 3 citas geográficas fallaron la verificación literal: 'Alto Macul' (10 car.) y 'Peñalolén' (9 car.) son más cortas que el mínimo de 15 caracteres que exige quote_flags() en v5.1/v5.2/v5.2.1 (MIN_EVIDENCE_QUOTE_CHARS=15); '@MuniLaFlorida' (14 car.) también queda bajo el mínimo. Con las 3 citas inválidas, evidencia_geo_verified=False y el documento cae a uncertain."
+    },
+    "v5_2_3_tras_el_prompt_endurecido_profundidad_documentacion_caso": {
+      "decision_documento": "include",
+      "profundidad_documentacion_caso": "caso_principal",
+      "tipo_accion_contenciosa": "otra_accion_verificable",
+      "evidencia_geografica_quotes": ["Comunidad Alto Macul", "@MuniLaFlorida", "hacia Peñalolén"],
+      "evidence_geo_quotes_verified": [false, false, true],
+      "gate_amplia_decision_final": "include",
+      "gate_amplia_reasons": [],
+      "explicacion": "El modelo reformuló las citas. 'Comunidad Alto Macul' (21 car.) es MÁS LARGA que 15 caracteres, pero NO es literal -- esa frase exacta no aparece en el texto fuente (el texto dice solo 'Alto Macul' en el handle @alto_macul, no 'Comunidad Alto Macul' en el cuerpo) -- por eso sigue marcada False, correctamente. '@MuniLaFlorida' sigue siendo False por ser < 15 caracteres. La tercera, 'hacia Peñalolén' (16 car.), SÍ es literal y SÍ supera el umbral -- es la ÚNICA cita geográfica que pasa, y basta una sola cita válida (regla v5.2.1: 'any' es suficiente, no exige 'all') para que evidencia_geo_verified=True y el gate ya no bloquee por geografía."
+    },
+    "v5_2_4_gate_de_objeto_corregido_sin_nueva_llamada_API": {
+      "decision_documento": "include",
+      "nota": "Sin cambios respecto a v5.2.3 para este caso -- el fix del gate de objeto (instrumento_urbano_general/equipamiento_urbano/infraestructura_no_residencial) no aplica aquí porque es_proyecto_inmobiliario ya era 'si' en ambas corridas; el cambio de v5.2.1 a v5.2.3 fue puramente de redacción de citas del modelo, no del gate."
+    }
+  },
+
+  "por_que_cambio_la_decision_entre_v5_2_1_y_v5_2_3": {
+    "resumen": "No cambió ningún hecho del documento ni el gate de objeto/acción/geografía en sí -- cambió cómo el modelo redactó sus propias citas de evidencia geográfica al pasar del prompt v5.2 (usado en v5.2.1) al prompt v5.2.3 (más estricto sobre profundidad_documentacion_caso). El prompt v5.2.3 no dice nada explícito sobre cómo citar geografía distinto de v5.2 -- este es un efecto secundario no buscado deliberadamente: el modelo, al ser más cuidadoso en general con las citas de acción/objeto, también reformuló una de las 3 citas geográficas de forma que pasó a ser literal Y suficientemente larga ('hacia Peñalolén' en vez de 'Peñalolén' solo).",
+    "riesgo_señalado": "Esto revela que el resultado depende de un detalle frágil: si el modelo hubiera escrito 'Peñalolén' en vez de 'hacia Peñalolén' (9 vs 16 caracteres), el documento seguiría en 'uncertain' como en v5.2.1. La diferencia entre incluir y no incluir este caso específico depende de si el modelo agregó o no una palabra de más alrededor del nombre de la comuna -- no de un cambio real en la evidencia disponible. Esto no es un bug del código (el umbral de 15 caracteres es una regla explícita y documentada), pero sí es una fuente de inestabilidad estocástica real en este caso límite específico, que Felipe debería saber antes de decidir."
+  },
+
+  "razon_del_modelo_para_incluir_v5_2_3": "El caso puede reconstruirse como una disputa comunitaria por la construcción pendiente de infraestructura vial vinculada al sector Alto Macul y a la conexión hacia Peñalolén.",
+
+  "nota_de_revision_humana_de_Felipe": {
+    "verdict": "mantener_uncertain",
+    "reviewed_at": "2026-09-15T21:37:42.663892+00:00",
+    "nota_completa": "Mantener uncertain. El post de una organización vecinal exige construir un segundo puente y alude a insistencias y conexiones hacia Peñalolén, pero el texto es extremadamente breve y no permite establecer con suficiente seguridad el contexto del proyecto, la naturaleza organizada de la acción ni el emplazamiento exacto. Requiere fuente complementaria para un gold definitivo.",
+    "nota_metodologica": "Esta revisión de Felipe fue ciega a la salida del modelo v5.2.1 en cuanto a NO haber visto las etiquetas antes de decidir -- pero el campo 'gate_document_decision' que aparece en su archivo de revisión SÍ registra que en ese momento el gate v5.2.1 decía 'uncertain', el mismo veredicto que dio Felipe. Es decir: cuando Felipe revisó, humano y gate coincidían. El desacuerdo actual (v5.2.3/v5.2.4 dicen include) es nuevo, surgido DESPUÉS de la revisión de Felipe, por el efecto de redacción de citas descrito arriba -- Felipe nunca vio ni evaluó la versión 'include' de este caso."
+  },
+
+  "analisis_independiente_de_Claude": {
+    "es_esto_un_falso_positivo_confirmado": "No, según el criterio estricto del proyecto (falso positivo confirmado = Felipe dijo explícitamente 'confirmar_exclude' contra un include del modelo). Felipe dijo 'mantener_uncertain', no 'excluir' -- por eso el comparador correctamente lo clasifica como 'model_include_not_approved', no como 'definite_model_include_false_positive'. El gate de 0 falsos positivos sigue pasando (0/50) porque este caso no cuenta como falso positivo bajo esa definición.",
+    "es_razonable_la_cautela_de_Felipe": "Sí, y por una razón adicional a la que él ya dio: el texto es un tuit de 279 caracteres, truncado a mitad de frase ('y Nada'), sin fecha visible del proyecto, sin nombre de proyecto inmobiliario, sin confirmación de que 'el segundo puente' sea efectivamente un proyecto de desarrollo urbano/inmobiliario formal y no, por ejemplo, una obra vial pública sin promotor privado (el modelo etiquetó tipo_objeto_norm='infraestructura_no_residencial' y es_proyecto_inmobiliario='si', pero no hay ninguna cita literal que sustente el 'si' de es_proyecto_inmobiliario -- ese campo no tiene su propio arreglo de evidencia_quotes en el schema, solo los tres genéricos de acción/objeto/geografía, y ninguno de los tres prueba específicamente que haya un promotor inmobiliario involucrado).",
+    "hallazgo_adicional_no_reportado_antes": "El campo es_proyecto_inmobiliario (que decide si pasa el gate de objeto en la vista amplia) no tiene evidencia literal exigida por el schema -- a diferencia de acción/objeto/geografía, es un campo de juicio del modelo sin verificación mecánica. Para este caso en particular eso importa: es la única razón por la que 'infraestructura_no_residencial' + 'es_proyecto_inmobiliario=si' pasa el gate de objeto amplio, y no hay forma de que el código confirme que ese 'si' está bien fundado.",
+    "conclusion": "No es un bug de código -- es un caso genuinamente límite con evidencia mínima (un tuit corto, truncado, sin fecha ni nombre de proyecto), y el gate lo está tratando correctamente dentro de sus reglas declaradas (una sola cita geográfica válida ya es 'suficiente' por diseño desde v5.2.1). La pregunta real es si esa regla de 'una sola cita basta' es demasiado permisiva para publicaciones sociales cortas como esta -- ya existe una protección parcial para eso (el test 'short_social_post_is_not_promoted_by_a_short_geography_label' exige texto >=500 caracteres para aceptar citas geográficas cortas <15 caracteres), pero este caso la esquiva porque la cita ganadora ('hacia Peñalolén', 16 car.) queda justo por encima del umbral de longitud, no por debajo -- esa protección específica no aplica aquí."
+  },
+
+  "opciones_para_Felipe": [
+    {
+      "opcion": "Mantener exclude/uncertain para este caso específico y anotarlo como excepción manual documentada, sin cambiar el gate.",
+      "consecuencia": "El gate de 0 falsos positivos sigue en 0 (ya lo está). No se toca código. Este caso queda fuera del corpus incluido por decisión editorial directa, no por el gate."
+    },
+    {
+      "opcion": "Endurecer el gate para posts cortos de redes sociales: exigir 2 citas geográficas válidas (no 1) cuando el texto fuente es corto (por ejemplo <500 caracteres, el mismo umbral que ya usa la excepción de cita corta), en vez de bastar con una.",
+      "consecuencia": "Cambiaría el comportamiento no solo de este caso sino de cualquier publicación social corta futura en el corpus completo (~4.530 documentos pendientes) -- requiere evaluar cuántos casos más tocaría antes de aplicarlo, no solo este."
+    },
+    {
+      "opcion": "Dejarlo como 'uncertain' explícito en vez de 'include' o 'exclude', reconociendo que ni el modelo ni el gate tienen evidencia suficiente para decidir con el texto truncado disponible.",
+      "consecuencia": "Requeriría un ajuste al gate (hoy con evidencia suficiente y sin 'hard_exclude' reasons, el resultado es 'include', nunca 'uncertain' de oficio) o una anotación editorial manual fuera del pipeline automático."
+    }
+  ],
+
+  "fuentes": {
+    "revision_humana": "Auditoria/muestras_control/revision_humana_blind_v5_2_1_50_felipe.json",
+    "clasificacion_v5_2_1": "Auditoria/muestras_control/clasificacion_blind_v5_2_1_50.jsonl",
+    "clasificacion_v5_2_3": "Auditoria/muestras_control/clasificacion_blind_v5_2_3_50.jsonl",
+    "clasificacion_v5_2_4": "Auditoria/muestras_control/clasificacion_blind_v5_2_4_50.jsonl",
+    "gate_code": "Trabajo/scripts/classify_v5_1.py (quote_flags, MIN_EVIDENCE_QUOTE_CHARS=15); Trabajo/scripts/classify_v5_2_2.py (_short_geography_quote_flags, umbral de 500 caracteres)"
+  }
+}

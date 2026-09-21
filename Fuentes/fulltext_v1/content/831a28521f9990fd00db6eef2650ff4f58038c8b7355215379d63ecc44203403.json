@@ -1,0 +1,14 @@
+{
+  "url": "https://bancochile-promociones.enlaceinmobiliario.cl/listado/region-metropolitana/nunoa",
+  "extraction_method": "http_error_403",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 403,
+  "fetched_at": "2026-09-12T00:52:57.877560+00:00",
+  "comuna": "Ñuñoa",
+  "termino": "proyecto inmobiliario oposición",
+  "discovery_record_hash": "831a28521f9990fd00db6eef2650ff4f58038c8b7355215379d63ecc44203403",
+  "discovery_title": "Proyectos inmobiliarios en venta en Ñuñoa | Banco de Chile"
+}

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-es" lang="es-es" dir="ltr">
+<head>
+		
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<base href="https://dtpm.cl/index.php/gtfs-vigente" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="DTPM, Directorio, Transporte, Publico, Metropolitano, Santiago, Chile, Transantiago, Recorridos, Buses, Usuarios, pasajeros" />
+	<meta name="author" content="Super User" />
+	<meta name="description" content="Las principales labores del DTPM son articular, coordinar y hacer seguimiento de las acciones, programas y medidas tendientes a gestionar el transporte público de la ciudad de Santiago derivadas de las acciones de diversos sectores públicos y privados responsables del plan capitalino." />
+	<meta name="generator" content="Joomla! - Open Source Content Management" />
+	<title>GTFS vigente</title>
+	<link href="/templates/jm-commune-offices/css/bootstrap.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/bootstrap_responsive.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/template.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/template_responsive.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/extended_layouts.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/font_switcher.27.css" rel="stylesheet" type="text/css" />
+	<link href="//fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css" />
+	<link href="/modules/mod_djmegamenu/assets/css/animations.css" rel="stylesheet" type="text/css" />
+	<link href="/modules/mod_djmegamenu/assets/css/offcanvas.css" rel="stylesheet" type="text/css" />
+	<link href="/modules/mod_djmegamenu/mobilethemes/light/djmobilemenu.css" rel="stylesheet" type="text/css" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/djmegamenu.27.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/jm-commune-offices/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="/plugins/editors-xtd/edsanimate/assets/animate-animo.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.dj-hideitem { display: none !important; }
+
+			#dj-megamenu202mobile { display: none; }
+		@media (max-width: 979px) {
+			#dj-megamenu202, #dj-megamenu202sticky, #dj-megamenu202placeholder { display: none; }
+			#dj-megamenu202mobile { display: block; }
+		}
+	
+	</style>
+	<script src="/media/jui/js/jquery.min.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-noconflict.js" type="text/javascript"></script>
+	<script src="/media/system/js/caption.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-migrate.min.js" type="text/javascript"></script>
+	<script src="/media/jui/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery.ui.core.min.js" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery.ui.sortable.min.js" type="text/javascript"></script>
+	<script src="/plugins/system/ef4_jmframework/includes/assets/template/js/layout.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/fontswitcher.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/stickybar.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/pagesettings.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/jquery.countTo.js" type="text/javascript"></script>
+	<script src="/templates/jm-commune-offices/js/scripts.js" type="text/javascript"></script>
+	<script src="/modules/mod_djmegamenu/assets/js/jquery.djmegamenu.js" type="text/javascript" defer="defer"></script>
+	<script src="/modules/mod_djmegamenu/assets/js/jquery.djmobilemenu.js" type="text/javascript" defer="defer"></script>
+	<script src="/media/system/js/mootools-core.js" type="text/javascript"></script>
+	<script src="/media/system/js/core.js" type="text/javascript"></script>
+	<script src="/plugins/system/edsanimate/assets/jquery.ba-throttle-debounce.min.js" type="text/javascript"></script>
+	<script src="/plugins/editors-xtd/edsanimate/assets/animo.min.js" type="text/javascript"></script>
+	<script src="/plugins/system/edsanimate/assets/viewportchecker.js" type="text/javascript"></script>
+	<script src="/plugins/system/edsanimate/assets/edsanimate.js" type="text/javascript"></script>
+	<script src="/plugins/system/edsanimate/assets/edsanimate.site.js" type="text/javascript"></script>
+	<script type="text/javascript">
+jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});jQuery(function($){ $(".hasTooltip").tooltip({"html": true,"container": "body"}); });
+	(function(){
+		var cb = function() {
+			var add = function(css) {
+				var ss = document.styleSheets;
+			    for (var i = 0; i < ss.length; i++) {
+			        if (ss[i].href == css) return;
+			    }
+				var l = document.createElement('link'); l.rel = 'stylesheet';
+				l.href = css;
+				var h = document.getElementsByTagName('head')[0]; h.appendChild(l);
+			}
+			add('/media/djextensions/css/animate.min.css');
+			add('/media/djextensions/css/animate.ext.css');
+		};
+		var raf = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame;
+		if (raf) raf(cb);
+		else window.addEventListener('load', cb);
+	})();
+				var edsScrollOffset = "75";
+				var edsHideOverflowX = "1";
+				var edsHideOverflowY = "0";					
+			
+	</script>
+
+<link href="https://dtpm.cl/images/favicon.ico" rel="Shortcut Icon" />
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-41729508-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<!-- Accessibility Code for "www.dtpm.cl" -->
+<script>
+/*
+
+Want to customize your button? visit our documentation page:
+
+https://login.equalweb.com/custom-button.taf
+
+*/
+window.interdeal = {
+    "sitekey": "5b17f6463eba01124a875a5833c4c7ee",
+    "Position": "Left",
+    "domains": {
+        "js": "https://cdn.equalweb.com/",
+        "acc": "https://access.equalweb.com/"
+    },
+    "Menulang": "ES",
+    "btnStyle": {
+        "vPosition": [
+            "80%",
+            "80%"
+        ],
+        "scale": [
+            "0.5",
+            "0.5"
+        ],
+        "color": {
+            "main": "#1c4bb6",
+            "second": "#ffffff"
+        },
+        "icon": {
+            "outline": false,
+            "type": 1,
+            "shape": "circle"
+        }
+    }
+};
+(function(doc, head, body){
+    var coreCall             = doc.createElement('script');
+    coreCall.src             = interdeal.domains.js + 'core/5.1.0/accessibility.js';
+    coreCall.defer           = true;
+    coreCall.integrity       = 'sha512-TcsprTlCCE0u/G5TN3zikzkynCEIRcfd96+RejMcyd2HFPnTpVUDxumXmFb/rSJ3ogQM+b/yvYWLwV6duAuJQg==';
+    coreCall.crossOrigin     = 'anonymous';
+    coreCall.setAttribute('data-cfasync', true );
+    body? body.appendChild(coreCall) : head.appendChild(coreCall);
+})(document, document.head, document.body);
+</script><script type="text/javascript">
+	window.cookiePath = '/';
+</script>
+
+<!-- begin GetSmily plugin -->
+<script type='text/javascript'>
+var getsmily_id='6nhrkvida0gw24z';(function(d){var gs=d.createElement('script');var gsf=d.getElementsByTagName('script')[0];gs.async=1;gs.src='https://cdn.getsmily.com/emolytics/script/emolytics-widget.js';gsf.parentNode.insertBefore(gs,gsf);})(document);
+</script>
+<!-- end GetSmily plugin -->
+
+
+</head>
+<body class="  sticky-bar topbar2  ">
+  <div id="jm-allpage">
+  	  		  		  			  		  			<header id="jm-bar" class="" role="banner">
+		<div id="jm-top-bar">
+		<div id="jm-top-bar-in" class="container-fluid">
+									<div id="jm-top-bar2" class="pull-right  jm-responsive" data-wide="hidden-wide">
+								<div id="jm-page-settings" class="pull-right" aria-hidden="true">
+					<ul class="nav menu">
+												<li class="day-night">
+							<ul>
+																<li><a href="/index.php/gtfs-vigente?contrast=normal" class="jm-normal" title="Enable Default mode."><span class="jm-color icon-certificate" aria-hidden="true"></span> Modo normal</a></li>
+																								<li><a href="/index.php/gtfs-vigente?contrast=night" class="jm-night" title="Enable Night mode."><span class="jm-color icon-adjust" aria-hidden="true"></span> Modo nocturno</a></li>
+															</ul>
+						</li>
+																		<li class="contrast">
+							<ul>
+								<li class="contrast-label"><span class="separator">Alto contraste</span></li>
+								<li><a href="/index.php/gtfs-vigente?contrast=highcontrast" class="jm-highcontrast" title="High Contrast Black White mode">Aa</a></li>
+								<li><a href="/index.php/gtfs-vigente?contrast=highcontrast2" class="jm-highcontrast2" title="High Contrast Black Yellow mode">Aa</a></li>
+								<li><a href="/index.php/gtfs-vigente?contrast=highcontrast3" class="jm-highcontrast3" title="High Contrast Yellow Black mode">Aa</a></li>
+							</ul>
+						</li>
+																		<li class="container-width">
+							<ul>
+								<li><a href="/index.php/gtfs-vigente?width=fixed" class="jm-fixed" title="Enable Fixed layout."><span class="icon-align-justify" aria-hidden="true"></span>Fixed layout</a></li>
+								<li><a href="/index.php/gtfs-vigente?width=wide" class="jm-wide" title="Enable Wide layout."><span class="icon-align-justify" aria-hidden="true"></span>Wide layout</a></li>
+							</ul>
+						</li>
+																		<li class="resizer">
+							<ul>
+								<li><a href="#" class="jm-font-smaller" title="Smaller Font">A-</a></li>
+								<li><a href="#" class="jm-font-normal" title="Default Font">A</a></li>
+								<li><a href="#" class="jm-font-larger" title="Larger Font">A+</a></li>
+							</ul>
+						</li>
+											</ul>
+				</div>
+								    <div class="jm-module-raw  visible-desktop margin-ms">
+        
+
+<div class="custom visible-desktop margin-ms"  >
+	<p><a class="toggle-nav menu"><span class="icon-align-justify"></span></a></p></div>
+    </div>
+
+			</div>
+					</div>
+	</div>
+			<div id="jm-logo-nav">
+		<div id="jm-logo-nav-in" class="container-fluid">
+						<div id="jm-logo-sitedesc" class="pull-left">
+								<div id="jm-logo">
+					<a href="https://dtpm.cl/">
+												<img src="https://dtpm.cl/images/logo6.png" alt="DTPM " />
+											</a>
+				</div>
+											</div>
+									<nav id="jm-top-menu" class="pull-right "  tabindex="-1" role="navigation">
+				    <div class="jm-module-raw ">
+        <ul id="dj-megamenu202" class="dj-megamenu dj-megamenu-override " data-options='{"wrap":"jm-top-menu","animIn":"fadeInUp","animOut":"zoomOut","animSpeed":"normal","openDelay":"250","closeDelay":"500","event":"mouseenter","fixed":"0","offset":"0","theme":"override","direction":"ltr","wcag":"1"}' data-trigger="979">
+<li class="dj-up itemid435 first parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/quienes-somos-light.png" alt="Quiénes Somos" /><span class="image-title">Quiénes Somos</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid970 first"><a href="/index.php/homepage/directorio-de-transporte-publico" >Directorio de Transporte Público</a></li><li class="itemid1357"><a href="/index.php/homepage/resena-director" >Reseña Director</a></li><li class="itemid994"><a href="/index.php/homepage/organizacion" >Organización</a></li><li class="itemid972"><a href="/index.php/homepage/historia-del-sistema" >Historia del Sistema</a></li><li class="itemid1509 parent"><a class="dj-more " href="/index.php/destacados-home" >Sistema de Transportes<i class="arrow" aria-hidden="true"></i></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid971 first"><a href="/index.php/homepage/sistema-de-transportes/sistema-integrado-de-transporte" >Sistema Integrado de Transporte</a></li><li class="itemid974"><a href="/index.php/homepage/sistema-de-transportes/buses" >Buses</a></li><li class="itemid975"><a href="/index.php/homepage/sistema-de-transportes/metro" >Metro</a></li><li class="itemid976"><a href="/index.php/homepage/sistema-de-transportes/metrotren-nos" >Tren Nos</a></li><li class="itemid977"><a href="/index.php/homepage/sistema-de-transportes/servicios-complementarios" >Servicios Complementarios</a></li><li class="itemid978"><a href="/index.php/homepage/sistema-de-transportes/datos-y-servicios" >Datos y Servicios</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li></ul></div><div style="clear:both;height:0"></div></div></div></li><li class="dj-up itemid958 parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/icono-tarjeta-bip-light.png" alt="Sistemas de Pago" /><span class="image-title">Sistemas de Pago</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid959 first"><a href="/index.php/tarjeta-bip/tarifas-vigentes-stpm" >Tarifas</a></li><li class="itemid965"><a href="/index.php/tarjeta-bip/que-es-tarjeta-bip" >Tarjeta bip!</a></li><li class="itemid963"><a href="/index.php/tarjeta-bip/viajes-emergencia" >Viaje de Emergencia</a></li><li class="itemid964"><a href="/index.php/tarjeta-bip/red-comercializacion-carga" >Red de Comercialización y Carga</a></li><li class="itemid979"><a href="/index.php/tarjeta-bip/convenios-de-carga" >Convenios de Carga</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li><li class="dj-up itemid499 parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/icono-programas-de-operacion-light.png" alt="Operaciones" /><span class="image-title">Operaciones</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid1282 first"><a href="/index.php/noticias/pov2" >Programas de Operación</a></li><li class="itemid501"><a href="/index.php/noticias/indicadores-de-operacion" >Indicadores de Operación</a></li><li class="itemid980"><a href="/index.php/noticias/estadisticas" >Estadísticas Kilómetros</a></li><li class="itemid982"><a href="/index.php/noticias/plan-operacional-historico" >Planes Operacionales Históricos</a></li><li class="itemid983"><a href="/index.php/noticias/gtfs-vigente" >GTFS vigente</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li><li class="dj-up itemid516 parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/icono-infraestructura-light.png" alt="Infraestructura" /><span class="image-title">Infraestructura</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid968 first"><a href="/index.php/infraestructura/infraestructura-vial" >Red de Vías Prioritarias</a></li><li class="itemid999"><a href="/index.php/infraestructura/zonas-pagas" >Zonas Pagas</a></li><li class="itemid996"><a href="/index.php/infraestructura/refugios-y-puntos-de-parada" >Refugios y Puntos de Parada</a></li><li class="itemid995"><a href="/index.php/infraestructura/estaciones-de-trasbordo" >Estaciones de Trasbordo</a></li><li class="itemid997"><a href="/index.php/infraestructura/estaciones-de-intercambio-modal" >Estaciones de Intercambio Modal</a></li><li class="itemid966"><a href="/index.php/infraestructura/infraestructura-metro" >Infraestructura Metro</a></li><li class="itemid967"><a href="/index.php/infraestructura/plan-maestro-infraestructura" >Plan Maestro Infraestructura</a></li><li class="itemid984"><a href="/index.php/infraestructura/proyectos-destacados" >Proyectos Destacados</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li><li class="dj-up itemid969 parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/icono-documentos-light.png" alt="Documentos" /><span class="image-title">Documentos</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid1501 first"><a href="/index.php/documentos/estandares-de-eficiencia-energetica" >Estándares de eficiencia energética</a></li><li class="itemid1479"><a href="/index.php/documentos/contenidos-esenciales-2024" >Contenido Esencial de uso de Vías </a></li><li class="itemid1417"><a href="/index.php/documentos/transformacion-tecnologica" >Transformación Tecnológica</a></li><li class="itemid1574"><a href="/index.php/documentos/consulta-al-mercado-administrador-financiero" >Consulta al Mercado Administrador Financiero</a></li><li class="itemid1317"><a href="/index.php/documentos/instrucciones-a-proveedores" >Instrucciones a Proveedores</a></li><li class="itemid987"><a href="/index.php/documentos/contratos" >Contratos</a></li><li class="itemid988"><a href="/index.php/documentos/estudios" >Estudios </a></li><li class="itemid990"><a href="/index.php/documentos/licitaciones" >Licitaciones</a></li><li class="itemid985"><a href="/index.php/documentos/ranking-calidad-de-servicio" >Ranking Calidad de Servicio</a></li><li class="itemid989"><a href="/index.php/documentos/informes-de-gestion" >Informes </a></li><li class="itemid986"><a href="/index.php/documentos/gestion-de-requerimientos" >Gestión de Requerimientos</a></li><li class="itemid991"><a href="/index.php/documentos/manuales-y-otros" >Manuales y Otros</a></li><li class="itemid992"><a href="/index.php/documentos/modelos-de-demanda" >Modelos de Demanda</a></li><li class="itemid993"><a href="/index.php/documentos/matrices-de-viaje" >Matrices de Viaje</a></li><li class="itemid1397"><a href="/index.php/documentos/indice-de-evasion" >Índice de Evasión</a></li><li class="itemid1299"><a href="/index.php/documentos/otros" >Otros</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li><li class="dj-up itemid1511 parent separator"><a class="dj-up_a  "   tabindex="0"><span class="dj-drop" ><img src="/images/NWES1.png" alt="Noticias" /><span class="image-title">Noticias</span><i class="arrow" aria-hidden="true"></i></span></a><div class="dj-subwrap  single_column subcols1"><div class="dj-subwrap-in" style="width:200px;"><div class="dj-subcol" style="width:200px"><ul class="dj-submenu"><li class="itemid1512 first"><a href="/index.php/noticias-2/noticias-dtpm" >Noticias DTPM</a></li></ul></div><div style="clear:both;height:0"></div></div></div></li></ul>
+
+
+
+	<div id="dj-megamenu202mobile" class="dj-megamenu-offcanvas dj-megamenu-offcanvas-light ">
+		<a href="#" class="dj-mobile-open-btn" aria-label="Open mobile menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+		
+		<aside class="dj-offcanvas dj-offcanvas-light " data-effect="3">
+			<div class="dj-offcanvas-top">
+				<a href="#" class="dj-offcanvas-close-btn" aria-label="Close mobile menu"><i class="fa fa-close" aria-hidden="true"></i></a>
+			</div>
+							<div class="dj-offcanvas-logo">
+					<a href="https://dtpm.cl/">
+						<img src="/images/modules/awards/logo02.png" alt="DTPM - Directorio de Transporte Público Metropolitano" />
+					</a>
+				</div>
+						
+							<div class="dj-offcanvas-modules">
+							<div class="moduletable">
+						
+
+<div class="custom"  >
+	<div class="jm-social text-center"><a href="#" class="jm-facebook" target="_blank">facebook</a> <a href="#" class="jm-twitter" target="_blank">twitter</a></div></div>
+		</div>
+					</div>
+						
+			<div class="dj-offcanvas-content">			
+				<ul class="dj-mobile-nav dj-mobile-light ">
+<li class="dj-mobileitem itemid-435 divider deeper parent"><a   tabindex="0"><img src="/images/quienes-somos-light.png" alt="Quiénes Somos" /><span class="image-title">Quiénes Somos</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-970"><a href="/index.php/homepage/directorio-de-transporte-publico" >Directorio de Transporte Público</a></li><li class="dj-mobileitem itemid-1357"><a href="/index.php/homepage/resena-director" >Reseña Director</a></li><li class="dj-mobileitem itemid-994"><a href="/index.php/homepage/organizacion" >Organización</a></li><li class="dj-mobileitem itemid-972"><a href="/index.php/homepage/historia-del-sistema" >Historia del Sistema</a></li><li class="dj-mobileitem itemid-1509 deeper parent"><a href="/index.php/destacados-home" >Sistema de Transportes</a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-971"><a href="/index.php/homepage/sistema-de-transportes/sistema-integrado-de-transporte" >Sistema Integrado de Transporte</a></li><li class="dj-mobileitem itemid-974"><a href="/index.php/homepage/sistema-de-transportes/buses" >Buses</a></li><li class="dj-mobileitem itemid-975"><a href="/index.php/homepage/sistema-de-transportes/metro" >Metro</a></li><li class="dj-mobileitem itemid-976"><a href="/index.php/homepage/sistema-de-transportes/metrotren-nos" >Tren Nos</a></li><li class="dj-mobileitem itemid-977"><a href="/index.php/homepage/sistema-de-transportes/servicios-complementarios" >Servicios Complementarios</a></li><li class="dj-mobileitem itemid-978"><a href="/index.php/homepage/sistema-de-transportes/datos-y-servicios" >Datos y Servicios</a></li></ul></li></ul></li><li class="dj-mobileitem itemid-958 divider deeper parent"><a   tabindex="0"><img src="/images/icono-tarjeta-bip-light.png" alt="Sistemas de Pago" /><span class="image-title">Sistemas de Pago</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-959"><a href="/index.php/tarjeta-bip/tarifas-vigentes-stpm" >Tarifas</a></li><li class="dj-mobileitem itemid-965"><a href="/index.php/tarjeta-bip/que-es-tarjeta-bip" >Tarjeta bip!</a></li><li class="dj-mobileitem itemid-963"><a href="/index.php/tarjeta-bip/viajes-emergencia" >Viaje de Emergencia</a></li><li class="dj-mobileitem itemid-964"><a href="/index.php/tarjeta-bip/red-comercializacion-carga" >Red de Comercialización y Carga</a></li><li class="dj-mobileitem itemid-979"><a href="/index.php/tarjeta-bip/convenios-de-carga" >Convenios de Carga</a></li></ul></li><li class="dj-mobileitem itemid-499 divider deeper parent"><a   tabindex="0"><img src="/images/icono-programas-de-operacion-light.png" alt="Operaciones" /><span class="image-title">Operaciones</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-1282"><a href="/index.php/noticias/pov2" >Programas de Operación</a></li><li class="dj-mobileitem itemid-501"><a href="/index.php/noticias/indicadores-de-operacion" >Indicadores de Operación</a></li><li class="dj-mobileitem itemid-980"><a href="/index.php/noticias/estadisticas" >Estadísticas Kilómetros</a></li><li class="dj-mobileitem itemid-982"><a href="/index.php/noticias/plan-operacional-historico" >Planes Operacionales Históricos</a></li><li class="dj-mobileitem itemid-983"><a href="/index.php/noticias/gtfs-vigente" >GTFS vigente</a></li></ul></li><li class="dj-mobileitem itemid-516 divider deeper parent"><a   tabindex="0"><img src="/images/icono-infraestructura-light.png" alt="Infraestructura" /><span class="image-title">Infraestructura</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-968"><a href="/index.php/infraestructura/infraestructura-vial" >Red de Vías Prioritarias</a></li><li class="dj-mobileitem itemid-999"><a href="/index.php/infraestructura/zonas-pagas" >Zonas Pagas</a></li><li class="dj-mobileitem itemid-996"><a href="/index.php/infraestructura/refugios-y-puntos-de-parada" >Refugios y Puntos de Parada</a></li><li class="dj-mobileitem itemid-995"><a href="/index.php/infraestructura/estaciones-de-trasbordo" >Estaciones de Trasbordo</a></li><li class="dj-mobileitem itemid-997"><a href="/index.php/infraestructura/estaciones-de-intercambio-modal" >Estaciones de Intercambio Modal</a></li><li class="dj-mobileitem itemid-966"><a href="/index.php/infraestructura/infraestructura-metro" >Infraestructura Metro</a></li><li class="dj-mobileitem itemid-967"><a href="/index.php/infraestructura/plan-maestro-infraestructura" >Plan Maestro Infraestructura</a></li><li class="dj-mobileitem itemid-984"><a href="/index.php/infraestructura/proyectos-destacados" >Proyectos Destacados</a></li></ul></li><li class="dj-mobileitem itemid-969 divider deeper parent"><a   tabindex="0"><img src="/images/icono-documentos-light.png" alt="Documentos" /><span class="image-title">Documentos</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-1501"><a href="/index.php/documentos/estandares-de-eficiencia-energetica" >Estándares de eficiencia energética</a></li><li class="dj-mobileitem itemid-1479"><a href="/index.php/documentos/contenidos-esenciales-2024" >Contenido Esencial de uso de Vías </a></li><li class="dj-mobileitem itemid-1417"><a href="/index.php/documentos/transformacion-tecnologica" >Transformación Tecnológica</a></li><li class="dj-mobileitem itemid-1574"><a href="/index.php/documentos/consulta-al-mercado-administrador-financiero" >Consulta al Mercado Administrador Financiero</a></li><li class="dj-mobileitem itemid-1317"><a href="/index.php/documentos/instrucciones-a-proveedores" >Instrucciones a Proveedores</a></li><li class="dj-mobileitem itemid-987"><a href="/index.php/documentos/contratos" >Contratos</a></li><li class="dj-mobileitem itemid-988"><a href="/index.php/documentos/estudios" >Estudios </a></li><li class="dj-mobileitem itemid-990"><a href="/index.php/documentos/licitaciones" >Licitaciones</a></li><li class="dj-mobileitem itemid-985"><a href="/index.php/documentos/ranking-calidad-de-servicio" >Ranking Calidad de Servicio</a></li><li class="dj-mobileitem itemid-989"><a href="/index.php/documentos/informes-de-gestion" >Informes </a></li><li class="dj-mobileitem itemid-986"><a href="/index.php/documentos/gestion-de-requerimientos" >Gestión de Requerimientos</a></li><li class="dj-mobileitem itemid-991"><a href="/index.php/documentos/manuales-y-otros" >Manuales y Otros</a></li><li class="dj-mobileitem itemid-992"><a href="/index.php/documentos/modelos-de-demanda" >Modelos de Demanda</a></li><li class="dj-mobileitem itemid-993"><a href="/index.php/documentos/matrices-de-viaje" >Matrices de Viaje</a></li><li class="dj-mobileitem itemid-1397"><a href="/index.php/documentos/indice-de-evasion" >Índice de Evasión</a></li><li class="dj-mobileitem itemid-1299"><a href="/index.php/documentos/otros" >Otros</a></li></ul></li><li class="dj-mobileitem itemid-1511 divider deeper parent"><a   tabindex="0"><img src="/images/NWES1.png" alt="Noticias" /><span class="image-title">Noticias</span></a><ul class="dj-mobile-nav-child"><li class="dj-mobileitem itemid-1512"><a href="/index.php/noticias-2/noticias-dtpm" >Noticias DTPM</a></li></ul></li></ul>
+			</div>
+			
+						
+			<div class="dj-offcanvas-end" tabindex="0"></div>
+		</aside>
+	</div>
+
+    </div>
+    <div class="jm-module-raw ">
+        
+
+<div class="custom"  >
+	<div class="right-nav">
+<div class="social-icons"><a href="https://twitter.com/DTPMet" target="_blank" rel="noopener noreferrer"> <img src="/images/x-dk.png" alt="Twitter" /> </a> <a href="https://www.facebook.com/DtpMetropolitano" target="_blank" rel="noopener noreferrer"> <img src="/images/facebook-dk.png" alt="Facebook" /> </a> <a href="https://www.instagram.com/dtpmet/" target="_blank" rel="noopener noreferrer"> <img src="/images/instagram-dk.png" alt="Instagram" /> </a></div>
+<div class="buscador">
+<div class="buscar-btn"><img src="/images/lupa.png" alt="" /></div>
+</div>
+</div>
+<form action="/index.php/search" method="get" id="finder-search" class="form-search">
+<div class="finder search-ms"><input autocomplete="off" name="q" size="25" type="text" value="" id="mod-finder-searchword" class="search-query input-medium" placeholder="Buscar..." /> <button type="submit" class="btn btn-primary hasTooltip  search-ms finder search-ms"> <span class="icon-search icon-white"></span></button></div>
+<a class="close-search">Cerrar</a></form></div>
+    </div>
+
+			</nav>
+					</div>
+	</div>
+	</header>
+  		  			  		  			  		  			  		  			  		  			  		  			<div id="jm-system-message"><div class="container-fluid"><div id="system-message-container">
+	</div>
+</div></div>  		  			<div id="jm-main" tabindex="-1">
+	<div class="container-fluid">
+				<div class="row-fluid">
+			<div id="jm-breadcrumbs" class="span12 ">
+					<div class="jm-module ">
+		<div  class="jm-module-in">
+					    <div class="jm-module-content clearfix notitle">
+		    	
+<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb">
+			<li>
+			Estás aquí: &#160;
+		</li>
+	
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+									<a itemprop="item" href="/index.php" class="pathway"><span itemprop="name">Inicio</span></a>
+				
+									<span class="divider">
+						<img src="/templates/jm-commune-offices/images/system/arrow.png" alt="" />					</span>
+								<meta itemprop="position" content="1">
+			</li>
+					<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
+				<span itemprop="name">
+					GTFS vigente				</span>
+				<meta itemprop="position" content="2">
+			</li>
+		</ul>
+	      
+		    </div>
+		</div>
+	</div>
+	
+			</div>
+		</div>
+				<div class="row-fluid">
+			<div id="jm-content" class="span9" data-xtablet="span12" data-tablet="span12" data-mobile="span12">
+												<main id="jm-maincontent" role="main">
+					<div class="item-page" itemscope itemtype="https://schema.org/Article">
+	<meta itemprop="inLanguage" content="es-ES" />
+	
+		
+			<div class="page-header">
+					<h2 itemprop="headline">
+				GTFS vigente			</h2>
+									</div>
+					
+	
+	
+				
+								<div itemprop="articleBody">
+		<p>&nbsp;</p>
+<p>La Especificaci&oacute;n general de feeds de transporte p&uacute;blico (GTFS - General Transit Feed Specification) define un formato com&uacute;n para los horarios de transporte p&uacute;blico y la informaci&oacute;n geogr&aacute;fica asociada a ellos. Los "feeds" GTFS permiten que las empresas de transporte p&uacute;blico publiquen sus datos de transporte y que los programadores escriban aplicaciones que consuman esos datos de manera interoperable.</p>
+<p>&nbsp;</p>
+<p><strong><strong>GTFS Vigente desde 29 de agosto<b>&nbsp;de 2026</b><br /></strong></strong></p>
+<ul>
+<li><a href="/descargas/gtfs/GTFS_20260829.zip">GTFS</a>&nbsp;&nbsp;</li>
+</ul>
+<p><strong><strong>GTFS Vigente desde <strong>06 de diciembre 2025</strong> <strong>+ desv&iacute;os elecciones (segunda vuelta)</strong><br /></strong></strong></p>
+<ul>
+<li><a href="/descargas/gtfs/GTFS%20PO06dic+2vuelta.zip">GTFS</a>&nbsp;&nbsp;</li>
+</ul> 	</div>
+
+	
+							</div>
+
+				</main>
+											</div>
+									<aside id="jm-right" role="complementary" class="span3" data-xtablet="span12 first-span" data-tablet="span12 first-span" data-mobile="span12 first-span">
+				<div class="">
+						<div class="jm-module ">
+		<div  class="jm-module-in">
+					   		<h3 class="jm-title "><span>Destacados</span></h3>
+		   			    <div class="jm-module-content clearfix ">
+		    	<ul class="nav menu">
+<li class="item-1005"><a href="/index.php/homepage/directorio-de-transporte-publico" >Directorio de Transporte Público Metropolitano</a></li><li class="item-1006"><a href="/index.php/programa-de-operacion" >Programa de Operación</a></li><li class="item-1007"><a href="/index.php/documentos/estudios" >Estudios</a></li><li class="item-1008"><a href="/index.php/documentos/contratos" >Contratos</a></li><li class="item-1009"><a href="/index.php/documentos/ranking-calidad-de-servicio" >Ranking Calidad de Servicio</a></li><li class="item-1010"><a href="/index.php/documentos/informes-de-gestion" >Informes de Gestión</a></li></ul>
+	      
+		    </div>
+		</div>
+	</div>
+		<div class="jm-module ">
+		<div  class="jm-module-in">
+					    <div class="jm-module-content clearfix notitle">
+		    	
+
+<div class="custom"  >
+	<p><img src="/images/Banner_SIU.jpg" alt="Banner SIU" title="App Transantiago Oficial - Desc&aacute;rgala en Google Play y App Store" /></p></div>
+	      
+		    </div>
+		</div>
+	</div>
+					</div>
+			</aside>
+					</div>
+	</div>
+</div>
+  		  			  		  			  		  			  		  			<div id="jm-footer-mod" class="">
+	<div id="jm-footer-mod-in" class="container-fluid">
+		<div class="row-fluid jm-flexiblock jm-footer"><div class="span4"  data-default="span4" data-wide="span4" data-normal="span4" data-xtablet="span4" data-tablet="span100" data-mobile="span100">	<div class="jm-module ">
+		<div  class="jm-module-in">
+					    <div class="jm-module-content clearfix notitle">
+		    	
+
+<div class="custom"  >
+	<p><img src="/images/transporte2.png" alt="transporte2" />&nbsp;<img src="/images/dtpm3.png" alt="dtpm3" /></p></div>
+	      
+		    </div>
+		</div>
+	</div>
+	</div><div class="span4"  data-default="span4" data-wide="span4" data-normal="span4" data-xtablet="span4" data-tablet="span50 first-span" data-mobile="span100 first-span">	<div class="jm-module classic-ms">
+		<div  class="jm-module-in">
+					   		<h3 class="jm-title "><span>Links</span> de interés</h3>
+		   			    <div class="jm-module-content clearfix ">
+		    	<ul class="nav menu">
+<li class="item-534"><a href="http://www.mtt.gob.cl/" onclick="window.open(this.href, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,'); return false;">Ministerio de Transportes</a></li><li class="item-535"><a href="http://www.subtrans.gob.cl/" target="_blank">Subsecretaría de Transportes</a></li><li class="item-536"><a href="https://www.red.cl/" target="_blank">Red Movilidad</a></li><li class="item-541"><a href="http://www.tarjetabip.cl/" target="_blank">Red bip!</a></li><li class="item-657"><a href="https://www.portaltransparencia.cl/PortalPdT/directorio-de-organismos-regulados/?org=AN001" target="_blank">Gobierno Transparente</a></li><li class="item-658"><a href="https://www.chileatiende.gob.cl/" target="_blank">Chile Atiende</a></li><li class="item-1003"><a href="https://redsimus.com/" target="_blank">SIMUS</a></li></ul>
+	      
+		    </div>
+		</div>
+	</div>
+	</div><div class="span4"  data-default="span4" data-wide="span4" data-normal="span4" data-xtablet="span4" data-tablet="span50" data-mobile="span100 first-span">	<div class="jm-module ">
+		<div  class="jm-module-in">
+					   		<h3 class="jm-title "><span>Contacto</span></h3>
+		   			    <div class="jm-module-content clearfix ">
+		    	
+
+<div class="custom"  >
+	<p><img src="/images/icon-address.png" alt="Direccion" style="width: 18px; display: inline-block; margin-right: 7px;" />Agustinas 1382 -&nbsp;<span>Santiago - Chile<br /></span></p>
+<p><img src="/images/icon-phone.png" alt="Telefono" style="width: 18px; display: inline-block; margin-right: 7px;" />22 - 4213000 anexo 8511</p>
+<p><img src="/images/icon-email.png" alt="Contacto" style="width: 18px; display: inline-block; margin-right: 7px;" /><span style="color: #a19f9f;"><a href="http://dtpm.custhelp.com/" target="_blank" rel="noopener noreferrer" style="color: #a19f9f;">Contacto</a></span></p>
+<p><img src="/images/icon-hour.png" alt="Horario de atencion" style="width: 18px; display: inline-block; margin-right: 7px;" />Oficina de partes: Lunes a Viernes 9.00 am - 14.00 pm</p>
+<p>&nbsp;</p>
+<p><a href="https://twitter.com/DTPMet" target="_blank" rel="noopener noreferrer"><img src="/images/icon-x.png" alt="X" style="width: 25px;" /></a>&nbsp; <a href="https://www.facebook.com/DtpMetropolitano" target="_blank" rel="noopener noreferrer"><img src="/images/icon-facebook.png" alt="facebook" style="width: 23px;" /></a>&nbsp; <a href="https://www.instagram.com/dtpmet/" target="_blank" rel="noopener noreferrer"><img src="/images/icon-instagram.png" alt="instagram" style="width: 25px;" /></a></p></div>
+	      
+		    </div>
+		</div>
+	</div>
+	</div></div>	</div>
+</div>
+  		  			<footer id="jm-footer" role="contentinfo">
+	<div id="jm-footer-in" class="container-fluid">
+		<div id="jm-copy-power" class="pull-left">
+						<div id="jm-copyrights" class="pull-left ">
+				
+
+<div class="custom"  >
+	<p>Directorio de Transporte P&uacute;blico Metropolitano 2026</p></div>
+
+			</div>
+									<div id="jm-poweredby" class="pull-left">
+				<a href="/" target="_blank" rel="nofollow"></a>
+			</div>
+					</div>
+				<div id="jm-back-sitemap" class="pull-right">
+						<div id="jm-sitemap" class="pull-left">
+				<ul class="nav menu">
+<li class="item-922"><a href="/index.php/sitemap" >Mapa del sitio</a></li></ul>
+
+			</div>
+									<div id="jm-back-top" class="pull-right">
+				<a href="#jm-allpage">Subir<span class="icon-chevron-up"></span></a>
+			</div>
+					</div>
+			</div>
+</footer>
+  		  			
+  		  	  </div>
+</body>
+</html>

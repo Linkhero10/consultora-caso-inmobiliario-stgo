@@ -1,0 +1,28 @@
+{
+  "entity_actor_crosswalk": {
+    "n_entity_role_in_934_scope": 8215,
+    "n_entity_role_matched_exact": 5143,
+    "n_entity_role_matched_candidate_prefix_not_confirmed": 320,
+    "n_prefix_confirmed_by_sol_2026_09_18": 217,
+    "n_prefix_blocked_generic_head": 30,
+    "n_entity_role_unmatched": 2752,
+    "match_rate_exact": 0.626,
+    "match_rate_exact_plus_candidate": 0.665,
+    "nota": "unmatched_classification_only verificado contra casos reales: no es perdida de datos ni bug -- la entidad de clasificacion (Fase B) y la de enrichment v3.2 redactaron el mismo actor de forma distinta (ej. v3.2 embebe el cargo en el nombre) o v3.2 simplemente no volvio a extraer esa entidad especifica en su segunda lectura del documento. Las filas originales de entity_role NUNCA se borran ni se modifican, solo quedan sin v3_2_source_id en este crosswalk."
+  },
+  "case_mention_document_project_candidates": {
+    "n_case_mentions_total": 5731,
+    "n_case_mentions_with_at_least_1_project_candidate": 1592,
+    "n_case_mentions_no_project_candidate_in_bridge": 4139,
+    "nota": "un case_mention sin project_ids puede ser porque su documento no esta en los 934 enriquecidos, o porque el documento no menciona ningun proyecto con nombre propio (unresolved_no_project en el puente). TODOS los registros son candidatos a nivel de documento (relation_status=document_level_only), no vinculos verificados -- no usar como crosswalk afirmativo hasta que exista el gate documento->unidad_de_caso."
+  },
+  "event_evento_v3_2_crosswalk": {
+    "n_old_events": 38,
+    "n_old_events_matched": 0,
+    "n_old_events_unmatched": 38,
+    "nota": "event es un piloto vestigial de ~11 documentos (build_event_table_v1.py); no matcheados = redaccion de descripcion distinta entre el piloto y v3.2, no perdida de datos (ambas versiones se preservan)"
+  },
+  "integrity_check": "ok",
+  "foreign_key_check_issues": 0,
+  "explicitamente_fuera_de_alcance": "1814/3884 documentos (exclude/uncertain/insufficient_content) tienen entity_role pero NUNCA pasaron por el enrichment v3.2 -- no hay nada que reconciliar ahi, esos documentos simplemente no tienen capa v3.2."
+}

@@ -1,0 +1,107 @@
+{
+  "artifact_version": "1.0",
+  "created_at": "2026-09-15",
+  "status": "pendiente_revision_humana",
+  "purpose": "Dejar separada la revision preliminar de Codex de la revision humana exigida por el gate human_sample_reviewed.",
+  "input": {
+    "classification_file": "Auditoria/muestras_control/clasificacion_sample_v4_70.jsonl",
+    "urls_file": "Auditoria/muestras_control/sample_v3_70_urls.txt",
+    "schema": "Trabajo/config/classification_schema_v4.json",
+    "prompt": "Trabajo/prompts/classifier_system_v4.md",
+    "model": "openai/gpt-5.6-luna",
+    "reasoning_effort": "xhigh",
+    "n": 70,
+    "counts": {
+      "exclude": 57,
+      "include": 7,
+      "uncertain": 4,
+      "insufficient_content": 2,
+      "errors": 0,
+      "cost_usd": 0.15564395
+    }
+  },
+  "review_policy": {
+    "human_review_completed": false,
+    "codex_preliminary_review_is_not_human_review": true,
+    "production_allowed": false,
+    "required_before_release": "Revisar el texto fuente y las citas de los 7 include y 4 uncertain; registrar veredicto y observacion por URL; solo despues decidir si se habilita produccion."
+  },
+  "included_preliminary": [
+    {
+      "url": "http://cepapumahue.cl/1967/w3-article-93479.html",
+      "decision": "include",
+      "preliminary_status": "ok_preliminar",
+      "reason": "Oposicion organizada a edificios residenciales y escala de viviendas explicitamente documentada.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://www.latercera.com/pulso-pm/noticia/la-desconocida-guerra-inmobiliaria-en-estacion-central/4TDSYWZNMZCX5CD5LGAMJDHK7E/",
+      "decision": "include",
+      "preliminary_status": "ok_preliminar",
+      "reason": "Conflicto residencial de Estacion Central con accion administrativa/judicial y proyecto identificable.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://sintesischile.cl/especiales/estacion-central-seremi-acelera-proceso-de-revision-de-guetos-verticales-y-vecinos-acusan-montaje-de-constructoras/",
+      "decision": "include",
+      "preliminary_status": "ok_preliminar",
+      "reason": "Caso principal documentado; objeto residencial y geografia comunal verificables.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://es.linkedin.com/pulse/demoliendo-certezas-cu%C3%A1les-son-las-reglas-del-juego-torres-giagnoni",
+      "decision": "include",
+      "preliminary_status": "revisar_fuente_secundaria",
+      "reason": "Caso secundario documentado sobre torres residenciales; revisar suficiencia y calidad de fuente LinkedIn.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://blog.toctoc.com/denominacion-de-guetos-verticales-reduciria-plusvalia-de-esas-viviendas/",
+      "decision": "include",
+      "preliminary_status": "revisar_fuente_institucional",
+      "reason": "Accion y objeto residencial aparecen, pero conviene revisar sesgo/interes de la fuente comercial.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://tribunalambiental.cl/audiencia-r-334-336-2022-proyecto-inmobiliario-hijuelas-quilin-penalolen/",
+      "decision": "include",
+      "preliminary_status": "ok_preliminar",
+      "reason": "Expediente ambiental/judicial con proyecto residencial identificable y geografia exacta.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://www.pressenza.com/es/2018/08/autentica-utopia-en-una-capital/",
+      "decision": "include",
+      "preliminary_status": "revisar_tipo_de_conflicto",
+      "reason": "Ocupacion de inmueble residencial y conflicto con propietario; puede ser valido, pero no es el mismo patron que oposicion a proyecto habitacional.",
+      "human_review_required": true
+    }
+  ],
+  "uncertain_preliminary": [
+    {
+      "url": "https://www.t13.cl/noticia/nacional/proyecto-viviendas-sociales-divide-comunidad-ecologica-penalolen",
+      "decision": "uncertain",
+      "reason": "Citas independientes no grounded en la respuesta; requiere lectura humana.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://tribunalambiental.cl/sentencia-r-319-2022-humedal-urbano-tranque-la-poza-lo-barnechea/",
+      "decision": "uncertain",
+      "reason": "Accion y geografia verificadas, pero el objeto residencial/inmobiliario no queda demostrado.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://www.ciperchile.cl/2020/12/03/las-politicas-de-suelo-y-la-ley-de-integracion-social-y-urbana/",
+      "decision": "uncertain",
+      "reason": "Objeto residencial y accion aparecen, pero la geografia no queda grounded.",
+      "human_review_required": true
+    },
+    {
+      "url": "https://radio.uchile.cl/2016/04/07/la-ex-concertacion-ayudo-a-lucia-de-pinochet/",
+      "decision": "uncertain",
+      "reason": "La accion y objeto requieren verificar que el conflicto documental corresponda realmente al alcance inmobiliario.",
+      "human_review_required": true
+    }
+  ],
+  "decision": "No habilitar clasificacion de produccion hasta completar esta revision y actualizar stage_roadmap/run_state."
+}

@@ -1,0 +1,33 @@
+{
+  "run_id": "actor_second_pass_v2_20260917T171736Z",
+  "run_type": "produccion_actor_second_pass_v2",
+  "started_at": "2026-09-17T17:17:36.729342+00:00",
+  "finished_at": "2026-09-17T18:05:24.281384+00:00",
+  "api_call": true,
+  "records_requested": 241,
+  "records_written": 241,
+  "records_with_error": 0,
+  "cost_total_usd": 8.249301550000002,
+  "prompt_sha256": "ce238d69d8965aaee75ab03dd8ef39ebbd702d6ad9a6bd5741c88f4a539297bf",
+  "schema_sha256": "e545294c804a1cc9e532012f836a053da77be99eda184049ad9d07551cf7df0c",
+  "script_sha256": "4bdead378fe3a40a13d9fbee262cc6aba87b2fad98700fd47e929362eba42414",
+  "contract_fingerprint": "58c4c1910af8e841335aae547a552f7d7ddf03fe46b3129336d1c31f415d2b05",
+  "output_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\enriquecimiento_v3_2_934\\actor_second_pass_v2\\actor_second_pass_v2.jsonl",
+  "errors_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\enriquecimiento_v3_2_934\\actor_second_pass_v2\\actor_second_pass_v2.errors.jsonl",
+  "output_sha256": "fd2c7f355582f32c70cebde56d521326c346cb455013400d23a9f2fa11359663",
+  "errors_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "post_processing_2026-09-17_noche": {
+    "hallazgo_de_luna": "los campos records_written/output_sha256/script_sha256 de arriba describen SOLO la corrida API que genero 241 filas nuevas (run_id actor_second_pass_v2_20260917T171736Z), NO el estado actual del archivo canonico. Despues de esa corrida se aplico sanitize_pass2_project_associations() retroactivamente sobre las 266 filas totales (25 canario + 241 produccion) para limpiar 71 actores con proyecto_asociado corrupto (mismo bug de degeneracion de texto en cola de array ya visto en maxItems=12, recurrente en maxItems=30). Eso cambio el contenido del archivo sin regenerar este manifest -- Luna detecto correctamente la inconsistencia.",
+    "estado_real_del_archivo_canonico_verificado_ahora": {
+      "path": "Auditoria\\enriquecimiento_v3_2_934\\actor_second_pass_v2\\actor_second_pass_v2.jsonl",
+      "line_count": 266,
+      "file_sha256": "34cd9a08c97da84ff397dc815226c8cedeb92c6a87a847f5da42ffbba151791e",
+      "verified_at": "2026-09-17T21:00:00+00:00 approx (ver system clock real de esta herramienta)"
+    },
+    "script_actual_vs_manifest": {
+      "script_sha256_en_este_manifest": "4bdead378fe3a40a13d9fbee262cc6aba87b2fad98700fd47e929362eba42414",
+      "script_sha256_actual_en_disco": "a565a17fe750087f6064ad605ff65e5ece6fce7da648751ecd91585a83640969",
+      "nota": "difieren porque el script recibio ediciones posteriores a esta corrida (mensajes/logging, no logica de negocio verificada por separado). El contract_fingerprint de las 266 filas fue backfillado para coincidir con el script vigente en cada momento -- ver assert_existing_contract() y los backfills documentados en active-context.md. Este run_manifest queda como registro HISTORICO de esa corrida especifica, no como descriptor del estado actual del script."
+    }
+  }
+}

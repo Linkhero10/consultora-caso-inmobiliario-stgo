@@ -1,0 +1,18 @@
+{
+  "run_id": "20260916_163518_439351",
+  "started_pending": 3,
+  "written": 3,
+  "errors": 0,
+  "counts_consistent": true,
+  "total_cost_usd": 0.07757132,
+  "hitos_linea_tiempo": 12,
+  "requiere_revision_manual": 3,
+  "prompt_path": "Trabajo\\prompts\\enrichment_system_v3.md",
+  "prompt_sha256": "c248c657fddb89003c1273f07ad28a31294a93c95bf358842546cf467ead935c",
+  "schema_path": "Trabajo\\config\\enrichment_schema_v3.json",
+  "schema_sha256": "e0c64d9ba89de2573f102deecd42eaa5e35421a3865fe9106ed656423df2df96",
+  "script_sha256": "585e4720ea4f15c11f376e5d82b67a392f2fde62d5f771fd053e3db37d4eead2",
+  "workers": 3,
+  "effort": "xhigh",
+  "finished_at": "2026-09-16T16:38:46.376262+00:00"
+}

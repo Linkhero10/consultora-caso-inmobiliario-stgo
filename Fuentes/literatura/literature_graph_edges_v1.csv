@@ -1,0 +1,16 @@
+source_id,source_label,relation,target_id,target_label,evidence_file
+LIT-001,López-Meza-Gasic 2014,analiza,CONCEPT-001,renovación urbana,Fuentes/literatura/markdown/lopez_meza_gasic_2014_santa_isabel.md
+LIT-001,López-Meza-Gasic 2014,analiza,CONCEPT-002,brecha de renta,Fuentes/literatura/markdown/lopez_meza_gasic_2014_santa_isabel.md
+LIT-001,López-Meza-Gasic 2014,problematiza,CONCEPT-003,desplazamiento exclusionario,Fuentes/literatura/markdown/lopez_meza_gasic_2014_santa_isabel.md
+LIT-002,Valencia 2019,analiza,CONCEPT-004,patrimonialización,Fuentes/literatura/markdown/gentrificacion_patrimonial_santiago_2019.md
+LIT-002,Valencia 2019,compara,CONCEPT-005,barrios pericentrales,Fuentes/literatura/markdown/gentrificacion_patrimonial_santiago_2019.md
+LIT-003,Defensa de barrios 2017,analiza,CONCEPT-006,memoria barrial,Fuentes/literatura/markdown/nostalgia_defensa_barrios_santiago_2017.md
+LIT-003,Defensa de barrios 2017,analiza,CONCEPT-007,acción vecinal,Fuentes/literatura/markdown/nostalgia_defensa_barrios_santiago_2017.md
+CONCEPT-001,renovación urbana,relacionado_con,CONCEPT-004,patrimonialización,Auditoria/literatura/literature_synthesis_v1.md
+CONCEPT-001,renovación urbana,produce_pregunta,CONCEPT-003,desplazamiento exclusionario,Auditoria/literatura/literature_synthesis_v1.md
+CONCEPT-006,memoria barrial,complementa,CONCEPT-007,acción vecinal,Auditoria/literatura/literature_synthesis_v1.md
+LIT-004,Plaza Pública/Cadem 2018,mide,CONCEPT-008,opinión sobre edificios en altura,Fuentes/literatura/markdown/cadem_2018_opinion_vivienda_barrio.md
+LIT-004,Plaza Pública/Cadem 2018,compara,CONCEPT-009,vivienda social y equipamientos,Fuentes/literatura/markdown/cadem_2018_opinion_vivienda_barrio.md
+LIT-005,COES ELSOC 2016-2023,observa,CONCEPT-010,cohesión social,Fuentes/literatura/markdown/coes_elsoc_radiografia_cohesion_2016_2023.md
+LIT-005,COES ELSOC 2016-2023,contextualiza,CONCEPT-011,conflicto urbano,Auditoria/literatura/literature_synthesis_v1.md
+LIT-006,COES metodología ELSOC,documenta,CONCEPT-012,diseño longitudinal,Fuentes/literatura/markdown/coes_elsoc_comparacion_metodologica_2025.md

@@ -1,0 +1,112 @@
+{
+  "artifact_version": "human-review-release-gate-v5.2.4-plus-social-filter-1",
+  "generated_at": "2026-09-16T00:14:09.370053+00:00",
+  "status": "aprobado_revision_humana",
+  "resumen": "Gate de produccion aprobado sobre la base de una revision humana ciega real de Felipe (50 documentos, muestra estratificada en 10 estratos, sin ver las etiquetas del modelo antes de decidir), no del piloto original de 20 documentos de review_sample_v5_2_1_amplio.json v1 (ese artefacto queda superado por este). Contrato vigente al momento de aprobar: prompt/schema v5.2.3 + gate determinista v5.2.2 (comunas compuestas, citas geograficas cortas) + fix de objeto 2026-09-15 (instrumento_urbano_general/equipamiento_urbano/infraestructura_no_residencial ya no exigen es_proyecto_inmobiliario=si en la vista amplia) + filtro deterministico de posts de X/Twitter truncados o con muro de login capturado (aplicado antes de la API, sin costo).",
+  "cadena_de_verificacion": [
+    {
+      "paso": "1. Piloto v3 (70 docs)",
+      "resultado": "2 falsos positivos confirmados (Costanera Center, Cambio21/Pajaritos), 1 caso limite (Humedal La Poza)"
+    },
+    {
+      "paso": "2. Gate determinista v4",
+      "resultado": "corrige el problema estructural del v3 (evidencia separada de accion/objeto/geografia); 70/70 sin errores"
+    },
+    {
+      "paso": "3. v5/v5.1/v5.2",
+      "resultado": "case_mentions multiples, frontera de inmueble existente sin intervencion urbana formal"
+    },
+    {
+      "paso": "4. v5.2.1",
+      "resultado": "separa suficiencia de evidencia (any) de limpieza completa (all) de citas"
+    },
+    {
+      "paso": "5. Muestra ciega de 50 (revision de Felipe)",
+      "resultado": "13 aprobar_include, 35 confirmar_exclude, 1 mantener_uncertain, 1 requiere_mas_revision -- encontro 2 falsos positivos semanticos (SciELO, Cambio21/Santa Laura) y 4 falsos negativos geograficos"
+    },
+    {
+      "paso": "6. Prueba dirigida 2 docs (API real) con prompt v5.2.3",
+      "resultado": "SciELO -> uncertain, Cambio21 -> exclude; ambos falsos positivos resueltos"
+    },
+    {
+      "paso": "7. Corrida ciega completa 50 docs (API real, v5.2.3)",
+      "resultado": "0 falsos positivos definidos, acuerdo estricto 76% (38/50)"
+    },
+    {
+      "paso": "8. Bug de gate de objeto encontrado y corregido (Quilicura)",
+      "resultado": "recalculo sin API: acuerdo estricto 78% (39/50), 0 human_include_overrides pendientes"
+    },
+    {
+      "paso": "9. Filtro social (posts X/Twitter truncados o con muro de login)",
+      "resultado": "Alto Macul (unico desacuerdo real restante) queda apartado mecanicamente, consistente con mantener_uncertain de Felipe"
+    },
+    {
+      "paso": "10. revista180.udp.cl reextraido",
+      "resultado": "61.242 caracteres reales recuperados (antes solo 442, pagina Vista de OJS sin el articulo), pero supera el limite de 30.000 -- Felipe decidio dejarlo fuera de este piloto por ahora"
+    }
+  ],
+  "resultado_final_verificado": {
+    "muestra_base": "blind_sample_v5_2_1_50 (50 documentos, 10 estratos, sin overlap con pilotos previos)",
+    "documentos_comparables_tras_filtros": 49,
+    "documentos_excluidos_de_la_comparacion": [
+      {
+        "url": "https://x.com/alto_macul/status/1237328657254879232?lang=ar-x-fm",
+        "motivo": "filtro social deterministico: texto_cortado_a_mitad_de_frase; consistente con mantener_uncertain de Felipe, no contradice ningun veredicto humano"
+      }
+    ],
+    "falsos_positivos_definidos": 0,
+    "includes_sin_aprobar_pendientes": 0,
+    "acuerdo_estricto": "39/49 (79.6%)",
+    "acuerdo_operacional": "48/49 (97.96%) -- revista180.udp.cl ES la unica fila en desacuerdo operacional dentro de estas 49 (no fue excluida de esta comparacion, es la causa del desacuerdo). Felipe decidio dejarla fuera de la CLASIFICACION/PRODUCCION por ahora (apartada por longitud, requiere_mas_revision), pero sigue contando en el denominador de esta comparacion de 49 filas.",
+    "nota_sobre_desacuerdos_de_etiqueta_restantes": "Los desacuerdos que quedan entre acuerdo estricto y operacional son casi todos insufficient_content (gate) vs exclude/confirmar_exclude (Felipe) -- misma accion segura (el documento no entra al corpus incluido en ningun caso), etiqueta distinta. Ya aceptado explicitamente en diferencias_luna_vs_felipe_blind_v5_2_1_50.md como no problematico para el criterio de 0 falsos positivos. [Correccion 2026-09-16, hallazgo de Codex/Luna en auditoria cruzada: una version anterior de este texto decia incorrectamente 48/49 tras excluir revista180.udp.cl, lo cual es contradictorio -- si se excluyera, el denominador seria 48, no 49. Corregido.]"
+  },
+  "verificacion_tecnica": {
+    "tests": "61/61 (Trabajo/tests + Trabajo/scripts/tests), incluye 3 regresiones del fix de objeto y 6 del filtro social",
+    "api_calls_esta_ronda": "2 (prueba dirigida SciELO+Cambio21) + 50 (corrida ciega completa v5.2.3) = 52 llamadas reales; todos los recalculos posteriores (v5.2.4, filtro social) fueron sin API",
+    "revision_independiente": "Claude (Sonnet 5) audito el trabajo de Codex/Luna paso a paso, encontro y corrigio 1 bug de codigo (gate de objeto) no detectado previamente, y corrigio una afirmacion propia imprecisa en la bitacora (turn-20260916-000346-ed28e7)"
+  },
+  "revision_humana_base": {
+    "reviewer": "Felipe",
+    "review_type": "human_blind_review",
+    "human_review_completed": true,
+    "blind_to_ai_outputs": true,
+    "reviewed_at_original": "2026-09-15T21:37:42.663892+00:00",
+    "source_file": "Auditoria\\muestras_control\\revision_humana_blind_v5_2_1_50_felipe.json",
+    "source_sha256": "932cc27dc9ba4e0b5735faa96b68eff8f92f86b492308bfaed1ddbd2daff4800"
+  },
+  "aprobacion_de_felipe": {
+    "cuando": "2026-09-16T00:14:09.370801+00:00",
+    "que_aprobo": "Felipe realizo la revision humana ciega de los 50 casos (2026-09-15), confirmo explicitamente que fue ciega a las salidas de las IAs (bitacora turn-20260915-224441-9674db), y autorizo expresamente la construccion de este artefacto de liberacion tras revisar en el chat el resultado final verificado arriba.",
+    "cita_textual_verificable": "Claude pregunto en el chat: Quieres que arme el artefacto de liberacion ahora para desbloquear produccion, o prefieres revisar algo mas antes? Felipe respondio textualmente: Si, armalo. Esta es la unica base de autorizacion; registrado en bitacora turn-20260916-010956-b4be31 en respuesta al hallazgo de auditoria cruzada de Codex/Luna, que correctamente senalo que la version anterior de este campo solo parafraseaba la autorizacion sin cita verificable."
+  },
+  "contrato_vigente_para_produccion": {
+    "script_produccion": "Trabajo/scripts/classify_v5_2_2.py (sin --urls-file/--output-file/--dry-run)",
+    "prompt": "Trabajo/prompts/classifier_system_v5_2_3.md",
+    "prompt_sha256": "3719a94047562fcc2d458416454d25c6a5b5de1288c68152a683fb5f666e4202",
+    "schema": "Trabajo/config/classification_schema_v5_2_3.json",
+    "schema_sha256": "86f7fc51572b2c7cc133c35d49099d3172115e18997e2ed9a8ba69b83e495f31",
+    "gate_object_fix": "Trabajo/scripts/classify_v5_1.py (BROAD_NON_REAL_ESTATE_OBJECTS, 2026-09-15)",
+    "social_filter": "Trabajo/scripts/classify_luna.py (_is_incomplete_social_post, 2026-09-15)",
+    "workers_recomendados": 50,
+    "output_produccion": "Auditoria/clasificacion_luna_v5_2_2/classifications.jsonl"
+  },
+  "artefactos_de_soporte": [
+    "Auditoria/muestras_control/revision_humana_blind_v5_2_1_50_felipe.json",
+    "Auditoria/muestras_control/diferencias_luna_vs_felipe_blind_v5_2_1_50.md",
+    "Auditoria/muestras_control/comparison_human_vs_ai_blind_v5_2_5_social_filtered_49.json",
+    "Auditoria/muestras_control/caso_alto_macul_expediente.json",
+    "Auditoria/muestras_control/comparacion_gate_v5_2_3_vs_v5_2_4_blind50.json",
+    "Auditoria/muestras_control/PLAN_REPRUEBA_CIEGA_v5_2_3.md",
+    "Fuentes/fulltext_v2/social_truncado_apartados.jsonl",
+    "Trabajo/tests/test_classification_gate_v5_2_2.py",
+    "Trabajo/tests/test_social_truncation_filter.py"
+  ],
+  "review_policy": {
+    "human_review_completed": true,
+    "production_allowed": true,
+    "reviewer": "Felipe",
+    "basis": "blind_review_50_docs_2026-09-15",
+    "codex_preliminary_review_is_not_human_review": true,
+    "condiciones_de_reapertura": "Si una futura version del prompt/schema o del gate cambia decisiones sobre casos ya revisados, este artefacto debe marcarse superado y no reutilizarse para justificar produccion sin una nueva revision humana. Igualmente, si se decide reincorporar revista180.udp.cl u otros documentos apartados por longitud, requiere su propia revision antes de contar como aprobado."
+  }
+}

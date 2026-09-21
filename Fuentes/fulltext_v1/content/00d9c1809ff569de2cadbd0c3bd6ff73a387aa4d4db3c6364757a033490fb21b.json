@@ -1,0 +1,14 @@
+{
+  "url": "https://www.iaconcagua.com/proyectos/nueva-nunoa",
+  "extraction_method": "http_error_403",
+  "title": "",
+  "text": "",
+  "char_count": 0,
+  "date": null,
+  "http_status": 403,
+  "fetched_at": "2026-09-12T00:53:27.402186+00:00",
+  "comuna": "Ñuñoa",
+  "termino": "proyecto inmobiliario oposición",
+  "discovery_record_hash": "00d9c1809ff569de2cadbd0c3bd6ff73a387aa4d4db3c6364757a033490fb21b",
+  "discovery_title": "Edificio Nueva Ñuñoa - Inmobiliaria Aconcagua"
+}

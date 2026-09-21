@@ -1,0 +1,14 @@
+{
+  "url": "https://www.youtube.com/watch?v=HNH96OZRF4g",
+  "extraction_method": "beautifulsoup",
+  "title": "Ñuñoa dice \"no\" a los edificios en altura - YouTube",
+  "text": "Acerca de Prensa Derechos de autor Comunicarte con nosotros Creadores Anunciar Desarrolladores Condiciones Privacidad Políticas y seguridad Cómo funciona YouTube Prueba funciones nuevas © 2026 Google LLC",
+  "char_count": 203,
+  "date": null,
+  "http_status": 200,
+  "fetched_at": "2026-09-12T00:54:45.159759+00:00",
+  "comuna": "La Reina",
+  "termino": "edificio altura densidad reclamo",
+  "discovery_record_hash": "42478d0ef338e256c8485f6993c915401ffcc84124294d450022e4751a04e9ec",
+  "discovery_title": "Ñuñoa dice \"no\" a los edificios en altura"
+}

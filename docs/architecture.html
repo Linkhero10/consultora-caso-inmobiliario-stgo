@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arquitectura del pipeline</title>
+<style>
+  :root{
+    --bg:#f5f6f1; --surface:#fff; --ink:#1a2422; --ink-soft:#51615c; --ink-faint:#8a9994;
+    --accent:#0e7a6e; --accent-strong:#0a5c53; --border:#dce0d8; --stripe:#eff2eb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#111917; --surface:#161f1d; --ink:#e7ece9; --ink-soft:#a6b4af; --ink-faint:#6c7b76;
+      --accent:#4fd1c0; --accent-strong:#7be0d2; --border:#2a3532; --stripe:#1a2422;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .page{max-width:820px;margin:0 auto;padding:56px 24px 96px}
+  h1{font-size:clamp(26px,4vw,34px);margin:0 0 24px}
+  h2{font-size:20px;margin:32px 0 12px}
+  pre{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:18px 20px;overflow-x:auto;font-size:13.5px;line-height:1.7}
+  ul{padding-left:1.3em}
+  li{margin-bottom:10px;max-width:66ch}
+  a{color:var(--accent-strong)}
+  .back{display:inline-block;margin-bottom:24px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="back" href="index.html">&larr; Volver</a>
+  <h1>Arquitectura del pipeline</h1>
+
+<pre>FUENTE (prensa, actas, DS19)
+    │  scraping (brightdata_discovery.py, external_source_acquisition_v1.py)
+    ▼
+DOCUMENTO (3.884 documentos, con lineage y hash de origen)
+    │  clasificación LLM (classify_v5*.py)
+    ▼
+EVIDENCIA (citas verificadas como substring literal de la fuente)
+    │  enriquecimiento LLM sobre el subconjunto incluido (enrich_case_v3*.py, 934 documentos)
+    ▼
+MENCIÓN DE PROYECTO (nombre de proyecto tal como aparece en el texto)
+    │  resolución de identidad (build_case_project_bridge.py + resolve_project_review_queue.py)
+    ▼
+PROYECTO / CASO (990 proyectos → 862 casos; homónimos y variantes de escritura fusionados con
+    │              evidencia revisada, nunca por coincidencia de substring)
+    │  agrupación sociológica (build_conflict_registry_v1.py)
+    ▼
+CONFLICTO (839 conflictos; puede agrupar 2+ casos cuando corresponde al mismo litigio,
+    │        nunca al revés — conflict_id es una función many-to-one de case_id)
+    │  resolución de identidad de actor (build_actor_registry_v1.py)
+    ▼
+ACTOR / ENTIDAD (institución nacional consolidada cuando la evidencia lo permite;
+                  el resto conserva su identidad textual sin resolver)</pre>
+
+  <h2>Principios de diseño</h2>
+  <ul>
+    <li><strong>Cada capa es una decisión de identidad separada.</strong> Un documento, un
+      proyecto físico y un conflicto sociológico no son la misma unidad — fusionarlos
+      prematuramente pierde información (ej. un mismo proyecto con dos litigios distintos, o un
+      mismo conflicto que involucra varios proyectos).</li>
+    <li><strong>La fusión siempre requiere evidencia, nunca solo coincidencia de nombre.</strong>
+      Homónimos conocidos (ej. dos proyectos distintos llamados "El Colorado", uno un centro de
+      esquí y otro una vivienda social) están explícitamente protegidos contra fusión automática.
+    </li>
+    <li><strong>Vistas <code>safe</code> vs. <code>extended</code>.</strong> Cada capa expone una
+      vista conservadora (evidencia con rol focal/co-focal, revisada) y una extendida (agrega
+      menciones contextuales) — el análisis parte de la conservadora y usa la extendida solo como
+      prueba de sensibilidad.</li>
+    <li><strong>Todo cambio de fusión/separación queda en una cola de revisión con razón
+      explícita</strong>, no en un script que decide en silencio.</li>
+  </ul>
+
+  <p><a href="https://github.com/Linkhero10/consultora-caso-inmobiliario-stgo/blob/main/docs/architecture.md">Ver también la versión Markdown en el repositorio →</a></p>
+</div>
+</body>
+</html>

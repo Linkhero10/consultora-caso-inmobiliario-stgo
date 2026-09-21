@@ -1,0 +1,60 @@
+{
+  "name": "clasificacion_conflicto_inmobiliario_v4",
+  "strict": true,
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "decision": {"type": "string", "enum": ["include", "exclude", "uncertain", "insufficient_content"]},
+      "decision_reason": {"type": "string"},
+      "accion_contenciosa": {
+        "type": "string",
+        "enum": ["confirmada", "no", "incierta"],
+        "description": "Debe ser confirmada solo si el texto describe una accion verificable, no una opinion o critica aislada."
+      },
+      "tipo_accion_contenciosa": {
+        "type": "string",
+        "enum": ["recurso_judicial", "reclamacion_administrativa", "denuncia_formal", "fiscalizacion_solicitada", "protesta", "movilizacion_vecinal", "oposicion_organizada", "rechazo_institucional", "impugnacion_normativa", "otra_accion_verificable", "ninguna", "incierta"]
+      },
+      "profundidad_documentacion_caso": {
+        "type": "string",
+        "enum": ["caso_principal", "caso_secundario_documentado", "mencion_tangencial", "no_aplica", "incierta"],
+        "description": "Una etiqueta, hashtag o linea dentro de una lista de ejemplos es mencion_tangencial y nunca habilita include."
+      },
+      "es_proyecto_vivienda_inmobiliario": {"type": "string", "enum": ["si", "no", "incierto"]},
+      "tipo_objeto": {
+        "type": "string",
+        "enum": ["edificio_residencial", "ds19", "condominio", "loteo_residencial", "uso_mixto_residencial", "instrumento_urbano_residencial", "infraestructura_no_residencial", "inmobiliario_privado_no_residencial", "objeto_no_determinado", "none"]
+      },
+      "precision_geografica": {"type": "string", "enum": ["proyecto_exacto", "sector_barrio", "comuna", "provincia_general", "fuera_de_area", "ambigua"]},
+      "motivo_alcance": {
+        "type": "string",
+        "enum": ["sin_accion_contenciosa", "sin_conflicto_real", "sin_proyecto_inmobiliario", "infraestructura_no_residencial", "objeto_no_determinado", "mencion_tangencial_no_documentada", "caso_insuficientemente_documentado", "fuera_del_area_geografica", "contenido_insuficiente", "no_aplica_es_include"]
+      },
+      "evidencia_accion_quote": {"type": "string", "description": "Cita literal que demuestra la accion contenciosa. Vacia si no hay accion confirmada."},
+      "evidencia_objeto_quote": {"type": "string", "description": "Cita literal que demuestra que el objeto es residencial/habitacional o una norma aplicada a ello."},
+      "evidencia_geografica_quote": {"type": "string", "description": "Cita literal que demuestra la ubicacion del caso."},
+      "comunas_mencionadas": {"type": "array", "items": {"type": "string"}},
+      "comuna": {"type": "string"},
+      "tipo_conflicto": {"type": "string"},
+      "via_legal": {"type": "string"},
+      "comuna_secundaria_mencionada": {"type": "string"},
+      "actor_demandante_tipo": {"type": "string"},
+      "actor_demandante_nombre": {"type": "string"},
+      "actor_demandado_tipo": {"type": "string"},
+      "actor_demandado_nombre": {"type": "string"},
+      "sentiment": {"type": "string", "enum": ["positivo", "neutral", "negativo"]},
+      "evidence_quote": {"type": "string"},
+      "confidence": {"type": "string", "enum": ["alta", "media", "baja"]}
+    },
+    "required": [
+      "decision", "decision_reason", "accion_contenciosa", "tipo_accion_contenciosa", "profundidad_documentacion_caso",
+      "es_proyecto_vivienda_inmobiliario", "tipo_objeto", "precision_geografica", "motivo_alcance",
+      "evidencia_accion_quote", "evidencia_objeto_quote", "evidencia_geografica_quote", "comunas_mencionadas",
+      "comuna", "tipo_conflicto", "via_legal", "comuna_secundaria_mencionada", "actor_demandante_tipo",
+      "actor_demandante_nombre", "actor_demandado_tipo", "actor_demandado_nombre", "sentiment", "evidence_quote", "confidence"
+    ]
+  },
+  "_gate_duro_include": "El codigo calcula decision_final. Requiere decision=include, accion_contenciosa=confirmada, tipo_accion_contenciosa distinto de ninguna/incierta, objeto admisible, es_proyecto_vivienda_inmobiliario=si, precision geografica dentro del area, profundidad principal o secundaria documentada y las tres citas independientes verificadas literalmente. Cualquier condicion ambigua produce uncertain; una negacion explicita o mencion tangencial produce exclude.",
+  "_campos_derivados": ["evidence_action_verified", "evidence_object_verified", "evidence_geo_verified", "codigo_comuna_ine", "fuente_tipo", "decision_final"]
+}

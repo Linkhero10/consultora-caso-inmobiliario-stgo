@@ -1,0 +1,18 @@
+{
+  "run_id": "20260913_220528_781",
+  "created_at": "2026-09-13T22:05:31.116383+00:00",
+  "source_manifest": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\brightdata_discovery_v1\\discovery_manifest.jsonl",
+  "lines_valid": 21323,
+  "lines_source_valid": 21418,
+  "lines_legacy_excluded": 95,
+  "lines_discarded_truncated": 0,
+  "lines_control_events_excluded": 610,
+  "snapshot_sha256": "7d96f1baa1699a659049ad6c963b3afd1645224503422f6b0306ff34f6b95bec",
+  "snapshot_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\discovery_snapshots\\discovery_snapshot_20260913_220528_781.jsonl",
+  "legacy_path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Fuentes\\discovery_snapshots\\discovery_legacy_20260913_220528_781.jsonl",
+  "contract_version_counts": {
+    "discovery_v2": 21323,
+    "legacy_v1": 95
+  },
+  "record_schema_version": "discovery_snapshot_v3"
+}

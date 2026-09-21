@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="login/config/dojo.js"></script>
+  <script src="jsapi/dojo/dojo.js"></script>
+  <script>
+    require(["login", "dojo/domReady!"], function(login) {
+      login.run();
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>

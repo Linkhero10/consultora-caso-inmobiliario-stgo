@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "exceptions": [
+    {
+      "batch": "censo_arcgis_query_pilot_20260913",
+      "count": 16,
+      "classification": "invalid_probe_not_data",
+      "reason": "La primera construcción codificó los separadores de consulta dentro de where; ArcGIS respondió HTML de error con HTTP 200. No se usa ninguna de esas respuestas como dato.",
+      "replacement_batch": "censo_arcgis_query_pilot_corrected_20260913",
+      "replacement_validation": "Las consultas corregidas devolvieron application/json y fueron usadas en los CSV normalizados."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "nota": "PROPUESTA para revision humana, NO adjudicacion automatica. Caso elegido por el usuario: Estacion Central #3 (edificio_residencial, 11 documentos, 72 citas verificadas, 100% prensa) de Auditoria/integracion_v1/candidatos_piloto_v1.json.",
+  "hallazgo_relevante_antes_de_adjudicar": "Este cluster no es un unico proyecto/edificio -- es un fenomeno urbano con cobertura mediatica agregada ('guetos verticales de Estacion Central'). La mayoria de los articulos hablan de multiples torres en plural ('15 edificios de 10 inmobiliarias', 'tres edificios', 'mega edificios') sin nombrar un proyecto especifico. Forzar un solo project_id para los 11 documentos seria incorrecto -- se modela como 1 caso (fenomeno) que puede contener 0 o mas project_id especificos identificables.",
+  "case_id_propuesto": {
+    "id": "caso_guetos_verticales_estacion_central_v1",
+    "estado": "propuesto",
+    "nombre": "Guetos verticales / megatorres de Estacion Central",
+    "comuna": "Estación Central",
+    "ventana_temporal_documentos": "2017-2025 (11 fechas de publicacion distintas)",
+    "pregunta_analitica_sugerida": "Como se construyo, tramito y regulo el boom de edificacion en altura de alta densidad en Estacion Central entre ~2014 y 2025, y que actores institucionales/privados/comunitarios intervinieron.",
+    "documentos": 11
+  },
+  "candidatos_project_id_especificos": [
+    {
+      "project_id_propuesto": "proyecto_toro_mazotte_conde_del_maule_v1",
+      "estado": "propuesto_no_adjudicado",
+      "evidencia": "La combinacion de calles 'Toro Mazotte' / 'Conde del Maule' aparece en 2 documentos distintos (elpais.com 2025-09-17 y eldinamo.cl 2017-07-31) -- posible referencia al mismo sector/proyecto, pero podrian ser edificios distintos en la misma interseccion. Requiere lectura humana antes de fusionar.",
+      "documentos_candidatos": [
+        "https://elpais.com/chile/2025-09-17/la-vida-comprimida-en-los-guetos-verticales-de-estacion-central.html",
+        "https://www.eldinamo.cl/opinion/2017/07/31/guetos-verticales-miente-miente-que-algo-queda/"
+      ]
+    }
+  ],
+  "documentos_sin_project_id_especifico_identificable": {
+    "nota": "El texto solo describe el fenomeno agregado (multiples edificios/inmobiliarias), sin nombrar un proyecto/direccion especifica resoluble desde el titulo/resumen disponible. Quedan asociados solo al caso agregado, no a un project_id individual, hasta que una lectura completa del articulo (fuera de alcance de este ETL) identifique proyectos concretos.",
+    "documentos": [
+      "https://elquintopoder.cl/ciudad/la-unica-solucion-para-los-guetos-verticales-en-estacion-central/",
+      "https://radio.uchile.cl/2021/05/23/estacion-central-un-recorrido-por-la-comuna-a-cinco-anos-del-boom-de-los-guetos-verticales/",
+      "https://transportevertical.org/sitio/guetos-verticales-en-santiago/",
+      "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2022/08/09/el-presente-de-15-guetos-verticales-de-estacion-central-no-son-habitados-por-falta-de-recepcion.shtml",
+      "https://www.elciudadano.com/reportaje-investigacion/estacion-central-administracion-de-rodrigo-delgado-recaudo-5-mil-millones-por-polemicos-proyectos-inmobiliarios/03/23/",
+      "https://www.elciudadano.com/reportaje-investigacion/las-nuevas-callampas-boom-inmobiliario-en-estacion-central/04/07/",
+      "https://www.eldinamo.cl/opinion/2017/09/04/guetos-verticales-todos-los-analizados-por-la-autoridad-son-ilegales/",
+      "https://www.hogardecristo.cl/entrevistas/alejandro-verdugo-demolamos-al-menos-una-megatorre/",
+      "https://www.latercera.com/pulso-pm/noticia/estacion-central-y-los-edificios-fantasma-tres-proyectos-paralizados-por-presiones-politicas-y-perdidas-millonarias/"
+    ]
+  },
+  "regla_de_identidad_aplicada": "Ningun project_id se marca 'adjudicado' en este artefacto. Todo queda 'propuesto' hasta revision humana explicita (Felipe), siguiendo la regla de identidad de Auditoria/agent_reviews/inventario_integracion_arcos_20260913.md seccion 3: 'Alta como trabajo de modelado; no hay ID universal; requiere adjudicacion humana'."
+}

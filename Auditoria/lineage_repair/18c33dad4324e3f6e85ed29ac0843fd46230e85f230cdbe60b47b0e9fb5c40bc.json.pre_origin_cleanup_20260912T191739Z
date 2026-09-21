@@ -1,0 +1,63 @@
+{
+  "url": "https://www.lascondes.cl/atencion-al-vecino/",
+  "extraction_method": "insuficiente",
+  "title": "Atención al vecino - Las Condes",
+  "text": "Atención al vecino INGRESAR PARA VER MIS SOLICITUDES Centro de Atención al Vecino",
+  "char_count": 81,
+  "date": null,
+  "http_status": 200,
+  "fetched_at": "2026-09-12T15:39:27.529484+00:00",
+  "lineage": {
+    "discovery_record_hash": "18c33dad4324e3f6e85ed29ac0843fd46230e85f230cdbe60b47b0e9fb5c40bc",
+    "query": "\"edificio altura densidad reclamo\" \"Las Condes\"",
+    "comuna": "Las Condes",
+    "termino": "edificio altura densidad reclamo",
+    "periodo": "",
+    "nivel": "",
+    "snapshot_sha256": "3cf4cd4ceb98f89be25c15802ebf641c4bf0dfc048883c4385a005c6b6feea4f",
+    "snapshot_run_id": "20260912_153729_835",
+    "origins": [
+      {
+        "discovery_record_hash": "18c33dad4324e3f6e85ed29ac0843fd46230e85f230cdbe60b47b0e9fb5c40bc",
+        "query": "\"edificio altura densidad reclamo\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "edificio altura densidad reclamo",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "18c33dad4324e3f6e85ed29ac0843fd46230e85f230cdbe60b47b0e9fb5c40bc",
+        "query": "\"edificio altura densidad reclamo\" \"Las Condes\"",
+        "comuna": "Las Condes",
+        "termino": "edificio altura densidad reclamo",
+        "periodo": "",
+        "nivel": ""
+      },
+      {
+        "discovery_record_hash": "e649ddb108fc98f207c288c592d33d1c0944f27dbfa6735e2ec92fe7fd579b70",
+        "query": "\"reclamo de ilegalidad\" \"San Ramón\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+        "comuna": "San Ramón",
+        "termino": "reclamo de ilegalidad",
+        "periodo": "2024_2026",
+        "nivel": "comuna"
+      },
+      {
+        "discovery_record_hash": "8f5445470adc8c5c0d634758597cc05a380bab672a45d9e4238da6726af4d0be",
+        "query": "\"reclamo de ilegalidad\" \"San Miguel\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+        "comuna": "San Miguel",
+        "termino": "reclamo de ilegalidad",
+        "periodo": "2024_2026",
+        "nivel": "comuna"
+      },
+      {
+        "discovery_record_hash": "73e5ee82be66d9a274576c43f416bd0b648d22097c41e3c0529609f1f02f4bde",
+        "query": "\"reclamo de ilegalidad\" \"San Joaquín\" -site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl",
+        "comuna": "San Joaquín",
+        "termino": "reclamo de ilegalidad",
+        "periodo": "2024_2026",
+        "nivel": "comuna"
+      }
+    ]
+  },
+  "discovery_title": "Atención al vecino - Las Condes"
+}

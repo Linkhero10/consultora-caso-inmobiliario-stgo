@@ -1,0 +1,11 @@
+id,nombre,categoria,region,provincia,comuna,geometry
+,Torre Campanario del Colegio San Francisco Javier,Monumento Histórico,Los Lagos,Llanquihue,Puerto Montt,"{""type"": ""MultiPoint"", ""coordinates"": [[-72.94334027799994, -41.47085353706363]]}"
+,Las Poblaciones Obreras de la Plaza Chacabuco,Zona Típica o Pintoresca,Metropolitana de Santiago,Santiago,Independencia,"{""type"": ""MultiPoint"", ""coordinates"": [[-70.65737714199992, -33.407263401132326]]}"
+,Cerro Colo Colo,Monumento Histórico,Biobío,Arauco,Arauco,"{""type"": ""MultiPoint"", ""coordinates"": [[-73.3272930249999, -37.24909031109058]]}"
+,Eltún (cementerio mapuche) de Pelal Rucahue del lof Manquilef,Monumento Histórico,La Araucanía,Cautín,Freire,"{""type"": ""MultiPoint"", ""coordinates"": [[-72.6687462509999, -38.877750533077815]]}"
+,Complejo ferroviario de la Estación Barón,Zona Típica o Pintoresca,Valparaíso,Valparaíso,Valparaíso,"{""type"": ""MultiPoint"", ""coordinates"": [[-71.60056288099992, -33.03705235213714]]}"
+,Sector de Chambeque,Monumento Histórico,Biobío,Concepción,Lota,"{""type"": ""MultiPoint"", ""coordinates"": [[-73.17055619999991, -37.088972965092005]]}"
+,Conjunto Habitacional Villa Olímpica,Zona Típica o Pintoresca,Metropolitana de Santiago,Santiago,Ñuñoa,"{""type"": ""MultiPoint"", ""coordinates"": [[-70.61997934499993, -33.463619203131586]]}"
+,Construcciones y material rodante ferroviario de Baquedano,Monumento Histórico,Antofagasta,Antofagasta,Sierra Gorda,"{""type"": ""MultiPoint"", ""coordinates"": [[-69.83837776699994, -23.33459962631303]]}"
+,Edificios del Club Hípico,Monumento Histórico,Metropolitana de Santiago,Santiago,Santiago,"{""type"": ""MultiPoint"", ""coordinates"": [[-70.67004983699991, -33.458605045131655]]}"
+,Sector 1 de la Villa Frei,Zona Típica o Pintoresca,Metropolitana de Santiago,Santiago,Ñuñoa,"{""type"": ""MultiPoint"", ""coordinates"": [[-70.58178587299994, -33.45678192513164]]}"

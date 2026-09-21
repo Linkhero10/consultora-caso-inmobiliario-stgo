@@ -1,0 +1,14 @@
+{
+  "frozen_at": "2026-09-17T11:58:24.530839+00:00",
+  "universe_n": 934,
+  "universe_sha256": "3e3689eb73bb683d5ffdaa0e341a196b755422b005444f621f17c549007ce325",
+  "universe_definition": "decision_documento=='include' AND corpus_scope=='temporal_v2' en Auditoria/clasificacion_luna_v5_2_3/classifications.jsonl",
+  "prompt_path": "Trabajo/prompts/enrichment_system_v3_2.md",
+  "prompt_sha256": "d1ca7eb934826ceb6764112235c219da1a6ac609eef74b480e6470a52f149b96",
+  "schema_path": "Trabajo/config/enrichment_schema_v3_2.json",
+  "schema_sha256": "714a79cd1c79be429ae2f99d81434318329eccbdb4857b228efec005812e52d1",
+  "record_schema_path": "Trabajo/config/enrichment_record_schema_v3_2.json",
+  "record_schema_sha256": "8dbb93cf8095000e52defffb816906fc5e2b077bc0bc8822ba9b5203698f2f14",
+  "enrichment_schema_version": "v3.2",
+  "nota": "Regenerado 2026-09-17 tras agregar sanitize_project_associations() (fix del 7.8% de cuarentena por basura de generacion en actores[11]). Prompt/schema del LLM sin cambios -- solo el record schema crecio (proyecto_asociado_verificada/_original_modelo). Universo de 934 sin cambios. 933/934 ya completos; este congelamiento habilita el reintento del ultimo documento. [ACTUALIZADO 2026-09-17 tarde, auditoria de Luna post-934] record_schema_sha256 actualizado de nuevo tras (a) agregar el campo opcional record_schema_sha256_at_generation al schema y (b) normalizar localmente enrichment.jsonl (sin llamar a la API): unifico el hash de schema de los 934 registros (habia 3 valores distintos porque el schema crecio en vivo durante la corrida -- los 934 SI validaban contra el schema vigente en cada momento, verificado con jsonschema antes de tocar nada) preservando el hash original de cada registro en record_schema_sha256_at_generation, y corrigio un bug real en sanitize_project_associations() (la rama de coincidencia no reescribia proyecto_asociado con el valor normalizado tras strip(), dejando espacios sobrantes en 3/934 registros). Backup del archivo pre-normalizacion en Auditoria/enriquecimiento_v3_2_934/enrichment.pre_normalize_20260917T131104Z.jsonl. prompt_sha256/schema_sha256 (contrato del LLM) intactos -- esta corrida no gasto ni un centavo."
+}

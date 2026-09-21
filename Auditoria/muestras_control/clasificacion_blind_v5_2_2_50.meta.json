@@ -1,0 +1,40 @@
+{
+  "artifact_version": "v5.2.2-gate-recalculation-blind50-1",
+  "generated_at": "2026-09-15T22:35:58.511125+00:00",
+  "api_call": false,
+  "input": {
+    "path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\clasificacion_blind_v5_2_1_50.jsonl",
+    "sha256": "340942a5e629a3e4e92c7e5a49807120f66328db9835cf570311b9c80d6f2796",
+    "rows": 50
+  },
+  "output": {
+    "path": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\Auditoria\\muestras_control\\clasificacion_blind_v5_2_2_50.jsonl",
+    "sha256": "35da0bfa01c69da1d402148aead99d374849dabd320ba9cff6cb5a927091aee5",
+    "rows": 50
+  },
+  "counts_model_raw": {
+    "include": 16,
+    "exclude": 32,
+    "uncertain": 1,
+    "insufficient_content": 1
+  },
+  "counts_document_final": {
+    "include": 15,
+    "exclude": 23,
+    "uncertain": 2,
+    "insufficient_content": 10
+  },
+  "counts_residential": {
+    "include": 9,
+    "exclude": 27,
+    "uncertain": 4,
+    "insufficient_content": 10
+  },
+  "counts_broad": {
+    "include": 15,
+    "exclude": 23,
+    "uncertain": 2,
+    "insufficient_content": 10
+  },
+  "changed_documents": 4
+}

@@ -1,0 +1,14 @@
+{
+  "url": "https://www.youtube.com/watch?v=_X_fc4Oc77A",
+  "extraction_method": "beautifulsoup",
+  "title": "El edificio de Las Condes que se resiste a ser demolido: Vecinos se niegan a dejar el lugar - YouTube",
+  "text": "Acerca de Prensa Derechos de autor Comunicarte con nosotros Creadores Anunciar Desarrolladores Condiciones Privacidad Políticas y seguridad Cómo funciona YouTube Prueba funciones nuevas © 2026 Google LLC",
+  "char_count": 203,
+  "date": null,
+  "http_status": 200,
+  "fetched_at": "2026-09-12T00:51:12.905495+00:00",
+  "comuna": "Las Condes",
+  "termino": "edificio altura densidad reclamo",
+  "discovery_record_hash": "95a9983331a49da07cc6437024d2b62de88ad282c53eefe877e02a35f365abda",
+  "discovery_title": "El edificio de Las Condes que se resiste a ser demolido"
+}

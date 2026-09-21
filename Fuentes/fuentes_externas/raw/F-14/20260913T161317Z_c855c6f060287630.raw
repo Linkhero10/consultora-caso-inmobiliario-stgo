@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <link rel="shortcut icon" href="/media/favicon/iconified/favicon.ico" type="image/x-icon" />
+
+         <!-- UIKIT core CSS -->
+        <link href="/static/home/libs/uikit/css/uikit.min.css" rel="stylesheet">
+
+         <!-- Font Awesome -->
+        <!--link rel="stylesheet" href="/static/home/libs/fontawesome/font-awesome.min.css"-->
+        <link rel="stylesheet" href="/static/home/libs/fontawesome-pro-5.11.2-web/css/all.min.css">
+
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="/static/home/libs/leaflet/leaflet.css">
+
+        <!-- Tabulator -->
+        
+            <link rel="stylesheet" href="/static/home/libs/tabulator/tabulator-master/dist/css/tabulator_simple.min.css">
+        
+        
+        
+
+        <link rel="stylesheet" href="/static/home/base.css">
+
+        
+        
+
+        <!-- Local CSS -->
+        <style>
+            
+.doc-link {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: solid 1px lightgray;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 5px;
+    font-size: 24px;
+    width: 50%;
+}
+.doc-link:hover {
+    background-color: lightgray;
+}
+.editor_section {
+}
+.header-bar {
+    padding: 60px;
+    background-size: cover;
+    background-position: 50%;
+}
+.header-text {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+        </style>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5NF77L6S6"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-X5NF77L6S6');
+        </script>
+</head>
+
+<body>
+
+    <!--i class="fas fa-tree" style="font-size: 48px;"> </i--> 
+    
+
+
+
+
+
+<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; show-on-up: true; bottom: #transparent-sticky-navbar">
+
+<div class="uk-navbar-container uk-navbar-transparent" style="background-color: white; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);" uk-navbar>
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="" uk-toggle="target: #offcanvas-overlay"></a>
+
+       <a href="https://mma.gob.cl"> <img src="https://mma.gob.cl/wp-content/uploads/2018/11/xlogo-mma2x.png.pagespeed.ic.h35A5BtAlN.webp" class="nav-logo hide-very-small" style="height: 80px;"> </img></a>
+        <a class="uk-navbar-item uk-logo" href="/"> <i class="fas fa-triangle"></i>RCLIM</a>
+
+        <div class="uk-navbar-item hide-small" style="font-size: 18px; overflow: visible; flex-grow: 1; white-space: nowrap">
+            API 
+        </div>
+    </div>
+    <div class="uk-navbar-right">
+        <div class="uk-navbar-item">
+            <a href="http://www.cr2.cl/"> <img src="/media/logos/cr2.png" class="nav-logo hide-large" style="height: 60px;margin-left: 10px;"> </img></a>
+            <a href="https://cambioglobal.uc.cl/"> <img src="/media/logos/logo_centro_cambio_global.png" class="nav-logo hide-large" style="height: 60px;margin-left: 10px;"> </img> </a>
+        </div>
+
+        
+
+        
+
+        <div class="uk-navbar-item">
+            
+            <div><a href="/home/login">Login</a></div>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <a class="uk-navbar-item uk-logo" href="/"> <i class="fas fa-triangle"></i>RCLIM</a>
+        <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+
+        <ul class="uk-nav uk-nav-default">
+
+            <li class="uk-nav-header">Amenazas Climáticas</li>
+            <ul class="uk-nav-sub">
+                <li> <a href="/amenazas/"> <i class="fad fa-exclamation-triangle"></i> Explorador de Amenazas Climáticas </a></li>
+                <li> <a href="/features/repositorio/"> <i class="fad fa-database"></i> Repositorio de Archivos </a></li>
+                <li> <a href="/atlas/api/"> i<i class="fad fa-server"></i> API de Datos Climáticos</a></li>
+            </ul>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">  Mapas de Riesgo  </li>
+            <li class="uk-parent">
+                <a href="/atlas/index/"> <i class="fas fa-address-book"></i> Índice del Atlas </a> 
+                <ul class="uk-nav-sub">
+                    
+                        <li><a href="/atlas/sector_index/agricultura/"> <i class="fas fa-tractor"></i> Agricultura </a></li>
+                    
+                        <li><a href="/atlas/sector_index/salud_humano/"> <i class="fas fa-users-medical"></i> Salud y Bienestar Humano </a></li>
+                    
+                        <li><a href="/atlas/sector_index/bosques/"> <i class="fas fa-tree-alt"></i> Bosques Nativos </a></li>
+                    
+                        <li><a href="/atlas/sector_index/acuicultura/"> <i class="fas fa-fish"></i> Acuicultura </a></li>
+                    
+                        <li><a href="/atlas/sector_index/infrestrutura_costera/"> <i class="fas fa-ship"></i> Infraestructura Costera </a></li>
+                    
+                        <li><a href="/atlas/sector_index/recursos_hidricos/"> <i class="fas fa-raindrops"></i> Recursos Hidricos </a></li>
+                    
+                        <li><a href="/atlas/sector_index/turismo/"> <i class="fas fa-camera"></i> Turismo </a></li>
+                    
+                        <li><a href="/atlas/sector_index/pesca_artesanl/"> <i class="fas fa-fish"></i> Pesca Artesanal </a></li>
+                    
+                        <li><a href="/atlas/sector_index/biodiversidad/"> <i class="fas fa-paw"></i> Biodiversidad </a></li>
+                    
+                        <li><a href="/atlas/sector_index/silvicultura/"> <i class="fas fa-trees"></i> Plantaciones Forestales </a></li>
+                    
+                        <li><a href="/atlas/sector_index/mineria/"> <i class="fas fa-truck-monster"></i> Minería (en revisión) </a></li>
+                    
+                        <li><a href="/atlas/sector_index/infraestructura_energia/"> <i class="fas fa-bolt"></i> Energía Eléctrica </a></li>
+                    
+                </ul>
+                <!--a href="/atlas/working_groups/"> <i class="fas fa-address-book"></i> Grupos de trabajo</a-->
+            </li>
+
+            <li class="uk-parent">
+                <a href="/atlas/parcc_index/"> <i class="fas fa-address-book"></i> PARCC </a>
+                <ul class="uk-nav-sub">
+                    <li><a href="/atlas/parcc_index?region=coquimbo"> <i class="far fa-file-chart-line"></i> Coquimbo </a></li>
+                    <li><a href="/atlas/parcc_index?region=aysen"> <i class="far fa-file-chart-line"></i> Aysén </a></li>
+                    
+                </ul>
+            </li>
+
+            <li class="uk-parent">
+                <a href=""> <i class="fas fa-address-book"></i> Productos Avanzados </a>
+                <ul class="uk-nav-sub">
+                    <!--li> <a href="/atlas/cdi_index/"> <i class="far fa-atlas"></i> Nueva visualización de CDI </a></li-->
+                    <li> <a href="/parcc/resumen_regional/"> <i class="far fa-list"></i> Resumen regional </a></li>
+                    <li> <a href="/atlas/cdi_attribute_table/"> <i class="far fa-list"></i> Base de datos consolidada </a></li>
+                </ul>
+            </li>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Biodiversidad</li>
+            <ul class="uk-nav-sub">
+                <li> <a href="/biodiversity/home/"> <i class="fad fa-frog"></i> Mapas de especies </a></li>
+            </ul>
+
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Información</li>
+            <ul class="uk-nav-sub">
+                <li class=""> <a href="/atlas/about/"> <i class="fad fa-question-circle"></i> Acerca de ARClim</a></li>
+                <li class=""> <a href="/atlas/aprendizaje/"> <i class="fas fa-info-circle"></i> Aprendizaje</a></li>
+                <li class=""> <a href="/atlas/quienes_somos/"> <i class="fas fa-users"></i> Quienes somos</a></li>
+            </ul>
+
+            
+            <li class="uk-nav-divider"></li>
+            <li class="uk-nav-header">Área adminsitración</li>
+            <ul class="uk-nav-sub">
+                <li><a href="/home/login">Login</a></li>
+            </ul>
+            
+        </ul>
+
+
+    </div>
+</div>
+
+
+
+
+<div class="uk-container-expand header-bar" style="background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.7)), 
+                                                                     linear-gradient(rgba(0,0,100,0.9), rgba(0,0,100,0.5), rgba(255,255,255,0.0)),
+                                                                      url(/media/shutterstock/w1800/shutterstock_1653249892.jpg)">
+    <div class="uk-container">
+        <h1 id="info" class="uk-heading-small header-text"> API </h2>
+    </div>
+</div>
+
+<div class="uk-container" style="margin-top: 30px; margin-bottom: 30px;">
+<div class="uk-padding uk-margin">
+
+<p>ARClim cuenta con un API (interfaz de programación de aplicaciones) que permite acceder a gran parte de la información almacenada en la plataforma. Los diferentes tipos de información disponible a través del API son:</p>
+
+<p><b>Capas geográficas:</b>  Corresponden a capas de información geográfico en formato GeoJSON.  Ejemplos incluyen comunas, ciudades, zonas protegidas, caletas, etcétera. Es importante señalar que generalmente información geográfica fue recopilada desde otras fuentes nacionales (como por ejemplo la Infraestructura de Datos Geoespaciales de Chile - IDE) y ARClim no se debe considerar como fuente principal o “oficial” de la información. 
+
+<p><b>Indicadores Climáticos:</b>  Corresponden a variables calculadas a partir de los datos de simulaciones climáticos. Ejemplos incluyen la temperatura media, frecuencia de olas de calor, índices de sequia entre otros.  La plataforma ARClim permite obtener los datos de los indicadores climáticas para cada entidad (punto, línea o polígono) de las capas geográficas mencionadas anteriormente.  Los valores se disponen para el periodo histórico (1980-2010) y futuro (2035-2065), y para todas las estaciones/meses del año. También se puede obtener series de tiempo para localidades especificas.</p>
+
+<p><b>Variables básicas diarias:</b>  Corresponden a las variables básicas usadas para calcular los indicadores climáticos como la precipitación, temperatura máxima y mínima, humedad, radiación solar y viento. Se disponen en intervalos diarios para el periodo 1970 – 2070, para escenarios futuros SSP5-8.5 y SSP2-4.5</p>
+
+<p><b>Atributos:</b>  Corresponden a variables adicionales asociadas a las capas geográficas.  Por ejemplo, cada comuna en la capa geográfica de comunas cuenta con varios atributos tales como el nombre de la comuna, el número de habitantes, etcétera.  Los datos de estos atributos provienen de múltiples fuentes, en muchos casos los grupos de trabajo que participaban en ARClim recopilaron o calcularon atributos para facilitar los cálculos de los índices de amenaza, exposición, sensibilidad y riesgo (que también se consideran como atributos)</p>
+
+<p>Las consultas realizables con el API devuelvan información en el formato JSON. La tabla a continuación describe las consultas disponibles.  En el resto del documento se presenta el sintaxis y ejemplos de cada consulta.</p>
+
+<table class="uk-table uk-table-striped">
+<thead>
+    <tr>
+        <th> CONSULTA </th>
+        <th> DESCRIPCIÓN </th>
+</thead>
+<tbody>
+    <tr>
+        <td>/api/capas/ </td>
+        <td> Listado de capas geográficas disponibles </td>
+    </tr>
+    <tr>
+        <td> /api/attributos/{capa}/ </td>
+        <td> Listado de indicadores climáticos disponibles </td>
+    </tr>
+    <tr>
+        <td> /api/attributos/{capa}/ </td>
+        <td> Listado de atributos para una capa geográfica especifica </td>
+    </tr>
+    <tr>
+        <td> /api/datos/{capa}/{formato}/?attributes=… </td>
+        <td> Datos de atributos y indicadores climáticos para una capa geográfico </td>
+    </tr>
+    <tr>
+        <td> /api/series/{capa}/{indicador_climatico}/{season}/{scenario}/ </td>
+        <td> Serie de tiempo de un indicador climático para el periodo 1970-2069 </td>
+    </tr>
+    <tr>
+        <td> /api/daily_series/{variable}/{scenario}/ </td>
+        <td> Serie de tiempo diario para una variable básica para el periodo 1970-2069 </td>
+    </tr>
+</tbody>
+</table>
+
+Para conocer en detalle del API y su sintaxis se pueder consultar la siguente documentación:
+    <div class="doc-link"> <a href="/media/learning/API_ARClim.pdf"> <i class="fad fa-file-pdf"></i> Documentación API </a> </div>
+</div>
+</div>
+
+
+<div id="arclim_footer" class="uk-container-extend" style="
+display: ;
+padding: 0px;
+margin: 0px;
+background-size: cover;
+background-position: 50%;
+background-image:  linear-gradient(to right, rgba(255,0,0,0), rgba(255,100,0,0.7)),
+                   linear-gradient(rgba(40,30,150,0.1), rgba(220,220,255,0.6), rgba(255,255,255,0.9)),
+                   linear-gradient(rgba(0,0,100,0.9), rgba(0,0,100,0.5), rgba(255,255,255,0.0)),
+                   url(/media/shutterstock/w1200/shutterstock_96292022.jpg);
+color: white;
+    ">
+    <div class="uk-container">
+        <div class="uk-padding uk-margin">
+            <!-- FOOTER -->
+                <div class="uk-width-1-1">
+                    <div class="uk-grid-column-small uk-grid-row-large uk-child-width-1-6@m" uk-grid>
+                        <div>
+                            <div style="font-size: 32px; color: rgba(255,255,255,0.7); text-align: center;">
+
+                            <!--span class="fa-stack fa-2x">
+                            <i class="fad fa-triangle fa-stack-2x "></i>
+                            <i class="fal fa-thermometer-full fa-stack-1x fa-inverse" style="color: white; margin-top: 45px;"></i>
+                            </span-->
+
+<!-- ARCLIM LOGO HARDCODED -->
+<svg style="width: 100%; height: 100%;" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+<path class="fa-secondary" fill="rgba(255,255,255,0.3)" d="M569.54 440l-240-416c-18.4-32-64.68-32-83.18 0L6.48 440c-18.41 31.91 4.59 72 41.59 72h479.87c36.91 0 60-40 41.6-72zm-124.68 8H131.15a32 32 0 0 1-27.72-48l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.72 48z"></path>
+<path class="fa-primary" fill="rgba(255,255,255,0.7)" d="M103.43 400l156.82-272a32 32 0 0 1 55.44 0l156.89 272a32 32 0 0 1-27.71 48H131.15c-24.62 0-40.02-26.65-27.72-48z"></path>
+<path fill="white" transform="translate(224 170) scale(0.5)" d="M224 96c0-53.019-42.981-96-96-96S32 42.981 32 96v203.347C12.225 321.756.166 351.136.002 383.333c-.359 70.303 56.787 128.176 127.089 128.664.299.002.61.003.909.003 70.698 0 128-57.304 128-128 0-32.459-12.088-62.09-32-84.653V96zm-96 384l-.687-.002c-52.693-.366-95.581-43.795-95.312-96.501.202-39.467 22.532-61.321 31.999-72.05V96c0-35.29 28.71-64 64-64s64 28.71 64 64v215.447c9.186 10.409 32 32.659 32 72.553 0 52.935-43.065 96-96 96zm48-96c0 26.51-21.49 48-48 48s-48-21.49-48-48c0-20.898 13.359-38.667 32-45.258V96c0-8.837 7.164-16 16-16 8.837 0 16 7.163 16 16v242.742c18.641 6.591 32 24.36 32 45.258z"></path>
+</svg>
+
+                            </div>
+                            <div class="uk-text-center" style="padding-top: 30px;"> <a href="/" class="uk-link-text"><b> ATLAS DE RIESGOS CLIMÁTICOS</b> </a> </div>
+                        </div>
+                        <div>
+                        <h4 style="color:white;"> MAPAS DE RIESGO </h4>
+                        <ul class="uk-list" >
+                            <li> <a href="/atlas/index" class="uk-link-text"> Indice de mapas </a> </li>
+                            <li> <a href="/atlas/working_groups" class="uk-link-text"> Grupos de trabajo </a> </li>
+                        </ul>
+                        </div>
+                        <div>
+                        <h4 style="color:white;">BASE DE DATOS </h4>
+                        <ul class="uk-list">
+                            <li> <a href="/amenazas/" class="uk-link-text"> Explorador de Amenazas </a> </li>
+                            <li> <a href="/features/repositorio/" class="uk-link-text"> Repositorio de Datos Climáticos </a></li>
+                            <li> <a href="/biodiversity/home/" class="uk-link-text"> Mapas de Especies </a></li>
+                            <li> <a href="/atlas/api/" class="uk-link-text"> API </a></li>
+                        </ul>
+                        </div>
+                        <div>
+                        <h4 style="color:white;">INFORMACIÓN </h4>
+                        <ul class="uk-list">
+                            <li> <a href="/atlas/about/" class="uk-link-text"> Acerca de ARClim </a> </li>
+                            <li> <a href="/atlas/aprendizaje/" class="uk-link-text"> Aprendizaje </a></li>
+                            <li> <a href="/atlas/quienes_somos/" class="uk-link-text"> Quienes somos</a></li>
+                        </ul>
+                        </div>
+                        <div style="background-color: white; padding: 10px; opacity: 0.8; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                            <img src="/media/logos/logo-mma.jpg" style="max-width:100%; max-height:160px; ">
+                            <img src="/media/logos/cr2.png" style="max-width:100%; max-height:160px">
+                        </div>
+                        <div style="background-color: white; padding: 10px; opacity: 0.8; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                            <img src="/media/logos/LogoGIZ.png" style="max-width:100%; max-height:160px; padding: 10px;">
+                            <img src="/media/logos/logo_centro_cambio_global.png" style="max-width:100%; max-height:160px; padding: 10px;">
+                            <div style="color: lightgray;font-size: 12px; text-align: right;"> Implementado por: </div>
+                            <div style="text-align: right;font-family: arial-black; font-weight: bold; font-size: 24px;"> <span style="color: dodgerblue">meteo</span><span style="color:darkorange;">data</span> </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="uk-width-1-1 uk-text-center">
+                    © 2020 Ministerio de Medio Ambiente, Gobierno de Chile
+                </div>
+        </div>
+     </div>
+</div>
+</div>
+
+
+
+
+</body>
+
+<!-- JAVASCRIPT -->
+
+    <!-- JQuery -->
+    <script src="/static/home/libs/jquery/jquery-3.5.1.min.js"></script>
+
+    <!-- UI Kit -->
+    <script src="/static/home/libs/uikit/js/uikit.min.js"></script>
+    <script src="/static/home/libs/uikit/js/uikit-icons.min.js"></script>
+
+    <!-- Font Awesome -->
+    
+
+    <!-- Highcharts -->
+    <script src="/static/home/libs/highcharts/highcharts/code/highcharts.js"> </script>
+    <script src="/static/home/libs/highcharts/highcharts/code/highcharts-more.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/boost.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/exporting.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/export-data.js"></script>
+    <script src="/static/home/libs/highcharts/highcharts/code/modules/offline-exporting.js"></script>
+
+    <!-- Moment.js -->
+    <script src="/static/home/libs/momentjs/moment.min.js"></script>
+    <script src="/static/home/libs/momentjs/es.js"></script>
+
+    <!-- Google Maps -->
+    <!-- script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCs_DN1N78-H9aMjdE7QqBC7pnnUhPLXus"></script-->
+
+    <!-- Leaflet -->
+    <script src="/static/home/libs/leaflet/leaflet.js"></script>
+
+    <!-- TinyMCE -->
+    <!-- script src="https://cdn.tiny.cloud/1/cezlt4hk0j94k5pkchgf4x55q66p87vetu6fr47yijoo13jj/tinymce/5/tinymce.min.js"></script-->
+    <!-- script src="https://cdn.tiny.cloud/1/cezlt4hk0j94k5pkchgf4x55q66p87vetu6fr47yijoo13jj/tinymce/5/jquery.tinymce.min.js"></script-->
+
+    <!--- HandleBars -->
+    <script src="/static/home/libs/handlebars/handlebars-v4.7.7.min.js"></script>
+
+    <!--- Tabulator -->
+    
+        <script src="/static/home/libs/tabulator/tabulator-master/dist/js/tabulator.min.js"></script>
+    
+
+    
+
+
+    <script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+    
+    
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            
+                // Add all page specific javascript that is executed on document load here
+            
+        });
+    </script>
+
+
+
+</html>
