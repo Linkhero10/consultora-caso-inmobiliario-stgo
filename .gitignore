@@ -8,6 +8,11 @@ _FARO/
 FARO.md
 BITACORA.md
 
+# Instrucciones para agentes de IA (mencionan revisores externos por nombre
+# y rutas internas de FARO_GLOBAL -- no son parte del sistema mostrado)
+CLAUDE.md
+AGENTS.md
+
 # Cache de Python / pytest / metadata de instalacion editable
 __pycache__/
 *.pyc
