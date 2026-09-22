@@ -460,20 +460,27 @@ def test_museo_de_la_memoria_conflict_has_no_backing():
     assert row[0] == "sin_respaldo_exact_quote_detectado"
 
 
-def test_aeropuerto_los_cerrillos_no_automatic_pass_for_multi_case():
+def test_aeropuerto_los_cerrillos_current_fix1a_state():
     """Bug real que la validacion N=150 encontro: n_case_ids>1 (revision
     humana de los 63) NO garantiza que el conflicto este bien construido.
     Este test no afirma que la fusion quedo corregida (eso es Fix 1B) --
-    solo que la regla de respaldo se aplico sin excepcion automatica."""
+    solo que la regla de respaldo se aplico sin excepcion automatica. El
+    resultado empírico publicado de Fix 1A se fija explícitamente aquí para
+    que una reconstrucción silenciosa del warehouse no pueda cambiarlo sin
+    hacer fallar la regresión."""
     conn = _connect_or_skip()
     row = conn.execute(
-        "SELECT n_case_ids, respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:4f725d7265297513738bf370'"
+        "SELECT n_case_ids, respaldo_evidencia, "
+        "(SELECT COUNT(*) FROM conflict_evidence_backing b "
+        "WHERE b.conflict_id = c.conflict_id) AS n_backing "
+        "FROM conflict c WHERE c.conflict_id = 'conflict:4f725d7265297513738bf370'"
     ).fetchone()
     conn.close()
     assert row is not None, "el caso Aeropuerto debe estar presente en el warehouse de Fix 1A"
-    n_case_ids, respaldo = row
-    assert n_case_ids > 1  # sigue siendo multi-case (Fix 1B no aplicado todavia)
-    assert respaldo in ("respaldo_exact_quote_detectado", "sin_respaldo_exact_quote_detectado")  # nunca un valor inventado
+    n_case_ids, respaldo, n_backing = row
+    assert n_case_ids == 2  # sigue siendo multi-case (Fix 1B no aplicado todavía)
+    assert respaldo == "respaldo_exact_quote_detectado"
+    assert n_backing == 1
 
 
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():

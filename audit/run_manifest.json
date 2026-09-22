@@ -37,6 +37,6 @@
     "audit_report": "audit/conflict_evidence_backing_report.json",
     "note": "La cobertura total/parcial/ninguna y la ambiguedad multi-caso son campos derivados del warehouse vigente; no implican un vinculo directo proyecto-case_mention."
   },
-  "build_commit": "working-tree-fix1a-coverage-20260922",
-  "note": "Este manifiesto describe el working tree posterior a Fix 1A; el commit de release se anadira despues de la suite completa y la validacion del gate."
+  "build_commit": "f20b822093c2119e9e8f6c09087f7a03b76ad2a8",
+  "note": "Este manifiesto describe exactamente el warehouse publicado en el commit f20b822093c2119e9e8f6c09087f7a03b76ad2a8."
 }
