@@ -36,6 +36,11 @@ def _matches_project(quote_text: str, terms: set[str]) -> bool:
     return any(term and (term in quote or quote in term) for term in terms)
 
 
+def _is_verified(value: Any) -> bool:
+    """Interpreta flags SQLite/JSON sin convertir la cadena ``"0"`` en true."""
+    return value is True or value == 1 or str(value).strip().lower() in {"1", "true", "yes"}
+
+
 def _base_row(project_mention: dict[str, Any], status: str, reason: str) -> dict[str, Any]:
     return {
         "project_id": project_mention["project_id"],
@@ -71,7 +76,7 @@ def build_project_case_mention_links(
 
     evidence_by_cm: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for ev in evidence:
-        if ev.get("quote_role") != "objeto" or not bool(ev.get("verified")):
+        if ev.get("quote_role") != "objeto" or not _is_verified(ev.get("verified")):
             continue
         evidence_by_cm[ev["case_mention_id"]].append(ev)
 

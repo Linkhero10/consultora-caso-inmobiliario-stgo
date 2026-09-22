@@ -58,3 +58,13 @@ def test_nonmatching_object_quote_is_document_level_candidate_only():
     assert len(rows) == 1
     assert rows[0]["link_status"] == "document_level_candidate"
     assert rows[0]["evidence_id"] is None
+
+
+def test_string_zero_verified_flag_is_not_treated_as_verified():
+    rows = pcm.build_project_case_mention_links(
+        project_mentions=[{"document_id": "d1", "project_id": "p1", "raw_nombre_proyecto": "Torre Alameda"}],
+        case_mentions=[{"case_mention_id": "cm1", "document_id": "d1", "decision_final_amplio": "include"}],
+        evidence=[{"evidence_id": "ev1", "document_id": "d1", "case_mention_id": "cm1", "quote_role": "objeto", "quote_text": "Torre Alameda", "verified": "0"}],
+        project_aliases={"p1": ["Torre Alameda"]},
+    )
+    assert rows[0]["link_status"] == "document_level_candidate"
