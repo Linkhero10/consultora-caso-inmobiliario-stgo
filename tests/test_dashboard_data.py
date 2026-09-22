@@ -23,7 +23,7 @@ def _build_fixture_db(path: Path) -> None:
         CREATE TABLE event(event_id TEXT, document_id TEXT, url TEXT, fecha TEXT, descripcion TEXT, tipo_hito TEXT, fecha_year_grounded INTEGER, nombre_proyecto TEXT);
         CREATE TABLE project(project_id TEXT, canonical_name TEXT, normalized_name TEXT, aliases_json TEXT, n_documents INTEGER, n_mentions INTEGER, homonym_partition TEXT, case_id TEXT);
         CREATE TABLE project_mention_resolved(document_id TEXT, raw_nombre_proyecto TEXT, project_id TEXT);
-        CREATE TABLE conflict(conflict_id TEXT, label TEXT, n_case_ids INTEGER, origen TEXT, confidence TEXT);
+        CREATE TABLE conflict(conflict_id TEXT, label TEXT, n_case_ids INTEGER, origen TEXT, confidence TEXT, respaldo_evidencia TEXT);
         CREATE TABLE conflict_project(conflict_id TEXT, project_id TEXT, case_id TEXT);
         CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
         CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_sol TEXT, revisado_por TEXT);
@@ -60,7 +60,7 @@ def _build_fixture_db(path: Path) -> None:
     con.execute("INSERT INTO event VALUES ('event:doc1:0','doc1','https://a.cl','2026-01-01','Descripcion de hito','permiso_autorizacion',1,'Proyecto A')")
     con.execute("INSERT INTO project VALUES ('proj1','Proyecto A','proyecto a','[]',1,1,NULL,'case1')")
     con.execute("INSERT INTO project_mention_resolved VALUES ('doc1','Proyecto A','proj1')")
-    con.execute("INSERT INTO conflict VALUES ('conflict:1','Proyecto A',1,'trivial_single_case','baja_derivado_mecanicamente')")
+    con.execute("INSERT INTO conflict VALUES ('conflict:1','Proyecto A',1,'trivial_single_case','baja_derivado_mecanicamente','respaldo_exact_quote_detectado')")
     con.execute("INSERT INTO conflict_project VALUES ('conflict:1','proj1','case1')")
     con.execute("INSERT INTO document_conflict VALUES ('doc1','conflict:1','focal','{}','test','caso_unico')")
     con.execute("INSERT INTO document_case_unit VALUES ('doc1','caso_unico',0,NULL,NULL,NULL,NULL,NULL)")
@@ -101,7 +101,9 @@ def test_build_dashboard_dataset_end_to_end(tmp_path):
     data = target.build_dashboard_dataset(db_path)
 
     assert data["summary"]["n_documents"] == 3
-    assert data["summary"]["n_conflicts"] == 1
+    assert data["summary"]["n_conflicts_total"] == 1
+    assert data["summary"]["n_conflicts_evidence_backed"] == 1
+    assert data["summary"]["n_conflicts_without_exact_backing"] == 0
 
     conflict = data["conflicts"][0]
     assert conflict["label"] == "Proyecto A"
@@ -109,6 +111,7 @@ def test_build_dashboard_dataset_end_to_end(tmp_path):
     # por ambiguo y doc3 no es focal/co_focal.
     assert conflict["comunas"] == [{"codigo_comuna_ine": "13101", "comuna": "Santiago"}]
     assert conflict["projects"] == [{"project_id": "proj1", "nombre": "Proyecto A", "n_documents": 1}]
+    assert conflict["respaldo_evidencia"] == "respaldo_exact_quote_detectado"
     assert conflict["evidence_quotes_sample"] == ["Cita de prueba verificada."]
 
     # Actor resuelto via actor_event_project_link_conflict_safe (doc1, focal).
@@ -133,8 +136,10 @@ def test_ambiguous_comuna_document_contributes_to_no_territory(tmp_path):
     providencia = next(t for t in data["territories"] if t["codigo_comuna_ine"] == "13102")
     # conflict:1 tiene comuna resuelta via doc1 (Santiago) -- doc2 (ambiguo)
     # no debe sumar el mismo conflicto tambien a Providencia.
-    assert santiago["n_conflicts"] == 1
-    assert providencia["n_conflicts"] == 0
+    assert santiago["n_conflicts_total"] == 1
+    assert santiago["n_conflicts_backed"] == 1
+    assert providencia["n_conflicts_total"] == 0
+    assert providencia["n_conflicts_backed"] == 0
 
 
 def test_non_focal_mentions_never_contribute_actors_or_events(tmp_path):

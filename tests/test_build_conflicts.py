@@ -108,6 +108,108 @@ def test_build_conflict_relations_ignores_focal_and_mismo_conflicto():
     assert relations == []
 
 
+# --- Fix 1A: respaldo de evidencia (unitarias, datos sinteticos) ---
+
+
+def test_norm_strips_accents_case_and_extra_whitespace():
+    assert reg._norm("  Torre  Central  ") == "torre central"
+    assert reg._norm("Línea 7") == "linea 7"
+
+
+def test_mention_has_case_backing_matches_raw_inside_quote():
+    assert reg._mention_has_case_backing("Torre Central", ["se aprobo la torre central en 2024"]) is True
+
+
+def test_mention_has_case_backing_matches_quote_inside_raw():
+    assert reg._mention_has_case_backing("Proyecto Línea 7 Metro de Santiago", ["linea 7 metro"]) is True
+
+
+def test_mention_has_case_backing_no_match_returns_false():
+    assert reg._mention_has_case_backing("Museo de la Memoria en Punta Arenas", ["guetos verticales en estacion central"]) is False
+
+
+def test_mention_has_case_backing_never_fuzzy():
+    """Palabras parecidas pero no en relacion de substring nunca deben
+    calzar -- el detector esta congelado a exact_substring_v1."""
+    assert reg._mention_has_case_backing("Edificio Central Park", ["torre parque central"]) is False
+
+
+def test_project_backing_evidence_finds_matching_quote_across_documents():
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["cm1"]}
+    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    assert len(rows) == 1
+    assert rows[0]["case_mention_id"] == "cm1"
+    assert rows[0]["evidence_id"] == "e1"
+
+
+def test_project_backing_evidence_empty_when_case_mention_is_excluded():
+    """El documento tiene una mencion, pero su unico case_mention NO esta
+    incluido (decision_final_amplio != include) -- included_by_doc no lo
+    lista, asi que no puede haber respaldo."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc: dict = {}  # d1 no tiene ningun case_mention incluido
+    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    assert rows == []
+
+
+def test_project_backing_evidence_empty_when_no_objeto_evidence_for_that_mention():
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["cm1"]}
+    objeto_by_cm: dict = {}  # sin evidencia de objeto verificada para cm1
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    assert rows == []
+
+
+def test_build_conflict_backing_uniform_no_multi_case_exception():
+    """Bug real que la validacion N=150 encontro: 'n_case_ids > 1 -> siempre
+    respaldado' es incorrecto (Aeropuerto Los Cerrillos, Aldea del
+    Encuentro). El detector debe aplicarse igual sin importar cuantos
+    case_id tenga el conflicto."""
+    projects = [("p1", "Proyecto Sin Evidencia Real")]
+    case_id_by_project = {"p1": "case1"}
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Proyecto Sin Evidencia Real"}]}
+    included_by_doc = {"d1": ["cm1"]}
+    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "algo completamente distinto", "quote_norm": "algo completamente distinto"}]}
+    label, respaldo, rows = reg._build_conflict_backing(
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+    )
+    assert respaldo == "sin_respaldo_exact_quote_detectado"
+    assert rows == []
+
+
+def test_build_conflict_backing_label_prefers_backed_project_over_incidental_mention():
+    """Caso real verificado (Museo de la Memoria / guetos verticales
+    Estacion Central): el conflicto tiene 2 proyectos, solo 1 respaldado --
+    el label debe salir del respaldado, no del primero alfabetico entre
+    todos (que era exactamente el bug encontrado)."""
+    projects = [("p_incidental", "Aaa Proyecto Incidental Sin Evidencia"), ("p_real", "Zzz Proyecto Real Respaldado")]
+    case_id_by_project = {"p_incidental": "case1", "p_real": "case1"}
+    mentions_by_project = {
+        "p_incidental": [{"document_id": "d1", "raw_nombre_proyecto": "Aaa Proyecto Incidental Sin Evidencia"}],
+        "p_real": [{"document_id": "d1", "raw_nombre_proyecto": "Zzz Proyecto Real Respaldado"}],
+    }
+    included_by_doc = {"d1": ["cm1"]}
+    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "zzz proyecto real respaldado", "quote_norm": "zzz proyecto real respaldado"}]}
+    label, respaldo, rows = reg._build_conflict_backing(
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+    )
+    assert label == "Zzz Proyecto Real Respaldado"
+    assert respaldo == "respaldo_exact_quote_detectado"
+    assert len(rows) == 1
+
+
+def test_build_conflict_backing_fallback_label_when_none_backed():
+    projects = [("p2", "Bbb Segundo"), ("p1", "Aaa Primero")]
+    case_id_by_project = {"p1": "case1", "p2": "case1"}
+    label, respaldo, rows = reg._build_conflict_backing("conflict:x", projects, case_id_by_project, {}, {}, {})
+    assert label == "Aaa Primero"  # fallback: primero alfabetico entre TODOS
+    assert respaldo == "sin_respaldo_exact_quote_detectado"
+    assert rows == []
+
+
 # --- Pruebas de prueba adversarial contra el warehouse real ---
 
 CEMENTERIO_CASE = "92ddfd13158c1f43afb3e7c9"
@@ -289,6 +391,62 @@ def test_la_victoria_relation_stays_pending_human_decision():
     conn.close()
     assert matching
     assert matching[0][1] == "pending_human_decision"
+
+
+# --- Fix 1A: regresion real contra el warehouse ---
+
+
+def test_respaldo_evidencia_equivalence_with_conflict_evidence_backing():
+    """Invariante: conflict.respaldo_evidencia = 'respaldo_exact_quote_detectado'
+    SSI existe >=1 fila en conflict_evidence_backing para ese conflict_id."""
+    conn = _connect_or_skip()
+    mismatch = conn.execute(
+        """
+        SELECT c.conflict_id FROM conflict c
+        LEFT JOIN (SELECT DISTINCT conflict_id FROM conflict_evidence_backing) b
+          ON b.conflict_id = c.conflict_id
+        WHERE (c.respaldo_evidencia = 'respaldo_exact_quote_detectado') != (b.conflict_id IS NOT NULL)
+        """
+    ).fetchall()
+    conn.close()
+    assert mismatch == []
+
+
+def test_museo_de_la_memoria_conflict_has_no_backing():
+    """Caso real verificado a mano en la validacion N=150: el documento
+    (biografia de Miguel Lawner) menciona 'Museo de la Memoria y Derechos
+    Humanos en Punta Arenas' de pasada; la evidencia real del documento es
+    sobre los guetos verticales de Estacion Central. Sin case_mention
+    incluido que respalde ese nombre -- debe quedar sin respaldo."""
+    conn = _connect_or_skip()
+    row = conn.execute(
+        "SELECT respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:322c7c3d88d4ff08de440c56'"
+    ).fetchone()
+    conn.close()
+    if row is None:
+        import pytest
+
+        pytest.skip("conflict_id no presente en este warehouse (case grouping pudo cambiar)")
+    assert row[0] == "sin_respaldo_exact_quote_detectado"
+
+
+def test_aeropuerto_los_cerrillos_no_automatic_pass_for_multi_case():
+    """Bug real que la validacion N=150 encontro: n_case_ids>1 (revision
+    humana de los 63) NO garantiza que el conflicto este bien construido.
+    Este test no afirma que la fusion quedo corregida (eso es Fix 1B) --
+    solo que la regla de respaldo se aplico sin excepcion automatica."""
+    conn = _connect_or_skip()
+    row = conn.execute(
+        "SELECT n_case_ids, respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:4f725d7265297513738bf370'"
+    ).fetchone()
+    conn.close()
+    if row is None:
+        import pytest
+
+        pytest.skip("conflict_id no presente en este warehouse (case grouping pudo cambiar)")
+    n_case_ids, respaldo = row
+    assert n_case_ids > 1  # sigue siendo multi-case (Fix 1B no aplicado todavia)
+    assert respaldo in ("respaldo_exact_quote_detectado", "sin_respaldo_exact_quote_detectado")  # nunca un valor inventado
 
 
 def test_document_conflict_case_safe_view_only_includes_caso_unico():

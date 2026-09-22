@@ -131,9 +131,27 @@ def _resolve_actor_name(raw_name: str, identity_map: dict[str, dict[str, str]]) 
     return {"nombre": raw_name, "nombre_raw": raw_name, "identity_resolved": False, "entity_id": None}
 
 
+def _backed_conflict_ids(con: sqlite3.Connection) -> set[str]:
+    """conflict_id con respaldo_evidencia='respaldo_exact_quote_detectado'
+    (Fix 1A) -- universo analitico conservador. Si la columna no existe
+    (warehouse mas simple, ej. fixtures de test), se trata como si nada
+    tuviera respaldo detectado (conservador por default, nunca al reves)."""
+    if not _table_or_view_exists(con, "conflict") or not _column_exists(con, "conflict", "respaldo_evidencia"):
+        return set()
+    return {
+        row["conflict_id"]
+        for row in _rows(con, "SELECT conflict_id FROM conflict WHERE respaldo_evidencia = 'respaldo_exact_quote_detectado'")
+    }
+
+
+def _column_exists(con: sqlite3.Connection, table: str, column: str) -> bool:
+    return any(r["name"] == column for r in con.execute(f"PRAGMA table_info({table})"))
+
+
 def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
     territories = _rows(con, "SELECT * FROM territory ORDER BY comuna")
     doc_comuna = _document_single_comuna(con)
+    backed_conflict_ids = _backed_conflict_ids(con)
 
     safe_links = _safe_document_conflicts(con)
     doc_to_conflicts: dict[str, set[str]] = defaultdict(set)
@@ -151,6 +169,7 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
         doc_to_actors[row["document_id"]].add(row["nombre"])
 
     by_comuna_conflicts: dict[str, set[str]] = defaultdict(set)
+    by_comuna_conflicts_backed: dict[str, set[str]] = defaultdict(set)
     by_comuna_projects: dict[str, set[str]] = defaultdict(set)
     by_comuna_actors: dict[str, set[str]] = defaultdict(set)
     by_comuna_documents: dict[str, set[str]] = defaultdict(set)
@@ -158,14 +177,23 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
     for document_id, entry in doc_comuna.items():
         code = entry["codigo_comuna_ine"]
         by_comuna_documents[code].add(document_id)
-        by_comuna_conflicts[code].update(doc_to_conflicts.get(document_id, set()))
+        conflicts_here = doc_to_conflicts.get(document_id, set())
+        by_comuna_conflicts[code].update(conflicts_here)
+        by_comuna_conflicts_backed[code].update(conflicts_here & backed_conflict_ids)
         by_comuna_projects[code].update(doc_to_projects.get(document_id, set()))
         by_comuna_actors[code].update(doc_to_actors.get(document_id, set()))
 
+    # Fix 1A: dos universos explicitos, nunca uno silencioso -- n_conflicts_total
+    # (todo lo que document_conflict_case_safe vincula a esta comuna) vs.
+    # n_conflicts_backed (el subconjunto con respaldo exacto de evidencia
+    # detectado, ver build_conflicts.py). El mapa/resumen nunca deben
+    # redefinir "conflictos" para que signifique solo uno de los dos sin
+    # decirlo explicitamente.
     result = []
     for t in territories:
         code = t["codigo_comuna_ine"]
-        n_conflicts = len(by_comuna_conflicts.get(code, ()))
+        n_conflicts_total = len(by_comuna_conflicts.get(code, ()))
+        n_conflicts_backed = len(by_comuna_conflicts_backed.get(code, ()))
         poblacion = t["poblacion"] or 0
         result.append(
             {
@@ -177,11 +205,12 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "viviendas_hacinadas": t["viviendas_hacinadas"],
                 "viviendas_irrecuperables": t["viviendas_irrecuperables"],
                 "geometry": json.loads(t["geometry_json"]),
-                "n_conflicts": n_conflicts,
+                "n_conflicts_total": n_conflicts_total,
+                "n_conflicts_backed": n_conflicts_backed,
                 "n_projects": len(by_comuna_projects.get(code, ())),
                 "n_documents": len(by_comuna_documents.get(code, ())),
                 "n_actors": len(by_comuna_actors.get(code, ())),
-                "n_conflicts_per_100k": round(n_conflicts / poblacion * 100_000, 2) if poblacion else None,
+                "n_conflicts_backed_per_100k": round(n_conflicts_backed / poblacion * 100_000, 2) if poblacion else None,
             }
         )
     return result
@@ -335,6 +364,7 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "n_case_ids": c["n_case_ids"],
                 "origen": c["origen"],
                 "confidence": c["confidence"],
+                "respaldo_evidencia": c.get("respaldo_evidencia", "sin_respaldo_exact_quote_detectado"),
                 "comunas": [{"codigo_comuna_ine": k, "comuna": v} for k, v in sorted(comunas_seen.items())],
                 "projects": projects,
                 "documents": documents_out,
@@ -371,14 +401,20 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
         for actor in conflict["actors"]:
             actor_keys.add(actor["entity_id"] or actor["nombre"])
 
+    n_conflicts_evidence_backed = sum(1 for c in conflicts if c["respaldo_evidencia"] == "respaldo_exact_quote_detectado")
+
     return {
         "n_documents": n_documents,
         "n_case_mentions": n_case_mentions,
-        "n_conflicts": len(conflicts),
+        # Fix 1A: dos universos explicitos -- nunca redefinir "n_conflicts"
+        # para que signifique solo el subconjunto respaldado sin decirlo.
+        "n_conflicts_total": len(conflicts),
+        "n_conflicts_evidence_backed": n_conflicts_evidence_backed,
+        "n_conflicts_without_exact_backing": len(conflicts) - n_conflicts_evidence_backed,
         "n_projects": n_projects,
         "n_actors": len(actor_keys),
         "n_evidence_verified": n_evidence_verified,
-        "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts"] > 0),
+        "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts_total"] > 0),
     }
 
 
@@ -406,6 +442,7 @@ def enum_values_present(dataset: dict[str, Any]) -> dict[str, set[str]]:
     for conflict in dataset["conflicts"]:
         found["conflict_origen"].add(conflict["origen"])
         found["conflict_confidence"].add(conflict["confidence"])
+        found["respaldo_evidencia"].add(conflict["respaldo_evidencia"])
         for actor in conflict["actors"]:
             if actor["tipo"]:
                 found[actor["tipo_categoria"]].add(actor["tipo"])

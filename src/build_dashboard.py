@@ -120,20 +120,33 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
 <section id="tab-arquitectura" class="panel page-text">{ARCHITECTURE_HTML}</section>
 <section id="tab-contexto" class="panel">
   <section class="grid" id="metrics"></section>
+  <p class="note" id="universeNote"></p>
   <div class="controls">
     <label>Colorear comunas por: <select id="metricSelect">
-      <option value="n_conflicts" selected>Conflictos</option>
-      <option value="n_conflicts_per_100k">Conflictos por 100.000 hab.</option>
+      <option value="n_conflicts_backed" selected>Conflictos con respaldo de evidencia detectado</option>
+      <option value="n_conflicts_backed_per_100k">Conflictos con respaldo por 100.000 hab.</option>
+      <option value="n_conflicts_total">Conflictos registrados (universo completo)</option>
       <option value="n_projects">Proyectos</option>
       <option value="n_documents">Documentos</option>
       <option value="n_actors">Actores</option>
     </select></label>
   </div>
   <div id="map"></div>
-  <h3 style="margin-top:20px">Conflictos</h3>
+  <h3 style="margin-top:20px">Conflictos con respaldo de evidencia detectado</h3>
   <div class="conflict-list" id="conflictList"></div>
   <div class="detail" id="conflictDetail" style="display:none"></div>
   <p class="note">Cada cita mostrada proviene de evidencia verificada contra el documento fuente.</p>
+  <details style="margin-top:16px">
+    <summary id="noBackingSummary">Conflictos sin respaldo exacto de evidencia detectado</summary>
+    <p class="note">El detector de respaldo (<code>exact_substring_v1</code>) busca una cita literal de
+    "objeto" que vincule explícitamente el nombre del proyecto con un caso incluido del mismo
+    documento. No encontrar ese respaldo exacto no demuestra que el conflicto sea falso -- en la
+    muestra de calibración (N=150 casos revisados manualmente), este detector tuvo 64.5% de
+    precisión y 77.8% de recall contra errores graves. Estos conflictos siguen en el universo
+    completo y no se han descartado ni marcado como inválidos; solo quedan fuera del universo
+    analítico conservador hasta tener respaldo documental exacto.</p>
+    <div class="conflict-list" id="noBackingList"></div>
+  </details>
 </section>
 </main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -161,7 +174,8 @@ function renderMetrics() {{
   const s = D.summary;
   const items = [
     ['Documentos', s.n_documents],
-    ['Conflictos', s.n_conflicts],
+    ['Conflictos registrados (universo completo)', s.n_conflicts_total],
+    ['Con respaldo de evidencia detectado', s.n_conflicts_evidence_backed],
     ['Proyectos', s.n_projects],
     ['Actores', s.n_actors],
     ['Citas verificadas', s.n_evidence_verified],
@@ -170,6 +184,10 @@ function renderMetrics() {{
   document.getElementById('metrics').innerHTML = items.map(([lbl, val]) =>
     `<div class="card"><div class="metric">${{val.toLocaleString('es-CL')}}</div><div class="label">${{lbl}}</div></div>`
   ).join('');
+  document.getElementById('universeNote').textContent =
+    `${{s.n_conflicts_total.toLocaleString('es-CL')}} conflictos registrados / ` +
+    `${{s.n_conflicts_evidence_backed.toLocaleString('es-CL')}} con respaldo exacto de evidencia detectado ` +
+    `(${{s.n_conflicts_without_exact_backing.toLocaleString('es-CL')}} sin respaldo exacto, ver sección abajo).`;
 }}
 
 let geoLayer = null;
@@ -197,27 +215,46 @@ function renderMap() {{
       onEachFeature: (f, layer) => {{
         const t = f.properties;
         layer.bindPopup(
-          `<b>${{t.comuna}}</b><br>Conflictos: ${{t.n_conflicts}}<br>Proyectos: ${{t.n_projects}}<br>` +
+          `<b>${{t.comuna}}</b><br>Conflictos registrados: ${{t.n_conflicts_total}}<br>` +
+          `Con respaldo de evidencia detectado: ${{t.n_conflicts_backed}}<br>Proyectos: ${{t.n_projects}}<br>` +
           `Población: ${{t.poblacion.toLocaleString('es-CL')}}<br>Viviendas hacinadas: ${{t.viviendas_hacinadas.toLocaleString('es-CL')}}`
         );
       }},
     }}).addTo(map);
   }}
-  draw('n_conflicts');
+  draw('n_conflicts_backed');
   document.getElementById('metricSelect').addEventListener('change', e => draw(e.target.value));
 }}
 
 function renderConflictList() {{
+  const backed = D.conflicts.filter(c => c.respaldo_evidencia === 'respaldo_exact_quote_detectado')
+    .sort((a, b) => b.n_case_ids - a.n_case_ids);
+  const noBacking = D.conflicts.filter(c => c.respaldo_evidencia !== 'respaldo_exact_quote_detectado')
+    .sort((a, b) => b.n_case_ids - a.n_case_ids);
+
+  function rowsHtml(items) {{
+    return items.map((c, i) => {{
+      const comunas = c.comunas.map(x => x.comuna).join(', ') || 'sin comuna';
+      return `<div class="conflict-row" data-idx="${{i}}"><b>${{c.label}}</b>
+        <div class="meta">${{comunas}} &middot; ${{c.projects.length}} proyecto(s) &middot; ${{label('conflict_confidence', c.confidence)}}</div></div>`;
+    }}).join('');
+  }}
+
+  function bind(listEl, items) {{
+    listEl.querySelectorAll('.conflict-row').forEach(row => {{
+      row.addEventListener('click', () => showConflictDetail(items[parseInt(row.dataset.idx)]));
+    }});
+  }}
+
   const list = document.getElementById('conflictList');
-  const sorted = [...D.conflicts].sort((a, b) => b.n_case_ids - a.n_case_ids);
-  list.innerHTML = sorted.map((c, i) => {{
-    const comunas = c.comunas.map(x => x.comuna).join(', ') || 'sin comuna';
-    return `<div class="conflict-row" data-idx="${{i}}"><b>${{c.label}}</b>
-      <div class="meta">${{comunas}} &middot; ${{c.projects.length}} proyecto(s) &middot; ${{label('conflict_confidence', c.confidence)}}</div></div>`;
-  }}).join('');
-  list.querySelectorAll('.conflict-row').forEach(row => {{
-    row.addEventListener('click', () => showConflictDetail(sorted[parseInt(row.dataset.idx)]));
-  }});
+  list.innerHTML = rowsHtml(backed);
+  bind(list, backed);
+
+  document.getElementById('noBackingSummary').textContent =
+    `Conflictos sin respaldo exacto de evidencia detectado (${{noBacking.length.toLocaleString('es-CL')}})`;
+  const noBackingList = document.getElementById('noBackingList');
+  noBackingList.innerHTML = rowsHtml(noBacking);
+  bind(noBackingList, noBacking);
 }}
 
 function showConflictDetail(c) {{
@@ -230,7 +267,7 @@ function showConflictDetail(c) {{
   const docs = c.documents.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a></li>`).join('') || '<li class="note">Sin documentos focales/co-principales para este conflicto</li>';
   const others = c.other_mentions.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a> <span class="note">(${{label('document_conflict_role', d.role)}} · no utilizado como evidencia focal)</span></li>`).join('');
   el.innerHTML = `<h3>${{c.label}}</h3>
-    <p class="note">Origen: ${{label('conflict_origen', c.origen)}} &middot; Confianza: ${{label('conflict_confidence', c.confidence)}} &middot; ${{c.n_case_ids}} caso(s)</p>
+    <p class="note">Origen: ${{label('conflict_origen', c.origen)}} &middot; Confianza: ${{label('conflict_confidence', c.confidence)}} &middot; ${{c.n_case_ids}} caso(s) &middot; ${{label('respaldo_evidencia', c.respaldo_evidencia)}}</p>
     <p><b>Proyectos:</b> ${{projects}}</p>
     <p><b>Actores</b> <span class="note">(rol focal/co-principal, identidad resuelta cuando aplica)</span>: ${{actors}}</p>
     ${{events ? `<p><b>Línea de tiempo</b> (${{c.n_events_total}} hito(s)):</p><ul>${{events}}</ul>` : ''}}

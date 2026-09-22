@@ -72,17 +72,154 @@ volver a correr resolve_project_review_queue.py y luego este script.
    cualquier otro project_id mencionado en el mismo documento se marca
    'mentioned_unreviewed' -- rotulado asi a proposito para no aparentar
    el mismo nivel de confianza que la revision humana de los 63.
+
+## Respaldo de evidencia (Fix 1A, 2026-09-22)
+
+Validacion externa ampliada (N=150, Sol) midio 42.0% de error grave sobre el
+universo real de conflictos -- mucho mas alto que el 24% de la auditoria
+original de 50/63, porque esa muestra anterior solo cubria documentos ya
+senalados para revision, no una muestra aleatoria del universo completo.
+Causa raiz rastreada y verificada a mano contra 2 casos reales ("Museo de
+la Memoria y Derechos Humanos en Punta Arenas", "Proyecto Tunel
+Internacional Paso Las Lenas"): el bloque de arriba (linea ~217, antes de
+este fix) tomaba TODO case_id de `project` sin excepcion y lo promovia a
+conflicto trivial -- sin comprobar nunca que ese project_id correspondiera
+a un case_mention real, incluido, con evidencia de "objeto" que lo
+respalde. Un nombre de proyecto mencionado solo de pasada (biografia de un
+arquitecto, comparacion de otro articulo) se volvia un "conflicto" con la
+misma jerarquia que uno real. Medido: 595/990 proyectos (60%) y 573/819
+conflictos triviales (70%) no tienen ninguna mencion respaldada.
+
+Fuente autoritativa del respaldo documental: `evidence` (tiene
+`case_mention_id` real) + `case_mention.decision_final_amplio='include'`
+-- nunca `enrichment_evidence` (no conserva ese vinculo). Candidato a
+respaldo solo si ademas `evidence.quote_role='objeto'` AND
+`evidence.verified=1`. `project_mention_resolved`/`project`/`case_id`
+siguen interviniendo para llegar hasta ahi (son la fuente autoritativa,
+no la UNICA tabla tocada).
+
+Matching: substring exacto normalizado en cualquier direccion
+(`exact_substring_v1`), NUNCA fuzzy. Congelado a proposito durante Fix 1A
+-- las matrices de calibracion de abajo describen exactamente esta regla;
+agregar minimo de caracteres, limites de token, stopwords, embeddings o
+excepciones manuales seria `exact_substring_v2` y exige re-medir las
+matrices desde cero.
+
+Metricas de calibracion (medidas sobre la misma N=150 que informo el
+diseno del detector -- son CALIBRACION, no validacion externa; requieren
+un holdout nuevo, independiente, antes de tratarlas como desempeno fuera
+de muestra):
+- Contra `error_grave`: TP=49, FP=27, FN=14, TN=60 -> precision 64.5%,
+  recall 77.8%.
+- Contra `falso_positivo_inclusion` UNION `etiqueta_no_coincide_con_evidencia`
+  (las 2 categorias que este detector ataca): TP=44, FP=32, FN=4, TN=70 ->
+  precision 57.9%, recall 91.7%.
+Interpretacion: recall alto, precision moderada -- sirve para priorizar
+revision y construir un universo analitico conservador, NUNCA para
+declarar que un conflicto sin respaldo es falso. ~1 de cada 3 marcados
+"sin respaldo" resulta legitimo en la calibracion.
+
+[PREFLIGHT, 2026-09-22] Al implementar el detector real y cruzarlo contra
+los 150 veredictos, aparecio una discrepancia de exactamente 1 caso
+("calle Toro Mazotte") en ambas matrices frente a los numeros calculados
+a mano durante el diseno (65.3%/58.7% de precision). Investigado antes de
+aceptar cualquier numero: el script de calibracion original OLVIDABA el
+filtro `evidence.verified=1` (una cita de ese conflicto, no verificada,
+calzaba por substring y se conto como respaldo valido). La implementacion
+real de este archivo SI exige verified=1, tal como exige el diseno
+acordado -- es la implementacion la correcta, no el calculo de calibracion
+original. Las cifras de arriba ya estan corregidas (64.5%/57.9%); nunca se
+modifico el detector para ajustarse a un numero previo.
+
+Aplicado UNIFORMEMENTE a conflictos triviales y multi-case, sin excepcion
+para `n_case_ids > 1`: la validacion demostro que esa excepcion habria
+sido incorrecta (Aeropuerto Los Cerrillos y Aldea del Encuentro, ambos
+`n_case_ids=2` de la revision humana de los 63, resultaron `error_grave`
+en la validacion N=150 -- que un grupo de case_id haya pasado por
+revision humana confirma la UNION de casos, no garantiza que el conflicto
+resultante este bien construido).
+
+Provenance completo en `conflict_evidence_backing` (nunca solo una
+bandera): cada fila que respalda un conflicto queda trazable hasta la
+cita literal que lo justifica. `conflict.respaldo_evidencia` es el estado
+derivado (con CHECK explicito, nunca un TEXT abierto sin control) --
+'respaldo_exact_quote_detectado' syss existe >=1 fila de respaldo,
+'sin_respaldo_exact_quote_detectado' si no. Nada se borra: el universo
+completo de `conflict` se preserva integro, la bandera solo decide que
+cuenta en el universo analitico conservador del dashboard.
 """
 
 import hashlib
 import json
+import re
 import sqlite3
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
 CLASSIFIED_63 = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
+
+DETECTOR_VERSION = "exact_substring_v1"
+MATCH_METHOD = "normalized_bidirectional_substring"
+
+# Metricas de calibracion (N=150, Sol) -- ver docstring del modulo. Fijas
+# porque dependen de veredictos humanos externos, no se recalculan corriendo
+# este script; se citan tal cual en el reporte de auditoria.
+CALIBRATION_ERROR_GRAVE = {"tp": 49, "fp": 27, "fn": 14, "tn": 60, "precision": 0.645, "recall": 0.778}
+CALIBRATION_TARGET_CATEGORIES = {
+    "target": ["falso_positivo_inclusion", "etiqueta_no_coincide_con_evidencia"],
+    "tp": 44, "fp": 32, "fn": 4, "tn": 70, "precision": 0.579, "recall": 0.917,
+}
+
+
+def _norm(value: str) -> str:
+    text = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"\s+", " ", text.lower()).strip()
+
+
+def _mention_has_case_backing(raw_nombre_proyecto: str, objeto_quotes: list[str]) -> bool:
+    """Substring exacto normalizado en cualquier direccion. Nunca fuzzy --
+    ver 'Congelado explicito de la heuristica' en el docstring del modulo."""
+    pn = _norm(raw_nombre_proyecto)
+    if not pn:
+        return False
+    return any(pn in q or q in pn for q in objeto_quotes if q)
+
+
+def _project_backing_evidence(
+    project_id: str,
+    mentions_by_project: dict[str, list[dict]],
+    included_by_doc: dict[str, list[str]],
+    objeto_by_cm: dict[str, list[dict]],
+) -> list[dict]:
+    """Todas las filas de respaldo encontradas para este proyecto -- nunca
+    solo un booleano. Cada fila es provenance completo: exactamente que
+    cita, de que case_mention, de que documento, justifica el vinculo."""
+    rows = []
+    for mention in mentions_by_project.get(project_id, []):
+        document_id = mention["document_id"]
+        raw_nombre_proyecto = mention["raw_nombre_proyecto"]
+        pn = _norm(raw_nombre_proyecto)
+        if not pn:
+            continue
+        for case_mention_id in included_by_doc.get(document_id, []):
+            for ev in objeto_by_cm.get(case_mention_id, []):
+                q = ev["quote_norm"]
+                if q and (pn in q or q in pn):
+                    rows.append(
+                        {
+                            "project_id": project_id,
+                            "document_id": document_id,
+                            "case_mention_id": case_mention_id,
+                            "evidence_id": ev["evidence_id"],
+                            "raw_nombre_proyecto": raw_nombre_proyecto,
+                            "quote_text": ev["quote_text"],
+                        }
+                    )
+    return rows
 
 # Relaciones que SI unen case_id en un mismo conflicto -- cualquier
 # project_relation bajo 'mismo_conflicto' (parent_subproject, phase,
@@ -210,6 +347,58 @@ def build_conflict_relations(
     return result
 
 
+def _build_conflict_backing(
+    conflict_id: str,
+    projects: list[tuple[str, str]],
+    case_id_by_project: dict[str, str],
+    mentions_by_project: dict[str, list[dict]],
+    included_by_doc: dict[str, list[str]],
+    objeto_by_cm: dict[str, list[dict]],
+) -> tuple[str | None, str, list[dict]]:
+    """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
+    (sin excepcion por n_case_ids) y decide label + respaldo_evidencia.
+    `projects` es la lista (project_id, canonical_name) de todos los
+    project_id que componen el conflicto. Devuelve (label,
+    respaldo_evidencia, filas de conflict_evidence_backing)."""
+    backed_projects: list[tuple[str, str]] = []
+    backing_rows: list[dict] = []
+    for pid, canonical_name in projects:
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm)
+        if rows:
+            backed_projects.append((pid, canonical_name))
+            case_id_of_pid = case_id_by_project[pid]
+            for r in rows:
+                backing_rows.append(
+                    {
+                        "conflict_id": conflict_id,
+                        "case_id": case_id_of_pid,
+                        "project_id": r["project_id"],
+                        "document_id": r["document_id"],
+                        "case_mention_id": r["case_mention_id"],
+                        "evidence_id": r["evidence_id"],
+                        "raw_nombre_proyecto": r["raw_nombre_proyecto"],
+                        "quote_text": r["quote_text"],
+                        "quote_role": "objeto",
+                        "detector_version": DETECTOR_VERSION,
+                        "match_method": MATCH_METHOD,
+                    }
+                )
+
+    # Label: preferir canonical_name entre proyectos RESPALDADOS (Fix 1A,
+    # corrige etiqueta_no_coincide_con_evidencia -- 27/63 error_grave en la
+    # validacion N=150). Fallback explicito al mecanismo anterior (primero
+    # alfabetico entre TODOS) solo si ningun proyecto tiene respaldo.
+    if backed_projects:
+        label = sorted(backed_projects, key=lambda x: x[1])[0][1]
+    elif projects:
+        label = sorted(projects, key=lambda x: x[1])[0][1]
+    else:
+        label = None
+
+    respaldo_evidencia = "respaldo_exact_quote_detectado" if backed_projects else "sin_respaldo_exact_quote_detectado"
+    return label, respaldo_evidencia, backing_rows
+
+
 def main():
     conn = sqlite3.connect(WAREHOUSE)
     conn.execute("PRAGMA foreign_keys = ON")
@@ -217,19 +406,43 @@ def main():
     all_case_ids = sorted({r[0] for r in conn.execute("SELECT DISTINCT case_id FROM project WHERE case_id IS NOT NULL")})
     documentos_63 = load_classified_63()
 
+    # Precomputo unico para el detector de respaldo (Fix 1A) -- sin cascada
+    # de queries por conflicto. Fuente autoritativa: evidence + case_mention
+    # (nunca enrichment_evidence, que no conserva case_mention_id).
+    included_by_doc: dict[str, list[str]] = defaultdict(list)
+    for doc_id, cm_id in conn.execute("SELECT document_id, case_mention_id FROM case_mention WHERE decision_final_amplio = 'include'"):
+        included_by_doc[doc_id].append(cm_id)
+    objeto_by_cm: dict[str, list[dict]] = defaultdict(list)
+    for cm_id, ev_id, quote_text in conn.execute(
+        "SELECT case_mention_id, evidence_id, quote_text FROM evidence WHERE quote_role = 'objeto' AND verified = 1"
+    ):
+        objeto_by_cm[cm_id].append({"evidence_id": ev_id, "quote_text": quote_text, "quote_norm": _norm(quote_text)})
+    mentions_by_project: dict[str, list[dict]] = defaultdict(list)
+    for pid, doc_id, raw_name in conn.execute("SELECT project_id, document_id, raw_nombre_proyecto FROM project_mention_resolved"):
+        mentions_by_project[pid].append({"document_id": doc_id, "raw_nombre_proyecto": raw_name})
+    case_id_by_project: dict[str, str] = dict(conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL"))
+
     case_groups = build_case_groups(all_case_ids, documentos_63)
     case_id_to_conflict = {}
     conflict_rows = []
     conflict_case_rows = []
+    conflict_evidence_backing_rows = []
     for members in case_groups.values():
         conflict_id = _stable_conflict_id(members)
-        label = None
-        names = conn.execute(
-            "SELECT canonical_name FROM project WHERE case_id IN (%s) ORDER BY canonical_name" % ",".join("?" * len(members)),
+        projects = conn.execute(
+            "SELECT project_id, canonical_name FROM project WHERE case_id IN (%s) ORDER BY canonical_name" % ",".join("?" * len(members)),
             members,
         ).fetchall()
-        if names:
-            label = names[0][0]
+
+        # Detector de respaldo (Fix 1A): aplicado UNIFORMEMENTE, sin
+        # excepcion para n_case_ids>1 -- ver docstring del modulo (Aeropuerto
+        # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
+        # resultaron error_grave en la validacion N=150).
+        label, respaldo_evidencia, backing_rows = _build_conflict_backing(
+            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+        )
+        conflict_evidence_backing_rows.extend(backing_rows)
+
         conflict_rows.append(
             {
                 "conflict_id": conflict_id,
@@ -237,6 +450,7 @@ def main():
                 "n_case_ids": len(members),
                 "origen": "conflict_unit_63_evidence" if len(members) > 1 else "trivial_single_case",
                 "confidence": "alta_revisado_por_sol" if len(members) > 1 else "baja_derivado_mecanicamente",
+                "respaldo_evidencia": respaldo_evidencia,
             }
         )
         for cid in members:
@@ -378,6 +592,7 @@ def main():
         DROP VIEW IF EXISTS document_conflict_case_extended;
         DROP TABLE IF EXISTS conflict_relation;
         DROP TABLE IF EXISTS document_conflict;
+        DROP TABLE IF EXISTS conflict_evidence_backing;
         DROP TABLE IF EXISTS conflict_project;
         DROP TABLE IF EXISTS conflict_case;
         DROP TABLE IF EXISTS conflict_episode;
@@ -388,7 +603,10 @@ def main():
             label TEXT,
             n_case_ids INTEGER NOT NULL,
             origen TEXT NOT NULL,
-            confidence TEXT NOT NULL
+            confidence TEXT NOT NULL,
+            respaldo_evidencia TEXT NOT NULL CHECK (
+                respaldo_evidencia IN ('respaldo_exact_quote_detectado', 'sin_respaldo_exact_quote_detectado')
+            )
         );
         CREATE TABLE conflict_case (
             conflict_id TEXT NOT NULL REFERENCES conflict(conflict_id),
@@ -425,6 +643,33 @@ def main():
             descripcion TEXT,
             orden INTEGER
         );
+
+        -- [AGREGADO Fix 1A, 2026-09-22] Provenance completo del respaldo de
+        -- evidencia -- nunca solo una bandera. Cada fila es una cita literal
+        -- que justifica que un project_id (y por lo tanto el conflict_id que
+        -- lo contiene) tiene un case_mention incluido y verificado detras.
+        -- Ausencia de filas para un conflict_id = sin_respaldo_exact_quote_detectado.
+        -- detector_version separado de match_method a proposito: manana puede
+        -- existir exact_substring_v2 con varios tipos de match, y la fila debe
+        -- ser autosuficiente sin volver a consultar evidence.
+        CREATE TABLE conflict_evidence_backing (
+            conflict_id TEXT NOT NULL REFERENCES conflict(conflict_id),
+            case_id TEXT NOT NULL,
+            project_id TEXT NOT NULL REFERENCES project(project_id),
+            document_id TEXT NOT NULL REFERENCES document(document_id),
+            case_mention_id TEXT NOT NULL,
+            evidence_id TEXT NOT NULL,
+            raw_nombre_proyecto TEXT NOT NULL,
+            quote_text TEXT NOT NULL,
+            quote_role TEXT NOT NULL,
+            detector_version TEXT NOT NULL,
+            match_method TEXT NOT NULL,
+            PRIMARY KEY (conflict_id, project_id, document_id, case_mention_id, evidence_id)
+        );
+        CREATE INDEX idx_conflict_backing_conflict ON conflict_evidence_backing(conflict_id);
+        CREATE INDEX idx_conflict_backing_project ON conflict_evidence_backing(project_id);
+        CREATE INDEX idx_conflict_backing_case_mention ON conflict_evidence_backing(case_mention_id);
+        CREATE INDEX idx_conflict_backing_document ON conflict_evidence_backing(document_id);
 
         -- [CORREGIDO 2026-09-18, hallazgo real de revisión] la primera version
         -- solo filtraba unidad_caso_tipo='caso_unico', pero dentro de un
@@ -480,8 +725,24 @@ def main():
     )
 
     conn.executemany(
-        "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence) VALUES (:conflict_id, :label, :n_case_ids, :origen, :confidence)",
+        "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence, respaldo_evidencia) "
+        "VALUES (:conflict_id, :label, :n_case_ids, :origen, :confidence, :respaldo_evidencia)",
         conflict_rows,
+    )
+    # INSERT OR IGNORE: un mismo project_id puede tener 2 raw_nombre_proyecto
+    # distintos para el mismo documento (ej. "Lote 18" / "Lote 18-A", 2
+    # menciones reales del mismo proyecto con redaccion distinta) que calzan
+    # con la misma cita de evidencia -- la clave primaria no incluye
+    # raw_nombre_proyecto a proposito (la pregunta que responde la fila es
+    # "que evidencia respalda este project_id en este conflicto", no "cuantas
+    # variantes de texto calzaron"), asi que el duplicado se ignora sin
+    # perder la senal de respaldo.
+    conn.executemany(
+        "INSERT OR IGNORE INTO conflict_evidence_backing (conflict_id, case_id, project_id, document_id, case_mention_id, "
+        "evidence_id, raw_nombre_proyecto, quote_text, quote_role, detector_version, match_method) "
+        "VALUES (:conflict_id, :case_id, :project_id, :document_id, :case_mention_id, :evidence_id, "
+        ":raw_nombre_proyecto, :quote_text, :quote_role, :detector_version, :match_method)",
+        conflict_evidence_backing_rows,
     )
     conn.executemany(
         "INSERT INTO conflict_case (conflict_id, case_id) VALUES (:conflict_id, :case_id)", conflict_case_rows
@@ -506,10 +767,21 @@ def main():
     role_counts: dict[str, int] = defaultdict(int)
     for r in document_conflict_rows:
         role_counts[r["role"]] += 1
+    n_conflicts_backed = sum(1 for c in conflict_rows if c["respaldo_evidencia"] == "respaldo_exact_quote_detectado")
+    n_trivial = len(conflict_rows) - n_multi
+    n_trivial_backed = sum(
+        1 for c in conflict_rows if c["n_case_ids"] == 1 and c["respaldo_evidencia"] == "respaldo_exact_quote_detectado"
+    )
+    n_projects_total = len(case_id_by_project)
+    n_projects_with_backing = sum(
+        1 for pid in case_id_by_project if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm)
+    )
     summary = {
         "n_conflicts_total": len(conflict_rows),
         "n_conflicts_multi_case": n_multi,
-        "n_conflicts_trivial": len(conflict_rows) - n_multi,
+        "n_conflicts_trivial": n_trivial,
+        "n_conflicts_evidence_backed": n_conflicts_backed,
+        "n_conflicts_without_exact_backing": len(conflict_rows) - n_conflicts_backed,
         "n_conflict_project_links": len(conflict_project_rows),
         "n_document_conflict_links": len(document_conflict_rows),
         "n_document_conflict_from_sol_evidence": sum(1 for r in document_conflict_rows if r["source"] == "conflict_unit_63_sol"),
@@ -522,6 +794,25 @@ def main():
         "foreign_key_check_issues": len(conn.execute("PRAGMA foreign_key_check").fetchall()),
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    audit_report = {
+        "detector_version": DETECTOR_VERSION,
+        "projects_total": n_projects_total,
+        "projects_with_backing": n_projects_with_backing,
+        "projects_without_backing": n_projects_total - n_projects_with_backing,
+        "conflicts_total": len(conflict_rows),
+        "trivial_conflicts_total": n_trivial,
+        "trivial_conflicts_without_backing": n_trivial - n_trivial_backed,
+        "conflicts_with_backing": n_conflicts_backed,
+        "conflicts_without_backing": len(conflict_rows) - n_conflicts_backed,
+        "backing_rows": len(conflict_evidence_backing_rows),
+        "calibration_n": 150,
+        "calibration_error_grave": CALIBRATION_ERROR_GRAVE,
+        "calibration_target_categories": CALIBRATION_TARGET_CATEGORIES,
+    }
+    AUDIT_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    AUDIT_REPORT_PATH.write_text(json.dumps(audit_report, ensure_ascii=False, indent=2), encoding="utf-8")
+    summary["audit_report_path"] = str(AUDIT_REPORT_PATH.relative_to(PROJECT_ROOT))
 
     conn.close()
     return summary

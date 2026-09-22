@@ -1,0 +1,33 @@
+{
+  "detector_version": "exact_substring_v1",
+  "projects_total": 990,
+  "projects_with_backing": 390,
+  "projects_without_backing": 600,
+  "conflicts_total": 839,
+  "trivial_conflicts_total": 819,
+  "trivial_conflicts_without_backing": 505,
+  "conflicts_with_backing": 331,
+  "conflicts_without_backing": 508,
+  "backing_rows": 614,
+  "calibration_n": 150,
+  "calibration_error_grave": {
+    "tp": 49,
+    "fp": 27,
+    "fn": 14,
+    "tn": 60,
+    "precision": 0.645,
+    "recall": 0.778
+  },
+  "calibration_target_categories": {
+    "target": [
+      "falso_positivo_inclusion",
+      "etiqueta_no_coincide_con_evidencia"
+    ],
+    "tp": 44,
+    "fp": 32,
+    "fn": 4,
+    "tn": 70,
+    "precision": 0.579,
+    "recall": 0.917
+  }
+}
