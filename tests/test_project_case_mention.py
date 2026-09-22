@@ -68,3 +68,13 @@ def test_string_zero_verified_flag_is_not_treated_as_verified():
         project_aliases={"p1": ["Torre Alameda"]},
     )
     assert rows[0]["link_status"] == "document_level_candidate"
+
+
+def test_uncertain_case_mention_is_not_labeled_as_excluded():
+    rows = pcm.build_project_case_mention_links(
+        project_mentions=[{"document_id": "d1", "project_id": "p1", "raw_nombre_proyecto": "Edificio CChC"}],
+        case_mentions=[{"case_mention_id": "cm1", "document_id": "d1", "decision_final_amplio": "uncertain"}],
+        evidence=[{"evidence_id": "ev1", "document_id": "d1", "case_mention_id": "cm1", "quote_role": "objeto", "quote_text": "Edificio CChC", "verified": 1}],
+    )
+    assert rows[0]["link_status"] == "non_included_case_mention"
+    assert rows[0]["decision_final_amplio"] == "uncertain"

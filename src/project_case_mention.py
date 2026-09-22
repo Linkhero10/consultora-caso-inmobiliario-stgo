@@ -8,7 +8,10 @@ exige una cita de objeto verificada y una única ``case_mention`` incluida para
 considerar que el enlace es directo **según la regla automática v1**. Los
 documentos con varias menciones compatibles se conservan como
 ``ambiguous_direct`` y nunca se promueven silenciosamente a respaldo. Esta
-regla no pretende ser la definición final: una futura v2 podría resolver
+Una coincidencia en ``exclude`` queda como ``excluded_case_mention``; una
+coincidencia en ``uncertain`` u otro estado no incluido queda como
+``non_included_case_mention``. Esta regla no pretende ser la definición final:
+una futura v2 podría resolver
 varias correspondencias inequívocas dentro de un mismo documento.
 
 El módulo no modifica ningún warehouse: sus funciones son puras y el script
@@ -53,7 +56,7 @@ def _base_row(project_mention: dict[str, Any], status: str, reason: str) -> dict
         "quote_text": None,
         "decision_final_amplio": None,
         "link_status": status,
-        "match_method": "verified_object_quote_exact_substring_v1" if status in {"verified_direct", "ambiguous_direct", "excluded_case_mention"} else "none",
+        "match_method": "verified_object_quote_exact_substring_v1" if status in {"verified_direct", "ambiguous_direct", "excluded_case_mention", "non_included_case_mention"} else "none",
         "reason": reason,
     }
 
@@ -70,7 +73,8 @@ def build_project_case_mention_links(
     aparece cuando exactamente una mención incluida del documento tiene una
     cita de objeto verificada que contiene (o está contenida por) un
     nombre/alias del proyecto. Un match en una mención excluida nunca se
-    considera respaldo. Que v1 no resuelva un documento multi-caso no implica
+    considera respaldo; los estados no incluidos distintos de ``exclude`` se
+    conservan separados. Que v1 no resuelva un documento multi-caso no implica
     que la relación sea imposible para una revisión humana o una v2.
     """
     project_aliases = project_aliases or {}
@@ -91,6 +95,7 @@ def build_project_case_mention_links(
         terms.discard("")
         include_matches: dict[str, list[dict[str, Any]]] = defaultdict(list)
         excluded_matches: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        non_included_matches: dict[str, list[dict[str, Any]]] = defaultdict(list)
 
         for cm in cms_by_doc.get(pm["document_id"], []):
             matches = [
@@ -99,7 +104,13 @@ def build_project_case_mention_links(
             ]
             if not matches:
                 continue
-            target = include_matches if cm.get("decision_final_amplio") == "include" else excluded_matches
+            decision = cm.get("decision_final_amplio")
+            if decision == "include":
+                target = include_matches
+            elif decision == "exclude":
+                target = excluded_matches
+            else:
+                target = non_included_matches
             target[cm["case_mention_id"]].extend(matches)
 
         if len(include_matches) == 1:
@@ -135,6 +146,20 @@ def build_project_case_mention_links(
                 cm = next(cm for cm in cms_by_doc[pm["document_id"]] if cm["case_mention_id"] == case_mention_id)
                 for ev in sorted(matches, key=lambda item: item["evidence_id"]):
                     row = _base_row(pm, "excluded_case_mention", "la coincidencia nominal solo esta respaldada por una case_mention excluida")
+                    row.update({
+                        "case_mention_id": case_mention_id,
+                        "evidence_id": ev["evidence_id"],
+                        "quote_text": ev.get("quote_text"),
+                        "decision_final_amplio": cm.get("decision_final_amplio"),
+                    })
+                    rows.append(row)
+            continue
+
+        if non_included_matches:
+            for case_mention_id, matches in sorted(non_included_matches.items()):
+                cm = next(cm for cm in cms_by_doc[pm["document_id"]] if cm["case_mention_id"] == case_mention_id)
+                for ev in sorted(matches, key=lambda item: item["evidence_id"]):
+                    row = _base_row(pm, "non_included_case_mention", "la coincidencia nominal solo esta respaldada por una case_mention no incluida y no marcada como exclude")
                     row.update({
                         "case_mention_id": case_mention_id,
                         "evidence_id": ev["evidence_id"],
