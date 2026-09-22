@@ -13,6 +13,7 @@
   "backing_rows": 613,
   "backing_rows_detected_raw": 614,
   "backing_rows_persisted": 613,
+  "backing_rows_deduplicated": 1,
   "coverage_backing": {
     "total": 281,
     "parcial": 50,

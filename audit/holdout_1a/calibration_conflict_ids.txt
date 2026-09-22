@@ -1,0 +1,3 @@
+# Placeholder intentionally empty: the durable list of 150 calibration conflict_id
+# values was not preserved in the historical artifacts. Until it is recovered,
+# holdout_1a_manifest.json must remain candidate_independence_unverified.

@@ -1,0 +1,44 @@
+{
+  "artifact_version": "fix1a-holdout-v1",
+  "status": "candidate_independence_unverified",
+  "blind": true,
+  "model_labels_used": false,
+  "detector_fields_excluded": [
+    "ambiguous_multi_case_document",
+    "backing_rows",
+    "backing_rows_detected_raw",
+    "backing_rows_persisted",
+    "backing_scope",
+    "coverage_backing",
+    "detector_version",
+    "label_source_project_id",
+    "match_method",
+    "n_documents_ambiguous_backing",
+    "n_projects_backed",
+    "n_projects_unbacked",
+    "respaldo_evidencia"
+  ],
+  "warehouse_sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+  "warehouse_conflicts_total": 839,
+  "selection_seed": "fix1a-holdout-20260922",
+  "main": {
+    "n": 100,
+    "method": "simple_random_sample_without_replacement_after_calibration_exclusion",
+    "ids_sha256": "c0f58b69295a78eadfe6107a582dbd9e198fb6ebeb6f1d7f96f55aa5bef2d7ad",
+    "path": "audit\\holdout_1a\\holdout_main_n100.json"
+  },
+  "stress": {
+    "n": 50,
+    "method": "directed_stress_sample; reported_separately",
+    "ids_sha256": "0f5ac90e85159a6f67350c145f0db621cf46ffedd25af7bb271554e0ec4bf172",
+    "path": "audit\\holdout_1a\\stress_sample_n50.json"
+  },
+  "calibration_exclusion": {
+    "path": "audit\\holdout_1a\\calibration_conflict_ids.txt",
+    "ids_present": 0,
+    "required": 150,
+    "independence_verified": false,
+    "note": "Sin los 150 IDs durables, el paquete es candidato reproducible pero no puede presentarse como validacion externa."
+  },
+  "generated_without_api": true
+}

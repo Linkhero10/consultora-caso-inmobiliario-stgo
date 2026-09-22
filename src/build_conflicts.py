@@ -892,6 +892,7 @@ def main():
         "backing_rows": n_backing_rows_persisted,
         "backing_rows_detected_raw": len(conflict_evidence_backing_rows),
         "backing_rows_persisted": n_backing_rows_persisted,
+        "backing_rows_deduplicated": len(conflict_evidence_backing_rows) - n_backing_rows_persisted,
         "coverage_backing": {
             "total": sum(1 for c in conflict_rows if c["coverage_backing"] == "total"),
             "parcial": sum(1 for c in conflict_rows if c["coverage_backing"] == "parcial"),

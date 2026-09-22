@@ -513,6 +513,9 @@ def test_backing_report_count_matches_persisted_rows():
         )
     )
     assert report["backing_rows_persisted"] == persisted
+    assert report["backing_rows_deduplicated"] == (
+        report["backing_rows_detected_raw"] - report["backing_rows_persisted"]
+    )
 
 
 def test_document_conflict_case_safe_view_only_includes_caso_unico():

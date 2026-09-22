@@ -18,6 +18,7 @@
       "actor_event_project_link": 17227,
       "conflict_evidence_backing": 613,
       "conflict_evidence_backing_detected_raw": 614,
+      "conflict_evidence_backing_deduplicated": 1,
       "conflicts_evidence_backed": 331,
       "conflicts_without_exact_backing": 508,
       "conflicts_backing_total": 281,
