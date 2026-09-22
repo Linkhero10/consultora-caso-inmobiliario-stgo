@@ -38,6 +38,10 @@ deliberadamente sin resolver.
   la conservadora y usa la extendida solo como prueba de sensibilidad.
 - **Todo cambio de fusión/separación queda en una cola de revisión con razón explícita**
   (`project_review_queue`), nunca en un script que decide en silencio.
+- **El respaldo documental no se confunde con un vínculo directo ausente.** `conflict_evidence_backing`
+  registra coincidencias verificadas a nivel de documento/case_mention; cuando el documento contiene
+  varios casos se conserva una señal explícita de ambigüedad y la cobertura del conflicto puede ser
+  total, parcial o ninguna.
 
 ## Base de datos
 

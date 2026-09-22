@@ -112,6 +112,9 @@ def test_build_dashboard_dataset_end_to_end(tmp_path):
     assert conflict["comunas"] == [{"codigo_comuna_ine": "13101", "comuna": "Santiago"}]
     assert conflict["projects"] == [{"project_id": "proj1", "nombre": "Proyecto A", "n_documents": 1}]
     assert conflict["respaldo_evidencia"] == "respaldo_exact_quote_detectado"
+    assert conflict["coverage_backing"] == "total"
+    assert conflict["n_projects_backed"] == 1
+    assert conflict["n_projects_unbacked"] == 0
     assert conflict["evidence_quotes_sample"] == ["Cita de prueba verificada."]
 
     # Actor resuelto via actor_event_project_link_conflict_safe (doc1, focal).

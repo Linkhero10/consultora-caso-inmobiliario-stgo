@@ -132,15 +132,17 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
     </select></label>
   </div>
   <div id="map"></div>
-  <h3 style="margin-top:20px">Conflictos con respaldo de evidencia detectado</h3>
+  <h3 style="margin-top:20px">Conflictos con respaldo documental detectado</h3>
   <div class="conflict-list" id="conflictList"></div>
   <div class="detail" id="conflictDetail" style="display:none"></div>
   <p class="note">Cada cita mostrada proviene de evidencia verificada contra el documento fuente.</p>
   <details style="margin-top:16px">
     <summary id="noBackingSummary">Conflictos sin respaldo exacto de evidencia detectado</summary>
     <p class="note">El detector de respaldo (<code>exact_substring_v1</code>) busca una cita literal de
-    "objeto" que vincule explícitamente el nombre del proyecto con un caso incluido del mismo
-    documento. No encontrar ese respaldo exacto no demuestra que el conflicto sea falso -- en la
+    "objeto" que contenga el nombre normalizado del proyecto dentro de un documento con al menos
+    una mención incluida. El warehouse no conserva todavía un vínculo proyecto↔case_mention
+    directo, por lo que los documentos multi-caso se señalan como ambiguos. No encontrar ese
+    respaldo exacto no demuestra que el conflicto sea falso -- en la
     muestra de calibración (N=150 casos revisados manualmente), este detector tuvo 64.5% de
     precisión y 77.8% de recall contra errores graves. Estos conflictos siguen en el universo
     completo y no se han descartado ni marcado como inválidos; solo quedan fuera del universo
@@ -269,6 +271,9 @@ function showConflictDetail(c) {{
   el.innerHTML = `<h3>${{c.label}}</h3>
     <p class="note">Origen: ${{label('conflict_origen', c.origen)}} &middot; Confianza: ${{label('conflict_confidence', c.confidence)}} &middot; ${{c.n_case_ids}} caso(s) &middot; ${{label('respaldo_evidencia', c.respaldo_evidencia)}}</p>
     <p><b>Proyectos:</b> ${{projects}}</p>
+    <p><b>Cobertura del respaldo:</b> ${{label('coverage_backing', c.coverage_backing)}}
+      (${{c.n_projects_backed}} respaldado(s), ${{c.n_projects_unbacked}} sin respaldo;
+      ${{c.n_documents_ambiguous_backing}} documento(s) multi-caso ambiguo(s))</p>
     <p><b>Actores</b> <span class="note">(rol focal/co-principal, identidad resuelta cuando aplica)</span>: ${{actors}}</p>
     ${{events ? `<p><b>Línea de tiempo</b> (${{c.n_events_total}} hito(s)):</p><ul>${{events}}</ul>` : ''}}
     ${{quotes ? `<p><b>Evidencia citada:</b></p>${{quotes}}` : ''}}

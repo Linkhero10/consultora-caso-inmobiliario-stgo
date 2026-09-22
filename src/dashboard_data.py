@@ -357,6 +357,7 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
 
         events = events_by_conflict.get(conflict_id, [])
 
+        fallback_backed = c.get("respaldo_evidencia") == "respaldo_exact_quote_detectado"
         result.append(
             {
                 "conflict_id": conflict_id,
@@ -365,6 +366,11 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "origen": c["origen"],
                 "confidence": c["confidence"],
                 "respaldo_evidencia": c.get("respaldo_evidencia", "sin_respaldo_exact_quote_detectado"),
+                "n_projects_backed": c.get("n_projects_backed", len(projects) if fallback_backed else 0),
+                "n_projects_unbacked": c.get("n_projects_unbacked", 0 if fallback_backed else len(projects)),
+                "coverage_backing": c.get("coverage_backing", "total" if fallback_backed else "ninguna"),
+                "label_source_project_id": c.get("label_source_project_id"),
+                "n_documents_ambiguous_backing": c.get("n_documents_ambiguous_backing", 0),
                 "comunas": [{"codigo_comuna_ine": k, "comuna": v} for k, v in sorted(comunas_seen.items())],
                 "projects": projects,
                 "documents": documents_out,

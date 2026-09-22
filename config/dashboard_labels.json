@@ -3,6 +3,11 @@
     "respaldo_exact_quote_detectado": "Con respaldo de evidencia detectado",
     "sin_respaldo_exact_quote_detectado": "Sin respaldo exacto de evidencia detectado"
   },
+  "coverage_backing": {
+    "total": "Total",
+    "parcial": "Parcial",
+    "ninguna": "Ninguna"
+  },
   "decision": {
     "include": "Incluido",
     "exclude": "Excluido",

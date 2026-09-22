@@ -1,5 +1,7 @@
 {
   "detector_version": "exact_substring_v1",
+  "backing_scope": "document_level_case_mention_without_project_link",
+  "backing_scope_note": "El warehouse no conserva vinculo proyecto-case_mention; las coincidencias son documentales y los documentos multi-caso quedan senalados como ambiguos.",
   "projects_total": 990,
   "projects_with_backing": 390,
   "projects_without_backing": 600,
@@ -8,7 +10,15 @@
   "trivial_conflicts_without_backing": 505,
   "conflicts_with_backing": 331,
   "conflicts_without_backing": 508,
-  "backing_rows": 614,
+  "backing_rows": 613,
+  "backing_rows_detected_raw": 614,
+  "backing_rows_persisted": 613,
+  "coverage_backing": {
+    "total": 281,
+    "parcial": 50,
+    "ninguna": 508
+  },
+  "conflicts_with_ambiguous_multi_case_backing": 114,
   "calibration_n": 150,
   "calibration_error_grave": {
     "tp": 49,
@@ -29,5 +39,6 @@
     "tn": 70,
     "precision": 0.579,
     "recall": 0.917
-  }
+  },
+  "warehouse_sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5"
 }

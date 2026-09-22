@@ -70,3 +70,22 @@ La validación muestral N=50 identificó el problema real; no se ha corrido toda
 muestra más grande sobre el corpus completo. Las conclusiones analíticas de fondo (más allá de la
 infraestructura de identidad, que sí está verificada y cerrada) siguen pendientes de los arcos
 sustantivos de análisis.
+
+## 6. Fix 1A: respaldo documental y ambigüedad multi-caso
+
+La validación ampliada N=150 detectó 63 errores graves (42%), concentrados en promociones
+mecánicas de menciones de proyecto a conflictos y en etiquetas que no coincidían con la evidencia.
+Fix 1A conserva el universo completo, pero separa una vista conservadora basada en una coincidencia
+`exact_substring_v1` entre el nombre normalizado del proyecto y una cita `objeto` verificada de un
+documento con al menos una mención incluida.
+
+El esquema actual no tiene un vínculo afirmativo proyecto↔case_mention. Por tanto, el respaldo se
+declara como documental, no directo, mediante `backing_scope`; cuando un documento tiene más de una
+mención incluida con evidencia de objeto, `ambiguous_multi_case_document=1` hace visible esa
+limitación. La tabla `conflict_evidence_backing` conserva la cita, documento, mención, versión del
+detector y método de coincidencia.
+
+En el warehouse vigente: 839 conflictos, 331 con respaldo documental detectado, 508 sin respaldo;
+281 con cobertura total de proyectos, 50 parcial y 508 ninguna. Estos estados no equivalen a
+"verdadero/falso": la ausencia de respaldo solo excluye del universo analítico conservador hasta
+pasar el holdout N=100 y stress sample N=50 pendiente.

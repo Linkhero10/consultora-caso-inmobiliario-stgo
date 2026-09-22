@@ -163,6 +163,24 @@ def test_project_backing_evidence_empty_when_no_objeto_evidence_for_that_mention
     assert rows == []
 
 
+def test_project_backing_evidence_marks_document_level_multi_case_ambiguity():
+    """El esquema actual no vincula proyecto y case_mention dentro del
+    mismo documento. La fila debe conservar esa limitación explícitamente,
+    especialmente cuando hay más de una mención incluida con objeto."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["cm1", "cm2"]}
+    objeto_by_cm = {
+        "cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}],
+        "cm2": [{"evidence_id": "e2", "quote_text": "la Torre Central tambien", "quote_norm": "la torre central tambien"}],
+    }
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    assert len(rows) == 2
+    assert {row["backing_scope"] for row in rows} == {"document_level_case_mention_without_project_link"}
+    assert {row["document_case_mention_count"] for row in rows} == {2}
+    assert {row["document_object_case_mention_count"] for row in rows} == {2}
+    assert {row["ambiguous_multi_case_document"] for row in rows} == {1}
+
+
 def test_build_conflict_backing_uniform_no_multi_case_exception():
     """Bug real que la validacion N=150 encontro: 'n_case_ids > 1 -> siempre
     respaldado' es incorrecto (Aeropuerto Los Cerrillos, Aldea del
@@ -199,6 +217,8 @@ def test_build_conflict_backing_label_prefers_backed_project_over_incidental_men
     assert label == "Zzz Proyecto Real Respaldado"
     assert respaldo == "respaldo_exact_quote_detectado"
     assert len(rows) == 1
+    assert rows[0]["backing_scope"] == "document_level_case_mention_without_project_link"
+    assert rows[0]["ambiguous_multi_case_document"] == 0
 
 
 def test_build_conflict_backing_fallback_label_when_none_backed():
@@ -208,6 +228,19 @@ def test_build_conflict_backing_fallback_label_when_none_backed():
     assert label == "Aaa Primero"  # fallback: primero alfabetico entre TODOS
     assert respaldo == "sin_respaldo_exact_quote_detectado"
     assert rows == []
+
+
+def test_backing_summary_exposes_partial_coverage_and_label_source():
+    projects = [("p1", "A Proyecto"), ("p2", "B Proyecto")]
+    rows = [{"project_id": "p1", "ambiguous_multi_case_document": 0}]
+    summary = reg._backing_summary(projects, rows)
+    assert summary == {
+        "n_projects_backed": 1,
+        "n_projects_unbacked": 1,
+        "coverage_backing": "parcial",
+        "label_source_project_id": "p1",
+        "n_documents_ambiguous_backing": 0,
+    }
 
 
 # --- Pruebas de prueba adversarial contra el warehouse real ---
@@ -423,10 +456,7 @@ def test_museo_de_la_memoria_conflict_has_no_backing():
         "SELECT respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:322c7c3d88d4ff08de440c56'"
     ).fetchone()
     conn.close()
-    if row is None:
-        import pytest
-
-        pytest.skip("conflict_id no presente en este warehouse (case grouping pudo cambiar)")
+    assert row is not None, "el caso Museo debe estar presente en el warehouse de Fix 1A"
     assert row[0] == "sin_respaldo_exact_quote_detectado"
 
 
@@ -440,13 +470,42 @@ def test_aeropuerto_los_cerrillos_no_automatic_pass_for_multi_case():
         "SELECT n_case_ids, respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:4f725d7265297513738bf370'"
     ).fetchone()
     conn.close()
-    if row is None:
-        import pytest
-
-        pytest.skip("conflict_id no presente en este warehouse (case grouping pudo cambiar)")
+    assert row is not None, "el caso Aeropuerto debe estar presente en el warehouse de Fix 1A"
     n_case_ids, respaldo = row
     assert n_case_ids > 1  # sigue siendo multi-case (Fix 1B no aplicado todavia)
     assert respaldo in ("respaldo_exact_quote_detectado", "sin_respaldo_exact_quote_detectado")  # nunca un valor inventado
+
+
+def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
+    conn = _connect_or_skip()
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}
+    assert {
+        "backing_scope",
+        "document_case_mention_count",
+        "document_object_case_mention_count",
+        "ambiguous_multi_case_document",
+    } <= columns
+    bad_scope = conn.execute(
+        "SELECT COUNT(*) FROM conflict_evidence_backing "
+        "WHERE backing_scope != 'document_level_case_mention_without_project_link'"
+    ).fetchone()[0]
+    conn.close()
+    assert bad_scope == 0
+
+
+def test_backing_report_count_matches_persisted_rows():
+    import json
+    from pathlib import Path
+
+    conn = _connect_or_skip()
+    persisted = conn.execute("SELECT COUNT(*) FROM conflict_evidence_backing").fetchone()[0]
+    conn.close()
+    report = json.loads(
+        (Path(__file__).resolve().parents[1] / "audit" / "conflict_evidence_backing_report.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert report["backing_rows_persisted"] == persisted
 
 
 def test_document_conflict_case_safe_view_only_includes_caso_unico():

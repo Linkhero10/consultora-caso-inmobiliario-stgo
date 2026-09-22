@@ -87,8 +87,10 @@ conflicto trivial -- sin comprobar nunca que ese project_id correspondiera
 a un case_mention real, incluido, con evidencia de "objeto" que lo
 respalde. Un nombre de proyecto mencionado solo de pasada (biografia de un
 arquitecto, comparacion de otro articulo) se volvia un "conflicto" con la
-misma jerarquia que uno real. Medido: 595/990 proyectos (60%) y 573/819
-conflictos triviales (70%) no tienen ninguna mencion respaldada.
+misma jerarquia que uno real. La medición exploratoria inicial (595/990
+proyectos y 573/819 conflictos triviales sin respaldo) quedó superada por
+el reporte generado desde el warehouse vigente; nunca debe tratarse como
+una cifra congelada.
 
 Fuente autoritativa del respaldo documental: `evidence` (tiene
 `case_mention_id` real) + `case_mention.decision_final_amplio='include'`
@@ -143,7 +145,7 @@ Provenance completo en `conflict_evidence_backing` (nunca solo una
 bandera): cada fila que respalda un conflicto queda trazable hasta la
 cita literal que lo justifica. `conflict.respaldo_evidencia` es el estado
 derivado (con CHECK explicito, nunca un TEXT abierto sin control) --
-'respaldo_exact_quote_detectado' syss existe >=1 fila de respaldo,
+'respaldo_exact_quote_detectado' si existe >=1 fila de respaldo,
 'sin_respaldo_exact_quote_detectado' si no. Nada se borra: el universo
 completo de `conflict` se preserva integro, la bandera solo decide que
 cuenta en el universo analitico conservador del dashboard.
@@ -164,6 +166,11 @@ AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.j
 
 DETECTOR_VERSION = "exact_substring_v1"
 MATCH_METHOD = "normalized_bidirectional_substring"
+BACKING_SCOPE = "document_level_case_mention_without_project_link"
+
+# El esquema actual no conserva un vinculo proyecto->case_mention. Por eso
+# las coincidencias del detector son documentales, y cualquier documento con
+# varias menciones incluidas y evidencia de objeto se marca como ambiguo.
 
 # Metricas de calibracion (N=150, Sol) -- ver docstring del modulo. Fijas
 # porque dependen de veredictos humanos externos, no se recalculan corriendo
@@ -205,7 +212,10 @@ def _project_backing_evidence(
         pn = _norm(raw_nombre_proyecto)
         if not pn:
             continue
-        for case_mention_id in included_by_doc.get(document_id, []):
+        included_case_mentions = included_by_doc.get(document_id, [])
+        object_case_mentions = [cm_id for cm_id in included_case_mentions if objeto_by_cm.get(cm_id)]
+        ambiguous_multi_case_document = int(len(set(object_case_mentions)) > 1)
+        for case_mention_id in included_case_mentions:
             for ev in objeto_by_cm.get(case_mention_id, []):
                 q = ev["quote_norm"]
                 if q and (pn in q or q in pn):
@@ -217,6 +227,13 @@ def _project_backing_evidence(
                             "evidence_id": ev["evidence_id"],
                             "raw_nombre_proyecto": raw_nombre_proyecto,
                             "quote_text": ev["quote_text"],
+                            # El warehouse actual conserva el proyecto a
+                            # nivel de documento, no de case_mention. No se
+                            # presenta como un vinculo directo inexistente.
+                            "backing_scope": BACKING_SCOPE,
+                            "document_case_mention_count": len(included_case_mentions),
+                            "document_object_case_mention_count": len(set(object_case_mentions)),
+                            "ambiguous_multi_case_document": ambiguous_multi_case_document,
                         }
                     )
     return rows
@@ -381,6 +398,10 @@ def _build_conflict_backing(
                         "quote_role": "objeto",
                         "detector_version": DETECTOR_VERSION,
                         "match_method": MATCH_METHOD,
+                        "backing_scope": r["backing_scope"],
+                        "document_case_mention_count": r["document_case_mention_count"],
+                        "document_object_case_mention_count": r["document_object_case_mention_count"],
+                        "ambiguous_multi_case_document": r["ambiguous_multi_case_document"],
                     }
                 )
 
@@ -397,6 +418,39 @@ def _build_conflict_backing(
 
     respaldo_evidencia = "respaldo_exact_quote_detectado" if backed_projects else "sin_respaldo_exact_quote_detectado"
     return label, respaldo_evidencia, backing_rows
+
+
+def _backing_summary(projects: list[tuple[str, str]], backing_rows: list[dict]) -> dict:
+    """Resume cobertura y ambigüedad sin convertir ausencia en falsedad.
+
+    El detector solo observa respaldo documental a nivel de documento/case
+    mention. Por eso la cobertura de un conflicto con varios proyectos debe
+    distinguirse de una bandera binaria: un proyecto respaldado no respalda
+    automáticamente a sus hermanos.
+    """
+    project_ids = {pid for pid, _ in projects}
+    backed_ids = {row["project_id"] for row in backing_rows if row.get("project_id") in project_ids}
+    n_backed = len(backed_ids)
+    n_unbacked = len(project_ids) - n_backed
+    if not project_ids or n_backed == 0:
+        coverage = "ninguna"
+    elif n_unbacked == 0:
+        coverage = "total"
+    else:
+        coverage = "parcial"
+    if backed_ids:
+        label_candidates = sorted((name, pid) for pid, name in projects if pid in backed_ids)
+    else:
+        label_candidates = sorted((name, pid) for pid, name in projects)
+    return {
+        "n_projects_backed": n_backed,
+        "n_projects_unbacked": n_unbacked,
+        "coverage_backing": coverage,
+        "label_source_project_id": label_candidates[0][1] if label_candidates else None,
+        "n_documents_ambiguous_backing": len({
+            row["document_id"] for row in backing_rows if row.get("ambiguous_multi_case_document")
+        }),
+    }
 
 
 def main():
@@ -442,6 +496,7 @@ def main():
             conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
         )
         conflict_evidence_backing_rows.extend(backing_rows)
+        backing_summary = _backing_summary(projects, backing_rows)
 
         conflict_rows.append(
             {
@@ -451,6 +506,7 @@ def main():
                 "origen": "conflict_unit_63_evidence" if len(members) > 1 else "trivial_single_case",
                 "confidence": "alta_revisado_por_sol" if len(members) > 1 else "baja_derivado_mecanicamente",
                 "respaldo_evidencia": respaldo_evidencia,
+                **backing_summary,
             }
         )
         for cid in members:
@@ -606,7 +662,12 @@ def main():
             confidence TEXT NOT NULL,
             respaldo_evidencia TEXT NOT NULL CHECK (
                 respaldo_evidencia IN ('respaldo_exact_quote_detectado', 'sin_respaldo_exact_quote_detectado')
-            )
+            ),
+            n_projects_backed INTEGER NOT NULL CHECK (n_projects_backed >= 0),
+            n_projects_unbacked INTEGER NOT NULL CHECK (n_projects_unbacked >= 0),
+            coverage_backing TEXT NOT NULL CHECK (coverage_backing IN ('total', 'parcial', 'ninguna')),
+            label_source_project_id TEXT,
+            n_documents_ambiguous_backing INTEGER NOT NULL CHECK (n_documents_ambiguous_backing >= 0)
         );
         CREATE TABLE conflict_case (
             conflict_id TEXT NOT NULL REFERENCES conflict(conflict_id),
@@ -664,6 +725,10 @@ def main():
             quote_role TEXT NOT NULL,
             detector_version TEXT NOT NULL,
             match_method TEXT NOT NULL,
+            backing_scope TEXT NOT NULL CHECK (backing_scope = 'document_level_case_mention_without_project_link'),
+            document_case_mention_count INTEGER NOT NULL CHECK (document_case_mention_count >= 0),
+            document_object_case_mention_count INTEGER NOT NULL CHECK (document_object_case_mention_count >= 0),
+            ambiguous_multi_case_document INTEGER NOT NULL CHECK (ambiguous_multi_case_document IN (0, 1)),
             PRIMARY KEY (conflict_id, project_id, document_id, case_mention_id, evidence_id)
         );
         CREATE INDEX idx_conflict_backing_conflict ON conflict_evidence_backing(conflict_id);
@@ -725,8 +790,12 @@ def main():
     )
 
     conn.executemany(
-        "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence, respaldo_evidencia) "
-        "VALUES (:conflict_id, :label, :n_case_ids, :origen, :confidence, :respaldo_evidencia)",
+        "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence, respaldo_evidencia, "
+        "n_projects_backed, n_projects_unbacked, coverage_backing, label_source_project_id, "
+        "n_documents_ambiguous_backing) "
+        "VALUES (:conflict_id, :label, :n_case_ids, :origen, :confidence, :respaldo_evidencia, "
+        ":n_projects_backed, :n_projects_unbacked, :coverage_backing, :label_source_project_id, "
+        ":n_documents_ambiguous_backing)",
         conflict_rows,
     )
     # INSERT OR IGNORE: un mismo project_id puede tener 2 raw_nombre_proyecto
@@ -739,9 +808,13 @@ def main():
     # perder la senal de respaldo.
     conn.executemany(
         "INSERT OR IGNORE INTO conflict_evidence_backing (conflict_id, case_id, project_id, document_id, case_mention_id, "
-        "evidence_id, raw_nombre_proyecto, quote_text, quote_role, detector_version, match_method) "
+        "evidence_id, raw_nombre_proyecto, quote_text, quote_role, detector_version, match_method, "
+        "backing_scope, document_case_mention_count, document_object_case_mention_count, "
+        "ambiguous_multi_case_document) "
         "VALUES (:conflict_id, :case_id, :project_id, :document_id, :case_mention_id, :evidence_id, "
-        ":raw_nombre_proyecto, :quote_text, :quote_role, :detector_version, :match_method)",
+        ":raw_nombre_proyecto, :quote_text, :quote_role, :detector_version, :match_method, "
+        ":backing_scope, :document_case_mention_count, :document_object_case_mention_count, "
+        ":ambiguous_multi_case_document)",
         conflict_evidence_backing_rows,
     )
     conn.executemany(
@@ -762,6 +835,13 @@ def main():
         conflict_relation_rows,
     )
     conn.commit()
+
+    # `conflict_evidence_backing_rows` conserva todas las coincidencias
+    # detectadas; la clave primaria de la tabla puede deduplicar variantes
+    # que apuntan al mismo conflicto/proyecto/documento/case_mention/evidence.
+    # Reportamos ambas magnitudes para que el audit no confunda detección con
+    # filas efectivamente persistidas.
+    n_backing_rows_persisted = conn.execute("SELECT COUNT(*) FROM conflict_evidence_backing").fetchone()[0]
 
     n_multi = sum(1 for c in conflict_rows if c["n_case_ids"] > 1)
     role_counts: dict[str, int] = defaultdict(int)
@@ -792,11 +872,15 @@ def main():
         "n_conflict_relations_resolved_keep_separate": sum(1 for r in conflict_relation_rows if r["review_status"] == "resolved_keep_separate"),
         "integrity_check": conn.execute("PRAGMA integrity_check").fetchone()[0],
         "foreign_key_check_issues": len(conn.execute("PRAGMA foreign_key_check").fetchall()),
+        "n_conflict_evidence_backing_rows_detected_raw": len(conflict_evidence_backing_rows),
+        "n_conflict_evidence_backing_rows_persisted": n_backing_rows_persisted,
     }
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
     audit_report = {
         "detector_version": DETECTOR_VERSION,
+        "backing_scope": BACKING_SCOPE,
+        "backing_scope_note": "El warehouse no conserva vinculo proyecto-case_mention; las coincidencias son documentales y los documentos multi-caso quedan senalados como ambiguos.",
         "projects_total": n_projects_total,
         "projects_with_backing": n_projects_with_backing,
         "projects_without_backing": n_projects_total - n_projects_with_backing,
@@ -805,16 +889,26 @@ def main():
         "trivial_conflicts_without_backing": n_trivial - n_trivial_backed,
         "conflicts_with_backing": n_conflicts_backed,
         "conflicts_without_backing": len(conflict_rows) - n_conflicts_backed,
-        "backing_rows": len(conflict_evidence_backing_rows),
+        "backing_rows": n_backing_rows_persisted,
+        "backing_rows_detected_raw": len(conflict_evidence_backing_rows),
+        "backing_rows_persisted": n_backing_rows_persisted,
+        "coverage_backing": {
+            "total": sum(1 for c in conflict_rows if c["coverage_backing"] == "total"),
+            "parcial": sum(1 for c in conflict_rows if c["coverage_backing"] == "parcial"),
+            "ninguna": sum(1 for c in conflict_rows if c["coverage_backing"] == "ninguna"),
+        },
+        "conflicts_with_ambiguous_multi_case_backing": sum(
+            1 for c in conflict_rows if c["n_documents_ambiguous_backing"] > 0
+        ),
         "calibration_n": 150,
         "calibration_error_grave": CALIBRATION_ERROR_GRAVE,
         "calibration_target_categories": CALIBRATION_TARGET_CATEGORIES,
     }
+    conn.close()
+    audit_report["warehouse_sha256"] = hashlib.sha256(WAREHOUSE.read_bytes()).hexdigest()
     AUDIT_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     AUDIT_REPORT_PATH.write_text(json.dumps(audit_report, ensure_ascii=False, indent=2), encoding="utf-8")
     summary["audit_report_path"] = str(AUDIT_REPORT_PATH.relative_to(PROJECT_ROOT))
-
-    conn.close()
     return summary
 
 

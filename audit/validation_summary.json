@@ -29,5 +29,34 @@
   "pruebas_automatizadas": {
     "descripcion": "Tests correspondientes al pipeline vigente, incluidos casos de regresion sobre bugs reales encontrados en revision (ver tests/). Un numero de tests fijo aqui se desactualiza en cada cambio -- el conteo real y actualizado esta en el ultimo run de CI, no en este archivo.",
     "ci": "corre en cada push a main, ver .github/workflows/tests.yml y la pestana Actions del repositorio para el resultado vigente"
+  },
+  "validacion_conflict_ampliada": {
+    "n": 150,
+    "resultado": {
+      "ok": 70,
+      "error_menor": 17,
+      "error_grave": 63
+    },
+    "error_grave_pct": 0.42,
+    "metodo": "muestra ampliada sobre el universo completo de conflictos, revisada caso por caso por un revisor humano externo; calibracion, no validacion externa independiente",
+    "nota": "No debe mezclarse con la muestra historica de 50/63, que estaba sesgada hacia documentos ya senalados para revision."
+  },
+  "fix_1a": {
+    "warehouse_sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+    "detector_version": "exact_substring_v1",
+    "backing_scope": "document_level_case_mention_without_project_link",
+    "conflicts_total": 839,
+    "conflicts_with_backing": 331,
+    "conflicts_without_backing": 508,
+    "conflict_evidence_backing_rows": 613,
+    "conflict_evidence_backing_detected_raw": 614,
+    "coverage_backing": {
+      "total": 281,
+      "parcial": 50,
+      "ninguna": 508
+    },
+    "conflicts_with_ambiguous_multi_case_backing": 114,
+    "report": "audit/conflict_evidence_backing_report.json",
+    "status": "implementacion_reconstruida; validacion_holdout_pendiente"
   }
 }

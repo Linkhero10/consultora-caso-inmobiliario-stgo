@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-09-21",
+  "generated_at": "2026-09-22",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "84f5cb8c2b799c2445b1dfb65c290680feadfe5a5bf80e8d5637cb547b11f450",
+    "sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
@@ -15,7 +15,15 @@
       "conflict_relation": 3,
       "actor_registry": 6,
       "actor_alias": 29,
-      "actor_event_project_link": 17227
+      "actor_event_project_link": 17227,
+      "conflict_evidence_backing": 613,
+      "conflict_evidence_backing_detected_raw": 614,
+      "conflicts_evidence_backed": 331,
+      "conflicts_without_exact_backing": 508,
+      "conflicts_backing_total": 281,
+      "conflicts_backing_partial": 50,
+      "conflicts_backing_none": 508,
+      "conflicts_with_ambiguous_multi_case_backing": 114
     }
   },
   "tests": {
@@ -23,5 +31,12 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "el conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui"
   },
-  "note": "build_commit se actualiza en cada release etiquetada; ver el historial de commits de main para la version exacta que produjo este manifiesto."
+  "fix_1a": {
+    "detector_version": "exact_substring_v1",
+    "backing_scope": "document_level_case_mention_without_project_link",
+    "audit_report": "audit/conflict_evidence_backing_report.json",
+    "note": "La cobertura total/parcial/ninguna y la ambiguedad multi-caso son campos derivados del warehouse vigente; no implican un vinculo directo proyecto-case_mention."
+  },
+  "build_commit": "working-tree-fix1a-coverage-20260922",
+  "note": "Este manifiesto describe el working tree posterior a Fix 1A; el commit de release se anadira despues de la suite completa y la validacion del gate."
 }

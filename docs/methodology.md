@@ -44,6 +44,20 @@ exigen `role IN ('focal', 'co_focal')`. Las vistas `_extended` agregan `contextu
 análisis de sensibilidad. Nunca se usa `mentioned_unreviewed` ni `panoramic_mention` como evidencia
 de que un conflicto es real.
 
+## Respaldo documental de proyecto (Fix 1A)
+
+La vista conservadora exige una cita `objeto` verificada cuyo texto contenga el nombre
+normalizado del proyecto (`exact_substring_v1`) y que provenga de un documento con al menos una
+mención incluida. La tabla `conflict_evidence_backing` conserva la cadena completa hasta la cita.
+
+El esquema actual no vincula afirmativamente cada proyecto con un `case_mention` específico dentro
+de documentos que contienen varios casos. Por eso el respaldo se etiqueta con
+`backing_scope=document_level_case_mention_without_project_link` y se marca
+`ambiguous_multi_case_document=1` cuando hay más de una mención incluida con evidencia de objeto.
+Esto es una señal de calidad y no una adjudicación directa ni una prueba de que los demás proyectos
+del documento sean parte del mismo conflicto. La cobertura por conflicto se informa como `total`,
+`parcial` o `ninguna`; la ausencia de respaldo no equivale a falsedad.
+
 ## Por qué existe el gate: lo que encontró la validación
 
 Una muestra aleatoria de 50 documentos enriquecidos, revisada caso por caso, encontró **24% de
