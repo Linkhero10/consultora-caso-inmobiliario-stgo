@@ -1,0 +1,110 @@
+{
+  "artifact_version": "gate1a-validacion-crosswalk-v1",
+  "reviewer": "revisor humano externo (revision ciega, independencia verificada 150/150 IDs de calibracion excluidos)",
+  "warehouse_sha256_at_holdout_generation": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+  "warehouse_sha256_at_crosswalk": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+  "main_n100": {
+    "verdict_counts": {
+      "correcto": 52,
+      "error_menor": 4,
+      "error_grave": 37,
+      "no_verificable": 7
+    },
+    "error_grave": {
+      "tp": 36,
+      "fp": 29,
+      "fn": 1,
+      "tn": 34,
+      "n": 100,
+      "precision": 0.554,
+      "recall": 0.973,
+      "precision_ci95": [
+        0.433,
+        0.668
+      ],
+      "recall_ci95": [
+        0.862,
+        0.995
+      ]
+    },
+    "target_categories": {
+      "tp": 29,
+      "fp": 36,
+      "fn": 1,
+      "tn": 34,
+      "n": 100,
+      "precision": 0.446,
+      "recall": 0.967,
+      "precision_ci95": [
+        0.332,
+        0.567
+      ],
+      "recall_ci95": [
+        0.833,
+        0.994
+      ]
+    },
+    "note": "Muestreo aleatorio simple del universo completo tras excluir los 150 IDs de calibracion. Estas cifras SI estiman desempeno poblacional fuera de muestra."
+  },
+  "stress_n50": {
+    "verdict_counts": {
+      "correcto": 14,
+      "error_menor": 2,
+      "error_grave": 28,
+      "no_verificable": 6
+    },
+    "error_grave": {
+      "tp": 28,
+      "fp": 22,
+      "fn": 0,
+      "tn": 0,
+      "n": 50,
+      "precision": 0.56,
+      "recall": 1.0,
+      "precision_ci95": [
+        0.423,
+        0.688
+      ],
+      "recall_ci95": [
+        0.879,
+        1.0
+      ]
+    },
+    "target_categories": {
+      "tp": 23,
+      "fp": 27,
+      "fn": 0,
+      "tn": 0,
+      "n": 50,
+      "precision": 0.46,
+      "recall": 1.0,
+      "precision_ci95": [
+        0.33,
+        0.596
+      ],
+      "recall_ci95": [
+        0.857,
+        1.0
+      ]
+    },
+    "note": "Muestra dirigida (100% sin_respaldo_exact_quote_detectado por diseno) -- FN/TN estructuralmente 0. NO usar para estimar desempeno poblacional; sirve solo para auditar el lado debil del detector (precision entre los marcados sin respaldo)."
+  },
+  "calibration_n150_for_comparison": {
+    "error_grave": {
+      "tp": 49,
+      "fp": 27,
+      "fn": 14,
+      "tn": 60,
+      "precision": 0.645,
+      "recall": 0.778
+    },
+    "target_categories": {
+      "tp": 44,
+      "fp": 32,
+      "fn": 4,
+      "tn": 70,
+      "precision": 0.579,
+      "recall": 0.917
+    }
+  }
+}

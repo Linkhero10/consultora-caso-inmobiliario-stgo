@@ -58,6 +58,19 @@
     },
     "conflicts_with_ambiguous_multi_case_backing": 114,
     "report": "audit/conflict_evidence_backing_report.json",
-    "status": "implementacion_reconstruida; validacion_holdout_pendiente"
+    "status": "gate_1a_validacion_go"
+  },
+  "gate_1a_validacion": {
+    "holdout_main_n": 100,
+    "holdout_stress_n": 50,
+    "independencia_verificada": "0% de solapamiento con los 150 IDs de calibracion, confirmado por interseccion de conjuntos y reproducido de forma independiente por el revisor externo",
+    "resultado_main_error_grave": {"tp": 36, "fp": 29, "fn": 1, "tn": 34, "precision": 0.554, "recall": 0.973, "precision_ci95": [0.433, 0.668], "recall_ci95": [0.862, 0.995]},
+    "resultado_main_target_categories": {"tp": 29, "fp": 36, "fn": 1, "tn": 34, "precision": 0.446, "recall": 0.967, "precision_ci95": [0.332, 0.567], "recall_ci95": [0.833, 0.994]},
+    "resultado_stress_error_grave": {"tp": 28, "fp": 22, "fn": 0, "tn": 0, "precision": 0.56, "recall": 1.0, "nota": "muestra dirigida, no poblacional"},
+    "resultado_stress_target_categories": {"tp": 23, "fp": 27, "fn": 0, "tn": 0, "precision": 0.46, "recall": 1.0, "nota": "muestra dirigida, no poblacional"},
+    "interpretacion": "Recall fuera de muestra igual o mayor que en calibracion; precision moderada, con intervalo de confianza que incluye o casi incluye la cifra de calibracion. No hay evidencia de que el detector se comporte peor fuera de muestra.",
+    "decision": "GO",
+    "detalle": "audit/holdout_1a/GATE_1A_VALIDACION_DECISION.md",
+    "crosswalk": "audit/holdout_1a/gate1a_validacion_crosswalk.json"
   }
 }

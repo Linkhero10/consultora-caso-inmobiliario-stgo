@@ -16,6 +16,40 @@ varias correspondencias inequívocas dentro de un mismo documento.
 
 El módulo no modifica ningún warehouse: sus funciones son puras y el script
 de integración que las consume escribe una copia de auditoría separada.
+
+## Caso Villa Francia y especificación de v2 (2026-09-22, revisión externa)
+
+Una primera ronda de revisión externa había marcado el proyecto "Villa
+Francia" (conflict:26e80bf2138c5ef722b2ab10) como `respaldo_directo` citando
+una equivalencia semántica ("una iniciativa que brindaría un espacio seguro a
+los niños y jóvenes"). Verificado contra el warehouse real: esa cita
+pertenece a una `case_mention` con `decision_final_amplio='exclude'` y no
+contiene el nombre del proyecto ni literal ni parcialmente. La revisión
+externa se retractó explícitamente de ese veredicto tras ver este detalle,
+confirmando que el código actual (`document_level_candidate` para este caso,
+sin excepción) ya se comporta correctamente -- no se requirió ningún cambio
+de lógica.
+
+De esa retractación salió una especificación explícita para una futura v2
+(NO implementada, solo documentada aquí para cuando se decida construirla):
+
+- Hard gates (deben cumplirse TODOS antes de evaluar cualquier equivalencia
+  no literal): `case_mention.decision_final_amplio == 'include'`,
+  `evidence.verified == 1`, `evidence.quote_role == 'objeto'`,
+  `evidence.case_mention_id == case_mention.case_mention_id`, proyecto y
+  case_mention en el mismo `document_id`. Un `exclude` bloquea la promoción
+  sin excepción, sin importar la similitud semántica.
+- Solo tras pasar los hard gates, una equivalencia no literal (nombre
+  descriptivo/paráfrasis en vez del nombre exacto) podría promoverse
+  automáticamente cuando exista **alias/sigla controlada y versionada, O al
+  menos dos anclas independientes concordantes** (dirección/localización
+  distintiva, alias/sigla registrada, actor/desarrollador distintivo,
+  atributo estructural único combinado con geografía, identificador
+  administrativo/legal), todas dentro de la misma `case_mention`. Nunca
+  aceptar "similitud semántica" o un embedding como evidencia suficiente por
+  sí solos -- pueden proponer candidatos para revisión humana, nunca
+  promover automáticamente.
+- Detalle completo: `Auditoria/PARA_SOL_project_case_mention_v1/sol_villa_francia_regla_v2.json`.
 """
 
 from __future__ import annotations
