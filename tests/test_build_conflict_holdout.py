@@ -1,8 +1,12 @@
 import json
 import sqlite3
+import sys
 from pathlib import Path
 
-from src.build_conflict_holdout import DETECTOR_FIELDS, _assert_blind, build_package
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
+sys.path.insert(0, str(SCRIPT_DIR))
+
+from build_conflict_holdout import DETECTOR_FIELDS, _assert_blind, build_package  # noqa: E402
 
 
 def _fixture_db(path: Path) -> None:
