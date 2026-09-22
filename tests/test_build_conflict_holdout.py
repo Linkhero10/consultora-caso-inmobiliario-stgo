@@ -48,7 +48,13 @@ def test_candidate_is_marked_unverified_without_calibration_ids(tmp_path):
     db = tmp_path / "warehouse.sqlite"
     _fixture_db(db)
     output = tmp_path / "audit"
-    manifest = build_package(warehouse=db, output_dir=output, main_n=10, stress_n=5)
+    # Ruta explicita que NO existe -- nunca depender del archivo real del
+    # proyecto (audit/holdout_1a/calibration_conflict_ids.txt), que puede
+    # estar poblado con los 150 IDs reales y romper este test en silencio.
+    missing_calibration_ids = tmp_path / "no_calibration_ids.txt"
+    manifest = build_package(
+        warehouse=db, output_dir=output, main_n=10, stress_n=5, calibration_ids_path=missing_calibration_ids
+    )
     assert manifest["status"] == "candidate_independence_unverified"
     assert manifest["calibration_exclusion"]["independence_verified"] is False
     main = json.loads((output / "holdout_main_n100.json").read_text(encoding="utf-8"))

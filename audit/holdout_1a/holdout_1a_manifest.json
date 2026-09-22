@@ -1,6 +1,6 @@
 {
   "artifact_version": "fix1a-holdout-v1",
-  "status": "candidate_independence_unverified",
+  "status": "ready_for_external_review",
   "blind": true,
   "model_labels_used": false,
   "detector_fields_excluded": [
@@ -24,20 +24,20 @@
   "main": {
     "n": 100,
     "method": "simple_random_sample_without_replacement_after_calibration_exclusion",
-    "ids_sha256": "c0f58b69295a78eadfe6107a582dbd9e198fb6ebeb6f1d7f96f55aa5bef2d7ad",
+    "ids_sha256": "7531fdb6e91766474e32bb0ed51844c94933ef25afdc36a2434df1020eaded83",
     "path": "audit\\holdout_1a\\holdout_main_n100.json"
   },
   "stress": {
     "n": 50,
     "method": "directed_stress_sample; reported_separately",
-    "ids_sha256": "0f5ac90e85159a6f67350c145f0db621cf46ffedd25af7bb271554e0ec4bf172",
+    "ids_sha256": "1ae18e34ea87c89082047b588d2b8c2a0c7cb8484251ab435b272702b993ddd3",
     "path": "audit\\holdout_1a\\stress_sample_n50.json"
   },
   "calibration_exclusion": {
     "path": "audit\\holdout_1a\\calibration_conflict_ids.txt",
-    "ids_present": 0,
+    "ids_present": 150,
     "required": 150,
-    "independence_verified": false,
+    "independence_verified": true,
     "note": "Sin los 150 IDs durables, el paquete es candidato reproducible pero no puede presentarse como validacion externa."
   },
   "generated_without_api": true
