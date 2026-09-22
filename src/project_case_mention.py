@@ -5,9 +5,11 @@
 La tabla histórica ``project_mention_resolved`` solo identifica que un
 proyecto apareció en un documento. Este módulo agrega una capa candidata que
 exige una cita de objeto verificada y una única ``case_mention`` incluida para
-considerar que el enlace es directo. Los documentos con varias menciones
-compatibles se conservan como ``ambiguous_direct`` y nunca se promueven
-silenciosamente a respaldo.
+considerar que el enlace es directo **según la regla automática v1**. Los
+documentos con varias menciones compatibles se conservan como
+``ambiguous_direct`` y nunca se promueven silenciosamente a respaldo. Esta
+regla no pretende ser la definición final: una futura v2 podría resolver
+varias correspondencias inequívocas dentro de un mismo documento.
 
 El módulo no modifica ningún warehouse: sus funciones son puras y el script
 de integración que las consume escribe una copia de auditoría separada.
@@ -64,10 +66,12 @@ def build_project_case_mention_links(
 ) -> list[dict[str, Any]]:
     """Devuelve enlaces directos y estados de ambigüedad deterministas.
 
-    ``verified_direct`` solo aparece cuando exactamente una mención incluida
-    del documento tiene una cita de objeto verificada que contiene (o está
-    contenida por) un nombre/alias del proyecto. Un match en una mención
-    excluida nunca se considera respaldo.
+    ``verified_direct`` es un estado automático conservador de v1: solo
+    aparece cuando exactamente una mención incluida del documento tiene una
+    cita de objeto verificada que contiene (o está contenida por) un
+    nombre/alias del proyecto. Un match en una mención excluida nunca se
+    considera respaldo. Que v1 no resuelva un documento multi-caso no implica
+    que la relación sea imposible para una revisión humana o una v2.
     """
     project_aliases = project_aliases or {}
     cms_by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
