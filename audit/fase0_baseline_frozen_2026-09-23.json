@@ -1,0 +1,440 @@
+{
+  "descripcion": "Fase 0 (congelar baseline) del diseno de atribucion geografica case_mention-level, propuesto por revision externa y aceptado para prototipo aislado. No modifica warehouse ni dashboard.",
+  "hashes": {
+    "warehouse.sqlite": "673a433398b46e320dd48dfffb72f46f10f29936e2bd3bc0ed9047761fea0d08",
+    "src/project_case_mention.py": "9dd224e8b020ceed51e15a76cd486ecc5b7062d743202833357dc3af32047474",
+    "src/dashboard_data.py": "eba6135b934c7463a34ed2ab16b5fe2fbfaa47ab40a4aae6e3fe10f5eb60fc18"
+  },
+  "metodo_version": "verified_object_quote_exact_substring_v1 (congelado -- ver docstring de src/project_case_mention.py)",
+  "linker_output": {
+    "n_rows_total": 1481,
+    "sha256_output_completo": "184ce7a872554497afc835e27efb258ac9c511309b967dd2c31cd6904188add3",
+    "resumen_por_link_status": {
+      "verified_direct": 562,
+      "excluded_case_mention": 186,
+      "document_level_candidate": 638,
+      "ambiguous_direct": 57,
+      "non_included_case_mention": 38
+    },
+    "archivo_jsonl": "audit/fase0_project_case_mention_links_full_2026-09-23.jsonl"
+  },
+  "reconstruccion_blind_spot_desde_este_snapshot": {
+    "n_documentos_comuna_unica": 1613,
+    "n_pares_unicos_documento_proyecto_sospechosos": 118,
+    "n_comunas_afectadas": 19,
+    "total_pares_removidos": 90
+  },
+  "coincide_con_informe_previo_2026-09-23": true,
+  "informe_previo_referenciado": "audit/geografia_blind_spot_comuna_unica_2026-09-23.json",
+  "detalle_por_comuna_recalculado": [
+    {
+      "codigo_comuna_ine": "13114",
+      "n_projects_antes": 82,
+      "n_projects_despues": 71,
+      "delta": 11
+    },
+    {
+      "codigo_comuna_ine": "13106",
+      "n_projects_antes": 87,
+      "n_projects_despues": 76,
+      "delta": 11
+    },
+    {
+      "codigo_comuna_ine": "13101",
+      "n_projects_antes": 37,
+      "n_projects_despues": 27,
+      "delta": 10
+    },
+    {
+      "codigo_comuna_ine": "13102",
+      "n_projects_antes": 30,
+      "n_projects_despues": 22,
+      "delta": 8
+    },
+    {
+      "codigo_comuna_ine": "13115",
+      "n_projects_antes": 43,
+      "n_projects_despues": 36,
+      "delta": 7
+    },
+    {
+      "codigo_comuna_ine": "13132",
+      "n_projects_antes": 59,
+      "n_projects_despues": 53,
+      "delta": 6
+    },
+    {
+      "codigo_comuna_ine": "13107",
+      "n_projects_antes": 34,
+      "n_projects_despues": 29,
+      "delta": 5
+    },
+    {
+      "codigo_comuna_ine": "13118",
+      "n_projects_antes": 15,
+      "n_projects_despues": 10,
+      "delta": 5
+    },
+    {
+      "codigo_comuna_ine": "13120",
+      "n_projects_antes": 52,
+      "n_projects_despues": 48,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13124",
+      "n_projects_antes": 52,
+      "n_projects_despues": 48,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13125",
+      "n_projects_antes": 25,
+      "n_projects_despues": 21,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13123",
+      "n_projects_antes": 43,
+      "n_projects_despues": 40,
+      "delta": 3
+    },
+    {
+      "codigo_comuna_ine": "13119",
+      "n_projects_antes": 29,
+      "n_projects_despues": 26,
+      "delta": 3
+    },
+    {
+      "codigo_comuna_ine": "13110",
+      "n_projects_antes": 42,
+      "n_projects_despues": 40,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13122",
+      "n_projects_antes": 25,
+      "n_projects_despues": 23,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13113",
+      "n_projects_antes": 18,
+      "n_projects_despues": 16,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13128",
+      "n_projects_antes": 10,
+      "n_projects_despues": 9,
+      "delta": 1
+    },
+    {
+      "codigo_comuna_ine": "13130",
+      "n_projects_antes": 12,
+      "n_projects_despues": 11,
+      "delta": 1
+    },
+    {
+      "codigo_comuna_ine": "13127",
+      "n_projects_antes": 23,
+      "n_projects_despues": 22,
+      "delta": 1
+    }
+  ],
+  "territorios_baseline_actual": {
+    "sha256": "18b4f4a9538ceb8fe6dfa776010261ea469b0af940e3d714ea76a47276a441c2",
+    "n_comunas": 32,
+    "datos": [
+      {
+        "codigo_comuna_ine": "13102",
+        "comuna": "CERRILLOS",
+        "n_conflicts_total": 9,
+        "n_conflicts_backed": 9,
+        "n_projects": 30,
+        "n_documents": 57,
+        "n_actors": 113
+      },
+      {
+        "codigo_comuna_ine": "13103",
+        "comuna": "CERRO NAVIA",
+        "n_conflicts_total": 0,
+        "n_conflicts_backed": 0,
+        "n_projects": 0,
+        "n_documents": 22,
+        "n_actors": 0
+      },
+      {
+        "codigo_comuna_ine": "13104",
+        "comuna": "CONCHALÍ",
+        "n_conflicts_total": 6,
+        "n_conflicts_backed": 3,
+        "n_projects": 10,
+        "n_documents": 21,
+        "n_actors": 56
+      },
+      {
+        "codigo_comuna_ine": "13105",
+        "comuna": "EL BOSQUE",
+        "n_conflicts_total": 0,
+        "n_conflicts_backed": 0,
+        "n_projects": 0,
+        "n_documents": 2,
+        "n_actors": 0
+      },
+      {
+        "codigo_comuna_ine": "13106",
+        "comuna": "ESTACIÓN CENTRAL",
+        "n_conflicts_total": 17,
+        "n_conflicts_backed": 10,
+        "n_projects": 87,
+        "n_documents": 197,
+        "n_actors": 595
+      },
+      {
+        "codigo_comuna_ine": "13107",
+        "comuna": "HUECHURABA",
+        "n_conflicts_total": 9,
+        "n_conflicts_backed": 8,
+        "n_projects": 34,
+        "n_documents": 52,
+        "n_actors": 142
+      },
+      {
+        "codigo_comuna_ine": "13108",
+        "comuna": "INDEPENDENCIA",
+        "n_conflicts_total": 4,
+        "n_conflicts_backed": 3,
+        "n_projects": 6,
+        "n_documents": 31,
+        "n_actors": 78
+      },
+      {
+        "codigo_comuna_ine": "13109",
+        "comuna": "LA CISTERNA",
+        "n_conflicts_total": 3,
+        "n_conflicts_backed": 3,
+        "n_projects": 3,
+        "n_documents": 30,
+        "n_actors": 35
+      },
+      {
+        "codigo_comuna_ine": "13110",
+        "comuna": "LA FLORIDA",
+        "n_conflicts_total": 23,
+        "n_conflicts_backed": 13,
+        "n_projects": 42,
+        "n_documents": 81,
+        "n_actors": 195
+      },
+      {
+        "codigo_comuna_ine": "13111",
+        "comuna": "LA GRANJA",
+        "n_conflicts_total": 1,
+        "n_conflicts_backed": 1,
+        "n_projects": 1,
+        "n_documents": 7,
+        "n_actors": 25
+      },
+      {
+        "codigo_comuna_ine": "13112",
+        "comuna": "LA PINTANA",
+        "n_conflicts_total": 2,
+        "n_conflicts_backed": 1,
+        "n_projects": 7,
+        "n_documents": 28,
+        "n_actors": 50
+      },
+      {
+        "codigo_comuna_ine": "13113",
+        "comuna": "LA REINA",
+        "n_conflicts_total": 7,
+        "n_conflicts_backed": 6,
+        "n_projects": 18,
+        "n_documents": 26,
+        "n_actors": 91
+      },
+      {
+        "codigo_comuna_ine": "13114",
+        "comuna": "LAS CONDES",
+        "n_conflicts_total": 35,
+        "n_conflicts_backed": 23,
+        "n_projects": 82,
+        "n_documents": 107,
+        "n_actors": 409
+      },
+      {
+        "codigo_comuna_ine": "13115",
+        "comuna": "LO BARNECHEA",
+        "n_conflicts_total": 15,
+        "n_conflicts_backed": 11,
+        "n_projects": 43,
+        "n_documents": 81,
+        "n_actors": 232
+      },
+      {
+        "codigo_comuna_ine": "13116",
+        "comuna": "LO ESPEJO",
+        "n_conflicts_total": 1,
+        "n_conflicts_backed": 1,
+        "n_projects": 1,
+        "n_documents": 7,
+        "n_actors": 7
+      },
+      {
+        "codigo_comuna_ine": "13117",
+        "comuna": "LO PRADO",
+        "n_conflicts_total": 0,
+        "n_conflicts_backed": 0,
+        "n_projects": 0,
+        "n_documents": 6,
+        "n_actors": 6
+      },
+      {
+        "codigo_comuna_ine": "13118",
+        "comuna": "MACUL",
+        "n_conflicts_total": 6,
+        "n_conflicts_backed": 4,
+        "n_projects": 15,
+        "n_documents": 33,
+        "n_actors": 69
+      },
+      {
+        "codigo_comuna_ine": "13119",
+        "comuna": "MAIPÚ",
+        "n_conflicts_total": 11,
+        "n_conflicts_backed": 8,
+        "n_projects": 29,
+        "n_documents": 70,
+        "n_actors": 151
+      },
+      {
+        "codigo_comuna_ine": "13121",
+        "comuna": "PEDRO AGUIRRE CERDA",
+        "n_conflicts_total": 2,
+        "n_conflicts_backed": 0,
+        "n_projects": 9,
+        "n_documents": 13,
+        "n_actors": 39
+      },
+      {
+        "codigo_comuna_ine": "13122",
+        "comuna": "PEÑALOLÉN",
+        "n_conflicts_total": 14,
+        "n_conflicts_backed": 12,
+        "n_projects": 25,
+        "n_documents": 77,
+        "n_actors": 211
+      },
+      {
+        "codigo_comuna_ine": "13123",
+        "comuna": "PROVIDENCIA",
+        "n_conflicts_total": 18,
+        "n_conflicts_backed": 15,
+        "n_projects": 43,
+        "n_documents": 71,
+        "n_actors": 172
+      },
+      {
+        "codigo_comuna_ine": "13124",
+        "comuna": "PUDAHUEL",
+        "n_conflicts_total": 11,
+        "n_conflicts_backed": 8,
+        "n_projects": 52,
+        "n_documents": 59,
+        "n_actors": 168
+      },
+      {
+        "codigo_comuna_ine": "13125",
+        "comuna": "QUILICURA",
+        "n_conflicts_total": 12,
+        "n_conflicts_backed": 7,
+        "n_projects": 25,
+        "n_documents": 52,
+        "n_actors": 154
+      },
+      {
+        "codigo_comuna_ine": "13126",
+        "comuna": "QUINTA NORMAL",
+        "n_conflicts_total": 4,
+        "n_conflicts_backed": 3,
+        "n_projects": 7,
+        "n_documents": 19,
+        "n_actors": 28
+      },
+      {
+        "codigo_comuna_ine": "13127",
+        "comuna": "RECOLETA",
+        "n_conflicts_total": 8,
+        "n_conflicts_backed": 4,
+        "n_projects": 23,
+        "n_documents": 59,
+        "n_actors": 148
+      },
+      {
+        "codigo_comuna_ine": "13128",
+        "comuna": "RENCA",
+        "n_conflicts_total": 4,
+        "n_conflicts_backed": 4,
+        "n_projects": 10,
+        "n_documents": 38,
+        "n_actors": 38
+      },
+      {
+        "codigo_comuna_ine": "13129",
+        "comuna": "SAN JOAQUÍN",
+        "n_conflicts_total": 2,
+        "n_conflicts_backed": 2,
+        "n_projects": 5,
+        "n_documents": 20,
+        "n_actors": 34
+      },
+      {
+        "codigo_comuna_ine": "13130",
+        "comuna": "SAN MIGUEL",
+        "n_conflicts_total": 3,
+        "n_conflicts_backed": 3,
+        "n_projects": 12,
+        "n_documents": 32,
+        "n_actors": 84
+      },
+      {
+        "codigo_comuna_ine": "13131",
+        "comuna": "SAN RAMÓN",
+        "n_conflicts_total": 1,
+        "n_conflicts_backed": 1,
+        "n_projects": 1,
+        "n_documents": 12,
+        "n_actors": 11
+      },
+      {
+        "codigo_comuna_ine": "13101",
+        "comuna": "SANTIAGO",
+        "n_conflicts_total": 15,
+        "n_conflicts_backed": 11,
+        "n_projects": 37,
+        "n_documents": 77,
+        "n_actors": 194
+      },
+      {
+        "codigo_comuna_ine": "13132",
+        "comuna": "VITACURA",
+        "n_conflicts_total": 26,
+        "n_conflicts_backed": 17,
+        "n_projects": 59,
+        "n_documents": 90,
+        "n_actors": 265
+      },
+      {
+        "codigo_comuna_ine": "13120",
+        "comuna": "ÑUÑOA",
+        "n_conflicts_total": 18,
+        "n_conflicts_backed": 14,
+        "n_projects": 52,
+        "n_documents": 136,
+        "n_actors": 376
+      }
+    ]
+  },
+  "nota": "Este baseline se usa en Fase 2 (integracion no productiva) para verificar que SOLO n_projects cambia y que n_conflicts/n_conflicts_backed/n_documents/n_actors quedan identicos."
+}

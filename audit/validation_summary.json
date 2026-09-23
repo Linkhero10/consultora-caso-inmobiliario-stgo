@@ -161,9 +161,10 @@
     "descripcion": "Diagnostico (Claude Sonnet 5) del blind spot estructural NO protegido por _document_single_comuna: documentos con comuna unica resuelta que mencionan de pasada un proyecto sin respaldo real ahi.",
     "medicion": "1613 documentos con comuna unica; 118 pares unicos (documento,proyecto) sospechosos; 19/29 comunas cambiarian su conteo de n_projects; 90 pares removidos en total si se filtra. n_conflicts/n_conflicts_backed NO afectados (ya protegidos).",
     "detalle_medicion": "audit/geografia_blind_spot_comuna_unica_2026-09-23.json",
-    "propuesta_no_decidida": "Integrar project_case_mention.py como filtro de n_projects en dashboard_data.py -- ver Auditoria/DISENO_geografia_case_mention_level_2026-09-23/PROMPT_DISENO.md para el diagnostico completo y la propuesta.",
-    "status": "en_revision_externa -- el usuario pidio que otra IA de una propuesta de diseno independiente antes de implementar nada",
-    "nota": "Este bloque documenta el estado del DISENO, no una correccion aplicada -- no tocar warehouse ni codigo hasta decidir."
+    "propuesta_revisada_por_ia_externa": "audit/project_case_mention_geography_design_2026-09-23.md (revision externa, verificada por Claude Sonnet 5 -- hashes, conteos SQL y 3 gaps de codigo confirmados exactos). Recomienda atribucion compuesta en 2 etapas (project->case_mention->comuna) en vez del filtro minimo original, con plan de 4 fases. Gate: implementar_con_cambios como prototipo aislado y reversible.",
+    "fase_0_congelar_baseline": "COMPLETA (2026-09-23). Baseline congelado en audit/fase0_baseline_frozen_2026-09-23.json + audit/fase0_project_case_mention_links_full_2026-09-23.jsonl (1481 filas del linker, hash del output completo). Reconstruccion del blind spot desde este snapshot coincide exacto con el informe previo (118 pares, 19 comunas, 90 removidos). Incluye baseline real de dashboard_data.build_territories() (n_conflicts_total/n_conflicts_backed/n_projects/n_documents/n_actors por las 29 comunas) para comparar en Fase 2.",
+    "status": "fase_0_completa -- pendiente fase 1 (tests unitarios del linker con los 3 gaps identificados) antes de integracion no productiva",
+    "nota": "Este bloque documenta el estado del DISENO, no una correccion aplicada -- no se toco warehouse ni codigo productivo (dashboard_data.py, project_case_mention.py) en esta fase."
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
