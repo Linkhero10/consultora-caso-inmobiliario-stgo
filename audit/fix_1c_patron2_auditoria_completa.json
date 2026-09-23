@@ -1,0 +1,52 @@
+{
+  "metodologia": "nombre_proyecto de documentos focales/co-focales caso_unico sin coincidencia de substring literal en ninguna cita objeto verificada e incluida del mismo documento",
+  "total_documentos_focales_con_nombre_proyecto": 551,
+  "total_candidatos_sin_match_literal": 204,
+  "tier_a_cero_solapamiento_tokens": {
+    "n": 128,
+    "revisados_individualmente": 128,
+    "resultado": {
+      "bien_fundado": 123,
+      "no_concluyente": 1,
+      "posible_error": 4
+    },
+    "casos_posible_error_confirmados_y_corregidos": [
+      {
+        "document_id": "5d2f0680d21e1061790de468589132de52ff9cffd576ecee2fb4c0ad6b070f47",
+        "nombre_proyecto": "Templo votivo",
+        "veredicto": "posible_error",
+        "justificacion": "El claim incluido como evidencia dice explícitamente que 'el caso principal es la aprobación del nuevo PRC de Maipú y sus restricciones a la altura, densidad y tipologías de edificación'; el Templo Votivo es solo un hito religioso usado como referencia en el titular ('nada superará al Templo Votivo'), no un proyecto inmobiliario en disputa. El objeto real del documento es el Plan Regulador Comunal, no 'Templo votivo'.",
+        "confianza": "alta"
+      },
+      {
+        "document_id": "2cb01a7a9e863f52c401b8f98df2af848a01c9b2d3354ee8dcc3a22554714db2",
+        "nombre_proyecto": "Liceo Reino de Dinamarca",
+        "veredicto": "posible_error",
+        "justificacion": "El conflicto real, según explicacion_tipo_conflicto y el claim incluido, son las faenas mineras de la empresa Imperial SPA que generan polvo con cuarzo en Rinconada Rural; el Liceo Reino de Dinamarca es solo el establecimiento escolar afectado (suspensión de clases), no el proyecto/objeto en disputa. tipo_objeto_norm='proyecto_industrial' tampoco corresponde a un liceo.",
+        "confianza": "alta"
+      },
+      {
+        "document_id": "b243ca1d3dd9948c4e15a7f8c41da3b3f10730236af8714d62cf942a16712523",
+        "nombre_proyecto": "Hotel Sheraton San Cristóbal",
+        "veredicto": "posible_error",
+        "justificacion": "El claim que menciona el 'Caso Hotel Sheraton San Cristóbal' fue explícitamente EXCLUIDO como evidencia ('el hotel es citado únicamente... la fuente no documenta su conflicto específico'). El único claim incluido es sobre el reclamo de ENACO contra el nuevo PRC de Lo Barnechea, un caso distinto en el que el hotel solo aparece como antecedente citado de pasada.",
+        "confianza": "alta"
+      },
+      {
+        "document_id": "fb31947ee71b5386e1bcde4fa1b37570a867232120537d317dfdf5ad52249b76",
+        "nombre_proyecto": "casona de calle Huérfanos",
+        "veredicto": "posible_error",
+        "justificacion": "El claim sobre la casona específica (arrendada por Boric) fue EXCLUIDO por no documentar disputa inmobiliaria alguna. El único claim INCLUIDO como evidencia trata de la protección patrimonial general del barrio Yungay en 2009, sin vincularse a esa casona en particular -- mismo patrón que el caso Hospital Ochagavía: nombre de proyecto ligado a evidencia que en realidad describe otro objeto (el barrio, no la casona).",
+        "confianza": "alta"
+      }
+    ]
+  },
+  "tier_b_algun_solapamiento_tokens": {
+    "n": 76,
+    "revisados_individualmente": 2,
+    "nota": "Los 2 de menor solapamiento (<0.2) se revisaron y resultaron bien fundados. Los 74 restantes tienen solapamiento >=0.2 (al menos una palabra clave distintiva coincide) y no se revisaron caso por caso -- el patron observado en los revisados sugiere que son en su mayoria nombres descriptivos legitimos, no fabricaciones, pero esto queda como supuesto razonable, no como verificacion exhaustiva.",
+    "resultado_de_los_2_revisados": {
+      "bien_fundado": 2
+    }
+  }
+}

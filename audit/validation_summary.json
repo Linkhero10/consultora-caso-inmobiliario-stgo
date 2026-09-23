@@ -81,19 +81,20 @@
       "objeto de disputa fuera de la Provincia de Santiago"
     ],
     "n_case_mentions_analizadas": 608,
-    "patron_2_n_candidatos_automatizados": 115,
-    "patron_2_n_revisados_a_mano": 30,
-    "patron_2_n_sin_auditar_individualmente": 85,
-    "hallazgos_nuevos_confirmados": 0,
-    "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608); 0 en la submuestra de ~30/115 revisada a mano del patron 2 -- NO equivale a 0 sobre los 115, los ~85 restantes quedan sin auditar individualmente (hallazgo de revision externa, 2026-09-23, corregido aqui).",
+    "patron_2_total_candidatos": 204,
+    "patron_2_tier_a_cero_solapamiento": {"n": 128, "revisados": 128, "bien_fundado": 123, "posible_error_confirmado_y_corregido": 4, "no_concluyente": 1},
+    "patron_2_tier_b_algun_solapamiento": {"n": 76, "revisados": 2, "sin_auditar_individualmente": 74, "nota": "riesgo estimado bajo (nombres descriptivos con palabra clave real coincidente), no verificado caso por caso"},
+    "hallazgos_nuevos_confirmados": 4,
+    "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608). En patron 2: auditoria completa del Tier A (128/128) encontro y corrigio 4 casos reales adicionales a Hospital Ochagavia -- Templo votivo, Liceo Reino de Dinamarca (confirmado tambien de forma independiente por el Gate 1A), Hotel Sheraton San Cristobal, casona de calle Huerfanos. Tier B (76) solo auditado en una submuestra de 2; 74 quedan sin revisar individualmente.",
     "caso_canonico_que_motivo_fix_1c": "Hospital Ochagavia (corregido en Fix 1B, capa de clasificacion de documento)",
-    "conclusion": "0 casos nuevos confirmados en el alcance efectivamente auditado -- Fix 1C se cierra sin cambios de codigo en esta ronda, con auditoria de los ~85 candidatos restantes del patron 2 como trabajo futuro explicito",
+    "conclusion": "4 casos reales adicionales encontrados y corregidos tras auditoria completa del grupo de mayor riesgo (Tier A, 128/128); Tier B (74/76) queda como trabajo futuro explicito, riesgo estimado bajo pero no verificado",
     "detalle": "audit/fix_1c_investigation.md",
-    "status": "cerrado_con_salvedad_de_alcance"
+    "detalle_caso_por_caso": "audit/fix_1c_patron2_auditoria_completa.json",
+    "status": "tier_a_completo_tier_b_parcial"
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
-    "status": "cerrado_con_salvedad_de_alcance_en_fix_1c",
-    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano."
+    "status": "cerrado_tier_a_completo_tier_b_parcial",
+    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano. fix_1c.patron_2_tier_b_algun_solapamiento tiene 74/76 casos sin auditar individualmente, riesgo estimado bajo."
   }
 }

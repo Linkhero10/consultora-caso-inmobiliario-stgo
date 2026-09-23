@@ -1,0 +1,4017 @@
+[
+  {
+    "document_id": "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce",
+    "nombre_proyecto": "Terrazas del Valle",
+    "title": "14 edificios y dos centros comerciales: el megaproyecto inmobiliario de Schiess en “pausa” en Lo Barnechea - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/14-edificios-y-dos-centros-comerciales-el-megaproyecto-inmobiliario-de-schiess-en-pausa-en-lo-barnechea/7WFDO7MBGVH7TNTLWJJ7NH3W6M/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "terrazas",
+      "valle"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de “dos centros comerciales, cine, teatro, y 55 viviendas en una modalidad de condominio”",
+      "Se trata de 14 edificios con 112 departamentos",
+      "Conjunto Armónico Portezuelo de propiedad de la inmobiliaria PyG Larraín"
+    ]
+  },
+  {
+    "document_id": "1410ad1368098950b59f745acbe939bbc9493c6ad1006600c452676e6e3cdf32",
+    "nombre_proyecto": "Barrio Las Rejas",
+    "title": "Buscan declarar zona típica el barrio Las Rejas de Estación Central para evitar guetos verticales",
+    "url": "https://www.elmostrador.cl/cultura/2021/04/14/buscan-declarar-zona-tipica-el-barrio-las-rejas-de-estacion-central-para-evitar-guetos-verticales/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "barrio",
+      "rejas"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la declaratoria de zona típica del sector",
+      "impedir la expansión inmobiliaria de edificios que pudieran poner en peligro el valor del patrimonio material e inmaterial del territorio",
+      "el municipio intentó vender la villa a las inmobiliarias",
+      "para dar paso a los guetos verticales."
+    ]
+  },
+  {
+    "document_id": "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5",
+    "nombre_proyecto": "proyecto que levantará donde actualmente están las instalaciones de la Universidad Gabriela Mistral (UGM)",
+    "title": "Inmobiliaria Paz afina proyecto de uso mixto en terreno de la Universidad Gabriela Mistral | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/inmobiliaria-paz-afina-proyecto-de-uso-mixto-en-terreno-de-la",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "actualmente",
+      "donde",
+      "estan",
+      "gabriela",
+      "instalaciones",
+      "levantara",
+      "mistral",
+      "ugm",
+      "universidad"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "La inmobiliaria planea construir tres edificios de entre seis y 12 pisos de uso mixto, dos para viviendas y uno para oficinas; todos ellos contarán con locales comerciales en el primer piso.",
+      "la postergación de la construcción del nuevo Campus Huechuraba",
+      "impide en lo absoluto la concreción de dicho proyecto"
+    ]
+  },
+  {
+    "document_id": "25e6bd2d722a655dc15cfcf692eb9e91818854e252dc5ef4aa28c21cd5e6a857",
+    "nombre_proyecto": "New Vittorio",
+    "title": "New Vittorio: Corte valida cierre de bar y discoteca en Maipú",
+    "url": "https://lavozdemaipu.cl/new-vittorio-maipu-patente-alcoholes/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "new",
+      "vittorio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el titular del bar y discoteca",
+      "las tres patentes de alcoholes del establecimiento",
+      "una estructura —descrita como techumbre liviana— instalada sin permiso"
+    ]
+  },
+  {
+    "document_id": "3e88f2564cbf685c9329e1fb5e0bdc6cbab1269a0558a910d817fa59cfae832f",
+    "nombre_proyecto": "Portal La Florida",
+    "title": "Portal La Florida y los problemas con la Constructora Concreta S.A",
+    "url": "https://doble-espacio.uchile.cl/portal-la-florida-y-sus-problemas-con-la-constructora-concreta/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "florida",
+      "portal"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un proyecto habitacional compuesto por tres lotes y un gran número de departamentos",
+      "pasó a albergar una edificación de 460 departamentos",
+      "un pequeño pulmón verde de un tramo de Plaza Larraguibel o Parque Urbano"
+    ]
+  },
+  {
+    "document_id": "447d26e64ff2da081794413122f86fb2266e40b9181b7e847feca751bb6287b3",
+    "nombre_proyecto": "Hijuelas Quilín",
+    "title": "Luz verde a megaproyecto en Peñalolén: inmobiliaria y municipio sellan acuerdo y redefinen obra de US$ 350 millones | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/luz-verde-a-megaproyecto-en-penalolen-inmobiliaria-y-municipio-sellan",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "hijuelas",
+      "quilin"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Este desarrollo, que contempla 24 torres y un pequeño centro comercial",
+      "La propuesta consiste en reducir la altura de los edificios, que originalmente iban a tener 15, 12 y 11 pisos, a un máximo de nueve niveles.",
+      "Con esta modificación, se eliminan 54 unidades habitacionales."
+    ]
+  },
+  {
+    "document_id": "4f2ebe9f3f9d338e7ae1ec5c674565c45ef5bd869e3edeb4a8551d66f6873262",
+    "nombre_proyecto": "Conjunto Armónico Portezuelo",
+    "title": "Familia Larraín vuelve a la carga por millonario proyecto de torres en Lo Curro - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/familia-larrain-vuelve-a-la-carga-por-millonario-proyecto-de-torres-en-lo-curro/132025/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "armonico",
+      "conjunto",
+      "portezuelo"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Se trata de 15 edificios, con 2.955 estacionamientos,",
+      "hoy el proyecto es sólo residencial"
+    ]
+  },
+  {
+    "document_id": "8271ad5019e63a746b9f2eb978404459386ed1206057a30659b38f9b12dbe68a",
+    "nombre_proyecto": "Barrio Las Rejas",
+    "title": "Buscan declarar zona típica el barrio Las Rejas de Estación Central para evitar guetos verticales",
+    "url": "https://memoriasdechuchunco.cl/2021/05/05/buscan-declarar-zona-tipica-el-barrio-las-rejas-de-estacion-central-para-evitar-guetos-verticales/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "barrio",
+      "rejas"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "proyectos inmobiliarios que podrían afectar el patrimonio material, inmaterial y los estándares de vida de los vecinos",
+      "declaratoria de zona típica"
+    ]
+  },
+  {
+    "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+    "nombre_proyecto": "proyecto que impulsa la inmobiliaria Nueva El Golf",
+    "title": "Felipe Alessandri presenta recurso contra municipio de Lavín para defender su casa en el barrio donde vivió Pinochet",
+    "url": "https://www.elmostrador.cl/noticias/pais/2017/10/31/felipe-alessandri-presenta-recurso-contra-municipio-de-lavin-para-defender-su-casa-en-el-barrio-donde-vivio-pinochet/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "golf",
+      "impulsa",
+      "inmobiliaria",
+      "nueva"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el proyecto inmobiliario que pretende emplazarse en el barrio Presidente Errázuriz",
+      "la edificación de dos torres, una de 19 pisos para departamentos y otra de 12 para oficinas",
+      "La constructora SuKasa planea edificar tres torres de 15 pisos y dos subterráneos",
+      "Esto implicaba 4.200 viviendas"
+    ]
+  },
+  {
+    "document_id": "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a",
+    "nombre_proyecto": "Hospital Ochagavía",
+    "title": "EL ESPACIO Y LA MEMORIA: EL HOSPITAL OCHAGAVÍA DE SANTIAGO | Ángelo Narváez León",
+    "url": "https://www.urbanlivinglab.net/hospital-ochagavia/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "hospital",
+      "ochagavia"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "La Inmobiliaria Mapocho S.A. se adjudicó la compra con un proyecto comercial y habitacional",
+      "dos torres de 320 departamentos y una plaza cívica de 16.000 m2"
+    ]
+  },
+  {
+    "document_id": "af9420b65f6dc9aa58f57fb5423529d08b2a2d68c38e67790dd70271f3de9b31",
+    "nombre_proyecto": "Ciudad del Niño",
+    "title": "Vecinos de Ciudad del Niño protestan por amenazas de guetos verticales - Radio JGM",
+    "url": "https://radiojgm.uchile.cl/vecinos-de-ciudad-del-nino-convocan-a-protestas-por-amenazas-de-guetos-verticales/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "ciudad",
+      "nino"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un megaproyecto inmobiliario de 23 torres",
+      "totalizarían 5.401 departamentos de entre 30 m² y 57 m²",
+      "permisos de obra nueva aprobados por la Dirección de Obras Municipales de San Miguel",
+      "alturas de entre 14 y 25 pisos y densidad de 2.371 habitantes por hectárea aproximadamente"
+    ]
+  },
+  {
+    "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+    "nombre_proyecto": "Villa San Luis",
+    "title": "Villa San Luis: ¿Más que viviendas sociales, un Monumento Nacional? - La Tercera",
+    "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "1.038 viviendas sociales",
+      "Eran 27 bloques de departamentos de 4 pisos, repartidos en 9 hectáreas",
+      "construir 6 torres de 19 pisos en el Lote 18",
+      "declaratoria como Monumento Nacional del Lote 18-A1 del complejo"
+    ]
+  },
+  {
+    "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+    "nombre_proyecto": "Villa San Luis",
+    "title": "¿Patrimonio o ruinas? La Villa San Luis en Las Condes se niega a morir - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/patrimonio-ruinas-la-villa-san-luis-las-condes-se-niega-morir/808323/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el condominio de integración social",
+      "Se autoriza a que se complete la demolición del block 15 y se proceda a una demolición programada del block 14"
+    ]
+  },
+  {
+    "document_id": "750b5bfde627fffe3aa97b00b34a9f80a0cf8fef5a31114f8961ef16bba6e1bc",
+    "nombre_proyecto": "narco market",
+    "title": "Corte desestima recurso contra la Municipalidad de Peñalolén por la demolición de una narco‑casa",
+    "url": "https://www.canal9.cl/episodios/2026/08/03/rechazan-recurso-de-proteccion-contra-municipalidad-de-penalolen-por-demolicion-de-narco-casa",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "market",
+      "narco"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la demolición de una vivienda utilizada para el tráfico de drogas",
+      "la vivienda correspondía a un asentamiento irregular"
+    ]
+  },
+  {
+    "document_id": "54dc13e29f33b552e5c64ebca1606df0436a6c36bae4099c6dbfe33e409828bb",
+    "nombre_proyecto": "Fundo Panul",
+    "title": "La batalla por el Panul y las amenazas al último bosque nativo de Santiago",
+    "url": "https://www.elmostrador.cl/noticias/pais/2021/05/05/la-batalla-por-el-panul-el-proyecto-inmobiliario-que-pone-bajo-amenaza-al-ultimo-bosque-nativo-de-santiago/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "fundo",
+      "panul"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "presentó un proyecto de división predial ante la Dirección de Obras Municipales (DOM) de La Florida, con el que buscan concretar la construcción de calles y alumbrado público.",
+      "el proyecto presentado resulta inviable",
+      "solicitud de aprobación de división afecta a utilidad pública"
+    ]
+  },
+  {
+    "document_id": "32840f9e5c5550d0d404d3108129e56b05216bc0cbc757bae3baae2c63425440",
+    "nombre_proyecto": "Conjunto Armónico Bellavista",
+    "title": "i. municipalidad de recoleta - direccion juridica",
+    "url": "https://www.recoletatransparente.cl/archivos_2019/promulga_acuerdos/EX%201232.pdf",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "armonico",
+      "bellavista",
+      "conjunto"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "solicitando la Declaración de Ilegalidad y Nulidad de Derecho Público, de los Permisos de Edificación Nº 252 del año 2007; Nº 254 del año 2008 y Nº 30 del año 2012",
+      "de todos los Certificados de Recepciones Totales o Parciales Definitivas de la obras autorizadas por dichos Permisos de Edificación"
+    ]
+  },
+  {
+    "document_id": "b1d277dad13ec707489df38cf66d972a6f0828360eb706e2bc276e1e3c0e0fed",
+    "nombre_proyecto": "Maestranza San Eugenio",
+    "title": "Doris González, líder de Ukamau: \"Nadie está pidiendo que le regalen una vivienda, queremos que se garantice un derecho\" | The Clinic",
+    "url": "https://www.theclinic.cl/2015/12/13/doris-gonzalez-lider-de-ukamau-nadie-esta-pidiendo-que-le-regalen-una-vivienda-queremos-que-se-garantice-un-derecho/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "eugenio",
+      "maestranza",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "erigirán 424 casas con características especiales y un parque con anfiteatro",
+      "Son departamentos que fueron trabajados con los pobladores en sus asambleas",
+      "un proyecto de autogestión"
+    ]
+  },
+  {
+    "document_id": "459f4caf3ed73776aa8ad02b670d6c3991eed7333642be703e6410e89e08de4c",
+    "nombre_proyecto": "Antonia López de Bello N° 361, casa 13",
+    "title": "Ley Chile - Biblioteca del Congreso Nacional",
+    "url": "https://www.bcn.cl/leychile/Navegar?idNorma=1215686",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "361",
+      "antonia",
+      "bello",
+      "casa",
+      "lopez"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "autorizó la construcción de un edificio de agrupación aislado con adosamiento, con destino residencial (vivienda unifamiliar)",
+      "las construcciones ejecutadas en disconformidad con las disposiciones de la Ley General de Urbanismo y Construcciones y su Ordenanza General de Urbanismo y Construcciones sin permiso de esta Dirección de Obras"
+    ]
+  },
+  {
+    "document_id": "7144290ffc096fd0d4c90f732e320e91374c69f71917d08c3faeca5cab6d289b",
+    "nombre_proyecto": "Las Condesas 5",
+    "title": "La promesa aún inconclusa de la alcaldesa Peñaloza: edificio social de Las Condes se mantiene deshabitado - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/deshabitado-y-sin-una-pronta-solucion-la-teleserie-que-envuelve-al-edificio-de-la-rotonda-atenas-construido-para-viviendas-sociales/IVYENSFMPZAPRC7W23734IOLLI/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "condesas"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el edificio de integración social construido cerca de la Rotonda Atenas de Las Condes",
+      "autorización para enajenar las 85 unidades de departamentos que conforman la torre",
+      "el condominio Rotonda Atenas"
+    ]
+  },
+  {
+    "document_id": "cf871c7091dafecfbac7dfe5b2f12b78859d05d0d692954875b52f0675a220e5",
+    "nombre_proyecto": "Alameda Urbano",
+    "title": "Una semana viviendo en el gueto vertical - La Tercera",
+    "url": "https://www.latercera.com/paula/una-semana-viviendo-gueto-vertical/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "alameda",
+      "urbano"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "detener las obras de dos edificios gigantes",
+      "nuevos permisos de edificación"
+    ]
+  },
+  {
+    "document_id": "7984475ee8ec9d110f24c049d37824e26c8b32031cf3b8d8e196a379d8c9404b",
+    "nombre_proyecto": "Helipuerto Santiago SpA",
+    "title": "Interferencia (@InterferenciaCL) en X",
+    "url": "https://x.com/InterferenciaCL/status/1912853555821854901",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "helipuerto",
+      "santiago",
+      "spa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la clausura del hangar, local comercial y las oficinas de la empresa"
+    ]
+  },
+  {
+    "document_id": "6c3834a7f6a0b3dac2a0bc6b0556e0d4296839cda2a81df379cc937dbcf2c1f5",
+    "nombre_proyecto": "Eco Egaña Sustentable",
+    "title": "Los argumentos de Fundamenta para defender proyecto en Plaza Egaña antes de crucial alegato en la Corte Suprema - La Tercera",
+    "url": "https://www.latercera.com/pulso-pm/noticia/los-argumentos-de-fundamenta-para-defender-proyecto-en-plaza-egana-antes-de-crucial-alegato-en-la-corte-suprema/2NQHIMHO7NG7HGMUHS53WXEUDQ/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "eco",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "proyecto inmobiliario de Fundamenta",
+      "consiste en la construcción de cuatro torres",
+      "construcción de cuatro edificios con viviendas, oficinas, comercio y estacionamientos",
+      "El proyecto inmobiliario contempla 1.752 viviendas en un terreno de 1,5 ha"
+    ]
+  },
+  {
+    "document_id": "9ed556e1e2c0f55122d4a73c6995abb1500fa1af7d5952f96b509c8bc49acea9",
+    "nombre_proyecto": "Universidad San Sebastián",
+    "title": "Santiago, a siete de febrero de dos mil veintitrés.",
+    "url": "https://www.doe.cl/alerta/15022023/202302153002",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "san",
+      "sebastian",
+      "universidad"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "publicidad sin permiso y sin pago de derechos municipales",
+      "en el frontis de la casa central",
+      "la imagen de un árbol"
+    ]
+  },
+  {
+    "document_id": "e852f03fe228119aaa5f3e2649ee86dc425ae4d9e6da5fc835b891629e54291a",
+    "nombre_proyecto": "Parque Canal El Bollo",
+    "title": "Municipalidad de Las Condes actuó apegada a la legalidad en caso Parque Canal El Bollo resuelve la Corte Suprema",
+    "url": "https://www.diarioconstitucional.cl/2025/10/02/municipalidad-de-las-condes-actuo-apegada-a-la-legalidad-en-caso-parque-canal-el-bollo-resuelve-la-corte-suprema/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "bollo",
+      "canal",
+      "parque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la Municipalidad de Las Condes negara una modificación de proyecto solicitada por la reclamante",
+      "la empresa Desarrollo Inmobiliario Cerro Apoquindo obtuvo de la misma DOM el Permiso de Edificación N°81 para un lote colindante.",
+      "un anteproyecto de edificación presentado por otra inmobiliaria",
+      "la aprobación del Permiso de Edificación N°37"
+    ]
+  },
+  {
+    "document_id": "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
+    "nombre_proyecto": "Edificio Pajaritos",
+    "title": "Los contratos por trato directo del alcalde Vodanovic con ONG vinculada al FA para frenar inversión inmobiliaria - Ex-Ante | Las noticias que importan",
+    "url": "https://www.ex-ante.cl/economia/los-contratos-por-trato-directo-del-alcalde-vodanovic-con-ong-vinculada-al-fa-para-frenar-inversion-inmobiliaria/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "pajaritos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El megaproyecto, de la inmobiliaria Icalma, consta de 3 edificios, dos de 21 pisos y uno de 26.",
+      "La iniciativa considera un total 483 departamentos, 8 locales comerciales, 385 estacionamientos para vehículos y 322 estacionamientos para bicicletas.",
+      "Segunda Línea Oleoducto M-AAMB"
+    ]
+  },
+  {
+    "document_id": "a1da4880d4ec2b1973120a7f3b246c06a087f4d6ca5553b44b3c8fa769c32a6d",
+    "nombre_proyecto": "John Dewey College",
+    "title": "De colegio de elite a proyecto inmobiliario: la vertiginosa historia tras el cierre del John Dewey",
+    "url": "https://interferencia.cl/articulos/de-colegio-de-elite-proyecto-inmobiliario-la-vertiginosa-historia-tras-el-cierre-del-john",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "college",
+      "dewey",
+      "john"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "ya no es más un colegio, sino que corresponde al proyecto inmobiliario de Pé, Pé y Riquelme Limitada",
+      "el que proyecta la edificación de dos torres con funciones habitacionales, y comerciales en la planta baja.",
+      "un proyecto completo para el inmueble, con los planos para edificar dos edificios de ocho pisos, que contempla 118 viviendas, 87 oficinas, dos comercios y 238 estacionamientos."
+    ]
+  },
+  {
+    "document_id": "f1acd7f26e6c762c207dc36d7c8a7228b2591662116aa62bc21891417c951dad",
+    "nombre_proyecto": "Open Plaza Fontova",
+    "title": "Rentabilidad versus ética: el caso de Rentas Falabella y Open Plaza Fontova - CIPER Chile",
+    "url": "https://www.ciperchile.cl/2019/06/14/rentabilidad-versus-etica-el-caso-de-rentas-falabella-y-open-plaza-fontova/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "fontova",
+      "open",
+      "plaza"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un centro comercial que incluye un supermercado Tottus y un Sodimac con su canal especializado Patio Constructor",
+      "un proyecto para modificar y ampliar el volumen de superficie comercial, levantando casi 40 locales para arriendo a terceros"
+    ]
+  },
+  {
+    "document_id": "aa3282bbc4867c374db2a72852d30991eed3cf70b9ab6b768a20bbff646bfa58",
+    "nombre_proyecto": "Edificio Patio Chiloé",
+    "title": "Edificio Patio Chiloé",
+    "url": "https://www.scielo.cl/scielo.php?script=sci_arttext&pid=S0717-69962018000100132",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "chiloe",
+      "patio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "En el barrio Matta Sur han aparecido decenas de edificios de gran altura en los últimos años.",
+      "En consecuencia, el Plan Regulador de la comuna de Santiago cambió, estableciéndose una altura máxima de edificación de catorce metros y la imposibilidad de erigir edificación aislada sobre la continua."
+    ]
+  },
+  {
+    "document_id": "c4f4c30018eeca10587a52b88020b34b43cf8f928786b8f7618e4b8b97dbb1fa",
+    "nombre_proyecto": "Nueva Alameda Providencia",
+    "title": "EXPLOSIÓN INMOBILIARIA EN ESTACIÓN CENTRAL Y ...",
+    "url": "https://revistaplaneo.cl/wp-content/uploads/Arti%CC%81culo_Di%CC%81az.pdf",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "alameda",
+      "nueva",
+      "providencia"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "numerosos edificios de departamentos",
+      "edificios en altura"
+    ]
+  },
+  {
+    "document_id": "700ab01a8df738d9e1bf80e69e7dd3c674b623b228b4056e201ea8eb197de571",
+    "nombre_proyecto": "Egaña-Comunidad Sustentable",
+    "title": "SEA admitió a trámite recurso de reclamación presentado por proyecto inmobiliario “Egaña-Comunidad Sustentable”",
+    "url": "https://www.paiscircular.cl/radar-legal/sea-admitio-a-tramite-recurso-de-reclamacion-presentado-por-proyecto-inmobiliario-egana-comunidad-sustentable/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "comunidad",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto inmobiliario consiste en la construcción de cuatro edificios, con un total de 1.752 departamentos, además de un sector de comercio y más de dos mil estacionamientos"
+    ]
+  },
+  {
+    "document_id": "7f155f9dc0b0a8875d91a1b4949074166da697b5cf2a3cf28f28d4990819d05b",
+    "nombre_proyecto": "maestranza San Eugenio",
+    "title": "Revolucionarios de la vivienda social: La historia de lucha de Ukamau",
+    "url": "https://eldesconcierto.cl/2015/10/07/revolucionarios-de-la-vivienda-social",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "eugenio",
+      "maestranza",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "424 departamentos de 62 metros cuadrados",
+      "la construcción de sus futuras viviendas en un paño de tres hectáreas"
+    ]
+  },
+  {
+    "document_id": "da24f797477a198276cd5cc264403a2eaa22785bf7d6f06e56e3ad044faddcb9",
+    "nombre_proyecto": "Parque Las Américas",
+    "title": "Si Dorothy Pérez hubiera ejercido como contralora, este proyecto en Vitacura no se habría ejecutado - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2025/06/02/si-dorothy-perez-hubiera-ejercido-como-contralora-este-proyecto-en-vitacura-no-se-habria-ejecutado/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "americas",
+      "parque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "para construir su proyecto inmobiliario",
+      "obtiene de parte de la Dirección de Obras Municipales (DOM) de Vitacura el permiso de edificación N° 202 por 18 torres habitacionales de entre 13 y 25 pisos de altura",
+      "el aludido Plan Seccional permitía para el terreno desafectado solamente la construcción de casas de 2 pisos y algunos edificios de 4 pisos"
+    ]
+  },
+  {
+    "document_id": "a210b6643d80a48f76b9e7835a87a54858b0d9b29fafd831fa697710922731d3",
+    "nombre_proyecto": "Tranque La Poza",
+    "title": "Tribunal Ambiental rechazó reclamación de club de golf La Dehesa contra declaratoria de humedal urbano del Tranque La Poza | Resumen.cl",
+    "url": "https://resumen.cl/articulos/tribunal-ambiental-rechazo-reclamacion-de-club-de-golf-la-dehesa-contra-declaratoria-de-humedal-urbano-del-tranque-la-poza",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "poza",
+      "tranque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "declaratoria como urbano"
+    ]
+  },
+  {
+    "document_id": "3ebb845167c581788a965d836b9f3640074afc722eefeb08ffedaf2857de5e4d",
+    "nombre_proyecto": "edificio fantasma",
+    "title": "Corte Suprema rechaza recurso de empresa dueña de “edificio fantasma” en Estación Central y valida actuar del municipio en el proceso | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/corte-suprema-rechaza-recurso-de-empresa-duena-de-edificio-fantasma-en",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "fantasma"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un edificio de 42 pisos, con 732 departamentos, dos locales comerciales, 119 estacionamientos y 168 bodegas",
+      "un proyecto de 36 pisos, con solo 398 viviendas y 155 habitaciones destinadas a hotel"
+    ]
+  },
+  {
+    "document_id": "e643a3f7f2a0c61e356ff0c37422d1ebe505064825db9cc60c992a2b47f6804d",
+    "nombre_proyecto": "Valdovinos 3017-3101",
+    "title": "Un terreno urbano con 2 distintos usos de suelo - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2017/08/11/un-terreno-urbano-con-2-distintos-usos-de-suelo/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "3017",
+      "3101",
+      "valdovinos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "una inmobiliaria, dueña de un terreno subdividido",
+      "para 3 torres habitaciones de 15 pisos",
+      "3 torres habitacionales de 15 pisos cada una en la comuna de Santiago"
+    ]
+  },
+  {
+    "document_id": "52d09478110ca3833dfca024f33d313cf9b5806ee914dd6c3695e79f7a8b3612",
+    "nombre_proyecto": "Estadio Santa Laura",
+    "title": "Un negocio inmobiliario en el área verde de Estadio Santa Laura",
+    "url": "https://elquintopoder.cl/ciudad/un-negocio-inmobiliario-en-el-area-verde-de-estadio-santa-laura/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "estadio",
+      "laura",
+      "santa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "para la construcción de 2 torres de 23 y 15 pisos en el terreno área verde que le pertenece a la persona jurídica Inmobiliaria y Promotora Unión Española S.A.",
+      "se trata de un negocio de 368 viviendas, con 237 estacionamientos y un local comercial",
+      "las viviendas son 296, con 744 estacionamientos, un supermercado, un apart hotel con 70 habitaciones, una universidad, que suponemos es la SEK, 2 oficinas y 48 locales comerciales"
+    ]
+  },
+  {
+    "document_id": "887332595cf913d6b4235ada04e0aa4c5977834c489fdd264b7bc10499e0228a",
+    "nombre_proyecto": "Helipuerto Santiago SpA",
+    "title": "Seremi Minvu extiende permiso para helipuerto de ex ministros de Piñera a pesar de fallo que declaró ilegal su funcionamiento",
+    "url": "https://interferencia.cl/articulos/seremi-minvu-extiende-permiso-para-helipuerto-de-ex-ministros-de-pinera-pesar-de-fallo-que",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "helipuerto",
+      "santiago",
+      "spa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de oficinas, pista de aterrizaje y un hangar en un terreno adyacente al Espacio Riesco."
+    ]
+  },
+  {
+    "document_id": "cdbb95f74d5564b982b4c4b963ea2759668ec824af2a5dd4aa32899e666456d7",
+    "nombre_proyecto": "Hijuelas Quilín",
+    "title": "La ciudad no se vende: vecinos de Peñalolén se rebelan contra megaproyecto aprobado entre cuatro paredes",
+    "url": "https://www.elciudadano.com/chile/la-ciudad-no-se-vende-vecinos-de-penalolen-se-rebelan-contra-megaproyecto-aprobado-entre-cuatro-paredes/05/02/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "hijuelas",
+      "quilin"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "construcción de este proyecto inmobiliario en la comuna de Peñalolén",
+      "la nueva propuesta de la inmobiliaria contempla 38 edificios de 9 pisos cada uno, más de 2.300 viviendas y 4.000 estacionamientos",
+      "un Strip Center con más de 20 locales comerciales"
+    ]
+  },
+  {
+    "document_id": "5f930c847d86531be57cae3540ee70cd768108c8772971eddbb8987335878f83",
+    "nombre_proyecto": "Conjunto Las Hiedras",
+    "title": "SEREMI - Documento Digitalizado en OFP - Minvu",
+    "url": "https://documentos.minvu.cl/regionXIII/seremi/oficios/Documentos/01%2002%2001%202018.pdf",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "conjunto",
+      "hiedras"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "proyecto de estacionamiento privado",
+      "la construcción de un sistema de estacionamientos automatizado conformado por 2 módulos de 3 niveles",
+      "ampliación del Inmueble de: Conservación Histórica existente"
+    ]
+  },
+  {
+    "document_id": "78c109ffb36f3adc097fecefe7d1e35582ca06abcaddde90ff0faba48cf66a39",
+    "nombre_proyecto": "Liceo Reino de Dinamarca",
+    "title": "RINCONADA DE MAIPÚ: MÁS DE 500 ESTUDIANTES SIN CLASES POR CONTAMINACIÓN",
+    "url": "https://www.colegiodeprofesores.cl/2023/03/07/rinconada-de-maipu-mas-de-500-estudiantes-sin-clases-por-contaminacion/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "dinamarca",
+      "liceo",
+      "reino"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "faenas extractivas de la empresa Minera Imperial"
+    ]
+  },
+  {
+    "document_id": "ec8bcdd59c7a59ade77f67a73b4cbf867edd93d446d5e08f40bb5eb6273616f1",
+    "nombre_proyecto": "estadio Santa Laura",
+    "title": "Independencia suma su tercera zona típica: Plaza Chacabuco - Blog Inmobiliario - TOCTOC.com",
+    "url": "https://blog.toctoc.com/independencia-suma-su-tercera-zona-tipica-plaza-chacabuco/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "estadio",
+      "laura",
+      "santa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de dos edificios habitacionales (368 viviendas) más un centro comercial"
+    ]
+  },
+  {
+    "document_id": "1a8868138b4b5e7fc7a078b55f0e79cce30c7616c1a38c8ead2128ffa4f92f3c",
+    "nombre_proyecto": "Edificio Pajaritos",
+    "title": "Maipú congela permisos a nuevos megaproyectos inmobiliarios: \"Cerramos la puerta con candado a los guetos verticales\" | The Clinic",
+    "url": "https://www.theclinic.cl/2023/09/20/municipalidad-maipu-congela-permisos-megaproyectos-guetos-verticales/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "pajaritos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "modificaciones del Plan Regulador Comunal (PRC)",
+      "nuevos megaproyectos en los grandes ejes del sector"
+    ]
+  },
+  {
+    "document_id": "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad",
+    "nombre_proyecto": "Parque Rabat",
+    "title": "El golpe de la Seremi de Vivienda y la Contraloría a proyecto inmobiliario en la casa más cara de Santiago | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/el-golpe-de-la-seremi-de-vivienda-y-la-contraloria-a-proyecto-inmobiliario",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "parque",
+      "rabat"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un condominio tipo A compuesto por 39 casas y dos edificios (con 20 departamentos)"
+    ]
+  },
+  {
+    "document_id": "1f76345186fda988e68d0ba37c3dc89562da1f55f0491eea71c956ff0bab9d8f",
+    "nombre_proyecto": "Edificio Fantasma",
+    "title": "Rechazan recurso de inmobiliara de \"edificio fantasma\" en Estación Central: ¿Qué pasará ahora con el deshabitado inmueble?",
+    "url": "https://www.meganoticias.cl/nacional/497014-edificio-fantasma-estacion-central-sin-ocupantes-hotel-rechazan-recurso-brk-28-08-2025.html",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "fantasma"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "La construcción comenzó en 2015 con un permiso para levantar un edificio de 42 pisos y 732 departamentos, incluyendo bodegas.",
+      "Sin embargo, la inmobiliaria construyó un proyecto distinto: 36 pisos, 398 viviendas y 155 habitaciones destinadas a aparthotel, uso que no estaba autorizado en los permisos originales.",
+      "El inmueble, ubicado en calle Federico Scotto con Avenida Bernardo O’Higgins, permanece terminado desde 2022, pero no ha podido ser habitado debido a que no cuenta con la recepción final."
+    ]
+  },
+  {
+    "document_id": "644d3dd05d9fceb5383b9dfcd7da46e9849d586222b581702ab8518997d718f2",
+    "nombre_proyecto": "Alameda 4499",
+    "title": "¿Por qué existen los guetos verticales ilegales en Estación Central?",
+    "url": "https://elquintopoder.cl/ciudad/por-que-existen-los-guetos-verticales-ilegales-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "4499",
+      "alameda"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la irrupción de varias decenas de invasivas torres habitacionales, que tienen entre los 25 y 40 pisos",
+      "75 permisos de edificación y 30 resoluciones de anteproyectos cursados por su antecesor a partir del año 2013",
+      "guetos verticales ilegales",
+      "con altura máxima de 12 pisos, en el PRC"
+    ]
+  },
+  {
+    "document_id": "f491365929e87b322139b7a7b75d8b6933ac1e18dc1a9a60db0205d4fa0b6ccd",
+    "nombre_proyecto": "Portal Bicentenario",
+    "title": "Un conflicto derivado del cierre del aeropuerto Los Cerrillos",
+    "url": "https://elquintopoder.cl/ciudad/un-conflicto-derivado-del-cierre-del-aeropuerto-los-cerrillos/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bicentenario",
+      "portal"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un edificio de 17 pisos con 112 departamentos y 134 estacionamientos",
+      "edificio habitacional de 17 pisos",
+      "cambiaba el uso de suelo a habitacional-mixto de sus 254 hectáreas definidas como de infraestructura aeroportuaria en el PRMS"
+    ]
+  },
+  {
+    "document_id": "dd956064928249db6ff39b466b6f405a5ae4a36d291992a9fc4870c56839b0ea",
+    "nombre_proyecto": "Estadio Nacional",
+    "title": "Sebastián Sichel (@sebastiansichel) en X",
+    "url": "https://x.com/sebastiansichel/status/2011531176000061522",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "estadio",
+      "nacional"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "eventos masivos en el recinto",
+      "se cierren las calles"
+    ]
+  },
+  {
+    "document_id": "b741354d64aac1e6cf208c60f8ecd2a40cbbe472bfc786813cf77575e16407b5",
+    "nombre_proyecto": "Vespucio 345",
+    "title": "Corte Suprema confirma validez de actuación de Inmobiliaria Nueva El Golf en disputa con vecinos y Municipalidad de Las Condes - La Tercera",
+    "url": "https://www.latercera.com/pulso/noticia/corte-suprema-confirma-validez-actuacion-inmobiliaria-nueva-golf-disputa-vecinos-municipalidad-las-condes/973821/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "345",
+      "vespucio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "contra el Permiso de Edificación y su modificación",
+      "una modificación de permiso"
+    ]
+  },
+  {
+    "document_id": "e815c11b2b0acef85b6661ac15f60f6241e2ff9f2e1a863aa6d3bf142411fd5a",
+    "nombre_proyecto": "Egaña- Comunidad Sustentable",
+    "title": "Tribunal anuló parcialmente aprobación ambiental del proyecto inmobiliario en “Egaña- Comunidad Sustentable”, en la comuna de Ñuñoa",
+    "url": "https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "comunidad",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto inmobiliario considera cuatro torres (tres residenciales y una para oficinas) y un sector de comercio",
+      "Contempla 1.752 departamentos"
+    ]
+  },
+  {
+    "document_id": "be39dcc82c07c6047f5770749c863da9b9d6e8406364d5ccf20824d2a9cbd5c5",
+    "nombre_proyecto": "edificio institucional de la Cámara Chilena de la Construcción (CChC) en Las Condes",
+    "title": "Necesaria réplica a los arquitectos del edificio de la CChC en Las Condes",
+    "url": "https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2021/05/24/necesaria-replica-a-los-arquitectos-del-edificio-de-la-cchc-en-las-condes.shtml",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "camara",
+      "cchc",
+      "chilena",
+      "condes",
+      "institucional"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el proyecto objetado correspondía a la construcción de dos edificios enfrentados en una de sus fachadas sin vanos, de volúmenes separados, funcional y estructuralmente independientes",
+      "porque fue considerado Conjunto Armónico a pesar de que no parecía serlo"
+    ]
+  },
+  {
+    "document_id": "7253b71b8aa887f3e9b3c545962a567e4bc7c772e5209f4bbc2fba577f012f82",
+    "nombre_proyecto": "Ciudad del Niño",
+    "title": "El megaproyecto que San Miguel busca frenar: construcción de 23 torres elevaría en 18% la población de la comuna - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/el-megaproyecto-que-san-miguel-busca-frenar-construccion-de-23-torres-elevaria-en-18-la-poblacion-de-la-comuna/CTUY7NRWDFAGJKSVUFN43KXK7E/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "ciudad",
+      "nino"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Un megaproyecto inmobiliario que consta de 23 edificios",
+      "Se trata de 5.041 departamentos, distribuidos en torres de 14 a 23 pisos"
+    ]
+  },
+  {
+    "document_id": "55dae700063cebc780630f0ed7e15fb33ee8a59bfb8c84c1577739c937265e6e",
+    "nombre_proyecto": "edificio de la estrecha calle Santa Petronila",
+    "title": "Megatorres o guetos verticales de Estación Central",
+    "url": "https://www.hogardecristo.cl/entrevistas/alejandro-verdugo-demolamos-al-menos-una-megatorre/",
+    "n_quotes_objeto_incluidas": 6,
+    "name_tokens": [
+      "calle",
+      "estrecha",
+      "petronila",
+      "santa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "mal llamados guetos verticales de Estación Central",
+      "las megatorres que comenzaron a surgir en la segunda década del siglo 21",
+      "Nuestro objetivo fue siempre parar las construcciones verticales desmesuradas.",
+      "tres altos edificios",
+      "la casa familiar",
+      "Así es que no dieron los espacios físicos para el proyecto."
+    ]
+  },
+  {
+    "document_id": "5d2f0680d21e1061790de468589132de52ff9cffd576ecee2fb4c0ad6b070f47",
+    "nombre_proyecto": "Templo votivo",
+    "title": "Ninguna construcción superará al Templo votivo: Maipú aprueba nuevo Plan Regulador que prohíbe megaedificios y guetos verticales",
+    "url": "https://www.adnradio.cl/2024/09/12/ninguna-construccion-superara-al-templo-votivo-maipu-aprueba-nuevo-plan-regulador-que-prohibe-megaedificios-y-guetos-verticales/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "templo",
+      "votivo"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "nuevo Plan Regulador Comunal (PRC)",
+      "La nueva regulación establece límites de altura de entre 11 y 6 pisos en los principales ejes de la comuna",
+      "Además, el PRC prohíbe la construcción de “apart hotel”"
+    ]
+  },
+  {
+    "document_id": "939a588e52cd5985ca08a0193f2040d5a72f0b5f1462f7db3399a4fc49bb38be",
+    "nombre_proyecto": "comunidad Jardines Fray de León",
+    "title": "Suprema confirma que dueñas de departamento en Las Condes no pueden arrendarlo vía Airbnb",
+    "url": "https://www.emol.com/noticias/Nacional/2019/03/21/941867/Suprema-confirma-que-duenos-de-departamentos-no-pueden-arrendarlos-via-Airbnb.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "comunidad",
+      "fray",
+      "jardines",
+      "leon"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "carácter y destino habitacional del edificio",
+      "destinación de los diversos departamentos o unidades al giro de Apart Hotel"
+    ]
+  },
+  {
+    "document_id": "7f35111585461570180f8f7dbd163dc49e6584ce0ebc4932a4b070a370567417",
+    "nombre_proyecto": "Edificio Capital",
+    "title": "Comunidad acusa defectos en dos torres de 30 pisos en Estación Central: inmobiliaria y constructora apuntan a mal uso de los habitantes | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/comunidad-acusa-defectos-en-dos-torres-de-30-pisos-en-estacion-central",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "capital"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "se compone de dos edificios de 30 pisos con 372 departamentos en cada torre, con destino habitacional"
+    ]
+  },
+  {
+    "document_id": "e01496fe46ebf60e722a8de673bd9d881f4fe132539f6476def2ab11d7f1362a",
+    "nombre_proyecto": "Panul",
+    "title": "Alcalde Carter e Inmobiliaria Gesterra cada vez más cerca de concretar la destrucción del Panul",
+    "url": "https://redprecordillera.cl/noticias/alcalde-carter-e-inmobiliaria-gesterra-cada-vez-mas-cerca-de-concretar-la-destruccion-del-panul",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "panul"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la realización del megaproyecto inmobiliario en el corazón del bosque",
+      "la inmobiliaria Gesterra podría construir en ese lugar"
+    ]
+  },
+  {
+    "document_id": "70f7618164c8798e4159d09004dd2f59e7d2a0b54e702e7903577daff9ea976c",
+    "nombre_proyecto": "edificio que le pertenecía a la Protección Mutua de los Empleados Públicos de Chile",
+    "title": "Pretenden demoler edificio patrimonial en comuna de Santiago",
+    "url": "https://elquintopoder.cl/ciudad/pretenden-demoler-edificio-patrimonial-en-comuna-de-santiago/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "chile",
+      "empleados",
+      "mutua",
+      "pertenecia",
+      "proteccion",
+      "publicos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el cual fue protegido oficialmente el 28 de mayo de 2008 por la Municipalidad de Santiago bajo la figura de “Conservación Histórica” en el correspondiente Plan Regulador Comunal (PRC)",
+      "permiso de edificación Nº 13.972 para construir 2 torres de 35 pisos cada una",
+      "En las torres se consideraban 760 pequeños departamentos habitacionales con 249 estacionamientos."
+    ]
+  },
+  {
+    "document_id": "c5f0ac9ca9238e5663e4fb70359c29947495ab921411243a9239dec392ec7cd1",
+    "nombre_proyecto": "Bar La Virgen",
+    "title": "La contienda judicial que enfrenta nuevamente al Bar La Virgen con la Municipalidad de Vitacura | The Clinic",
+    "url": "https://www.theclinic.cl/2023/12/22/contienda-judicial-enfrenta-nuevamente-a-bar-la-virgen-con-municipalidad-de-vitacura/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "bar",
+      "virgen"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un nuevo local gastronómico abrió sus puertas en Avenida Vitacura 4085",
+      "la remodelación del local"
+    ]
+  },
+  {
+    "document_id": "2cb01a7a9e863f52c401b8f98df2af848a01c9b2d3354ee8dcc3a22554714db2",
+    "nombre_proyecto": "Liceo Reino de Dinamarca",
+    "title": "Municipalidad de Maipú presenta recurso de protección contra empresa por contaminación que afecta a Liceo Reino de Dinamarca",
+    "url": "https://lavozdemaipu.cl/icipalidad-de-maipu-presenta-recurso-de-proteccion/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "dinamarca",
+      "liceo",
+      "reino"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "las faenas que realiza en el barrio Rinconada Rural",
+      "las actividades de esa empresa en dicho terreno"
+    ]
+  },
+  {
+    "document_id": "8b221f1e8ef7bddf86ba9aba041fa43446eeb73dd3bb499fa3a092b363aa55d4",
+    "nombre_proyecto": "Egaña Comunidad Sustentable",
+    "title": "Fundamenta y rechazo de megaproyecto en Ñuñoa: “Fue una decisión apurada”",
+    "url": "https://www.pauta.cl/economia/2022/04/11/alfredo-palominos-fundamenta-rechazo-megaproyecto-inmobiliario-nunoa.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "comunidad",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El plan desarrollado por Fundamenta incluye 1.828 departamentos, oficinas y un boulevard para el comercio."
+    ]
+  },
+  {
+    "document_id": "18ecda5f2e57933e8a97b2c3ba96ca7391eda8e1f2f8c4a0ee515462cf644d1a",
+    "nombre_proyecto": "Edificio La Portada",
+    "title": "Edificio La Portada, Vitacura: de “ícono” a “lunar”",
+    "url": "https://mundodelaconstruccion.cl/2017/06/28/edificio-la-portada-vitacura-de-icono-a-lunar/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "portada"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la finalidad de levantar una moderna torre, de sobre 30 pisos de altura",
+      "cuenta con 116 departamentos"
+    ]
+  },
+  {
+    "document_id": "c48e772910b25f014578bcad7cadaa558a8b4b1e58b7fff9804d8edf1389cb3f",
+    "nombre_proyecto": "Urbanya",
+    "title": "Urbanya: inmobiliaria de familia Santa Cruz rechaza críticas por millonario proyecto en Pudahuel - La Tercera",
+    "url": "https://www.latercera.com/pulso/noticia/urbanya-inmobiliaria-de-familia-santa-cruz-rechaza-criticas-por-millonario-proyecto-en-pudahuel/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "urbanya"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Es el proyecto inmobiliario más ambicioso de la familia Santa Cruz en el sector poniente de Santiago",
+      "considera casi 1.200 viviendas, un sector logístico-empresarial e infraestructura en la comuna de Pudahuel"
+    ]
+  },
+  {
+    "document_id": "a4cd2d245e49890d11a883828e3bcf229dd0a1c8f77a380b6a1d69d3524c2340",
+    "nombre_proyecto": "Seccional La Platina",
+    "title": "Construcción de la segregación residencial: El proyecto habitacional de La Platina en la comuna de La Pintana",
+    "url": "https://www.museovicunamackenna.gob.cl/noticias/construccion-de-la-segregacion-residencial-el-proyecto-habitacional-de-la-platina-en-la",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "platina",
+      "seccional"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un gran proyecto inmobiliario acompañado de un parque (de 42 hectáreas)",
+      "gran proyecto residencial con un parque accesorio",
+      "proyecto habitacional"
+    ]
+  },
+  {
+    "document_id": "17082a243b606252353c99ce2b0a8ef4575c3284bab6550ab2edfc3265dca365",
+    "nombre_proyecto": "Parque Cerro Colorado",
+    "title": "Comunidad del Parque Cerro Colorado en Las Condes, ...",
+    "url": "https://defendamoslaciudad.cl/noticias/item/download/1774_ef9e37b4e594256ed45b56450196a1b7",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "cerro",
+      "colorado",
+      "parque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "vamos a construir 5 edificios y algunas casas",
+      "negocios inmobiliarios que él pretende"
+    ]
+  },
+  {
+    "document_id": "1e4f5b2715df34bf55728db24da4439c4fcacc7b81d13430fa000b098bfc4574",
+    "nombre_proyecto": "Eco Egaña",
+    "title": "Obreros protestan en Plaza Egaña por paralización en una construcción inmobiliaria - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/obreros-protestan-en-plaza-egana-por-paralizacion-en-una-construccion-inmobiliaria/5K4TUTVZ4VD7NKRZI2EOHDRV4A/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "eco",
+      "egana"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "paralizaría una obra de construcción inmobiliaria de cuatro torres de 36 pisos",
+      "Contempla más de 1.800 departamentos, junto a oficinas y comercio en el sector.",
+      "consiste en la construcción de cuatro edificios en un terreno de 15 mil m² y el desarrollo de un sub centro comercial"
+    ]
+  },
+  {
+    "document_id": "ecc215820258cee392cf3d10bda60ef608ba2ca09a58d5721fa330b3ce2f1e40",
+    "nombre_proyecto": "Curtidos BAS",
+    "title": "Fallo TC Curtidos BAS: ¿giro en la jusrisprudencia de propiedad?",
+    "url": "https://www.elmercurio.com/legal/movil/detalle.aspx?Id=904245&Path=/0D/CC/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bas",
+      "curtidos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "las industrias instaladas que a posteriori quedan absorbidas dentro de una zona residencial",
+      "actividad económica lícita de curtiembre",
+      "el predio propio y sus instalaciones"
+    ]
+  },
+  {
+    "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+    "nombre_proyecto": "Parque Las Moscas",
+    "title": "El destino de gueto vertical del parque Las Moscas",
+    "url": "https://www.elmostrador.cl/noticias/opinion/2017/07/27/el-destino-de-gueto-vertical-del-parque-las-moscas/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "moscas",
+      "parque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales",
+      "considera 3 edificios de 15 pisos cada uno",
+      "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017, para un edificio de 15 pisos y 1.400 viviendas"
+    ]
+  },
+  {
+    "document_id": "691d2b5285e3ef038c912b04627deca1ddb5c4fa69e8a871e1031d6a0197b7a0",
+    "nombre_proyecto": "proyecto de Inmobiliaria Bellavista en calle Dardignac",
+    "title": "Bernardo Echeverría: ”Las autoridades no pueden actuar arbitrariamente”",
+    "url": "https://www.pauta.cl/ciudad/2020/05/04/bernardo-echeverria-las-autoridades-no-pueden-actuar-arbitrariamente.html",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bellavista",
+      "calle",
+      "dardignac",
+      "inmobiliaria"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "contempla tres torres de 19 pisos cada una",
+      "la primera está construida y habitada",
+      "recepción definitiva de parte del municipio"
+    ]
+  },
+  {
+    "document_id": "1883c7216c83a6e84b735de9193499b7468f1526d5e4194ca9ca8f75a9aaf217",
+    "nombre_proyecto": "Edificio Pajaritos",
+    "title": "Polémica por edificios en Maipú: inmobiliaria descarta repetir guetos verticales de Estación Central",
+    "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2023/06/02/polemica-por-edificios-en-maipu-inmobiliaria-descarta-repetir-guetos-verticales-de-estacion-central.shtml",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "pajaritos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Un megaproyecto, que contempla la construcción de tres torres en Maipú, ha generado debate entre los vecinos de la comuna.",
+      "El proyecto de Icalma prevé la construcción de torres con 16, 18 y 21 pisos."
+    ]
+  },
+  {
+    "document_id": "b243ca1d3dd9948c4e15a7f8c41da3b3f10730236af8714d62cf942a16712523",
+    "nombre_proyecto": "Hotel Sheraton San Cristóbal",
+    "title": "Enaco en picada contra nuevo plan regulador de Lo Barnechea: apunta a “incongruencias y discriminaciones inaceptables” | Diario Financiero | Rodrigo Andreucci | 10 comentarios",
+    "url": "https://es.linkedin.com/posts/rodrigoandreucciabogado_enaco-en-picada-contra-nuevo-plan-regulador-activity-7421553099644764160-Ts1b",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "cristobal",
+      "hotel",
+      "san",
+      "sheraton"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "baja densidad en zonas del nuevo #PRC de la comuna de #LoBarnechea"
+    ]
+  },
+  {
+    "document_id": "7937692b9c924bc45358346dd0ac639852aa039bfb4ff164ae0a32ec957a819d",
+    "nombre_proyecto": "Zoccalo",
+    "title": "Municipalidad de Vitacura escala conflicto por proyecto Zoccalo y acude a la Corte Suprema - La Tercera",
+    "url": "https://www.latercera.com/pulso/noticia/municipalidad-de-vitacura-escala-conflicto-por-proyecto-zoccalo-y-acude-a-la-corte-suprema/EGAEKPEAAFAP5KLHVS5K2ZPS2A/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "zoccalo"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción, explotación y mantención de un proyecto de estacionamientos subterráneos en calle Alonso de Córdova",
+      "Esta iniciativa nueva, reducida a un solo tramo, incluía una placa para la instalación de locales comerciales equivalente a 5.045 m2"
+    ]
+  },
+  {
+    "document_id": "ddcaa38442f927fadc52b82c88d226015f5905b0404de70f24b5b288087f5d3e",
+    "nombre_proyecto": "Hotel Sheraton Santiago",
+    "title": "Corte de Santiago acoge reclamo de ilegalidad e invalida permiso de edificación de torres en Providencia",
+    "url": "https://www.portal.ijuridica.cl/2023/02/corte-de-santiago-acoge-reclamo-de-ilegalidad-e-invalida-permiso-de-edificacion-de-torres-en-providencia/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "hotel",
+      "santiago",
+      "sheraton"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "construcción de dos torres habitacionales de 30 y 32 pisos",
+      "el Permiso de Edificación N° 35-2019",
+      "el decreto alcaldicio que acogió el reclamo de ilegalidad interpuesto por la Junta de Vecinos N° 12 Pedro de Valdivia Norte contra la resolución que rechazó la invalidación del permiso de edificación cuestionado",
+      "pide que se declare que el Decreto Alcaldicio Ex. 1566-2021"
+    ]
+  },
+  {
+    "document_id": "0ed9347d593ee4f11966faef554bf1e010f49cacfa448eec9af9d91f24ae2176",
+    "nombre_proyecto": "Centro de Salud Familiar (Cesfam)",
+    "title": "Contraloría sanciona a exalcaldesa Peñaloza por compra de Cesfam en Las Condes y destituye al exdirector de Control - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/contraloria-sanciona-a-exalcaldesa-penaloza-por-compra-de-cesfam-en-las-condes-y-destituye-al-exdirector-de-control/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "centro",
+      "cesfam",
+      "familiar",
+      "salud"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "comprar los lotes correspondientes a 5.315 metros cuadrados por un monto de 353.956 UF"
+    ]
+  },
+  {
+    "document_id": "d02820096888bb9c3efa3626d41ffa4a99fdea16510cb3ef40a856d0f8039c9a",
+    "nombre_proyecto": "Maestranza San Eugenio",
+    "title": "CC Santiago BLOG [14/12] Movimiento de Pobladores UKAMAU - Conversatorio con Doris González",
+    "url": "http://contested-cities.net/CCsantiago/movimiento-pobladores-ukamau-conversatorio-doris-gonzalez/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "eugenio",
+      "maestranza",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un proyecto de vivienda social para más de 400 familias"
+    ]
+  },
+  {
+    "document_id": "35900b3524da87df86bb7782a3c49c07a84c232d861071316cca01529638d7fb",
+    "nombre_proyecto": "Egańa Comunidad Sustentable",
+    "title": "EyN: Vecinos se movilizan en contra de proyecto de 1.828 departamentos en Plaza Egańa",
+    "url": "http://www.economiaynegocios.cl/noticias/noticias.asp?id=438845",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "comunidad",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "proyecto inmobiliario que busca levantar cuatro torres de departamentos de entre 27 y 32 pisos de altura",
+      "Los edificios contendrán 1.828 departamentos",
+      "una placa comercial de 7.500 m {+2} en cuatro niveles"
+    ]
+  },
+  {
+    "document_id": "d70561c55428df325e8133c73f55187908505b3d248b9eb56239efc442486793",
+    "nombre_proyecto": "San Nicolás",
+    "title": "2° Tribunal Ambiental anuló RCA que aprobó proyecto inmobiliario en la comuna de San Miguel por no considerar debidamente observaciones ciudadanas",
+    "url": "https://www.paiscircular.cl/radar-legal/2-tribunal-ambiental-anulo-rca-que-aprobo-proyecto-inmobiliario-en-la-comuna-de-san-miguel-por-no-considerar-debidamente-observaciones-ciudadanas/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "nicolas",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto consiste en la construcción y operación de un proyecto inmobiliario, compuesto por dos edificios de departamentos de 12 pisos de altura y una placa comercial con 16 locales comerciales.",
+      "Contempla un total de 378 departamentos, 358 estacionamientos y 523 bicicleteros."
+    ]
+  },
+  {
+    "document_id": "0eb9dd292cda1b1ca2d1c40c7d64d66c34ab9c48028f779a4a18611e08bf81e0",
+    "nombre_proyecto": "Villa San Luis de Las Condes",
+    "title": "CORTE SUPREMA RECHAZÓ RECURSO DE PROTECCIÓN INTERPUESTO POR INMOBILIARIA QUE BUSCABA DECLARAR ILEGAL EL CARÁCTER DE MONUMENTO HISTÓRICO DE LA VILLA SAN LUIS - Consejo de Defensa del Estado",
+    "url": "https://www.cde.gob.cl/corte-suprema-rechazo-recurso-de-proteccion-interpuesto-por-inmobiliaria-que-buscaba-declarar-ilegal-el-caracter-de-monumento-historico-de-la-villa-san-luis/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "condes",
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "declaró como monumento histórico el mencionado conjunto habitacional"
+    ]
+  },
+  {
+    "document_id": "cbbac397f25dad81ec2e6d02c8a312edc9ea66627f83834c171f8af3b91d7d9d",
+    "nombre_proyecto": "Territoria Apoquindo",
+    "title": "Territoria Apoquindo: El mall objetado por Contraloría - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2020/01/02/territoria-apoquindo-el-mall-objetado-por-contralaria/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "apoquindo",
+      "territoria"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Mall de US$ 500 millones",
+      "para construir en distintos predios fusionados 3 edificios de comercio y oficinas",
+      "se objetó la emisión del Permiso de Edificación Nº 108"
+    ]
+  },
+  {
+    "document_id": "e8f24b37781a1ba71dfd30afc5613578ded18f664da2fe94ef14514f1ba26293",
+    "nombre_proyecto": "Alameda 4499",
+    "title": "Aquí se dice por qué existen los guetos verticales ilegales en Estación Central - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2021/03/09/aqui-se-dice-por-que-existen-los-guetos-verticales-ilegales-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "4499",
+      "alameda"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "varias decenas de invasivas torres habitacionales, que tienen entre los 25 y 40 pisos, con capacidades de entre 300 y 800 habitáculos",
+      "los 75 permisos de edificación y 30 resoluciones de anteproyectos cursados por su antecesor a partir del año 2013"
+    ]
+  },
+  {
+    "document_id": "6cb71d7ef8a3e4376a6a4cdc4e0e3f7c28d34cdea6296c74a99c45c9fc6011e7",
+    "nombre_proyecto": "ex Villa San Luis",
+    "title": "Miguel Lawner y el acuerdo sobre la ex Villa San Luis: «Es extraordinariamente importante porque es una primera reparación a las mil familias que fueron desalojadas» - COLEGIO DE ARQUITECTOS DE CHILE",
+    "url": "https://colegioarquitectos.com/noticias/?p=27186",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un Museo Memorial de hasta 800 m2 que buscará recuperar los vestigios del Block 14",
+      "uno de los proyectos de integración social y urbana más importantes del Gobierno del Presidente Salvador Allende",
+      "departamentos magníficos en la comuna en que ellos debían vivir"
+    ]
+  },
+  {
+    "document_id": "880b3ffcbb9dec356398805146b11543254e229134331a4e12acb73453db590a",
+    "nombre_proyecto": "proyecto del terreno en Bellavista",
+    "title": "Socio de Banmerchant y Gerente general de Desarrollo Inmobiliario Bellavista: \"No volvería a invertir en Recoleta mientras Jadue sea alcalde, porque hemos visto el abuso de la autoridad\" - La Tercera",
+    "url": "https://www.latercera.com/pulso/noticia/socio-banmerchant-gerente-general-desarrollo-inmobiliario-bellavista-no-volveria-invertir-recoleta-jadue-sea-alcalde-visto-abuso-la-autoridad/823552/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bellavista",
+      "terreno"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Se construirían tres torres de 19 pisos",
+      "una torre que alcanzó a habitarse",
+      "una segunda con 239 promesas de compraventa"
+    ]
+  },
+  {
+    "document_id": "f6d95e80a18a5387037e06321a8ab9ae26928a0c3e14386d9fa86c314f555617",
+    "nombre_proyecto": "Helipuerto Santiago",
+    "title": "Helipuerto de Huechuraba lamenta fallo y dice que recinto \"es una tremenda contribución a la industria aeronáutica\"",
+    "url": "https://www.emol.com/noticias/Nacional/2025/04/25/1164560/helipuerto-santiago-lamenta-suprema.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "helipuerto",
+      "santiago"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la que declara la nulidad de la primera prórroga del permiso de edificación provisorio del recinto ubicado en Huechuraba"
+    ]
+  },
+  {
+    "document_id": "5625f22e58e0dd51e50cd8632a0ce43b7610594432e0a7b28236e4dfc43245b1",
+    "nombre_proyecto": "Vitacura Center",
+    "title": "Cencosud Shopping lanza proyecto de nuevo centro comercial en Vitacura y espera que esté operativo en 2026 | Diario Financiero",
+    "url": "https://www.df.cl/empresas/retail/cencosud-lanza-proyecto-de-nuevo-centro-comercial-en-vitacura-y-espera",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "center",
+      "vitacura"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "su nuevo proyecto de centro comercial",
+      "El centro comercial, que estará ubicado en la intersección de las avenidas Santa María y Américo Vespucio Norte"
+    ]
+  },
+  {
+    "document_id": "d6e917e115fe9f8eb0f53e450b0de700d0d136520985bddc5d2c3dfdb2b9d863",
+    "nombre_proyecto": "Construcción Obras Inmobiliaria Los Silos III",
+    "title": "archiva denuncia presentada en contra - Gobierno Transparente",
+    "url": "https://transparencia.sma.gob.cl/doc/resoluciones/RESOL_EXENTA_SMA_2022/RESOL%20EXENTA%20N%201090%20SMA.PDF",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "iii",
+      "inmobiliaria",
+      "obras",
+      "silos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "quema de vegetación, construcción de una zanja con maquinaria, y la disminución del flujo de agua en un humedal urbano",
+      "refuerzo de un cierre perimetral preexistente y la habilitación de una zanja"
+    ]
+  },
+  {
+    "document_id": "fb31947ee71b5386e1bcde4fa1b37570a867232120537d317dfdf5ad52249b76",
+    "nombre_proyecto": "casona de calle Huérfanos",
+    "title": "Yungay, un barrio cargado de historia para el presidente Boric en Chile",
+    "url": "https://elpais.com/internacional/2022-03-12/yungay-un-barrio-cargado-de-historia-para-el-presidente-boric-en-chile.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "calle",
+      "casona",
+      "huerfanos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Declarado patrimonio en 2009",
+      "está protegido y no se puede demoler"
+    ]
+  },
+  {
+    "document_id": "a29bdef7b9f3c0879639fee123a8fe23ecc34af1e9b780bd58d4c75d47766481",
+    "nombre_proyecto": "Edificio Claudio Arrau",
+    "title": "Tribunal rechazó reclamación de la Municipalidad de Pudahuel contra el procedimiento de evaluación del Edificio Claudio Arrau",
+    "url": "https://tribunalambiental.cl/sentencia-r-441-2024-desarrollo-los-bronces-sea-ruta-g-21-rca-5",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "arrau",
+      "claudio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto, cuyo titular es Inmobiliaria Los Morros S.A., consiste en la construcción y operación de un proyecto inmobiliario que contempla la edificación con destino habitacional de 2 torres de 15 pisos, con 511 departamentos y 6 locales comerciales"
+    ]
+  },
+  {
+    "document_id": "681997e9d3a49034ac644db92a1f7f59a9607de22a124f5d7b99151cb1213629",
+    "nombre_proyecto": "Quebrada de La Plata",
+    "title": "atendido el estado procesal, no ha lugar. VISTOS: A fs. 1 d",
+    "url": "https://ciperchile.cl/pdfs/2015/03/mineria-maipu/2013-03-26_CortedeApelaciones_rechazarecurso_de_UdeChile.pdf",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "plata",
+      "quebrada"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "constatando la existencia de un campamento minero con ocho operarios, dos retroexcavadoras, dos camiones tolva, un generador de energía",
+      "comprobó el ensanche de senderos, destrucción de árboles nativos y la existencia de dos profundas excavaciones en el cerro"
+    ]
+  },
+  {
+    "document_id": "7765d45503ecfb4d7ba4722549e1c0f4aa029faaede885bd06a0bb3318cedf00",
+    "nombre_proyecto": "Alto Las Condes 2",
+    "title": "¿Dónde quiere construir Cencosud el \"Alto Las Condes 2\" y por qué está en conflicto con la municipalidad de Vitacura?",
+    "url": "https://www.meganoticias.cl/nacional/414211-proyecto-alto-las-condes-2-cencosud-conflicto-municipalidad-vitacura-dom-pdp-16-5-2023.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "alto",
+      "condes"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Además de un centro comercial, la iniciativa, que requeriría unos 300 millones de dólares de inversión, contempla la construcción de torres de oficinas, departamentos, un hotel y un rascacielos de hasta 55 pisos."
+    ]
+  },
+  {
+    "document_id": "420c22c032ead90ff637724cf1d1039fcc01b7d1476b59350f4443d32fbc5899",
+    "nombre_proyecto": "Edificio Pajaritos",
+    "title": "Tribunal rechazó reclamación de la Municipalidad de Maipú en contra de la aprobación del proyecto “Edificio Pajaritos”",
+    "url": "https://tribunalambiental.cl/sentencia-r-404-2023-municipalidad-maipu-sea-edificio-pajaritos",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "pajaritos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "consiste en la construcción de dos edificios de 21 pisos con destino habitacional y un edificio de 26 pisos de apart hotel con locales comerciales, contemplando en total 483 departamentos, 8 locales comerciales, 484 apartamentos, 385 estacionamientos para vehículos y 322 estacionamientos para bicicletas"
+    ]
+  },
+  {
+    "document_id": "b7f85029fd71ce55e695dc8245b823b8fb66d0c592b771ce13005f506914d200",
+    "nombre_proyecto": "edificio fantasma",
+    "title": "Empresa dueña de \"edificio fantasma\" en Estación Central pierde en la Suprema disputa con municipalidad",
+    "url": "https://www.emol.com/noticias/Economia/2025/08/27/1176189/edificio-fantasma--estacion-central.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "fantasma"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "autorizó un proyecto para levantar un edificio de 42 pisos, con 732 departamentos, locales comerciales, estacionamientos y bodegas.",
+      "construyó un edificio distinto: 36 pisos, 398 viviendas, además de un apart hotel de 155 habitaciones, y modificaciones en estacionamientos y otras características urbanísticas."
+    ]
+  },
+  {
+    "document_id": "1efad5e5d1644ba0ce0880f146d307241eeb72c3f927a8b1e32aa2362d727033",
+    "nombre_proyecto": "San Nicolás",
+    "title": "Tribunal anuló RCA que aprobó proyecto inmobiliario en la comuna de San Miguel por no considerar debidamente observaciones ciudadanas",
+    "url": "https://tribunalambiental.cl/sentencia-r-463-2024-proyecto-inmobiliario-en-san-miguel",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "nicolas",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto consiste en la construcción y operación de un proyecto inmobiliario, compuesto por dos edificios de departamentos de 12 pisos de altura y una placa comercial con 16 locales comerciales.",
+      "Contempla un total de 378 departamentos, 358 estacionamientos y 523 bicicleteros."
+    ]
+  },
+  {
+    "document_id": "6e7ef1bd0a7ada7095c0b9d76ae3c98e476a1964c2548f132ef8efe4afac9bb4",
+    "nombre_proyecto": "proyecto en Plaza Egaña",
+    "title": "Casi 300 observaciones ciudadanas suma proyecto en Plaza Egaña | Diario Financiero",
+    "url": "https://www.df.cl/empresas/infraestructura-inmobiliaria/casi-300-observaciones-ciudadanas-suma-proyecto-en-plaza-egana",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "egana",
+      "plaza"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "busca levantar cuatro torres de departamentos de entre 27 y 32 pisos de altura"
+    ]
+  },
+  {
+    "document_id": "e13ebc73d5ad05757b72964d91d52766915808d6d1cb5d906f8a10557829711e",
+    "nombre_proyecto": "Cerro Colorado 4661",
+    "title": "La sentencia que falta para iniciar el proyecto de viviendas sociales de Poduje cerca del Parque Arauco - Ex-Ante | Las noticias que importan",
+    "url": "https://www.ex-ante.cl/nacional/el-proyecto-de-viviendas-sociales-anunciado-por-poduje-cerca-del-parque-arauco-y-la-disputa-legal-por-el-pano/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "4661",
+      "cerro",
+      "colorado"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "levantará proyectos sociales en Las Condes",
+      "un proyecto mixto de departamentos y casas",
+      "para destinarla a la construcción de viviendas de interés público"
+    ]
+  },
+  {
+    "document_id": "28cd2ac02d945364a956f8cd8a8eb1326e955fccdab0b47c657ed4cf8c57c2a8",
+    "nombre_proyecto": "edificio fantasma",
+    "title": "Corte Suprema rechaza recurso por ‘edificio fantasma’ en Estación Central - Valuaciones Chile",
+    "url": "https://valuaciones.cl/corte-suprema-rechaza-recurso-por-edificio-fantasma-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "fantasma"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de un edificio de 42 pisos, con 732 departamentos, dos locales comerciales, 119 estacionamientos y 168 bodegas",
+      "un proyecto de 36 pisos, con solo 398 viviendas y 155 habitaciones destinadas a hotel"
+    ]
+  },
+  {
+    "document_id": "980d2c8bf54c29bf8ae765dd6e327514a0c37b599eeb6e91a8be1db8a8bf9d20",
+    "nombre_proyecto": "San Nicolás",
+    "title": "Paralización de proyecto inmobiliario golpea con 131 despidos y $325 millones en costos - Ex-Ante | Las noticias que importan",
+    "url": "https://www.ex-ante.cl/economia/paralizacion-de-proyecto-inmobiliario-golpea-con-131-despidos-y-325-millones-en-costos/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "nicolas",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto contempla la construcción y operación de un conjunto inmobiliario compuesto por dos edificios de departamentos de 12 pisos de altura, un nivel subterráneo y una placa comercial con 16 locales.",
+      "En total, se desarrollarán 378 departamentos"
+    ]
+  },
+  {
+    "document_id": "9387b59729946ee2c5dc27e81368e77cb54ec232092305dd6e6137e442b224df",
+    "nombre_proyecto": "Hijuelas Quilín",
+    "title": "Municipalidad de Peñalolén en la mira de Contraloría por millonario proyecto inmobiliario",
+    "url": "https://www.elperiodista.cl/2025/05/municipalidad-de-penalolen-en-la-mira-de-contraloria-por-millonario-proyecto-inmobiliario/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "hijuelas",
+      "quilin"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de 15 edificios habitacionales con más de 2.300 departamentos, un centro comercial y más de 4.000 estacionamientos"
+    ]
+  },
+  {
+    "document_id": "26092fcb6164c2e9f7917ae45f8f74fc2b4b3ac6e8ebb302e56a3ff68b0a461d",
+    "nombre_proyecto": "Club de planeadores de Vitacura",
+    "title": "ASMA Superintendencia - Gobierno Transparente",
+    "url": "https://transparencia.sma.gob.cl/doc/resoluciones/RESOL_EXENTA_SMA_2021/RESOL%20EXENTA%20N%201063%20SMA.PDF",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "club",
+      "planeadores",
+      "vitacura"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el terreno era utilizado como helipuerto, y sus galpones como hangar para la custodia y mantención de helicópteros"
+    ]
+  },
+  {
+    "document_id": "8af7f687c89db04b890a9e01edc241eb71fa259ee5410cfc0dfcb27d6d7bef19",
+    "nombre_proyecto": "mall de Cencosud",
+    "title": "Cencosud suspende tramitación ambiental de mall en Vitacura tras oposición de vecinos y Municipalidad | Diario Financiero",
+    "url": "https://www.df.cl/empresas/retail/cencosud-suspende-tramitacion-ambiental-de-mall-en-vitacura-tras",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "cencosud",
+      "mall"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "el proyecto de su nuevo centro comercial en Vitacura"
+    ]
+  },
+  {
+    "document_id": "54b7e3ff6d7f161954eb9be1b3803fa8e18b90107ad5491efd98712cd4f6d2bf",
+    "nombre_proyecto": "Plaza Barcelona",
+    "title": "Vecinos de Conchalí piden al Minvu no construir en reconocida área verde utilizada por la comunidad",
+    "url": "https://www.elmostrador.cl/noticias/pais/2014/03/17/vecinos-de-conchali-piden-al-minvu-no-construir-en-reconocida-area-verde-utilizada-por-la-comunidad/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "barcelona",
+      "plaza"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "los que pretenden construir en el citado terreno una serie de viviendas sociales.",
+      "no permitirán el cambio de uso de suelo"
+    ]
+  },
+  {
+    "document_id": "4a66453c203e04bb2f2bfc5893bd0b720139d15b548784997c9e610aa73d6353",
+    "nombre_proyecto": "Parque Isabel Riquelme",
+    "title": "La ex Concertación ayudó a Lucía de Pinochet - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2016/04/07/la-ex-concertacion-ayudo-a-lucia-de-pinochet/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "isabel",
+      "parque",
+      "riquelme"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "ese predio de 2 lotes contiguos de 27.500 m2 se transformó en urbano, apto para construir viviendas y equipamientos varios",
+      "una modificación al Plan Regulador Comunal (PRC) de Santiago para eliminar la zonificación de área verde",
+      "se intentaba incorporar usos de suelo de vivienda, equipamientos e industrias inofensivas",
+      "la ejecución de atractivos proyectos inmobiliarios"
+    ]
+  },
+  {
+    "document_id": "42c8b7e00822408d333117960962a4ac9a5fb982220ccba0e343973fbd499178",
+    "nombre_proyecto": "proyecto Avda. Vespucio con Renato Sanchez Fontecilla y Asturias",
+    "title": "Abogado Rodrigo Andreucci: el artículo 6.1.8 de la OGUC es ilegal",
+    "url": "https://www.defendamoslaciudad.cl/noticias/item/8914-abogado-rodrigo-andreucci-el-articulo-6-1-8-de-la-oguc-es-ilegal",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "asturias",
+      "avda",
+      "fontecilla",
+      "renato",
+      "sanchez",
+      "vespucio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "destinar la placa comercial a un supermercado (construido!)"
+    ]
+  },
+  {
+    "document_id": "8701d9d9c66b83b04154ec260046da9026d6bfccb6f9ec0e8c75074cf815c189",
+    "nombre_proyecto": "proyecto inmobiliario de Fundamenta",
+    "title": "\"¿Un gueto más en la comuna?\": La batalla vecinal de Ñuñoa contra millonario proyecto inmobiliario de casi 700 departamentos | The Clinic",
+    "url": "https://www.theclinic.cl/2026/03/06/un-gueto-mas-en-la-comuna-la-batalla-vecinal-de-nunoa-contra-millonario-proyecto-inmobiliario-de-casi-700-departamentos/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "fundamenta",
+      "inmobiliario"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "La empresa inició a finales del 2025 la tramitación de la Declaración de Impacto Ambiental (DIA) en el Servicio de Evaluación Ambiental (SEA) de un proyecto habitacional avaluado en US$101,9 millones.",
+      "Este contempla la construcción de cinco edificios habitacionales, dos torres de 13 pisos y tres edificios de seis pisos, que en conjunto sumarían 693 departamentos.",
+      "además de una dotación de 738 estacionamientos subterráneos para vehículos"
+    ]
+  },
+  {
+    "document_id": "e8d8897339fffec56ff1e2ef2f99eebcb105d903383ec2f71ff00b19f2ce1ee6",
+    "nombre_proyecto": "Parcelación San Ignacio",
+    "title": "Región Metropolitana - Documento Digitalizado en OFP - Minvu",
+    "url": "https://documentos.minvu.cl/regionXIII/seremi/resoluciones_exentas/Documentos/RES.EX.N%C2%B01681%2002.07.2019.pdf",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "ignacio",
+      "parcelacion",
+      "san"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Solicitud de Modificación de Deslindes s/N°, de fecha 15 de noviembre de 2018",
+      "Lote Z2 – ROL SII N° 118-548"
+    ]
+  },
+  {
+    "document_id": "73ef57568d0926b953bd8a66298306bbdd971f6d9964e80cf88958ec98d2044c",
+    "nombre_proyecto": "Casa tipo inglés",
+    "title": "Casa tipo inglés demolida",
+    "url": "http://minunoa.blogspot.com/2015/01/casa-tipo-ingles-demolida.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "casa",
+      "ingles",
+      "tipo"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Las cuatro casas construidas durante los años treinta en José Domingo Cañas con Fernández Concha están cubiertas por paneles que presagian su inminente demolición.",
+      "las casas fueron demolidas"
+    ]
+  },
+  {
+    "document_id": "4ba9a07daf4a059797769414f3d3c2f2493cfd8b2b6bbba97c20579332e14b78",
+    "nombre_proyecto": "desarrollo de Satel",
+    "title": "La inmobiliaria Satel presentó la semana pasada un recurso ...",
+    "url": "https://segreader.emol.cl/2017/12/06/A/G539LUFU/light?gt=133034",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "desarrollo",
+      "satel"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "su proyecto inmobiliario en la esquina de Manquehue con Los Militares, en Las Condes",
+      "La iniciativa de siete pisos, destinada al arriendo de oficinas y locales comerciales"
+    ]
+  },
+  {
+    "document_id": "ad0a7f79556703c164600d1acb30cab2ebb1cea93c2b4234999111cf3c00e5d3",
+    "nombre_proyecto": "Hijuelas-Quilín",
+    "title": "Buscan revivir proyecto en Peñalolén que considera 15 torres y centro comercial | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/buscan-revivir-proyecto-en-penalolen-que-considera-15-torres-y-centro",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "hijuelas",
+      "quilin"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "contempla un centro comercial vecinal y 15 edificios para viviendas, de entre 11 y 15 pisos, que albergarían 2.368 departamentos"
+    ]
+  },
+  {
+    "document_id": "10120ea02ad38a83ae19935edab47325143cf2f9b322f44388a20e0bbaf99357",
+    "nombre_proyecto": "Club de Campo Vitacura",
+    "title": "Inmobiliaria de Fernández León inicia construcción de millonario megaproyecto en Vitacura | Diario Financiero",
+    "url": "https://www.df.cl/empresas/infraestructura-inmobiliaria/inmobiliaria-de-fernandez-leon-inicia-construccion-de-millonario",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "campo",
+      "club",
+      "vitacura"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un terreno de 28 mil m2 ubicado en isla Lo Matta",
+      "un parque en la ribera sur del Río Mapocho"
+    ]
+  },
+  {
+    "document_id": "3da108b701f5cfc7dc4c2e2d8e168e417637718815bdbdcaecb27360c0014e98",
+    "nombre_proyecto": "Toro Mazotte 115",
+    "title": "Tribunal Ambiental escuchó los alegatos en reclamación presentada por Inmobiliaria contra el SEA por rechazo al proyecto de construcción de dos torres de 38 pisos en Estación Central",
+    "url": "https://tribunalambiental.cl/audiencia-r-147-2017-edificio-toro-mazotte/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "115",
+      "mazotte",
+      "toro"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto consiste en la construcción dos torres de 38 pisos de altura con tres niveles de subterráneos, con un total de 1.078 departamentos, 195 estacionamientos, 305 bodegas y 2 locales comerciales"
+    ]
+  },
+  {
+    "document_id": "da451faff591bd3cbe897fc099fb5e6110f57a05cdff7581a08b0bf05659bbdc",
+    "nombre_proyecto": "Avenida Vicuña Mackenna N°6171, ex 6161",
+    "title": "NELSON LAMAS Y OTROS. RUT: 6.760.182-3 DOMICILIO: ...",
+    "url": "https://interferencia.cl/sites/default/files/recurso_asbestos.pdf",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "6161",
+      "avenida",
+      "mackenna",
+      "n6171",
+      "vicuna"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "de una demolición, acopio y retiro de escombros.",
+      "Que dicho material a demoler, acopiar y retirar contiene ASBESTO",
+      "construcción, que está abandonada y parcialmente demolida"
+    ]
+  },
+  {
+    "document_id": "fda14e16c17a80f893c8a2e89a616a3d8e2e419c6da6ab32afdbc6c94c95665d",
+    "nombre_proyecto": "Villa San Luis",
+    "title": "Las Condes: Corte Suprema ratifica que la Villa San Luis es un Monumento Histórico",
+    "url": "https://www.elciudadano.com/chile/las-condes-corte-suprema-ratifica-que-la-villa-san-luis-es-un-monumento-historico/07/24/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "al complejo de departamentos de los años setenta",
+      "los inmuebles que quedan del conjunto habitacional",
+      "los aspectos relevantes y de fondo en la determinación del eventual carácter histórico y patrimonial de los escombros y vestigios ubicados en el Lote 18-A1"
+    ]
+  },
+  {
+    "document_id": "35d910e4e566642d4caf161215c417f34d61f8cde66c1ffa090da3bc964d1149",
+    "nombre_proyecto": "Club Ossandón",
+    "title": "El conflicto municipal en La Reina que involucra al subsecretario del Deporte",
+    "url": "https://www.biobiochile.cl/especial/noticias/reportajes/reportajes-politica/2018/06/22/el-conflicto-municipal-en-la-reina-que-involucra-al-subsecretario-del-deporte.shtml",
+    "n_quotes_objeto_incluidas": 5,
+    "name_tokens": [
+      "club",
+      "ossandon"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "obras para ampliar el recinto",
+      "construyendo disconforme a lo aprobado",
+      "el emplazamiento de un muro de escalada",
+      "la ampliación que venía desarrollando previamente por fuera de la ley",
+      "votó a favor de un cambio en el plan regulador que favoreció directamente a su padre"
+    ]
+  },
+  {
+    "document_id": "24a9507021c7366fd74e562b6771d4ae1ab0ecd6f5bde3b5073d6f1665b15cbc",
+    "nombre_proyecto": "proyecto de PyG Larraín",
+    "title": "Junta de vecinos de Lo Curro atenta a proyecto de PyG ... - Emol",
+    "url": "https://segreader.emol.cl/2018/01/30/A/FU3AMV6C/light?gt=162252",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "larrain",
+      "pyg"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "serán 15 edificios con 577 departamentos, 1.450 estacionamientos, de los cuales seis serán apart hotel con 2.660 camas y 1.505 estacionamientos"
+    ]
+  },
+  {
+    "document_id": "7808fc3aab6806436a01fef52d33e3f907ad751a273c3e5143037f663221bcaf",
+    "nombre_proyecto": "aeropuerto de Santiago",
+    "title": "Nuevo Pudahuel advierte que millonarias multas del MOP ponen en riesgo su solvencia",
+    "url": "https://www.cooperativa.cl/noticias/pais/transportes/aviacion/nuevo-pudahuel-advierte-que-millonarias-multas-del-mop-ponen-en-riesgo/2022-11-04/100105.html",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "aeropuerto",
+      "santiago"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "las boletas de garantía de explotación de las obras de la concesión para la Primera Puesta en Servicio Provisoria Parcial (PPSPP)",
+      "por una multa que se cursó en abril del presente por cerca de 70 millones de pesos",
+      "en los plazos de la licitación para la entrega de las correcciones a las observaciones que formuló el inspector fiscal al Programa Anual de Conversación de las Obras (PACO) en 2019"
+    ]
+  },
+  {
+    "document_id": "190ea526c576cdde79383ebade59286d8a7f567f17bce9607b62f037ad87f7e9",
+    "nombre_proyecto": "Hijuelas Quilín",
+    "title": "Tribunal ambiental dejó sin efecto aprobación del proyecto \"Hijuelas Quilín\" de Peñalolén",
+    "url": "https://www.cooperativa.cl/noticias/pais/vivienda/tribunal-ambiental-dejo-sin-efecto-aprobacion-del-proyecto-hijuelas/2023-07-19/195542.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "hijuelas",
+      "quilin"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El complejo contempla 24 torres, con 2.368 departamentos, un strip center y 4.009 estacionamientos."
+    ]
+  },
+  {
+    "document_id": "a5efca8771d9ab020b599a95bc4ae6970cae30a76c916182383a2313d89ee6ae",
+    "nombre_proyecto": "Lote A",
+    "title": "Sentencia nº Rol 3250-16 de Tribunal Constitucional, 3 de Abril de 2018",
+    "url": "https://vlex.cl/vid/708387449",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "lote"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Su demanda tiene por objeto que se declare que a un inmueble de su propiedad no le corresponde quedar afecto a declaración de utilidad pública, y en consecuencia, se pidió al tribunal que ordenara al municipio dictar la normativa urbanística correspondiente, que le permitirá desarrollar su proyecto inmobiliario.",
+      "Dicho predio, desde el año 2002, quedó afecto a utilidad pública, al estar incluido en una zona que el plan regulador comunal determinó como destinada a área verde.",
+      "desarrollar su proyecto de subdivisión y edificación en el predio."
+    ]
+  },
+  {
+    "document_id": "9cb57787afc9b998a99cddbed7db5aa26cffd99783526d51783ddc8961e6e9d2",
+    "nombre_proyecto": "Vespucio 345",
+    "title": "Batacazo de Inmobiliaria Nueva El Golf: municipio de Las Condes deberá pagar casi $10 mil millones tras error en apelación ante la Corte - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/batacazo-de-inmobiliaria-nueva-el-golf-municipio-de-las-condes-debera-pagar-casi-10-mil-millones-tras-error-en-apelacion-ante-la-corte/TGGDFUBKBJGMJK2VG22XBIV6KU/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "345",
+      "vespucio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "obtuvo el permiso de edificación de lo que sería un lujoso proyecto de departamentos",
+      "“un conjunto armónico” de dos edificios, uno con destino residencial, vivienda, y otro de equipamiento de oficinas",
+      "la construcción de locales comerciales"
+    ]
+  },
+  {
+    "document_id": "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e",
+    "nombre_proyecto": "inmueble ubicado en calle Pastor Fernández 18.580",
+    "title": "Otra inmobiliaria rechaza nuevo plan regulador de Lo Barnechea: dice que es una regulación expropiatoria que elude compensación | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/otra-inmobiliaria-rechaza-nuevo-plan-regulador-de-lo-barnechea-dice-que-es",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "580",
+      "calle",
+      "fernandez",
+      "inmueble",
+      "pastor",
+      "ubicado"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Actualización del Plan Regulador Comunal (PRC) de Lo Barnechea",
+      "con el fin de desarrollar un proyecto inmobiliario",
+      "cuenta con permisos para construir diversos proyectos en terrenos de su propiedad en La Dehesa",
+      "59 edificios para un total de 468 departamentos de tipo residencial"
+    ]
+  },
+  {
+    "document_id": "9a7ab3c621faf460284cf7f8ffc6d9e242ef1f3f42ef2b000ae871c7f1570d06",
+    "nombre_proyecto": "Colegio Las Américas",
+    "title": "Venden terreno con fines educacionales para construir torres de departamentos - CIPER Chile",
+    "url": "https://www.ciperchile.cl/2014/12/23/colegio-las-americas-intentan-vender-terreno-con-destino-educacional-para-construir-departamentos/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "americas",
+      "colegio"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "para que ésta edificara siete torres habitacionales",
+      "en las cuales se proyectan 316 viviendas acogidas a las franquicias tributarias que brinda la reglamentación del DFL2 y 365 estacionamientos",
+      "un conjunto armónico de siete torres habitacionales"
+    ]
+  },
+  {
+    "document_id": "267a9e2d6e4bb695920e75754964c18df08d9acecd953e04606795d33e055145",
+    "nombre_proyecto": "Plan Fontova",
+    "title": "Anuncian nuevo proyecto para ensanchar avenida Pedro Fontova en Huechuraba",
+    "url": "https://chicureo.com/taller/2014/04/09/anuncian-nuevo-proyecto-para-ensanchar-avenida-pedro-fontova-en-huechuraba/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "fontova",
+      "plan"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Para terminar con los tacos, la obra tiene contemplada la ampliación a dos de las vías de ingreso y a tres la de salida."
+    ]
+  },
+  {
+    "document_id": "0029c2939e55804d1a7fff365fe8c27ef74d9415f4d200bfb03b16a395739272",
+    "nombre_proyecto": "Frutillar N°414",
+    "title": "(saj) (jmv) resuelve reclamación interpuesta por",
+    "url": "https://documentos.minvu.cl/server/api/core/bitstreams/fe2eec33-b89b-4b54-bc22-815085dba900/content",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "frutillar",
+      "n414"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "rechazó la Solicitud de Regularización de Edificaciones Existentes – Dañadas a consecuencia de una catástrofe",
+      "la edificación presentada no cumple con la totalidad de las normas urbanísticas pertinentes a la zona del PRC donde se encuentra"
+    ]
+  },
+  {
+    "document_id": "f1963b7e629c54d960674663c2d0486679c6e0d83e800b904ee0cfd2851eeee1",
+    "nombre_proyecto": "Egaña–Comunidad Sustentable",
+    "title": "Tras siete meses paralizado se aprueba megaproyecto en Ñuñoa: SEA acoge recurso por Egaña Sustentable",
+    "url": "https://www.emol.com/noticias/Economia/2022/11/14/1078308/sea-permite-proyecto-plaza-egana.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "eganacomunidad",
+      "sustentable"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto considera la construcción de cuatro edificios y un sector de comercio en una superficie de 15.180,56 m2",
+      "se contempla un total de 1.752 departamentos"
+    ]
+  },
+  {
+    "document_id": "24cc5a587b727e6f7e7ed0ee3a6523b6e9700711d25e2055b36c97e980ee7fa3",
+    "nombre_proyecto": "Edificio Pajaritos",
+    "title": "Proyecto Pajaritos: la polémica por tres torres que podrían construirse en la principal arteria de Maipú",
+    "url": "https://www.pauta.cl/ciudad/2023/05/26/proyecto-pajaritos-la-polemica-por-tres-torres-que-podrian-construirse.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "pajaritos"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "contempla la construcción de tres edificios que tendrían usos residenciales, pero también comerciales y de apart hotel",
+      "En ellos, habría 448 departamentos, ocho locales comerciales y 434 apartamentos."
+    ]
+  },
+  {
+    "document_id": "8f976b1ba3bfb6ab2fd4ab05d2c93ded7083b09d52a71e8090de71307f986770",
+    "nombre_proyecto": "Edificio del grupo Angelini en Las Condes",
+    "title": "[OPINIÓN] Edificio del grupo Angelini en Las Condes: Un nuevo \"error\" municipal",
+    "url": "https://www.elmartutino.cl/noticia/sociedad/opinion-edificio-del-grupo-angelini-en-las-condes-un-nuevo-error-municipal",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "angelini",
+      "condes",
+      "grupo"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "Se trata del permiso de edificación Nº 40 del 10 de abril de 2013, tipificado como Conjunto Armónico",
+      "para construir 2 edificios de oficinas de servicios profesionales y comercio (equipamiento) con un total de 39.534,35 m2",
+      "ese proyecto inmobiliario, que consta de un edificio de 22 pisos y otro de 2 pisos, con un total de 481 estacionamientos bajo el nivel del suelo",
+      "el proyecto no cuenta con viviendas"
+    ]
+  },
+  {
+    "document_id": "b755f54757defc3013a92708a13be52808d7014f0ce1f50efa129370530550eb",
+    "nombre_proyecto": "ex colegio Mayflower",
+    "title": "Las Condes arrienda ex colegio Mayflower mientras alista construcción de nuevo establecimiento municipal | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/las-condes-arrienda-ex-colegio-mayflower-mientras-alista-construccion-de",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "colegio",
+      "mayflower"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "en 2015, el clan presentó un anteproyecto para el desarrollo de un centro comercial.",
+      "para autorizar un mall se requiere una modificación al plan regulador comunal."
+    ]
+  },
+  {
+    "document_id": "1d5456b4111537f9d322a3c5152527ce7038be8ebce2761e820b9b594f57b6c8",
+    "nombre_proyecto": "Bunker",
+    "title": "Primero: Comparece el abogado Cristián A",
+    "url": "https://www.doe.cl/alerta/23112023/202311233005",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "bunker"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "calle Bombero Núñez N°159-169",
+      "actualmente opera como restaurant, bar y discoteque",
+      "nuevo acceso al inmueble",
+      "construcciones habitadas sin recepción final"
+    ]
+  },
+  {
+    "document_id": "55877b4248c79eb9bdcfd97de6965532769db70059359d97657908bd41c6b067",
+    "nombre_proyecto": "Avenida Portales 4047",
+    "title": "El terreno del fisco que usa la Armada en Santiago donde un grupo de vecinos busca levantar viviendas sociales",
+    "url": "https://interferencia.cl/articulos/el-terreno-del-fisco-que-usa-la-armada-en-santiago-donde-un-grupo-de-vecinos-busca",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "4047",
+      "avenida",
+      "portales"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto diseñado por Castillo incluye la construcción de cerca de 300 departamentos, un anfiteatro y jardines abiertos al barrio que rodean los edificios."
+    ]
+  },
+  {
+    "document_id": "485da976888071ded1fb14004c74eeb5756db0a50891c4d8f90e78f898238f92",
+    "nombre_proyecto": "Lugar de memoria: Guerrero, Parada y Nattino",
+    "title": "La esquina que enfrenta a Providencia",
+    "url": "https://kilometrocero.cl/la-esquina-que-enfrenta-a-providencia/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "guerrero",
+      "lugar",
+      "memoria",
+      "nattino",
+      "parada"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "un memorial en honor a las víctimas del Caso Degollados",
+      "un proyecto de tres bancas con los apellidos de las víctimas del Caso Degollados",
+      "que consistirá en tres bancas con los apellidos de los hombres asesinados"
+    ]
+  },
+  {
+    "document_id": "0b4fb575563b7cba27730d354f8325a56824307407e75d52264021de24ac919b",
+    "nombre_proyecto": "Parque Las Moscas",
+    "title": "Un gueto vertical en área verde que era de “Doña Lucía”",
+    "url": "https://eldesconcierto.cl/2017/07/16/un-gueto-vertical-en-area-verde-que-era-de-dona-lucia",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "moscas",
+      "parque"
+    ],
+    "overlap_tokens": [],
+    "overlap_ratio": 0.0,
+    "quotes_objeto_incluidas": [
+      "El permiso contempla 4.200 viviendas y 21 locales comerciales.",
+      "3 edificios de 15 pisos cada uno",
+      "un edificio de 15 pisos para 1.400 viviendas, 7 locales comerciales"
+    ]
+  },
+  {
+    "document_id": "c81a05564461ffe3c05946e89aec6485ad6224e6bb42a6b5a6206f1c578164ea",
+    "nombre_proyecto": "Proyecto de declaración de Humedal Urbano de parte de los terrenos de Fundación CAZ",
+    "title": "Recrudece disputa por herencia de Michel Durand: hijo denuncia a su padre por secar “humedal” en Lo Barnechea - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/recrudece-disputa-por-herencia-de-michel-durand-hijo-denuncia-a-su-padre-por-secar-humedal-en-lo-barnechea/2RX2CAPVZVCUNCUPUH4SRYNIFE/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "caz",
+      "declaracion",
+      "fundacion",
+      "humedal",
+      "parte",
+      "terrenos",
+      "urbano"
+    ],
+    "overlap_tokens": [
+      "humedal"
+    ],
+    "overlap_ratio": 0.14,
+    "quotes_objeto_incluidas": [
+      "secar un “humedal” ubicado a pocos metros de su casa en Lo Barnechea"
+    ]
+  },
+  {
+    "document_id": "8f0dc37c09c989b600716d65dd413da217335b3c496c7eeec80f86b59cae2e1b",
+    "nombre_proyecto": "edificio de 17 pisos localizado en la calle Américo Vespucio 7550",
+    "title": "El gobierno debe resolver el caso de los guetos verticales ilegales en Estación Central",
+    "url": "https://elquintopoder.cl/ciudad/el-gobierno-debe-resolver-el-caso-de-los-guetos-verticales-ilegales-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "7550",
+      "americo",
+      "calle",
+      "localizado",
+      "pisos",
+      "vespucio"
+    ],
+    "overlap_tokens": [
+      "pisos"
+    ],
+    "overlap_ratio": 0.17,
+    "quotes_objeto_incluidas": [
+      "otorgó 75 permisos con agrupamiento continuo para construir torres habitacionales de entre 25 y 38 pisos",
+      "los 75 permisos de edificación ilegales se transformaron en 49 torres ya construidas"
+    ]
+  },
+  {
+    "document_id": "972242e22455c413379ed13c0d02bd9e7a45566818350aaf849fafc239d6cbcb",
+    "nombre_proyecto": "Proyecto de la Universidad San Sebastián en la manzana delimitada por las calles Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono",
+    "title": "¿Cuál será el epílogo respecto de un antiguo conflicto inmobiliario en Recoleta?",
+    "url": "https://interferencia.cl/articulos/cual-sera-el-epilogo-respecto-de-un-antiguo-conflicto-inmobiliario-en-recoleta",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "bellavista",
+      "calles",
+      "dardignac",
+      "delimitada",
+      "ernesto",
+      "lagarrigue",
+      "manzana",
+      "nono",
+      "pinto",
+      "pio",
+      "san",
+      "sebastian",
+      "universidad"
+    ],
+    "overlap_tokens": [
+      "san",
+      "sebastian",
+      "universidad"
+    ],
+    "overlap_ratio": 0.23,
+    "quotes_objeto_incluidas": [
+      "la Universidad San Sebastián obtuvo un permiso para que una de sus empresas inmobiliarias relacionadas construyera su casa central, un centro de extensión y 3 elevadas torres residenciales de 19 pisos cada una",
+      "la Dirección de Obras Municipales le otorgó un permiso a los dueños de esa universidad para construir los equipamientos educacionales y las tres torres residenciales"
+    ]
+  },
+  {
+    "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+    "nombre_proyecto": "Cooperativa de Viviendas Oscar Heiremans",
+    "title": "Columna de - Patricio Herman - Expoliación de área verde perteneciente a una comunidad de Conchalí | Cooperativa",
+    "url": "https://opinion.cooperativa.cl/opinion/medio-ambiente/expoliacion-de-area-verde-perteneciente-a-una-comunidad-de-conchali/2014-02-02/121855.html",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "cooperativa",
+      "heiremans",
+      "oscar",
+      "viviendas"
+    ],
+    "overlap_tokens": [
+      "viviendas"
+    ],
+    "overlap_ratio": 0.25,
+    "quotes_objeto_incluidas": [
+      "un terreno área verde de 5.100 m2",
+      "el servicio público dependiente del Minvu desea construir allí viviendas sociales",
+      "las que recientemente ya han destruido varios añosos árboles"
+    ]
+  },
+  {
+    "document_id": "8fb1823903f2d58b53a1d774b63819639e77b76d1c8ece64df61f62ce91f34e2",
+    "nombre_proyecto": "Edificio ilegal de la Universidad San Sebastián",
+    "title": "El Minvu rechazó un perdonazo para edificio ilegal de la Universidad San Sebastián - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2026/03/10/el-minvu-rechazo-un-perdonazo-para-edificio-ilegal-de-la-universidad-san-sebastian/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "ilegal",
+      "san",
+      "sebastian",
+      "universidad"
+    ],
+    "overlap_tokens": [
+      "universidad"
+    ],
+    "overlap_ratio": 0.25,
+    "quotes_objeto_incluidas": [
+      "un centro de extensión, que es de la propia universidad, y de tres torres habitacionales de 19 pisos cada una.",
+      "el permiso de edificación violaba ese PRC",
+      "las mentadas torres se edificaban con infracción a la normativa urbanística"
+    ]
+  },
+  {
+    "document_id": "68b55af1e204801fe307879c2661869d9d8a72a89e3a5b5ea4a6fcac435da423",
+    "nombre_proyecto": "Villa San Luis de Las Condes",
+    "title": "Por la memoria y el derecho a la vivienda. El despojo de la Villa San Luis - Revista Planeo",
+    "url": "https://revistaplaneo.cl/2018/12/14/por-la-memoria-y-el-derecho-a-la-vivienda-el-despojo-de-la-villa-san-luis/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "condes",
+      "luis",
+      "san",
+      "villa"
+    ],
+    "overlap_tokens": [
+      "villa"
+    ],
+    "overlap_ratio": 0.25,
+    "quotes_objeto_incluidas": [
+      "las últimas torres del sector",
+      "la construcción del nuevo centro de negocios de la comuna",
+      "la preservación de la Villa"
+    ]
+  },
+  {
+    "document_id": "290718bbd0ad42bc30f57690d53d3672796ca4d9456143d72be6b1611db68dc2",
+    "nombre_proyecto": "Solución Sanitaria para un sector de Quilicura",
+    "title": "Inmobiliarias se oponen al reconocimiento oficial de los Humedales de Quilicura | Resumen.cl",
+    "url": "https://resumen.cl/articulos/inmobiliarias-se-oponen-al-reconocimiento-oficial-de-los-humedales-de-quilicura",
+    "n_quotes_objeto_incluidas": 6,
+    "name_tokens": [
+      "quilicura",
+      "sanitaria",
+      "sector",
+      "solucion"
+    ],
+    "overlap_tokens": [
+      "quilicura"
+    ],
+    "overlap_ratio": 0.25,
+    "quotes_objeto_incluidas": [
+      "reconocimiento de 468,3 hectáreas de humedales de Quilicura reconocidos oficialmente por el Ministerio del Medio Ambiente",
+      "reconoció oficialmente como Humedal Urbano las más de 400 hectáreas de Humedales de la comuna",
+      "sus terrenos no son humedal, y que estarían afectando gravemente su propiedad privada e intereses",
+      "Plan Regulador Comunal de Quilicura",
+      "áreas de protección de valor natural",
+      "Nuevo Plan Regulador Comunal"
+    ]
+  },
+  {
+    "document_id": "988970c4c8a402947299068a732e943161e07bc4241629e440e9dacfaec60e6a",
+    "nombre_proyecto": "centro de datos de Google en la comuna de Cerrillos",
+    "title": "Guerra del agua en Cerrillos: Google enfrenta arremetida legal por megaproyecto de data center - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/guerra-del-agua-en-cerrillos-google-enfrenta-arremetida-legal-por-megaproyecto-de-data-center/3EESORSYUBFX3HZFGNWJU7PGP4/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "centro",
+      "cerrillos",
+      "datos",
+      "google"
+    ],
+    "overlap_tokens": [
+      "google"
+    ],
+    "overlap_ratio": 0.25,
+    "quotes_objeto_incluidas": [
+      "megaproyecto de data center que Google Chile pretende construir en la comuna con una inversión de US$200 millones",
+      "La iniciativa, que considera una vida útil de 25 años, pretende construirse en un sitio baldío en una superficie de 23 hectáreas"
+    ]
+  },
+  {
+    "document_id": "59aeb5dffad66b8843f6736a3dbb4f47fa8c37226a05039cf240130651db56f2",
+    "nombre_proyecto": "proyecto de subdivisión del Bosque Panul",
+    "title": "La amenaza inmobiliaria que tiene en jaque al Panul, uno de los últimos bosques nativos de la Región Metropolitana | Ladera Sur",
+    "url": "https://laderasur.com/articulo/la-amenaza-inmobiliaria-que-tiene-en-jaque-al-panul-uno-de-los-ultimos-bosques-nativos-de-la-region-metropolitana/?srsltid=AfmBOorlB_EF-N49FXXnZRrKsANw0PyVuOif9izvyFUU3QqEaw4a_MQ8",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bosque",
+      "panul",
+      "subdivision"
+    ],
+    "overlap_tokens": [
+      "panul"
+    ],
+    "overlap_ratio": 0.33,
+    "quotes_objeto_incluidas": [
+      "la inmobiliaria Gesterra presentó en enero del presente año un proyecto que busca subdividir el Fundo Panul (ubicado en La Florida) en varios lotes",
+      "Proyecto Inmobiliaria El Panul (Inmobiliaria Gesterra)",
+      "para construir 1304 viviendas"
+    ]
+  },
+  {
+    "document_id": "73486132630cc647b20720131d9102d6f75c88b3e9d8dc7524d46fd74377179e",
+    "nombre_proyecto": "Egaña Comunidad Sustentable",
+    "title": "Municipio de Ñuñoa rechaza que Fundamenta reinicie obras de polémico proyecto en Plaza Egaña",
+    "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2023/01/20/municipio-de-nunoa-rechaza-que-fundamenta-reinicie-obras-de-polemico-proyecto-en-plaza-egana.shtml",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "comunidad",
+      "egana",
+      "sustentable"
+    ],
+    "overlap_tokens": [
+      "egana"
+    ],
+    "overlap_ratio": 0.33,
+    "quotes_objeto_incluidas": [
+      "el polémico proyecto habitacional en Plaza Egaña",
+      "pretende construir cuatro torres de departamentos"
+    ]
+  },
+  {
+    "document_id": "19e5b72686b68225dcd57f22a979191081ae46d6a9fce86740bca22b90adda87",
+    "nombre_proyecto": "Construcción Corredor de Transporte Público Vicuña Mackenna Norte",
+    "title": "SE RECHAZA RECURSO DE CASACIÓN EN EL FONDO QUE SE ARTICULA SOBRE LA BASE DE LA INCORRECTA PONDERACIÓN DE LA PRUEBA... (www.lot.cl)",
+    "url": "https://www.lot.cl/articulo.php?noti=225",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "corredor",
+      "mackenna",
+      "norte",
+      "publico",
+      "transporte",
+      "vicuna"
+    ],
+    "overlap_tokens": [
+      "mackenna",
+      "vicuna"
+    ],
+    "overlap_ratio": 0.33,
+    "quotes_objeto_incluidas": [
+      "se dispuso la expropiación total del inmueble ubicado en Avenida Vicuña Mackenna N° 7499, comuna de La Florida"
+    ]
+  },
+  {
+    "document_id": "a75ac26e11a3faa260df8d32c613fcbd405a3c1f29d4d4497cd9abd6f13dae69",
+    "nombre_proyecto": "Toro Mazotte 115",
+    "title": "Tribunal Ambiental de Santiago confirma rechazo a construcción de torres habitacionales en Estación Central",
+    "url": "https://tribunalambiental.cl/sentencia-confirma-rechazo-torres-habitacionales-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "115",
+      "mazotte",
+      "toro"
+    ],
+    "overlap_tokens": [
+      "toro"
+    ],
+    "overlap_ratio": 0.33,
+    "quotes_objeto_incluidas": [
+      "confirmando la no construcción de dos torres habitacionales de 38 pisos",
+      "El proyecto, ubicado en la calle Toro Mazote en Estación Central, contempla la construcción de dos torres de 38 pisos de altura con tres niveles de subterráneos, con un total de 1.078 departamentos, 195 estacionamientos, 305 bodegas y locales comerciales, entre otros."
+    ]
+  },
+  {
+    "document_id": "2d57e661c8cdb330d1257879424e9c0ec285bef77f39475fcf1fa7bcdb56842d",
+    "nombre_proyecto": "Mall Vivo Santiago",
+    "title": "Vecinos de Ñuñoa protestan contra proyecto Mall Vivo",
+    "url": "https://www.elmostrador.cl/cultura/2021/07/29/vecinos-de-nunoa-protestan-contra-proyecto-mall-vivo/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "mall",
+      "santiago",
+      "vivo"
+    ],
+    "overlap_tokens": [
+      "mall"
+    ],
+    "overlap_ratio": 0.33,
+    "quotes_objeto_incluidas": [
+      "El proyecto contempla construir, en los terrenos del ex edificio COPESA, el segundo mall más grande de Latinoamérica con un total de 217.119 m2 construidos.",
+      "Consta de un mall de 7 pisos y 7 subterráneos con 2.504 estacionamientos para autos y 1.290 estacionamientos para bicicletas, un edificio con 176 departamentos y apart hotel con 176 departamentos, con altura de 30 pisos",
+      "También incluye la construcción de un preuniversitario, una clínica, un gimnasio, salas de cine, restaurantes"
+    ]
+  },
+  {
+    "document_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74",
+    "nombre_proyecto": "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas",
+    "title": "La comunidad organizada de Quilicura lucha contra una ...",
+    "url": "https://www.revistadefrente.cl/la-comunidad-organizada-de-quilicura-lucha-contra-una-nueva-planta-de-aguas-servidas-y-en-defensa-de-humedal/",
+    "n_quotes_objeto_incluidas": 5,
+    "name_tokens": [
+      "aguas",
+      "disposicion",
+      "provision",
+      "servicios",
+      "servidas",
+      "solucion",
+      "transitoria",
+      "tratamiento"
+    ],
+    "overlap_tokens": [
+      "aguas",
+      "servidas",
+      "tratamiento"
+    ],
+    "overlap_ratio": 0.38,
+    "quotes_objeto_incluidas": [
+      "El proyecto de instalación de una nueva Planta de Tratamiento de Aguas Servidas",
+      "con un proyecto que contempla la construcción, habilitación y operación de una planta de tratamiento de aguas servidas",
+      "El proyecto Loteo Lo Cruzat cuenta con una inversión de 250 millones de dólares para la construcción y urbanización de 2.599 viviendas",
+      "Esta empresa ya había presentado un primer proyecto al SEA en el año 2018",
+      "primer proyecto de la planta de aguas servidas"
+    ]
+  },
+  {
+    "document_id": "ec499d24fd62792bfd3b59f3f4bb2522f6709a44a35eeb67be8e73a36cc77248",
+    "nombre_proyecto": "Estadio Nacional Julio Martínez Pradanos",
+    "title": "Fracasa primer intento judicial de Sichel: Corte de Santiago declara inadmisible recurso por concierto de Bad Bunny - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/fracasa-arremetida-judicial-de-sichel-corte-de-santiago-declara-inadmisible-recurso-por-concierto-de-bad-bunny/",
+    "n_quotes_objeto_incluidas": 6,
+    "name_tokens": [
+      "estadio",
+      "julio",
+      "martinez",
+      "nacional",
+      "pradanos"
+    ],
+    "overlap_tokens": [
+      "estadio",
+      "nacional"
+    ],
+    "overlap_ratio": 0.4,
+    "quotes_objeto_incluidas": [
+      "cerró las calles aledañas al reducto deportivo",
+      "cierre de calles y veredas",
+      "se realizaron en el Estadio Nacional",
+      "abstenerse de imponer restricciones generales de tránsito sin fundamento legal expreso y coordinación anticipada y directa con la Ilustre Municipalidad de Ñuñoa",
+      "garantizar accesos irrestrictos a inmuebles y actividades económicas",
+      "organismo que administra el reducto deportivo"
+    ]
+  },
+  {
+    "document_id": "050f1bb1a3f8ee928730b8831de6b3fc72e444eae28c6e5cceef395833c60dcc",
+    "nombre_proyecto": "proyecto inmobiliario de once pisos en avenida La Estrella número 500",
+    "title": "Municipalidad de Pudahuel se defiende y dice no estar de acuerdo con polémico proyecto inmobiliario | Diario Tropezón | Tu Diario",
+    "url": "https://www.tropezon.cl/2020/09/municipalidad-de-pudahuel-se-defiende-y-dice-no-estar-de-acuerdo-con-polemico-proyecto-inmobiliario/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "500",
+      "avenida",
+      "estrella",
+      "inmobiliario",
+      "numero",
+      "once",
+      "pisos"
+    ],
+    "overlap_tokens": [
+      "inmobiliario",
+      "once",
+      "pisos"
+    ],
+    "overlap_ratio": 0.43,
+    "quotes_objeto_incluidas": [
+      "la construcción de un proyecto inmobiliario de once pisos",
+      "el levantamiento de esta torre de once pisos",
+      "El Municipio y nuestro alcalde Johnny Carrasco no están de acuerdo con el proyecto inmobiliario en cuestión"
+    ]
+  },
+  {
+    "document_id": "becb9cded27a3a7b0bfaf68ea95ac1a8968bbebf214dc8982ee8b4f20e932e1d",
+    "nombre_proyecto": "plan piloto de utilización de drones de tele vigilancia en la comuna de Las Condes",
+    "title": "Suprema confirmó rechazo de recurso de protección y Las Condes podrá seguir con drones de vigilancia",
+    "url": "https://colegioabogados.cl/suprema-confirmo-rechazo-recurso-proteccion-las-condes-podra-seguir-drones-vigilancia/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "condes",
+      "drones",
+      "piloto",
+      "plan",
+      "tele",
+      "utilizacion",
+      "vigilancia"
+    ],
+    "overlap_tokens": [
+      "drones",
+      "plan",
+      "vigilancia"
+    ],
+    "overlap_ratio": 0.43,
+    "quotes_objeto_incluidas": [
+      "plan de vigilancia aérea impulsado por el alcalde Joaquín Lavín",
+      "El plan de vigilancia —al que hacen referencia— está constituido por drones: vehículos aéreos no tripulados y habilitados con cámaras aéreas de alta tecnología y parlantes capaces de emitir mensajes"
+    ]
+  },
+  {
+    "document_id": "1a8e6b56d4a74b8b6d936e6b641c0aa1cd55fc0da517900f58514b175ef30208",
+    "nombre_proyecto": "Canal El Bollo",
+    "title": "Canal El Bollo: vecinos acusan reducción de superficie útil de propiedad tras fallo de Contraloría",
+    "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2022/06/17/canal-el-bollo-vecinos-acusan-reduccion-de-superficie-util-de-propiedad-tras-fallo-de-contraloria.shtml",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "bollo",
+      "canal"
+    ],
+    "overlap_tokens": [
+      "canal"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "la modificación del Plan Regulador Comunal que reduciría la superficie útil de la propiedad",
+      "la zona de afectación a utilidad pública del canal a 80 metros"
+    ]
+  },
+  {
+    "document_id": "6771bd36cd47b568aa7d165b633f4c65b260cc4077b84ae90761a7837db382ae",
+    "nombre_proyecto": "Bosque Panul",
+    "title": "Santiago al borde de un crimen ambiental",
+    "url": "https://www.redprecordillera.cl/noticias/santiago-al-borde-de-un-crimen-ambiental",
+    "n_quotes_objeto_incluidas": 7,
+    "name_tokens": [
+      "bosque",
+      "panul"
+    ],
+    "overlap_tokens": [
+      "bosque"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "hoy el bosque continúa bajo amenaza inmobiliaria",
+      "destruir un bosque nativo para cambiarlo por casas",
+      "el proyecto inmobiliario es ilegal y fue rechazado después de 4 años de tramitación",
+      "La última propuesta de Plan Regulador del edil mantenía la propiedad privada, parcelaba el bosque y permitía invasivas construcciones",
+      "propuesta de Plan Regulador",
+      "una modificación que no generaría un parque, sino que sólo restringiría el uso de suelo urbano en una franja de 20 hectáreas"
+    ]
+  },
+  {
+    "document_id": "f96c488ee7c22e38e88da8684df7bc4678ad3ec72b77bbf13ddfa3dda2085399",
+    "nombre_proyecto": "Toma Dignidad",
+    "title": "Decreto Exento 1774",
+    "url": "https://www.laflorida.cl/sitio/wp-content/uploads/2024/03/Decreto-Exento-1774.pdf",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "dignidad",
+      "toma"
+    ],
+    "overlap_tokens": [
+      "toma"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "instalaciones y edificaciones irregulares en la toma de terrenos situados entre Canal San Carlos, Quebrada de Macul, calle Las Perdices, calle Las Fisceas, calle La Quebrada y parte del lote 6100-14, lote remanente",
+      "Estimaciones actuales elevan a 750 familias las que habitarían de forma irregular y en condiciones precarias el lugar",
+      "zona de riesgo de acuerdo al Plan Regulador Metropolitano de Santiago y Regulador Comunal de La Florida"
+    ]
+  },
+  {
+    "document_id": "63ea00793d12cb9496497f5f265dfef10dc306d5d0bf341bd9600dae77d42b88",
+    "nombre_proyecto": "Barrio Maestranza 1",
+    "title": "Apertura Barrio Maestranza 1 de Ukamau: Ejemplo en la democratización de la ciudad, una victoria de la organización y lucha popular | Ukamau",
+    "url": "https://ukamau.cl/2020/11/02/apertura-barrio-maestranza-1-de-ukamau-ejemplo-en-la-democratizacion-de-la-ciudad-una-victoria-de-la-organizacion-y-lucha-popular/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "barrio",
+      "maestranza"
+    ],
+    "overlap_tokens": [
+      "barrio"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "El Barrio ocupa casi 3 hectáreas de superficie, con 424 departamentos y cada uno tiene una superficie de 62 m2."
+    ]
+  },
+  {
+    "document_id": "b3a2fae1a87f3d2685503be60364ab7277ce38263b629a866ea57eec12033268",
+    "nombre_proyecto": "Mall Sport",
+    "title": "Corte Suprema respalda a vecinos en disputa con Mall Sport y declara “ilegal” dictamen que permitía su ampliación - La Tercera",
+    "url": "https://www.latercera.com/la-tercera-pm/noticia/corte-suprema-respalda-a-vecinos-en-disputa-con-mall-sport-y-declara-ilegal-dictamen-que-permitia-su-ampliacion/VYAXA5W77ZFP3HFMQKF6YXJ27I/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "mall",
+      "sport"
+    ],
+    "overlap_tokens": [
+      "mall"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "el centro comercial de propiedad del empresario Jorge Gálmez buscaba expandir en un 78% su superficie",
+      "instruyendo a la aprobación del Anteproyecto que buscaba la ampliación del centro comercial",
+      "un proyecto de ampliación de un mall"
+    ]
+  },
+  {
+    "document_id": "7e44587e12be4617bcc2b07595ac7175ff2370cc8bebbfd344dd8ecd702e9c54",
+    "nombre_proyecto": "globos de televigilancia en Las Condes y Lo Barnechea",
+    "title": "Corte Suprema revocó sentencia que ordenó retirar los globos de televigilancia en Las Condes y Lo Barnechea. ¿Qué dice el fallo? - Fundación Datos Protegidos",
+    "url": "https://datosprotegidos.org/corte-suprema-revoco-sentencia-que-ordeno-retirar-los-globos-de-televigilancia-en-las-condes-y-lo-barnechea-que-dice-el-fallo/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "barnechea",
+      "condes",
+      "globos",
+      "televigilancia"
+    ],
+    "overlap_tokens": [
+      "globos",
+      "televigilancia"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "los globos de televigilancia",
+      "globos de vigilancia emplazados en dichas comunas"
+    ]
+  },
+  {
+    "document_id": "ce86680747321e9ef0c4997f399ad2137fc2967f4547e82b3e34ab46abc4a720",
+    "nombre_proyecto": "Helipuerto Santiago",
+    "title": "Corte de Santiago ordena suspensión del Helipuerto Santiago hasta que obtenga las autorizaciones correspondientes.",
+    "url": "https://www.diarioconstitucional.cl/2025/04/25/corte-de-santiago-ordena-suspension-del-helipuerto-santiago-hasta-que-obtenga-las-autorizaciones-correspondientes/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "helipuerto",
+      "santiago"
+    ],
+    "overlap_tokens": [
+      "helipuerto"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "el helipuerto ubicado en Avenida El Salto",
+      "actividades como pistas de aterrizaje y hangares",
+      "una pista de aterrizaje y hangar",
+      "actividad de transporte aéreo de pasajeros"
+    ]
+  },
+  {
+    "document_id": "38bd84b13616a9ec5768e373764048ae5eb764374b3b792fc4be6adfc95eacb5",
+    "nombre_proyecto": "proyecto de calle Montenegro",
+    "title": "Nuevo precedente: alcaldesa Ríos de Ñuñoa ordena iniciar invalidación de proyecto inmobiliario por violar normativa urbanística comunal",
+    "url": "https://interferencia.cl/articulos/nuevo-precedente-alcaldesa-rios-de-nunoa-ordena-iniciar-invalidacion-de-proyecto",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "calle",
+      "montenegro"
+    ],
+    "overlap_tokens": [
+      "montenegro"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "anteproyecto de edificación ubicado en calles Montenegro y Pedro Torres",
+      "el proyecto pretendía acogerse a las disposiciones especiales DFL2, de copropiedad inmobiliaria y al artículo artículo 6.1.8. de vivienda económica"
+    ]
+  },
+  {
+    "document_id": "fca0c05742a0aa676987d8b9c82ba09b1c390cf576f381b578984fbaed61b7a5",
+    "nombre_proyecto": "Línea 7 del Metro",
+    "title": "Preocupación en vecinos de Santiago y Recoleta por trazado de futura línea 7 del Metro",
+    "url": "https://radionuevomundo.cl/2019/10/preocupacion-en-vecinos-de-santiago-y-recoleta-por-trazado-de-futura-linea-7-del-metro/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "linea",
+      "metro"
+    ],
+    "overlap_tokens": [
+      "metro"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "el megaproyecto",
+      "esta nueva salida del Metro Baquedano hacia el Parque Forestal"
+    ]
+  },
+  {
+    "document_id": "5de09c392fbd3df91895534e925c9411488c8c970eff58fcb1fccc79a720745a",
+    "nombre_proyecto": "Predio El Durazno",
+    "title": "Director SEA (RM) autorizó a Eliodoro Matte Capdevila construir casas de lujo en área protegida y sin evaluación ambiental en Lo Barnechea",
+    "url": "https://www.elciudadano.com/chile/director-sea-rm-autorizo-a-eliodoro-matte-capdevila-construir-casas-de-lujo-en-area-protegida-y-sin-evaluacion-ambiental-en-lo-barnechea/04/02/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "durazno",
+      "predio"
+    ],
+    "overlap_tokens": [
+      "predio"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "su proyecto inmobiliario",
+      "construir las propiedades en una predio de 6,72 hectáreas",
+      "dichos 2 inmuebles de 1.887 m2 edificados",
+      "accesos y obras complementarias para la dotación de agua potable, alcantarillado, suministro eléctrico, estacionamientos, terraza, piscina y paisajismo"
+    ]
+  },
+  {
+    "document_id": "674382cb1473ca8d2c44d40579d7157e37bb6daf0b8f2c49687574b04530c392",
+    "nombre_proyecto": "local McDonald’s",
+    "title": "Corte deja sin efecto inhabilidad parcial de local McDonald’s para funcionamiento de Automac",
+    "url": "https://www.diarioconstitucional.cl/2025/12/23/corte-deja-sin-efecto-inhabilidad-parcial-de-local-mcdonalds-para-funcionamiento-de-automac/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "local",
+      "mcdonalds"
+    ],
+    "overlap_tokens": [
+      "local"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "un local comercial respecto del funcionamiento del servicio de comida al paso o “Automac”",
+      "el proyecto fue concebido, aprobado y recepcionado con un anillo de circulación vehicular interior"
+    ]
+  },
+  {
+    "document_id": "15465e27dc279ccde561dc2635ed98a5beed320dd1376418f006c3f54b30e3df",
+    "nombre_proyecto": "Alameda Urbano",
+    "title": "Estación Central modificará el plan regulador ante polémica por los \"guetos verticales\"",
+    "url": "https://www.cooperativa.cl/noticias/pais/vivienda/estacion-central-modificara-el-plan-regulador-ante-polemica-por-los/2017-04-13/082542.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "alameda",
+      "urbano"
+    ],
+    "overlap_tokens": [
+      "alameda"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "existencia de \"guetos verticales\" en la comuna",
+      "permitirá edificios hasta 15 pisos de altura en el eje Alameda"
+    ]
+  },
+  {
+    "document_id": "07196391a3c1bc51a80d5ed3c48acd2b283babf657e8d9b0ec9629fc76b702e8",
+    "nombre_proyecto": "calle Vital Apoquindo 1.400-1.450-1.500",
+    "title": "Los dictámenes atrasados de la Contraloría no sirven de nada",
+    "url": "https://elquintopoder.cl/ciudadania/los-dictamenes-atrasados-de-la-contraloria-no-sirven-de-nada/",
+    "n_quotes_objeto_incluidas": 7,
+    "name_tokens": [
+      "400",
+      "450",
+      "500",
+      "apoquindo",
+      "calle",
+      "vital"
+    ],
+    "overlap_tokens": [
+      "apoquindo",
+      "calle",
+      "vital"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "consistente en 25 edificios en altura",
+      "Este negocio se trata de un millonario proyecto residencial y de equipamiento comercial",
+      "con 443 viviendas, 12 locales comerciales y 1.163 estacionamientos",
+      "algunas disposiciones del PRC, que son contrarias a derecho",
+      "un incremento de la densidad y constructibilidad para predios que enfrentan calle Vital Apoquindo",
+      "las normas sobre densidad neta que contiene el PRC de Las Condes"
+    ]
+  },
+  {
+    "document_id": "1a29abd8060bfe4c8e7260a8b5e5cbfcf8c7ea90408dc61a9bfa3c623e202234",
+    "nombre_proyecto": "Parque Alvarado",
+    "title": "Constructora Ebco modifica polémico proyecto en cerro Alvarado para viabilizar obras - La Tercera",
+    "url": "https://www.latercera.com/pulso/constructora-ebco-modifica-polemico-proyecto-cerro-alvarado-viabilizar-obras/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "alvarado",
+      "parque"
+    ],
+    "overlap_tokens": [
+      "alvarado"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "un extenso proyecto inmobiliario, que el empresario Hernán Besomi planeaba construir en cerro Alvarado.",
+      "Así, el megaproyecto contempla ahora la construcción de un total de 244 viviendas, de las cuales 177 corresponden a departamentos distribuidos en 16 edificios, mientras que en la propuesta original se consideraban 126 departamentos en edificios de tres pisos."
+    ]
+  },
+  {
+    "document_id": "b16487fd9d6073ee65880980e25626d4fc3dce36c54faad795950a2f4e1933a3",
+    "nombre_proyecto": "Modificación Nº 34 al Plan Regulador Comunal de Vitacura \"Normalización de la Vialidad y Rectificación de Usos de Suelo\"",
+    "title": "Ley Chile - Biblioteca del Congreso Nacional",
+    "url": "https://www.bcn.cl/leychile/Navegar?idNorma=1131346&idVersion=2019-05-10",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "comunal",
+      "modificacion",
+      "normalizacion",
+      "plan",
+      "rectificacion",
+      "regulador",
+      "suelo",
+      "usos",
+      "vialidad",
+      "vitacura"
+    ],
+    "overlap_tokens": [
+      "comunal",
+      "modificacion",
+      "plan",
+      "regulador",
+      "vitacura"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "PROMULGA MODIFICACIÓN Nº 34 AL PLAN REGULADOR COMUNAL DE VITACURA"
+    ]
+  },
+  {
+    "document_id": "af30d346464c5db9e352714fb5b917a55e9651d8b95a8f8a9e68c654db5bc158",
+    "nombre_proyecto": "Helipuerto de Santiago",
+    "title": "La Clínica de Justicia Ambiental UDP, representando a las y los vecinos de la población El Barrero de Huechuraba, obtuvo un importante triunfo en la Corte Suprema en el caso denominado “Helipuerto de… | Facultad de Derecho UDP",
+    "url": "https://es.linkedin.com/posts/derechoudp_la-cl%C3%ADnica-de-justicia-ambiental-udp-representando-activity-7322643276061184000-pS4s",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "helipuerto",
+      "santiago"
+    ],
+    "overlap_tokens": [
+      "helipuerto"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "la primera ampliación del permiso provisorio de las obras del helipuerto",
+      "un permiso de edificación provisorio para el funcionamiento del helipuerto"
+    ]
+  },
+  {
+    "document_id": "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9",
+    "nombre_proyecto": "Línea 3 de Metro",
+    "title": "SMA formula cargos por ruido contra proyecto Línea 3 de Metro",
+    "url": "https://portal.sma.gob.cl/index.php/sma-formula-cargos-por-ruido-contra-proyecto-linea-3-de-metro/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "linea",
+      "metro"
+    ],
+    "overlap_tokens": [
+      "linea"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "su proyecto de Línea 3 que se extiende por seis comunas de la Región Metropolitana",
+      "el ruido inducido por vibraciones que se genera con ocasión del funcionamiento de la Línea 3."
+    ]
+  },
+  {
+    "document_id": "a6b747a18936b773453e0f57a4e33fd85810769402a964f417029ce4a3ec6023",
+    "nombre_proyecto": "Mega Proyecto Departamental",
+    "title": "Informe alerta que restos de hasta 30 desaparecidos podrían estar sepultados en antiguo vertedero de Macul - CIPER Chile",
+    "url": "https://www.ciperchile.cl/2026/03/20/informe-alerta-que-restos-de-hasta-30-desaparecidos-podrian-estar-sepultados-en-antiguo-vertedero-de-macul/",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "departamental",
+      "mega"
+    ],
+    "overlap_tokens": [
+      "departamental"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "Los cuerpos de hasta 30 detenidos desaparecidos podrían estar en un sitio eriazo ubicado en Departamental con Macul, el que antes operaba como un vertedero, según advierte un informe de 33 páginas elaborado por el Plan Nacional de Búsqueda (PNB).",
+      "El texto incluye una propuesta técnica de excavación, que debiera ser ejecutada por el Ministerio de Obras Públicas (MOP).",
+      "la creación de un proyecto inmobiliario de nueve edificios a construirse sobre el exvertedero",
+      "solicitando que el exvertedero sea declarado monumento nacional"
+    ]
+  },
+  {
+    "document_id": "8b3ce8708ad6021a8e66a313a889e1040c934b383c29eb6769f3b1636f6ae086",
+    "nombre_proyecto": "Humedal de Quilicura",
+    "title": "Humedal de Quilicura: un espacio vital para la comunidad y la supervivencia humana",
+    "url": "https://elpais.com/america-futura/2025-01-09/humedal-de-quilicura-un-espacio-vital-para-la-comunidad-y-la-supervivencia-humana.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "humedal",
+      "quilicura"
+    ],
+    "overlap_tokens": [
+      "quilicura"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "en 2020 se aprobó la Ley 21.202 de Humedales Urbanos y un año después, tres de los cinco humedales ubicados en Quilicura– O’higgins, San Luis y San Luis del Norte– un terreno de 468,3 hectáreas, fueron incluídos dentro de esta normativa"
+    ]
+  },
+  {
+    "document_id": "be1d574a37763232aa5fa9f3e66acdd5be4ca7bbb2d9a74af431772048b69b06",
+    "nombre_proyecto": "edificio de 13 pisos junto al pasaje El Almendral",
+    "title": "Alcalde Carter realiza acciones en favor de inmobiliaria para mantener construcción de edificio en La Florida",
+    "url": "https://lavozdelosquesobran.cl/hoy/alcalde-carter-realiza-acciones-en-favor-de-inmobiliaria-para-mantener-construccion-de-edificio-en-la-florida/11122022",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "almendral",
+      "junto",
+      "pasaje",
+      "pisos"
+    ],
+    "overlap_tokens": [
+      "junto",
+      "pisos"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "permiso de edificación para un edificio de 13 pisos que se construirá junto a sus casas"
+    ]
+  },
+  {
+    "document_id": "8edf360e952f71958700364ac9ea63a3a65074c9f2a72445563d21f6f469ce7d",
+    "nombre_proyecto": "ex vertedero Departamental",
+    "title": "Los terrenos de Macul que guardan un secreto de hace 50 años: salen a la venta predios donde se investiga el destino de hasta 30 víctimas de la dictadura | The Clinic",
+    "url": "https://www.theclinic.cl/2026/07/18/terrenos-exvertedero-departamental-ejecutados/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "departamental",
+      "vertedero"
+    ],
+    "overlap_tokens": [
+      "vertedero"
+    ],
+    "overlap_ratio": 0.5,
+    "quotes_objeto_incluidas": [
+      "El plan consistía en la recuperación del suelo y la eventual construcción de nueve edificios con más de dos mil departamentos.",
+      "un megaproyecto que contemplaba intervenir parte del antiguo vertedero"
+    ]
+  },
+  {
+    "document_id": "11f4f7d56f37cfd728803a47123a2444dd8f17d1a03cf49ebb12443339984718",
+    "nombre_proyecto": "proyecto inmobiliario de dos edificios con más de mil departamentos en Estación Central",
+    "title": "Suprema falla contra proyecto inmobiliario de dos edificios con más de mil departamentos en Estación Central",
+    "url": "https://www.chilevision.cl/noticias/reportajes/cronicas/suprema-falla-contra-proyecto-inmobiliario-de-dos-edificios-con-mas-de-mil-departamentos-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "central",
+      "departamentos",
+      "dos",
+      "estacion",
+      "inmobiliario",
+      "mas",
+      "mil"
+    ],
+    "overlap_tokens": [
+      "departamentos",
+      "dos",
+      "mas",
+      "mil"
+    ],
+    "overlap_ratio": 0.57,
+    "quotes_objeto_incluidas": [
+      "Pero esta vez la construcción de dos torres de 38 pisos con más de mil departamentos quedó en nada.",
+      "La idea de la firma era construir 1.078 departamentos con 305 bodegas y sólo 195 estacionamientos."
+    ]
+  },
+  {
+    "document_id": "e8c24790cf9832f3b0cc8e465ae461c09b96bcfeb894b708cbfff30db87dc2a0",
+    "nombre_proyecto": "Plan de regeneración urbana para la población El Castillo",
+    "title": "La Pintana pide su propio plan de \"regeneración urbana\" para la población El Castillo - La Tercera",
+    "url": "https://www.latercera.com/nacional/noticia/la-pintana-pide-propio-plan-regeneracion-urbana-la-poblacion-castillo/683406/",
+    "n_quotes_objeto_incluidas": 5,
+    "name_tokens": [
+      "castillo",
+      "plan",
+      "poblacion",
+      "regeneracion",
+      "urbana"
+    ],
+    "overlap_tokens": [
+      "plan",
+      "regeneracion",
+      "urbana"
+    ],
+    "overlap_ratio": 0.6,
+    "quotes_objeto_incluidas": [
+      "plan de regeneración urbana con obras clave",
+      "iluminación, ensanche de veredas, creación de áreas verdes, ampliación de la comisaría y, en especial, la apertura de pasajes",
+      "renovación de las viviendas sociales",
+      "la llegada del Metro y un mejor servicio del Transantiago",
+      "una futura estación del tren subterráneo"
+    ]
+  },
+  {
+    "document_id": "7b3854682d4fbb4fa85c04b6bc7204b3fc669258b3a43d6290b4f0d88c46936b",
+    "nombre_proyecto": "Cuartel General del Cuerpo de Bomberos de Conchalí",
+    "title": "Cuerpo de bomberos de Conchalí-Huechuraba se querella por estafa contra inmobiliaria: los dejaron sin cuartel",
+    "url": "https://interferencia.cl/articulos/cuerpo-de-bomberos-de-conchali-huechuraba-se-querella-por-estafa-contra-inmobiliaria-los",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "bomberos",
+      "conchali",
+      "cuartel",
+      "cuerpo",
+      "general"
+    ],
+    "overlap_tokens": [
+      "bomberos",
+      "cuartel",
+      "cuerpo"
+    ],
+    "overlap_ratio": 0.6,
+    "quotes_objeto_incluidas": [
+      "la inmobiliaria propuso al cuerpo de bomberos como dación en pago del precio del terreno, construir las nuevas dependencias del cuartel al interior del edificio.",
+      "para tener un paño rectangular donde emplazar un edificio de 15 pisos.",
+      "Asimismo, estas nuevas instalaciones se emplazarían en una superficie construida de 600 mt2 en el primer piso y 300 mt2 en el segundo, totalizando 900 mt2."
+    ]
+  },
+  {
+    "document_id": "6f4d1bbe0a5de34a60526411561219783e2de91927ab16ea2306a5bde84e9909",
+    "nombre_proyecto": "proyecto clave para prevenir aluviones en la quebrada de Ramón",
+    "title": "La trabada tramitación de proyecto clave para contener aluviones entre Las Condes y La Reina - Ex-Ante | Las noticias que importan",
+    "url": "https://www.ex-ante.cl/nacional/el-desconocido-proyecto-para-contener-aluviones-en-zona-critica-de-las-condes-que-lleva-mas-de-4-anos-de-tramitacion/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "aluviones",
+      "clave",
+      "prevenir",
+      "quebrada",
+      "ramon"
+    ],
+    "overlap_tokens": [
+      "aluviones",
+      "quebrada",
+      "ramon"
+    ],
+    "overlap_ratio": 0.6,
+    "quotes_objeto_incluidas": [
+      "el proyecto del MOP busca contener crecidas y aluviones en la quebrada de Ramón mediante piscinas de retención y mallas dinámicas",
+      "El plan contempla la construcción y operación de un sistema de retenedores o piscinas de retención capaces de almacenar hasta 860.650 m³ de agua en caso de crecida."
+    ]
+  },
+  {
+    "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+    "nombre_proyecto": "Parque Bicentenario Cerrillos",
+    "title": "Parque Bicentenario Cerrillos",
+    "url": "https://urbano.wikiexplora.com/Parque_Bicentenario_Cerrillos",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "bicentenario",
+      "cerrillos",
+      "parque"
+    ],
+    "overlap_tokens": [
+      "bicentenario",
+      "parque"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "la construcción del proyecto Ciudad Portal Bicentenario",
+      "el llamado a un Concurso Internacional de Ideas para la construcción de un gran parque residencial",
+      "Las bases técnicas exigieron la incorporación de 15.000 viviendas",
+      "En los alrededores del parque se construirán viviendas, colegios, supermercados, espacios culturales y de entretenimiento."
+    ]
+  },
+  {
+    "document_id": "4766e98c8c621eb699f6ef5898419c8dbb68ab6819457028d20163ef7f84dda8",
+    "nombre_proyecto": "subdivisión del resto del Lote C",
+    "title": "Corte Suprema acoge reclamo de ilegalidad y deja sin efecto invalidación municipal - DOE | Actualidad Jurídica",
+    "url": "https://actualidadjuridica.doe.cl/corte-suprema-acoge-reclamo-de-ilegalidad-y-deja-sin-efecto-invalidacion-municipal/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "lote",
+      "resto",
+      "subdivision"
+    ],
+    "overlap_tokens": [
+      "lote",
+      "subdivision"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "la subdivisión de un lote a favor de Inmobiliaria Uncastillo S.A."
+    ]
+  },
+  {
+    "document_id": "1af88ca5c1a68b41f4a83e0b275d97401c0dac6f8ea7dc32f17888d51c21df43",
+    "nombre_proyecto": "Toro Mazotte 115",
+    "title": "Tribunal Ambiental de Santiago realizó inspección en el área donde está proyectada la construcción de dos torres de 38 pisos en Estación Central",
+    "url": "https://tribunalambiental.cl/tribunal-ambiental-de-santiago-realizo-inspeccion-en-el-area-donde-esta-proyectada-la-construccion-de-dos-torres-de-38-pisos-en-estacion-central/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "115",
+      "mazotte",
+      "toro"
+    ],
+    "overlap_tokens": [
+      "115",
+      "toro"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "proyecto inmobiliario en altura “Toro Mazote 115”",
+      "dos torres de 38 pisos de altura con tres niveles de subterráneos, con un total de 1.078 departamentos, 195 estacionamientos, 305 bodegas y locales comerciales"
+    ]
+  },
+  {
+    "document_id": "937ac1325eb9ffea5b3e8c57ac497b09489542c5139aac1f253edef606482bda",
+    "nombre_proyecto": "proyecto de mall de Cenco en Vitacura",
+    "title": "#matrizderiesgo #vitacura #alcaldesa #seremi #seremitransporte #ministeriodetransporte #ley19880 #invalidaciónactoadministratio #imiv #cenco #cencosud #mall #inmobiliaria #bancos #riesgos… | Rodrigo Andreucci",
+    "url": "https://es.linkedin.com/posts/rodrigoandreucciabogado_matrizderiesgo-vitacura-alcaldesa-activity-7398783595907129344-5orB",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "cenco",
+      "mall",
+      "vitacura"
+    ],
+    "overlap_tokens": [
+      "cenco",
+      "mall"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "DEL PROYECTO DE MALL DE CENCO",
+      "proyecto de Santa María de Manquehue"
+    ]
+  },
+  {
+    "document_id": "811c64ade81737b50aedca647f6f55ead3081569e89c0987eb0ae80e6a10fb41",
+    "nombre_proyecto": "tren Santiago-Batuco",
+    "title": "EFE lanza licitación para diseño en detalle de tren Santiago-Batuco y se definen conexiones con Metro | Diario Financiero",
+    "url": "https://www.df.cl/empresas/construccion/efe-lanza-licitacion-para-diseno-en-detalle-de-tren-santiago-batuco-y-se",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "batuco",
+      "santiago",
+      "tren"
+    ],
+    "overlap_tokens": [
+      "batuco",
+      "santiago"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "el que consiste en el mejoramiento de las vías y así optimizar el futuro proceso de instalación.",
+      "el proyecto que unirá Santiago con Batuco."
+    ]
+  },
+  {
+    "document_id": "59722e208ebe675a517dad7fc0ebd83cc3a31b876e3383694f0a21812170086d",
+    "nombre_proyecto": "Helipuerto Santiago SpA",
+    "title": "Corte suspende helipuerto de Sanhattan que operaba sin permisos en Huechuraba: esta es la lista de empresarios que lo usaron",
+    "url": "https://interferencia.cl/articulos/corte-suspende-helipuerto-de-sanhattan-que-operaba-sin-permisos-en-huechuraba-esta-es-la",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "helipuerto",
+      "santiago",
+      "spa"
+    ],
+    "overlap_tokens": [
+      "helipuerto",
+      "santiago"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "el Helipuerto Santiago funcionaba sin los permisos correspondientes para operar",
+      "uso de suelo para incluir una pista de aterrizaje y hangar"
+    ]
+  },
+  {
+    "document_id": "ee218e6407606e004aef593930bb2d93f19769d488cf37d4e3732e0e8c588748",
+    "nombre_proyecto": "Viña Cousiño Macul",
+    "title": "“Esta vez tocamos los intereses de los verdaderos dueños del país” - Doble Espacio Revista de Periodismo",
+    "url": "https://doble-espacio.uchile.cl/esta-vez-tocamos-los-intereses-de-los-verdaderos-duenos-del-pais/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "cousino",
+      "macul",
+      "vina"
+    ],
+    "overlap_tokens": [
+      "cousino",
+      "vina"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "la Viña Cousiño está destinada a proyectos habitacionales para ricos, dirigidos por la inmobiliaria Crillón que es de los hijos de Cousiño.",
+      "otras 40 hectáreas ya se están destinando a la construcción de departamentos para ricos",
+      "modificar el uso de suelo para que el Serviu pueda comprar y construir viviendas."
+    ]
+  },
+  {
+    "document_id": "c141978e8ce2dfd6140f0eb2bfa7be67ddf5facce254afd2561590933f5fe266",
+    "nombre_proyecto": "proyecto de subdivisión del Parque Panul",
+    "title": "¿Qué pasa con el proyecto de subdivisión en el Bosque Panul?",
+    "url": "https://www.redprecordillera.cl/noticias/que-pasa-con-el-proyecto-de-subdivision-en-el-bosque-panul",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "panul",
+      "parque",
+      "subdivision"
+    ],
+    "overlap_tokens": [
+      "panul",
+      "subdivision"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "un proyecto que pretendía urbanizar el Bosque Panul",
+      "esta solicitud de subdivisión fue presentada",
+      "se presentó un proyecto para urbanizar el Bosque Panul acogiéndose al Plan Regulador vigente"
+    ]
+  },
+  {
+    "document_id": "8089ba9a4d00134c3b1be93501eb99cac556d4b3fb32dd18c4ee9cb56a081140",
+    "nombre_proyecto": "Mall Vivo Ñuñoa",
+    "title": "La experiencia de la Coordinadora No Al Mall Vivo y la demanda por una ciudad justa",
+    "url": "https://revistaentorno.cl/no-al-mall-vivo/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "mall",
+      "nunoa",
+      "vivo"
+    ],
+    "overlap_tokens": [
+      "mall",
+      "vivo"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "Mega Proyecto comercial e inmobiliario de la empresa Vivo Corp.",
+      "con un Mall de 6 pisos con tiendas comerciales , 2 torres de 22 pisos con 400 departamentos",
+      "1 torre de 11 pisos para oficinas"
+    ]
+  },
+  {
+    "document_id": "29b8706071102813f32da8f022e3f4214192e35eaddf406313859cd5512eaf21",
+    "nombre_proyecto": "4 torres de Fundamenta en Ñuñoa",
+    "title": "Proyecto en Ñuñoa: exsupremo Sergio Muñoz tenía la razón - Diario y Radio Universidad Chile",
+    "url": "https://radio.uchile.cl/2026/04/04/proyecto-en-nunoa-exsupremo-sergio-munoz-tenia-la-razon/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "fundamenta",
+      "nunoa",
+      "torres"
+    ],
+    "overlap_tokens": [
+      "nunoa",
+      "torres"
+    ],
+    "overlap_ratio": 0.67,
+    "quotes_objeto_incluidas": [
+      "proyecto inmobiliario de 4 torres aisladas de 32 pisos c/u, 3 de viviendas y una de oficinas",
+      "el permiso de edificación N° 296 del 12/10/2018",
+      "la resolución número 208, de fecha 09/12/2025, de la sagaz DOM de Ñuñoa, que aprobó una modificación a este permiso de edificación"
+    ]
+  },
+  {
+    "document_id": "05f27810b020e61b8a139572e5b32eb5260ac91718fb04f72811932109293d77",
+    "nombre_proyecto": "nuevo edificio de la Cámara Chilena de la Construcción en Las Condes",
+    "title": "\"Salvado por la campana\": el nuevo edificio de la Cámara Chilena de la Construcción en Las Condes",
+    "url": "https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2021/06/23/salvado-por-la-campana-el-nuevo-edificio-de-la-camara-chilena-de-la-construccion-en-las-condes.shtml",
+    "n_quotes_objeto_incluidas": 4,
+    "name_tokens": [
+      "camara",
+      "chilena",
+      "condes",
+      "nuevo"
+    ],
+    "overlap_tokens": [
+      "camara",
+      "chilena",
+      "condes"
+    ],
+    "overlap_ratio": 0.75,
+    "quotes_objeto_incluidas": [
+      "con el cual la asociación gremial empresarial, la Cámara Chilena de la Construcción (CChC), construyó su espléndida y esbelta torre corporativa",
+      "la estructura de 21 pisos de la CChC",
+      "la magnífica edificación aislada emplazada en la punta de diamante de las avenidas Apoquindo y Las Condes",
+      "Conjunto Armónico"
+    ]
+  },
+  {
+    "document_id": "9b673d7465747b63103e654794d4e15c4804ae0f620520a27a3313e2790fde0e",
+    "nombre_proyecto": "TALLER DE DESABOLLADURA Y PINTURA LASTRAS",
+    "title": "Juan Zulú vs. Taller de Desabolladura y Pintura - Derecho",
+    "url": "https://www.studocu.com/cl/document/universidad-de-antofagasta/derecho/recurso-de-proteccion/6521711",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "desabolladura",
+      "lastras",
+      "pintura",
+      "taller"
+    ],
+    "overlap_tokens": [
+      "desabolladura",
+      "pintura",
+      "taller"
+    ],
+    "overlap_ratio": 0.75,
+    "quotes_objeto_incluidas": [
+      "taller de desabolladura y pintura de vehículos en un sitio colindante a su propiedad."
+    ]
+  },
+  {
+    "document_id": "4781b9343cbab8be5a7ddf1bd30ae948a90d0e755c991c4cac2879bd9ef0ba0f",
+    "nombre_proyecto": "Planta de separación y tratamiento para la valorización de residuos Eco Campus- Rembre",
+    "title": "Tribunal acogió parcialmente reclamaciones ciudadanas en contra de la aprobación de planta de tratamiento y revalorización de residuos en Quilicura",
+    "url": "https://tribunalambiental.cl/sentencia-r-352-2022-planta-rembre-quilicura/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "campus",
+      "eco",
+      "planta",
+      "rembre",
+      "residuos",
+      "separacion",
+      "tratamiento",
+      "valorizacion"
+    ],
+    "overlap_tokens": [
+      "planta",
+      "rembre",
+      "residuos",
+      "separacion",
+      "tratamiento",
+      "valorizacion"
+    ],
+    "overlap_ratio": 0.75,
+    "quotes_objeto_incluidas": [
+      "El Proyecto de Rembre consiste en la construcción y operación de una planta de separación y tratamiento para la valorización de residuos no peligrosos, de origen domiciliario, industrial y comercial, además de una línea de trituración de neumáticos fuera de uso."
+    ]
+  },
+  {
+    "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+    "nombre_proyecto": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+    "title": "¿Qué sucederá con los 25 edificios ilegales en Las Condes? - El Clarin de Chile",
+    "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+    "n_quotes_objeto_incluidas": 8,
+    "name_tokens": [
+      "1450",
+      "400",
+      "500",
+      "apoquindo",
+      "calle",
+      "numeros",
+      "vital"
+    ],
+    "overlap_tokens": [
+      "1450",
+      "400",
+      "500",
+      "apoquindo",
+      "calle",
+      "numeros",
+      "vital"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "Se trata de un mega proyecto inmobiliario de 25 edificios en altura a ubicarse en un terreno de 131.422 m2 localizado en la calle Vital Apoquindo números 1.400, 1450 y 1.500 de esa comuna.",
+      "Estamos hablando de un millonario proyecto residencial y de equipamiento comercial que contempla 443 viviendas, 12 locales comerciales y 1.163 estacionamientos.",
+      "un incremento de la densidad y constructibilidad por predios que enfrentan calle Vital Apoquindo",
+      "las normas sobre densidad neta que contiene el PRC de Las Condes",
+      "su participación en la modificación N° 8 del PRC de Las Condes",
+      "eventual conflicto de intereses"
+    ]
+  },
+  {
+    "document_id": "5de9bf8c934fe3ef2939b6e24b026344128196f25b94930eef37c355749edf9e",
+    "nombre_proyecto": "Centro de Almacenamiento de Datos Huechuraba",
+    "title": "La estrategia de Amazon para instalarse en Chile y su red de intermediarios que omitió el Tribunal Ambiental",
+    "url": "https://www.pincoyazo.cl/post/estrategia-de-amazon-para-instalarse-en-chile-y-su-red-de-intermediarios",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "almacenamiento",
+      "centro",
+      "datos",
+      "huechuraba"
+    ],
+    "overlap_tokens": [
+      "almacenamiento",
+      "centro",
+      "datos",
+      "huechuraba"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "proyecto de Centro de Almacenamiento de Datos (Data Center)",
+      "proyecto denominado Línea de Alta Tensión Huechuraba",
+      "la construcción de una línea de trasmisión eléctrica de alta tensión"
+    ]
+  },
+  {
+    "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+    "nombre_proyecto": "proyecto en calle Cerro Colorado",
+    "title": "Viviendas sociales en Las Condes y sector oriente: plan del Gobierno y proyecto en Cerro Colorado",
+    "url": "https://www.pauta.cl/actualidad/2026/04/14/gobierno-impulsa-plan-de-viviendas-sociales-en-el-sector-oriente-con-proyectos-en-las-condes-la-reina-y-la-dehesa.html",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "calle",
+      "cerro",
+      "colorado"
+    ],
+    "overlap_tokens": [
+      "calle",
+      "cerro",
+      "colorado"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "el desarrollo de un proyecto en Las Condes, en un terreno ubicado en calle Cerro Colorado, cercano al Parque Arauco, que pertenece al Serviu",
+      "para dar paso a la construcción de viviendas",
+      "levantar alrededor de 340 viviendas sociales"
+    ]
+  },
+  {
+    "document_id": "8e2c5fe4899ccea013c1b98f17e69e41fcadc6fcd569321642097dca157cfc8e",
+    "nombre_proyecto": "Humedal Urbano de Quilicura",
+    "title": "La triple amenaza al humedal urbano más grande del país",
+    "url": "https://www.elmostrador.cl/noticias/pais/2023/02/02/la-triple-amenaza-al-humedal-urbano-mas-grande-del-pais/",
+    "n_quotes_objeto_incluidas": 6,
+    "name_tokens": [
+      "humedal",
+      "quilicura",
+      "urbano"
+    ],
+    "overlap_tokens": [
+      "humedal",
+      "quilicura",
+      "urbano"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "Estas compañías solicitaron que se reduzca el área de protección del humedal en un 80%.",
+      "En 2021 fue protegido por la Ley de Humedales Urbanos (Ley 21.202).",
+      "Lo anterior se obtiene al analizar el caudal otorgado al pozo Fundo La Montaña y los descensos hídricos.",
+      "el acuífero que alimenta el humedal de Quilicura está siendo sobreexplotado",
+      "En 2022 se aprobó, además, el proyecto San Isidro, que consiste en una planta de tratamiento de aguas servidas, en Quilicura",
+      "el proyecto de la empresa San Isidro afectará un humedal urbano y el estero Las Cruces."
+    ]
+  },
+  {
+    "document_id": "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b",
+    "nombre_proyecto": "centro de datos de Amazon",
+    "title": "Unos vecinos de Huechuraba intentaron parar un centro de datos de Amazon. La justicia de Chile se puso en su camino",
+    "url": "https://www.xataka.com/robotica-e-ia/vecinos-chile-intentaron-frenar-centro-datos-amazon-justicia-ha-dejado-mensaje-claro-su-decision",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "amazon",
+      "centro",
+      "datos"
+    ],
+    "overlap_tokens": [
+      "amazon",
+      "centro",
+      "datos"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "donde Amazon planea construir un centro de datos",
+      "El centro de almacenamiento de datos en Huechuraba está concebido para operar durante 30 años",
+      "Google había obtenido una aprobación inicial en 2020 para construir un centro de datos de 200 millones de dólares en Cerrillos"
+    ]
+  },
+  {
+    "document_id": "b3f69ea02421c237c523beddd79568d7347cd2f9e2d49bf10ddb983b7dc1111c",
+    "nombre_proyecto": "proyecto de 4 torres de la Inmobiliaria Fundamenta",
+    "title": "Columna de - Patricio Herman Pacheco - Inmobiliaria Fundamenta y los abogados Lagos, Vargas y Silber | Cooperativa",
+    "url": "https://opinion.cooperativa.cl/opinion/urbanismo/inmobiliaria-fundamenta-y-los-abogados-lagos-vargas-y-silber/2026-08-03/075034.html",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "fundamenta",
+      "inmobiliaria",
+      "torres"
+    ],
+    "overlap_tokens": [
+      "fundamenta",
+      "inmobiliaria",
+      "torres"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "proyecto de 4 torres -de entre 26 y 32 pisos cada una- con destinos de viviendas, oficinas y locales comerciales de la Inmobiliaria Fundamenta en la comuna de Ñuñoa",
+      "El nuevo DOM, Patricio Reyes, otorgó el 12/10/2018 a dichas empresas el permiso de edificación N° 296"
+    ]
+  },
+  {
+    "document_id": "660c82921be130e998c277ea45c8f1d2fb08ba7b5f0e41da1f3a0291c0b84de0",
+    "nombre_proyecto": "Anteproyecto de Edificación N° 113/20",
+    "title": "RESOLUCIÓN ELECTRONICA DPC - ESN",
+    "url": "https://documentos.minvu.cl/regionXIII/seremi/resoluciones_exentas/Documentos/160%202023.pdf",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "113",
+      "anteproyecto",
+      "edificacion"
+    ],
+    "overlap_tokens": [
+      "113",
+      "anteproyecto",
+      "edificacion"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "que considera 1 edificio de 207 departamentos",
+      "Anteproyecto de Edificación para Obra Nueva, expediente N° 113/20"
+    ]
+  },
+  {
+    "document_id": "71823c13d5db85bafabc094ce1386dcb8871e85bc642b78fc8cb52d7d22811fd",
+    "nombre_proyecto": "Centro de Almacenamiento de Datos Huechuraba",
+    "title": "Tribunal Ambiental rechaza reclamo de vecinos y confirma viabilidad de data center de Amazon en Huechuraba",
+    "url": "https://www.emol.com/noticias/Economia/2026/04/06/1196414/amazon-tribunal-ambiental.html",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "almacenamiento",
+      "centro",
+      "datos",
+      "huechuraba"
+    ],
+    "overlap_tokens": [
+      "almacenamiento",
+      "centro",
+      "datos",
+      "huechuraba"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "El proyecto contempla la construcción y operación de un centro de almacenamiento de datos con una vida útil de 30 años, emplazado en un terreno de 10,9 hectáreas en Huechuraba, con una superficie construida de 21.350,07 m²."
+    ]
+  },
+  {
+    "document_id": "b83e45226eb0060d383463a61625896bc60bbfcd8c75e176e08c42a133774d5f",
+    "nombre_proyecto": "Edificio General Amengual",
+    "title": "Detienen obra de gueto vertical en Estación Central por invadir casa particular",
+    "url": "https://interferencia.cl/articulos/detienen-obra-de-gueto-vertical-en-estacion-central-por-invadir-casa-particular",
+    "n_quotes_objeto_incluidas": 5,
+    "name_tokens": [
+      "amengual",
+      "general"
+    ],
+    "overlap_tokens": [
+      "amengual",
+      "general"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480",
+      "edificación de pilas de socalzado distintas a las autorizadas",
+      "ejecución de obras en terrenos de su propiedad",
+      "utilización de su pared medianera para sostener la obra denunciada",
+      "un megaproyecto de viviendas en el sector"
+    ]
+  },
+  {
+    "document_id": "4783bb0cd65ccbac5ffd3e32b27dcf51ebaca8dfcaf93e8c91e7972e2a27cabe",
+    "nombre_proyecto": "Centro de Distribución Mayorista Las Mercedes",
+    "title": "Ley Chile - Biblioteca del Congreso Nacional",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=1201225",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "centro",
+      "distribucion",
+      "mayorista",
+      "mercedes"
+    ],
+    "overlap_tokens": [
+      "centro",
+      "distribucion",
+      "mayorista",
+      "mercedes"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "El Permiso de Edificación Nº 192/12 de 06.07.2012",
+      "para la construcción de Centro de Distribución Mayorista en Camino San Pablo Antiguo Nº 13612/142312, Fundo Las Mercedes, con una superficie de 196.326 m2"
+    ]
+  },
+  {
+    "document_id": "af478b4db4430ebcc4ba4336102d617d743294df6deded5f85641dab8e6cf105",
+    "nombre_proyecto": "Humedal Urbano Tranque La Poza",
+    "title": "Presentan alegatos en reclamación contra Ministerio del Medio Ambiente por declaración de Humedal Urbano en comuna de Lo Barnechea",
+    "url": "https://www.paiscircular.cl/radar-legal/presentan-alegatos-en-reclamacion-contra-ministerio-del-medio-ambiente-por-declaracion-de-humedal-urbano-en-comuna-de-lo-barnechea/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "humedal",
+      "poza",
+      "tranque",
+      "urbano"
+    ],
+    "overlap_tokens": [
+      "humedal",
+      "poza",
+      "tranque",
+      "urbano"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "por la resolución en que declaró como humedal urbano al humedal Tranque La Poza"
+    ]
+  },
+  {
+    "document_id": "a7594aa85d63d9ea1eaa4e9f92032fca3107b1c93c5b77cb60a727ecba7364be",
+    "nombre_proyecto": "departamentos de Rotonda Atenas",
+    "title": "Viviendas sociales en Las Condes: la verdadera historia de los postulantes - Hogar de Cristo",
+    "url": "https://www.hogardecristo.cl/reportajes/viviendas-sociales-en-las-condes-la-verdadera-historia-de-los-postulantes/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "atenas",
+      "departamentos",
+      "rotonda"
+    ],
+    "overlap_tokens": [
+      "atenas",
+      "departamentos",
+      "rotonda"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "los 85 departamentos en el sector de Rotonda Atenas",
+      "construcción de viviendas sociales"
+    ]
+  },
+  {
+    "document_id": "d943ddc66f6108169f586e572bccfe4373896c1d53e3930b3a48e678acd38485",
+    "nombre_proyecto": "El Panul",
+    "title": "Boletín",
+    "url": "https://www.terram.cl/la-batalla-por-el-panul-y-las-amenazas-al-ultimo-bosque-nativo-de-santiago/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "panul"
+    ],
+    "overlap_tokens": [
+      "panul"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "El 13 de enero de 2021, la inmobiliaria Gesterra, de la familia Navarrete, presentó un proyecto de división predial ante la Dirección de Obras Municipales (DOM) de La Florida, con el que se busca concretar la construcción de calles y alumbrado público.",
+      "a la fecha existe solicitud de aprobación de división afecta a utilidad pública",
+      "el trámite realizado por la inmobiliaria Gesterra para urbanizar el bosque Panul"
+    ]
+  },
+  {
+    "document_id": "1f120a939cb5b7d109238c9e7fe98212957bbe7fd36020f072d0da9b49ea9cb3",
+    "nombre_proyecto": "Block 73",
+    "title": "Block 73: el conflicto entre vecinos de Villa Olímpica y la FACh",
+    "url": "https://www.elciudadano.com/organizacion-social/234293/11/23/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "block"
+    ],
+    "overlap_tokens": [
+      "block"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "El block número 73 de la calle Los Jazmines #1506 de la Villa Olímpica de Ñuñoa es el punto de disputa entre el Comité de Vivienda Villa Olímpica y la Fuerza Aérea de Chile (FACh).",
+      "el edificio, propiedad de las Fuerzas Armadas, sea traspasado a Bienes Nacionales para destinarlo a la construcción de viviendas sociales.",
+      "la institución prentende ponerlo en venta bajo licitación pública por más de 400 millones de pesos"
+    ]
+  },
+  {
+    "document_id": "04d3ab4e99932671616453b17d13ee671939dafeda83ab02d0cf16af9eba73e8",
+    "nombre_proyecto": "Humedal Urbano Tranque La Poza",
+    "title": "Tribunal rechazó reclamación de inmobiliaria contra la declaración de Humedal Urbano en la comuna de Lo Barnechea",
+    "url": "https://tribunalambiental.cl/sentencia-r-319-2022-humedal-urbano-tranque-la-poza-lo-barnechea/",
+    "n_quotes_objeto_incluidas": 1,
+    "name_tokens": [
+      "humedal",
+      "poza",
+      "tranque",
+      "urbano"
+    ],
+    "overlap_tokens": [
+      "humedal",
+      "poza",
+      "tranque",
+      "urbano"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "por la resolución en que declaró como humedal urbano al humedal Tranque La Poza"
+    ]
+  },
+  {
+    "document_id": "3cede650283bf5574348824c4d99567e0f271eb2c38f50a647d93ed3c95b4f2b",
+    "nombre_proyecto": "Automac de McDonald’s en La Florida",
+    "title": "Corte deja sin efecto clausura municipal y mantiene operativo el Automac de McDonald’s en La Florida",
+    "url": "https://www.diarioconstitucional.cl/2026/07/09/corte-deja-sin-efecto-clausura-municipal-y-mantiene-operativo-el-automac-de-mcdonalds-en-la-florida/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "automac",
+      "florida",
+      "mcdonalds"
+    ],
+    "overlap_tokens": [
+      "automac",
+      "florida",
+      "mcdonalds"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "las obras destinadas al funcionamiento del servicio Automac o comida al paso",
+      "un restaurante McDonald’s en la comuna de La Florida",
+      "el restaurante contaba con permisos y recepciones vigentes que comprendían el anillo de circulación vehicular y las ventanillas del servicio Automac"
+    ]
+  },
+  {
+    "document_id": "2262300b4f8f0adec74438d6003503efac1d875de1bb2380907cc6ca2b3558b2",
+    "nombre_proyecto": "inmueble fiscal del pasaje Carlota Milcher",
+    "title": "¡Inmueble recuperado!: Independencia suma un nuevo espacio para la comunidad gracias al trabajo conjunto con Bienes Nacionales",
+    "url": "https://www.independencia.cl/inmueble-recuperado-independencia-suma-un-nuevo-espacio-para-la-comunidad-gracias-al-trabajo-conjunto-con-bienes-nacionales/",
+    "n_quotes_objeto_incluidas": 3,
+    "name_tokens": [
+      "carlota",
+      "fiscal",
+      "inmueble",
+      "milcher",
+      "pasaje"
+    ],
+    "overlap_tokens": [
+      "carlota",
+      "fiscal",
+      "inmueble",
+      "milcher",
+      "pasaje"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "un inmueble fiscal que permanecía abandonado en el pasaje Carlota Milcher",
+      "infraestructura destinada a servicios públicos, cultura, deporte, salud, seguridad y desarrollo comunitario",
+      "realizando las obras necesarias para dejar el inmueble completamente habilitado"
+    ]
+  },
+  {
+    "document_id": "b3eb274f4dc6148420ee9117ac830de27a40d1e8164f21881b24cb17e29fb4f9",
+    "nombre_proyecto": "proyecto de construcción en perímetro del Hotel Sheraton Santiago",
+    "title": "Corte de Santiago acoge reclamo de vecinos e invalida permiso para construir torres junto al Sheraton",
+    "url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2023/02/24/corte-de-santiago-acoge-reclamo-de-vecinos-e-invalida-permiso-para-construir-torres-junto-al-sheraton.shtml",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "hotel",
+      "perimetro",
+      "santiago",
+      "sheraton"
+    ],
+    "overlap_tokens": [
+      "hotel",
+      "perimetro",
+      "santiago",
+      "sheraton"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de dos torres habitacionales de 30 y 32 pisos",
+      "el proyecto de construcción en el perímetro que, actualmente, corresponde al Hotel Sheraton Santiago"
+    ]
+  },
+  {
+    "document_id": "e33c3fce0817b8fc9f920305e224d680fc7f6b3cbced78de182612183510412c",
+    "nombre_proyecto": "Vicuña Mackenna 6161",
+    "title": "La Florida: inmobiliaria inventó 'calle' de 10 cm de ancho para facilitar construcción de edificio junto a pasaje residencial",
+    "url": "https://interferencia.cl/articulos/la-florida-inmobiliaria-invento-calle-de-10-cm-de-ancho-para-facilitar-construccion-de",
+    "n_quotes_objeto_incluidas": 6,
+    "name_tokens": [
+      "6161",
+      "mackenna",
+      "vicuna"
+    ],
+    "overlap_tokens": [
+      "6161",
+      "mackenna",
+      "vicuna"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "contempla la construcción una torre de 272 departamentos de 17 metros cuadrados divididos en 13 pisos de altura en Vicuña Mackenna Poniente 6161",
+      "el permiso de edificación",
+      "una franja de 10 centímetros de ancho por 111 metros de largo",
+      "la demolición del antiguo edificio ubicado en el terreno",
+      "un programa para la remoción de los asbestos",
+      "proyecto habitacional"
+    ]
+  },
+  {
+    "document_id": "2ed84aff0a824c7e27707c6bf7f63fe061e8e5c211c775111ea5e9befccc0d3c",
+    "nombre_proyecto": "Memorial de víctimas del caso «Degollados»",
+    "title": "Memorial de víctimas del caso «Degollados» encuentra oposición en reducido grupo de vecinos que quiere «tranquilidad» en Providencia",
+    "url": "https://www.elmostrador.cl/noticias/pais/2015/10/06/memorial-de-victimas-del-caso-degollados-encuentra-oposicion-en-reducido-grupo-de-vecinos-que-quiere-tranquilidad-en-providencia/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "caso",
+      "degollados",
+      "memorial",
+      "victimas"
+    ],
+    "overlap_tokens": [
+      "caso",
+      "degollados",
+      "memorial",
+      "victimas"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "la construcción de un memorial de las víctimas del «Caso Degollados» en la esquina de Los Leones con El Vergel",
+      "al lugar donde se instalará el monumento"
+    ]
+  },
+  {
+    "document_id": "e459c1721c99fa676bd50a60bf613d46fdb0df93e52c2ebd283a4afb3a486ad5",
+    "nombre_proyecto": "Alto Las Condes 2",
+    "title": "La batalla legal entre Vitacura y Cencosud que tiene con pena a Paulmann - CIPER Chile",
+    "url": "https://www.ciperchile.cl/2017/04/28/la-batalla-legal-entre-vitacura-y-cencosud-que-tiene-con-pena-a-paulmann/",
+    "n_quotes_objeto_incluidas": 2,
+    "name_tokens": [
+      "alto",
+      "condes"
+    ],
+    "overlap_tokens": [
+      "alto",
+      "condes"
+    ],
+    "overlap_ratio": 1.0,
+    "quotes_objeto_incluidas": [
+      "Un ambicioso proyecto que pretende erigir en la esquina de avenida Kennedy con Padre Hurtado -frente al Alto Las Condes- y que incluiría un mall, torres de oficinas y departamentos, un rascacielos de 55 pisos, un hotel y un túnel que, bajo la avenida Kennedy, conectaría ambos centros comerciales.",
+      "Ugarte, ya trabajando para Cencosud, modificó el proyecto original que tenía Carlos Celle y proyectó la ampliación del mall Alto Las Condes en el paño recién adquirido por Paulmann."
+    ]
+  }
+]

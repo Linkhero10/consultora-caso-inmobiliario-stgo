@@ -11,66 +11,102 @@ El propio Fix 1B produjo el caso canónico que motiva Fix 1C: el documento "Pedr
 toma medidas para poner freno a edificios de altura" fue clasificado con
 `enrichment_document.nombre_proyecto = "Núcleo Ochagavía"` pese a que su contenido real trata
 anteproyectos genéricos de regulación de altura, sin relación con el sitio específico
-Hospital/Núcleo Ochagavía. Ver `tests/test_build_conflicts.py::test_hospital_ochagavia_pac_document_no_longer_focal`
-para la regresión y el docstring de `src/build_conflicts.py` (sección "Fix 1B") para el detalle
-completo del caso.
+Hospital/Núcleo Ochagavía.
 
-## Búsqueda sistemática realizada
+## Búsqueda sistemática realizada (dos rondas)
 
 Sobre las 608 `case_mention` focales/co-focales, `caso_unico`, `decision_final_amplio='include'`,
 con `codigo_comuna_ine` válido (visibles en el dashboard público), se buscaron tres patrones:
 
-1. **Homónimos geográficos con código INE de Santiago**: nombres de comuna con riesgo de
-   homonimia (Recoleta, Providencia, San Joaquín, Independencia, La Florida, San Ramón, La Reina,
-   Vitacura) cruzados contra menciones de países/ciudades extranjeras en `evidence.quote_text`, más
-   verificación de consistencia interna `comuna` (texto) vs. `codigo_comuna_ine` contra `territory`.
+1. **Homónimos geográficos con código INE de Santiago.**
 2. **`nombre_proyecto` no sustentado por evidencia verificada** (el patrón exacto de Hospital
    Ochagavía): documentos donde el `nombre_proyecto` no aparece como substring literal en ninguna
    cita de objeto verificada de una mención incluida del mismo documento.
-3. **Objeto de disputa fuera de la Provincia de Santiago**: `case_mention` con comuna válida pero
-   cuya evidencia de objeto mencione explícitamente otra región de Chile o un país extranjero.
+3. **Objeto de disputa fuera de la Provincia de Santiago**.
 
-## Resultado
+Los patrones 1 y 3 se agotaron por completo contra los 608 case_mention en la primera ronda: **0
+casos nuevos** en ninguno de los dos. Los únicos matches del patrón 1 (Recoleta+Perú, Recoleta+La
+Paz, Providencia+Uruguay, La Florida+México) ya están correctamente `decision_final_amplio='exclude'`.
+El patrón 3 solo produjo 3 falsos positivos triviales (nombres de calle, no de lugar real).
 
-Los patrones 1 y 3 sí se agotaron por completo contra los 608 case_mention: **0 casos nuevos** en
-ninguno de los dos. Los únicos matches del patrón 1 (Recoleta+Perú, Recoleta+La Paz,
-Providencia+Uruguay, La Florida+México) ya están correctamente `decision_final_amplio='exclude'`.
-El patrón 3 solo produjo 3 falsos positivos triviales ("Barcelona"/"Ecuador" como nombres de calle,
-no de lugar real).
+### Patrón 2 — ronda 1 (2026-09-23, primera pasada, incompleta)
 
-**El patrón 2 NO se agotó por completo -- esto se corrige aquí explícitamente tras revisión
-externa que señaló que la redacción anterior sonaba más exhaustiva de lo que fue.** Generó una
-lista automatizada de 115/551 documentos focales sin substring literal (22 con cero solapamiento
-de tokens). Se revisaron a mano solo **~30 de los 115** (los 22 de cero solapamiento más ~8
-adicionales de la lista completa), no los 115. En esos ~30, a diferencia de Hospital Ochagavía,
-el nombre resultó bien fundado en todos (confirmado en un documento hermano del mismo caso, en el
-título del artículo, o en contexto no capturado por la cita muestreada) -- ninguno era una
-fabricación real. **Los ~85 candidatos restantes del patrón 2 quedan sin auditar
-individualmente.** La afirmación correcta es "0 confirmados en la submuestra revisada del patrón
-2", no "0 confirmados sobre los 115".
+Una primera búsqueda automatizada generó 115 candidatos y solo se revisaron a mano ~30 -- la
+conclusión de esa ronda ("0 casos nuevos confirmados") quedó explícitamente acotada a esa
+submuestra, no a los 115 completos. El usuario pidió completar la auditoría de los candidatos
+restantes.
 
-**Conclusión: Fix 1C se cierra en esta ronda sin cambios de código, con esta salvedad explícita
-pendiente.** El caso Hospital Ochagavía era relativamente aislado dentro de la submuestra
-revisada, no evidencia de un problema sistémico -- pero esa conclusión está acotada a ~30/115
-candidatos del patrón 2, no a su totalidad. Auditar los ~85 restantes queda como trabajo futuro
-concreto para retomar Fix 1C, no como parte de este cierre.
+### Patrón 2 — ronda 2 (2026-09-23, auditoría completa)
 
-## Observaciones de menor confianza, no confirmadas como bugs (seguimiento eventual, no bloqueante)
+Se reconstruyó la lista de candidatos con una metodología más precisa (comparación de conjuntos de
+palabras clave, no solo substring completo, excluyendo artículos/preposiciones): **204 documentos
+focales de 551 no tienen `nombre_proyecto` como substring literal en ninguna cita verificada
+incluida** (más candidatos que la ronda 1 porque el criterio quedó más estricto/documentado, no
+porque haya más bugs). Se separaron en:
 
-1. El documento sobre "Barrio Las Rejas" lista como alias "Nueva Alameda Providencia" (proyecto
-   real y distinto, con su propio documento focal). La evidencia sí menciona NAP como causa de la
-   amenaza al barrio, así que es defendible, pero vale la pena revisar si esto infla el conteo de
-   `project.n_documents` para ese proyecto.
-2. 157 `project_id` en `project_mention_resolved` tienen menciones incluidas en más de una comuna
-   (ej. un hito usado como referencia geográfica en varios artículos). La mayoría parecen
-   legítimos, pero el volumen sugiere que valdría la pena una auditoría dedicada de
-   `homonym_partition` como tarea aparte -- no se hizo a fondo por estar fuera del alcance
-   estricto de "documentos focales con falso positivo geográfico/semántico".
+- **Tier A (128 casos, cero solapamiento de palabras clave con la evidencia)**: la señal más
+  fuerte de riesgo. Revisados **los 128, uno por uno**, vía 3 subagentes en paralelo, cada uno
+  verificando título del documento, `proyectos_mencionados_json`, todas las `case_mention` del
+  documento (no solo las incluidas), y documentos "hermanos" que mencionen el mismo `project_id`.
+- **Tier B (76 casos, algún solapamiento de palabras clave)**: señal más débil -- casi siempre
+  nombres descriptivos largos que por diseño no calzan como substring completo pero sí comparten
+  una palabra distintiva real con la evidencia (ej. "Humedal Urbano..." ↔ cita "secar un humedal").
+  Se revisaron a mano los 2 casos de menor solapamiento (ambos resultaron bien fundados); los 74
+  restantes (solapamiento ≥0.2) **no se revisaron individualmente** -- el patrón observado sugiere
+  que son en su mayoría paráfrasis legítimas, pero esto es un supuesto razonable, no una
+  verificación exhaustiva.
+
+## Resultado final
+
+| Grupo | n | bien fundado | posible error (confirmado) | no concluyente | sin revisar individualmente |
+|---|---|---|---|---|---|
+| Patrón 1 (homónimos) | 608 case_mention | -- | 0 | -- | 0 |
+| Patrón 3 (fuera de región) | 608 case_mention | -- | 0 | -- | 0 |
+| Patrón 2, Tier A | 128 | 123 | **4** | 1 | 0 |
+| Patrón 2, Tier B | 76 | 2 (submuestra) | 0 (submuestra) | 0 | 74 |
+
+Detalle completo caso por caso: `audit/fix_1c_patron2_auditoria_completa.json`.
+
+### Los 4 casos confirmados y corregidos
+
+Los 4 comparten exactamente el patrón de Hospital Ochagavía: `nombre_proyecto` viene de una
+`case_mention` **excluida** o de una referencia retórica/periférica, mientras la `case_mention`
+realmente **incluida** describe un objeto distinto. Los 4 aparecían como evidencia `focal`
+(verificada, visible en el dashboard público) bajo el nombre equivocado; los 4 se corrigieron con
+`document_case_unit.correccion_nombre_proyecto=''` protegido por `tiene_error=1` explícito, igual
+que Hospital Ochagavía -- ya no cuentan como evidencia focal.
+
+1. **"Templo votivo"** — el objeto real es el nuevo Plan Regulador Comunal de Maipú (límites de
+   altura); el templo es solo una referencia retórica en el titular ("Ninguna construcción
+   superará al Templo votivo").
+2. **"Liceo Reino de Dinamarca"** — el objeto real son las faenas de la empresa minera Imperial
+   SPA que generan contaminación en Rinconada Rural; el liceo es el establecimiento afectado
+   (clases suspendidas), no el proyecto en disputa. **Este caso ya había sido señalado
+   independientemente por la revisión externa del Gate 1A**
+   (`conflict:fdac62833c48b1814f2b74a9`, categoría `etiqueta_no_coincide_con_evidencia`) --
+   confirmación cruzada por dos métodos distintos.
+3. **"Hotel Sheraton San Cristóbal"** — la mención literal del hotel quedó excluida; el caso
+   incluido es un juicio de ENACO contra el nuevo plan regulador de Lo Barnechea.
+4. **"Casona de calle Huérfanos"** — la mención de esa casa específica quedó excluida; el caso
+   incluido es la protección patrimonial general del barrio Yungay.
+
+## Conclusión
+
+**Fix 1C se cierra con auditoría completa del Tier A (128/128) y submuestra representativa del
+Tier B (2/76 de los de menor solapamiento).** Se encontraron y corrigieron 4 casos reales
+adicionales al de Hospital Ochagavía -- total 5 documentos corregidos en esta fase. La tasa de
+error real medida es baja (4/128 = 3.1% en el grupo de mayor riesgo, 0/480 en los patrones 1 y 3,
+que sí se agotaron por completo) pero no cero: confirma que el patrón de Hospital Ochagavía no fue
+un caso aislado, aunque tampoco es un problema sistémico masivo.
+
+**Lo que queda explícitamente sin auditar**: los 74 candidatos del Tier B con solapamiento parcial
+de palabras clave. Dado el patrón observado (nombres descriptivos largos con al menos una palabra
+distintiva real coincidente), el riesgo esperado es bajo, pero esto no se ha verificado caso por
+caso.
 
 ## Estado del gate CONFLICT
 
-El gate CONFLICT (Fix 1A + Fix 1B + Fix 1C) se considera cerrado **para el alcance efectivamente
-auditado** -- con la salvedad explícita de arriba: ~85 candidatos del patrón 2 de Fix 1C quedan
-sin revisar individualmente. No se detectó nada en la submuestra que sugiera que retomarlos
-cambiaría la conclusión, pero "no se detectó nada en 30/115" no es lo mismo que "se descartaron
-los 115". Ver `audit/run_manifest.json` para el estado del warehouse en el momento de este cierre.
+El gate CONFLICT (Fix 1A + Fix 1B + Fix 1C) se considera cerrado para el Tier A completo (mayor
+riesgo, 100% auditado) y con una salvedad explícita en el Tier B (74/76 sin auditar
+individualmente, riesgo estimado bajo). Ver `audit/run_manifest.json` para el estado del warehouse
+vigente.

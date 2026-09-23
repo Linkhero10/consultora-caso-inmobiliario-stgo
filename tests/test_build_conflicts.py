@@ -517,6 +517,37 @@ def test_hospital_ochagavia_pac_document_no_longer_focal():
     assert conflict_row[1] == "Hospital Ochagavía"
 
 
+def test_fix_1c_audit_completo_documentos_ya_no_focal():
+    """Fix 1C (2026-09-23): auditoria completa de los 128 candidatos de mayor
+    riesgo (cero solapamiento de palabras clave entre nombre_proyecto y las
+    citas de evidencia) que quedaron sin revisar tras el cierre inicial de
+    Fix 1C. Se revisaron los 128 (antes solo ~30) via 3 subagentes en
+    paralelo + verificacion manual propia de cada 'posible_error'. De los
+    128, 123 resultaron bien fundados (el nombre si corresponde al objeto
+    real, solo que la confirmacion vive en el titulo, en un documento
+    hermano, o en una cita no capturada por el filtro automatico), 1 quedo
+    no_concluyente (documento unico, ambiguo, no accionable), y 4 resultaron
+    ser el mismo patron que Hospital Ochagavia: el nombre_proyecto viene de
+    una case_mention EXCLUIDA o de una referencia retorica/periferica,
+    mientras la case_mention realmente INCLUIDA describe un objeto distinto.
+    Los 4 se corrigieron igual que Ochagavia: correccion_nombre_proyecto=''
+    protegido con tiene_error=1."""
+    conn = _connect_or_skip()
+    docs = [
+        "5d2f0680d21e1061790de468589132de52ff9cffd576ecee2fb4c0ad6b070f47",  # "Templo votivo"
+        "2cb01a7a9e863f52c401b8f98df2af848a01c9b2d3354ee8dcc3a22554714db2",  # "Liceo Reino de Dinamarca"
+        "b243ca1d3dd9948c4e15a7f8c41da3b3f10730236af8714d62cf942a16712523",  # "Hotel Sheraton San Cristóbal"
+        "fb31947ee71b5386e1bcde4fa1b37570a867232120537d317dfdf5ad52249b76",  # "casona de calle Huérfanos"
+    ]
+    for doc_id in docs:
+        row = conn.execute(
+            "SELECT role FROM document_conflict WHERE document_id = ?", (doc_id,)
+        ).fetchone()
+        assert row is not None, f"el documento {doc_id} debe seguir presente en el warehouse"
+        assert row[0] == "mentioned_unreviewed", f"{doc_id} ya no debe contar como evidencia focal/verificada"
+    conn.close()
+
+
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     conn = _connect_or_skip()
     columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}
