@@ -584,6 +584,39 @@ def test_fix_1c_project_case_mention_cross_check_documentos_ya_no_focal():
     conn.close()
 
 
+def test_fix_1c_ronda_4_ivo_gasic_vespucio_oriente_ya_no_focal():
+    """Fix 1C, ronda 4 (2026-09-23): la revision AI-assisted del enriquecimiento
+    N=150 (ejecutada por Luna/Codex, verificada por Claude Sonnet 5 contra el
+    SQL real) marco como error_grave la entrevista a Ivo Gasic (Revista
+    Planeo) por tener nombre_proyecto='Autopista Vespucio Oriente (AVO)'. La
+    verificacion confirmo el mismo patron que Hospital Ochagavia: la cita
+    literal 'Autopista Vespucio Oriente' solo existe en case_mention:4,
+    EXCLUIDA; las case_mention incluidas (0,1,2) tratan de la lucha del MPL
+    por vivienda social y contra el Plan Regulador Comunal de Penalolen (canal
+    Las Perdices, Lo Hermida, conjunto habitacional de 120 familias) --
+    Vespucio Oriente aparece solo de pasada en una entrevista panoramica.
+    Corregido igual que los casos previos: correccion_nombre_proyecto=''
+    protegido con tiene_error=1.
+
+    De los otros 6 error_grave de la misma revision N=150, 2 coincidian
+    exactamente con documentos ya corregidos en la ronda 3 (Portal
+    Bicentenario, Americo Vespucio 7550) -- confirmacion cruzada
+    independiente real, sin necesidad de correccion adicional. El desacuerdo
+    de severidad sobre el caso Ex-Ante/FIMA se adjudico a error_menor (la
+    case_mention focal SI tiene evidencia objeto real de 'Edificio
+    Pajaritos'); los 3 restantes no estan en role focal/co_focal en ningun
+    conflicto y quedan documentados como limitacion de calidad de
+    enriquecimiento, no corregidos individualmente."""
+    conn = _connect_or_skip()
+    row = conn.execute(
+        "SELECT role FROM document_conflict WHERE document_id = ?",
+        ("9c71d8a489c1f04aae08dd95bf6044086528dd80e38a5621b979e12ee43140f7",),
+    ).fetchone()
+    conn.close()
+    assert row is not None, "el documento debe seguir presente en el warehouse"
+    assert row[0] == "mentioned_unreviewed", "ya no debe contar como evidencia focal/verificada"
+
+
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     conn = _connect_or_skip()
     columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}

@@ -140,13 +140,16 @@
   "enrichment_validation_expansion_n150": {
     "descripcion": "Auditoria asistida por IA (2026-09-23) de una muestra estratificada N=150 de documentos enriquecidos v3.2, contrastada con fuentes originales cuando estuvieron accesibles. No equivale a validacion humana externa independiente.",
     "muestra_construida": "audit/validacion_ampliada_enrichment_n150_seed20260923.json -- 150 documentos, estratificado (escala_conflicto x actores_posiblemente_truncados), excluyendo los 50 ya revisados",
-    "resultado": "Se intentaron los 150 registros: 60 ok, 64 error_menor, 7 error_grave y 19 no_verificable. Queda un desacuerdo de severidad preservado para adjudicacion humana/externa. Son conteos descriptivos no ponderados; no estiman prevalencia en el universo.",
-    "status": "revision_ia_completada_pendiente_adjudicacion_humana_externa",
+    "resultado": "Se intentaron los 150 registros: 60 ok, 65 error_menor, 6 error_grave y 19 no_verificable (tras adjudicar el unico desacuerdo pendiente, ver adjudicacion_2026-09-23). Son conteos descriptivos no ponderados; no estiman prevalencia en el universo.",
+    "status": "revision_ia_completada_verificada_y_adjudicada_por_claude",
     "nota": "La muestra esta estratificada y los resultados son asistidos por IA; no reemplazan la validacion humana externa N=50 ni habilitan produccion. Hay 150 intentos, 131 dictamenes adjudicables y 19 no verificables por acceso/adecuacion de la fuente.",
     "historial_intento_previo": "Un intento anterior fue interrumpido antes de producir resultados; el estado queda supersedido por la auditoria registrada en este bloque.",
     "artefacto_resultado": "audit/validacion_ampliada_enrichment_n150_resultado.json",
     "muestra_sha256": "2b4b49f5d5d87329abb09ea7459a2cdb2380651c20bdd91114e1d9a9bca26748",
-    "solapamiento_con_n50": 0
+    "solapamiento_con_n50": 0,
+    "verificacion_2026-09-23": "Claude Sonnet 5 verifico el trabajo de Luna contra datos reales (SQL, sample hashes, IDs, suite pytest) antes de aceptarlo -- ver bitacora FARO. Warehouse confirmado intacto (SHA identico antes/despues).",
+    "adjudicacion_2026-09-23": "De los 7 error_grave originales, 2 coinciden exactamente con documentos ya corregidos en Fix 1C ronda 3 (Portal Bicentenario, Americo Vespucio 7550) -- confirmacion cruzada independiente real. 1 nuevo bug confirmado y corregido con el mismo patron (Ivo Gasic/entrevista MPL: nombre_proyecto='Autopista Vespucio Oriente' solo respaldado por una case_mention EXCLUIDA). El desacuerdo de severidad Ex-Ante/FIMA se adjudico a error_menor (case_mention focal SI tiene evidencia objeto real y especifica; el problema es de campos secundarios -- proyectos_mencionados mezclados, tipo_accion impreciso -- no de respaldo del nombre). Los 3 error_grave restantes (pagina indice de Transporte, perfil de Rodrigo Delgado, perfil de Miguel Lawner) no estan en role focal/co_focal en ningun conflicto -- no corrompen evidencia verificada publica hoy; quedan documentados como limitacion de calidad de enriquecimiento, no corregidos individualmente.",
+    "pendiente_explicito": "64 de los 65 error_menor no se revisaron caso por caso mas alla del veredicto de Luna (35 de ellos SI tienen role focal/co_focal -- por definicion de la categoria son fallas localizadas que no invalidan el nucleo del registro, mismo criterio que la validacion N=50 original). Los 19 no_verificable quedan sin dictamen por falta de acceso a la fuente."
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],

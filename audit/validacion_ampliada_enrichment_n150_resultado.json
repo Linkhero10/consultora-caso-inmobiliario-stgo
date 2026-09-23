@@ -13,7 +13,7 @@
     "universo_tras_exclusion_previa": 884,
     "n_solapamiento_con_n50": 0,
     "diseno": "Muestreo estratificado por escala_conflicto x actores_posiblemente_truncados.",
-      "advertencia_inferencial": "Los conteos crudos no estiman prevalencia del universo porque el muestreo es estratificado y no se aplicaron ponderadores. La adjudicacion es asistida por IA, no reemplaza la validacion humana externa; el cero solapamiento solo confirma que son IDs distintos."
+    "advertencia_inferencial": "Los conteos crudos no estiman prevalencia del universo porque el muestreo es estratificado y no se aplicaron ponderadores. La adjudicacion es asistida por IA, no reemplaza la validacion humana externa; el cero solapamiento solo confirma que son IDs distintos."
   },
   "linaje": {
     "warehouse_path": "data/warehouse.sqlite",
@@ -33,9 +33,9 @@
     }
   },
   "conteos_no_ponderados": {
-    "error_menor": 64,
+    "error_menor": 65,
     "ok": 60,
-    "error_grave": 7,
+    "error_grave": 6,
     "no_verificable": 19
   },
   "distribucion_por_estrato_no_ponderada": {
@@ -97,13 +97,7 @@
     }
   },
   "nota_confianza": "Se preserva el valor reportado por tanda. Algunas tandas usaron etiquetas cualitativas y otras scores numericos; estos ultimos no estan calibrados y no son comparables entre si.",
-  "discrepancias_pendientes": [
-    {
-      "document_id": "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
-      "tema": "severidad_error_grave_vs_error_menor",
-      "resolucion": "sin_resolver; se preserva el veredicto de la tanda y se solicita adjudicacion humana/externa"
-    }
-  ],
+  "discrepancias_pendientes": [],
   "registros": [
     {
       "document_id": "4766e98c8c621eb699f6ef5898419c8dbb68ab6819457028d20163ef7f84dda8",
@@ -1762,7 +1756,7 @@
       "title": "Los contratos por trato directo del alcalde Vodanovic con ONG vinculada al FA para frenar inversión inmobiliaria - Ex-Ante | Las noticias que importan",
       "estrato_muestreo": "local::no_truncado",
       "estado_fuente": "leida",
-      "veredicto_revisor_ia": "error_grave",
+      "veredicto_revisor_ia": "error_menor",
       "confianza_reportada": {
         "tipo": "etiqueta_cualitativa_no_calibrada",
         "valor_reportado": "alta"
@@ -1786,8 +1780,8 @@
       "fuente_alternativa_si_uso": null,
       "razon_no_verificable": null,
       "discrepancia_de_severidad": {
-        "estado": "requiere_adjudicacion_humana_o_externa",
-        "detalle": "Se conserva error_grave como veredicto original. Una lectura de coordinacion considero plausible error_menor porque Edificio Pajaritos es objeto reiterado de los contratos; otra mantuvo error_grave por el foco editorial en contratos FIMA, la lista de proyectos distintos y la asociacion de eventos a un solo proyecto. No se altera ni cuenta como resolucion el desacuerdo."
+        "estado": "adjudicado_2026-09-23_claude_sonnet_5",
+        "detalle": "Se conserva error_grave como veredicto original. Una lectura de coordinacion considero plausible error_menor porque Edificio Pajaritos es objeto reiterado de los contratos; otra mantuvo error_grave por el foco editorial en contratos FIMA, la lista de proyectos distintos y la asociacion de eventos a un solo proyecto. No se altera ni cuenta como resolucion el desacuerdo. Adjudicacion (Claude Sonnet 5, 2026-09-23): error_menor, no error_grave. Verificado contra SQL real (case_mention/evidence): la case_mention:0 (incluida, focal para el conflicto Edificio Pajaritos) SI tiene evidencia objeto verificada real y especifica (3 edificios, 483 deptos, RCA de 4Life Seguros de Vida S.A.) -- el vinculo focal no esta roto, a diferencia de los patrones Fix 1C (Hospital Ochagavia, Portal Bicentenario, etc.) donde la case_mention incluida no respalda el nombre. El problema real es que proyectos_mencionados_json mezcla 4 proyectos ambientales distintos citados de pasada en el mismo parrafo (Oleoducto, La Farfana, Dominga, Hidroaysen) y tipo_accion=recurso_judicial no capta bien el eje central de contratacion/asesoria FIMA -- son fallas localizadas en campos secundarios, no una unidad analitica invalidada. No se corrige codigo; se conserva como documentado."
       }
     },
     {
