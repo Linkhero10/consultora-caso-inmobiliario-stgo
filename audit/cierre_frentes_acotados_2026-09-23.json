@@ -1,0 +1,20 @@
+{
+  "descripcion": "Auditoria de cierre (2026-09-23, Claude Sonnet 5) de los 2 frentes acotados que quedaron pendientes tras verificar el trabajo de Luna: los error_menor con evidencia focal actual, y los ambiguous_direct sin verificar del cross-check project_case_mention.py.",
+  "frente_1_error_menor_focal": {
+    "universo": 36,
+    "metodo": "chequeo mecanico doble: (a) substring simple del nombre_proyecto contra evidencia objeto incluida/excluida de cada documento, (b) re-ejecucion de project_case_mention.py (metodo mas preciso, quote exacta) filtrado a estos 36 documentos.",
+    "resultado_a": "0 sospechosos (ningun caso con respaldo solo en case_mention excluida)",
+    "resultado_b": "4 candidatos iniciales (viviendas sociales Top, Nueva Alameda Providencia, Oleoducto Sonacol, Planta La Farfana) -- los 4 verificados: ninguno es focal/co_focal para el project_id senalado (son contextual_mention o mentioned_unreviewed), es decir ninguno alimenta evidencia publica verificada bajo un nombre incorrecto.",
+    "conclusion": "Los 36 error_menor focales NO esconden ningun bug del patron Fix 1C. Consistente con la definicion de la categoria (fallas localizadas que no invalidan el nucleo del registro) usada tambien en la validacion N=50 original.",
+    "status": "verificado_sin_hallazgos_nuevos"
+  },
+  "frente_2_ambiguous_direct": {
+    "universo_filas": 29,
+    "universo_grupos_unicos_documento_proyecto": 13,
+    "metodo": "revision manual directa contra SQL (case_mention + evidence) de las 13 combinaciones unicas documento/proyecto.",
+    "resultado": "13/13 legitimos: en todos los casos, las multiples case_mention incluidas que matchean el mismo nombre_proyecto describen el MISMO objeto real en la MISMA comuna -- son menciones repetidas del mismo proyecto en distintos parrafos del mismo articulo (ej. Eco Egana citado 2 veces, Humedal Urbano de Quilicura citado 4 veces), no una contaminacion entre proyectos distintos.",
+    "conclusion": "ambiguous_direct, como senal, es mucho mas debil que excluded_case_mention (que ya se habia revisado 10/10 con 6 bugs reales confirmados) -- en esta muestra no genero ningun caso real.",
+    "status": "verificado_sin_hallazgos_nuevos"
+  },
+  "conclusion_general": "Con este cierre, TODOS los senaladores de riesgo generados hasta ahora sobre documentos focales (fix_1c patron 2 completo 204/204, project_case_mention.py excluded_case_mention 10/10, ambiguous_direct 13/13, enrichment N=150 error_grave 7/7, enrichment N=150 error_menor focal 36/36) quedan revisados individualmente. El unico frente estructural que sigue abierto es el bug de granularidad document-level vs case_mention-level en project_mention_resolved (ver homonym_partition_audit) -- ese no se resuelve caso por caso, requiere una decision de diseno."
+}
