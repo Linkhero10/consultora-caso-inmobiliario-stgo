@@ -438,6 +438,13 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
 
     n_conflicts_evidence_backed = sum(1 for c in conflicts if c["respaldo_evidencia"] == "respaldo_exact_quote_detectado")
 
+    # Fase C: capa de contexto social fino por manzana censal (Censo 2024).
+    # Opcional a proposito -- fixtures de test y warehouses mas simples no
+    # la tienen, y el resto del dashboard debe seguir funcionando igual.
+    n_manzanas_censales = 0
+    if _table_or_view_exists(con, "manzana_censal"):
+        n_manzanas_censales = con.execute("SELECT COUNT(*) FROM manzana_censal").fetchone()[0]
+
     return {
         "n_documents": n_documents,
         "n_case_mentions": n_case_mentions,
@@ -450,6 +457,7 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
         "n_actors": len(actor_keys),
         "n_evidence_verified": n_evidence_verified,
         "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts_total"] > 0),
+        "n_manzanas_censales": n_manzanas_censales,
     }
 
 

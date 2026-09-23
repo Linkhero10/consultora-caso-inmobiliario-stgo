@@ -61,7 +61,15 @@ enrichment_document, enrichment_actor,
   enrichment_institution, enrichment_event,
   enrichment_evidence,
   enrichment_project_mention           -- salida cruda del enriquecimiento LLM
+territory, geocoded_location,
+  geocoded_location_conflict,
+  manzana_censal                       -- geografia: comuna (agregado) y manzana censal (contexto)
 ```
+
+`manzana_censal` (Censo 2024, INE) es contexto social fino, no ubicación de conflictos -- ver
+"Capa de contexto social fino" en `docs/methodology.md`. Su geometría vive en
+`docs/manzanas_censales.geojson` (servido estático, cargado bajo demanda por el mapa), no en el
+SQLite, para no duplicar ~20 MB de polígonos.
 
 Vistas de referencia para construir la red actor↔conflicto:
 `actor_event_project_link_conflict_safe` (conservadora) y `..._conflict_extended` (con menciones

@@ -1,0 +1,192 @@
+{
+  "fecha_descarga": "2026-09-22",
+  "fuente_url": "https://services5.arcgis.com/hUyD8u3TeZLKPe4T/arcgis/rest/services/Censo2024_v2/FeatureServer/6",
+  "fuente_capa": "Manzanas_CPV24 (Censo 2024, INE)",
+  "descripcion": "Manzanas censales urbanas/rurales de las 32 comunas de la Provincia de Santiago, con geometria de poligono y variables poblacionales agregadas, para el mapa fino (Fase C) del dashboard.",
+  "campos_incluidos": [
+    "CUT (codigo comuna INE, entero)",
+    "COMUNA",
+    "PROVINCIA",
+    "REGION",
+    "MANZENT (identificador unico de manzana censal)",
+    "COD_MANZANA",
+    "COD_DISTRITO",
+    "DISTRITO",
+    "AREA_C (URBANO/RURAL)",
+    "TIPO_MZ",
+    "n_per (poblacion total de la manzana)",
+    "n_hog (numero de hogares)",
+    "n_vp (numero de viviendas particulares)",
+    "geometry (poligono, simplificado, ver tolerancia_simplificacion_grados)"
+  ],
+  "total_features": 46864,
+  "conteo_por_comuna": {
+    "13101": {
+      "nombre": "SANTIAGO",
+      "expected_count": 1711,
+      "downloaded_count": 1711
+    },
+    "13102": {
+      "nombre": "CERRILLOS",
+      "expected_count": 985,
+      "downloaded_count": 985
+    },
+    "13103": {
+      "nombre": "CERRO NAVIA",
+      "expected_count": 1266,
+      "downloaded_count": 1266
+    },
+    "13104": {
+      "nombre": "CONCHALÍ",
+      "expected_count": 1418,
+      "downloaded_count": 1418
+    },
+    "13105": {
+      "nombre": "EL BOSQUE",
+      "expected_count": 1449,
+      "downloaded_count": 1449
+    },
+    "13106": {
+      "nombre": "ESTACIÓN CENTRAL",
+      "expected_count": 1290,
+      "downloaded_count": 1290
+    },
+    "13107": {
+      "nombre": "HUECHURABA",
+      "expected_count": 1085,
+      "downloaded_count": 1085
+    },
+    "13108": {
+      "nombre": "INDEPENDENCIA",
+      "expected_count": 577,
+      "downloaded_count": 577
+    },
+    "13109": {
+      "nombre": "LA CISTERNA",
+      "expected_count": 712,
+      "downloaded_count": 712
+    },
+    "13110": {
+      "nombre": "LA FLORIDA",
+      "expected_count": 3584,
+      "downloaded_count": 3584
+    },
+    "13111": {
+      "nombre": "LA GRANJA",
+      "expected_count": 1230,
+      "downloaded_count": 1230
+    },
+    "13112": {
+      "nombre": "LA PINTANA",
+      "expected_count": 1609,
+      "downloaded_count": 1609
+    },
+    "13113": {
+      "nombre": "LA REINA",
+      "expected_count": 817,
+      "downloaded_count": 817
+    },
+    "13114": {
+      "nombre": "LAS CONDES",
+      "expected_count": 2285,
+      "downloaded_count": 2285
+    },
+    "13115": {
+      "nombre": "LO BARNECHEA",
+      "expected_count": 1250,
+      "downloaded_count": 1250
+    },
+    "13116": {
+      "nombre": "LO ESPEJO",
+      "expected_count": 807,
+      "downloaded_count": 807
+    },
+    "13117": {
+      "nombre": "LO PRADO",
+      "expected_count": 893,
+      "downloaded_count": 893
+    },
+    "13118": {
+      "nombre": "MACUL",
+      "expected_count": 1020,
+      "downloaded_count": 1020
+    },
+    "13119": {
+      "nombre": "MAIPÚ",
+      "expected_count": 5875,
+      "downloaded_count": 5875
+    },
+    "13120": {
+      "nombre": "ÑUÑOA",
+      "expected_count": 1323,
+      "downloaded_count": 1323
+    },
+    "13121": {
+      "nombre": "PEDRO AGUIRRE CERDA",
+      "expected_count": 1077,
+      "downloaded_count": 1077
+    },
+    "13122": {
+      "nombre": "PEÑALOLÉN",
+      "expected_count": 2355,
+      "downloaded_count": 2355
+    },
+    "13123": {
+      "nombre": "PROVIDENCIA",
+      "expected_count": 881,
+      "downloaded_count": 881
+    },
+    "13124": {
+      "nombre": "PUDAHUEL",
+      "expected_count": 2187,
+      "downloaded_count": 2187
+    },
+    "13125": {
+      "nombre": "QUILICURA",
+      "expected_count": 2083,
+      "downloaded_count": 2083
+    },
+    "13126": {
+      "nombre": "QUINTA NORMAL",
+      "expected_count": 854,
+      "downloaded_count": 854
+    },
+    "13127": {
+      "nombre": "RECOLETA",
+      "expected_count": 1352,
+      "downloaded_count": 1352
+    },
+    "13128": {
+      "nombre": "RENCA",
+      "expected_count": 1453,
+      "downloaded_count": 1453
+    },
+    "13129": {
+      "nombre": "SAN JOAQUÍN",
+      "expected_count": 982,
+      "downloaded_count": 982
+    },
+    "13130": {
+      "nombre": "SAN MIGUEL",
+      "expected_count": 630,
+      "downloaded_count": 630
+    },
+    "13131": {
+      "nombre": "SAN RAMÓN",
+      "expected_count": 822,
+      "downloaded_count": 822
+    },
+    "13132": {
+      "nombre": "VITACURA",
+      "expected_count": 1002,
+      "downloaded_count": 1002
+    }
+  },
+  "comunas_con_cero_resultados": [],
+  "tamano_final_bytes": 23651416,
+  "tamano_final_mb": 22.56,
+  "tolerancia_simplificacion_grados": 5e-05,
+  "nota_simplificacion": "El GeoJSON crudo (sin simplificar) pesaba 57.3 MB (54.66 MB), por encima del limite de 25 MB acordado para este repo (que publica en GitHub Pages). Se aplico shapely.simplify(tolerance=0.00005, preserve_topology=True) sobre cada poligono de manzana. 0.00005 grados equivale a aprox. 5.5 metros en la latitud de Santiago (~-33.5), una distorsion imperceptible a la escala de un mapa de ciudad o comuna, y con preserve_topology=True para evitar auto-interseccion o colapso de poligonos pequenos. Con esta tolerancia el archivo quedo en 22.56 MB, bajo el limite de 25 MB.",
+  "sha256_geojson_final": "d3a8e2a6da745e801d3c2d586c9a1ab0cc6857adbb2f6dfa9fbec36a5dea9e97",
+  "archivo_geojson": "Fuentes/fuentes_externas/raw/F-20/manzanas_censales_provincia_santiago.geojson"
+}

@@ -130,7 +130,11 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
       <option value="n_documents">Documentos</option>
       <option value="n_actors">Actores</option>
     </select></label>
+    <label><input type="checkbox" id="manzanaToggle"> Ver contexto social fino (manzana censal, Censo 2024)</label>
   </div>
+  <p class="note" id="manzanaNote" style="display:none">Capa de contexto social (población por manzana censal, la unidad
+    geográfica más fina del Censo) -- no indica dónde ocurre cada conflicto. Los conflictos siguen
+    registrados y coloreados a nivel de comuna; esta capa solo agrega detalle socioeconómico de fondo.</p>
   <div id="map"></div>
   <h3 style="margin-top:20px">Conflictos con respaldo documental detectado</h3>
   <div class="conflict-list" id="conflictList"></div>
@@ -182,6 +186,7 @@ function renderMetrics() {{
     ['Actores', s.n_actors],
     ['Citas verificadas', s.n_evidence_verified],
     ['Comunas con conflictos', s.n_comunas_con_conflictos],
+    ['Manzanas censales (Censo 2024)', s.n_manzanas_censales],
   ];
   document.getElementById('metrics').innerHTML = items.map(([lbl, val]) =>
     `<div class="card"><div class="metric">${{val.toLocaleString('es-CL')}}</div><div class="label">${{lbl}}</div></div>`
@@ -222,10 +227,54 @@ function renderMap() {{
           `Población: ${{t.poblacion.toLocaleString('es-CL')}}<br>Viviendas hacinadas: ${{t.viviendas_hacinadas.toLocaleString('es-CL')}}`
         );
       }},
-    }}).addTo(map);
+    }});
+    const manzanaOn = document.getElementById('manzanaToggle').checked;
+    if (!manzanaOn) geoLayer.addTo(map);
   }}
   draw('n_conflicts_backed');
   document.getElementById('metricSelect').addEventListener('change', e => draw(e.target.value));
+
+  // Fase C: capa de contexto social fino (manzana censal). Se carga solo
+  // cuando el usuario la pide (fetch perezoso) -- el GeoJSON pesa ~22 MB y
+  // no debe viajar en cada carga de página. Nunca se colorea por conflictos
+  // a este nivel: la unica variable disponible es poblacion (contexto), y
+  // el mapa por comuna sigue siendo el unico nivel al que se le atribuyen
+  // conflictos.
+  let manzanaLayer = null;
+  let manzanaGeojsonCache = null;
+  const manzanaToggle = document.getElementById('manzanaToggle');
+  const manzanaNote = document.getElementById('manzanaNote');
+  manzanaToggle.addEventListener('change', async () => {{
+    if (!manzanaToggle.checked) {{
+      if (manzanaLayer) map.removeLayer(manzanaLayer);
+      manzanaNote.style.display = 'none';
+      if (geoLayer) geoLayer.addTo(map);
+      return;
+    }}
+    manzanaNote.style.display = 'block';
+    if (geoLayer) map.removeLayer(geoLayer);
+    if (!manzanaGeojsonCache) {{
+      manzanaToggle.disabled = true;
+      try {{
+        const resp = await fetch('manzanas_censales.geojson');
+        manzanaGeojsonCache = await resp.json();
+      }} finally {{
+        manzanaToggle.disabled = false;
+      }}
+    }}
+    if (manzanaLayer) map.removeLayer(manzanaLayer);
+    const maxPop = Math.max(...manzanaGeojsonCache.features.map(f => f.properties.n_per || 0));
+    manzanaLayer = L.geoJSON(manzanaGeojsonCache, {{
+      style: f => ({{ fillColor: colorFor(f.properties.n_per, maxPop), weight: 0.3, color: '#56777c', fillOpacity: 0.7 }}),
+      onEachFeature: (f, layer) => {{
+        const p = f.properties;
+        layer.bindPopup(
+          `<b>Manzana censal, ${{p.COMUNA}}</b><br>Población: ${{(p.n_per || 0).toLocaleString('es-CL')}}<br>` +
+          `Hogares: ${{(p.n_hog || 0).toLocaleString('es-CL')}}<br>Viviendas particulares: ${{(p.n_vp || 0).toLocaleString('es-CL')}}`
+        );
+      }},
+    }}).addTo(map);
+  }});
 }}
 
 function renderConflictList() {{

@@ -58,6 +58,19 @@ Esto es una señal de calidad y no una adjudicación directa ni una prueba de qu
 del documento sean parte del mismo conflicto. La cobertura por conflicto se informa como `total`,
 `parcial` o `ninguna`; la ausencia de respaldo no equivale a falsedad.
 
+## Capa de contexto social fino: manzana censal (Censo 2024)
+
+El mapa por comuna (32 unidades) puede activar una capa opcional de manzanas censales del Censo
+2024 (INE, 46.864 manzanas), la unidad geográfica más fina disponible, con población, hogares y
+viviendas particulares por manzana. **Esta capa es solo contexto socioeconómico de fondo, no
+ubica conflictos**: se investigó explícitamente si el warehouse permite ese nivel de precisión
+(join espacial contra las coordenadas ya resueltas en `geocoded_location`) y la respuesta es no —
+las únicas coordenadas resueltas y vinculadas a un conflicto están marcadas
+`relation_type='contextual_location'` (un lugar mencionado en el documento, no el sitio
+determinado del conflicto), y tratarlas como ubicación exacta habría violado el mismo principio
+("ausencia de resolución > relación inventada") que ya rige el resto del pipeline. Los conflictos
+siguen contándose y coloreándose únicamente a nivel de comuna.
+
 ## Por qué existe el gate: lo que encontró la validación
 
 Una muestra aleatoria de 50 documentos enriquecidos, revisada caso por caso, encontró **24% de

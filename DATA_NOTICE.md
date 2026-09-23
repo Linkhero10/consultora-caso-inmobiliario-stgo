@@ -32,3 +32,15 @@ de Chile (BCN)** (`Toponimos_BCN`, `Areas_Pobladas_BCN`) más nombres administra
 Se usa únicamente como referencia de lectura para `src/geocode_locations.py` (resolución de
 texto de lugar a coordenada, sin fuzzy matching); no se redistribuyen los shapefiles BCN
 originales, solo este CSV ya derivado. Atribución: Biblioteca del Congreso Nacional de Chile.
+
+## Manzanas censales (Censo 2024, contexto social fino)
+
+`Fuentes/fuentes_externas/raw/F-20/manzanas_censales_provincia_santiago.geojson` (y su copia
+publicada `docs/manzanas_censales.geojson`) contiene geometría de manzana censal y variables
+poblacionales agregadas (población, hogares, viviendas particulares) de las 32 comunas de la
+Provincia de Santiago, derivadas del **Censo de Población y Vivienda 2024** del Instituto Nacional
+de Estadísticas (INE) de Chile, vía su servicio público ArcGIS FeatureServer
+(`Censo2024_v2`, capa `Manzanas_CPV24`). La geometría fue simplificada
+(`shapely.simplify`, tolerancia 0.00005°, ~5.5 m) para reducir el tamaño del archivo publicado;
+ver `manzanas_censales_manifest.json` junto al GeoJSON para el detalle exacto (fecha, conteos por
+comuna, tolerancia, SHA-256). Atribución: Instituto Nacional de Estadísticas (INE) de Chile.

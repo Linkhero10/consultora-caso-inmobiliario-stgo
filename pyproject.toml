@@ -20,6 +20,7 @@ dependencies = [
   "openpyxl",
   "PyYAML",
   "scipy",
+  "shapely",
 ]
 
 [project.optional-dependencies]
