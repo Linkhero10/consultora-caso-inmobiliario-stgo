@@ -483,6 +483,40 @@ def test_aeropuerto_los_cerrillos_current_fix1a_state():
     assert n_backing == 1
 
 
+def test_hospital_ochagavia_pac_document_no_longer_focal():
+    """Fix 1B (2026-09-22): adjudicacion de uno de los 4 desacuerdos reales
+    de conflictos_distintos_fusionados. El documento 'Pedro Aguirre Cerda
+    toma medidas...' estaba clasificado con nombre_proyecto='Nucleo
+    Ochagavia' pero su contenido real es sobre anteproyectos genericos de
+    altura, sin vinculo con la reconversion especifica del sitio -- eso lo
+    hacia aparecer como evidencia focal (verificada) del conflicto Hospital
+    Ochagavia/Nucleo Ochagavia. Se corrigio con correccion_nombre_proyecto=''
+    (document_case_unit), protegido con tiene_error=1 explicito.
+
+    La union de case_id en CONFLICT se mantiene intacta a proposito (no se
+    convirtio en Fix 1B una separacion automatica): su documento fundador
+    ('El espacio y la memoria...') es coherente por si solo -- un mismo
+    inmueble, una sola trayectoria (hospital -> reconversion comercial).
+    Separar los case_id no habria resuelto el problema real, solo lo habria
+    desplazado a la etiqueta 'Nucleo Ochagavia'. La correccion real de
+    nombre_proyecto pertenece a Fix 1C (clasificador aguas arriba), no a
+    esta capa."""
+    conn = _connect_or_skip()
+    doc_role = conn.execute(
+        "SELECT role, unidad_caso_tipo FROM document_conflict "
+        "WHERE document_id = 'ad078a77f1ebd1d1938316d5103acadf10d9455f2799a414ba8af2d190df0342'"
+    ).fetchone()
+    conflict_row = conn.execute(
+        "SELECT n_case_ids, label FROM conflict WHERE conflict_id = 'conflict:df81347c6c222b0f5a06c44c'"
+    ).fetchone()
+    conn.close()
+    assert doc_role is not None, "el documento debe seguir presente en el warehouse"
+    assert doc_role[0] == "mentioned_unreviewed", "ya no debe contar como evidencia focal/verificada"
+    assert conflict_row is not None, "el conflicto Hospital Ochagavia debe seguir existiendo"
+    assert conflict_row[0] == 2  # la union de case_id se mantiene intacta a proposito
+    assert conflict_row[1] == "Hospital Ochagavía"
+
+
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     conn = _connect_or_skip()
     columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}

@@ -149,6 +149,36 @@ derivado (con CHECK explicito, nunca un TEXT abierto sin control) --
 'sin_respaldo_exact_quote_detectado' si no. Nada se borra: el universo
 completo de `conflict` se preserva integro, la bandera solo decide que
 cuenta en el universo analitico conservador del dashboard.
+
+## Fix 1B (2026-09-22): resultado de la adjudicacion de los 15 conflictos_distintos_fusionados
+
+De los 15 conflictos marcados `conflictos_distintos_fusionados` en la validacion N=150, 11 se
+cerraron sin cambios de codigo: en todos ellos, el "conflicto mezclado" solo aparecia mezclado si
+se contaban documentos con rol `mentioned_unreviewed`/`panoramic_mention`/`contextual_mention`,
+que el dashboard publico ya excluye de la evidencia mostrada
+(`document_conflict_case_safe` exige `role IN ('focal','co_focal')`); los documentos realmente
+focales de esos 11 describian consistentemente el mismo proyecto.
+
+Los 4 restantes (todos `n_case_ids=2`, provenientes de la misma relacion `mismo_conflicto` humana
+del paquete de 63 documentos) se enviaron a adjudicacion externa. Resultado: 3 mantienen la union
+(Aeropuerto Los Cerrillos/Ciudad Portal Bicentenario, Loteo S1/S2, Ciudad Parque Bicentenario -- en
+los tres, el documento fundador de la union describe coherentemente una sola trayectoria
+conflictiva) y 1 (Hospital Ochagavia) revelo un problema real, pero NO en la capa CONFLICT: el
+documento fundador de esa union ("El espacio y la memoria...") es coherente por si solo (un mismo
+inmueble, hospital -> reconversion comercial), pero un SEGUNDO documento ("Pedro Aguirre Cerda toma
+medidas...") aparecia como evidencia focal del mismo conflicto por una atribucion de
+`nombre_proyecto` aguas arriba (clasificacion LLM) que no correspondia a su contenido real
+(anteproyectos genericos de altura, no la reconversion especifica del sitio). Separar los case_id
+en CONFLICT no habria resuelto esto -- solo habria desplazado el documento mal atribuido bajo la
+etiqueta "Nucleo Ochagavia" en vez de "Hospital Ochagavia". Se corrigio en la capa correcta
+(`document_case_unit.correccion_nombre_proyecto=''`, protegido con `tiene_error=1` explicito contra
+reclasificacion silenciosa) sin tocar la union de case_id. Ver
+`tests/test_build_conflicts.py::test_hospital_ochagavia_pac_document_no_longer_focal`.
+
+Resultado neto: 0/15 correcciones en la capa de agrupacion CONFLICT propiamente dicha; 1/15
+correccion en la capa de clasificacion de documento (`document_case_unit`), fuera del alcance de
+este modulo. El documento mal clasificado queda registrado como caso de prueba para Fix 1C
+(falsos positivos de `nombre_proyecto` en el clasificador aguas arriba).
 """
 
 import hashlib
