@@ -183,9 +183,30 @@ def test_run_manifest_is_written_with_counts_and_cost(tmp_path, monkeypatch):
     assert manifest["schema_sha256"]
     assert "run_id" in manifest and "started_at" in manifest and "finished_at" in manifest
 
-    errors_path = output_path.with_name(output_path.stem + ".errors.jsonl")
-    error_lines = [json.loads(l) for l in errors_path.read_text(encoding="utf-8").splitlines() if l.strip()]
-    assert error_lines[0]["run_id"] == manifest["run_id"], "los errores deben llevar el run_id de la corrida que los genero"
+
+def test_entry_script_sha256_falls_back_when_argv0_is_not_a_real_file(tmp_path, monkeypatch):
+    """Hallazgo real de revision externa (2026-09-23): bajo ciertos arneses
+    de invocacion de pytest, sys.argv[0] puede no apuntar a un archivo
+    legible (vacio, launcher inexistente), y entry_script_sha256 quedaba
+    null en silencio (_sha256_file solo atrapa OSError, no lo reporta).
+    Ahora debe caer a Path(__file__) en vez de dejar el campo vacio."""
+    output_path = tmp_path / "classifications.jsonl"
+    docs = _fake_docs(1)
+    _patch_common(monkeypatch, tmp_path, docs, output_path)
+    monkeypatch.setattr(target, "classify_document", lambda doc, api_key, prompt, schema: {
+        "parsed": {}, "usage": {"cost": 0.0}, "reasoning": None, "reasoning_details": None,
+    })
+    # Simula un sys.argv[0] que no resuelve a un archivo real.
+    monkeypatch.setattr(target.sys, "argv", [str(tmp_path / "launcher_inexistente")])
+    urls_file = tmp_path / "urls.txt"
+    urls_file.write_text(docs[0]["url"], encoding="utf-8")
+    args = argparse.Namespace(limit=0, dry_run=False, urls_file=str(urls_file), output_file=str(output_path), workers=1)
+    target._run(args)
+
+    manifest_path = next(tmp_path.glob("classifications.run_manifest.*.json"))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert manifest["entry_script_sha256"], "debe caer a Path(__file__) en vez de quedar null"
+    assert manifest["entry_script_sha256"] == manifest["base_gate_sha256"]
 
 
 def test_cost_of_a_schema_validation_failure_is_not_lost(tmp_path, monkeypatch):

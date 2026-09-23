@@ -32,20 +32,28 @@ con `codigo_comuna_ine` válido (visibles en el dashboard público), se buscaron
 
 ## Resultado
 
-**0 casos nuevos confirmados.** Los únicos matches del patrón 1 (Recoleta+Perú, Recoleta+La Paz,
+Los patrones 1 y 3 sí se agotaron por completo contra los 608 case_mention: **0 casos nuevos** en
+ninguno de los dos. Los únicos matches del patrón 1 (Recoleta+Perú, Recoleta+La Paz,
 Providencia+Uruguay, La Florida+México) ya están correctamente `decision_final_amplio='exclude'`.
 El patrón 3 solo produjo 3 falsos positivos triviales ("Barcelona"/"Ecuador" como nombres de calle,
-no de lugar real). El patrón 2 generó una lista de 115/551 documentos focales sin substring
-literal (22 con cero solapamiento de tokens); se revisaron a mano ~30 de los casos más extremos y,
-a diferencia de Hospital Ochagavía, en todos el nombre resultó bien fundado (confirmado en un
-documento hermano del mismo caso, en el título del artículo, o en contexto no capturado por la
-cita muestreada) -- ninguno era una fabricación real.
+no de lugar real).
 
-**Conclusión: Fix 1C se cierra sin cambios de código.** El caso Hospital Ochagavía era relativamente
-aislado, no síntoma de un problema sistémico en la clasificación de `nombre_proyecto`. Esto no
-significa que el clasificador sea perfecto -- significa que, con los tres patrones buscados en
-serio contra los datos reales, no se encontró evidencia de un problema recurrente que justifique
-una corrección de código en esta ronda.
+**El patrón 2 NO se agotó por completo -- esto se corrige aquí explícitamente tras revisión
+externa que señaló que la redacción anterior sonaba más exhaustiva de lo que fue.** Generó una
+lista automatizada de 115/551 documentos focales sin substring literal (22 con cero solapamiento
+de tokens). Se revisaron a mano solo **~30 de los 115** (los 22 de cero solapamiento más ~8
+adicionales de la lista completa), no los 115. En esos ~30, a diferencia de Hospital Ochagavía,
+el nombre resultó bien fundado en todos (confirmado en un documento hermano del mismo caso, en el
+título del artículo, o en contexto no capturado por la cita muestreada) -- ninguno era una
+fabricación real. **Los ~85 candidatos restantes del patrón 2 quedan sin auditar
+individualmente.** La afirmación correcta es "0 confirmados en la submuestra revisada del patrón
+2", no "0 confirmados sobre los 115".
+
+**Conclusión: Fix 1C se cierra en esta ronda sin cambios de código, con esta salvedad explícita
+pendiente.** El caso Hospital Ochagavía era relativamente aislado dentro de la submuestra
+revisada, no evidencia de un problema sistémico -- pero esa conclusión está acotada a ~30/115
+candidatos del patrón 2, no a su totalidad. Auditar los ~85 restantes queda como trabajo futuro
+concreto para retomar Fix 1C, no como parte de este cierre.
 
 ## Observaciones de menor confianza, no confirmadas como bugs (seguimiento eventual, no bloqueante)
 
@@ -61,5 +69,8 @@ una corrección de código en esta ronda.
 
 ## Estado del gate CONFLICT
 
-Con este cierre, el gate CONFLICT completo (Fix 1A + Fix 1B + Fix 1C) queda cerrado. Ver
-`audit/run_manifest.json` para el estado del warehouse en el momento de este cierre.
+El gate CONFLICT (Fix 1A + Fix 1B + Fix 1C) se considera cerrado **para el alcance efectivamente
+auditado** -- con la salvedad explícita de arriba: ~85 candidatos del patrón 2 de Fix 1C quedan
+sin revisar individualmente. No se detectó nada en la submuestra que sugiera que retomarlos
+cambiaría la conclusión, pero "no se detectó nada en 30/115" no es lo mismo que "se descartaron
+los 115". Ver `audit/run_manifest.json` para el estado del warehouse en el momento de este cierre.

@@ -20,12 +20,21 @@ falla en CI si el manifiesto committeado no coincide con el warehouse
 committeado, para que esta desincronización no pueda volver a colarse sin
 que la suite lo note.
 
-`build_commit` es best-effort: se llena con `git rev-parse HEAD` al momento
-de generar el manifiesto, pero el propio commit que incluye este manifiesto
-todavía no existe en ese momento -- por diseño, describe el commit sobre el
-que se construyó el warehouse (el padre), no un commit futuro que no puede
-conocerse de antemano. La verificación de CI que realmente importa es el
-SHA-256 del warehouse, no el commit exacto.
+## `parent_commit_at_generation` vs. `release_commit` (corregido 2026-09-23)
+
+Una primera versión de este script solo escribía un campo `build_commit` con
+`git rev-parse HEAD` al momento de generar el manifiesto -- pero ese HEAD es
+el commit PADRE (el estado del repo antes de que este warehouse regenerado
+se commitee), cuyo propio `data/warehouse.sqlite` en Git LFS puede tener un
+SHA-256 distinto al que este manifiesto registra. Un revisor externo señaló
+correctamente que eso deja ambiguo a qué commit describe realmente el
+manifiesto. Ahora se registran dos campos separados:
+`parent_commit_at_generation` (informativo, el HEAD real al generar) y
+`release_commit` (el commit que efectivamente incluye este manifiesto junto
+a este warehouse exacto -- necesariamente `null` al generar, porque ese
+commit todavía no existe; se completa en un commit de seguimiento inmediato
+que cite el hash real ya creado). Ninguno de los dos es lo que CI verifica
+-- la garantía fuerte es el SHA-256 del warehouse, no el commit.
 """
 
 from __future__ import annotations
@@ -115,12 +124,30 @@ def generate(warehouse_path: Path = WAREHOUSE_PATH, manifest_path: Path = MANIFE
             "ci_workflow": ".github/workflows/tests.yml",
             "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui.",
         },
-        "build_commit": _git_head(),
+        # Dos campos de commit distintos y deliberadamente separados
+        # (hallazgo real de revision externa, 2026-09-23): "parent_commit_at_generation"
+        # es el HEAD real en el momento en que este script corrio (el commit
+        # SOBRE el que se reconstruyo el warehouse, ya en el repo) -- puede
+        # tener un objeto LFS de warehouse.sqlite DISTINTO al sha256 de
+        # arriba, precisamente porque este manifiesto describe un warehouse
+        # regenerado que todavia no esta committeado en ese momento. No usar
+        # este campo para verificar que sha256 corresponde a un commit dado.
+        # "release_commit" es el commit que efectivamente incluye ESTE
+        # archivo de manifiesto junto a este data/warehouse.sqlite exacto --
+        # no puede conocerse antes de crear el commit (no existe todavia), asi
+        # que queda null hasta un commit de seguimiento inmediato que lo
+        # complete citando el hash real ya creado (mismo patron ya usado en
+        # el commit 23339cc). El SHA-256 del warehouse es la unica garantia
+        # fuerte; ambos campos de commit son informativos, no verificados por CI.
+        "parent_commit_at_generation": _git_head(),
+        "release_commit": None,
         "note": (
             "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse "
             "vigente en cada ronda de reconstruccion -- nunca se edita a mano. "
             "tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide "
-            "exactamente con data/warehouse.sqlite tal como esta committeado."
+            "exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la "
+            "garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation "
+            "y release_commit en src/generate_run_manifest.py)."
         ),
     }
     manifest_path.parent.mkdir(parents=True, exist_ok=True)

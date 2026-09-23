@@ -81,15 +81,19 @@
       "objeto de disputa fuera de la Provincia de Santiago"
     ],
     "n_case_mentions_analizadas": 608,
+    "patron_2_n_candidatos_automatizados": 115,
+    "patron_2_n_revisados_a_mano": 30,
+    "patron_2_n_sin_auditar_individualmente": 85,
     "hallazgos_nuevos_confirmados": 0,
+    "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608); 0 en la submuestra de ~30/115 revisada a mano del patron 2 -- NO equivale a 0 sobre los 115, los ~85 restantes quedan sin auditar individualmente (hallazgo de revision externa, 2026-09-23, corregido aqui).",
     "caso_canonico_que_motivo_fix_1c": "Hospital Ochagavia (corregido en Fix 1B, capa de clasificacion de documento)",
-    "conclusion": "0 casos nuevos confirmados tras busqueda sistematica -- Fix 1C se cierra sin cambios de codigo en esta ronda",
+    "conclusion": "0 casos nuevos confirmados en el alcance efectivamente auditado -- Fix 1C se cierra sin cambios de codigo en esta ronda, con auditoria de los ~85 candidatos restantes del patron 2 como trabajo futuro explicito",
     "detalle": "audit/fix_1c_investigation.md",
-    "status": "cerrado_sin_correcciones_adicionales"
+    "status": "cerrado_con_salvedad_de_alcance"
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
-    "status": "cerrado",
+    "status": "cerrado_con_salvedad_de_alcance_en_fix_1c",
     "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano."
   }
 }

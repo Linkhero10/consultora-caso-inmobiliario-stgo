@@ -925,7 +925,15 @@ def _run(args: argparse.Namespace) -> int:
     errors_path = output_path.with_name(output_path.stem + ".errors.jsonl")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
     manifest_path = output_path.with_name(f"{output_path.stem}.run_manifest.{run_id}.json")
+    # sys.argv[0] no siempre es un archivo legible: bajo ciertos arneses de
+    # invocacion (algunos wrappers de pytest, interpretes embebidos) puede
+    # venir vacio o apuntar a un launcher que no es un archivo real, lo que
+    # dejaba entry_script_sha256=None en silencio (_sha256_file solo atrapa
+    # OSError). Se cae a Path(__file__) -- el propio modulo, ya usado como
+    # fallback y como base_gate_sha256 -- en vez de dejar el campo vacio.
     _entry_script_path = Path(sys.argv[0]) if sys.argv else Path(__file__)
+    if not _entry_script_path.is_file():
+        _entry_script_path = Path(__file__)
     run_manifest = {
         "run_id": run_id,
         "started_at": datetime.now(timezone.utc).isoformat(),
