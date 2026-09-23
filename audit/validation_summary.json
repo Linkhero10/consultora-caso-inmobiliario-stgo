@@ -157,6 +157,14 @@
     "detalle": "audit/cierre_frentes_acotados_2026-09-23.json",
     "status": "cerrado_sin_hallazgos_nuevos"
   },
+  "diseno_geografia_case_mention_level_2026-09-23": {
+    "descripcion": "Diagnostico (Claude Sonnet 5) del blind spot estructural NO protegido por _document_single_comuna: documentos con comuna unica resuelta que mencionan de pasada un proyecto sin respaldo real ahi.",
+    "medicion": "1613 documentos con comuna unica; 118 pares unicos (documento,proyecto) sospechosos; 19/29 comunas cambiarian su conteo de n_projects; 90 pares removidos en total si se filtra. n_conflicts/n_conflicts_backed NO afectados (ya protegidos).",
+    "detalle_medicion": "audit/geografia_blind_spot_comuna_unica_2026-09-23.json",
+    "propuesta_no_decidida": "Integrar project_case_mention.py como filtro de n_projects en dashboard_data.py -- ver Auditoria/DISENO_geografia_case_mention_level_2026-09-23/PROMPT_DISENO.md para el diagnostico completo y la propuesta.",
+    "status": "en_revision_externa -- el usuario pidio que otra IA de una propuesta de diseno independiente antes de implementar nada",
+    "nota": "Este bloque documenta el estado del DISENO, no una correccion aplicada -- no tocar warehouse ni codigo hasta decidir."
+  },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
     "status": "cerrado_tier_a_completo_tier_b_parcial",

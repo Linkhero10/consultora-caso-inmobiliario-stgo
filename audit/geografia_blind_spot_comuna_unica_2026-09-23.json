@@ -1,0 +1,269 @@
+{
+  "descripcion": "Medicion (2026-09-23, Claude Sonnet 5) del blind spot NO protegido por la regla defensiva _document_single_comuna de dashboard_data.py: documentos con una UNICA comuna resuelta (por lo tanto no descartados por esa regla) que ademas mencionan, de pasada, un proyecto cuyo nombre solo tiene respaldo en una case_mention EXCLUIDA o NO incluida de ese mismo documento.",
+  "metodo": "src/project_case_mention.py (build_project_case_mention_links) ejecutado contra el warehouse real; se cruzan los pares (document_id, project_id) con link_status en (excluded_case_mention, non_included_case_mention) contra el conjunto de documentos con comuna unica resuelta (misma logica exacta que dashboard_data._document_single_comuna).",
+  "n_documentos_comuna_unica": 1613,
+  "n_pares_documento_proyecto_sospechosos_en_comuna_unica": 124,
+  "n_pares_unicos_documento_proyecto": 118,
+  "n_comunas_afectadas_en_conteo_n_projects": 19,
+  "n_comunas_totales_con_documentos": 29,
+  "total_pares_proyecto_comuna_removidos_si_se_filtra": 90,
+  "detalle_por_comuna": [
+    {
+      "codigo_comuna_ine": "13114",
+      "n_projects_antes": 82,
+      "n_projects_despues": 71,
+      "delta": 11
+    },
+    {
+      "codigo_comuna_ine": "13106",
+      "n_projects_antes": 87,
+      "n_projects_despues": 76,
+      "delta": 11
+    },
+    {
+      "codigo_comuna_ine": "13101",
+      "n_projects_antes": 37,
+      "n_projects_despues": 27,
+      "delta": 10
+    },
+    {
+      "codigo_comuna_ine": "13102",
+      "n_projects_antes": 30,
+      "n_projects_despues": 22,
+      "delta": 8
+    },
+    {
+      "codigo_comuna_ine": "13115",
+      "n_projects_antes": 43,
+      "n_projects_despues": 36,
+      "delta": 7
+    },
+    {
+      "codigo_comuna_ine": "13132",
+      "n_projects_antes": 59,
+      "n_projects_despues": 53,
+      "delta": 6
+    },
+    {
+      "codigo_comuna_ine": "13107",
+      "n_projects_antes": 34,
+      "n_projects_despues": 29,
+      "delta": 5
+    },
+    {
+      "codigo_comuna_ine": "13118",
+      "n_projects_antes": 15,
+      "n_projects_despues": 10,
+      "delta": 5
+    },
+    {
+      "codigo_comuna_ine": "13120",
+      "n_projects_antes": 52,
+      "n_projects_despues": 48,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13124",
+      "n_projects_antes": 52,
+      "n_projects_despues": 48,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13125",
+      "n_projects_antes": 25,
+      "n_projects_despues": 21,
+      "delta": 4
+    },
+    {
+      "codigo_comuna_ine": "13123",
+      "n_projects_antes": 43,
+      "n_projects_despues": 40,
+      "delta": 3
+    },
+    {
+      "codigo_comuna_ine": "13119",
+      "n_projects_antes": 29,
+      "n_projects_despues": 26,
+      "delta": 3
+    },
+    {
+      "codigo_comuna_ine": "13110",
+      "n_projects_antes": 42,
+      "n_projects_despues": 40,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13122",
+      "n_projects_antes": 25,
+      "n_projects_despues": 23,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13113",
+      "n_projects_antes": 18,
+      "n_projects_despues": 16,
+      "delta": 2
+    },
+    {
+      "codigo_comuna_ine": "13128",
+      "n_projects_antes": 10,
+      "n_projects_despues": 9,
+      "delta": 1
+    },
+    {
+      "codigo_comuna_ine": "13130",
+      "n_projects_antes": 12,
+      "n_projects_despues": 11,
+      "delta": 1
+    },
+    {
+      "codigo_comuna_ine": "13127",
+      "n_projects_antes": 23,
+      "n_projects_despues": 22,
+      "delta": 1
+    }
+  ],
+  "alcance_no_afectado": "n_conflicts y n_conflicts_backed por comuna NO se ven afectados por este blind spot -- ya usan document_conflict_case_safe / el filtro de comuna unica, que es mas estricto. El unico campo afectado es n_projects (opcion de color del mapa \"Proyectos\" + tooltip de comuna en docs/index.html).",
+  "ejemplos_sospechosos": [
+    {
+      "document_id": "00055138761f145174e2e9c1e02aeeb26fdc7ad4a3f6e8bb64352c9fa4ed1575",
+      "project_id": "df5d54c58b523636382d0f61",
+      "raw_nombre_proyecto": "Villa Militar del Oeste",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Villa Militar del Oeste"
+    },
+    {
+      "document_id": "00bf0ba8d43fd72891bfa2ea1aff46f0cebb5e05fa4fbd84b7c7864e58606b0a",
+      "project_id": "8a529b2462116b2091a15767",
+      "raw_nombre_proyecto": "Unidad Vecinal Providencia",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Unidad Vecinal Providencia"
+    },
+    {
+      "document_id": "00d896c6f662b28b36106f8e0d51c0e24ff7ac87bf7003f7fb2269f713bcbd22",
+      "project_id": "0a46fc5f5b355791d002f52a",
+      "raw_nombre_proyecto": "Ciudad Parque de Aitué",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto Ciudad Parque de Aitué"
+    },
+    {
+      "document_id": "00d896c6f662b28b36106f8e0d51c0e24ff7ac87bf7003f7fb2269f713bcbd22",
+      "project_id": "134aaa7f59c0bf4617ab91db",
+      "raw_nombre_proyecto": "Paicaví 436",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto Paicaví 420 y Paicaví 436"
+    },
+    {
+      "document_id": "00d896c6f662b28b36106f8e0d51c0e24ff7ac87bf7003f7fb2269f713bcbd22",
+      "project_id": "3b57ad2d7bdff42eb0ac791d",
+      "raw_nombre_proyecto": "Paicaví 420",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto Paicaví 420 y Paicaví 436"
+    },
+    {
+      "document_id": "010907f0d290b5674792d718af7cef77b42661494560d7d7d485fd4b9ab93b9f",
+      "project_id": "1d9b782c94a7e089c28a36d7",
+      "raw_nombre_proyecto": "Mediterráneo",
+      "link_status": "excluded_case_mention",
+      "quote_text": "el proyecto hidroeléctrico Mediterráneo"
+    },
+    {
+      "document_id": "0d95504e340fa551ed899638deb65b6a00626ac983ba4a46fb0766cce094246e",
+      "project_id": "3b90fc14060c12f4a8e25636",
+      "raw_nombre_proyecto": "Centro Integral de Gestión de Residuos Industriales",
+      "link_status": "excluded_case_mention",
+      "quote_text": "“Centro Integral de Gestión de Residuos Industriales” (Cigri)"
+    },
+    {
+      "document_id": "0ea3a685865105df5d67884a6f739baed8c638f7a2478acbc4f74d9ee24a754a",
+      "project_id": "1245c05fc9b2250688fc49b0",
+      "raw_nombre_proyecto": "Modificación del Plan Regulador Comunal de Santiago del sector Matta – Franklin",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Modificación del Plan Regulador Comunal de Santiago del sector Matta – Franklin"
+    },
+    {
+      "document_id": "1266913b54ac0a8a4f46d755ea888b8ad61945c30b5bd569e7eb2691d6c4f427",
+      "project_id": "81775c9148f7a524efb39e82",
+      "raw_nombre_proyecto": "Condominio Viento Norte",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Condominio Viento Norte"
+    },
+    {
+      "document_id": "1266913b54ac0a8a4f46d755ea888b8ad61945c30b5bd569e7eb2691d6c4f427",
+      "project_id": "a82900c5e304875cdb9f9d76",
+      "raw_nombre_proyecto": "Condominio Viento Sur",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Condominio Viento Sur"
+    },
+    {
+      "document_id": "1410ad1368098950b59f745acbe939bbc9493c6ad1006600c452676e6e3cdf32",
+      "project_id": "e64cb33f7422d75ed07769f9",
+      "raw_nombre_proyecto": "Nueva Alameda Providencia",
+      "link_status": "excluded_case_mention",
+      "quote_text": "la expropiación de sus viviendas debido al proyecto Nueva Alameda Providencia"
+    },
+    {
+      "document_id": "1be7f70f50bb35374d203fafd125da2177a56bcce14f524b992ecd661d136a27",
+      "project_id": "80119ee1c677f9875d29c4b3",
+      "raw_nombre_proyecto": "edificio de Desarrollo Inmobiliario Bellavista",
+      "link_status": "excluded_case_mention",
+      "quote_text": "edificio de Desarrollo Inmobiliario Bellavista"
+    },
+    {
+      "document_id": "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+      "project_id": "0a9d6730e059f72c2cdec2d8",
+      "raw_nombre_proyecto": "Recreo",
+      "link_status": "excluded_case_mention",
+      "quote_text": "dos proyectos de Grupo Su Ksa, ubicados en calles Recreo y Placilla"
+    },
+    {
+      "document_id": "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+      "project_id": "a91a4ec8177080fd3d7aaaec",
+      "raw_nombre_proyecto": "Placilla",
+      "link_status": "excluded_case_mention",
+      "quote_text": "dos proyectos de Grupo Su Ksa, ubicados en calles Recreo y Placilla"
+    },
+    {
+      "document_id": "24a9507021c7366fd74e562b6771d4ae1ab0ecd6f5bde3b5073d6f1665b15cbc",
+      "project_id": "1d6bceac9e9b2a5cf48a1fc6",
+      "raw_nombre_proyecto": "proyecto de PyG Larraín",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto de PyG Larraín"
+    },
+    {
+      "document_id": "25e6bd2d722a655dc15cfcf692eb9e91818854e252dc5ef4aa28c21cd5e6a857",
+      "project_id": "0b727c7a3931a81b28a3cc0a",
+      "raw_nombre_proyecto": "Espacio Don Óscar",
+      "link_status": "excluded_case_mention",
+      "quote_text": "El expediente del Espacio Don Óscar"
+    },
+    {
+      "document_id": "25e6bd2d722a655dc15cfcf692eb9e91818854e252dc5ef4aa28c21cd5e6a857",
+      "project_id": "8ce3d137d2adba7520ce63b9",
+      "raw_nombre_proyecto": "The Lux",
+      "link_status": "excluded_case_mention",
+      "quote_text": "del restaurante The Lux"
+    },
+    {
+      "document_id": "290718bbd0ad42bc30f57690d53d3672796ca4d9456143d72be6b1611db68dc2",
+      "project_id": "9c1e2455cab8dc3d504ce1b7",
+      "raw_nombre_proyecto": "Solución Sanitaria para un sector de Quilicura",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto liderado por la empresa Aguas San Isidro titulado «Solución Sanitaria para un sector de Quilicura»"
+    },
+    {
+      "document_id": "2f847115d52a5509a0de609338cc5f1e77ad3b4573471692a3b53b85291b366f",
+      "project_id": "409f4314b8a1a3d97829838d",
+      "raw_nombre_proyecto": "Altos de Puyai",
+      "link_status": "excluded_case_mention",
+      "quote_text": "proyecto de segunda vivienda Altos de Puyai"
+    },
+    {
+      "document_id": "39f3d136262ee4cad996bbc2aa17307983589dfe0620dca06eeaed7a76bc20ca",
+      "project_id": "022c09549847326dc607c2b5",
+      "raw_nombre_proyecto": "Edificación Centro Comunitario Padre Hurtado",
+      "link_status": "excluded_case_mention",
+      "quote_text": "Edificación Centro Comunitario Padre Hurtado"
+    }
+  ]
+}
