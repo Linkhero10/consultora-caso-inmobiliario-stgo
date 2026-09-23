@@ -113,14 +113,26 @@ def build_project_case_mention_links(
     """
     project_aliases = project_aliases or {}
     cms_by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    cm_document_by_id: dict[str, str] = {}
     for cm in case_mentions:
         cms_by_doc[cm["document_id"]].append(cm)
+        cm_document_by_id[cm["case_mention_id"]] = cm["document_id"]
 
+    # Guard de integridad (2026-09-23, revision de diseno externa): una
+    # evidencia solo puede respaldar una case_mention de SU MISMO documento.
+    # No cambia ningun resultado sobre datos ya consistentes (0 filas
+    # discrepantes verificado contra el warehouse real) -- protege contra
+    # fixtures/datos corruptos donde evidence.document_id no coincide con el
+    # document_id de la case_mention referenciada.
     evidence_by_cm: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for ev in evidence:
         if ev.get("quote_role") != "objeto" or not _is_verified(ev.get("verified")):
             continue
-        evidence_by_cm[ev["case_mention_id"]].append(ev)
+        cm_id = ev.get("case_mention_id")
+        cm_doc_id = cm_document_by_id.get(cm_id)
+        if cm_doc_id is None or cm_doc_id != ev.get("document_id"):
+            continue
+        evidence_by_cm[cm_id].append(ev)
 
     rows: list[dict[str, Any]] = []
     for pm in project_mentions:
