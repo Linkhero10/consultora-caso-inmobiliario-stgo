@@ -115,6 +115,8 @@ Los nombres son ilustrativos; el contrato final debe usar enums estables y exhau
 
 En el mapa principal, contar valores distintos de project_id por codigo_comuna_ine solo cuando exista una atribución textual directa admisible, de una case_mention incluida, con comuna propia resuelta. Un project_id puede contarse en más de una comuna solo cuando haya un enlace elegible independiente en cada comuna; si los enlaces se contradicen o la identidad es dudosa, se envía a revisión en lugar de declarar multi-comuna automáticamente.
 
+Este indicador significa “proyecto con mención de objeto vinculada a una case_mention incluida y comuna resuelta”. No demuestra por sí solo que el proyecto sea el objeto focal/co-focal del conflicto: el texto de una cita puede nombrar más de un proyecto y la relación de rol no se conserva a esa granularidad para todo el corpus. Si el producto quiere contar exclusivamente proyectos focales del conflicto, hace falta un vínculo independiente de rol por proyecto-mención; no se debe heredar el rol document-level de document_conflict hacia cada project_id. La etiqueta pública debe reflejar esta distinción.
+
 Los document_level_candidate, ambiguous_direct, excluded_case_mention, non_included_case_mention y las menciones sin comuna no se presentan como geográficamente resueltos. Tampoco se eliminan del corpus ni del registro del proyecto: simplemente no forman el numerador geográfico estricto.
 
 La UI debe llamar al indicador algo como “proyectos con atribución textual directa a una comuna” y explicar que las citas se validan como texto literal. No debe decir “ubicación real verificada”. Para que el usuario vea la cobertura, el panel de detalle puede mostrar por separado cuántos proyectos o pares quedan sin atribución; no los suma a ninguna comuna.
@@ -159,6 +161,7 @@ No incluye:
 | Evidencia pertenece a otro documento o mención | Validar los tres document_id de project mention, case_mention y evidence antes de emitir una arista; abortar o poner en cuarentena la fila inconsistente. |
 | Un proyecto aparece varias veces o en varias menciones | Mantener aristas separadas y deduplicar el indicador final por project_id + comuna, nunca por conteo de citas. |
 | Un proyecto es realmente lineal o multi-comuna | Aceptar cada comuna solo por evidencia propia y mantener una razón/estado explícito de multi-comuna; no inferirlo de una contradicción. |
+| Un quote de objeto nombra varios proyectos, pero el usuario interpreta cada uno como objeto focal | Separar vínculo textual/geográfico de rol focal/co-focal; no propagar el rol document-level a cada proyecto. |
 | Menor n_projects se interpreta como desaparición de proyectos | Renombrar el indicador, mostrar coverage/unresolved en separado y conservar la medición anterior como serie histórica document-level. |
 | Cambio de lógica y comparación sobre la misma muestra usada para diseñarlo | Congelar reglas antes de una revisión ciega nueva; separar muestra de diseño, muestra de validación y stress sample. |
 | Deriva de fuente o de algoritmo | Hashes obligatorios del warehouse, código del linker, configuración y sidecar; abortar la comparación si cambian sin regenerar el baseline. |
@@ -182,9 +185,10 @@ Cubrir al menos:
 7. Fragmento genérico del nombre: no direct; un alias controlado sí puede pasar si está aprobado y versionado.
 8. Una mención incluida más una coincidencia excluded del mismo nombre: conservar ambas señales y no esconder la colisión por short-circuit.
 9. Varias citas para la misma case_mention: no inflar el conteo de proyectos.
-10. Varias case_mentions incluidas con el mismo código versus códigos distintos: ambas quedan ambiguas para el enlace; la primera puede ir a sensibilidad geográfica, la segunda a unresolved/review.
-11. Código vacío, inválido o fuera de territory: enlace textual conservado, ninguna comuna inferida.
-12. Proyecto respaldado en varias noticias: contar una vez por comuna; permitir varias comunas únicamente con enlaces distintos elegibles.
+10. Una cita de objeto que enumera varios project_id: no inferir que cada uno es el objeto focal/co-focal del conflicto.
+11. Varias case_mentions incluidas con el mismo código versus códigos distintos: ambas quedan ambiguas para el enlace; la primera puede ir a sensibilidad geográfica, la segunda a unresolved/review.
+12. Código vacío, inválido o fuera de territory: enlace textual conservado, ninguna comuna inferida.
+13. Proyecto respaldado en varias noticias: contar una vez por comuna; permitir varias comunas únicamente con enlaces distintos elegibles.
 
 ### Fase 2 — integración no productiva
 
