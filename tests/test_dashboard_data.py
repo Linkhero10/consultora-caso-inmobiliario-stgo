@@ -166,6 +166,66 @@ def test_evidence_only_counts_verified_quotes(tmp_path):
     assert "Cita no verificada." not in quotes
 
 
+def test_backing_quotes_non_focal_fallback_when_no_focal_evidence(tmp_path):
+    """Fix 1A seguimiento: el detector de respaldo busca evidencia en
+    cualquier documento que mencione el proyecto, no solo en los focales de
+    ESTE conflicto -- por eso un conflicto puede quedar 'con respaldo
+    detectado' sin ningun documento focal. El dashboard debe mostrar esa
+    cita explicitamente (nunca dejarla vacia ni mezclarla con
+    evidence_quotes_sample, que exige documento focal)."""
+    db_path = tmp_path / "warehouse.sqlite"
+    con = sqlite3.connect(str(db_path))
+    con.executescript(
+        """
+        CREATE TABLE document(document_id TEXT, url TEXT, fecha_publicacion TEXT, fetched_at TEXT, title TEXT, lineage_json TEXT, corpus_scope TEXT, contract_version TEXT, decision_documento TEXT);
+        CREATE TABLE case_mention(case_mention_id TEXT, document_id TEXT, mention_index INTEGER, comuna TEXT, codigo_comuna_ine TEXT, tipo_objeto_norm TEXT, decision_final_amplio TEXT, decision_final_residencial TEXT);
+        CREATE TABLE evidence(evidence_id TEXT, document_id TEXT, case_mention_id TEXT, quote_role TEXT, quote_index INTEGER, quote_text TEXT, verified INTEGER);
+        CREATE TABLE territory(codigo_comuna_ine TEXT, comuna TEXT, poblacion INTEGER, inmigrantes INTEGER, hogares INTEGER, viviendas_hacinadas INTEGER, viviendas_irrecuperables INTEGER, geometry_json TEXT);
+        CREATE TABLE event(event_id TEXT, document_id TEXT, url TEXT, fecha TEXT, descripcion TEXT, tipo_hito TEXT, fecha_year_grounded INTEGER, nombre_proyecto TEXT);
+        CREATE TABLE project(project_id TEXT, canonical_name TEXT, normalized_name TEXT, aliases_json TEXT, n_documents INTEGER, n_mentions INTEGER, homonym_partition TEXT, case_id TEXT);
+        CREATE TABLE project_mention_resolved(document_id TEXT, raw_nombre_proyecto TEXT, project_id TEXT);
+        CREATE TABLE conflict(conflict_id TEXT, label TEXT, n_case_ids INTEGER, origen TEXT, confidence TEXT, respaldo_evidencia TEXT);
+        CREATE TABLE conflict_project(conflict_id TEXT, project_id TEXT, case_id TEXT);
+        CREATE TABLE conflict_evidence_backing(conflict_id TEXT, case_id TEXT, project_id TEXT, document_id TEXT, case_mention_id TEXT, evidence_id TEXT, raw_nombre_proyecto TEXT, quote_text TEXT, quote_role TEXT, detector_version TEXT, match_method TEXT);
+        CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
+        CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_sol TEXT, revisado_por TEXT);
+        CREATE TABLE enrichment_actor(actor_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo TEXT, rol TEXT, stance TEXT, nivel_involucramiento TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
+        CREATE TABLE enrichment_institution(institucion_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo_norm TEXT, rol_en_texto TEXT, accion_institucional TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
+        CREATE TABLE enrichment_event(event_id TEXT, document_id TEXT, idx INTEGER, fecha TEXT, date_precision TEXT, descripcion TEXT, tipo_hito TEXT, proyecto_asociado TEXT, fecha_year_grounded INTEGER, evidencia_hito TEXT, evidencia_hito_original_modelo TEXT, evidencia_hito_verificada INTEGER, evidence_id TEXT, nombre_proyecto_documento TEXT, revision_nivel_documento TEXT);
+        CREATE TABLE actor_event_project_link(link_id TEXT, source_table TEXT, source_id TEXT, document_id TEXT, nombre TEXT, proyecto_asociado_raw TEXT, project_id TEXT, resolution_status TEXT, source_pass TEXT);
+        CREATE TABLE actor_registry(entity_id TEXT, entity_key TEXT, canonical_label TEXT, n_alias INTEGER, tipo TEXT);
+        CREATE TABLE actor_alias(nombre_norm TEXT, entity_id TEXT, fuente TEXT, razon TEXT);
+        CREATE VIEW document_conflict_case_safe AS
+            SELECT * FROM document_conflict WHERE unidad_caso_tipo = 'caso_unico' AND role IN ('focal', 'co_focal');
+        CREATE VIEW actor_event_project_link_conflict_safe AS
+            SELECT l.*, cp.conflict_id AS conflict_id FROM actor_event_project_link l
+            JOIN conflict_project cp ON cp.project_id = l.project_id
+            JOIN document_conflict_case_safe dcs ON dcs.document_id = l.document_id AND dcs.conflict_id = cp.conflict_id
+            WHERE l.resolution_status = 'resolved_explicit';
+        """
+    )
+    # doc1: mentioned_unreviewed -- NO cuenta como focal, pero SI tiene la
+    # cita que respalda el proyecto segun conflict_evidence_backing.
+    con.execute("INSERT INTO document VALUES ('doc1','https://a.cl','2026-01-01','2026-01-02','Titulo A','{}','include','v1','include')")
+    con.execute("INSERT INTO project VALUES ('proj1','Proyecto Fantasma',' proyecto fantasma','[]',1,1,NULL,'case1')")
+    con.execute("INSERT INTO conflict_project VALUES ('conflict:1','proj1','case1')")
+    con.execute("INSERT INTO conflict VALUES ('conflict:1','Proyecto Fantasma',1,'trivial_single_case','baja_derivado_mecanicamente','respaldo_exact_quote_detectado')")
+    con.execute("INSERT INTO document_conflict VALUES ('doc1','conflict:1','mentioned_unreviewed','{}','test','caso_unico')")
+    con.execute(
+        "INSERT INTO conflict_evidence_backing VALUES ('conflict:1','case1','proj1','doc1','doc1:0','doc1:0:objeto:0','Proyecto Fantasma','el nuevo Proyecto Fantasma','objeto','exact_substring_v1','normalized_bidirectional_substring')"
+    )
+    con.commit()
+    con.close()
+
+    data = target.build_dashboard_dataset(db_path)
+    conflict = data["conflicts"][0]
+    assert conflict["evidence_quotes_sample"] == []
+    assert conflict["documents"] == []
+    assert len(conflict["backing_quotes_non_focal"]) == 1
+    assert conflict["backing_quotes_non_focal"][0]["quote_text"] == "el nuevo Proyecto Fantasma"
+    assert conflict["backing_quotes_non_focal"][0]["document_url"] == "https://a.cl"
+
+
 def test_all_enum_values_have_labels_in_real_warehouse():
     """Contra el warehouse real: ningún valor debe llegar al dashboard sin
     entrada humanizada en config/dashboard_labels.json."""

@@ -266,6 +266,9 @@ function showConflictDetail(c) {{
   const actors = c.actors.map(a => `<span class="pill">${{a.nombre}} (${{label(a.tipo_categoria, a.tipo)}}${{a.stance ? ', ' + label('stance', a.stance) : ''}})</span>`).join('') || '<span class="note">Sin actores verificados con rol focal/co-principal</span>';
   const events = c.events.map(e => `<li>${{e.fecha || 's/f'}} — ${{label('tipo_hito', e.tipo_hito)}}: ${{e.descripcion}}</li>`).join('');
   const quotes = c.evidence_quotes_sample.map(q => `<div class="quote">"${{q}}"</div>`).join('');
+  const backingQuotesNonFocal = (c.backing_quotes_non_focal || []).map(bq =>
+    `<div class="quote">"${{bq.quote_text}}"<br><span class="note">Fuente: <a href="${{bq.document_url}}" target="_blank" rel="noopener">${{bq.document_title || bq.document_url}}</a> (no es un documento focal/co-principal de este conflicto -- ver nota abajo)</span></div>`
+  ).join('');
   const docs = c.documents.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a></li>`).join('') || '<li class="note">Sin documentos focales/co-principales para este conflicto</li>';
   const others = c.other_mentions.map(d => `<li><a href="${{d.url}}" target="_blank" rel="noopener">${{d.title || d.url}}</a> <span class="note">(${{label('document_conflict_role', d.role)}} · no utilizado como evidencia focal)</span></li>`).join('');
   el.innerHTML = `<h3>${{c.label}}</h3>
@@ -277,6 +280,7 @@ function showConflictDetail(c) {{
     <p><b>Actores</b> <span class="note">(rol focal/co-principal, identidad resuelta cuando aplica)</span>: ${{actors}}</p>
     ${{events ? `<p><b>Línea de tiempo</b> (${{c.n_events_total}} hito(s)):</p><ul>${{events}}</ul>` : ''}}
     ${{quotes ? `<p><b>Evidencia citada:</b></p>${{quotes}}` : ''}}
+    ${{backingQuotesNonFocal ? `<p><b>Cita que respalda la etiqueta</b> <span class="note">(el detector de respaldo busca en cualquier documento que mencione el proyecto, no solo en los focales de este conflicto -- por eso esta cita aparece aunque no haya documentos focales abajo)</span>:</p>${{backingQuotesNonFocal}}` : ''}}
     <p><b>Documentos fuente (focal/co-principal):</b></p><ul>${{docs}}</ul>
     ${{others ? `<p><b>Otras menciones</b> <span class="note">(contextuales o sin revisar -- no aportan actores/eventos a este detalle)</span>:</p><ul>${{others}}</ul>` : ''}}`;
 }}

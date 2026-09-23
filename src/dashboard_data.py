@@ -314,6 +314,24 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
     for row in _rows(con, "SELECT document_id, quote_role, quote_text FROM evidence WHERE verified = 1"):
         evidence_by_doc[row["document_id"]].append(row)
 
+    # Fix 1A seguimiento (2026-09-23): el detector de respaldo busca evidencia
+    # en CUALQUIER documento que mencione el proyecto (nunca solo los
+    # focales de este conflicto -- ver docstring de build_conflicts.py). Sin
+    # este fallback, ~1/3 de los conflictos "con respaldo detectado" mostraban
+    # el sello sin ninguna cita visible, porque su respaldo real vivia en un
+    # documento no-focal. Se muestra explicitamente rotulada como tal --
+    # nunca se mezcla con evidence_quotes_sample (que exige documento focal),
+    # nunca se presenta como si fuera evidencia focal verificada.
+    backing_quotes_by_conflict: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    if _table_or_view_exists(con, "conflict_evidence_backing"):
+        for row in _rows(
+            con,
+            "SELECT conflict_id, document_id, quote_text FROM conflict_evidence_backing ORDER BY conflict_id, document_id, evidence_id",
+        ):
+            entries = backing_quotes_by_conflict[row["conflict_id"]]
+            if len(entries) < MAX_EVIDENCE_QUOTES_PER_CONFLICT and not any(e["quote_text"] == row["quote_text"] for e in entries):
+                entries.append({"quote_text": row["quote_text"], "document_id": row["document_id"]})
+
     result = []
     for c in conflicts:
         conflict_id = c["conflict_id"]
@@ -358,6 +376,16 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
         events = events_by_conflict.get(conflict_id, [])
 
         fallback_backed = c.get("respaldo_evidencia") == "respaldo_exact_quote_detectado"
+        backing_quotes_non_focal: list[dict[str, Any]] = []
+        if not evidence_quotes and fallback_backed:
+            backing_quotes_non_focal = [
+                {
+                    "quote_text": bq["quote_text"],
+                    "document_url": documents_by_id.get(bq["document_id"], {}).get("url"),
+                    "document_title": documents_by_id.get(bq["document_id"], {}).get("title"),
+                }
+                for bq in backing_quotes_by_conflict.get(conflict_id, [])
+            ]
         result.append(
             {
                 "conflict_id": conflict_id,
@@ -379,6 +407,7 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "events": events[:MAX_EVENTS_PER_CONFLICT],
                 "n_events_total": len(events),
                 "evidence_quotes_sample": evidence_quotes,
+                "backing_quotes_non_focal": backing_quotes_non_focal,
             }
         )
     return result
