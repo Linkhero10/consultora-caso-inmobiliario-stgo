@@ -548,6 +548,42 @@ def test_fix_1c_audit_completo_documentos_ya_no_focal():
     conn.close()
 
 
+def test_fix_1c_project_case_mention_cross_check_documentos_ya_no_focal():
+    """Fix 1C, cross-check con project_case_mention.py (2026-09-23): el metodo
+    de solapamiento de palabras clave (patron 2 de Fix 1C) audito los 204
+    candidatos completos (Tier A 128/128 + Tier B 76/76) sin encontrar casos
+    nuevos en el Tier B. Un segundo metodo, complementario, usa el modulo
+    experimental src/project_case_mention.py para vincular cada mencion de
+    proyecto con la case_mention especifica (no solo el documento) que
+    respalda su nombre. Aplicado a los 552 documentos focales, encontro 6
+    casos reales mas donde el nombre_proyecto viene de una case_mention
+    EXCLUIDA mientras la case_mention INCLUIDA describe un objeto distinto --
+    exactamente el patron de Hospital Ochagavia, pero invisibles al metodo de
+    solapamiento de palabras clave porque comparten alguna palabra con la
+    evidencia real (ej. 'edificio', 'proyecto').
+
+    Uno de estos 6 ('edificio de 17 pisos... Americo Vespucio 7550') habia
+    sido marcado bien_fundado en una revision manual rapida previa -- este
+    cross-check mas preciso revirtio ese veredicto. Corregidos igual que los
+    casos previos: correccion_nombre_proyecto='' protegido con tiene_error=1."""
+    conn = _connect_or_skip()
+    docs = [
+        "290718bbd0ad42bc30f57690d53d3672796ca4d9456143d72be6b1611db68dc2",  # "Solucion Sanitaria para un sector de Quilicura"
+        "42c8b7e00822408d333117960962a4ac9a5fb982220ccba0e343973fbd499178",  # "proyecto Avda. Vespucio con Renato Sanchez Fontecilla y Asturias"
+        "55dae700063cebc780630f0ed7e15fb33ee8a59bfb8c84c1577739c937265e6e",  # "edificio de la estrecha calle Santa Petronila"
+        "644d3dd05d9fceb5383b9dfcd7da46e9849d586222b581702ab8518997d718f2",  # "Alameda 4499"
+        "8f0dc37c09c989b600716d65dd413da217335b3c496c7eeec80f86b59cae2e1b",  # "edificio de 17 pisos... Americo Vespucio 7550"
+        "f491365929e87b322139b7a7b75d8b6933ac1e18dc1a9a60db0205d4fa0b6ccd",  # "Portal Bicentenario"
+    ]
+    for doc_id in docs:
+        row = conn.execute(
+            "SELECT role FROM document_conflict WHERE document_id = ?", (doc_id,)
+        ).fetchone()
+        assert row is not None, f"el documento {doc_id} debe seguir presente en el warehouse"
+        assert row[0] == "mentioned_unreviewed", f"{doc_id} ya no debe contar como evidencia focal/verificada"
+    conn.close()
+
+
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     conn = _connect_or_skip()
     columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}

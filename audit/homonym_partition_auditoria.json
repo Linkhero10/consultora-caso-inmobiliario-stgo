@@ -1,0 +1,840 @@
+{
+  "metodo": "auditoria AI-assisted (subagentes Sonnet 5) sobre los 131 project_id con case_mention incluida en mas de 1 comuna. NO es validacion externa humana -- ver nota_metodologica.",
+  "nota_metodologica": "Extension de calibracion asistida por IA, distinta de la revision externa humana de Sol. Cada subagente comparo, a nivel de case_mention (join project_mention_resolved -> case_mention -> evidence), si la comuna divergente realmente corresponde al objeto del proyecto o es contaminacion geografica de otra mencion en el mismo documento.",
+  "universo_total_candidatos": 131,
+  "revisados": 89,
+  "pendientes": 42,
+  "pendientes_nota": "homonym_low_batch2 (42 casos de riesgo bajo, n_comunas=2) no se completo -- la corrida se detuvo por limite de sesion (rate_limit) tras sobre-paralelizar subagentes. Queda pendiente para una proxima ronda, en tandas mas chicas.",
+  "distribucion_hallazgos": {
+    "error_geografico": 58,
+    "legitimo_multi_comuna": 4,
+    "no_concluyente": 27
+  },
+  "hallazgo_principal": "El patron dominante NO es homonimia (0/89 homonimo_real). Es un bug estructural de vinculacion project_mention_resolved a nivel de DOCUMENTO en vez de CASE_MENTION: cuando un documento panoramico menciona varios proyectos/comunas, todas las comunas del documento quedan asociadas a cada project_id mencionado en el, sin filtrar por cual case_mention especifica corresponde a cual proyecto.",
+  "casos_legitimo_multi_comuna": [
+    {
+      "project_id": "1116e5a6a061a1bd4fe3499b",
+      "canonical_name": "Línea 7 del Metro",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Es infraestructura lineal (línea de Metro) que por definición atraviesa múltiples comunas -- Santiago, Renca, Estación Central y Providencia son consistentes con el trazado real de la futura Línea 7. Los documentos confirman explícitamente 'futura Línea 7 del Metro' y 'Proyecto Línea 7 Metro' en contextos distintos pero coherentes con un proyecto que cruza la ciudad.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "c81799f769f704acbc71e31a",
+      "canonical_name": "Vespucio Oriente",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Es una autopista urbana (anillo Américo Vespucio) que por diseño atraviesa múltiples comunas del oriente de Santiago -- Providencia, Vitacura y Macul son consistentes con su trazado real, confirmado explícitamente por la cita 'autopista Vespucio Oriente' en el documento del MOP sobre la Costanera Central.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "47d95340c019f22409c2eaee",
+      "canonical_name": "extensión de Costanera Sur",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "La extensión de la Costanera Sur corre por el borde entre Providencia y Vitacura; el propio artículo señala que 'vecinos de Vitacura ahora rechazan la extensión de Costanera Sur' además de la oposición en Providencia, consistente con una obra vial en el límite de ambas comunas.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "b7ba8a7f3a40b7e7ac8f5a4d",
+      "canonical_name": "Parque Las Moscas",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Ambos documentos describen el mismo proyecto (mismos datos: 4.200 viviendas, 21 locales, dirección Carlos Valdovinos 3017) pero uno lo sitúa explícitamente en Pedro Aguirre Cerda y el otro en Santiago; el terreno se ubica en el 'sector Especial E2 del PRC de Santiago' en el límite con PAC, consistente con una disputa real de límite comunal ampliamente cubierta por prensa con ambas atribuciones.",
+      "confianza": "media"
+    }
+  ],
+  "filas_completas": [
+    {
+      "project_id": "a502f0079a094cb3bd90cc60",
+      "canonical_name": "Egaña Comunidad Sustentable",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto real es único y está en Plaza Egaña, Ñuñoa (confirmado por 3 documentos dedicados: SEA, La Tercera, BioBioChile). Las comunas Estación Central y Peñalolén provienen de artículos sobre OTROS proyectos (guerra inmobiliaria en EC; batalla de Quilín en Peñalolén) que solo citan 'Egaña Comunidad Sustentable' como comparación de pasada. Maipú, San Miguel y Cerrillos provienen todas del MISMO documento (Ex-Ante, Jonathan Orrego) que es un artículo panorámico sobre temas urbanos de toda la RM: menciona Egaña una sola vez (Ñuñoa) y el resto de las citas de ese documento son sobre tomas, Metro, permisos, etc. sin relación con Egaña -- la comuna del documento se está propagando incorrectamente a todas las menciones del proyecto en ese documento.",
+      "comunas_involucradas_en_el_error": [
+        "Estación Central",
+        "Peñalolén",
+        "Maipú",
+        "San Miguel",
+        "Cerrillos"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e8fd7b147a07358cd8e129e9",
+      "canonical_name": "Costanera Center",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto real (única torre/mall) está confirmado explícitamente 'comuna de Providencia' en el documento de Cooperativa/CIPER. Los documentos de Vitacura y Estación Central NO son sobre Costanera Center: son sobre un proyecto distinto de Cencosud en Vitacura ('Alto Las Condes II', mismo document_id que aparece también bajo el project_id 'Alto Las Condes') y sobre las mega torres de EC que solo citan a Costanera Center como referencia de altura. El documento de Pedro Aguirre Cerda (Hospital Ochagavía) ni siquiera menciona Costanera Center en las citas de objeto. El de Ñuñoa es sobre el Mall Vivo Santiago de Saieh, un proyecto totalmente distinto. Se detecta contaminación cruzada de evidencia entre los project_id 'Costanera Center' y 'Alto Las Condes' (comparten document_id idénticos).",
+      "comunas_involucradas_en_el_error": [
+        "Vitacura",
+        "Las Condes",
+        "Estación Central",
+        "Ñuñoa",
+        "Pedro Aguirre Cerda"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "cc2300e4021749f70a0516c4",
+      "canonical_name": "Hotel Punta Piqueros",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto real está explícitamente en Concón (V Región), fuera de las comunas de la RM listadas. Los 6 documentos (Estación Central, Providencia, Cerrillos, Recoleta, Las Condes, Ñuñoa) citan 'el caso Hotel Punta Piqueros' únicamente como PRECEDENTE JURISPRUDENCIAL en artículos sobre edificios completamente distintos en cada una de esas comunas (CCHC en Las Condes, USS en Recoleta, un edificio de Ñuñoa, etc.). Ninguna de las 6 comunas corresponde a la ubicación real del proyecto.",
+      "comunas_involucradas_en_el_error": [
+        "Estación Central",
+        "Providencia",
+        "Cerrillos",
+        "Recoleta",
+        "Las Condes",
+        "Ñuñoa"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "f953f8a81f80b42e5d79c131",
+      "canonical_name": "Villa Portales",
+      "veredicto": "error_geografico",
+      "justificacion": "Villa Portales es el conjunto SERVIU histórico ubicado en Estación Central (comuna correcta, confirmada por el documento de radio.uchile sobre reconstrucción de barrios emblemáticos, que sí la menciona). Lo Espejo, Maipú y La Reina provienen todas del MISMO documento de Ley del Lobby (audiencia 2021), que es un acta con múltiples direcciones y temas dispersos (SERVIU Lo Espejo, vivienda en Ñuñoa, Remodelación San Borja, pavimentos, etc.) donde 'obras de Villa Portales' es solo una línea entre muchas -- la comuna del acta se propaga erróneamente. El documento de Ñuñoa es sobre la Villa Olímpica de Ñuñoa, un conjunto distinto, y no confirma Villa Portales.",
+      "comunas_involucradas_en_el_error": [
+        "Lo Espejo",
+        "Maipú",
+        "La Reina",
+        "Ñuñoa"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "6ffb1bdaea1e425d89c489ee",
+      "canonical_name": "Mall Barón",
+      "veredicto": "error_geografico",
+      "justificacion": "El Mall Barón real está en los terrenos del ex Puerto de Valparaíso ('en los terrenos del Puerto', cita textual), es decir fuera de la Región Metropolitana. Ninguna de las 4 comunas asignadas (La Cisterna, Santiago, Ñuñoa, Las Condes) es correcta: los documentos de La Cisterna y Santiago ni siquiera mencionan Mall Barón en sus citas de objeto (tratan de exigencias inmobiliarias genéricas y del Club de Golf Los Leones), y el documento compartido por Ñuñoa/Las Condes solo cita 'Mall Barón en los terrenos del Puerto' como ejemplo de pasada dentro de un artículo sobre el Edificio Botero en Ñuñoa.",
+      "comunas_involucradas_en_el_error": [
+        "La Cisterna",
+        "Santiago",
+        "Ñuñoa",
+        "Las Condes"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "56e38026f850dc7badd03854",
+      "canonical_name": "Ciudad del Niño",
+      "veredicto": "error_geografico",
+      "justificacion": "El megaproyecto de 23 torres en el terreno Ciudad del Niño está confirmado en San Miguel por 3 documentos dedicados (Radio JGM x2, La Tercera). Ñuñoa, Maipú y Cerrillos provienen todas del mismo artículo panorámico de Ex-Ante (Jonathan Orrego) que menciona muchos proyectos y comunas de la RM sin relación específica con Ciudad del Niño -- mismo patrón de contaminación por documento compartido visto en 'Egaña Comunidad Sustentable' y 'Edificio Pajaritos' (idéntico document_id).",
+      "comunas_involucradas_en_el_error": [
+        "Ñuñoa",
+        "Maipú",
+        "Cerrillos"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "0a7420a2f224e2831f8d5788",
+      "canonical_name": "Edificio Pajaritos",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto (inmobiliaria Icalma, 3 torres de 21-26 pisos) está confirmado en Maipú por 3 documentos dedicados (Ex-Ante, The Clinic, Municipalidad de Maipú). Ñuñoa, San Miguel y Cerrillos provienen del mismo artículo panorámico de Ex-Ante que en 'Egaña Comunidad Sustentable' y 'Ciudad del Niño' (idéntico document_id 'a77ded2af...'), donde 'Edificio Pajaritos' se menciona una sola vez de pasada y el resto del contenido de ese documento no tiene relación con él.",
+      "comunas_involucradas_en_el_error": [
+        "Ñuñoa",
+        "San Miguel",
+        "Cerrillos"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "708353b6e07226824317b02d",
+      "canonical_name": "proyecto de Inmobiliaria Nueva El Golf",
+      "veredicto": "error_geografico",
+      "justificacion": "El nombre 'Nueva El Golf' remite al sector El Golf de Las Condes, y el único documento que efectivamente lo nombra ('el proyecto de Inmobiliaria Nueva El Golf') es compartido entre Las Condes, La Cisterna y San Miguel: es un artículo genérico sobre la influencia de distintas municipalidades (incluye San Miguel) en el mercado inmobiliario, no un proyecto ubicado en 3 comunas. El documento de Peñalolén (sobre un megaproyecto de 24 torres, US$350M) no menciona 'El Golf' en absoluto en las citas de objeto, lo que sugiere un vínculo erróneo adicional.",
+      "comunas_involucradas_en_el_error": [
+        "Peñalolén",
+        "La Cisterna",
+        "San Miguel"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "1116e5a6a061a1bd4fe3499b",
+      "canonical_name": "Línea 7 del Metro",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Es infraestructura lineal (línea de Metro) que por definición atraviesa múltiples comunas -- Santiago, Renca, Estación Central y Providencia son consistentes con el trazado real de la futura Línea 7. Los documentos confirman explícitamente 'futura Línea 7 del Metro' y 'Proyecto Línea 7 Metro' en contextos distintos pero coherentes con un proyecto que cruza la ciudad.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "2cfcdb67a6274db8af9377f6",
+      "canonical_name": "Alto Las Condes",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto real (ampliación de Cencosud, 'Alto Las Condes II') está confirmado en Vitacura por 3 documentos dedicados (DF, Emol, CIPER). Providencia proviene de documentos que en realidad son sobre 'Costanera Center' (mismos document_id que en ese otro project_id -- contaminación cruzada confirmada). Las Condes y Huechuraba provienen de un único artículo panorámico de CIPER sobre 'leyes de amarre' que menciona de pasada muchos malls distintos de todo Santiago (Parque Arauco, Plaza Norte, Four Seasons, etc.), no específicamente Alto Las Condes en esas comunas.",
+      "comunas_involucradas_en_el_error": [
+        "Providencia",
+        "Las Condes",
+        "Huechuraba"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "2b5185b9ab9e659ddc404ae9",
+      "canonical_name": "Conjunto Armónico Bellavista (CAB)",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto CAB está confirmado en Recoleta (calle Dardignac) por 3 documentos dedicados (Ex-Ante, recoleta.cl, LinkedIn/maqui.ai). Las Condes, Estación Central e Independencia provienen todas del MISMO documento (artículo legal sobre caducidad de permisos de edificación) que usa el caso CAB como ejemplo jurisprudencial único -- no hay contenido que ubique el proyecto en esas otras 3 comunas.",
+      "comunas_involucradas_en_el_error": [
+        "Las Condes",
+        "Estación Central",
+        "Independencia"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "fe5f329547314a7796f48998",
+      "canonical_name": "Parque Pumpin",
+      "veredicto": "error_geografico",
+      "justificacion": "Un documento (DF, sobre Vespucio 345) confirma explícitamente 'Parque Pümpin en Valparaíso' -- el proyecto real está fuera de la Región Metropolitana. Las 4 comunas asignadas (Estación Central, Las Condes, La Cisterna, San Miguel) provienen de documentos que ni siquiera mencionan Parque Pumpin (el de comunidadfeliz.cl es sobre 'Nueva El Golf', compartido con otro project_id) o lo citan solo como comparación de pasada (entrevista a Patricio Herman sobre EC).",
+      "comunas_involucradas_en_el_error": [
+        "Estación Central",
+        "Las Condes",
+        "La Cisterna",
+        "San Miguel"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "36bd93d333d00c28f2e840a2",
+      "canonical_name": "Estadio Nacional",
+      "veredicto": "error_geografico",
+      "justificacion": "El Estadio Nacional real está en Ñuñoa (confirmado por 2 documentos judiciales/de prensa dedicados). Cerrillos y La Florida provienen de un único documento sobre la 'Villa Panamericana de Cerrillos' que menciona al Estadio Nacional solo de pasada (obras de acceso/seguridad) dentro de un reportaje centrado en Cerrillos, no una segunda sede del estadio.",
+      "comunas_involucradas_en_el_error": [
+        "Cerrillos",
+        "La Florida"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "044c20f0e13a1bae6c68978c",
+      "canonical_name": "General Amengual",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio 'General Amengual 480' está confirmado en Estación Central por 2 documentos dedicados (CIPER, Interferencia). Vitacura y Santiago provienen del mismo documento sobre el 'Proyecto Zoccalo de Vitacura', que solo menciona de pasada 'evaluación ambiental de los edificios General Amengual y Recreo' como referencia comparativa dentro de un artículo centrado en un proyecto distinto en Vitacura.",
+      "comunas_involucradas_en_el_error": [
+        "Vitacura",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "0a9d6730e059f72c2cdec2d8",
+      "canonical_name": "Recreo",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio 'Recreo' (Grupo Su Ksa) está confirmado en Estación Central ('dos proyectos de Grupo Su Ksa, ubicados en calles Recreo y Placilla'). Vitacura y Santiago provienen del mismo documento sobre el 'Proyecto Zoccalo de Vitacura' que solo cita 'los edificios General Amengual y Recreo' de pasada como comparación, igual que en el caso de General Amengual (mismo bug, mismo documento).",
+      "comunas_involucradas_en_el_error": [
+        "Vitacura",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "787a43f11f81e900f38cc64a",
+      "canonical_name": "Población Alessandri",
+      "veredicto": "error_geografico",
+      "justificacion": "Población Alessandri es un barrio real y conocido de Estación Central, consistente con el documento de Hogar de Cristo (entrevista al alcalde de Estación Central) aunque sus citas de objeto no incluyen el nombre exacto. Independencia y Santiago provienen de un documento sobre la declaratoria de Zona Típica de Plaza Chacabuco y Matta Sur que, según las citas disponibles, no tiene relación temática con Población Alessandri -- posible error de vinculación de menciones además del geográfico.",
+      "comunas_involucradas_en_el_error": [
+        "Independencia",
+        "Santiago"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "aef943251b1be918370edf5d",
+      "canonical_name": "Villa Olímpica",
+      "veredicto": "error_geografico",
+      "justificacion": "La Villa Olímpica real está en Ñuñoa (3 documentos dedicados y consistentes). El documento de Las Condes es sobre la 'Villa Compañero Ministro Carlos Cortés', un conjunto habitacional completamente distinto y no relacionado con la Villa Olímpica de Ñuñoa (mismo document_id reaparece también en los project_id 'Villa San Luis de Las Condes' y 'Nueva Las Condes' -- fuerte indicio de mención mal resuelta). Estación Central proviene de un artículo genérico sobre 'barrios emblemáticos' de la RM que agrupa varios conjuntos sin fijar la comuna de cada uno.",
+      "comunas_involucradas_en_el_error": [
+        "Las Condes",
+        "Estación Central"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "51a8b044e39aac5f75cfa5c1",
+      "canonical_name": "Remodelación San Borja",
+      "veredicto": "error_geografico",
+      "justificacion": "Otro documento del corpus (Ley del Lobby, comuna Lo Espejo/Villa Portales) confirma explícitamente 'Remodelacion San Borja de Santiago', es decir la comuna correcta es Santiago -- que no figura entre las 3 comunas asignadas a este project_id (Pedro Aguirre Cerda, Las Condes, Estación Central). Ninguno de los 3 documentos muestreados menciona 'San Borja' en sus citas de objeto (tratan del Hospital Ochagavía en PAC, la Villa Cortés en Las Condes, y una disputa de arquitectos en EC), lo que confirma que las 3 comunas asignadas son incorrectas.",
+      "comunas_involucradas_en_el_error": [
+        "Pedro Aguirre Cerda",
+        "Las Condes",
+        "Estación Central"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e6e1dcbb49d300864229e9e5",
+      "canonical_name": "edificio UNCTAD III",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio UNCTAD III (hoy Centro Cultural GAM) es un hito conocido ubicado en la comuna de Santiago, sobre la Alameda. Ninguna de las 3 comunas asignadas (Pedro Aguirre Cerda, Estación Central, Las Condes) corresponde a esa ubicación, y ninguno de los documentos muestreados confirma explícitamente el edificio en esas comunas: el de PAC es sobre el Hospital Ochagavía (sin relación) y el compartido por EC/Las Condes es una entrevista general a Miguel Lawner sobre 'guetos verticales' y la Villa San Luis, mencionando UNCTAD III solo tangencialmente.",
+      "comunas_involucradas_en_el_error": [
+        "Pedro Aguirre Cerda",
+        "Estación Central",
+        "Las Condes"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "78a738016ed2fc76ff4fa288",
+      "canonical_name": "Villa San Luis de Las Condes",
+      "veredicto": "error_geografico",
+      "justificacion": "La Villa San Luis está confirmada en Las Condes por 3 documentos dedicados y consistentes (El Mostrador, Revista Planeo, Le Monde Diplomatique). Macul y Santiago provienen de un único artículo académico panorámico (Iberoamericana, sobre sitios de memoria y DDHH a nivel nacional) que menciona la Villa San Luis como uno de MUCHOS sitios (Venda Sexy, Comité Pro Paz, etc., ubicados en otras comunas), sin reubicar el proyecto mismo.",
+      "comunas_involucradas_en_el_error": [
+        "Macul",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "4414e1024e8bba2d3f337c4f",
+      "canonical_name": "Nueva Las Condes",
+      "veredicto": "error_geografico",
+      "justificacion": "El centro de negocios Nueva Las Condes (construido sobre el ex terreno de la Villa San Luis) está confirmado en Las Condes por 3 documentos dedicados. Macul y Santiago provienen del mismo artículo académico panorámico (Iberoamericana) que en 'Villa San Luis de Las Condes' -- idéntico document_id y mismo bug de contaminación por documento compartido.",
+      "comunas_involucradas_en_el_error": [
+        "Macul",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "c81799f769f704acbc71e31a",
+      "canonical_name": "Vespucio Oriente",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Es una autopista urbana (anillo Américo Vespucio) que por diseño atraviesa múltiples comunas del oriente de Santiago -- Providencia, Vitacura y Macul son consistentes con su trazado real, confirmado explícitamente por la cita 'autopista Vespucio Oriente' en el documento del MOP sobre la Costanera Central.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e8c2fdeb634b825d051c4c10",
+      "canonical_name": "GAM",
+      "veredicto": "error_geografico",
+      "justificacion": "El Centro Cultural GAM (ex UNCTAD III) es un hito conocido ubicado en la comuna de Santiago. Ninguna de las 3 comunas asignadas (Providencia, Vitacura, Las Condes) es correcta. El documento compartido por Providencia/Vitacura (entrevista a Iván Poduje sobre sustentabilidad urbana) no menciona 'GAM' en absoluto en sus citas de objeto -- indicio de mención mal vinculada además del error geográfico -- y el de Las Condes (sobre premio a Miguel Lawner, arquitecto asociado al GAM) tampoco ubica el edificio en esa comuna.",
+      "comunas_involucradas_en_el_error": [
+        "Providencia",
+        "Vitacura",
+        "Las Condes"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "91f2112803222891bec22245",
+      "canonical_name": "Carlos Valdovinos",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'las tres torres del proyecto Carlos Valdovinos, en el Parque Las Moscas' aparece solo en un documento de comuna Santiago (13101). Las comunas 13106 y 13132 provienen de UN SOLO documento compartido (interferencia.cl, 'El intenso lobby...') que en realidad narra TRES proyectos distintos en el mismo artículo: Carlos Valdovinos (Santiago), 'guetos verticales' (Estación Central) y Zoccalo (Vitacura). El vínculo project_mention_resolved liga por document_id, no por case_mention_id, así que todas las menciones/comunas de ese documento multi-tema quedaron atribuidas también a Carlos Valdovinos.",
+      "comunas_involucradas_en_el_error": [
+        "Estación Central",
+        "Vitacura"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "b2d5e037f8dfb338f97313e7",
+      "canonical_name": "Zoccalo",
+      "veredicto": "error_geografico",
+      "justificacion": "Tres documentos independientes confirman Zoccalo como proyecto de estacionamientos/comercio en Vitacura (13132). Las comunas Estación Central (13106) y Santiago (13101) provienen del mismo documento multi-tema (interferencia.cl) que también cubre 'guetos verticales' en Estación Central y Carlos Valdovinos en Santiago -- contaminación por vínculo a nivel de documento, no de mención real de Zoccalo.",
+      "comunas_involucradas_en_el_error": [
+        "Estación Central",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "8a13e9059cc4e077f99996b5",
+      "canonical_name": "Universidad Finis Terrae",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'no se podía construir la Universidad Finis Terrae... tipificado como área verde' corresponde a Lo Barnechea (13115). Las otras dos comunas vienen del mismo artículo de opinión (El Mostrador) que en un solo texto menciona TRES casos de corrupción urbanística distintos: un permiso en Bellavista/Providencia (13123), la Universidad Finis Terrae en Lo Barnechea (13115) y el Estadio Santa Rosa de Las Condes en Las Condes (13114). El vínculo documento->proyecto asignó las tres comunas al mismo proyecto.",
+      "comunas_involucradas_en_el_error": [
+        "Providencia",
+        "Las Condes"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "97c0825984bf2794409d77de",
+      "canonical_name": "Estadio Santa Rosa de Las Condes",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'Estadio Santa Rosa de Las Condes, extenso predio área verde ribereño del río Mapocho... vendiendo el terreno con fines inmobiliarios' corresponde a Las Condes (13114). Providencia (13123) y Lo Barnechea (13115) son contaminación del mismo artículo de opinión multi-caso descrito arriba (UFT en Lo Barnechea, permiso Bellavista en Providencia); no son menciones reales del Estadio Santa Rosa.",
+      "comunas_involucradas_en_el_error": [
+        "Providencia",
+        "Lo Barnechea"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "eedf5c4d11e1b2e81a1dcdc6",
+      "canonical_name": "Mirador Barón",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento compartido (comunidadfeliz.cl, 'Influencia de municipalidades...') es un artículo genérico de política urbana que en sus tres comunas habla de: el proyecto 'Inmobiliaria Nueva El Golf' (Las Condes), una norma de estacionamientos mínimos (La Cisterna) y una modificación del Plan Regulador de San Miguel. Ninguna de las citas 'objeto' verificadas menciona 'Mirador Barón' en absoluto, por lo que no se puede determinar a cuál comuna (si alguna) corresponde realmente este proyecto ni si el nombre está bien asociado al documento.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "cf65c362a0dd71489735dc57",
+      "canonical_name": "Plaza Egaña",
+      "veredicto": "no_concluyente",
+      "justificacion": "Los documentos vinculados hablan de 'eventual edificación de 54 inmuebles' y 'proyecto Hijuelas Quilín' (Lo Barnechea/Peñalolén) y de un conflicto de una plaza/feria en Ñuñoa (acta COSOC). Ninguna cita 'objeto' verificada menciona 'Plaza Egaña' por nombre, así que no hay evidencia suficiente para decidir si es homónimo, error geográfico o legítimo.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "f4cef477adb06d2e318077cf",
+      "canonical_name": "Villa Panamericana de Cerrillos",
+      "veredicto": "error_geografico",
+      "justificacion": "Dos documentos independientes (El Ciudadano y En Estrado) confirman que la Villa Panamericana está en Cerrillos (13102): '17 torres', '1.355 departamentos', 'complejo... para los deportistas de los Juegos Santiago 2023'. Las comunas La Florida (13110, sobre un balneario municipal distinto) y Ñuñoa (13120, sobre instalaciones del Estadio Nacional) provienen del mismo artículo de El Ciudadano que cubre múltiples escándalos del Ministerio del Deporte en un solo texto -- contaminación por vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "La Florida",
+        "Ñuñoa"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "ad9b26c608d619590d7c857f",
+      "canonical_name": "Parque Deportivo Estadio Nacional",
+      "veredicto": "error_geografico",
+      "justificacion": "Las citas sobre rejas perimetrales, seguridad y accesos del Estadio Nacional corresponden geográficamente a Ñuñoa (13120), comuna real del Estadio Nacional. Cerrillos (13102, sobre la Villa Panamericana) y La Florida (13110, sobre un balneario municipal) son contaminación del mismo artículo multi-escándalo de El Ciudadano, no menciones reales del Parque Deportivo Estadio Nacional.",
+      "comunas_involucradas_en_el_error": [
+        "Cerrillos",
+        "La Florida"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "ba96a35216f3b3fe00fb1a47",
+      "canonical_name": "Centro de Entrenamiento de Hockey Césped del Estadio Nacional",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'construcción del Centro de Entrenamiento de Hockey Césped del Estadio Nacional' corresponde a instalaciones del Estadio Nacional, ubicado en Ñuñoa (13120). Cerrillos (Villa Panamericana) y La Florida (balneario municipal) son contaminación del mismo artículo multi-tema de El Ciudadano.",
+      "comunas_involucradas_en_el_error": [
+        "Cerrillos",
+        "La Florida"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "7de57b31a4d37b73f9da9ad4",
+      "canonical_name": "Venda Sexy",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'el ex centro de detención la \"Venda Sexy\"... Memorial contra la Violencia Política Sexual' aparece explícitamente en la comuna Macul (13118), lugar histórico real del sitio. Las Condes (13114, sobre 'Nueva Las Condes' y un Museo-Memorial distinto) y Santiago (13101, sobre el Comité Pro Paz / Santa Mónica) son otros sitios de memoria distintos mencionados en el mismo artículo académico (Iberoamericana), atribuidos por error al mismo proyecto vía vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "Las Condes",
+        "Santiago"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "73b8ccba6f36447cc900e3b2",
+      "canonical_name": "Santa Mónica 2338",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'Sitio de Memoria Comité Pro Paz de Santa Mónica' aparece en la comuna Santiago (13101), que coincide con el nombre del proyecto. Las Condes y Macul corresponden a otros sitios de memoria distintos (Nueva Las Condes y Venda Sexy respectivamente) mencionados en el mismo artículo académico compartido -- contaminación por vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "Las Condes",
+        "Macul"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "5db3a8296f693c6477728cc7",
+      "canonical_name": "Ex Cuartel Borgoño",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguna de las tres citas 'objeto' del documento compartido (sobre Las Condes/Nueva Las Condes, Venda Sexy en Macul, y Comité Pro Paz en Santiago) menciona 'Cuartel Borgoño' por nombre. No hay evidencia visible que permita ubicar la mención real de este sitio dentro del documento ni determinar su comuna correcta.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "b38af461b8089a0dd1238fea",
+      "canonical_name": "Central Park",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'edificio Central Park, de calle Balmaceda, comuna de Santiago' identifica explícitamente la comuna Santiago (13101). Macul (13118, sobre 'Condominio Sol Oriente') y Maipú (13119, sobre 'edificio Hermanos Carrera') son otros edificios dañados por el 27F mencionados en el mismo artículo de La Tercera ('Los edificios fantasmas...'), atribuidos por error al proyecto Central Park vía vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "Macul",
+        "Maipú"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "33d41fa3b2aa9c83f69e85ee",
+      "canonical_name": "Terreno Prais Pudahuel",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento (registro de Ley del Lobby, Audiencias 2021) contiene tres audiencias distintas: servidumbre de paso SERVIU en Lo Espejo, corredor de transporte en Maipú, y pavimento participativo en La Reina. Ninguna cita menciona 'Terreno Prais Pudahuel' ni 'Pudahuel' (que ni siquiera es una de las tres comunas listadas), por lo que no se puede determinar su comuna real ni el tipo de error.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "0812b2f08f98e46d29aa9895",
+      "canonical_name": "Edificio 882 de Av Circunvalación N° 1751",
+      "veredicto": "no_concluyente",
+      "justificacion": "Mismo documento de registro de Ley del Lobby con tres audiencias distintas (Lo Espejo, Maipú, La Reina). Ninguna cita menciona 'Av Circunvalación' ni el número de dirección, así que no hay evidencia para ubicar este proyecto en ninguna de las tres comunas listadas.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "fc6b5cc78a01bb9169ac12fb",
+      "canonical_name": "Habilitación Corredor de Transporte Público Eje Vial Rinconada Maipú",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto cita textualmente el nombre del proyecto: '\"Habilitación Corredor de Transporte Público Eje Vial Rinconada Maipú\"', ubicado en la comuna Maipú (13119). Lo Espejo (servidumbre SERVIU) y La Reina (pavimento participativo) son otras audiencias distintas del mismo registro de Ley del Lobby, atribuidas por error a este proyecto vía vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "Lo Espejo",
+        "La Reina"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "project_id": "db5ca48365c7bc415d4e6161",
+      "canonical_name": "Remodelacion San Borja de Santiago",
+      "veredicto": "no_concluyente",
+      "justificacion": "Mismo documento de registro de Ley del Lobby con tres audiencias distintas (Lo Espejo, Maipú, La Reina). Ninguna cita menciona 'San Borja' ni Santiago como comuna (que ni siquiera aparece en la lista de comunas de este project_id), por lo que no hay evidencia para evaluar este caso.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "99c553e65bf75ee8f0c826f0",
+      "canonical_name": "pavimento participativo La reina ID 48-128-LR19",
+      "veredicto": "error_geografico",
+      "justificacion": "El objeto 'contrato de pavimento participativo' aparece en la comuna La Reina (13113), consistente con el nombre del proyecto. Lo Espejo (servidumbre SERVIU) y Maipú (corredor de transporte) son otras audiencias distintas del mismo registro de Ley del Lobby, atribuidas por error vía vínculo a nivel de documento.",
+      "comunas_involucradas_en_el_error": [
+        "Lo Espejo",
+        "Maipú"
+      ],
+      "confianza": "media"
+    },
+    {
+      "project_id": "35ba5e4d5460183e0c7edf49",
+      "canonical_name": "Puerto de Palos",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento compartido (La Tercera, 'Los edificios fantasmas del 27F') solo describe tres edificios por nombre: Central Park (Santiago), Condominio Sol Oriente (Macul) y Hermanos Carrera (Maipú). Ninguna cita 'objeto' menciona 'Puerto de Palos', por lo que no se puede determinar a cuál de las tres comunas corresponde este proyecto ni si está mal geolocalizado.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "c9528ac7d91bbdfa80cd9b5a",
+      "canonical_name": "Plaza del Río",
+      "veredicto": "no_concluyente",
+      "justificacion": "Mismo documento compartido sobre edificios dañados por el 27F (Central Park en Santiago, Sol Oriente en Macul, Hermanos Carrera en Maipú). Ninguna cita menciona 'Plaza del Río', por lo que no hay evidencia para ubicar este proyecto en ninguna de las tres comunas.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "d1ad31d3f49285bb82d61c4d",
+      "canonical_name": "Antígona",
+      "veredicto": "no_concluyente",
+      "justificacion": "Mismo documento compartido sobre edificios dañados por el 27F. Ninguna cita 'objeto' verificada menciona 'Antígona', por lo que no se puede determinar la comuna real de este proyecto con la evidencia disponible.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "c0c009391cb0a2cbced247ba",
+      "canonical_name": "Festival",
+      "veredicto": "no_concluyente",
+      "justificacion": "Mismo documento compartido sobre edificios dañados por el 27F. El nombre genérico 'Festival' no aparece en ninguna cita 'objeto' verificada de las tres comunas, por lo que no hay evidencia suficiente para clasificar este caso.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "6afefbbe4f00c704d21e8127",
+      "canonical_name": "Toledo​￼?",
+      "veredicto": "no_concluyente",
+      "justificacion": "El nombre canónico está corrupto/incompleto (contiene caracteres invisibles y un signo de interrogación), lo que sugiere un problema de extracción del nombre del proyecto en sí. Comparte documento y comunas con los otros cinco casos del mismo artículo sobre edificios del 27F, y ninguna cita 'objeto' lo menciona. Insuficiente evidencia para clasificar.",
+      "comunas_involucradas_en_el_error": [],
+      "confianza": "baja"
+    },
+    {
+      "project_id": "c824698f5351192c7f1550b4",
+      "canonical_name": "Conjunto Armónico Portezuelo",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto real está íntegramente en Vitacura (Av. Santa Teresa de Los Andes 9763). El documento de 'Lo Barnechea' es una nota sobre otro megaproyecto distinto (Schiess, 14 edificios/112 deptos); dentro de ese mismo artículo la mención que sí es sobre 'Conjunto Armónico Portezuelo' indica explícitamente comuna de Vitacura.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "744f0e5bf37d911f993ce9ee",
+      "canonical_name": "Edificio Botero",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio está en calle Luis Pereira 786, Ñuñoa (confirmado en 3 documentos). El documento de 'Las Condes' es un artículo sobre vecinos de Ñuñoa que sólo de paso menciona un caso distinto en el barrio El Golf (Las Condes); esa mención no es sobre el Edificio Botero.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "f001faedc662d71e3a74166b",
+      "canonical_name": "Hijuelas Quilín",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto está en Peñalolén (ex fundo Quebrada de Macul, Av. Consistorial). El documento de 'Lo Barnechea' es una nota sobre otro proyecto distinto (54 inmuebles en Cerro del Medio/Nueva La Dehesa); ese mismo artículo, al mencionar a Hijuelas Quilín, la ubica en Peñalolén.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "ba52b0791a4aa2e61dc76d5c",
+      "canonical_name": "Barrio Plaza Chacabuco",
+      "veredicto": "error_geografico",
+      "justificacion": "La Zona Típica 'Plaza Chacabuco' fue declarada en la comuna de Independencia. La atribución a 'Santiago' proviene, dentro del mismo artículo, de un párrafo distinto sobre la declaratoria del barrio Matta Sur (otra entidad, otra comuna).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e1c30745abde8086367a9640",
+      "canonical_name": "Ciudad de Los Valles",
+      "veredicto": "error_geografico",
+      "justificacion": "El loteo 'Ciudad de Los Valles' está en Pudahuel (irregularidades de permisos de loteo y edificación de la DOM de Pudahuel). El documento de 'Cerrillos' es una investigación de CIPER sobre el data center de Google en Cerrillos, que no menciona Ciudad de Los Valles.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "cc6edcd95ed8fd534546f6e6",
+      "canonical_name": "Dominga",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguno de los dos documentos ofrece evidencia geográfica real sobre el proyecto Dominga (megaproyecto minero-portuario de Coquimbo, fuera de la RM). El documento de 'Maipú' trata del 'Edificio Pajaritos'; el de 'Estación Central' sólo nombra 'Dominga' de pasada sin comuna asociada.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "085576d63341fca6ceb07921",
+      "canonical_name": "Autopista del Sol",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguno de los dos documentos menciona 'Autopista del Sol' en las citas verificadas; tratan de proyectos distintos (condominio Flor del Valle en Maipú; autopista Costanera Central/Vespucio Oriente en Macul). No hay evidencia que permita ubicar el proyecto real.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "332a219b09bf2049e93166ae",
+      "canonical_name": "Población Las Rosas",
+      "veredicto": "no_concluyente",
+      "justificacion": "El único documento citado no menciona 'Población Las Rosas' en ninguna de sus menciones (trata de las declaratorias de Zona Típica de Plaza Chacabuco en Independencia y de barrio Matta Sur en Santiago). Sin evidencia que vincule el nombre a alguna de las dos comunas.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "d615451d97ebbe5b241c5277",
+      "canonical_name": "barrio Matta Sur",
+      "veredicto": "error_geografico",
+      "justificacion": "La propuesta de declaratoria de Zona Típica del barrio Matta Sur se ubica explícitamente en la comuna de Santiago. La atribución a 'Independencia' proviene, en el mismo artículo, del párrafo sobre la Zona Típica Plaza Chacabuco (otra entidad).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "a9f18d299c7df38f085fed86",
+      "canonical_name": "Población Madrid",
+      "veredicto": "no_concluyente",
+      "justificacion": "El único documento citado no menciona 'Población Madrid' en ninguna mención; trata de las Zonas Típicas de Plaza Chacabuco (Independencia) y barrio Matta Sur (Santiago). No hay evidencia que vincule el nombre a alguna comuna.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "db3bc9e3094e7d83be4f693d",
+      "canonical_name": "Hospital San Borja Arriarán",
+      "veredicto": "no_concluyente",
+      "justificacion": "El único documento citado no menciona el Hospital San Borja Arriarán en ninguna mención; trata de Zonas Típicas de Plaza Chacabuco y Matta Sur. No hay evidencia que vincule el nombre a alguna comuna (el hospital real está en la comuna de Santiago, dato no verificable con este documento).",
+      "confianza": "media"
+    },
+    {
+      "project_id": "8f276ad881cff4c732236787",
+      "canonical_name": "Villa San Luis",
+      "veredicto": "error_geografico",
+      "justificacion": "La Villa San Luis (Lote 18) está en Las Condes, confirmado extensamente en dos documentos dedicados. Los documentos de 'Estación Central' tratan mayormente de los 'guetos verticales' de esa comuna (proyecto distinto); sólo mencionan a Villa San Luis de paso, ya ubicándola 'en Las Condes'.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "56029c529c4c61cb488f342c",
+      "canonical_name": "Vespucio 345",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto Vespucio 345 está en la esquina de Américo Vespucio con Renato Sánchez, comuna de Las Condes (confirmado en dos documentos). El documento de 'Recoleta' trata de un edificio distinto en calle Dardignac, Recoleta; sólo nombra 'Vespucio 345' una vez sin contexto geográfico.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "b660f526418e762a81c58061",
+      "canonical_name": "Población Abate Molina",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguno de los dos documentos menciona 'Población Abate Molina' en las citas verificadas (tratan de los guetos verticales de Estación Central y de la Villa San Luis / población La Victoria en Las Condes). Sin evidencia que ubique el proyecto real.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "c57dcd3e0c49b536080b5c24",
+      "canonical_name": "Valle Nevado",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto Valle Nevado (PRC, La Parva, Manantiales) está extensamente documentado en Lo Barnechea. El documento de 'Huechuraba' trata del helipuerto de Sanhattan, un proyecto no relacionado que no menciona Valle Nevado.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "47d95340c019f22409c2eaee",
+      "canonical_name": "extensión de Costanera Sur",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "La extensión de la Costanera Sur corre por el borde entre Providencia y Vitacura; el propio artículo señala que 'vecinos de Vitacura ahora rechazan la extensión de Costanera Sur' además de la oposición en Providencia, consistente con una obra vial en el límite de ambas comunas.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "91efbddefbb509c983717b17",
+      "canonical_name": "nueva estación, en Eliodoro Yáñez",
+      "veredicto": "error_geografico",
+      "justificacion": "La nueva estación en Eliodoro Yáñez es un proyecto de Providencia ('los vecinos pidieron... una nueva estación en Eliodoro Yáñez', calle ubicada en Providencia). La atribución a Vitacura proviene, en el mismo artículo, del párrafo sobre la extensión de Costanera Sur (otro proyecto).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "960969ce8eb29a74b14046ab",
+      "canonical_name": "parque Renato Poblete",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento citado no menciona el Parque Renato Poblete en ninguna de sus citas verificadas (trata de la estación en Eliodoro Yáñez en Providencia y la extensión de Costanera Sur en Vitacura). El parque real está en Quinta Normal, fuera de ambas comunas atribuidas.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "212f802564fe369f0b2744cc",
+      "canonical_name": "Barrio Cívico en La Moneda",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento citado no menciona el Barrio Cívico en La Moneda en ninguna cita verificada. El Barrio Cívico real está en la comuna de Santiago, no en Providencia ni Vitacura.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "95c5c8cea5e74f04aa99202b",
+      "canonical_name": "Complejo Deportivo Don Óscar",
+      "veredicto": "error_geografico",
+      "justificacion": "El complejo está 'ubicado en Pajaritos con Américo Vespucio (comuna de Maipú)', explícito en el documento. La atribución a Cerro Navia proviene de otros hechos del mismo reportaje de corrupción municipal (contratos distintos en esa comuna).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e4ce47f5cff6c7d98db345e3",
+      "canonical_name": "Centro Cultural de Cerro Navia",
+      "veredicto": "error_geografico",
+      "justificacion": "El propio nombre y la cita ('la licitación de la construcción del Centro Cultural de Cerro Navia') confirman que el proyecto está en Cerro Navia. La atribución a Maipú proviene de otros hechos del mismo reportaje (contratos distintos en esa comuna).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "f524da062028dfac65f80d79",
+      "canonical_name": "edificio de avenida Independencia 801",
+      "veredicto": "no_concluyente",
+      "justificacion": "La mención específica no tiene comuna resuelta ('Ambos se ubican en el edificio de avenida Independencia 801'), y esa dirección no corresponde evidentemente ni a Maipú ni a Cerro Navia (más propia de Independencia/Conchalí). No es posible confirmar la comuna real con la evidencia disponible.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "a5406b393dd9a92caa4f8e76",
+      "canonical_name": "Planta de Tratamiento de Aguas Servidas de la comuna de Perquenco",
+      "veredicto": "no_concluyente",
+      "justificacion": "El nombre remite a la comuna de Perquenco (Región de La Araucanía), que no aparece en ninguna de las citas verificadas del documento (una recopilación de jurisprudencia con casos de Providencia, Cerrillos, Zapallar, Tomé, etc.). Ni Providencia ni Cerrillos son la comuna real del proyecto.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "8df9eae26a4ac5817a0a6e2b",
+      "canonical_name": "Reposición de Luminarias en la Vía Pública de Cerrillos",
+      "veredicto": "error_geografico",
+      "justificacion": "La cita coincide exactamente con el nombre del proyecto y su comuna ('Reposición de Luminarias en la Vía Pública de Cerrillos', 'Municipalidad de Cerrillos'). La atribución a Providencia proviene de otro caso de jurisprudencia distinto en el mismo listado.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "4182a03dc09c48d1e0032ded",
+      "canonical_name": "proyecto de piscicultura en la cuenca del lago Villarrica",
+      "veredicto": "no_concluyente",
+      "justificacion": "El lago Villarrica está en la Región de La Araucanía, no en la Región Metropolitana; ni Providencia ni Cerrillos son comunas plausibles para este proyecto, que aparece sólo como un ítem más de un listado de jurisprudencia ambiental de todo Chile.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "1c0826b1d4e1f878acd68bb3",
+      "canonical_name": "Proyecto de Desalinización de Agua de Mar mediante Concesión de Obra Pública",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguna de las citas verificadas del documento (un listado de jurisprudencia) asocia este proyecto a una ubicación específica; ni Providencia ni Cerrillos tienen evidencia de vínculo real con una planta desalinizadora.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "2396059a776af42c809a7195",
+      "canonical_name": "Egaña Sustentable",
+      "veredicto": "error_geografico",
+      "justificacion": "El megaproyecto Egaña Sustentable está confirmado en dos documentos como ubicado en Plaza Egaña, comuna de Ñuñoa. El documento de 'San Miguel' trata de un proyecto completamente distinto (San Nicolás, de Inmobiliaria Delabase) que sólo menciona a Egaña Sustentable como referencia de otro litigio, sin comuna asociada.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "b7ba8a7f3a40b7e7ac8f5a4d",
+      "canonical_name": "Parque Las Moscas",
+      "veredicto": "legitimo_multi_comuna",
+      "justificacion": "Ambos documentos describen el mismo proyecto (mismos datos: 4.200 viviendas, 21 locales, dirección Carlos Valdovinos 3017) pero uno lo sitúa explícitamente en Pedro Aguirre Cerda y el otro en Santiago; el terreno se ubica en el 'sector Especial E2 del PRC de Santiago' en el límite con PAC, consistente con una disputa real de límite comunal ampliamente cubierta por prensa con ambas atribuciones.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "3bbef574de08d7dcb2b3dc93",
+      "canonical_name": "centro de datos de Amazon",
+      "veredicto": "error_geografico",
+      "justificacion": "El centro de datos de Amazon está explícitamente en Huechuraba ('Américo Vespucio 1055'). La mención de Cerrillos, en el mismo artículo, corresponde a un proyecto distinto de Google ('centro de datos de 200 millones de dólares en Cerrillos').",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "b195d7c038b7418fa163a104",
+      "canonical_name": "centro de datos de 200 millones de dólares en Cerrillos",
+      "veredicto": "error_geografico",
+      "justificacion": "Esta es la mención al proyecto de Google en Cerrillos, explícita en el texto. La atribución a Huechuraba corresponde, en el mismo artículo, al proyecto distinto de Amazon.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "e5827e6db28637966446541f",
+      "canonical_name": "Somma Inés de Suárez",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio Somma Inés de Suárez está en Pedro de Valdivia 2219, Providencia, ampliamente documentado. El documento de 'Las Condes' trata de otro edificio de la misma marca ('Somma Las Clarisas', calle Las Clarisas, Las Condes) que sólo menciona a 'Somma Inés de Suárez' de pasada, sin comuna asociada a esa mención.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "91dfa1994055d7f553783b36",
+      "canonical_name": "tren Santiago-Batuco",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguno de los dos documentos citados menciona un proyecto de tren en sus citas verificadas: el de Renca trata de la actualización del Plan Regulador Comunal, y el de Lo Barnechea trata de un proyecto habitacional y del 'Hospital Zona Norte' en Colina. No hay evidencia real del proyecto de tren en ninguna de las dos comunas.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "c86e9f143c9c10888f579a49",
+      "canonical_name": "Población La Victoria",
+      "veredicto": "error_geografico",
+      "justificacion": "La Población La Victoria está explícitamente 'ubicada en la comuna de Pedro Aguirre Cerda (Santiago)', confirmado en un documento dedicado al tema. El documento de 'Las Condes' trata de la Villa San Luis y sólo menciona a La Victoria de pasada, sin comuna asociada.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "f6dd96a278ef92c13ed90830",
+      "canonical_name": "Edificio Renard",
+      "veredicto": "error_geografico",
+      "justificacion": "El edificio se nombra sólo en una lista de proyectos observados por 'Los Adoquines de Ñuñoa', agrupación vecinal de esa comuna, lo que sugiere fuertemente ubicación en Ñuñoa. La atribución a Las Condes proviene, en el mismo artículo, de un párrafo distinto sobre un proyecto en el barrio El Golf.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "a9b995818115bbb735ff1fc2",
+      "canonical_name": "Anteproyecto de Amapolas 4937-4921",
+      "veredicto": "error_geografico",
+      "justificacion": "Mismo patrón que Edificio Renard: nombrado sólo en la lista de proyectos observados por la agrupación vecinal 'Los Adoquines de Ñuñoa'. La atribución a Las Condes proviene de un párrafo distinto e independiente del mismo artículo (proyecto en El Golf).",
+      "confianza": "media"
+    },
+    {
+      "project_id": "c3a2d8b6c5957940954f86ea",
+      "canonical_name": "Montenegro 2124-2160",
+      "veredicto": "error_geografico",
+      "justificacion": "La dirección 'Montenegro' coincide con la calle donde se ubica el Edificio Botero en Ñuñoa (Montenegro y Pedro Torres), y el proyecto aparece en la misma lista de observaciones de 'Los Adoquines de Ñuñoa'. La atribución a Las Condes proviene de un párrafo distinto del mismo artículo.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "7e34267fbca606d360ebf85c",
+      "canonical_name": "Edificio Parque Villanueva",
+      "veredicto": "error_geografico",
+      "justificacion": "Mismo patrón: nombrado sólo en la lista de proyectos observados por 'Los Adoquines de Ñuñoa'. La atribución a Las Condes proviene de un párrafo distinto e independiente del mismo artículo.",
+      "confianza": "media"
+    },
+    {
+      "project_id": "93603cea8a12ec5ef4edbcb2",
+      "canonical_name": "Línea 7 Metro de Santiago",
+      "veredicto": "no_concluyente",
+      "justificacion": "Ninguno de los documentos trata realmente de una 'Línea 7'. Los documentos de Vitacura tratan del conflicto por el mall 'Alto Las Condes 2' de Cencosud; el de La Reina trata de la Línea 3 (no la Línea 7) del Metro. No hay evidencia real del proyecto en ninguna comuna.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "c73555c14aa1c7d4b560979b",
+      "canonical_name": "proyecto que levantará donde actualmente están las instalaciones de la Universidad Gabriela Mistral (UGM)",
+      "veredicto": "error_geografico",
+      "justificacion": "El proyecto en el terreno actual de la UGM está en Providencia (DOM de Providencia, tres edificios de uso mixto). La atribución a Huechuraba corresponde, en el mismo artículo, a un proyecto distinto y futuro ('nuevo Campus Huechuraba') de la misma universidad.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "3f82a8828b9a9087546ada2e",
+      "canonical_name": "anteproyecto que consideraba la construcción de siete edificios en el lugar",
+      "veredicto": "error_geografico",
+      "justificacion": "Es una versión anterior del mismo proyecto UGM en Providencia ('DOM de Providencia'). La atribución a Huechuraba corresponde al proyecto distinto 'Campus Huechuraba' mencionado en el mismo artículo.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "d8f164a032cd123a395453f1",
+      "canonical_name": "Campus Huechuraba",
+      "veredicto": "error_geografico",
+      "justificacion": "El nuevo Campus Huechuraba está explícitamente en 'El Salto, Huechuraba'. La atribución a Providencia corresponde, en el mismo artículo, al proyecto distinto en el terreno actual de la UGM (Providencia).",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "d14617afdd4826ab3f0560c3",
+      "canonical_name": "Municipalidad de Vitacura",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento citado (sobre el proyecto de la UGM en Providencia/Huechuraba) no menciona a la Municipalidad de Vitacura en ninguna cita verificada. No hay evidencia que vincule esta entidad a ninguna de las dos comunas atribuidas.",
+      "confianza": "alta"
+    },
+    {
+      "project_id": "83af3a73c67d2df0bdd5ecb6",
+      "canonical_name": "Centro cultural Alameda",
+      "veredicto": "no_concluyente",
+      "justificacion": "El documento citado (sobre el proyecto de la UGM en Providencia/Huechuraba) no menciona un 'Centro cultural Alameda' en ninguna cita verificada. No hay evidencia que vincule esta entidad a ninguna de las dos comunas atribuidas.",
+      "confianza": "alta"
+    }
+  ]
+}

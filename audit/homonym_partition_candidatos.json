@@ -1,0 +1,2735 @@
+[
+  {
+    "project_id": "a502f0079a094cb3bd90cc60",
+    "canonical_name": "Egaña Comunidad Sustentable",
+    "n_comunas": 6,
+    "comunas": {
+      "13120": [
+        "73486132630cc647b20720131d9102d6f75c88b3e9d8dc7524d46fd74377179e",
+        "700ab01a8df738d9e1bf80e69e7dd3c674b623b228b4056e201ea8eb197de571",
+        "9a0cb3e842e17fd3ea5a9b4636319ff6d8b4c293716bdd20b4dce7275a323fce",
+        "3a4f0061a89b4c4564d27c89e050be5deaaa93020894a76eed6f2f4ccbfbdcc6",
+        "e815c11b2b0acef85b6661ac15f60f6241e2ff9f2e1a863aa6d3bf142411fd5a",
+        "520aea7e2f49b133f9925e84e59f4b2590c16eef79725ea3b0a9c57204e772ff",
+        "8b221f1e8ef7bddf86ba9aba041fa43446eeb73dd3bb499fa3a092b363aa55d4",
+        "d6c2c3998ed0ec6ec237a5c0e396695d141964d56a8f824bb8e509799680fd80",
+        "4190a3dab2f972892440527a41e8c9909588eed1e08d9aef017ace53d0c7a0c6",
+        "8bc73c0ba767c8b6e0a29020c3e27f2fd80e4cee9a5b1760b532a4d7d06d71e9",
+        "2f04e77464892ffd9397932e5fbfae42042f26cdf9949f6c7c34abe083c5512b",
+        "1033090c354cd12017bf413ba52c74fa6a199029f2a9f3458d6115153eccd7b9",
+        "bc9c56305719bac2c673a51d55e2f47d7d2f134931b38eb21c1094061ba6c859",
+        "35900b3524da87df86bb7782a3c49c07a84c232d861071316cca01529638d7fb",
+        "178146772414526fc4106174ebe4835634ca5f039a65d91cf6d6c6bf2c3f0420",
+        "178146772414526fc4106174ebe4835634ca5f039a65d91cf6d6c6bf2c3f0420",
+        "37a43e984f9ea2b3fb6c0a7b22fd7e63fb1613f50c4cef85dcd58e8b2ffede61",
+        "d7637273d20e93fc55c471dcdd227ae69408653fa1879b0f6ccdef38b839b3bd",
+        "ead94ed5f0b8a98f817fd6c58b44611468463e51c95da1fbfe6281afe7df239b",
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13106": [
+        "d21809bc5a7a2dfe67af055bfe100747c7d4aa982f9d29ca4dd986af7eb9a77f",
+        "d21809bc5a7a2dfe67af055bfe100747c7d4aa982f9d29ca4dd986af7eb9a77f",
+        "d21809bc5a7a2dfe67af055bfe100747c7d4aa982f9d29ca4dd986af7eb9a77f"
+      ],
+      "13122": [
+        "af44bb04e749c89a44d384e0392cfd2c8e376cb4d6e3feeb0198e0527972748d"
+      ],
+      "13119": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13130": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13102": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13106": "Estación Central",
+      "13122": "Peñalolén",
+      "13119": "Maipú",
+      "13130": "San Miguel",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "e8fd7b147a07358cd8e129e9",
+    "canonical_name": "Costanera Center",
+    "n_comunas": 6,
+    "comunas": {
+      "13121": [
+        "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a"
+      ],
+      "13132": [
+        "f4f102a14d6a2503600f10a7a8413267d0f4b5d92e209c478d3836c0c37f7f8b",
+        "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+        "e459c1721c99fa676bd50a60bf613d46fdb0df93e52c2ebd283a4afb3a486ad5"
+      ],
+      "13114": [
+        "cbbac397f25dad81ec2e6d02c8a312edc9ea66627f83834c171f8af3b91d7d9d"
+      ],
+      "13106": [
+        "a9ebbf17ab1a17220a038b47759a976538e98625d744cbceec9d0e7a6c0c54ad"
+      ],
+      "13123": [
+        "f01f1b7aed25d1e2bf8e4105b5d6cd15ddee97558c8eaa4ac9c5ee4f81a270ad",
+        "4ff897052e01ad8510fda07459b38cdfa5b1bdcd43e453c751ad2b1443b9ff83",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c"
+      ],
+      "13120": [
+        "2f4a0ba1b55978653de3bdb5f99acd5f783b74df145ad34ea8ada06bc093c64c"
+      ]
+    },
+    "comuna_nombres": {
+      "13121": "Pedro Aguirre Cerda",
+      "13132": "Vitacura",
+      "13114": "Las Condes",
+      "13106": "Estación Central",
+      "13123": "Providencia",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "cc2300e4021749f70a0516c4",
+    "canonical_name": "Hotel Punta Piqueros",
+    "n_comunas": 6,
+    "comunas": {
+      "13106": [
+        "1813590ce7704b1d480825bc30acd0957a0154f600faf089dcae56a4a4bfc4be"
+      ],
+      "13123": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13102": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13127": [
+        "972242e22455c413379ed13c0d02bd9e7a45566818350aaf849fafc239d6cbcb"
+      ],
+      "13114": [
+        "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8"
+      ],
+      "13120": [
+        "cb2a0a8e7d1a252e83a9ed27c8b094e35a193c5c654777468857b8d2c4b8f91f"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13123": "Providencia",
+      "13102": "Cerrillos",
+      "13127": "Recoleta",
+      "13114": "Las Condes",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "f953f8a81f80b42e5d79c131",
+    "canonical_name": "Villa Portales",
+    "n_comunas": 5,
+    "comunas": {
+      "13120": [
+        "00bf0ba8d43fd72891bfa2ea1aff46f0cebb5e05fa4fbd84b7c7864e58606b0a",
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13106": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13106": "Estación Central",
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "6ffb1bdaea1e425d89c489ee",
+    "canonical_name": "Mall Barón",
+    "n_comunas": 4,
+    "comunas": {
+      "13109": [
+        "60053a24bc0a4c4deb64fe8233e9429deef173f41ceac1486ffce596abefad82"
+      ],
+      "13101": [
+        "c2b0b2a3746eb7799595b42e60b775b8a39f07b68f4e2b21498ec9befc26ae0b"
+      ],
+      "13120": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13109": "La Cisterna",
+      "13101": "Santiago",
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "56e38026f850dc7badd03854",
+    "canonical_name": "Ciudad del Niño",
+    "n_comunas": 4,
+    "comunas": {
+      "13130": [
+        "af9420b65f6dc9aa58f57fb5423529d08b2a2d68c38e67790dd70271f3de9b31",
+        "7253b71b8aa887f3e9b3c545962a567e4bc7c772e5209f4bbc2fba577f012f82",
+        "9b8f11ad38c4a01c608165d08d363871c4663710a9808942aeba4146ebac82f2",
+        "9b8f11ad38c4a01c608165d08d363871c4663710a9808942aeba4146ebac82f2",
+        "c798b2ea772e9af89953aa8fe43fff5bfe4896747b2042c82b0d353deb33981b",
+        "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
+        "dbf252891466d8b444b40738af3da8dcad2b3cb48e00dc310fffc8a1a5b977a0",
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13120": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13119": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13102": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ]
+    },
+    "comuna_nombres": {
+      "13130": "San Miguel",
+      "13120": "Ñuñoa",
+      "13119": "Maipú",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "0a7420a2f224e2831f8d5788",
+    "canonical_name": "Edificio Pajaritos",
+    "n_comunas": 4,
+    "comunas": {
+      "13119": [
+        "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
+        "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
+        "1a8868138b4b5e7fc7a078b55f0e79cce30c7616c1a38c8ead2128ffa4f92f3c",
+        "a8593a97752ddc270c9bfa57e346fce6372b5eb67ac2d6bc732f94229e261f93",
+        "a8593a97752ddc270c9bfa57e346fce6372b5eb67ac2d6bc732f94229e261f93",
+        "1883c7216c83a6e84b735de9193499b7468f1526d5e4194ca9ca8f75a9aaf217",
+        "d7762e8fed5e1b42e18bc3037e2e8d0b58f2390838499e6455e4a1916b2af804",
+        "d7762e8fed5e1b42e18bc3037e2e8d0b58f2390838499e6455e4a1916b2af804",
+        "420c22c032ead90ff637724cf1d1039fcc01b7d1476b59350f4443d32fbc5899",
+        "a54e1d5e50675544323e5c62d77218e50445f09219defc1f1363d0a731c87706",
+        "24cc5a587b727e6f7e7ed0ee3a6523b6e9700711d25e2055b36c97e980ee7fa3",
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13120": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13130": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ],
+      "13102": [
+        "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13120": "Ñuñoa",
+      "13130": "San Miguel",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "708353b6e07226824317b02d",
+    "canonical_name": "proyecto de Inmobiliaria Nueva El Golf",
+    "n_comunas": 4,
+    "comunas": {
+      "13122": [
+        "447d26e64ff2da081794413122f86fb2266e40b9181b7e847feca751bb6287b3"
+      ],
+      "13114": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13109": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13130": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ]
+    },
+    "comuna_nombres": {
+      "13122": "Peñalolén",
+      "13114": "Las Condes",
+      "13109": "La Cisterna",
+      "13130": "San Miguel"
+    }
+  },
+  {
+    "project_id": "1116e5a6a061a1bd4fe3499b",
+    "canonical_name": "Línea 7 del Metro",
+    "n_comunas": 4,
+    "comunas": {
+      "13101": [
+        "cf6ba04926896b2c959e586e8f5863ae553b1b8a5a69f7a6da42225f2fb10699",
+        "cf6ba04926896b2c959e586e8f5863ae553b1b8a5a69f7a6da42225f2fb10699",
+        "fb008ae48536fc180703db49377f5c29a9f6011972e47b7b8916affdaad07e63"
+      ],
+      "13128": [
+        "815649d74b5f7e7419f38a5df80824827f7a4b69ccd77fb754486d849661518d",
+        "815649d74b5f7e7419f38a5df80824827f7a4b69ccd77fb754486d849661518d"
+      ],
+      "13106": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ],
+      "13123": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13128": "Renca",
+      "13106": "Estación Central",
+      "13123": "Providencia"
+    }
+  },
+  {
+    "project_id": "2cfcdb67a6274db8af9377f6",
+    "canonical_name": "Alto Las Condes",
+    "n_comunas": 4,
+    "comunas": {
+      "13132": [
+        "f4f102a14d6a2503600f10a7a8413267d0f4b5d92e209c478d3836c0c37f7f8b",
+        "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+        "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+        "e459c1721c99fa676bd50a60bf613d46fdb0df93e52c2ebd283a4afb3a486ad5",
+        "4c0cccf40e5138d2148aaff53c413924b9b42be75fd82b9ef57842dbcf629533"
+      ],
+      "13123": [
+        "f01f1b7aed25d1e2bf8e4105b5d6cd15ddee97558c8eaa4ac9c5ee4f81a270ad",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c",
+        "e3bfb2ac0a9ef563f9d7bd5759eedfa539f69326db2bcfa2c29dd0b65e49470c"
+      ],
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13132": "Vitacura",
+      "13123": "Providencia",
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "2b5185b9ab9e659ddc404ae9",
+    "canonical_name": "Conjunto Armónico Bellavista (CAB)",
+    "n_comunas": 4,
+    "comunas": {
+      "13127": [
+        "765b95c190dcb89eebb44a7dde28b8f115b1eb352f63194c6cf729ce4e0547ce",
+        "b685bc0778dd066590dd00c8e8b5dacc453e4322c87474a5c802f9c32b3f4102",
+        "6cd3486f60f58854776ee05893fd08cb43a117a6cd200c1c2594acbc658e81dd",
+        "6cd3486f60f58854776ee05893fd08cb43a117a6cd200c1c2594acbc658e81dd",
+        "2b8abd6526bb988ccdfbfd363d7496ef3f3abce4ca2343dbe90d1386c438f476",
+        "2b8abd6526bb988ccdfbfd363d7496ef3f3abce4ca2343dbe90d1386c438f476"
+      ],
+      "13114": [
+        "b685bc0778dd066590dd00c8e8b5dacc453e4322c87474a5c802f9c32b3f4102"
+      ],
+      "13106": [
+        "b685bc0778dd066590dd00c8e8b5dacc453e4322c87474a5c802f9c32b3f4102"
+      ],
+      "13108": [
+        "b685bc0778dd066590dd00c8e8b5dacc453e4322c87474a5c802f9c32b3f4102"
+      ]
+    },
+    "comuna_nombres": {
+      "13127": "Recoleta",
+      "13114": "Las Condes",
+      "13106": "Estación Central",
+      "13108": "Independencia"
+    }
+  },
+  {
+    "project_id": "fe5f329547314a7796f48998",
+    "canonical_name": "Parque Pumpin",
+    "n_comunas": 4,
+    "comunas": {
+      "13106": [
+        "8f88833757fb006df65d9c681e04cb50a09b119de80fc034666de0adfc2cf1ea"
+      ],
+      "13114": [
+        "9a78e6271f5a18f6cfb2e59426eadde1d40d9c15e78cda0fa7190e73dbac474b",
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13109": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13130": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes",
+      "13109": "La Cisterna",
+      "13130": "San Miguel"
+    }
+  },
+  {
+    "project_id": "36bd93d333d00c28f2e840a2",
+    "canonical_name": "Estadio Nacional",
+    "n_comunas": 3,
+    "comunas": {
+      "13120": [
+        "f39ba7a5241be095b1e7e3542720894921d577d3d88230801ba8bff1335d6ec3",
+        "0bdbfa992e099e8ee99ea8a514de077ed6d46d31e623eab8c7085bc52090da78",
+        "00bf0ba8d43fd72891bfa2ea1aff46f0cebb5e05fa4fbd84b7c7864e58606b0a",
+        "dd956064928249db6ff39b466b6f405a5ae4a36d291992a9fc4870c56839b0ea",
+        "aac191b3fa1201bbe8c7d62417c21bf7538ea0c493b784b2b1b633bbf02bb6aa",
+        "bce53427b78ee768f087ae5c65d04b77384c2781c57552c40eeea88c12c6af04",
+        "da870b4ef73df07691b591c26afeb81ae7dce00e33075fb1d17b8cbf523a0ea2",
+        "94f302b5a138a703669730ef993a88880e5d9b0ffb8b504fe5d802cb9e8118a6",
+        "9fada7bd592c4659a1cfc89b64967e3e112abacdf95326749ecab96b5148637d",
+        "7a614768747e641036c395da74f40159c0e52e6964e2e2c30d72c1115325a847",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13102": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13110": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13102": "Cerrillos",
+      "13110": "La Florida"
+    }
+  },
+  {
+    "project_id": "044c20f0e13a1bae6c68978c",
+    "canonical_name": "General Amengual",
+    "n_comunas": 3,
+    "comunas": {
+      "13106": [
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "b83e45226eb0060d383463a61625896bc60bbfcd8c75e176e08c42a133774d5f",
+        "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13132": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13101": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13132": "Vitacura",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "0a9d6730e059f72c2cdec2d8",
+    "canonical_name": "Recreo",
+    "n_comunas": 3,
+    "comunas": {
+      "13106": [
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "247ad87e8e5340af780c792e9dad722a93ce187b971426e37029aa2667acf826",
+        "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13132": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13101": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13132": "Vitacura",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "787a43f11f81e900f38cc64a",
+    "canonical_name": "Población Alessandri",
+    "n_comunas": 3,
+    "comunas": {
+      "13108": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13106": [
+        "b197f2df00e60c4ceaeb5c49258a69ca8b916cf3bdd6a1d8626eb7bab9f20111",
+        "b197f2df00e60c4ceaeb5c49258a69ca8b916cf3bdd6a1d8626eb7bab9f20111"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago",
+      "13106": "Estación Central"
+    }
+  },
+  {
+    "project_id": "aef943251b1be918370edf5d",
+    "canonical_name": "Villa Olímpica",
+    "n_comunas": 3,
+    "comunas": {
+      "13120": [
+        "00bf0ba8d43fd72891bfa2ea1aff46f0cebb5e05fa4fbd84b7c7864e58606b0a",
+        "6f8f40f4ae8aeef2f7805aa9ac6038ff023a24fe1693423e21c3aad2fd297b0f",
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13114": [
+        "cde1df8c57d204e2c950c7a9ab73f79c3478f659025b014be9d7a5fb9c37c629"
+      ],
+      "13106": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes",
+      "13106": "Estación Central"
+    }
+  },
+  {
+    "project_id": "51a8b044e39aac5f75cfa5c1",
+    "canonical_name": "Remodelación San Borja",
+    "n_comunas": 3,
+    "comunas": {
+      "13121": [
+        "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a"
+      ],
+      "13114": [
+        "cde1df8c57d204e2c950c7a9ab73f79c3478f659025b014be9d7a5fb9c37c629"
+      ],
+      "13106": [
+        "323f39dc66878c098b0e1b2d9978377566e15c4bcac1c6efbdfc66bf98a1a7e2",
+        "323f39dc66878c098b0e1b2d9978377566e15c4bcac1c6efbdfc66bf98a1a7e2"
+      ]
+    },
+    "comuna_nombres": {
+      "13121": "Pedro Aguirre Cerda",
+      "13114": "Las Condes",
+      "13106": "Estación Central"
+    }
+  },
+  {
+    "project_id": "e6e1dcbb49d300864229e9e5",
+    "canonical_name": "edificio UNCTAD III",
+    "n_comunas": 3,
+    "comunas": {
+      "13121": [
+        "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a"
+      ],
+      "13106": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ]
+    },
+    "comuna_nombres": {
+      "13121": "Pedro Aguirre Cerda",
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "78a738016ed2fc76ff4fa288",
+    "canonical_name": "Villa San Luis de Las Condes",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "55d0580797b321f50a0c7e6ea85cc1bf80c7b95b8b759d98122e1e7a3746ed70",
+        "68b55af1e204801fe307879c2661869d9d8a72a89e3a5b5ea4a6fcac435da423",
+        "3ce1ba0d8539eadeaf05abb82dcdb4608b73a14e1264e1dafa7aecb6b3f7396f",
+        "fcb326cec6a3084f56747ede3c5c36fb5ebaba907dea68292deff0aa2c134f24",
+        "0eb9dd292cda1b1ca2d1c40c7d64d66c34ab9c48028f779a4a18611e08bf81e0",
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13118": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13101": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13118": "Macul",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "4414e1024e8bba2d3f337c4f",
+    "canonical_name": "Nueva Las Condes",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "671ee83be0a903e9e02e2c6caaf7aae1bbd522404cd0231368509947d979e6c0",
+        "2f6b6068d6781bcc947da97c4bef72f54717aceb67644c64eb4744fd54ed9a6e",
+        "cde1df8c57d204e2c950c7a9ab73f79c3478f659025b014be9d7a5fb9c37c629",
+        "3ce1ba0d8539eadeaf05abb82dcdb4608b73a14e1264e1dafa7aecb6b3f7396f",
+        "49cad11e0067ec651737cc7bb755ab6dd7e72a5467f1e6a9d7faaf4f869f40f0",
+        "8b9432dd39c26bb6c2bd4156cf9cea2dec0cce495190b7d4da4766320744fdaf",
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d",
+        "020c4b0dc36e9f5d66fa7a0c08a8694e5a851aa7de45f3d9c932e8329a86318c",
+        "020c4b0dc36e9f5d66fa7a0c08a8694e5a851aa7de45f3d9c932e8329a86318c"
+      ],
+      "13118": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13101": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13118": "Macul",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "c81799f769f704acbc71e31a",
+    "canonical_name": "Vespucio Oriente",
+    "n_comunas": 3,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13118": [
+        "91b089204b71a59fda5c24eb26013a5aac77bdbe2de0b1a3f73e0e434fe5b9a8"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "e8c2fdeb634b825d051c4c10",
+    "canonical_name": "GAM",
+    "n_comunas": 3,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13114": [
+        "fcb326cec6a3084f56747ede3c5c36fb5ebaba907dea68292deff0aa2c134f24"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "91f2112803222891bec22245",
+    "canonical_name": "Carlos Valdovinos",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "bcccc2d994195d86aef273847e38b68d7cce8b55dac9f628c8e31d2bcf20140e",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13106": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13132": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13106": "Estación Central",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "b2d5e037f8dfb338f97313e7",
+    "canonical_name": "Zoccalo",
+    "n_comunas": 3,
+    "comunas": {
+      "13132": [
+        "7937692b9c924bc45358346dd0ac639852aa039bfb4ff164ae0a32ec957a819d",
+        "c7952da9cebf04cb5016a94ce6a90e2f88e90d3c84ad85a38c636f29c568d45c",
+        "c7952da9cebf04cb5016a94ce6a90e2f88e90d3c84ad85a38c636f29c568d45c",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13106": [
+        "e8df274f5317f6b643b596e548b3370553610957933d06ec191892a7a864275c",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe",
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ],
+      "13101": [
+        "ea98a61087479809d0a929c2d39b1a52dd99ea0f1f3cd25e5566ce657a3135fe"
+      ]
+    },
+    "comuna_nombres": {
+      "13132": "Vitacura",
+      "13106": "Estación Central",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "8a13e9059cc4e077f99996b5",
+    "canonical_name": "Universidad Finis Terrae",
+    "n_comunas": 3,
+    "comunas": {
+      "13123": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ],
+      "13115": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ],
+      "13114": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13115": "Lo Barnechea",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "97c0825984bf2794409d77de",
+    "canonical_name": "Estadio Santa Rosa de Las Condes",
+    "n_comunas": 3,
+    "comunas": {
+      "13123": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ],
+      "13115": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ],
+      "13114": [
+        "07b70553a3e8fa635997b73ad5da0e5905ac2139b99d37b6ceb1525ef3895b05"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13115": "Lo Barnechea",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "eedf5c4d11e1b2e81a1dcdc6",
+    "canonical_name": "Mirador Barón",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13109": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ],
+      "13130": [
+        "b2c7eb3570a011f9ddec399b957b1d5e0541052c69426fb26db4901947cb1ff5"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13109": "La Cisterna",
+      "13130": "San Miguel"
+    }
+  },
+  {
+    "project_id": "cf65c362a0dd71489735dc57",
+    "canonical_name": "Plaza Egaña",
+    "n_comunas": 3,
+    "comunas": {
+      "13115": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ],
+      "13122": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ],
+      "13120": [
+        "6f8f40f4ae8aeef2f7805aa9ac6038ff023a24fe1693423e21c3aad2fd297b0f"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13122": "Peñalolén",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "f4cef477adb06d2e318077cf",
+    "canonical_name": "Villa Panamericana de Cerrillos",
+    "n_comunas": 3,
+    "comunas": {
+      "13102": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "e3616aa6d60d198baa4b24891a82c587ecf7ab67119423683031c59d18c6b797"
+      ],
+      "13110": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13120": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13110": "La Florida",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "ad9b26c608d619590d7c857f",
+    "canonical_name": "Parque Deportivo Estadio Nacional",
+    "n_comunas": 3,
+    "comunas": {
+      "13102": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13110": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13120": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13110": "La Florida",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "ba96a35216f3b3fe00fb1a47",
+    "canonical_name": "Centro de Entrenamiento de Hockey Césped del Estadio Nacional",
+    "n_comunas": 3,
+    "comunas": {
+      "13102": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13110": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ],
+      "13120": [
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+        "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13110": "La Florida",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "7de57b31a4d37b73f9da9ad4",
+    "canonical_name": "Venda Sexy",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13118": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13101": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13118": "Macul",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "73b8ccba6f36447cc900e3b2",
+    "canonical_name": "Santa Mónica 2338",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13118": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13101": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13118": "Macul",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "5db3a8296f693c6477728cc7",
+    "canonical_name": "Ex Cuartel Borgoño",
+    "n_comunas": 3,
+    "comunas": {
+      "13114": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13118": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ],
+      "13101": [
+        "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13118": "Macul",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "b38af461b8089a0dd1238fea",
+    "canonical_name": "Central Park",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade",
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade",
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "33d41fa3b2aa9c83f69e85ee",
+    "canonical_name": "Terreno Prais Pudahuel",
+    "n_comunas": 3,
+    "comunas": {
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "0812b2f08f98e46d29aa9895",
+    "canonical_name": "Edificio 882 de Av Circunvalación N° 1751",
+    "n_comunas": 3,
+    "comunas": {
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "fc6b5cc78a01bb9169ac12fb",
+    "canonical_name": "Habilitación Corredor de Transporte Público Eje Vial Rinconada Maipú",
+    "n_comunas": 3,
+    "comunas": {
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "db5ca48365c7bc415d4e6161",
+    "canonical_name": "Remodelacion San Borja de Santiago",
+    "n_comunas": 3,
+    "comunas": {
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "99c553e65bf75ee8f0c826f0",
+    "canonical_name": "pavimento participativo La reina ID 48-128-LR19",
+    "n_comunas": 3,
+    "comunas": {
+      "13116": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13119": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ],
+      "13113": [
+        "4973149e159be90621b1ce9bfffefa190bb3361c7a6a7ed92873f859e04ed969"
+      ]
+    },
+    "comuna_nombres": {
+      "13116": "Lo Espejo",
+      "13119": "Maipú",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "35ba5e4d5460183e0c7edf49",
+    "canonical_name": "Puerto de Palos",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "c9528ac7d91bbdfa80cd9b5a",
+    "canonical_name": "Plaza del Río",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "d1ad31d3f49285bb82d61c4d",
+    "canonical_name": "Antígona",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "c0c009391cb0a2cbced247ba",
+    "canonical_name": "Festival",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "6afefbbe4f00c704d21e8127",
+    "canonical_name": "Toledo​￼?",
+    "n_comunas": 3,
+    "comunas": {
+      "13101": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13118": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ],
+      "13119": [
+        "312d89ab30182060f22e98f51d08719cbb5488d64ce36e8ebc19b23d8058a7bc"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul",
+      "13119": "Maipú"
+    }
+  },
+  {
+    "project_id": "c824698f5351192c7f1550b4",
+    "canonical_name": "Conjunto Armónico Portezuelo",
+    "n_comunas": 2,
+    "comunas": {
+      "13132": [
+        "71ddd1a605f1d3708e12999c47669033d7bb1ac5396d75c5b4b75a0f59c33bb5",
+        "4f2ebe9f3f9d338e7ae1ec5c674565c45ef5bd869e3edeb4a8551d66f6873262",
+        "f28fc2dc895adadc65921f31e23d95a9e0e954d6dffff7e2fd591be2b22e2eeb",
+        "52acb8a61b83cfd95279235f77b79d59468138829430e315ce07b910aaef5bbe",
+        "52acb8a61b83cfd95279235f77b79d59468138829430e315ce07b910aaef5bbe",
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce",
+        "15f01d5d91a0181e6fc77deb13f3985de8786bff73b1082e3a10a4bdc355c0ea",
+        "070cbb3163ae0b9f88d89b31b82becb4ac1c335d3a95662f3f2af20a9a7cc91b"
+      ],
+      "13115": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13132": "Vitacura",
+      "13115": "Lo Barnechea"
+    }
+  },
+  {
+    "project_id": "744f0e5bf37d911f993ce9ee",
+    "canonical_name": "Edificio Botero",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "af782895d56421b6524b490bf81063fe4c50d549c0a96d26729aa71d4a1eff61",
+        "38bd84b13616a9ec5768e373764048ae5eb764374b3b792fc4be6adfc95eacb5",
+        "a678618b313737535abe14e4fc09c849cc0b7e1078c0bbc028affb350cf85d03",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "3100d9b8fb6752dbe9deeab4e1071bfc66f6ead4f1789a5a007b37fc7518fb36",
+        "3100d9b8fb6752dbe9deeab4e1071bfc66f6ead4f1789a5a007b37fc7518fb36"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "f001faedc662d71e3a74166b",
+    "canonical_name": "Hijuelas Quilín",
+    "n_comunas": 2,
+    "comunas": {
+      "13122": [
+        "235e81a8df1bcf517279e1b1486da869e863870e6f81391f437036372281292c",
+        "447d26e64ff2da081794413122f86fb2266e40b9181b7e847feca751bb6287b3",
+        "cdbb95f74d5564b982b4c4b963ea2759668ec824af2a5dd4aa32899e666456d7",
+        "bdf6b1ac2b9054cc0735aa42e92b76674c36c68f70f7df0cca528b6950325747",
+        "057359dfc86cd8e50182e7187830abaeee1246b620098e596ba60dccf2ff9e76",
+        "92f47acdeef2ad5a1f91a4ce489b6d148d11e302c91c0592aa6ed60a63c8f116",
+        "40d03c6326614a3f28680556f4ee7b9496ab976bbd15acf3e9c082d295fcdb6a",
+        "9387b59729946ee2c5dc27e81368e77cb54ec232092305dd6e6137e442b224df",
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c",
+        "ad0a7f79556703c164600d1acb30cab2ebb1cea93c2b4234999111cf3c00e5d3",
+        "6a96e4fafa7189630d50823608809a791b2ba79224995ad2e3872aceff165044",
+        "190ea526c576cdde79383ebade59286d8a7f567f17bce9607b62f037ad87f7e9",
+        "bb6967b1f34d4ef0963942f1d6331dbbe06d739b713da183a9ee204d07ef8e2b",
+        "068c6a29e10734f3da5f5711af1992f259e0eb688675dc201a4e4afc3d1eabf3",
+        "af44bb04e749c89a44d384e0392cfd2c8e376cb4d6e3feeb0198e0527972748d"
+      ],
+      "13115": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ]
+    },
+    "comuna_nombres": {
+      "13122": "Peñalolén",
+      "13115": "Lo Barnechea"
+    }
+  },
+  {
+    "project_id": "ba52b0791a4aa2e61dc76d5c",
+    "canonical_name": "Barrio Plaza Chacabuco",
+    "n_comunas": 2,
+    "comunas": {
+      "13108": [
+        "c5036b5f0d3f60d09a78efd4a585b3c3ded32291d86c47262e01e1a3b1e212aa",
+        "c5036b5f0d3f60d09a78efd4a585b3c3ded32291d86c47262e01e1a3b1e212aa",
+        "c5036b5f0d3f60d09a78efd4a585b3c3ded32291d86c47262e01e1a3b1e212aa",
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16",
+        "428dbaa2b392e8ea34e327569a9092785edf4ad5599cb49cb71d71ccd1582f00",
+        "ef45da57fd534ba92cd3fbcda09eba42955de7150c1445d194c6f457fdd3703a",
+        "ef45da57fd534ba92cd3fbcda09eba42955de7150c1445d194c6f457fdd3703a"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "e1c30745abde8086367a9640",
+    "canonical_name": "Ciudad de Los Valles",
+    "n_comunas": 2,
+    "comunas": {
+      "13124": [
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "ca42d3857eccbcbd90a46dbf5aff92af121a22281289fc8bc69e944962fb3e81",
+        "4df795b0d40caccd0a9f8d120cb1bef1ae401f92dfe37a26e3658e545ec7e5f9",
+        "4df795b0d40caccd0a9f8d120cb1bef1ae401f92dfe37a26e3658e545ec7e5f9",
+        "4df795b0d40caccd0a9f8d120cb1bef1ae401f92dfe37a26e3658e545ec7e5f9",
+        "dba8050d706847121699107d50fbf11dc8171eb9e3c9a73f5d0e665347e70d91",
+        "1a482b26d94e023cc05c0cf176cc1370d8a02932a7032cdd1992c1289b6b0a42",
+        "1a482b26d94e023cc05c0cf176cc1370d8a02932a7032cdd1992c1289b6b0a42",
+        "1a482b26d94e023cc05c0cf176cc1370d8a02932a7032cdd1992c1289b6b0a42",
+        "7a8cb892d9050b3f145ee59005cc3b7e9e5ec66366dbb237530ea067bf060059",
+        "7a8cb892d9050b3f145ee59005cc3b7e9e5ec66366dbb237530ea067bf060059"
+      ],
+      "13102": [
+        "010907f0d290b5674792d718af7cef77b42661494560d7d7d485fd4b9ab93b9f"
+      ]
+    },
+    "comuna_nombres": {
+      "13124": "Pudahuel",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "cc6edcd95ed8fd534546f6e6",
+    "canonical_name": "Dominga",
+    "n_comunas": 2,
+    "comunas": {
+      "13119": [
+        "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41",
+        "d6ed6ce57842355097c464de274c0419fe9dddb51e8bcd8ad1b12215d48a6f41"
+      ],
+      "13106": [
+        "90f45322746efd7c53a7e42bcb02a7aa37e7a305572163938526c9a3c06c0e9f"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13106": "Estación Central"
+    }
+  },
+  {
+    "project_id": "085576d63341fca6ceb07921",
+    "canonical_name": "Autopista del Sol",
+    "n_comunas": 2,
+    "comunas": {
+      "13119": [
+        "1db5406b237c5d2f53dd5c987323ee7db803c8570e982b4fb303af19d500dd42"
+      ],
+      "13118": [
+        "91b089204b71a59fda5c24eb26013a5aac77bdbe2de0b1a3f73e0e434fe5b9a8"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "332a219b09bf2049e93166ae",
+    "canonical_name": "Población Las Rosas",
+    "n_comunas": 2,
+    "comunas": {
+      "13108": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "d615451d97ebbe5b241c5277",
+    "canonical_name": "barrio Matta Sur",
+    "n_comunas": 2,
+    "comunas": {
+      "13108": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "a9f18d299c7df38f085fed86",
+    "canonical_name": "Población Madrid",
+    "n_comunas": 2,
+    "comunas": {
+      "13108": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "db3bc9e3094e7d83be4f693d",
+    "canonical_name": "Hospital San Borja Arriarán",
+    "n_comunas": 2,
+    "comunas": {
+      "13108": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ],
+      "13101": [
+        "63c963a7dcb55498c7599a23d9261909106a0071953d3a207f9410adca9dad16"
+      ]
+    },
+    "comuna_nombres": {
+      "13108": "Independencia",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "8f276ad881cff4c732236787",
+    "canonical_name": "Villa San Luis",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "266511eaabdb4f053b06ed5c8f629283213c19fad441f389934be9d8dd547605",
+        "71172477dff902fce33f3caddb5e1ce55841fa6c99b86fcdc50bd8d9917a085b",
+        "323f39dc66878c098b0e1b2d9978377566e15c4bcac1c6efbdfc66bf98a1a7e2",
+        "323f39dc66878c098b0e1b2d9978377566e15c4bcac1c6efbdfc66bf98a1a7e2",
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "671ee83be0a903e9e02e2c6caaf7aae1bbd522404cd0231368509947d979e6c0",
+        "2f6b6068d6781bcc947da97c4bef72f54717aceb67644c64eb4744fd54ed9a6e",
+        "4f6bfedb769650ad5d6e7ff0d0a665e4c0589271c691f216e5a10be062876381",
+        "d18eaeee95ef8ffb6dda206572c10252e96886c4608b877c4a13e5a592a7eb66",
+        "49cad11e0067ec651737cc7bb755ab6dd7e72a5467f1e6a9d7faaf4f869f40f0",
+        "dc7cecff9d58c087bb502aea75d50f7aff284e271ec757c46d45564210b6de85",
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805",
+        "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+        "fda14e16c17a80f893c8a2e89a616a3d8e2e419c6da6ab32afdbc6c94c95665d",
+        "8b9432dd39c26bb6c2bd4156cf9cea2dec0cce495190b7d4da4766320744fdaf",
+        "020c4b0dc36e9f5d66fa7a0c08a8694e5a851aa7de45f3d9c932e8329a86318c",
+        "020c4b0dc36e9f5d66fa7a0c08a8694e5a851aa7de45f3d9c932e8329a86318c",
+        "0dea8747f17180d1d1cf90b993f158ea414d467c89fe11683b1279039de58cf0",
+        "0dea8747f17180d1d1cf90b993f158ea414d467c89fe11683b1279039de58cf0",
+        "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "56029c529c4c61cb488f342c",
+    "canonical_name": "Vespucio 345",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "4aeb26821495bf607c4d11a9f52569e553edbfc657700f7ddad1ef220fada06b",
+        "b741354d64aac1e6cf208c60f8ecd2a40cbbe472bfc786813cf77575e16407b5",
+        "851535fde5a750a7dfe8af5e75510a3e042d557c8cf7a356b018543198264be7",
+        "353cb6cd2f043a99bdcd62819e6420c59d84f9e06a7aa868be67ecee37915839",
+        "9a78e6271f5a18f6cfb2e59426eadde1d40d9c15e78cda0fa7190e73dbac474b",
+        "fc6318280085341ad3f02ef1a118acbaf68b0ccf26ef430f9192d843d2fde8bb",
+        "72ad65bfbf4c22f3baa8ff06218c261d86c4f298c153dcecbf4dc543256cf9b5",
+        "9cb57787afc9b998a99cddbed7db5aa26cffd99783526d51783ddc8961e6e9d2"
+      ],
+      "13127": [
+        "691d2b5285e3ef038c912b04627deca1ddb5c4fa69e8a871e1031d6a0197b7a0"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13127": "Recoleta"
+    }
+  },
+  {
+    "project_id": "b660f526418e762a81c58061",
+    "canonical_name": "Población Abate Molina",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "71172477dff902fce33f3caddb5e1ce55841fa6c99b86fcdc50bd8d9917a085b"
+      ],
+      "13114": [
+        "fcb326cec6a3084f56747ede3c5c36fb5ebaba907dea68292deff0aa2c134f24"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "c57dcd3e0c49b536080b5c24",
+    "canonical_name": "Valle Nevado",
+    "n_comunas": 2,
+    "comunas": {
+      "13107": [
+        "59722e208ebe675a517dad7fc0ebd83cc3a31b876e3383694f0a21812170086d"
+      ],
+      "13115": [
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5",
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5",
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5",
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5"
+      ]
+    },
+    "comuna_nombres": {
+      "13107": "Huechuraba",
+      "13115": "Lo Barnechea"
+    }
+  },
+  {
+    "project_id": "47d95340c019f22409c2eaee",
+    "canonical_name": "extensión de Costanera Sur",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "91efbddefbb509c983717b17",
+    "canonical_name": "nueva estación, en Eliodoro Yáñez",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "960969ce8eb29a74b14046ab",
+    "canonical_name": "parque Renato Poblete",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "212f802564fe369f0b2744cc",
+    "canonical_name": "Barrio Cívico en La Moneda",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22",
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ],
+      "13132": [
+        "6d1b6008e0e2aaace17879d1a9a5530e061e11804264fbfae1ef8ed8eb0fec22"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "95c5c8cea5e74f04aa99202b",
+    "canonical_name": "Complejo Deportivo Don Óscar",
+    "n_comunas": 2,
+    "comunas": {
+      "13119": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ],
+      "13103": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13103": "Cerro Navia"
+    }
+  },
+  {
+    "project_id": "e4ce47f5cff6c7d98db345e3",
+    "canonical_name": "Centro Cultural de Cerro Navia",
+    "n_comunas": 2,
+    "comunas": {
+      "13119": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ],
+      "13103": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13103": "Cerro Navia"
+    }
+  },
+  {
+    "project_id": "f524da062028dfac65f80d79",
+    "canonical_name": "edificio de avenida Independencia 801",
+    "n_comunas": 2,
+    "comunas": {
+      "13119": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ],
+      "13103": [
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e",
+        "b917dd52966934abe24bb1ca549a94de51997be72924cc6c2ad80670d7c42a8e"
+      ]
+    },
+    "comuna_nombres": {
+      "13119": "Maipú",
+      "13103": "Cerro Navia"
+    }
+  },
+  {
+    "project_id": "a5406b393dd9a92caa4f8e76",
+    "canonical_name": "Planta de Tratamiento de Aguas Servidas de la comuna de Perquenco",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13102": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "8df9eae26a4ac5817a0a6e2b",
+    "canonical_name": "Reposición de Luminarias en la Vía Pública de Cerrillos",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13102": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "4182a03dc09c48d1e0032ded",
+    "canonical_name": "proyecto de piscicultura en la cuenca del lago Villarrica",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13102": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "1c0826b1d4e1f878acd68bb3",
+    "canonical_name": "Proyecto de Desalinización de Agua de Mar mediante Concesión de Obra Pública",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ],
+      "13102": [
+        "300313ad7a6869efb7a3fafa554cd9d3be23ede552fab2da29a1953fbe69ab12"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "2396059a776af42c809a7195",
+    "canonical_name": "Egaña Sustentable",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "1e4f5b2715df34bf55728db24da4439c4fcacc7b81d13430fa000b098bfc4574",
+        "ead94ed5f0b8a98f817fd6c58b44611468463e51c95da1fbfe6281afe7df239b"
+      ],
+      "13130": [
+        "c7aba02622a8318c9420af9340cd17bb021f45940ed154009e53432d6007ef3e"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13130": "San Miguel"
+    }
+  },
+  {
+    "project_id": "b7ba8a7f3a40b7e7ac8f5a4d",
+    "canonical_name": "Parque Las Moscas",
+    "n_comunas": 2,
+    "comunas": {
+      "13121": [
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992"
+      ],
+      "13101": [
+        "0b4fb575563b7cba27730d354f8325a56824307407e75d52264021de24ac919b"
+      ]
+    },
+    "comuna_nombres": {
+      "13121": "Pedro Aguirre Cerda",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "3bbef574de08d7dcb2b3dc93",
+    "canonical_name": "centro de datos de Amazon",
+    "n_comunas": 2,
+    "comunas": {
+      "13107": [
+        "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b"
+      ],
+      "13102": [
+        "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b"
+      ]
+    },
+    "comuna_nombres": {
+      "13107": "Huechuraba",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "b195d7c038b7418fa163a104",
+    "canonical_name": "centro de datos de 200 millones de dólares en Cerrillos",
+    "n_comunas": 2,
+    "comunas": {
+      "13107": [
+        "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b"
+      ],
+      "13102": [
+        "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b"
+      ]
+    },
+    "comuna_nombres": {
+      "13107": "Huechuraba",
+      "13102": "Cerrillos"
+    }
+  },
+  {
+    "project_id": "e5827e6db28637966446541f",
+    "canonical_name": "Somma Inés de Suárez",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "96d0b9d8658d65b70992563b83223f26add6c544345dc5d2b9f4a2d19d1cb21a"
+      ],
+      "13114": [
+        "506c47e833b2fce88da3c01cd7803669691f8fdcb35a50dca98d7da80c2b6fa1"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "91dfa1994055d7f553783b36",
+    "canonical_name": "tren Santiago-Batuco",
+    "n_comunas": 2,
+    "comunas": {
+      "13128": [
+        "815649d74b5f7e7419f38a5df80824827f7a4b69ccd77fb754486d849661518d",
+        "815649d74b5f7e7419f38a5df80824827f7a4b69ccd77fb754486d849661518d"
+      ],
+      "13115": [
+        "a1ce727e7485815804d670172db57ee3e2bfd4f00eaf34facbf08d764eefac30"
+      ]
+    },
+    "comuna_nombres": {
+      "13128": "Renca",
+      "13115": "Lo Barnechea"
+    }
+  },
+  {
+    "project_id": "c86e9f143c9c10888f579a49",
+    "canonical_name": "Población La Victoria",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "fcb326cec6a3084f56747ede3c5c36fb5ebaba907dea68292deff0aa2c134f24"
+      ],
+      "13121": [
+        "34c26e5aaf4f48a74d16ad587a7b0384cb459c157714e592725284560dea1ce9"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13121": "Pedro Aguirre Cerda"
+    }
+  },
+  {
+    "project_id": "f6dd96a278ef92c13ed90830",
+    "canonical_name": "Edificio Renard",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "a9b995818115bbb735ff1fc2",
+    "canonical_name": "Anteproyecto de Amapolas 4937-4921",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "c3a2d8b6c5957940954f86ea",
+    "canonical_name": "Montenegro 2124-2160",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "7e34267fbca606d360ebf85c",
+    "canonical_name": "Edificio Parque Villanueva",
+    "n_comunas": 2,
+    "comunas": {
+      "13120": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb",
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ],
+      "13114": [
+        "8e9543a96ec0c27ed006c1c8a9dcf9d9ffb37cc98b1a12c656bd5bfd327af5eb"
+      ]
+    },
+    "comuna_nombres": {
+      "13120": "Ñuñoa",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "93603cea8a12ec5ef4edbcb2",
+    "canonical_name": "Línea 7 Metro de Santiago",
+    "n_comunas": 2,
+    "comunas": {
+      "13132": [
+        "7765d45503ecfb4d7ba4722549e1c0f4aa029faaede885bd06a0bb3318cedf00",
+        "a3fd98f337c6e4ca4b55164cd61f24618a020ad6d0f57ad4e1b58e71abb34160"
+      ],
+      "13113": [
+        "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9"
+      ]
+    },
+    "comuna_nombres": {
+      "13132": "Vitacura",
+      "13113": "La Reina"
+    }
+  },
+  {
+    "project_id": "c73555c14aa1c7d4b560979b",
+    "canonical_name": "proyecto que levantará donde actualmente están las instalaciones de la Universidad Gabriela Mistral (UGM)",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ],
+      "13107": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "3f82a8828b9a9087546ada2e",
+    "canonical_name": "anteproyecto que consideraba la construcción de siete edificios en el lugar",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ],
+      "13107": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "d8f164a032cd123a395453f1",
+    "canonical_name": "Campus Huechuraba",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ],
+      "13107": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "d14617afdd4826ab3f0560c3",
+    "canonical_name": "Municipalidad de Vitacura",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ],
+      "13107": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "83af3a73c67d2df0bdd5ecb6",
+    "canonical_name": "Centro cultural Alameda",
+    "n_comunas": 2,
+    "comunas": {
+      "13123": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ],
+      "13107": [
+        "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5"
+      ]
+    },
+    "comuna_nombres": {
+      "13123": "Providencia",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "1d9c3181d7bccecb034d9199",
+    "canonical_name": "Terrazas del Valle",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "3a39920fc262a55a49d331fe5add20689418d19d76d26b899b6c0ac885f9e36a",
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ],
+      "13132": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "4ecb9c6daa3ba08bb919e7a0",
+    "canonical_name": "Iglesia de Puerto Harris",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "ed968617526456439a271896",
+    "canonical_name": "Museo de la Solidaridad",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "dbe336c9a0e9563bdb7b29d7",
+    "canonical_name": "Museo de la Memoria y Derechos Humanos en Punta Arenas",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "8482189e25088c0b0fa7c962",
+    "canonical_name": "casona ubicada en la Av. República 475",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ],
+      "13114": [
+        "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13114": "Las Condes"
+    }
+  },
+  {
+    "project_id": "30fbcfdfba08905f9292e974",
+    "canonical_name": "Cerro del Medio, en Nueva La Dehesa",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ],
+      "13122": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13122": "Peñalolén"
+    }
+  },
+  {
+    "project_id": "ec34b43da19077ad8def6690",
+    "canonical_name": "megatorres de Estación Central",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ],
+      "13122": [
+        "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13122": "Peñalolén"
+    }
+  },
+  {
+    "project_id": "4633a97118c8ded4ef9219de",
+    "canonical_name": "Condominio Santa Úrsula",
+    "n_comunas": 2,
+    "comunas": {
+      "13124": [
+        "69bb4b00bf4ba2cd321b4482c49521f54b63b0066fe92ba161fe076931f892fd"
+      ],
+      "13109": [
+        "35dbbe7f89ac460311d1c8bdc9cb4f93fc2533be966838a71df72db4f1561057"
+      ]
+    },
+    "comuna_nombres": {
+      "13124": "Pudahuel",
+      "13109": "La Cisterna"
+    }
+  },
+  {
+    "project_id": "378e8d25e8e3edf01183be0f",
+    "canonical_name": "Portal La Dehesa",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ],
+      "13132": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "b941de77e2cd63714c3a9030",
+    "canonical_name": "Espacio Urbano El Rodeo",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ],
+      "13132": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "d184ac6f9190cfa8a094f5d9",
+    "canonical_name": "Mall Vivo Los Trapenses",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ],
+      "13132": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "8ac10ad3994b8eca91b32fef",
+    "canonical_name": "Colegio Craighouse",
+    "n_comunas": 2,
+    "comunas": {
+      "13115": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ],
+      "13132": [
+        "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce"
+      ]
+    },
+    "comuna_nombres": {
+      "13115": "Lo Barnechea",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "8c053fa664e944c16437beb0",
+    "canonical_name": "Castillo Hidalgo",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "16fde55eef61f2c60cb01510",
+    "canonical_name": "“Castillito” Parque Forestal",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "014e5eb5cab5fbb7bf47f1d6",
+    "canonical_name": "Portal Bulnes",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "476e21ff30d4f6c5e653ce66",
+    "canonical_name": "Parque San Luis Orione",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "20e806cfc49401f5adafcbd9",
+    "canonical_name": "Estadio Monumental",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "351e64df75771aed3c254077",
+    "canonical_name": "Estacionamientos Ñuñoa",
+    "n_comunas": 2,
+    "comunas": {
+      "13102": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ],
+      "13120": [
+        "db82b4b990ece2c10e6638328796639cb1d175cdcfc1b81a5bef203a7539ba33"
+      ]
+    },
+    "comuna_nombres": {
+      "13102": "Cerrillos",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "c5e14c0c21e5f47cd8988b3b",
+    "canonical_name": "Vital Apoquindo números 1.400, 1450 y 1.500",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5"
+      ],
+      "13132": [
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "4a9211bfe09688b423f03613",
+    "canonical_name": "proyecto de Cencosud ubicado en Av. Presidente Kennedy N° 8950",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e"
+      ],
+      "13132": [
+        "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "45e59cd6b17dcc4228417411",
+    "canonical_name": "Túnel San Cristóbal",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ],
+      "13123": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13123": "Providencia"
+    }
+  },
+  {
+    "project_id": "d265ab6014136005840b4589",
+    "canonical_name": "Teleférico Bicentenaho",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ],
+      "13123": [
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8",
+        "05e7ce30293172e696ac905145be85dad6a92189fd5b1b3226aabebeae797fe8"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13123": "Providencia"
+    }
+  },
+  {
+    "project_id": "8efd4a4bbd70a38291e41ef8",
+    "canonical_name": "proyecto que impulsa la inmobiliaria Nueva El Golf",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ],
+      "13101": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "f7d6ad8c044247d2be5e72c1",
+    "canonical_name": "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ],
+      "13101": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "34dfed845b909bed9ca77737",
+    "canonical_name": "edificio de 14 pisos en Vicuña Mackenna 385",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ],
+      "13101": [
+        "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13101": "Santiago"
+    }
+  },
+  {
+    "project_id": "5fd6d26afc0da9705016abeb",
+    "canonical_name": "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e"
+      ],
+      "13132": [
+        "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13132": "Vitacura"
+    }
+  },
+  {
+    "project_id": "298ec0707c6d389dfdbbd5e2",
+    "canonical_name": "torre C del complejo Puerto de Palos",
+    "n_comunas": 2,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "9b8f814f47c35c901d0a7b0c",
+    "canonical_name": "construcciones Antígona",
+    "n_comunas": 2,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "edf836753468104f5d5665d5",
+    "canonical_name": "Condominio Sol Oriente",
+    "n_comunas": 2,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "977abe2c05ac9690c75bd72c",
+    "canonical_name": "construcción Don Tristán",
+    "n_comunas": 2,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "1af804134495d90ca08bd9f2",
+    "canonical_name": "edificio Hermanos Carrera",
+    "n_comunas": 2,
+    "comunas": {
+      "13101": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ],
+      "13118": [
+        "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade"
+      ]
+    },
+    "comuna_nombres": {
+      "13101": "Santiago",
+      "13118": "Macul"
+    }
+  },
+  {
+    "project_id": "f07aa53048656b9ac2d0a326",
+    "canonical_name": "Barrio Yungay",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13120": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "110f5c978900d56ffaa6a78f",
+    "canonical_name": "Villa Canadá",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13120": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "c1ec29b668a407470fac7f7c",
+    "canonical_name": "Basílica del Salvador",
+    "n_comunas": 2,
+    "comunas": {
+      "13106": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ],
+      "13120": [
+        "9bdf051611ef3f1a80c029972a0ef9447ff34a666d75fce88f019bc17c24df90"
+      ]
+    },
+    "comuna_nombres": {
+      "13106": "Estación Central",
+      "13120": "Ñuñoa"
+    }
+  },
+  {
+    "project_id": "2a50af5242f6fa521f1247ea",
+    "canonical_name": "Four Seasons",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "fdc01e86f6f69387ce88a408",
+    "canonical_name": "Muelle Barón",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "6bf348ffa4baa30fed8272e9",
+    "canonical_name": "Moneda Bicentenario",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "0523a6f49c9410f22d0127f4",
+    "canonical_name": "City Park",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "af1375c67ea74f942b3acac0",
+    "canonical_name": "Plaza Norte",
+    "n_comunas": 2,
+    "comunas": {
+      "13114": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ],
+      "13107": [
+        "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4"
+      ]
+    },
+    "comuna_nombres": {
+      "13114": "Las Condes",
+      "13107": "Huechuraba"
+    }
+  },
+  {
+    "project_id": "b7d51c1d615e9ad376c6bd4f",
+    "canonical_name": "inmueble de La Florida (ubicado en calle Millalongo)",
+    "n_comunas": 2,
+    "comunas": {
+      "13118": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ],
+      "13110": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ]
+    },
+    "comuna_nombres": {
+      "13118": "Macul",
+      "13110": "La Florida"
+    }
+  },
+  {
+    "project_id": "3f93b9007aa9358d599e6851",
+    "canonical_name": "propiedad de Talagante",
+    "n_comunas": 2,
+    "comunas": {
+      "13118": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ],
+      "13110": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ]
+    },
+    "comuna_nombres": {
+      "13118": "Macul",
+      "13110": "La Florida"
+    }
+  },
+  {
+    "project_id": "c80459a274e4aabfc0e99e42",
+    "canonical_name": "Avenida Macul N°3.804",
+    "n_comunas": 2,
+    "comunas": {
+      "13118": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ],
+      "13110": [
+        "78a2cf622a836275c10be8eb2d66ab6f15761071961c64541e50d155fbe18a10"
+      ]
+    },
+    "comuna_nombres": {
+      "13118": "Macul",
+      "13110": "La Florida"
+    }
+  }
+]

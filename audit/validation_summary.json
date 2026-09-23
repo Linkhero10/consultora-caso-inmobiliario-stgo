@@ -83,14 +83,53 @@
     "n_case_mentions_analizadas": 608,
     "patron_2_total_candidatos": 204,
     "patron_2_tier_a_cero_solapamiento": {"n": 128, "revisados": 128, "bien_fundado": 123, "posible_error_confirmado_y_corregido": 4, "no_concluyente": 1},
-    "patron_2_tier_b_algun_solapamiento": {"n": 76, "revisados": 2, "sin_auditar_individualmente": 74, "nota": "riesgo estimado bajo (nombres descriptivos con palabra clave real coincidente), no verificado caso por caso"},
+    "patron_2_tier_b_algun_solapamiento": {"n": 76, "revisados": 76, "bien_fundado": 76, "posible_error_confirmado": 0, "nota": "ronda 2 (2026-09-23) completo los 74 casos que quedaban sin auditar individualmente via 2 subagentes en paralelo (37+37); 0 casos nuevos confirmados por el metodo de solapamiento de palabras clave. Ver project_case_mention_cross_check mas abajo -- ese metodo, complementario y mas preciso a nivel de case_mention, SI encontro 6 casos reales adicionales entre los documentos focales que este metodo no detecto."},
     "hallazgos_nuevos_confirmados": 4,
-    "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608). En patron 2: auditoria completa del Tier A (128/128) encontro y corrigio 4 casos reales adicionales a Hospital Ochagavia -- Templo votivo, Liceo Reino de Dinamarca (confirmado tambien de forma independiente por el Gate 1A), Hotel Sheraton San Cristobal, casona de calle Huerfanos. Tier B (76) solo auditado en una submuestra de 2; 74 quedan sin revisar individualmente.",
+    "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608). En patron 2 (metodo token-overlap): auditoria completa de Tier A (128/128) y Tier B (76/76) encontro y corrigio 4 casos reales adicionales a Hospital Ochagavia -- Templo votivo, Liceo Reino de Dinamarca (confirmado tambien de forma independiente por el Gate 1A), Hotel Sheraton San Cristobal, casona de calle Huerfanos.",
     "caso_canonico_que_motivo_fix_1c": "Hospital Ochagavia (corregido en Fix 1B, capa de clasificacion de documento)",
-    "conclusion": "4 casos reales adicionales encontrados y corregidos tras auditoria completa del grupo de mayor riesgo (Tier A, 128/128); Tier B (74/76) queda como trabajo futuro explicito, riesgo estimado bajo pero no verificado",
+    "conclusion": "Patron 2 completamente auditado (204/204 candidatos) por el metodo de solapamiento de palabras clave: 4 casos reales confirmados y corregidos, todos en Tier A. Tier B (76/76) auditado sin encontrar casos nuevos por ese metodo -- pero el cross-check independiente con project_case_mention.py (ver bloque siguiente) encontro 6 casos reales mas que este metodo no detecto, por operar a nivel de case_mention en vez de documento completo.",
     "detalle": "audit/fix_1c_investigation.md",
     "detalle_caso_por_caso": "audit/fix_1c_patron2_auditoria_completa.json",
-    "status": "tier_a_completo_tier_b_parcial"
+    "status": "patron_2_completo_204_204_mas_6_hallazgos_adicionales_via_cross_check"
+  },
+  "fix_1c_project_case_mention_cross_check": {
+    "descripcion": "Segunda ronda de deteccion (2026-09-23), complementaria al metodo de solapamiento de palabras clave de fix_1c. Usa el modulo experimental src/project_case_mention.py (construido por Codex/Luna en una ronda previa, no integrado al pipeline productivo) para vincular cada mencion de proyecto con la case_mention especifica (no solo el documento) que respalda su nombre.",
+    "viabilidad": "confirmada -- 1481 vinculos calculados en 0.1s contra el warehouse real. Los 5 bugs ya conocidos (Hospital Ochagavia, Templo votivo, Liceo Reino de Dinamarca, Hotel Sheraton San Cristobal, casona de calle Huerfanos) correctamente NO obtuvieron link_status='verified_direct'. 10/10 verified_direct muestreados al azar se verificaron manualmente como correctos.",
+    "distribucion_link_status": {"document_level_candidate": 638, "verified_direct": 562, "excluded_case_mention": 186, "ambiguous_direct": 57, "non_included_case_mention": 38},
+    "aplicado_a_documentos_focales": "de 83 vinculos sospechosos (excluded_case_mention/ambiguous_direct) entre los 552 documentos focales, se filtraron a 39 (23 pares documento/proyecto unicos) que realmente coinciden con la regla mecanica de nombre_proyecto_focal de build_conflicts.py -- ver audit/project_case_mention_real_focal_suspicious.json",
+    "resultado_verificacion_excluded_case_mention": {"n": 10, "bien_fundado": 4, "posible_error_confirmado_y_corregido": 6},
+    "casos_confirmados_y_corregidos": [
+      "Solucion Sanitaria para un sector de Quilicura",
+      "proyecto Avda. Vespucio con Renato Sanchez Fontecilla y Asturias",
+      "edificio de la estrecha calle Santa Petronila",
+      "Alameda 4499",
+      "edificio de 17 pisos localizado en la calle Americo Vespucio 7550",
+      "Portal Bicentenario"
+    ],
+    "nota_metodologica_importante": "el caso 'edificio de 17 pisos... Americo Vespucio 7550' habia sido marcado bien_fundado en una revision manual rapida previa (ronda 1 del Tier B); este cross-check mas preciso a nivel de case_mention revirtio ese veredicto y confirmo que si era un bug real. Demuestra que el metodo de solapamiento de palabras clave (fix_1c patron 2) tiene falsos negativos reales que este metodo no tiene -- son complementarios, no sustitutos.",
+    "correccion_aplicada": "document_case_unit.correccion_nombre_proyecto='' + tiene_error=1 en data/warehouse.sqlite (tabla document_case_unit) y Auditoria/integracion_v1/warehouse_v3_2.sqlite (tabla document_unidad_caso_sol), mismo patron que los 5 casos previos de Fix 1C. 6 filas afectadas en cada base.",
+    "recomendacion": "integrar project_case_mention.py como senal de QA complementaria (no reemplazo del detector congelado exact_substring_v1 de Fix 1A) en una proxima ronda -- util especificamente para detectar casos donde el nombre_proyecto proviene de una case_mention EXCLUIDA mientras la incluida describe un objeto distinto. No se integro al pipeline productivo en esta ronda, solo se uso como auditoria puntual.",
+    "detalle": "audit/project_case_mention_suspicious_focal.json, audit/project_case_mention_real_focal_suspicious.json"
+  },
+  "homonym_partition_audit": {
+    "descripcion": "Auditoria (2026-09-23) de los project_id cuyas case_mention incluidas caen en mas de una comuna -- originalmente recordado como 'homonimos geograficos' pero la query real dio 131 casos, no 157.",
+    "universo_total": 131,
+    "distribucion_n_comunas": {"2": 85, "3": 34, "4": 8, "6": 3, "5": 1},
+    "revisados": 89,
+    "pendientes": 42,
+    "pendientes_nota": "homonym_low_batch2 (42 casos de riesgo bajo) no se completo -- la corrida se detuvo por rate_limit tras sobre-paralelizar subagentes. Pendiente para proxima ronda.",
+    "hallazgo_principal": "el patron dominante NO es homonimia real (0/89 homonimo_real). Es un bug estructural: project_mention_resolved vincula project_id a document_id (no a case_mention_id), asi que cuando un documento panoramico menciona varios proyectos/comunas distintas, todas las comunas del documento quedan atribuidas a cada project_id mencionado en el.",
+    "distribucion_veredictos": {"error_geografico": 58, "no_concluyente": 27, "legitimo_multi_comuna": 4, "homonimo_real": 0},
+    "consecuencia": "problema de granularidad document-level vs case_mention-level en project_mention_resolved -- distinto y mas amplio que los bugs puntuales de nombre_proyecto corregidos en Fix 1C. Requiere decision de diseno (no es un parche de una fila) antes de intervenir; documentado como limitacion conocida, no corregido en esta ronda.",
+    "detalle": "audit/homonym_partition_auditoria.json",
+    "status": "auditoria_parcial_89_131_hallazgo_estructural_documentado_sin_corregir"
+  },
+  "enrichment_validation_expansion_n150": {
+    "descripcion": "Intento (2026-09-23) de ampliar la validacion humana de enriquecimiento mas alla de los N=50 originales, usando subagentes Sonnet con WebFetch para verificar contra el articulo real.",
+    "muestra_construida": "audit/validacion_ampliada_enrichment_n150_seed20260923.json -- 150 documentos, estratificado (escala_conflicto x actores_posiblemente_truncados), excluyendo los 50 ya revisados",
+    "resultado": "NO completado. Se lanzaron 4 subagentes en paralelo (batch1-4); al menos uno de ellos (proposito general con acceso a la herramienta Agent) decidio por su cuenta spawnear sub-subagentes propios para paralelizar la lectura de articulos, multiplicando el consumo y agotando el limite de sesion (rate_limit HTTP 429) antes de producir ningun archivo de resultado real.",
+    "status": "no_ejecutado -- pendiente para una proxima ronda, en tandas mas chicas y sin permitir auto-paralelizacion anidada",
+    "nota": "el usuario senalo explicitamente el sobreuso de subagentes; ver leccion guardada en memoria de usuario (feedback-no-sobreparalelizar-subagentes)"
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
