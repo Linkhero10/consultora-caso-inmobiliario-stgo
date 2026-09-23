@@ -115,21 +115,38 @@
     "descripcion": "Auditoria (2026-09-23) de los project_id cuyas case_mention incluidas caen en mas de una comuna -- originalmente recordado como 'homonimos geograficos' pero la query real dio 131 casos, no 157.",
     "universo_total": 131,
     "distribucion_n_comunas": {"2": 85, "3": 34, "4": 8, "6": 3, "5": 1},
-    "revisados": 89,
-    "pendientes": 42,
-    "pendientes_nota": "homonym_low_batch2 (42 casos de riesgo bajo) no se completo -- la corrida se detuvo por rate_limit tras sobre-paralelizar subagentes. Pendiente para proxima ronda.",
-    "hallazgo_principal": "el patron dominante NO es homonimia real (0/89 homonimo_real). Es un bug estructural: project_mention_resolved vincula project_id a document_id (no a case_mention_id), asi que cuando un documento panoramico menciona varios proyectos/comunas distintas, todas las comunas del documento quedan atribuidas a cada project_id mencionado en el.",
-    "distribucion_veredictos": {"error_geografico": 58, "no_concluyente": 27, "legitimo_multi_comuna": 4, "homonimo_real": 0},
+    "revisados": 131,
+    "pendientes": 0,
+    "pendientes_nota": "No quedan project_id sin intento de revision. 46/131 quedaron no_concluyente por evidencia de linkage insuficiente a nivel case_mention; esto no equivale a afirmar su validez geografica.",
+    "hallazgo_principal": "el patron dominante NO es homonimia real (0/131 homonimo_real). Es un bug estructural: project_mention_resolved vincula project_id a document_id (no a case_mention_id), asi que cuando un documento panoramico menciona varios proyectos/comunas distintas, todas las comunas del documento quedan atribuidas a cada project_id mencionado en el.",
+    "distribucion_veredictos": {"error_geografico": 81, "no_concluyente": 46, "legitimo_multi_comuna": 4, "homonimo_real": 0},
     "consecuencia": "problema de granularidad document-level vs case_mention-level en project_mention_resolved -- distinto y mas amplio que los bugs puntuales de nombre_proyecto corregidos en Fix 1C. Requiere decision de diseno (no es un parche de una fila) antes de intervenir; documentado como limitacion conocida, no corregido en esta ronda.",
     "detalle": "audit/homonym_partition_auditoria.json",
-    "status": "auditoria_parcial_89_131_hallazgo_estructural_documentado_sin_corregir"
+    "status": "auditoria_asistida_ia_131_de_131_hallazgo_estructural_documentado_sin_corregir",
+    "historial_revision_parcial_pre_batch2": {
+      "revisados": 89,
+      "pendientes": 42,
+      "distribucion_veredictos": {
+        "error_geografico": 58,
+        "no_concluyente": 27,
+        "legitimo_multi_comuna": 4,
+        "homonimo_real": 0
+      },
+      "nota": "Estado anterior a completar homonym_low_batch2; se conserva como historial."
+    },
+    "resultado_batch2": "audit/homonym_low_batch2_resultado.json",
+    "metodo_y_limitacion": "Auditoria asistida por IA, caso a caso a nivel case_mention; no constituye validacion humana externa. Persiste la limitacion estructural document-level vs case_mention-level."
   },
   "enrichment_validation_expansion_n150": {
-    "descripcion": "Intento (2026-09-23) de ampliar la validacion humana de enriquecimiento mas alla de los N=50 originales, usando subagentes Sonnet con WebFetch para verificar contra el articulo real.",
+    "descripcion": "Auditoria asistida por IA (2026-09-23) de una muestra estratificada N=150 de documentos enriquecidos v3.2, contrastada con fuentes originales cuando estuvieron accesibles. No equivale a validacion humana externa independiente.",
     "muestra_construida": "audit/validacion_ampliada_enrichment_n150_seed20260923.json -- 150 documentos, estratificado (escala_conflicto x actores_posiblemente_truncados), excluyendo los 50 ya revisados",
-    "resultado": "NO completado. Se lanzaron 4 subagentes en paralelo (batch1-4); al menos uno de ellos (proposito general con acceso a la herramienta Agent) decidio por su cuenta spawnear sub-subagentes propios para paralelizar la lectura de articulos, multiplicando el consumo y agotando el limite de sesion (rate_limit HTTP 429) antes de producir ningun archivo de resultado real.",
-    "status": "no_ejecutado -- pendiente para una proxima ronda, en tandas mas chicas y sin permitir auto-paralelizacion anidada",
-    "nota": "el usuario senalo explicitamente el sobreuso de subagentes; ver leccion guardada en memoria de usuario (feedback-no-sobreparalelizar-subagentes)"
+    "resultado": "Se intentaron los 150 registros: 60 ok, 64 error_menor, 7 error_grave y 19 no_verificable. Queda un desacuerdo de severidad preservado para adjudicacion humana/externa. Son conteos descriptivos no ponderados; no estiman prevalencia en el universo.",
+    "status": "revision_ia_completada_pendiente_adjudicacion_humana_externa",
+    "nota": "La muestra esta estratificada y los resultados son asistidos por IA; no reemplazan la validacion humana externa N=50 ni habilitan produccion. Hay 150 intentos, 131 dictamenes adjudicables y 19 no verificables por acceso/adecuacion de la fuente.",
+    "historial_intento_previo": "Un intento anterior fue interrumpido antes de producir resultados; el estado queda supersedido por la auditoria registrada en este bloque.",
+    "artefacto_resultado": "audit/validacion_ampliada_enrichment_n150_resultado.json",
+    "muestra_sha256": "2b4b49f5d5d87329abb09ea7459a2cdb2380651c20bdd91114e1d9a9bca26748",
+    "solapamiento_con_n50": 0
   },
   "gate_conflict_completo": {
     "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
