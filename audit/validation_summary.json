@@ -42,7 +42,8 @@
     "nota": "No debe mezclarse con la muestra historica de 50/63, que estaba sesgada hacia documentos ya senalados para revision."
   },
   "fix_1a": {
-    "warehouse_sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+    "generated_from_warehouse_sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+    "nota_provenance": "Este bloque describe el estado medido en el momento en que se cerro Fix 1A -- para el hash y los conteos del warehouse VIGENTE ahora mismo, usar audit/run_manifest.json, nunca este campo.",
     "detector_version": "exact_substring_v1",
     "backing_scope": "document_level_case_mention_without_project_link",
     "conflicts_total": 839,
@@ -72,5 +73,23 @@
     "decision": "GO",
     "detalle": "audit/holdout_1a/GATE_1A_VALIDACION_DECISION.md",
     "crosswalk": "audit/holdout_1a/gate1a_validacion_crosswalk.json"
+  },
+  "fix_1c": {
+    "patrones_buscados": [
+      "homonimos geograficos con codigo INE de Santiago",
+      "nombre_proyecto no sustentado por evidencia verificada",
+      "objeto de disputa fuera de la Provincia de Santiago"
+    ],
+    "n_case_mentions_analizadas": 608,
+    "hallazgos_nuevos_confirmados": 0,
+    "caso_canonico_que_motivo_fix_1c": "Hospital Ochagavia (corregido en Fix 1B, capa de clasificacion de documento)",
+    "conclusion": "0 casos nuevos confirmados tras busqueda sistematica -- Fix 1C se cierra sin cambios de codigo en esta ronda",
+    "detalle": "audit/fix_1c_investigation.md",
+    "status": "cerrado_sin_correcciones_adicionales"
+  },
+  "gate_conflict_completo": {
+    "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
+    "status": "cerrado",
+    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano."
   }
 }

@@ -1,43 +1,41 @@
 {
-  "schema_version": "1.0",
-  "generated_at": "2026-09-22",
+  "schema_version": "2.0",
+  "generated_at": "2026-09-23",
+  "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "8ac767b7d5f4a80a4c49d3b56b8ce50ba72ad65ea3bc4e411141c3f0d36aa8e5",
+    "sha256": "520b94038f611c581bc5a186d24a5c9cb5c862a29849c92c28aa79e77ebc78d1",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
+      "document": 3884,
       "project": 990,
       "conflict": 839,
       "conflict_case": 862,
       "conflict_project": 990,
       "document_conflict": 1268,
       "conflict_relation": 3,
+      "conflict_evidence_backing": 613,
       "actor_registry": 6,
       "actor_alias": 29,
       "actor_event_project_link": 17227,
-      "conflict_evidence_backing": 613,
-      "conflict_evidence_backing_detected_raw": 614,
-      "conflict_evidence_backing_deduplicated": 1,
-      "conflicts_evidence_backed": 331,
-      "conflicts_without_exact_backing": 508,
-      "conflicts_backing_total": 281,
-      "conflicts_backing_partial": 50,
-      "conflicts_backing_none": 508,
-      "conflicts_with_ambiguous_multi_case_backing": 114
+      "manzana_censal": 46864,
+      "geocoded_location": 22,
+      "geocoded_location_conflict": 7
+    }
+  },
+  "detector_versions": {
+    "conflict_evidence_backing": {
+      "detector_version": "exact_substring_v1",
+      "generated_from_warehouse_sha256": "520b94038f611c581bc5a186d24a5c9cb5c862a29849c92c28aa79e77ebc78d1",
+      "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
   "tests": {
     "path": "tests/",
     "ci_workflow": ".github/workflows/tests.yml",
-    "note": "el conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui"
+    "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "fix_1a": {
-    "detector_version": "exact_substring_v1",
-    "backing_scope": "document_level_case_mention_without_project_link",
-    "audit_report": "audit/conflict_evidence_backing_report.json",
-    "note": "La cobertura total/parcial/ninguna y la ambiguedad multi-caso son campos derivados del warehouse vigente; no implican un vinculo directo proyecto-case_mention."
-  },
-  "build_commit": "f20b822093c2119e9e8f6c09087f7a03b76ad2a8",
-  "note": "Este manifiesto describe exactamente el warehouse publicado en el commit f20b822093c2119e9e8f6c09087f7a03b76ad2a8."
+  "build_commit": "c0283769698271c2c572e2644b71c66a2a589027",
+  "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado."
 }
