@@ -60,6 +60,7 @@ TRACKED_TABLES = [
     "document_conflict", "conflict_relation", "conflict_evidence_backing",
     "actor_registry", "actor_alias", "actor_event_project_link",
     "manzana_censal", "geocoded_location", "geocoded_location_conflict",
+    "case_mention_duplicate_link",
 ]
 
 

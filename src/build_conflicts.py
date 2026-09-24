@@ -185,6 +185,7 @@ import hashlib
 import json
 import re
 import sqlite3
+import sys
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
@@ -202,6 +203,7 @@ BACKING_SCOPE = "document_level_case_mention_without_project_link"
 # _project_backing_evidence() y load_v3_3_verified_links() mas abajo.
 DETECTOR_VERSION_V3_3 = "v3_3_verified_index"
 MATCH_METHOD_V3_3 = "model_verified_case_mention_index"
+MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP = "v3_3_verified_index_via_duplicate_group"
 BACKING_SCOPE_V3_3 = "mention_level_verified_index"
 
 CLASSIFICATIONS_PATH = PROJECT_ROOT / "Auditoria" / "clasificacion" / "classifications.jsonl"
@@ -297,6 +299,7 @@ def _project_backing_evidence(
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
+    duplicate_group_members: dict[str, list[str]] | None = None,
 ) -> list[dict]:
     """Todas las filas de respaldo encontradas para este proyecto -- nunca
     solo un booleano. Cada fila es provenance completo: exactamente que
@@ -313,6 +316,7 @@ def _project_backing_evidence(
     substring, porque v3.3 ya es una fuente mas confiable que la heuristica
     para esa mencion puntual. El substring (`exact_substring_v1`) sigue
     intacto solo para menciones que v3.3 nunca evaluo."""
+    duplicate_group_members = duplicate_group_members or {}
     rows = []
     for mention in mentions_by_project.get(project_id, []):
         document_id = mention["document_id"]
@@ -326,7 +330,8 @@ def _project_backing_evidence(
             idx = v3_3_links_by_docid[v3_3_key]
             if idx is not None:
                 case_mention_id = f"{document_id}:{idx}"
-                if case_mention_id in included_by_doc.get(document_id, []):
+                doc_included = included_by_doc.get(document_id, [])
+                if case_mention_id in doc_included and objeto_by_cm.get(case_mention_id):
                     for ev in objeto_by_cm.get(case_mention_id, []):
                         rows.append(
                             {
@@ -337,13 +342,43 @@ def _project_backing_evidence(
                                 "raw_nombre_proyecto": raw_nombre_proyecto,
                                 "quote_text": ev["quote_text"],
                                 "backing_scope": BACKING_SCOPE_V3_3,
-                                "document_case_mention_count": len(included_by_doc.get(document_id, [])),
+                                "document_case_mention_count": len(doc_included),
                                 "document_object_case_mention_count": 1,
                                 "ambiguous_multi_case_document": 0,
                                 "detector_version": DETECTOR_VERSION_V3_3,
                                 "match_method": MATCH_METHOD_V3_3,
                             }
                         )
+                else:
+                    # Fix 1E: el case_mention_id que v3.3 indico no tiene por
+                    # si solo evidencia objeto incluida -- classify.py a veces
+                    # fragmenta el MISMO objeto real en varias case_mentions
+                    # (ver detect_case_mention_duplicates.py). Si algun otro
+                    # miembro de su grupo de duplicados SI tiene evidencia
+                    # incluida, se usa igual -- describe el mismo objeto real
+                    # que v3.3 ya identifico, solo que la evidencia verificada
+                    # quedo en la copia hermana. Nunca silencioso: queda
+                    # explicito en match_method.
+                    for sibling_id in duplicate_group_members.get(case_mention_id, []):
+                        if sibling_id == case_mention_id or sibling_id not in doc_included:
+                            continue
+                        for ev in objeto_by_cm.get(sibling_id, []):
+                            rows.append(
+                                {
+                                    "project_id": project_id,
+                                    "document_id": document_id,
+                                    "case_mention_id": sibling_id,
+                                    "evidence_id": ev["evidence_id"],
+                                    "raw_nombre_proyecto": raw_nombre_proyecto,
+                                    "quote_text": ev["quote_text"],
+                                    "backing_scope": BACKING_SCOPE_V3_3,
+                                    "document_case_mention_count": len(doc_included),
+                                    "document_object_case_mention_count": 1,
+                                    "ambiguous_multi_case_document": 0,
+                                    "detector_version": DETECTOR_VERSION_V3_3,
+                                    "match_method": MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP,
+                                }
+                            )
             continue  # cubierto por v3.3 (con o sin backing) -- nunca cae al substring
 
         included_case_mentions = included_by_doc.get(document_id, [])
@@ -508,6 +543,7 @@ def _build_conflict_backing(
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
+    duplicate_group_members: dict[str, list[str]] | None = None,
 ) -> tuple[str | None, str, list[dict]]:
     """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
     (sin excepcion por n_case_ids) y decide label + respaldo_evidencia.
@@ -517,7 +553,7 @@ def _build_conflict_backing(
     backed_projects: list[tuple[str, str]] = []
     backing_rows: list[dict] = []
     for pid, canonical_name in projects:
-        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid)
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members)
         if rows:
             backed_projects.append((pid, canonical_name))
             case_id_of_pid = case_id_by_project[pid]
@@ -622,6 +658,22 @@ def main():
         if doc_id:
             v3_3_links_by_docid[(doc_id, norm_name)] = idx
 
+    # Fix 1E: case_mentions duplicadas del mismo objeto real dentro de un
+    # documento (classify.py no las deduplica). Tabla aditiva y opcional --
+    # si no existe todavia (no se corrio detect_case_mention_duplicates.py),
+    # el fallback simplemente no tiene efecto, no rompe nada.
+    duplicate_group_members: dict[str, list[str]] = defaultdict(list)
+    if conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='case_mention_duplicate_link'").fetchone():
+        groups_raw: dict[str, list[str]] = defaultdict(list)
+        for cm_id, group_id in conn.execute("SELECT case_mention_id, duplicate_group_id FROM case_mention_duplicate_link"):
+            groups_raw[group_id].append(cm_id)
+        for group_id, members in groups_raw.items():
+            if len(members) > 1:
+                for cm_id in members:
+                    duplicate_group_members[cm_id] = members
+    else:
+        print("[aviso] case_mention_duplicate_link no existe -- correr src/detect_case_mention_duplicates.py antes para activar el fallback de Fix 1E.", file=sys.stderr)
+
     case_groups = build_case_groups(all_case_ids, documentos_63)
     case_id_to_conflict = {}
     conflict_rows = []
@@ -639,7 +691,7 @@ def main():
         # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
         # resultaron error_grave en la validacion N=150).
         label, respaldo_evidencia, backing_rows = _build_conflict_backing(
-            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid
+            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members
         )
         conflict_evidence_backing_rows.extend(backing_rows)
         backing_summary = _backing_summary(projects, backing_rows)
@@ -1001,7 +1053,7 @@ def main():
     n_projects_total = len(case_id_by_project)
     n_projects_with_backing = sum(
         1 for pid in case_id_by_project
-        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid)
+        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members)
     )
     backing_rows_by_detector: dict[str, int] = defaultdict(int)
     conflicts_with_backing_by_detector: dict[str, set] = defaultdict(set)

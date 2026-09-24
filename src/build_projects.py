@@ -328,7 +328,46 @@ def resolve_association(document_id: str, proyecto_asociado_raw: str, doc_projec
     return None, "unresolved_ambiguous"
 
 
+SOURCE_WAREHOUSE_EXPECTED_TABLES = ("enrichment_actor", "enrichment_institution", "enrichment_event", "document_case_unit")
+SOURCE_WAREHOUSE_MIN_DOCUMENTS = 934
+
+
+def _validate_source_warehouse(path: Path) -> None:
+    """[Fix 1E, 2026-09-24] Guardrail agregado tras un hallazgo real: el
+    2026-09-24, Auditoria/integracion_v1/warehouse_v3_2.sqlite quedo mutado
+    por trabajo de investigacion de geografia (2026-09-23) con un schema
+    incompatible (tablas renombradas con sufijo _v3_2, sin document_case_unit).
+    Correr este script sin darse cuenta sobreescribe data/warehouse.sqlite y
+    BORRA document_case_unit de forma permanente si no se restaura a tiempo
+    desde git -- ocurrio 2 veces en una sola sesion antes de agregar esto.
+    Aborta ANTES de copiar sobre el warehouse productivo, en vez de fallar a
+    mitad de camino con el dano ya hecho."""
+    if not path.exists():
+        raise SystemExit(f"No existe {path} -- no se puede reconstruir el registro de proyectos.")
+    conn = sqlite3.connect(path)
+    try:
+        tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        missing = [t for t in SOURCE_WAREHOUSE_EXPECTED_TABLES if t not in tables]
+        if missing:
+            raise SystemExit(
+                f"{path} no tiene el schema esperado (faltan tablas: {missing}). "
+                "Esto ya paso una vez: el archivo quedo mutado por otro trabajo (ver docstring de "
+                "_validate_source_warehouse). Corre `python src/build_enrichment_tables.py` para "
+                "regenerarlo correctamente (determinista, sin costo de LLM) antes de reintentar -- "
+                "NO se sobreescribe data/warehouse.sqlite con un schema incompatible."
+            )
+        n_docs = conn.execute("SELECT COUNT(*) FROM document").fetchone()[0]
+        if n_docs < SOURCE_WAREHOUSE_MIN_DOCUMENTS:
+            raise SystemExit(
+                f"{path} tiene solo {n_docs} documentos (se esperaban >= {SOURCE_WAREHOUSE_MIN_DOCUMENTS}). "
+                "Posible corpus incompleto -- corre `python src/build_enrichment_tables.py` para regenerarlo."
+            )
+    finally:
+        conn.close()
+
+
 def main() -> int:
+    _validate_source_warehouse(SOURCE_WAREHOUSE)
     enrichment_records = [
         json.loads(l) for l in ENRICHMENT_PATH.read_text(encoding="utf-8").splitlines() if l.strip()
     ]

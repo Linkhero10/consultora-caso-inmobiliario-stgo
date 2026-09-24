@@ -293,6 +293,39 @@ def test_project_backing_evidence_falls_back_to_substring_when_not_covered_by_v3
     assert rows_without_v3_3_dict[0]["detector_version"] == reg.DETECTOR_VERSION
 
 
+def test_project_backing_evidence_v3_3_index_excluded_falls_back_to_duplicate_group_sibling():
+    """Fix 1E: classify.py a veces fragmenta el MISMO objeto real en 2+
+    case_mentions (ej. Bellavista: idx1 include, idx2 casi-duplicado
+    exclude). Si v3.3 apunto al miembro que NO paso el filtro
+    (decision/evidencia), pero un hermano de su grupo de duplicados SI lo
+    pasa, se usa ese hermano -- nunca se pierde el backing solo porque
+    classify.py duplico el objeto."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    # d1:1 es el indice que v3.3 eligio, pero NO esta incluido (exclude).
+    # d1:0 SI esta incluido y tiene evidencia -- es su hermano de duplicado.
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 1}
+    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members)
+    assert len(rows) == 1
+    assert rows[0]["case_mention_id"] == "d1:0"
+    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION_V3_3
+    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
+
+
+def test_project_backing_evidence_v3_3_no_duplicate_group_sibling_still_empty():
+    """Sin duplicate_group_members (o sin hermano valido), el comportamiento
+    debe seguir siendo el mismo de antes de Fix 1E: sin backing, sin caer al
+    substring."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc: dict = {}
+    objeto_by_cm: dict = {}
+    v3_3_links = {("d1", "torre central"): 0}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links)
+    assert rows == []
+
+
 def test_backing_summary_exposes_partial_coverage_and_label_source():
     projects = [("p1", "A Proyecto"), ("p2", "B Proyecto")]
     rows = [{"project_id": "p1", "ambiguous_multi_case_document": 0}]

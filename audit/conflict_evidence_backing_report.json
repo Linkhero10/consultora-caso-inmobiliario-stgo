@@ -3,16 +3,16 @@
   "backing_scope": "document_level_case_mention_without_project_link",
   "backing_scope_note": "El warehouse no conserva vinculo proyecto-case_mention; las coincidencias son documentales y los documentos multi-caso quedan senalados como ambiguos.",
   "projects_total": 990,
-  "projects_with_backing": 437,
-  "projects_without_backing": 553,
+  "projects_with_backing": 438,
+  "projects_without_backing": 552,
   "conflicts_total": 839,
   "trivial_conflicts_total": 819,
   "trivial_conflicts_without_backing": 469,
   "conflicts_with_backing": 368,
   "conflicts_without_backing": 471,
-  "backing_rows": 949,
-  "backing_rows_detected_raw": 949,
-  "backing_rows_persisted": 949,
+  "backing_rows": 956,
+  "backing_rows_detected_raw": 956,
+  "backing_rows_persisted": 956,
   "backing_rows_deduplicated": 0,
   "coverage_backing": {
     "total": 323,
@@ -47,7 +47,7 @@
   ],
   "backing_rows_by_detector": {
     "exact_substring_v1": 374,
-    "v3_3_verified_index": 575
+    "v3_3_verified_index": 582
   },
   "conflicts_with_backing_by_detector": {
     "exact_substring_v1": 223,
@@ -55,5 +55,5 @@
     "ambos": 45
   },
   "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json); 'exact_substring_v1' sigue siendo la heuristica original de Fix 1A para las menciones que v3.3 nunca cubrio.",
-  "warehouse_sha256": "5add4f1d1ebad4457c86b53e452b4b92a36cf8a0fb2874a3629c0f65ffcabbdc"
+  "warehouse_sha256": "4b52d8dd77a44c8406dff759dfd78c8a99896c14e335b624089b37380c3d031f"
 }

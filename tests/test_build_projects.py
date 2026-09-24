@@ -256,3 +256,67 @@ def test_find_review_candidates_raises_on_ambiguous_canonical_name():
             assert "ambiguo" in str(e)
     finally:
         bridge_module.MANUAL_EXTRA_REVIEW_PAIRS = original_pairs
+
+
+# --- Fix 1E: guard de schema de SOURCE_WAREHOUSE (hallazgo real, 2026-09-24) ---
+
+
+def _make_sqlite(path, tables, n_documents=934):
+    import sqlite3
+
+    conn = sqlite3.connect(path)
+    conn.execute("CREATE TABLE document (document_id TEXT PRIMARY KEY)")
+    for i in range(n_documents):
+        conn.execute("INSERT INTO document VALUES (?)", (f"doc{i}",))
+    for t in tables:
+        conn.execute(f"CREATE TABLE {t} (id TEXT)")
+    conn.commit()
+    conn.close()
+
+
+def test_validate_source_warehouse_passes_with_expected_schema(tmp_path):
+    path = tmp_path / "good.sqlite"
+    _make_sqlite(path, bridge.SOURCE_WAREHOUSE_EXPECTED_TABLES)
+    bridge._validate_source_warehouse(path)  # no debe lanzar
+
+
+def test_validate_source_warehouse_rejects_wrong_schema_with_suffix(tmp_path):
+    """Reproduce exactamente el hallazgo real: tablas con sufijo _v3_2 en
+    vez de los nombres esperados -- debe abortar ANTES de copiar sobre
+    data/warehouse.sqlite, nunca sobreescribir en silencio."""
+    path = tmp_path / "mutated.sqlite"
+    _make_sqlite(path, ["enrichment_actor_v3_2", "enrichment_institucion_v3_2"])
+    try:
+        bridge._validate_source_warehouse(path)
+        assert False, "deberia haber abortado por schema incompatible"
+    except SystemExit as e:
+        assert "schema" in str(e) or "faltan tablas" in str(e)
+
+
+def test_validate_source_warehouse_rejects_missing_file(tmp_path):
+    path = tmp_path / "no_existe.sqlite"
+    try:
+        bridge._validate_source_warehouse(path)
+        assert False, "deberia haber abortado por archivo inexistente"
+    except SystemExit:
+        pass
+
+
+def test_validate_source_warehouse_rejects_incomplete_corpus(tmp_path):
+    path = tmp_path / "incomplete.sqlite"
+    _make_sqlite(path, bridge.SOURCE_WAREHOUSE_EXPECTED_TABLES, n_documents=10)
+    try:
+        bridge._validate_source_warehouse(path)
+        assert False, "deberia haber abortado por corpus incompleto"
+    except SystemExit:
+        pass
+
+
+def test_validate_source_warehouse_passes_against_real_current_source():
+    """Regresion real: la fuente actual (regenerada con
+    build_enrichment_tables.py tras el hallazgo de hoy) debe pasar el guard."""
+    if not bridge.SOURCE_WAREHOUSE.exists():
+        import pytest
+
+        pytest.skip("Auditoria/integracion_v1/warehouse_v3_2.sqlite no existe en este entorno (gitignorado)")
+    bridge._validate_source_warehouse(bridge.SOURCE_WAREHOUSE)  # no debe lanzar

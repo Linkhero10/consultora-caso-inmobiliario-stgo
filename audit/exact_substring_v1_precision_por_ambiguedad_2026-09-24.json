@@ -1,0 +1,22 @@
+{
+  "descripcion": "Fix 1E, seccion 6 del plan: reanalisis de los veredictos YA recolectados de Sol (holdout N=100 + stress N=50 de Fix 1A, 2026-09-22) separando por si el conflicto involucra al menos un documento con >1 case_mention (ambiguo, universo potencial de v3.3) vs todos sus documentos con <=1 case_mention (sin ambiguedad de indice). Costo: $0 -- ningun dato nuevo pedido a Sol, solo se recruza lo ya recolectado.",
+  "hipotesis_previa_no_confirmada": "Se esperaba que el subconjunto SIN ambiguedad (1 sola case_mention) tuviera precision sustancialmente mejor que el 44-56% publicado, porque no tiene el problema de eleccion entre indices que v3.3 resuelve. LA EVIDENCIA RECONSTRUIDA CONTRADICE ESA HIPOTESIS -- se documenta tal cual, no se fuerza el resultado esperado.",
+  "metodologia": "Se cruzaron audit/holdout_1a/holdout_main_n100.json + stress_sample_n50.json (para saber cuantas case_mentions tiene cada documento del conflicto) contra Auditoria/fix_1a_validation_holdout_20260922/sol_holdout_main_n100.json + sol_gate1a_stress_n50_review.json (veredicto real de Sol) y el respaldo_evidencia ACTUAL en data/warehouse.sqlite (no el estado original de Fix 1A puro).",
+  "limitaciones_reales_no_ocultadas": [
+    "16/100 conflict_id del holdout principal ya no existen o cambiaron en el warehouse actual (evolucion normal del pipeline desde 2026-09-22: Fix 1B fusiono/reviso agrupaciones) -- se excluyeron de este analisis, no se forzo un match.",
+    "El respaldo_evidencia usado es el ACTUAL (post Fix 1D/1E), no el original exact_substring_v1 puro de 2026-09-22. Esto es seguro SOLO para el subconjunto de 1 case_mention, porque v3.3 (Fix 1D) y el detector de duplicados (Fix 1E) por diseno NUNCA tocan documentos con <=1 case_mention (ambos requieren >=2 case_mentions para activarse) -- verificado logicamente, no empiricamente documento por documento.",
+    "El subconjunto SINGLE de main_n100 quedo con solo n=36 tras excluir los 16 sin match -- muestra chica, intervalo de confianza ancho, no se calculo IC95 explicito en esta pasada rapida.",
+    "No se corrigio por el submuestreo del stress sample (dirigido a alto riesgo) al reportar cifras separadas -- se reportan aparte, nunca mezcladas con main_n100, mismo principio que el Gate 1A-Validacion original."
+  ],
+  "resultado_main_n100_reconstruido_sobre_84_100": {
+    "tp": 27, "fp": 27, "fn": 2, "tn": 28, "precision": 0.5, "recall": 0.931,
+    "nota": "Del mismo orden de magnitud que el publicado (55.4%/97.3%), la diferencia es esperable por el estado del warehouse mas reciente y los 16 IDs excluidos -- no se presenta como reemplazo del numero oficial de Fix 1A."
+  },
+  "resultado_por_ambiguedad_main_n100": {
+    "documentos_1_case_mention_sin_ambiguedad": {"n": 36, "tp": 8, "fp": 16, "fn": 0, "tn": 12, "precision": 0.333, "recall": 1.0},
+    "algun_documento_mayor_a_1_case_mention_ambiguo": {"n": 48, "tp": 19, "fp": 11, "fn": 2, "tn": 16, "precision": 0.633, "recall": 0.905}
+  },
+  "interpretacion_honesta": "Contra lo esperado, el subconjunto SIN ambiguedad de case_mentions tiene PEOR precision reconstruida (33.3%) que el subconjunto CON ambiguedad (63.3%) en esta muestra. Una lectura plausible: muchos documentos de 1 sola case_mention son justamente los que solo mencionan un proyecto de pasada sin tener realmente un conflicto propio ahi (el patron 'falso_positivo_inclusion' que Fix 1A ya documenta como su punto debil), mientras que los documentos con multiples case_mentions tienden a ser articulos mas sustantivos con mas contexto verificable. No se puede confirmar esto con la muestra actual (n=36 es chico) sin una muestra nueva dedicada -- que implicaria gasto o trabajo nuevo de revision, fuera del alcance de $0 de este fix.",
+  "conclusion": "El detector exact_substring_v1 NO tiene un segmento 'facil' de precision sustancialmente mejor identificado hasta ahora -- la busqueda de 'backing gratis' para el subconjunto de 1 case_mention no encontro sustento. No se cambia el detector (sigue congelado). Se cierra esta linea de investigacion como 'explorada, hipotesis no confirmada' en vez de dejarla abierta indefinidamente.",
+  "recomendacion": "No priorizar mas trabajo en este eje sin datos nuevos. Si se quiere mejorar precision real, el camino con evidencia mas solida es migrar el enrichment productivo completo a v3.3 (fuera de alcance de este fix, requiere autorizacion de gasto aparte)."
+}

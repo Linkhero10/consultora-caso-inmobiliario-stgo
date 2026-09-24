@@ -4,7 +4,7 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "5add4f1d1ebad4457c86b53e452b4b92a36cf8a0fb2874a3629c0f65ffcabbdc",
+    "sha256": "4b52d8dd77a44c8406dff759dfd78c8a99896c14e335b624089b37380c3d031f",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
@@ -15,13 +15,14 @@
       "conflict_project": 990,
       "document_conflict": 1268,
       "conflict_relation": 3,
-      "conflict_evidence_backing": 949,
+      "conflict_evidence_backing": 956,
       "actor_registry": 6,
       "actor_alias": 29,
       "actor_event_project_link": 17227,
       "manzana_censal": 46864,
       "geocoded_location": 22,
-      "geocoded_location_conflict": 7
+      "geocoded_location_conflict": 7,
+      "case_mention_duplicate_link": 5731
     }
   },
   "detector_versions": {
@@ -31,7 +32,7 @@
         "exact_substring_v1",
         "v3_3_verified_index"
       ],
-      "generated_from_warehouse_sha256": "5add4f1d1ebad4457c86b53e452b4b92a36cf8a0fb2874a3629c0f65ffcabbdc",
+      "generated_from_warehouse_sha256": "4b52d8dd77a44c8406dff759dfd78c8a99896c14e335b624089b37380c3d031f",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
@@ -40,7 +41,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "dc4e836a537cd38ab15a1ce09982c9903594045b",
-  "release_commit": "e6a5c18",
+  "parent_commit_at_generation": "20e5ead5c8d639c4ab0a6b2a43dae96041c8e977",
+  "release_commit": null,
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }
