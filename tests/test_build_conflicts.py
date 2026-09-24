@@ -314,6 +314,44 @@ def test_project_backing_evidence_v3_3_index_excluded_falls_back_to_duplicate_gr
     assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
 
 
+def test_project_backing_evidence_v3_3_duplicate_group_fallback_tags_mixed_decision_explicitly():
+    """[Fix 1E hardening, hallazgo de revision externa] El fallback via grupo
+    duplicado no distinguia si el grupo tenia decision mixta (include +
+    exclude/uncertain entre sus miembros) -- una senal real de que el match
+    pudo ser mas arriesgado (el propio clasificador no fue consistente sobre
+    el objeto). Ahora debe quedar marcado con un match_method distinto,
+    nunca mezclado silenciosamente con el caso no-mixto, para que sea
+    auditable por separado."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 1}
+    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
+    decision_mixed_by_cm = {"d1:0": True, "d1:1": True}
+    rows = reg._project_backing_evidence(
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members, decision_mixed_by_cm
+    )
+    assert len(rows) == 1
+    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION
+    assert rows[0]["match_method"] != reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
+
+
+def test_project_backing_evidence_v3_3_duplicate_group_fallback_non_mixed_uses_plain_match_method():
+    """Contraparte del test anterior: un grupo sin decision mixta debe seguir
+    usando el match_method original, no el marcado como mixto."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 1}
+    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
+    decision_mixed_by_cm = {"d1:0": False, "d1:1": False}
+    rows = reg._project_backing_evidence(
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members, decision_mixed_by_cm
+    )
+    assert len(rows) == 1
+    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
+
+
 def test_project_backing_evidence_v3_3_no_duplicate_group_sibling_still_empty():
     """Sin duplicate_group_members (o sin hermano valido), el comportamiento
     debe seguir siendo el mismo de antes de Fix 1E: sin backing, sin caer al

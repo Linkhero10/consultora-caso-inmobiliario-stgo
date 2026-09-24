@@ -55,5 +55,5 @@
     "ambos": 45
   },
   "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json); 'exact_substring_v1' sigue siendo la heuristica original de Fix 1A para las menciones que v3.3 nunca cubrio.",
-  "warehouse_sha256": "4b52d8dd77a44c8406dff759dfd78c8a99896c14e335b624089b37380c3d031f"
+  "warehouse_sha256": "b56f85267000f58ecb5cf9a1a7796278272558b8e246487aa59fe3bfa5fccf45"
 }

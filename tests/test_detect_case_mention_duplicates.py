@@ -95,6 +95,32 @@ def test_empty_case_mentions_returns_empty():
     assert dup.compute_duplicate_groups({"content_sha256": "docH", "case_mentions": []}) == []
 
 
+def test_known_limitation_v1_generic_short_quote_near_threshold_can_group_different_real_objects():
+    """[Fix 1E hardening, hallazgo de revision externa (Luna), 2026-09-24]
+    Caracterizacion de un LIMITE REAL conocido de exact_object_or_quote_substring_v1,
+    documentado explicitamente en vez de ocultado (mismo patron que las
+    'LIMITACIONES CONOCIDAS de v1' de project_case_mention.py, ver
+    audit/validation_summary.json). Una cita generica de exactamente
+    MIN_QUOTE_LEN caracteres (8) puede calzar por substring entre dos
+    objetos REALMENTE DISTINTOS que comparten una frase corta y comun --
+    el detector los agrupa igual, porque MIN_QUOTE_LEN es un umbral fijo,
+    no una medida de especificidad semantica. Este test NO afirma que el
+    fix este roto -- confirma el comportamiento actual tal cual esta
+    disenado (congelado, 'nunca fuzzy' significa exacto pero no
+    necesariamente semantico), para que quede como caso de prueba conocido
+    si algun dia se evalua subir el umbral o agregar una excepcion."""
+    record = {"content_sha256": "docLimit", "case_mentions": [
+        _cm("Edificio Los Alerces", "include", ["el proyecto en Ñuñoa"]),
+        _cm("Torre Las Rosas", "exclude", ["el proyecto en Ñuñoa, a diez cuadras de distancia"]),
+    ]}
+    rows = dup.compute_duplicate_groups(record)
+    assert rows[0]["duplicate_group_id"] == rows[1]["duplicate_group_id"], (
+        "Comportamiento actual conocido: 'el proyecto en Ñuñoa' (>=8 chars) es substring "
+        "literal de la segunda cita, aunque describan edificios distintos en el mismo barrio."
+    )
+    assert rows[0]["decision_mixed_in_group"] == 1
+
+
 def test_real_quilicura_five_mentions_group_together():
     """Regresion real: el humedal de Quilicura (resumen.cl) tiene 5
     case_mentions identicas en classifications.jsonl real."""

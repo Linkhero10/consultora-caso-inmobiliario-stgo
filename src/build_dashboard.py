@@ -126,12 +126,13 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
       <option value="n_conflicts_backed" selected>Conflictos con respaldo de evidencia detectado</option>
       <option value="n_conflicts_backed_per_100k">Conflictos con respaldo por 100.000 hab.</option>
       <option value="n_conflicts_total">Conflictos registrados (universo completo)</option>
-      <option value="n_projects">Proyectos</option>
+      <option value="n_projects_mentioned">Proyectos mencionados (no es atribución territorial validada)</option>
       <option value="n_documents">Documentos</option>
       <option value="n_actors">Actores</option>
     </select></label>
     <label><input type="checkbox" id="manzanaToggle"> Ver contexto social fino (manzana censal, Censo 2024)</label>
   </div>
+  <p class="note" id="projectsMentionedNote" style="display:none">"Proyectos mencionados" cuenta cualquier proyecto nombrado en un documento, atribuido a la comuna única resuelta de ese documento -- no verifica que el proyecto pertenezca a esa comuna ni a un caso específico. No es un conteo territorial validado (una medición exploratoria previa mostró cambios de hasta -54% al restringir a vínculos directos confirmados).</p>
   <p class="note" id="manzanaNote" style="display:none">Capa de contexto social (población por manzana censal, la unidad
     geográfica más fina del Censo) -- no indica dónde ocurre cada conflicto. Los conflictos siguen
     registrados y coloreados a nivel de comuna; esta capa solo agrega detalle socioeconómico de fondo.</p>
@@ -225,7 +226,7 @@ function renderMap() {{
         const t = f.properties;
         layer.bindPopup(
           `<b>${{t.comuna}}</b><br>Conflictos registrados: ${{t.n_conflicts_total}}<br>` +
-          `Con respaldo de evidencia detectado: ${{t.n_conflicts_backed}}<br>Proyectos: ${{t.n_projects}}<br>` +
+          `Con respaldo de evidencia detectado: ${{t.n_conflicts_backed}}<br>Proyectos mencionados: ${{t.n_projects_mentioned}}<br>` +
           `Población: ${{t.poblacion.toLocaleString('es-CL')}}<br>Viviendas hacinadas: ${{t.viviendas_hacinadas.toLocaleString('es-CL')}}`
         );
       }},
@@ -234,7 +235,11 @@ function renderMap() {{
     if (!manzanaOn) geoLayer.addTo(map);
   }}
   draw('n_conflicts_backed');
-  document.getElementById('metricSelect').addEventListener('change', e => draw(e.target.value));
+  const projectsMentionedNote = document.getElementById('projectsMentionedNote');
+  document.getElementById('metricSelect').addEventListener('change', e => {{
+    draw(e.target.value);
+    projectsMentionedNote.style.display = e.target.value === 'n_projects_mentioned' ? 'block' : 'none';
+  }});
 
   // Fase C: capa de contexto social fino (manzana censal). Se carga solo
   // cuando el usuario la pide (fetch perezoso) -- el GeoJSON pesa ~22 MB y

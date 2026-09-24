@@ -207,7 +207,18 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "geometry": json.loads(t["geometry_json"]),
                 "n_conflicts_total": n_conflicts_total,
                 "n_conflicts_backed": n_conflicts_backed,
-                "n_projects": len(by_comuna_projects.get(code, ())),
+                # [Renombrado 2026-09-24, hallazgo de revision externa confirmado] Antes
+                # "n_projects". Este numero sale de CUALQUIER mencion de proyecto en un
+                # documento (project_mention_resolved, sin filtrar relevancia/foco) atribuida
+                # despues a la comuna unica resuelta del documento -- NO es un conteo
+                # territorial validado (mismo problema de raiz que Fix 1D resolvio para el
+                # respaldo de conflictos, pero nunca aplicado aqui). Una medicion exploratoria
+                # previa (Fase 2, 2026-09-23) mostro que restringir a vinculos directos
+                # verificados cambia el conteo en -54% en algunas comunas -- no adoptado como
+                # cifra final, solo como senal de que esto no debe presentarse como territorio
+                # validado. Renombrado para que el propio nombre del campo no implique una
+                # precision que no tiene; ver nota_metodologica en build_summary().
+                "n_projects_mentioned": len(by_comuna_projects.get(code, ())),
                 "n_documents": len(by_comuna_documents.get(code, ())),
                 "n_actors": len(by_comuna_actors.get(code, ())),
                 "n_conflicts_backed_per_100k": round(n_conflicts_backed / poblacion * 100_000, 2) if poblacion else None,
@@ -458,6 +469,15 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
         "n_evidence_verified": n_evidence_verified,
         "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts_total"] > 0),
         "n_manzanas_censales": n_manzanas_censales,
+        # [Agregado 2026-09-24, hallazgo de revision externa confirmado] n_projects
+        # (arriba, total del corpus) es un conteo directo del registro de proyectos --
+        # valido. Lo que NO es un conteo territorial validado es
+        # territories[].n_projects_mentioned (por comuna): sale de cualquier mencion de
+        # proyecto en un documento, atribuida a la comuna unica del documento, sin
+        # verificar que el proyecto pertenezca genuinamente a esa comuna o a la
+        # case_mention especifica del conflicto. Ver nota completa en el codigo de
+        # build_territories().
+        "nota_metodologica_geografia_proyectos": "n_projects_mentioned por comuna es un conteo de menciones documentales, no una atribucion territorial verificada -- una medicion exploratoria previa mostro que restringir a vinculos directos confirmados cambia el conteo en -54% en algunas comunas. No usar como cifra final de \"cuantos proyectos hay en esta comuna\".",
     }
 
 
