@@ -224,6 +224,7 @@
   },
   "fix_1d_integracion_v3_3_a_conflict": {
     "fecha": "2026-09-24",
+    "plan_aprobado_archivado": "audit/fix_1d_plan_2026-09-24.md -- copia palabra por palabra del plan diseñado en modo plan y aprobado por el usuario ANTES de escribir codigo. El original vivia solo en un archivo local mutable (C:\\Users\\felip\\.claude\\plans\\mutable-growing-meadow.md), luego sobreescrito por el plan de Fix 1E -- por eso se archiva aqui.",
     "descripcion": "Integra el case_mention_index verificado de v3.3 (0 fabricaciones en 809 evaluaciones, 2 rondas de revision ciega de Sol) al detector de respaldo de Fix 1A, como una segunda fuente en la MISMA tabla conflict_evidence_backing (detector_version='v3_3_verified_index'), sin tocar el detector original (exact_substring_v1, congelado) para el resto del corpus.",
     "cambios_codigo": [
       "src/build_conflicts.py: load_v3_3_verified_links() (traduce case_mention_index->case_mention_id via sha256 pinneado de classifications.jsonl, excluye la URL del piloto fuera del universo de 330), _project_backing_evidence() modificado para usar el indice verificado directamente cuando la mencion esta cubierta por v3.3 (con o sin backing, nunca cae al substring en ese caso), reporte audit/conflict_evidence_backing_report.json con desglose por detector_version.",
@@ -250,6 +251,7 @@
   },
   "fix_1e_deduplicar_case_mentions_classify_py": {
     "fecha": "2026-09-24",
+    "plan_aprobado_archivado": "audit/fix_1e_plan_2026-09-24.md -- copia palabra por palabra del plan diseñado en modo plan y aprobado por el usuario ANTES de escribir codigo. El original vivia solo en el mismo archivo local mutable que Fix 1D (C:\\Users\\felip\\.claude\\plans\\mutable-growing-meadow.md), reescrito encima del plan de Fix 1D -- por eso se archiva aqui.",
     "descripcion": "Ataca la causa raiz mas profunda detectada en las 2 rondas de revision ciega de Sol sobre v3.3: classify.py (Etapa 1) no tiene ningun paso de deduplicacion de case_mentions dentro de un documento -- una sola llamada LLM genera la lista completa y nada compara una mencion contra otra despues. Fix en 2 partes, 0 gasto de LLM en ambas.",
     "medicion_real_corpus_completo": {
       "n_documentos": 3885, "n_case_mentions_total": 5731,
