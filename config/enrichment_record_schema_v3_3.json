@@ -1,0 +1,622 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "nombre_proyecto": {
+      "type": "string",
+      "description": "Nombre o direccion del proyecto/edificio especifico si el texto lo menciona, para distinguir un proyecto concreto del fenomeno agregado. Cadena vacia si el articulo solo describe el fenomeno en general sin nombrar un proyecto especifico. Cuando el articulo mezcla VARIOS proyectos (revision.nivel='caso'), este campo puede quedar ambiguo o vacio a proposito -- para eso existe proyecto_asociado en cada actor/institucion/hito individual (ver mas abajo)."
+    },
+    "proyectos_mencionados": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre/direccion del proyecto o edificio, igual que antes (v3.2)."
+          },
+          "case_mention_index": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "v3.3 NUEVO (arregla de raiz el hallazgo de 2026-09-23: nombre_proyecto/proyectos_mencionados nunca se anclaban a un case_mention especifico, y cada intento posterior de reconstruir esa relacion via texto -- Fix 1C, project_case_mention.py -- tenia falsos positivos y falsos negativos reales). Indice (0-based, segun el orden en que se listan los CASE_MENTIONS EXISTENTES en el mensaje del usuario) de la case_mention cuyo objeto de disputa ES este proyecto. Usa null cuando el proyecto aparece en el documento pero ninguna case_mention listada lo tiene como su objeto central (mencion de pasada, ejemplo comparativo, contexto general) -- no fuerces un indice solo por cercania tematica o geografica. Si el mismo proyecto es el objeto de MAS de una case_mention (ej. dos parrafos separados que documentan el mismo caso), usa el indice de la mas completa/especifica, nunca inventes multiples entradas para el mismo nombre."
+          },
+          "case_mention_index_verificada": {
+            "type": "boolean"
+          },
+          "case_mention_index_original_modelo": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "nombre",
+          "case_mention_index",
+          "case_mention_index_verificada"
+        ]
+      },
+      "description": "v3.2 NUEVO (hallazgo real de Luna: nombre_proyecto es un solo campo por documento, pero un articulo puede mezclar varios edificios/proyectos distintos -- eso se perdia). Lista de TODOS los nombres de proyecto/edificio distintos que el texto menciona con nombre propio (no el fenomeno agregado). Si solo hay uno, coincide con nombre_proyecto. Lista vacia si el articulo no nombra ningun proyecto especifico. v3.3: cada elemento ahora es un objeto {nombre, case_mention_index} en vez de un string suelto -- ver descripcion de case_mention_index."
+    },
+    "objeto_disputa_norm": {
+      "type": "string",
+      "enum": [
+        "permiso",
+        "altura_densidad",
+        "uso_suelo",
+        "patrimonio",
+        "impacto_ambiental",
+        "movilidad",
+        "integracion_social",
+        "propiedad",
+        "demolicion",
+        "espacio_publico",
+        "infraestructura",
+        "otro",
+        "no_determinable"
+      ],
+      "description": "v3 NUEVO (hallazgo de Sol): que se disputa exactamente, distinto de tipo_objeto_norm (que YA clasifica el TIPO de edificio/objeto en la Etapa 1, ej. 'edificio_residencial'). Aqui se pide el EJE del conflicto sobre ese objeto: ej. un edificio_residencial puede disputarse por altura_densidad, por impacto_ambiental, o por patrimonio, segun el articulo. No repitas tipo_objeto_norm aqui."
+    },
+    "objeto_disputa_raw": {
+      "type": "string",
+      "description": "Descripcion literal en 3-8 palabras de que se disputa segun el texto (ej. 'altura permitida en el eje Alameda', 'declaratoria de monumento historico'). Cadena vacia si objeto_disputa_norm es no_determinable."
+    },
+    "evidencia_objeto_disputa": {
+      "type": "string",
+      "description": "Fragmento literal del texto que sustenta objeto_disputa_norm/raw. Cadena vacia si no hay cita directa disponible."
+    },
+    "tipo_accion": {
+      "type": "string",
+      "enum": [
+        "recurso_judicial",
+        "declaracion_publica_carta",
+        "denuncia_autoridades",
+        "protesta_manifestacion",
+        "sancion_administrativa",
+        "participacion_proceso_ambiental",
+        "campana_mediatica",
+        "cierre_rutas_bloqueo",
+        "huelga_paralizacion",
+        "toma_terreno_infraestructura",
+        "otro"
+      ],
+      "description": "Familia de accion contenciosa. Distinto de objeto_disputa (el motivo/eje) y via_legal_norm (el mecanismo legal): esto es COMO se expreso el conflicto."
+    },
+    "escala_conflicto": {
+      "type": "string",
+      "enum": [
+        "local",
+        "comunal",
+        "provincial",
+        "regional",
+        "nacional",
+        "no_determinable"
+      ]
+    },
+    "actores": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre literal del actor tal como aparece en el texto."
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "junta_vecinos",
+              "ong_patrimonial",
+              "colectivo_vecinal",
+              "inmobiliaria",
+              "municipio",
+              "concejal_politico",
+              "seremi_minvu",
+              "consejo_monumentos_nacionales",
+              "contraloria",
+              "poder_judicial",
+              "ciudadano_individual",
+              "otro"
+            ]
+          },
+          "rol": {
+            "type": "string",
+            "enum": [
+              "demandante",
+              "demandado",
+              "autoridad_decisora",
+              "mediador",
+              "mencionado"
+            ]
+          },
+          "stance": {
+            "type": "string",
+            "enum": [
+              "apoya",
+              "se_opone",
+              "neutral",
+              "mixto",
+              "no_determinable"
+            ],
+            "description": "v3 NUEVO (hallazgo de Sol, reemplaza tono_emocional libre): postura de ESTE actor especifico frente al proyecto/conflicto, segun lo que el texto documenta -- no una impresion general del articulo. Operacionalizable para redes (Dario), a diferencia de un texto libre de tono."
+          },
+          "nivel_involucramiento": {
+            "type": "string",
+            "enum": [
+              "central",
+              "secundario"
+            ],
+            "description": "v3.1 NUEVO (hallazgo real de Sol, verificado: 16/30 documentos de prueba saturaron el maximo de 12 actores; un caso real incluyo una fundacion deportiva, un colegio, un Cesfam, una empresa de combustibles y 'grupos de narcotraficantes' como actores solo por aparecer mencionados de pasada en un articulo sobre recuperacion de barrios -- ruido real para una red de actores del conflicto). central: ejecuta una accion, la recibe, toma una decision, o participa organizadamente en la controversia. secundario: aparece mencionado pero sin ese rol estructural -- util para filtrar sin perder informacion, no se descarta el actor, se etiqueta."
+          },
+          "cita": {
+            "type": "string",
+            "description": "Fragmento literal del texto donde se menciona a este actor. Cadena vacia si no hay cita directa disponible."
+          },
+          "proyecto_asociado": {
+            "type": "string",
+            "description": "v3.2 NUEVO (hallazgo real de Luna): a cual de los nombres en proyectos_mencionados[] se refiere la participacion de ESTE actor (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si no se puede determinar a cual proyecto especifico corresponde este actor."
+          },
+          "cita_verificada": {
+            "type": "boolean"
+          },
+          "cita_original_modelo": {
+            "type": "string"
+          },
+          "proyecto_asociado_verificada": {
+            "type": "boolean"
+          },
+          "proyecto_asociado_original_modelo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "tipo",
+          "rol",
+          "stance",
+          "nivel_involucramiento",
+          "cita",
+          "proyecto_asociado",
+          "cita_verificada",
+          "proyecto_asociado_verificada"
+        ]
+      }
+    },
+    "instituciones_mencionadas": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "v3 NUEVO (hallazgo de Sol y Luna, reemplaza institucion_decisora unico): todas las instituciones que el texto menciona como intervinientes, sin afirmar cual tiene la competencia juridica real -- eso requiere expediente oficial, no una nota de prensa. Puede haber varias en secuencia (DOM, Contraloria, tribunal) en un mismo conflicto.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre literal de la institucion tal como aparece en el texto."
+          },
+          "tipo_norm": {
+            "type": "string",
+            "enum": [
+              "dom_municipal",
+              "municipio_alcaldia",
+              "concejo_municipal",
+              "seremi_minvu",
+              "consejo_monumentos_nacionales",
+              "contraloria_general",
+              "poder_judicial",
+              "ministerio_medio_ambiente",
+              "sea",
+              "sma",
+              "otra"
+            ]
+          },
+          "rol_en_texto": {
+            "type": "string",
+            "description": "Que hizo o que se le pidio a esta institucion segun el texto (1 frase)."
+          },
+          "accion_institucional": {
+            "type": "string",
+            "description": "Accion concreta atribuida (ej. 'emitio dictamen', 'recibio denuncia', 'aprobo permiso'). Cadena vacia si no es clara."
+          },
+          "cita": {
+            "type": "string",
+            "description": "Fragmento literal del texto que sustenta esta fila. Cadena vacia si no hay cita directa."
+          },
+          "proyecto_asociado": {
+            "type": "string",
+            "description": "v3.2 NUEVO (hallazgo real de Luna): a cual de los nombres en proyectos_mencionados[] se refiere la actuacion de ESTA institucion (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si la actuacion es general/no especifica a un proyecto (ej. un dictamen sobre la comuna completa)."
+          },
+          "cita_verificada": {
+            "type": "boolean"
+          },
+          "cita_original_modelo": {
+            "type": "string"
+          },
+          "proyecto_asociado_verificada": {
+            "type": "boolean"
+          },
+          "proyecto_asociado_original_modelo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nombre",
+          "tipo_norm",
+          "rol_en_texto",
+          "accion_institucional",
+          "cita",
+          "proyecto_asociado",
+          "cita_verificada",
+          "proyecto_asociado_verificada"
+        ]
+      }
+    },
+    "institucion_decisora_segun_fuente": {
+      "type": "string",
+      "enum": [
+        "dom_municipal",
+        "concejo_municipal",
+        "seremi_minvu",
+        "consejo_monumentos_nacionales",
+        "contraloria_general",
+        "poder_judicial",
+        "ministerio_medio_ambiente",
+        "otra",
+        "no_aplica",
+        "no_afirmado_por_la_fuente"
+      ],
+      "description": "v3.0.1 CORREGIDO (hallazgo real de Sol: contradiccion entre 'afirma o implica' y 'si no lo dice explicitamente' en la version anterior). Solo se rellena con una institucion cuando LA FUENTE PERIODISTICA atribuye EXPLICITAMENTE a esa institucion la decision correspondiente -- no una impresion o inferencia del modelo sobre quien 'deberia' decidir. Esto NO es una determinacion juridica de competencia real -- eso viene de expediente oficial, nunca de una nota de prensa. Usar no_afirmado_por_la_fuente en cualquier otro caso, incluida la ambiguedad."
+    },
+    "instrumento_norm": {
+      "type": "string",
+      "enum": [
+        "permiso_edificacion",
+        "dia_declaracion_impacto_ambiental",
+        "eia_estudio_impacto_ambiental",
+        "rca_resolucion_calificacion_ambiental",
+        "resolucion_exenta_administrativa",
+        "prc_plan_regulador_comunal",
+        "dictamen_contraloria",
+        "circular_ddu_minvu",
+        "decreto_alcaldicio",
+        "decreto_supremo",
+        "sentencia_judicial",
+        "recurso_judicial_presentado",
+        "oficio_seremi_municipal",
+        "otro",
+        "no_aplica"
+      ],
+      "description": "v3.1 AMPLIADO (hallazgo real de Sol, expandido con patrones reales, no imaginados: de 10 casos 'otro' en la prueba de 30, 5 eran variantes de Resolucion Exenta/RCA, 2 eran recursos judiciales presentados -sin fallo aun, distinto de sentencia_judicial-, 1 era un oficio Seremi -mismo patron ya visto en el piloto Estacion Central-). Tipo de instrumento/acto administrativo o normativo central del caso, si el texto lo identifica con numero o nombre propio (ej. 'Dictamen N.27918', 'Decreto Alcaldicio N.324', 'Resolucion Exenta N.1090/22')."
+    },
+    "instrumento_raw": {
+      "type": "string",
+      "description": "Nombre/numero literal del instrumento segun el texto (ej. 'Dictamen N.27918 de 2018'). Cadena vacia si instrumento_norm es no_aplica."
+    },
+    "via_legal_norm": {
+      "type": "string",
+      "enum": [
+        "judicial",
+        "administrativa",
+        "contraloria",
+        "mixta",
+        "no_aplica"
+      ],
+      "description": "Mecanismo legal usado, distinto de tipo_accion (que es la forma de expresion del conflicto)."
+    },
+    "resultado_actuacion": {
+      "type": "string",
+      "description": "v3 NUEVO (hallazgo de Sol): que resultado concreto tuvo la accion/instrumento principal segun el texto (ej. 'invalido 49 permisos', 'rechazo el recurso', 'quedo pendiente'). Cadena vacia si el texto no lo resuelve."
+    },
+    "tipo_evidencia_fuente": {
+      "type": "string",
+      "enum": [
+        "declarativa",
+        "documental_cuantitativa_reportada",
+        "mixta",
+        "no_aplica"
+      ],
+      "description": "v3.1 RENOMBRADO (hallazgo real de Sol: el nombre viejo 'evidencia_desempeno' sonaba a que EL PIPELINE verifico el desempeno, cuando en realidad solo significa que LA PRENSA reporta un dato chequeable -- riesgo real de que capas posteriores lo malinterpreten como verificacion primaria). declarativa: afirmacion/promesa sin dato concreto. documental_cuantitativa_reportada: la fuente reporta un dato documental o cuantitativo concreto y verificable (numero de resolucion, fallo, dictamen, cifra oficial) -- esto NO significa que el pipeline haya verificado el documento primario, solo que la prensa cita algo especifico y chequeable, no una vaguedad. La verificacion primaria real (descargar y cotejar el documento oficial) es una capa posterior, separada, que hara Christian/Nicolas -- no este campo. mixta: ambas. no_aplica: no corresponde."
+    },
+    "triage_consistency_check": {
+      "type": "boolean",
+      "description": "v3.1 NUEVO (hallazgo de Sol): true si, durante este enriquecimiento mas profundo, encuentras algo que contradice una premisa central de la clasificacion de Etapa 1 (ej. Etapa 1 dijo 'accion contenciosa confirmada' pero al leer el articulo completo no identificas ninguna accion contenciosa real). NO cambia la decision de Etapa 1 por si solo -- solo marca el documento como candidato a auditoria retrospectiva del clasificador."
+    },
+    "triage_consistency_note": {
+      "type": "string",
+      "description": "Si triage_consistency_check es true, explica en 1 frase la contradiccion encontrada. Cadena vacia si es false."
+    },
+    "linea_tiempo": {
+      "type": "array",
+      "maxItems": 5,
+      "description": "v3.1 ACOTADO (hallazgo real de Sol: 14/30 documentos de prueba saturaron el maximo de 5 hitos, y algunos incluian contexto historico general -ej. 'a fines de los 60 se construyeron las primeras villas del sector', division administrativa de la comuna en 1985- que NO es parte de la trayectoria del conflicto inmobiliario/urbano documentado, solo ambientacion del barrio). Hasta 5 hitos que pertenecen DIRECTAMENTE a la trayectoria del conflicto actual (origen del proyecto -> permiso -> oposicion/denuncia -> actuacion institucional -> resolucion/desenlace) -- NO incluyas historia general del barrio, la comuna, la empresa o la normativa salvo que ese hecho sea causal o procesalmente parte del conflicto documentado. Lista vacia si el texto no permite determinar ninguna fecha de un hecho del conflicto (no confundir con la fecha de publicacion del articulo ni con contexto historico).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "description": "Fecha del hito (YYYY-MM-DD si se puede determinar, o YYYY-MM / YYYY si es aproximada). Nunca la fecha de publicacion del articulo salvo que el hito sea la publicacion misma."
+          },
+          "date_precision": {
+            "type": "string",
+            "enum": [
+              "dia",
+              "mes",
+              "año",
+              "aproximada",
+              "desconocida"
+            ],
+            "description": "v3 NUEVO (hallazgo de Sol): que tan precisa es realmente la fecha -- evita que 'fecha: 2018' aparente la misma precision que 'fecha: 2018-04-26'."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "1 frase describiendo el hito concreto en esa fecha."
+          },
+          "tipo_hito": {
+            "type": "string",
+            "enum": [
+              "permiso_autorizacion",
+              "denuncia_reclamo",
+              "fiscalizacion_sumario",
+              "dictamen_resolucion",
+              "sentencia_fallo_judicial",
+              "querella_accion_judicial",
+              "protesta_movilizacion",
+              "declaracion_publica",
+              "publicacion_prensa",
+              "otro"
+            ]
+          },
+          "evidencia_hito": {
+            "type": "string",
+            "description": "v3.0.1 NUEVO (hallazgo real de Sol: fecha_year_grounded solo probaba que el año aparece EN ALGUNA PARTE del articulo, no que ese hito especifico ocurrio ese año -- un articulo con hitos en 2018/2021/2024 podia mezclar la fecha equivocada con la descripcion equivocada y aun asi pasar la verificacion vieja). Fragmento literal del texto que sustenta ESTE hito especifico (la fecha Y el hecho juntos, no una cita generica del articulo). Cadena vacia si no hay una cita literal razonable -- no inventes una."
+          },
+          "proyecto_asociado": {
+            "type": "string",
+            "description": "v3.2 NUEVO (hallazgo real de Luna: nombre_proyecto es un solo campo por documento; un articulo que mezcla varios edificios/proyectos perdia la asociacion evento->proyecto especifico). A cual de los nombres en proyectos_mencionados[] pertenece ESTE hito especifico (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si el hito es del fenomeno agregado, no de un proyecto puntual."
+          },
+          "fecha_year_grounded": {
+            "type": "boolean"
+          },
+          "evidencia_hito_verificada": {
+            "type": "boolean"
+          },
+          "evidencia_hito_original_modelo": {
+            "type": "string"
+          },
+          "proyecto_asociado_verificada": {
+            "type": "boolean"
+          },
+          "proyecto_asociado_original_modelo": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fecha",
+          "date_precision",
+          "descripcion",
+          "tipo_hito",
+          "evidencia_hito",
+          "proyecto_asociado",
+          "fecha_year_grounded",
+          "evidencia_hito_verificada",
+          "proyecto_asociado_verificada"
+        ]
+      }
+    },
+    "ubicacion_especifica": {
+      "type": "string",
+      "description": "Direccion, sector o nombre de calle/barrio si el texto lo menciona, para geocodificacion mas precisa que el nivel comuna. Cadena vacia si no se menciona."
+    },
+    "explicacion_tipo_conflicto": {
+      "type": "string",
+      "description": "1 frase justificando por que se eligio ese tipo_conflicto en la clasificacion de Etapa 1, citando o parafraseando la parte relevante del texto."
+    },
+    "explicacion_actores": {
+      "type": "string",
+      "description": "1 frase justificando la identificacion de actores y sus roles."
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "v3.1 REESTRUCTURADO (hallazgo real de Sol: el booleano requiere_revision_manual dio 28/30=93.3% en la prueba de 30 -- inutil como filtro porque mezclaba severidades totalmente distintas: un actor secundario con postura incierta producia el mismo flag que dos versiones contradictorias del caso). Reemplaza requiere_revision_manual + motivo_revision_manual con una cola priorizada real.",
+      "properties": {
+        "nivel": {
+          "type": "string",
+          "enum": [
+            "ninguno",
+            "campo",
+            "caso",
+            "bloqueante"
+          ],
+          "description": "ninguno: sin ambiguedad relevante. campo: incertidumbre menor en 1-2 campos puntuales (ej. postura de un actor secundario), no requiere revisar el caso completo. caso: ambiguedad central que afecta la interpretacion general (ej. proyecto focal ambiguo, mezcla de varios proyectos). bloqueante: contradiccion que impide usar el registro con confianza (ej. dos versiones incompatibles del desenlace)."
+        },
+        "campos_afectados": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "string"
+          },
+          "description": "Nombres de los campos especificos con la incertidumbre (ej. 'stance_actor_Fulano', 'nombre_proyecto', 'resultado_actuacion'). Lista vacia si nivel es ninguno."
+        },
+        "motivo": {
+          "type": "string",
+          "description": "1 frase explicando la ambiguedad o contradiccion especifica. Cadena vacia si nivel es ninguno."
+        }
+      },
+      "required": [
+        "nivel",
+        "campos_afectados",
+        "motivo"
+      ]
+    },
+    "evidencia_objeto_disputa_verificada": {
+      "type": "boolean"
+    },
+    "evidencia_objeto_disputa_original_modelo": {
+      "type": "string"
+    },
+    "actores_posiblemente_truncados": {
+      "type": "boolean"
+    },
+    "instituciones_posiblemente_truncadas": {
+      "type": "boolean"
+    },
+    "hitos_posiblemente_truncados": {
+      "type": "boolean"
+    },
+    "url": {
+      "type": "string"
+    },
+    "n_case_mentions_etapa1": {
+      "type": "integer"
+    },
+    "decision_documento_etapa1": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contract_version_etapa1": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lineage": {
+      "type": "object"
+    },
+    "content_sha256": {
+      "type": "string"
+    },
+    "content_char_count": {
+      "type": "integer"
+    },
+    "input_truncated": {
+      "type": "boolean"
+    },
+    "enriched_at": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "reasoning_effort": {
+      "type": "string"
+    },
+    "enrichment_schema_version": {
+      "type": "string"
+    },
+    "prompt_sha256": {
+      "type": "string"
+    },
+    "schema_sha256": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "usage": {
+      "type": "object"
+    },
+    "retry_cost_usd": {
+      "type": "number"
+    },
+    "total_incurred_cost_usd": {
+      "type": "number"
+    },
+    "paid_attempt_count": {
+      "type": "integer"
+    },
+    "request_attempt_count": {
+      "type": "integer"
+    },
+    "reasoning": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reasoning_details": {
+      "type": [
+        "array",
+        "object",
+        "null"
+      ]
+    },
+    "raw_finish_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "record_schema_sha256": {
+      "type": "string"
+    },
+    "script_sha256": {
+      "type": "string"
+    },
+    "runner_script_sha256": {
+      "type": "string"
+    },
+    "core_enrichment_script_sha256": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "nombre_proyecto",
+    "proyectos_mencionados",
+    "objeto_disputa_norm",
+    "objeto_disputa_raw",
+    "evidencia_objeto_disputa",
+    "tipo_accion",
+    "escala_conflicto",
+    "actores",
+    "instituciones_mencionadas",
+    "institucion_decisora_segun_fuente",
+    "instrumento_norm",
+    "instrumento_raw",
+    "via_legal_norm",
+    "resultado_actuacion",
+    "tipo_evidencia_fuente",
+    "triage_consistency_check",
+    "triage_consistency_note",
+    "linea_tiempo",
+    "ubicacion_especifica",
+    "explicacion_tipo_conflicto",
+    "explicacion_actores",
+    "revision",
+    "evidencia_objeto_disputa_verificada",
+    "actores_posiblemente_truncados",
+    "instituciones_posiblemente_truncadas",
+    "hitos_posiblemente_truncados",
+    "url",
+    "n_case_mentions_etapa1",
+    "decision_documento_etapa1",
+    "contract_version_etapa1",
+    "lineage",
+    "content_sha256",
+    "content_char_count",
+    "input_truncated",
+    "enriched_at",
+    "model",
+    "reasoning_effort",
+    "enrichment_schema_version",
+    "prompt_sha256",
+    "schema_sha256",
+    "run_id",
+    "usage",
+    "retry_cost_usd",
+    "total_incurred_cost_usd",
+    "paid_attempt_count",
+    "request_attempt_count",
+    "reasoning",
+    "reasoning_details",
+    "raw_finish_reason"
+  ],
+  "title": "enrichment_record_v3_3",
+  "description": "Contrato del REGISTRO PERSISTIDO del piloto v3.3 -- distinto del contrato de respuesta del LLM (enrichment_schema_v3.3.json). Generado por build_enrichment_record_schema_v3_3.py a partir de enrichment_schema_v3_3.json -- no editar a mano, regenerar."
+}
