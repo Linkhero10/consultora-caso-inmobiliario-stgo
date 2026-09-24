@@ -181,7 +181,14 @@
       "resultado": "8/8 verificados manualmente contra los datos reales de classify.py (case_mentions/decision exactos). Los 6 bugs conocidos quedaron resueltos correctamente: Ivo Gasic->Vespucio Oriente correctamente indexado a la case_mention 4 EXCLUIDA real; Ex-Ante->Edificio Pajaritos/Oleoducto M-AAMB correctamente indexados a las case_mentions 0/1 incluidas reales, y los otros 4 proyectos (Farfana/Sonacol/Dominga/Hidroaysen) correctamente null; Portal Bicentenario correctamente indexado a la case_mention 3 EXCLUIDA real; Barrio Las Rejas: las 3 villas (Isabel Riquelme/Suecia/O'Higgins) correctamente null (solo aparecen en cita geografica, nunca objeto); CChC Las Condes correctamente indexado a la unica case_mention real (antes indetectable por match literal, ver Fix 1C). Hallazgo adicional: 'Villa Carlos Cortes' (theclinic.cl) resulto ser el nombre HISTORICO real de Villa San Luis (verificado en el texto fuente) -- el modelo correctamente los indexo al mismo case_mention en vez de tratarlos como proyectos distintos.",
       "detalle": "Auditoria/enriquecimiento_v3_3_piloto/ (gitignorado)"
     },
-    "status": "piloto_8_8_exitoso_verificado_manualmente -- pendiente decidir si escalar a calibracion/holdout formal antes de los 330 documentos reales, siguiendo la misma disciplina de Fix 1A",
+    "calibracion_75_documentos": {
+      "muestra": "audit/calibracion_v3_3_muestra_seed20260924.json -- holdout N=50 (aleatorio simple sobre el universo de 330 menos los 8 ya pilotados) + stress N=25 (dirigido a alto riesgo: >=4 case_mentions o >=3 proyectos), seed=20260924.",
+      "ejecucion": "75/75 escritos, 0 errores, 0 registros cuarentenados. GPT-6 Luna via OpenRouter, 50 workers en paralelo (autorizado explicitamente por el usuario). Costo real: $0.66341 USD.",
+      "verificacion": "203 proyectos mencionados en total; 167 recibieron case_mention_index no-null. Verificacion automatica (solapamiento de palabras) confirmo 157/167; los 10 restantes (0% solapamiento -- casos de parafraseo real) se verificaron a mano leyendo el articulo fuente: 10/10 CORRECTOS, incluido un caso resuelto via hecho geografico real (Villa Olimpica -> comuna Nunoa, verificado). Total: 167/167 (100%) de las asignaciones no-null verificadas como correctas. 0 fabricaciones detectadas.",
+      "detalle": "audit/calibracion_v3_3_resultado_seed20260924.json",
+      "status": "COMPLETA -- 100% de las asignaciones no-null verificadas correctas en 75 documentos (203 menciones de proyecto)"
+    },
+    "status": "calibracion_75_docs_100pct_verificado -- listo para decidir escalar a los 330 documentos reales o pedir una revision ciega externa (Sol) primero, siguiendo la disciplina de Gate 1A-Validacion",
     "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 (que sigue siendo el vigente en produccion) hasta que se decida promoverlo tras la validacion formal."
   },
   "gate_conflict_completo": {

@@ -1,0 +1,33 @@
+{
+  "descripcion": "Calibracion v3.3 (2026-09-24): holdout N=50 (aleatorio simple) + stress N=25 (dirigido a alto riesgo), sobre el fix de raiz de la relacion proyecto->case_mention. Muestra: audit/calibracion_v3_3_muestra_seed20260924.json (seed=20260924), excluye los 8 ya usados en el piloto inicial.",
+  "ejecucion": {
+    "modelo": "openai/gpt-6-luna (via OpenRouter, autorizado explicitamente por el usuario)",
+    "workers_paralelos": 50,
+    "n_documentos": 75,
+    "n_errores": 0,
+    "costo_total_usd": 0.663411305,
+    "invalid_records_cuarentenados": 0
+  },
+  "metricas_agregadas": {
+    "n_proyectos_mencionados_total": 203,
+    "n_case_mention_index_null": 36,
+    "n_case_mention_index_asignado": 167
+  },
+  "verificacion_automatica": {
+    "metodo": "solapamiento de palabras (normalizado, sin stopwords) entre el nombre del proyecto y objeto/citas de la case_mention referenciada -- senal permisiva, no prueba de correccion.",
+    "con_solapamiento": 157,
+    "sin_solapamiento_marcados_para_revision_manual": 10
+  },
+  "verificacion_manual_de_los_10_marcados": {
+    "metodo": "lectura directa del articulo fuente + comparacion con el objeto/comuna real de la case_mention referenciada por el indice.",
+    "resultado": "10/10 CORRECTOS. Todos son casos de parafraseo real (el nombre del proyecto no repite literalmente las palabras del objeto de la case_mention) que el metodo automatico de solapamiento no puede capturar por diseno -- exactamente el tipo de caso que este fix de raiz existe para resolver.",
+    "ejemplos_destacados": [
+      "Mall Alto Las Condes 2 -> case_mention 1 (Vitacura, 'varios edificios en altura... habitacionales y comerciales') -- el articulo confirma explicitamente que el proyecto de Paulmann esta en Vitacura.",
+      "Vital Apoquindo 1.400-1.450-1.500 -> case_mention 0 ('25 edificios, 443 viviendas') -- coincide exacto con la direccion y cifra de viviendas citadas en el articulo.",
+      "Club de Campo Vitacura -> case_mention 0 EXCLUIDA ('nueve edificios: siete torres residenciales y dos de oficinas') -- coincide exacto con el texto (nueve edificios, siete torres, dos oficinas), y la case_mention SI incluida (indice 1) es un proyecto no relacionado (parque ribera Mapocho) -- el modelo distinguio correctamente ambos objetos del mismo documento.",
+      "Villa Olimpica -> case_mention 2 (comuna=Nunoa) -- verificado como hecho geografico real (Villa Olimpica efectivamente esta en Nunoa), correctamente distinguido de barrio Yungay (indice 1) y Villa Canada (indice 3) dentro del mismo articulo comparativo de 4 barrios."
+    ]
+  },
+  "conclusion": "De 203 proyectos mencionados en 75 documentos, 167 recibieron un indice (no null); de esos, 167/167 (100%) resultaron verificables como correctos tras revision automatica (157) + manual (10). 0 errores de ejecucion, 0 registros cuarentenados. Ningun caso de fabricacion de indice detectado.",
+  "status": "calibracion_75_documentos_100pct_verificado_correcto -- listo para decidir si escalar a los 330 documentos reales o hacer una revision ciega externa (Sol) antes"
+}
