@@ -717,7 +717,18 @@ def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     assert v3_3_rows_have_correct_scope == 0
 
 
+def _v3_3_sources_available() -> bool:
+    """Auditoria/ es gitignorada (trabajo interno) -- un clon publico limpio
+    (ej. CI) no tiene classifications.jsonl ni los enrichment.jsonl de v3.3.
+    Mismo patron que _connect_or_skip() para warehouse.sqlite."""
+    return reg.CLASSIFICATIONS_PATH.exists() and any(p.exists() for p in reg.V3_3_ENRICHMENT_FILES)
+
+
 def test_load_v3_3_verified_links_excludes_out_of_universe_url_and_parses_real_data():
+    if not _v3_3_sources_available():
+        import pytest
+
+        pytest.skip("Auditoria/clasificacion/classifications.jsonl o los enrichment.jsonl de v3.3 no existen en este entorno (gitignorados)")
     links = reg.load_v3_3_verified_links()
     assert len(links) > 0
     assert all(url != reg.V3_3_URL_FUERA_DE_UNIVERSO for (url, _name) in links)
@@ -729,6 +740,8 @@ def test_load_v3_3_verified_links_excludes_out_of_universe_url_and_parses_real_d
 def test_load_v3_3_verified_links_aborts_on_classifications_sha256_mismatch(monkeypatch):
     import pytest
 
+    if not reg.CLASSIFICATIONS_PATH.exists():
+        pytest.skip("Auditoria/clasificacion/classifications.jsonl no existe en este entorno (gitignorado)")
     monkeypatch.setattr(reg, "CLASSIFICATIONS_SHA256_EXPECTED", "0" * 64)
     with pytest.raises(RuntimeError, match="sha256"):
         reg.load_v3_3_verified_links()
