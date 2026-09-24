@@ -102,9 +102,9 @@ def _sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def _process_one(case: dict[str, Any], api_key: str, system_prompt: str, schema: dict, record_schema: dict, run_id: str) -> dict[str, Any]:
+def _process_one(case: dict[str, Any], api_key: str, system_prompt: str, schema: dict, record_schema: dict, run_id: str, provider: str = "openrouter") -> dict[str, Any]:
     n_case_mentions = len(case.get("case_mentions") or [])
-    result = enrich_document(case, api_key, system_prompt, schema)
+    result = enrich_document(case, api_key, system_prompt, schema, provider=provider)
     if not result or "error" in result:
         return {"status": "error", "url": case.get("url"), "cost": (result or {}).get("total_incurred_cost_usd", 0.0) or 0.0,
                 "error": (result or {}).get("error"), "raw_content_on_failure": (result or {}).get("raw_content_on_failure")}
@@ -162,12 +162,14 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=50)
     parser.add_argument("--max-cost-usd", type=float, required=True, help="Deja de someter documentos nuevos apenas el costo confirmado acumulado alcance este limite. El trabajo ya en vuelo termina igual.")
     parser.add_argument("--sample", type=str, default=str(DEFAULT_SAMPLE_PATH))
+    parser.add_argument("--provider", choices=["openrouter", "nanogpt"], default="openrouter",
+                         help="Transporte del mismo modelo/esfuerzo/schema. nanogpt = mismo openai/gpt-6-luna via NanoGPT (sin comision de deposito).")
     args = parser.parse_args()
 
-    detail = {"escalamiento": True, "max_cost_usd": args.max_cost_usd, "workers": args.workers, "schema_version": "v3.3"}
+    detail = {"escalamiento": True, "max_cost_usd": args.max_cost_usd, "workers": args.workers, "schema_version": "v3.3", "provider": args.provider}
     try:
         with acquire_lock("enrich_case_v3_3_scale", detail=detail):
-            return _run(args.workers, args.max_cost_usd, Path(args.sample))
+            return _run(args.workers, args.max_cost_usd, Path(args.sample), args.provider)
     except LockBusyError as exc:
         logger.info(str(exc))
         return 2
@@ -175,11 +177,15 @@ def main() -> int:
         return exc.return_code
 
 
-def _run(workers: int, max_cost_usd: float, sample_path: Path) -> int:
+ENV_KEY_BY_PROVIDER = {"openrouter": "OPENROUTER_API_KEY", "nanogpt": "NANOGPT_API_KEY"}
+
+
+def _run(workers: int, max_cost_usd: float, sample_path: Path, provider: str = "openrouter") -> int:
     env = load_env(ENV_PATH)
-    api_key = env.get("OPENROUTER_API_KEY", "")
+    env_key = ENV_KEY_BY_PROVIDER[provider]
+    api_key = env.get(env_key, "")
     if not api_key:
-        logger.error("OPENROUTER_API_KEY vacia")
+        logger.error("%s vacia", env_key)
         return 1
 
     schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
@@ -210,7 +216,7 @@ def _run(workers: int, max_cost_usd: float, sample_path: Path) -> int:
             wave = pending[idx: idx + workers]
             idx += workers
             with ThreadPoolExecutor(max_workers=workers) as executor:
-                futures = {executor.submit(_process_one, case, api_key, system_prompt, schema, record_schema, run_id): case for case in wave}
+                futures = {executor.submit(_process_one, case, api_key, system_prompt, schema, record_schema, run_id, provider): case for case in wave}
                 for future in as_completed(futures):
                     result = future.result()
                     with write_lock:
@@ -241,7 +247,7 @@ def _run(workers: int, max_cost_usd: float, sample_path: Path) -> int:
         "run_id": run_id, "written": n_written, "errors": n_errors, "total_cost_usd": total_cost,
         "budget_exhausted": budget_exhausted, "max_cost_usd": max_cost_usd,
         "n_pendientes_sin_someter_por_presupuesto": max(len(pending) - idx, 0) if budget_exhausted else 0,
-        "schema_version": "v3.3_escalamiento", "workers": workers, "sample_path": str(sample_path),
+        "schema_version": "v3.3_escalamiento", "workers": workers, "sample_path": str(sample_path), "provider": provider,
         "finished_at": datetime.now(timezone.utc).isoformat(),
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")

@@ -176,7 +176,27 @@ def sanitize_project_associations_v3_3(parsed: dict[str, Any], n_case_mentions: 
     return parsed
 
 
-def enrich_document(case: dict[str, Any], api_key: str, system_prompt: str, schema: dict, effort: str = REASONING_EFFORT) -> dict[str, Any]:
+API_BASE_URLS = {
+    "openrouter": "https://openrouter.ai/api/v1/chat/completions",
+    "nanogpt": "https://nano-gpt.com/api/v1/chat/completions",
+}
+
+# Precio de lista de gpt-6-luna (confirmado via WebSearch 2026-09-24, mismo en
+# OpenRouter y NanoGPT porque ambos cobran al precio de lista del proveedor
+# real, sin markup en el token): $0.10/M input, $0.50/M output. Se usa SOLO
+# como respaldo cuando la respuesta del proveedor no trae "usage.cost" ya
+# calculado (OpenRouter si lo trae; NanoGPT puede no traerlo) -- nunca
+# reemplaza el costo real si el proveedor lo entrega.
+PRICE_PER_TOKEN_USD = {"input": 0.10 / 1_000_000, "output": 0.50 / 1_000_000}
+
+
+def _estimate_cost_usd(usage: dict) -> float:
+    prompt_tokens = usage.get("prompt_tokens") or 0
+    completion_tokens = usage.get("completion_tokens") or 0
+    return prompt_tokens * PRICE_PER_TOKEN_USD["input"] + completion_tokens * PRICE_PER_TOKEN_USD["output"]
+
+
+def enrich_document(case: dict[str, Any], api_key: str, system_prompt: str, schema: dict, effort: str = REASONING_EFFORT, provider: str = "openrouter") -> dict[str, Any]:
     attempt_costs: list[float] = []
     text = case.get("_text", "")[:MAX_TEXT_CHARS_FOR_PROMPT]
     context_block = _case_mentions_context_block(case)
@@ -197,7 +217,13 @@ def enrich_document(case: dict[str, Any], api_key: str, system_prompt: str, sche
         "response_format": {"type": "json_schema", "json_schema": schema},
         "max_tokens": MAX_COMPLETION_TOKENS,
     }
+    if provider == "nanogpt":
+        # NanoGPT no siempre incluye el costo calculado en la respuesta no-streaming
+        # salvo que se pida explicitamente (a diferencia de OpenRouter, que lo trae
+        # siempre en usage.cost). No cambia modelo/esfuerzo/schema, solo pide el dato.
+        payload["include_usage"] = True
 
+    api_base_url = API_BASE_URLS[provider]
     max_retries = 5
     request_attempt_count = 0
     last_raw_content: str | None = None
@@ -205,7 +231,7 @@ def enrich_document(case: dict[str, Any], api_key: str, system_prompt: str, sche
         request_attempt_count += 1
         try:
             resp = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
+                api_base_url,
                 headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
                 json=payload,
                 timeout=90,
@@ -213,7 +239,10 @@ def enrich_document(case: dict[str, Any], api_key: str, system_prompt: str, sche
             resp.raise_for_status()
             data = resp.json()
             usage = data.get("usage", {})
-            attempt_costs.append(usage.get("cost", 0.0) or 0.0)
+            attempt_cost = usage.get("cost", 0.0) or 0.0
+            if not attempt_cost:
+                attempt_cost = _estimate_cost_usd(usage)
+            attempt_costs.append(attempt_cost)
             message = data["choices"][0]["message"]
             content = message["content"]
             last_raw_content = content
