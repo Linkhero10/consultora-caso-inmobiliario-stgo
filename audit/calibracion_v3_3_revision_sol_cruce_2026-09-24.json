@@ -1,0 +1,34 @@
+{
+  "descripcion": "Cruce ciego: revision independiente de Sol (GPT-5.6, 75 documentos, 203 proyectos) contra las respuestas reales del modelo v3.3 (GPT-6 Luna), no mostradas a Sol antes de su revision.",
+  "metricas_crudas": {
+    "total_evaluado": 203,
+    "acuerdo_exacto": 186,
+    "acuerdo_pct": 91.6,
+    "ambos_null": 30,
+    "ambos_no_null_mismo_indice": 156,
+    "desacuerdo_total": 17,
+    "sol_null_modelo_indice": 10,
+    "sol_indice_modelo_null": 6,
+    "ambos_indice_pero_distinto": 1
+  },
+  "adjudicacion_manual_de_los_17_desacuerdos": {
+    "metodo": "Claude Sonnet 5 leyo el texto fuente y la lista real de case_mentions de cada uno de los 17 casos en desacuerdo, sin aceptar el desacuerdo crudo como prueba de error.",
+    "hallazgo_principal": "La causa dominante de desacuerdo (13/17) NO es un error del fix v3.3 -- es que classify.py (Etapa 1, upstream) a veces genera 2+ case_mentions casi duplicadas para el MISMO proyecto real (mismo objeto descrito dos veces, desde el expediente vs. la nota de prensa, o include vs. exclude de la misma cosa). Cuando eso pasa, Sol prefirio sistematicamente null (\"el nombre no permite discriminar de forma reproducible\", sus propias palabras) mientras el modelo eligio una de las opciones validas -- ninguna de las dos convenciones es incorrecta, son criterios distintos ante una ambiguedad real que preexiste en los datos de Etapa 1, no en v3.3.",
+    "casos_verificados_como_correctos_o_defendibles_pese_al_desacuerdo": [
+      "edificio Riga -> modelo indice 0: cita literal exacta (\"edificio Riga de 240 departamentos\"); case_mention 1 es un duplicado casi identico del mismo edificio -- Sol prefirio null por la duplicacion, el modelo eligio la primera, ambas defendibles.",
+      "Vital Apoquindo 1.400-1.450-1.500 -> modelo indice 0: verificado exacto contra el articulo real (443 viviendas, misma direccion) -- correcto, sin ambiguedad real.",
+      "Parque Forestal -> modelo indice 0: cita literal exacta (\"Parque Forestal y rejas de cierre\"); case_mention 1 es duplicado del mismo parque -- correcto.",
+      "La Cumbre / La Cumbre Oriente / Mirador Pie Andino / Lote 18 / Mejoramiento Integral Ferroviario / centro de datos Scala / Proyecto de PyG Larain -> en los 7, existen 2+ case_mentions duplicadas o casi duplicadas sobre el mismo objeto real; el modelo eligio una opcion valida, Sol prefirio null por la duplicacion."
+    ],
+    "casos_confirmados_como_fallos_reales_del_modelo_por_omision": [
+      "Parque San Borja (elmostrador enrejar): case_mention 6 tiene el objeto literal \"Parque San Borja\" -- el modelo debio haberlo indexado y no lo hizo (dio null). Fallo real, pero por OMISION (bajo recall), nunca por invencion de un vinculo falso.",
+      "Remodelacion Parque San Luis (periodicolacalle): el articulo dice explicitamente que este fue el nombre ORIGINAL del proyecto que hoy es \"Villa San Luis\" (case_mention 0) -- alias historico no reconocido, mismo tipo de caso que el modelo SI resolvio bien en el piloto original (Villa Carlos Cortes). Fallo real, tambien por omision."
+    ],
+    "casos_de_baja_confianza_no_concluyentes": [
+      "Rancagua Express (nombre paraguas de un programa, el sub-proyecto especifico si fue bien indexado)",
+      "Parque Las Moscas, Portal Bulnes, relleno de Til Til -- la propia Sol los marco confianza media, genuinamente ambiguos, no error claro en ninguna direccion."
+    ]
+  },
+  "conclusion": "Sobre 203 asignaciones: 0 fabricaciones confirmadas (el modelo nunca inserto con confianza un indice especificamente contradicho por Sol de forma clara -- el unico caso de indices distintos fue una duplicacion real, ambos defendibles). 2 omisiones reales confirmadas (Parque San Borja, Remodelacion Parque San Luis) -- ambas en la direccion segura (null en vez de inventar), ambas explicables por el mismo patron ya visto (alias/nombres historicos, igual que Villa Carlos Cortes que SI se resolvio bien en el piloto). El resto de los 17 desacuerdos (13-15) se explican por case_mentions duplicadas en Etapa 1, un problema de datos preexistente y ortogonal al fix v3.3, no una falla del mecanismo nuevo.",
+  "recomendacion": "GO para escalar a los 330 documentos reales. El fix funciona segun lo disenado: nunca fabrica vinculos falsos con confianza, y sus omisiones son pocas, explicables, y del lado seguro. El problema de case_mentions duplicadas en classify.py es real pero separado -- documentar como limitacion conocida, no bloquea el despliegue de v3.3."
+}

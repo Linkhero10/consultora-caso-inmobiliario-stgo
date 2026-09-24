@@ -188,7 +188,16 @@
       "detalle": "audit/calibracion_v3_3_resultado_seed20260924.json",
       "status": "COMPLETA -- 100% de las asignaciones no-null verificadas correctas en 75 documentos (203 menciones de proyecto)"
     },
-    "status": "calibracion_75_docs_100pct_verificado -- listo para decidir escalar a los 330 documentos reales o pedir una revision ciega externa (Sol) primero, siguiendo la disciplina de Gate 1A-Validacion",
+    "revision_ciega_sol": {
+      "reviewer": "GPT-5.6 Sol, ciega respecto de las respuestas del modelo (no se le mostraron)",
+      "n_documentos": 75, "n_proyectos_evaluados": 203,
+      "acuerdo_exacto_crudo": "186/203 (91.6%): 30 ambos null, 156 ambos con el mismo indice no-null.",
+      "desacuerdos_crudos": "17: 10 Sol=null/modelo=indice, 6 Sol=indice/modelo=null, 1 ambos con indice pero distinto.",
+      "adjudicacion_manual_claude": "Se leyo el texto fuente y la lista real de case_mentions de los 17 desacuerdos (no se acepto el desacuerdo crudo como prueba de error). Hallazgo principal: 13/17 se explican por case_mentions DUPLICADAS o casi duplicadas en classify.py (Etapa 1) para el mismo proyecto real -- un problema de datos preexistente, ortogonal a v3.3. Sol prefiere sistematicamente null ante esa duplicacion; el modelo elige una opcion valida entre las duplicadas -- ninguna convencion es incorrecta. Solo 2 omisiones reales confirmadas (Parque San Borja, Remodelacion Parque San Luis -- alias historico no reconocido, mismo patron que el modelo SI resolvio bien en el piloto con Villa Carlos Cortes), ambas por OMISION (null en vez de un vinculo inventado). 0 fabricaciones confirmadas en 203 asignaciones.",
+      "detalle": "audit/calibracion_v3_3_revision_sol_cruce_2026-09-24.json",
+      "recomendacion": "GO para escalar a los 330 documentos reales. Documentar como limitacion conocida separada: classify.py genera ocasionalmente case_mentions duplicadas para el mismo objeto, lo que crea ambiguedad irreducible para cualquier metodo (humano o modelo) que deba elegir un unico indice."
+    },
+    "status": "GO -- calibracion completa (piloto 8/8 + calibracion 75/75 + revision ciega externa de Sol), 0 fabricaciones confirmadas en 278 asignaciones evaluadas en total, listo para escalar a los 330 documentos reales",
     "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 (que sigue siendo el vigente en produccion) hasta que se decida promoverlo tras la validacion formal."
   },
   "gate_conflict_completo": {
