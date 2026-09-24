@@ -197,7 +197,14 @@
       "detalle": "audit/calibracion_v3_3_revision_sol_cruce_2026-09-24.json",
       "recomendacion": "GO para escalar a los 330 documentos reales. Documentar como limitacion conocida separada: classify.py genera ocasionalmente case_mentions duplicadas para el mismo objeto, lo que crea ambiguedad irreducible para cualquier metodo (humano o modelo) que deba elegir un unico indice."
     },
-    "status": "GO -- calibracion completa (piloto 8/8 + calibracion 75/75 + revision ciega externa de Sol), 0 fabricaciones confirmadas en 278 asignaciones evaluadas en total, listo para escalar a los 330 documentos reales",
+    "escalamiento_248_restantes": {
+      "presupuesto_solicitado_usd": 1.75, "costo_real_usd": 1.80816,
+      "resultado": "228/248 escritos, 20 errores. Causa de los 20: saldo real de OpenRouter agotado a mitad de la corrida (169 rechazos HTTP 402 registrados, la mayoria recuperados por reintento, 20 agotaron los 5 reintentos). $0 de costo incurrido en esos 20 (un 402 se rechaza antes de generar). invalid_records.jsonl vacio -- ningun fallo de contenido/schema, puro agotamiento de saldo.",
+      "total_acumulado": "piloto 8 + calibracion 75 + escalamiento 228 = 311/330 (94.2%) del universo real procesado con v3.3, mismo modelo/esfuerzo/schema en las 3 corridas.",
+      "pendiente": "20 documentos, retomables sin duplicar costo apenas haya saldo de API (already_enriched_urls() los filtra automaticamente).",
+      "detalle": "audit/escalamiento_v3_3_resultado_2026-09-24.json"
+    },
+    "status": "311/330 (94.2%) PROCESADO -- 20 documentos pendientes solo por saldo de API agotado, no por ningun error de contenido/schema/logica. El contrato v3.3 sigue sin promoverse a produccion (dashboard/warehouse) hasta decision explicita.",
     "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 (que sigue siendo el vigente en produccion) hasta que se decida promoverlo tras la validacion formal."
   },
   "gate_conflict_completo": {

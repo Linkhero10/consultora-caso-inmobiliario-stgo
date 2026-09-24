@@ -1,0 +1,20 @@
+{
+  "descripcion": "Escalamiento v3.3 (2026-09-24) sobre los 248 documentos restantes del universo real de 330, tras piloto (8, 100% verificado) + calibracion (75, revision ciega de Sol -> GO). Mismo modelo (GPT-6 Luna), mismo esfuerzo (xhigh), mismo schema/prompt v3.3 -- ningun parametro de calidad cambio.",
+  "presupuesto_solicitado_usd": 1.75,
+  "costo_real_usd": 1.8081554249999985,
+  "resultado": {
+    "escritos": 228,
+    "errores": 20,
+    "total_intentado": 248
+  },
+  "causa_de_los_20_errores": "Saldo real de la cuenta de OpenRouter agotado a mitad de la corrida -- 169 rechazos HTTP 402 (Payment Required) registrados en el log; la mayoria se recupero por reintento automatico (headroom liberado por solicitudes concurrentes que terminaban), pero 20 agotaron los 5 reintentos. Costo incurrido en esos 20: /usr/bin/bash (un 402 se rechaza ANTES de generar, nunca se cobra). invalid_records.jsonl vacio -- ninguno de los 20 fue un fallo de contenido/schema, todos son puro agotamiento de saldo.",
+  "total_acumulado_v3_3": {
+    "piloto": 8,
+    "calibracion": 75,
+    "escalamiento": 228,
+    "total_procesado_del_universo_330": 311,
+    "pendiente": 20,
+    "urls_pendientes": "ver lista completa en el log de esta corrida -- retomables sin duplicar costo apenas haya saldo (already_enriched_urls() los filtra automaticamente)."
+  },
+  "status": "311/330 (94.2%) del universo real procesado con v3.3. 20 documentos pendientes exclusivamente por saldo de API agotado -- ningun error de contenido, schema o logica."
+}
