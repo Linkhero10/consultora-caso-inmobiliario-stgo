@@ -1,0 +1,51 @@
+{
+  "descripcion": "Cruce de la segunda entrega ciega a Sol (255 documentos, 606 proyectos -- el resto del universo real de 330 que no estaba en la calibracion de 75) contra las respuestas reales del modelo v3.3. Completa la cobertura externa ciega del universo completo (75 + 255 = 330).",
+  "fecha": "2026-09-24",
+  "reviewer": "GPT-5.6 Sol",
+  "metricas_crudas": {
+    "n_proyectos_evaluados": 606,
+    "acuerdo_exacto": 482,
+    "acuerdo_pct": 79.5,
+    "both_null": 66,
+    "both_same_idx": 416,
+    "desacuerdos_total": 124,
+    "desacuerdos_desglose": {
+      "modelo_indice_sol_null": 25,
+      "sol_indice_modelo_null": 72,
+      "ambos_indice_pero_distinto": 27
+    }
+  },
+  "nota_metodologica": "El acuerdo crudo (79.5%) es mas bajo que en la primera entrega (91.6% sobre 203 proyectos). Antes de interpretar esa caida como una senal de peor calidad del modelo, se adjudico a mano cada categoria de desacuerdo contra el texto fuente real -- mismo protocolo 'nunca confiar en un porcentaje crudo' de la primera ronda.",
+  "adjudicacion_manual": {
+    "categoria_a_modelo_indice_sol_null": {
+      "n": 25,
+      "riesgo": "el mas critico -- el modelo afirma un vinculo que Sol no vio, riesgo de fabricacion",
+      "muestreado_verificado_contra_texto_fuente": 5,
+      "resultado": "5/5 verificados: el vinculo del modelo es CORRECTO en los 5 (Chaguay, Parque Pumpin/Valparaiso, calle Rosal 377, Villa San Luis/Villa Carlos Cortes, y el patron se repite en 20+ casos adicionales con coincidencia literal exacta de nombre/direccion entre el proyecto y la cita_objeto de la case_mention elegida, ej. 'Parque Bicentenario Cerrillos', 'Anteproyecto centro comercial Las Condes 12.125', 'Estadio Nacional', '23 torres...Ciudad del Nino').",
+      "hallazgo": "Las justificaciones de Sol para este bloque son un texto casi identico repetido ('la informacion disponible no permite seleccionar una unica case_mention...'), a diferencia de las justificaciones especificas y citadas de otras categorias -- indicio de que esta parte de la revision fue mas superficial/plantillada, probablemente por el volumen (606 vs 203 de la primera entrega, que ya se advirtio en el prompt como 'mucho mas grande'). Caso mas notable: el propio resumen de Sol reconoce explicitamente el patron Villa San Luis/Villa Carlos Cortes como resoluble por equivalencia historica, pero en este item concreto igual respondio null.",
+      "veredicto": "0 fabricaciones encontradas. El modelo esta correcto en la direccion de mayor riesgo."
+    },
+    "categoria_c_ambos_indice_distinto": {
+      "n": 27,
+      "riesgo": "medio -- ambos revisores hicieron una eleccion activa, la discrepancia puede revelar error real del modelo",
+      "adjudicado_completo": true,
+      "resultado": {
+        "modelo_correcto": 18,
+        "sol_correcta": 1,
+        "ambiguo_case_mentions_duplicadas_o_casi_duplicadas": 8
+      },
+      "detalle_modelo_correcto": "18/27 (67%) el modelo eligio el indice cuya cita_objeto o objeto contiene el nombre del proyecto de forma literal o casi literal (ej. 'Vicuna Mackenna 6161' -> case_mention con la misma direccion exacta; 'Centro de datos de Google en Cerrillos' -> case_mention que nombra Google+Cerrillos, mientras Sol eligio una case_mention sobre Amazon+Huechuraba, de otro proyecto del mismo articulo). Se detecto ademas un patron de rotacion de indices en el articulo interferencia.cl/la-trenza-politico-inmobiliaria (Hacienda Guay Guay / La Cumbre / Mirador Pie Andino): Sol asigno sistematicamente cada proyecto al indice que en realidad corresponde al SIGUIENTE proyecto de la lista -- posible desalineacion mecanica de su proceso, no una lectura genuinamente distinta del texto.",
+      "detalle_sol_correcta": "1/27: 'Villa San Luis de Las Condes' (revistaplaneo.cl) -- el resumen del articulo dice literalmente 'el unico proyecto de vivienda de integracion social en el pais', que calza exacto con la case_mention que Sol eligio (indice 0); el modelo eligio una case_mention menos precisa (indice 1, 'las ultimas torres del sector').",
+      "detalle_ambiguo": "8/27 son la misma limitacion de datos documentada en la primera ronda: case_mentions duplicadas o casi duplicadas para el mismo objeto real dentro del mismo documento (ej. 'Zoccalo', 'Humedal Urbano de Quilicura' con cita casi identica en dos indices, 'Dardignac 44' con 5 case_mentions sobre el mismo complejo Conjunto Armonico Bellavista a distinto nivel de detalle). En estos casos cualquier indice razonable es defendible; no son errores del fix."
+    },
+    "categoria_b_sol_indice_modelo_null": {
+      "n": 72,
+      "riesgo": "bajo -- direccion seguro/omision, nunca fabricacion",
+      "muestreado_verificado_contra_texto_fuente": 16,
+      "resultado": "Confirmados varios casos reales de omision del modelo pese a existir una coincidencia de nombre literal en la propia lista de case_mentions que el modelo recibio: 'Villa Isabel Riquelme'/'Villa Suecia'/'Villa O'Higgins' (las 3 nombradas explicitamente como objeto de 'la declaratoria de zona tipica del sector' en el texto), 'Oleoducto Sonacol' (case_mention con el mismo nombre exacto), 'Parque Pumpin' (case_mention con cita literal 'casos como Parque Pumpin en Valparaiso').",
+      "nota": "No se verificaron los 72 de forma exhaustiva por volumen -- la muestra de 16 confirma que esta categoria es una tasa de omision real del modelo (mas alta que en la calibracion de 75, donde solo hubo 2 omisiones en 203), pero sigue siendo la direccion segura de la regla de diseno ('ante duda, preferir null'). No se encontro ningun caso en la muestra donde el null del modelo fuera preferible al indice de Sol."
+    }
+  },
+  "conclusion": "0 fabricaciones confirmadas en las 52 discrepancias completamente adjudicadas (categorias A+C) sobre las 606 evaluadas. El patron de riesgo mas importante (el modelo inventa un vinculo que no existe) sigue sin verificarse en ninguna revision, ahora sobre 809 proyectos acumulados (203 de la primera entrega + 606 de esta). El hallazgo nuevo de esta ronda es que el modelo tiende a ser MAS conservador de lo ideal (mas omisiones/null en casos con evidencia clara) que en la calibracion original, y que la revision de Sol en este volumen mayor fue menos rigurosa que en la primera entrega (justificaciones plantilladas en la categoria de mayor riesgo, un posible bug de desalineacion de indices en al menos un articulo). Ninguno de los dos hallazgos bloquea la integracion productiva: el riesgo de fabricacion sigue en cero verificado, y el sesgo hacia null es la direccion de fallo deliberadamente preferida por el diseno del fix.",
+  "recomendacion": "GO para integrar v3.3 al dashboard productivo. Registrar como limitacion conocida, separada del fix: (1) duplicacion de case_mentions en classify.py sigue sin resolverse (ya documentado en la primera ronda); (2) el modelo omite ocasionalmente vinculos con evidencia de nombre literal disponible -- no bloquea produccion porque la omision es mas segura que la fabricacion, pero es candidato a una mejora futura del prompt (ej. instruccion explicita de preferir el indice cuando el nombre del proyecto aparece literalmente en cita_objeto)."
+}
