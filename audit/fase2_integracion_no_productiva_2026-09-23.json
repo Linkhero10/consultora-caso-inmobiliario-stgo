@@ -1,0 +1,658 @@
+{
+  "descripcion": "Fase 2 (integracion no productiva) del diseno de geografia case_mention-level. NO modifica warehouse ni dashboard_data.py -- solo mide que pasaria si se usara project_geography.py.",
+  "hashes": {
+    "warehouse.sqlite": "673a433398b46e320dd48dfffb72f46f10f29936e2bd3bc0ed9047761fea0d08",
+    "src/project_geography.py": "617a086639e3365b19fe40c6f30d4608a8ca3353c138116b40622c98e3e56934",
+    "src/project_case_mention.py": "d071934066de075dead8e3f888285795c5bd9914fad0bd065b161ecbe6241cb0"
+  },
+  "regla_dura_1_sin_fuga_de_pares_sospechosos": {
+    "n_pares_sospechosos_totales_118": 208,
+    "n_pares_que_llegaron_a_direct_attribution": 0,
+    "resultado": "PASA"
+  },
+  "regla_dura_2_document_level_y_ambiguous_nunca_directos": {
+    "n_filas_document_level_o_ambiguous_en_direct_attribution": 0,
+    "resultado": "PASA"
+  },
+  "resumen_geography_status": {
+    "direct_attribution": 522,
+    "excluded_not_eligible": 186,
+    "unresolved_document_level": 638,
+    "direct_link_no_comuna": 40,
+    "ambiguous_candidate": 57,
+    "non_included_not_eligible": 38
+  },
+  "campos_no_afectados_identicos_al_baseline": {
+    "resultado": "PASA",
+    "sha256_baseline": "18b4f4a9538ceb8fe6dfa776010261ea469b0af940e3d714ea76a47276a441c2",
+    "sha256_ahora": "18b4f4a9538ceb8fe6dfa776010261ea469b0af940e3d714ea76a47276a441c2",
+    "nota": "n_conflicts_total, n_conflicts_backed, n_documents, n_actors y n_projects (el actual, sin cambiar) deben ser byte-identicos al baseline -- confirma que este ejercicio es puramente de medicion, no toco nada real."
+  },
+  "comparacion_n_projects_actual_vs_case_mention_level": {
+    "n_comunas_con_diferencia": 27,
+    "total_delta": 415,
+    "detalle": [
+      {
+        "codigo_comuna_ine": "13106",
+        "comuna": "ESTACIÓN CENTRAL",
+        "n_projects_actual_document_level": 87,
+        "n_projects_case_mention_level_v1": 27,
+        "delta": 60
+      },
+      {
+        "codigo_comuna_ine": "13114",
+        "comuna": "LAS CONDES",
+        "n_projects_actual_document_level": 82,
+        "n_projects_case_mention_level_v1": 39,
+        "delta": 43
+      },
+      {
+        "codigo_comuna_ine": "13132",
+        "comuna": "VITACURA",
+        "n_projects_actual_document_level": 59,
+        "n_projects_case_mention_level_v1": 26,
+        "delta": 33
+      },
+      {
+        "codigo_comuna_ine": "13120",
+        "comuna": "ÑUÑOA",
+        "n_projects_actual_document_level": 52,
+        "n_projects_case_mention_level_v1": 22,
+        "delta": 30
+      },
+      {
+        "codigo_comuna_ine": "13110",
+        "comuna": "LA FLORIDA",
+        "n_projects_actual_document_level": 42,
+        "n_projects_case_mention_level_v1": 17,
+        "delta": 25
+      },
+      {
+        "codigo_comuna_ine": "13115",
+        "comuna": "LO BARNECHEA",
+        "n_projects_actual_document_level": 43,
+        "n_projects_case_mention_level_v1": 20,
+        "delta": 23
+      },
+      {
+        "codigo_comuna_ine": "13123",
+        "comuna": "PROVIDENCIA",
+        "n_projects_actual_document_level": 43,
+        "n_projects_case_mention_level_v1": 20,
+        "delta": 23
+      },
+      {
+        "codigo_comuna_ine": "13124",
+        "comuna": "PUDAHUEL",
+        "n_projects_actual_document_level": 52,
+        "n_projects_case_mention_level_v1": 30,
+        "delta": 22
+      },
+      {
+        "codigo_comuna_ine": "13107",
+        "comuna": "HUECHURABA",
+        "n_projects_actual_document_level": 34,
+        "n_projects_case_mention_level_v1": 15,
+        "delta": 19
+      },
+      {
+        "codigo_comuna_ine": "13101",
+        "comuna": "SANTIAGO",
+        "n_projects_actual_document_level": 37,
+        "n_projects_case_mention_level_v1": 20,
+        "delta": 17
+      },
+      {
+        "codigo_comuna_ine": "13119",
+        "comuna": "MAIPÚ",
+        "n_projects_actual_document_level": 29,
+        "n_projects_case_mention_level_v1": 13,
+        "delta": 16
+      },
+      {
+        "codigo_comuna_ine": "13125",
+        "comuna": "QUILICURA",
+        "n_projects_actual_document_level": 25,
+        "n_projects_case_mention_level_v1": 10,
+        "delta": 15
+      },
+      {
+        "codigo_comuna_ine": "13102",
+        "comuna": "CERRILLOS",
+        "n_projects_actual_document_level": 30,
+        "n_projects_case_mention_level_v1": 16,
+        "delta": 14
+      },
+      {
+        "codigo_comuna_ine": "13127",
+        "comuna": "RECOLETA",
+        "n_projects_actual_document_level": 23,
+        "n_projects_case_mention_level_v1": 10,
+        "delta": 13
+      },
+      {
+        "codigo_comuna_ine": "13122",
+        "comuna": "PEÑALOLÉN",
+        "n_projects_actual_document_level": 25,
+        "n_projects_case_mention_level_v1": 15,
+        "delta": 10
+      },
+      {
+        "codigo_comuna_ine": "13113",
+        "comuna": "LA REINA",
+        "n_projects_actual_document_level": 18,
+        "n_projects_case_mention_level_v1": 9,
+        "delta": 9
+      },
+      {
+        "codigo_comuna_ine": "13118",
+        "comuna": "MACUL",
+        "n_projects_actual_document_level": 15,
+        "n_projects_case_mention_level_v1": 7,
+        "delta": 8
+      },
+      {
+        "codigo_comuna_ine": "13121",
+        "comuna": "PEDRO AGUIRRE CERDA",
+        "n_projects_actual_document_level": 9,
+        "n_projects_case_mention_level_v1": 1,
+        "delta": 8
+      },
+      {
+        "codigo_comuna_ine": "13104",
+        "comuna": "CONCHALÍ",
+        "n_projects_actual_document_level": 10,
+        "n_projects_case_mention_level_v1": 4,
+        "delta": 6
+      },
+      {
+        "codigo_comuna_ine": "13112",
+        "comuna": "LA PINTANA",
+        "n_projects_actual_document_level": 7,
+        "n_projects_case_mention_level_v1": 2,
+        "delta": 5
+      },
+      {
+        "codigo_comuna_ine": "13130",
+        "comuna": "SAN MIGUEL",
+        "n_projects_actual_document_level": 12,
+        "n_projects_case_mention_level_v1": 7,
+        "delta": 5
+      },
+      {
+        "codigo_comuna_ine": "13128",
+        "comuna": "RENCA",
+        "n_projects_actual_document_level": 10,
+        "n_projects_case_mention_level_v1": 6,
+        "delta": 4
+      },
+      {
+        "codigo_comuna_ine": "13126",
+        "comuna": "QUINTA NORMAL",
+        "n_projects_actual_document_level": 7,
+        "n_projects_case_mention_level_v1": 4,
+        "delta": 3
+      },
+      {
+        "codigo_comuna_ine": "13129",
+        "comuna": "SAN JOAQUÍN",
+        "n_projects_actual_document_level": 5,
+        "n_projects_case_mention_level_v1": 2,
+        "delta": 3
+      },
+      {
+        "codigo_comuna_ine": "13108",
+        "comuna": "INDEPENDENCIA",
+        "n_projects_actual_document_level": 6,
+        "n_projects_case_mention_level_v1": 4,
+        "delta": 2
+      },
+      {
+        "codigo_comuna_ine": "13109",
+        "comuna": "LA CISTERNA",
+        "n_projects_actual_document_level": 3,
+        "n_projects_case_mention_level_v1": 2,
+        "delta": 1
+      },
+      {
+        "codigo_comuna_ine": "13103",
+        "comuna": "CERRO NAVIA",
+        "n_projects_actual_document_level": 0,
+        "n_projects_case_mention_level_v1": 2,
+        "delta": -2
+      }
+    ],
+    "ADVERTENCIA_magnitud_mayor_a_lo_estimado_en_fase_0": "La medicion de Fase 0/blind-spot solo excluia los 118 pares con evidencia CONTRADICTORIA (excluded_case_mention/non_included_case_mention), prediciendo ~90 pares removidos. La propuesta de diseno recomendada exige ademas verified_direct (no solo ausencia de contradiccion) + comuna propia resuelta -- esto TAMBIEN excluye los 638 document_level_candidate (el proyecto aparece en el documento pero ninguna case_mention tiene una cita de objeto que lo respalde). Efecto real medido: 27 comunas cambian, suma total de n_projects pasa de 765 a 350 (-54%) en esas comunas. Esto es una redefinicion sustancialmente mas estricta del indicador \"Proyectos\" que lo inicialmente estimado -- exactamente el riesgo que la propia propuesta de diseno anticipa en su tabla de riesgos (\"Menor n_projects se interpreta como desaparicion de proyectos\") y para el cual ya prescribe mitigacion: renombrar el indicador, mostrar cobertura/no-resuelto por separado, y conservar la medicion document-level anterior como serie historica.",
+    "magnitud_total": {
+      "comunas_con_diferencia": 27,
+      "suma_n_projects_antes": 765,
+      "suma_n_projects_despues": 350,
+      "variacion_pct": -54.2
+    }
+  },
+  "regression_ids": {
+    "descripcion": "IDs project_id|codigo_comuna_ine de cada atribucion direct_attribution -- para que una reejecucion futura pueda diffear altas/bajas especificas, no solo el total agregado.",
+    "n_ids": 522,
+    "sha256": "91eaa2b05b62a04714e1ea5ccd2bc29650af2d0b90bf9a88c9f6747c8ca52afa"
+  },
+  "n_projects_v2_por_comuna": {
+    "13114": [
+      "06cac2c4b094ac1ed38ac40b",
+      "0913e1f92700773a70c2dd0d",
+      "0c411864bb77a1c65e85e196",
+      "124a6f29f9096a46e6117ed7",
+      "13d3e8b584350274759e6065",
+      "1f44e66d31c41174eed3c165",
+      "23c289bbc0d09a3d0b71a6aa",
+      "2a50af5242f6fa521f1247ea",
+      "4414e1024e8bba2d3f337c4f",
+      "4951126db3b4cd8dd16d08e4",
+      "4acc6611fad8c55f8f538bcf",
+      "526b792badf047862c170a4e",
+      "56029c529c4c61cb488f342c",
+      "563986eac211be6beb5de3bc",
+      "5861af1942726c7bf6546aa9",
+      "5e8bc3f7a3fc027b5a062246",
+      "623ed9e19dc274ad6b3ae8dd",
+      "6f7fb291fdb161fc536f3262",
+      "708353b6e07226824317b02d",
+      "78a738016ed2fc76ff4fa288",
+      "8e19db86728d7ec62f8244e0",
+      "8f276ad881cff4c732236787",
+      "95d84991f800814ac4f10ed8",
+      "97c0825984bf2794409d77de",
+      "9e6f5d0d9f4b8223dc9c6298",
+      "a276e5326758970075e057b5",
+      "a71127327712c32eb584b209",
+      "a99008eb583574d1ba848496",
+      "aee6f5fa97792a0322da7a0c",
+      "b092024c2bfb5a9472ef90bc",
+      "b83676a1dfc657fda2fe2305",
+      "c5e14c0c21e5f47cd8988b3b",
+      "cb58ab6cdf313cc5dd1deb27",
+      "ce2339c9c8060e788149ac58",
+      "cf1d620d80045e870e995d34",
+      "cfe0f5b947bd40596cf5efc9",
+      "e217fb1e4569d4bceeba10f8",
+      "f8e4c09fed2dea777d8eaf85",
+      "fe0f38566717aa34de32376a"
+    ],
+    "13120": [
+      "055d7585b0599a8090836e58",
+      "21ef01a5f5ea1b84eb392920",
+      "2396059a776af42c809a7195",
+      "2666d97c7125f5a178d41c3b",
+      "36bd93d333d00c28f2e840a2",
+      "3fa82bcc9bd6c8bffba57d08",
+      "744f0e5bf37d911f993ce9ee",
+      "82a2b6442eedfbc0d0eeae2e",
+      "9669a78a07de32dc53a9cefd",
+      "99981a28a47c0a06ef007b3f",
+      "a502f0079a094cb3bd90cc60",
+      "aef943251b1be918370edf5d",
+      "b93208dc0c925cb4e63eb2dd",
+      "ba2bad7634b8d4731a8d74c6",
+      "ba96a35216f3b3fe00fb1a47",
+      "c3000f181429c4318268a403",
+      "c3bf1d136ab289088be1db41",
+      "c901564e7d569ab34d3ff8ad",
+      "de3f1c92de27d2bdbafd6749",
+      "f3653cd3f4047d7d2fc4134a",
+      "fbf988524a9e1998d29128c8",
+      "fcda5f17d8f9a5aca734f967"
+    ],
+    "13102": [
+      "0309797d2ce0dc01e690a0b5",
+      "0880b440928835d321bfb866",
+      "26f6b767ab873001b6a725b0",
+      "3ce6d0d030381374a3c026f7",
+      "4596755c20f8748af47457ab",
+      "476e21ff30d4f6c5e653ce66",
+      "550a0316d0b4935449c9f900",
+      "6a82b68223a8c41f15122f31",
+      "8df9eae26a4ac5817a0a6e2b",
+      "96d6e7e07e71dcf3d5c5ce48",
+      "ac866e9e2fa798fbf4272e1c",
+      "b195d7c038b7418fa163a104",
+      "df460c60b8334968790ee638",
+      "eb3643e037326f2ddbd80f9f",
+      "f4cef477adb06d2e318077cf",
+      "faa54e0ad6252ebe8973026f"
+    ],
+    "13124": [
+      "0913ce433cf7906fb082e70c",
+      "0c8df4572d8f6dbefeaecc7e",
+      "1261f2937bace054f9142b78",
+      "175d44989b9a6f3cdad9ad89",
+      "21cf546ca12599e99bca12be",
+      "231f1e87d33d59539c58631c",
+      "2e6dc0139b0cd41e9e8463ad",
+      "35ebcc65370313ea0b363614",
+      "494764f5783042274159dc35",
+      "4a0bc8713f5ace49ad18aad8",
+      "5155cde8dd90387a2a95dc88",
+      "6c80accab1cdea5ac54c41c4",
+      "6ca13f1d95815edd7f6643da",
+      "7a6e6ab2b3e62e33855ba588",
+      "7e360b7752db0ed0f697a866",
+      "8186c012953f2a067ec3feae",
+      "82e47af4deaa8615cff8ef60",
+      "9e27334439621705513045b6",
+      "aa3de4f9328f04728a25bad9",
+      "acd271a346ba73d9c4bba96a",
+      "b0a033b5629315b5bf48dec1",
+      "bc89b63f9a1f489b8da8d739",
+      "d26f43aed7a79063ed46ba8f",
+      "d8e3dccea5045e1fcd276dbf",
+      "e1c30745abde8086367a9640",
+      "e205affd56aa0490eab0cfde",
+      "ea5d8ac70a737f8dbcdcb939",
+      "ee0a28b210a5e9734fa0505e",
+      "f357731ca824936be23891c8",
+      "f92527d1583efd71e18fcdcd"
+    ],
+    "13128": [
+      "473b44a3d3b03c567e9d90de",
+      "a3fd34b29ae683ac95ed2703",
+      "bc201650ac1061c83985c180",
+      "c0aec03825e1cfe75d8db6c1",
+      "eea08392fff0bf591b87edfd",
+      "f7155a1f65aafcd3e9c57008"
+    ],
+    "13125": [
+      "21a616d59e8eff424afb7d29",
+      "25cae387b05bcae5470b13db",
+      "2bc6817db77993a8887b7b99",
+      "49ae693ef9da8c1626c66b7c",
+      "5a0de800e98e0202e29e28cf",
+      "7870612a937c31e81aedb226",
+      "7c32e9abaeffba0db8f616b4",
+      "839ff75b83c1e9bd1751aaf5",
+      "d494fe3015b16285ed66076e",
+      "f7af03bb9fcb57b16249290a"
+    ],
+    "13122": [
+      "0b6fac5d0c02f4def12ac10d",
+      "1344cfdc1fc5bddce28ff258",
+      "1cab4a257b1d65edcc59847a",
+      "20cca7673d814f021c1393aa",
+      "3300551f194156f8fbc3da1b",
+      "4438519dcb0d46d644291705",
+      "4d71189bd26b124a3587ae02",
+      "6ba1e354072926892ccc131d",
+      "9a3e3031d9dec08df42b5ca1",
+      "a2ee6f5dab730498a34827aa",
+      "b43af1793e074ddf82325815",
+      "c02681922f8ee50bb9a7a0c5",
+      "e3b34d1054d24915dc59081f",
+      "f001faedc662d71e3a74166b",
+      "f44bbeb615662dd947f773ae"
+    ],
+    "13101": [
+      "0152a61c89e0c5542cfd854e",
+      "0e1ad62b8315f0e58d2dd1c8",
+      "1116e5a6a061a1bd4fe3499b",
+      "24d2dbbfb1399c8087f69ae7",
+      "3dae1d7eed25cb991e618cea",
+      "4773661296a3e0f3a3900093",
+      "540f61bd77747111c8262792",
+      "6adefbac34725abb9c46b40c",
+      "84bd0423ecd40d39f76f0033",
+      "91f2112803222891bec22245",
+      "a4e1e1ddd8a7332091557222",
+      "b38af461b8089a0dd1238fea",
+      "d38b895603900dfb8523e121",
+      "d615451d97ebbe5b241c5277",
+      "da915f8ce7e1eeb24acfb619",
+      "e52356cef30fd8ba574dd312",
+      "ed3e94caf1f3fffdcf9fcaae",
+      "f6a392682ed269df36b8b79e",
+      "f98ce4cc38f10a31f72d3b35",
+      "fdfe9a8a770865cab1142bb6"
+    ],
+    "13132": [
+      "008d2f365c67d75ec7b3e30a",
+      "039e9cabe8cbbc9057c053bc",
+      "099b8381c05667526259843b",
+      "1cba660973883cf9418d1c7a",
+      "2cfcdb67a6274db8af9377f6",
+      "300139aded029da5517140aa",
+      "34495dfd047595225dbad42b",
+      "480e4d7868f1bf01e419709d",
+      "4a9211bfe09688b423f03613",
+      "575554364a2f583022665618",
+      "5f80f397e76c32671b3744b6",
+      "6731bae15356326b5b1c79f8",
+      "7d5048d0367a8d31a6884eb1",
+      "7d61feef2ffe697e61b5ab41",
+      "834100aeb6926ebad0582afa",
+      "8aeb5bda1c1a653db5abef0e",
+      "993cffe9909379cb2878c651",
+      "99470116c6fdd4de1798edeb",
+      "a3752ea42b260d71a25af712",
+      "a6801d24284c085213ec7f6f",
+      "b2d5e037f8dfb338f97313e7",
+      "c824698f5351192c7f1550b4",
+      "d4231579d75e9f9807c2006f",
+      "d4a9a680433e6789b64de3b5",
+      "d836b79f2a3c8c188c918018",
+      "f3971dafbee7d68d88518821"
+    ],
+    "13115": [
+      "01d6668a9dc5aba908f81090",
+      "081cb0ccdf6afd80f18348b1",
+      "148a7960ed520bda06f4155d",
+      "1a0eab360a7f915ca54c213f",
+      "3836d0e8915179bbc6d07661",
+      "4f07e49038a30232d0dcc62f",
+      "5194147fd32056956ed8d507",
+      "57441ff3d7d81631c6d5e803",
+      "5cbadc5fde2c89ff422eb9a9",
+      "755ead160950447ecb962b26",
+      "803b8601f7f58a2b25f694cd",
+      "8a13e9059cc4e077f99996b5",
+      "90a4ce86f85ada3939123201",
+      "9bcb4cd691cf1a862287033c",
+      "9fecc1b649c23a654df089df",
+      "b086a3426cb8ae918808c4b8",
+      "b91485b8bf199c62d36d9924",
+      "e49f5f5ccaf2380e7ac66171",
+      "f48fce5c485f778d529e5128",
+      "fc085adadb1a1dc7f1ee6910"
+    ],
+    "13113": [
+      "011a911100781dd8692e1e82",
+      "59583a0b20dc0908dbe45197",
+      "9641ee069bd910dfdca4227e",
+      "be9b5a4c53c00f42648673ca",
+      "c842b3fe450afe684c1bfb14",
+      "ce1f835f474273c86a0440c1",
+      "d37ac32a45b76393d0658a4e",
+      "e456549a9815284f66aeb631",
+      "e8c4f629903b052e94c7fd74"
+    ],
+    "13107": [
+      "144a727c43ae9a104eb13eae",
+      "3d9d19aaaaaa1160dd63ba47",
+      "66fb4ea24673dd36430805d0",
+      "740105190d88fffa8e1daa1b",
+      "8f0c8f439d7f0708f1a3396b",
+      "992d853bc5aef207c3641c6f",
+      "a8f8192169f11ceeed845c76",
+      "af1375c67ea74f942b3acac0",
+      "b26c5579bcf27d3edef348f9",
+      "bfccc2aaade8650742980e81",
+      "d8f164a032cd123a395453f1",
+      "ddbf6472a958cffddd2d5fa5",
+      "e35afc615d4ca055db117d5b",
+      "f84100df444e00a1672753ec",
+      "fb97ff0702a7cdee18775bc0"
+    ],
+    "13106": [
+      "044c20f0e13a1bae6c68978c",
+      "0a9d6730e059f72c2cdec2d8",
+      "0d53f5c8178732c2f6b497af",
+      "146f82aea2e4f3223da710bc",
+      "15448afc0cfadb9a6e38f542",
+      "38869edfac45c59cf53fc504",
+      "3b16f0ad34bb2713a609fe6f",
+      "3cfa67fbcde84e9a418c9c80",
+      "4004a60833a7ef59078e9522",
+      "4825739119dd93324411dd87",
+      "4e11bf7b8d4219646afb2c0f",
+      "5d13e62735c9ddd1cb96eb2d",
+      "5eb29825e55620943717be35",
+      "5f0d73e74a3687c25cb21589",
+      "6deaf4f5ceeb44f42942af1d",
+      "79bd439d4af500f5546d2af6",
+      "88c8410a413aebc993365d59",
+      "a51431011119c0526eb4e50d",
+      "a91a4ec8177080fd3d7aaaec",
+      "b9b4ca235dfda90922cfe90d",
+      "b9f01557c70c83216d597e46",
+      "bbd9bc1aff359eeea0ed3668",
+      "d978cec1d9baac2b41b00bfe",
+      "db62798f6561c41d1f8f0c7d",
+      "dd5eab3f6f39e9b0f9e53f65",
+      "e1ac5f091975950aaec5c96c",
+      "e64cb33f7422d75ed07769f9"
+    ],
+    "13130": [
+      "11693429984c7a39a3f190da",
+      "1ef9a6090c8fed40c1289147",
+      "56e38026f850dc7badd03854",
+      "68c8232920e2322af8bfb4d7",
+      "9b08fd383d61970acaf38a75",
+      "a6f02232859c0fa1123cda54",
+      "f7a2e3867e0dde4ff49c2b8a"
+    ],
+    "13123": [
+      "0e1a62aee759526f24cb9bc5",
+      "2326a872cc34f21b83d57aab",
+      "2e1f63f764e3f9bddcc89bf4",
+      "3c047f776c519b6b6b0c4398",
+      "5072bb81116307703651bd30",
+      "5fc1929629635e3c71603bda",
+      "803496aefc68167d7a9c2f7b",
+      "91efbddefbb509c983717b17",
+      "9dfaea99c0b553f58dc758ae",
+      "b1efb2d50d7ddb51e7c2bace",
+      "bd53259bbb593853b7e0d980",
+      "bf0918dd51fc2ab49181863a",
+      "d10df9409211221f1f71e7d7",
+      "d8c9c6d65b8693c8027c3b61",
+      "def7ed269a2579ed617035e3",
+      "e5827e6db28637966446541f",
+      "e871a0763a3b817e48fcf6ea",
+      "e8fd7b147a07358cd8e129e9",
+      "f7effd2b6e6f4910cc89c2ce",
+      "fb512a54a688cc0dcdaf69a3"
+    ],
+    "13108": [
+      "2b5185b9ab9e659ddc404ae9",
+      "485aaa31c35c3f2b1e14efc8",
+      "ba52b0791a4aa2e61dc76d5c",
+      "e708ad3eb2e2be91d8d34bcb"
+    ],
+    "13129": [
+      "c1210d7f77f28ec81101ee8d",
+      "fdc962cc67ee4db22a0292cb"
+    ],
+    "13119": [
+      "0a7420a2f224e2831f8d5788",
+      "0b727c7a3931a81b28a3cc0a",
+      "6ba15320b79e5f5261a770dc",
+      "6bd91950355456661ab8f177",
+      "7412986c9f8e8972ad56422a",
+      "985cba68b4d01947ca8e0938",
+      "c2c192c775e76900a5a6e05a",
+      "cc06d5ea5e77c8c4e0bbee16",
+      "df9d5034a6b7b550e2e4cdc9",
+      "e8195cc466bc9d0e3251d426",
+      "e91503802a4b21857e33135f",
+      "f08c13fa4aa8671b51287600",
+      "fc6b5cc78a01bb9169ac12fb"
+    ],
+    "13118": [
+      "2996b148ae467e6b372a0f3b",
+      "2b994bad3669549bafddd9b9",
+      "7471dab4ae4171e52ed8d58a",
+      "7de57b31a4d37b73f9da9ad4",
+      "a2ba0e7d6d8c7d1e727e2c52",
+      "c74248b91732d97af38c8341",
+      "edf836753468104f5d5665d5"
+    ],
+    "13110": [
+      "01c098d19da0110f77421232",
+      "12e516639cff47b4755e232a",
+      "2054891fbeba474d6ddb56d1",
+      "230e06e14c504f53f41670d2",
+      "3abab17b7e99915da4b4757a",
+      "3fdaaa67e2cc683364d5f9f5",
+      "44598b79177f378212cf10e4",
+      "490a76dd8490af3ee018d5f7",
+      "4fc78d29b62476464dfd8a31",
+      "5eb2668a2301c8070c50b5f7",
+      "6ce84d4aec96f048c10f5cf5",
+      "7e3e003e31c01c5e62da5393",
+      "8fda600c68aed01150d2ec94",
+      "a2c7532ba5e3c22b36192ce9",
+      "c3ad664d3fd620721405c962",
+      "d6dd7a1b19b73559e5e2fe4f",
+      "fabb32bf53dc8a8a10ae04e7"
+    ],
+    "13126": [
+      "06057145396f3706f7ebdecf",
+      "12decc7c3181ac53784e44da",
+      "d222676c4204a18f3f4cae3b",
+      "f227450deec1bc8e2efe63cd"
+    ],
+    "13104": [
+      "06dcb4bccedc135d0efc7acb",
+      "50ac7432ef2fa538bc5de747",
+      "51dd3f0585cc3abcadb8ca33",
+      "576aa1d1c48874e494a25a00"
+    ],
+    "13127": [
+      "002918e11ee16a0e8bcdeb05",
+      "017a50eba17125b1fb0f4af0",
+      "20d0dbd33b855377a948aa31",
+      "2b5185b9ab9e659ddc404ae9",
+      "3c3c53234cbce2dea5c38efc",
+      "7a4072da49c6decfd6df3f01",
+      "92a260cb24bbf99ddd450c98",
+      "a812c5dd74897808e543d008",
+      "b0516aa425cae9a231da9bfb",
+      "fb49a4d680834035f4a33276"
+    ],
+    "13109": [
+      "4633a97118c8ded4ef9219de",
+      "5d7b28edf6d0aedc769e1015"
+    ],
+    "13131": [
+      "a4c932634612138738971b5d"
+    ],
+    "13111": [
+      "5b4bcbfde83d52e77bf2e450"
+    ],
+    "13103": [
+      "ac9ee854bc305a5bca934aef",
+      "e4ce47f5cff6c7d98db345e3"
+    ],
+    "13116": [
+      "31c7c624a43bdb643b475a37"
+    ],
+    "13112": [
+      "bc91dff975e756ec1d964ec3",
+      "ca85f162c1f9063c8376055c"
+    ],
+    "13121": [
+      "2cd3e904849035547f1afeb1"
+    ]
+  },
+  "determinismo_dos_corridas_independientes": {
+    "hash_corrida_1": "91eaa2b05b62a04714e1ea5ccd2bc29650af2d0b90bf9a88c9f6747c8ca52afa",
+    "hash_corrida_2": "91eaa2b05b62a04714e1ea5ccd2bc29650af2d0b90bf9a88c9f6747c8ca52afa",
+    "resultado": "PASA"
+  }
+}
