@@ -138,10 +138,11 @@ def test_project_backing_evidence_finds_matching_quote_across_documents():
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc = {"d1": ["cm1"]}
     objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
     assert len(rows) == 1
     assert rows[0]["case_mention_id"] == "cm1"
     assert rows[0]["evidence_id"] == "e1"
+    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION
 
 
 def test_project_backing_evidence_empty_when_case_mention_is_excluded():
@@ -151,7 +152,7 @@ def test_project_backing_evidence_empty_when_case_mention_is_excluded():
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc: dict = {}  # d1 no tiene ningun case_mention incluido
     objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
     assert rows == []
 
 
@@ -159,7 +160,7 @@ def test_project_backing_evidence_empty_when_no_objeto_evidence_for_that_mention
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc = {"d1": ["cm1"]}
     objeto_by_cm: dict = {}  # sin evidencia de objeto verificada para cm1
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
     assert rows == []
 
 
@@ -173,7 +174,7 @@ def test_project_backing_evidence_marks_document_level_multi_case_ambiguity():
         "cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}],
         "cm2": [{"evidence_id": "e2", "quote_text": "la Torre Central tambien", "quote_norm": "la torre central tambien"}],
     }
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm)
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
     assert len(rows) == 2
     assert {row["backing_scope"] for row in rows} == {"document_level_case_mention_without_project_link"}
     assert {row["document_case_mention_count"] for row in rows} == {2}
@@ -192,7 +193,7 @@ def test_build_conflict_backing_uniform_no_multi_case_exception():
     included_by_doc = {"d1": ["cm1"]}
     objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "algo completamente distinto", "quote_norm": "algo completamente distinto"}]}
     label, respaldo, rows = reg._build_conflict_backing(
-        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, {}
     )
     assert respaldo == "sin_respaldo_exact_quote_detectado"
     assert rows == []
@@ -212,7 +213,7 @@ def test_build_conflict_backing_label_prefers_backed_project_over_incidental_men
     included_by_doc = {"d1": ["cm1"]}
     objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "zzz proyecto real respaldado", "quote_norm": "zzz proyecto real respaldado"}]}
     label, respaldo, rows = reg._build_conflict_backing(
-        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, {}
     )
     assert label == "Zzz Proyecto Real Respaldado"
     assert respaldo == "respaldo_exact_quote_detectado"
@@ -224,10 +225,72 @@ def test_build_conflict_backing_label_prefers_backed_project_over_incidental_men
 def test_build_conflict_backing_fallback_label_when_none_backed():
     projects = [("p2", "Bbb Segundo"), ("p1", "Aaa Primero")]
     case_id_by_project = {"p1": "case1", "p2": "case1"}
-    label, respaldo, rows = reg._build_conflict_backing("conflict:x", projects, case_id_by_project, {}, {}, {})
+    label, respaldo, rows = reg._build_conflict_backing("conflict:x", projects, case_id_by_project, {}, {}, {}, {})
     assert label == "Aaa Primero"  # fallback: primero alfabetico entre TODOS
     assert respaldo == "sin_respaldo_exact_quote_detectado"
     assert rows == []
+
+
+# --- Fix 1D: integracion de v3.3 (case_mention_index verificado) al backing ---
+
+
+def test_project_backing_evidence_uses_v3_3_index_directly_when_covered():
+    """Cuando la mencion esta cubierta por v3.3 con un indice valido que pasa
+    el filtro de decision/evidencia, se usa DIRECTAMENTE ese case_mention_id
+    -- no se ejecuta ninguna comparacion de substring."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["d1:0", "d1:1"]}
+    objeto_by_cm = {
+        "d1:1": [{"evidence_id": "e1", "quote_text": "una cita que no menciona el proyecto", "quote_norm": "una cita que no menciona el proyecto"}],
+    }
+    v3_3_links = {("d1", "torre central"): 1}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links)
+    assert len(rows) == 1
+    assert rows[0]["case_mention_id"] == "d1:1"
+    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION_V3_3
+    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3
+    assert rows[0]["ambiguous_multi_case_document"] == 0
+
+
+def test_project_backing_evidence_v3_3_null_suppresses_substring_fallback():
+    """Si v3.3 dice explicitamente que ninguna case_mention es el objeto
+    (indice null), NO debe caer al substring -- v3.3 es una fuente mas
+    confiable que la heuristica para esa mencion puntual, aunque el
+    substring hubiera encontrado un match."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la torre central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): None}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links)
+    assert rows == []
+
+
+def test_project_backing_evidence_v3_3_index_excluded_gives_no_backing_no_fallback():
+    """Si v3.3 apunta a un case_mention que NO paso el filtro (no esta en
+    included_by_doc, ej. decision_final_amplio != include), no hay backing
+    por esa via -- tampoco cae al substring."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc: dict = {}  # d1:0 no esta incluido
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la torre central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 0}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links)
+    assert rows == []
+
+
+def test_project_backing_evidence_falls_back_to_substring_when_not_covered_by_v3_3():
+    """Documento fuera del universo v3.3 (no aparece en el dict): el
+    comportamiento debe ser IDENTICO al detector exact_substring_v1
+    original -- regresion cero para el resto del corpus."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["cm1"]}
+    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    rows_without_v3_3_dict = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
+    rows_with_unrelated_v3_3_dict = reg._project_backing_evidence(
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, {("otro_doc", "otro proyecto"): 0}
+    )
+    assert rows_without_v3_3_dict == rows_with_unrelated_v3_3_dict
+    assert len(rows_without_v3_3_dict) == 1
+    assert rows_without_v3_3_dict[0]["detector_version"] == reg.DETECTOR_VERSION
 
 
 def test_backing_summary_exposes_partial_coverage_and_label_source():
@@ -467,7 +530,16 @@ def test_aeropuerto_los_cerrillos_current_fix1a_state():
     solo que la regla de respaldo se aplico sin excepcion automatica. El
     resultado empírico publicado de Fix 1A se fija explícitamente aquí para
     que una reconstrucción silenciosa del warehouse no pueda cambiarlo sin
-    hacer fallar la regresión."""
+    hacer fallar la regresión.
+
+    [ACTUALIZADO Fix 1D, 2026-09-24] n_backing subio de 1 a 4: la mencion
+    'Ciudad Portal Bicentenario' de este conflicto ahora esta cubierta por
+    v3.3 (detector_version='v3_3_verified_index'), que la ancla a UN
+    case_mention_id real -- pero ese case_mention tiene 4 citas 'objeto'
+    verificadas distintas (evidence_id ...:objeto:0 a ...:objeto:3), y el
+    diseno registra 1 fila de provenance por cada (case_mention, evidencia)
+    -- mismo grano que ya usaba el detector exact_substring_v1 original.
+    Verificado a mano contra el warehouse real, no es una regresion."""
     conn = _connect_or_skip()
     row = conn.execute(
         "SELECT n_case_ids, respaldo_evidencia, "
@@ -480,7 +552,7 @@ def test_aeropuerto_los_cerrillos_current_fix1a_state():
     n_case_ids, respaldo, n_backing = row
     assert n_case_ids == 2  # sigue siendo multi-case (Fix 1B no aplicado todavía)
     assert respaldo == "respaldo_exact_quote_detectado"
-    assert n_backing == 1
+    assert n_backing == 4
 
 
 def test_hospital_ochagavia_pac_document_no_longer_focal():
@@ -618,6 +690,9 @@ def test_fix_1c_ronda_4_ivo_gasic_vespucio_oriente_ya_no_focal():
 
 
 def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
+    """Fix 1D: ademas del scope documental original (exact_substring_v1),
+    ahora tambien es valido el scope a nivel de mencion verificada por v3.3
+    -- ambos son los UNICOS 2 valores esperados, nunca un typo nuevo."""
     conn = _connect_or_skip()
     columns = {row[1] for row in conn.execute("PRAGMA table_info(conflict_evidence_backing)")}
     assert {
@@ -625,13 +700,38 @@ def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
         "document_case_mention_count",
         "document_object_case_mention_count",
         "ambiguous_multi_case_document",
+        "detector_version",
     } <= columns
+    valid_scopes = {"document_level_case_mention_without_project_link", "mention_level_verified_index"}
     bad_scope = conn.execute(
+        "SELECT COUNT(*) FROM conflict_evidence_backing WHERE backing_scope NOT IN (%s)"
+        % ",".join("?" * len(valid_scopes)),
+        list(valid_scopes),
+    ).fetchone()[0]
+    v3_3_rows_have_correct_scope = conn.execute(
         "SELECT COUNT(*) FROM conflict_evidence_backing "
-        "WHERE backing_scope != 'document_level_case_mention_without_project_link'"
+        "WHERE detector_version = 'v3_3_verified_index' AND backing_scope != 'mention_level_verified_index'"
     ).fetchone()[0]
     conn.close()
     assert bad_scope == 0
+    assert v3_3_rows_have_correct_scope == 0
+
+
+def test_load_v3_3_verified_links_excludes_out_of_universe_url_and_parses_real_data():
+    links = reg.load_v3_3_verified_links()
+    assert len(links) > 0
+    assert all(url != reg.V3_3_URL_FUERA_DE_UNIVERSO for (url, _name) in links)
+    # al menos una entrada real con indice no nulo y una con null deben existir
+    assert any(idx is not None for idx in links.values())
+    assert any(idx is None for idx in links.values())
+
+
+def test_load_v3_3_verified_links_aborts_on_classifications_sha256_mismatch(monkeypatch):
+    import pytest
+
+    monkeypatch.setattr(reg, "CLASSIFICATIONS_SHA256_EXPECTED", "0" * 64)
+    with pytest.raises(RuntimeError, match="sha256"):
+        reg.load_v3_3_verified_links()
 
 
 def test_backing_report_count_matches_persisted_rows():

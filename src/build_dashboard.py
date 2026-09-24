@@ -142,15 +142,17 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
   <p class="note">Cada cita mostrada proviene de evidencia verificada contra el documento fuente.</p>
   <details style="margin-top:16px">
     <summary id="noBackingSummary">Conflictos sin respaldo exacto de evidencia detectado</summary>
-    <p class="note">El detector de respaldo (<code>exact_substring_v1</code>) busca una cita literal de
-    "objeto" que contenga el nombre normalizado del proyecto dentro de un documento con al menos
-    una mención incluida. El warehouse no conserva todavía un vínculo proyecto↔case_mention
-    directo, por lo que los documentos multi-caso se señalan como ambiguos. No encontrar ese
-    respaldo exacto no demuestra que el conflicto sea falso -- en la
-    muestra de calibración (N=150 casos revisados manualmente), este detector tuvo 64.5% de
-    precisión y 77.8% de recall contra errores graves. Estos conflictos siguen en el universo
-    completo y no se han descartado ni marcado como inválidos; solo quedan fuera del universo
-    analítico conservador hasta tener respaldo documental exacto.</p>
+    <p class="note">El respaldo se detecta con 2 métodos: para 330 documentos con ambigüedad real
+    (más de una mención de caso), un vínculo proyecto→mención verificado por el modelo de
+    enriquecimiento y confirmado por 2 rondas de revisión externa ciega (0 fabricaciones en 809
+    evaluaciones, <code>v3_3_verified_index</code>); para el resto del corpus, el detector original
+    (<code>exact_substring_v1</code>) busca una cita literal de "objeto" que contenga el nombre
+    normalizado del proyecto dentro de un documento con al menos una mención incluida. No encontrar
+    respaldo no demuestra que el conflicto sea falso -- en la muestra de calibración del detector
+    original (N=150 casos revisados manualmente), tuvo 64.5% de precisión y 77.8% de recall contra
+    errores graves. Estos conflictos siguen en el universo completo y no se han descartado ni
+    marcado como inválidos; solo quedan fuera del universo analítico conservador hasta tener
+    respaldo documental exacto.</p>
     <div class="conflict-list" id="noBackingList"></div>
   </details>
 </section>

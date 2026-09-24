@@ -102,7 +102,12 @@ def generate(warehouse_path: Path = WAREHOUSE_PATH, manifest_path: Path = MANIFE
     if BACKING_REPORT_PATH.exists():
         backing_report = json.loads(BACKING_REPORT_PATH.read_text(encoding="utf-8"))
         detector_versions["conflict_evidence_backing"] = {
+            # Fix 1D (2026-09-24): mas de un detector coexiste en la misma
+            # tabla (ver backing_rows_by_detector en el reporte) -- el campo
+            # singular "detector_version" queda como el mas antiguo/original
+            # por compatibilidad, pero "all" es la lista real vigente.
             "detector_version": backing_report.get("detector_version"),
+            "all_detector_versions": backing_report.get("detector_versions", [backing_report.get("detector_version")]),
             "generated_from_warehouse_sha256": backing_report.get("warehouse_sha256"),
             "report_path": "audit/conflict_evidence_backing_report.json",
         }

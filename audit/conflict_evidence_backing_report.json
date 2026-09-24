@@ -3,23 +3,23 @@
   "backing_scope": "document_level_case_mention_without_project_link",
   "backing_scope_note": "El warehouse no conserva vinculo proyecto-case_mention; las coincidencias son documentales y los documentos multi-caso quedan senalados como ambiguos.",
   "projects_total": 990,
-  "projects_with_backing": 390,
-  "projects_without_backing": 600,
+  "projects_with_backing": 437,
+  "projects_without_backing": 553,
   "conflicts_total": 839,
   "trivial_conflicts_total": 819,
-  "trivial_conflicts_without_backing": 505,
-  "conflicts_with_backing": 331,
-  "conflicts_without_backing": 508,
-  "backing_rows": 613,
-  "backing_rows_detected_raw": 614,
-  "backing_rows_persisted": 613,
-  "backing_rows_deduplicated": 1,
+  "trivial_conflicts_without_backing": 469,
+  "conflicts_with_backing": 368,
+  "conflicts_without_backing": 471,
+  "backing_rows": 949,
+  "backing_rows_detected_raw": 949,
+  "backing_rows_persisted": 949,
+  "backing_rows_deduplicated": 0,
   "coverage_backing": {
-    "total": 281,
-    "parcial": 50,
-    "ninguna": 508
+    "total": 323,
+    "parcial": 45,
+    "ninguna": 471
   },
-  "conflicts_with_ambiguous_multi_case_backing": 114,
+  "conflicts_with_ambiguous_multi_case_backing": 31,
   "calibration_n": 150,
   "calibration_error_grave": {
     "tp": 49,
@@ -41,5 +41,19 @@
     "precision": 0.579,
     "recall": 0.917
   },
-  "warehouse_sha256": "6f529ecac90f5baf64f6b9bafa2b9f6e6f9b38986a46d3aa18309a4302ba267e"
+  "detector_versions": [
+    "exact_substring_v1",
+    "v3_3_verified_index"
+  ],
+  "backing_rows_by_detector": {
+    "exact_substring_v1": 374,
+    "v3_3_verified_index": 575
+  },
+  "conflicts_with_backing_by_detector": {
+    "exact_substring_v1": 223,
+    "v3_3_verified_index": 190,
+    "ambos": 45
+  },
+  "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json); 'exact_substring_v1' sigue siendo la heuristica original de Fix 1A para las menciones que v3.3 nunca cubrio.",
+  "warehouse_sha256": "5add4f1d1ebad4457c86b53e452b4b92a36cf8a0fb2874a3629c0f65ffcabbdc"
 }

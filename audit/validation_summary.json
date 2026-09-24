@@ -219,12 +219,38 @@
       "conclusion": "0 fabricaciones confirmadas en las 52 discrepancias completamente adjudicadas (25+27) sobre 606 evaluadas, acumulando 0/255 fabricaciones confirmadas sobre 809 proyectos revisados por Sol en total (203+606). El hallazgo nuevo de esta ronda: el modelo tiende a ser mas conservador (mas omisiones) de lo visto en la calibracion original, y la revision de Sol sobre este volumen mayor fue menos rigurosa (justificaciones plantilladas, un posible bug de desalineacion de indices en un articulo). Ninguno de los dos bloquea produccion.",
       "recomendacion": "GO para integrar v3.3 al dashboard productivo. Limitacion conocida a documentar aparte (no bloqueante): el modelo omite ocasionalmente vinculos con evidencia de nombre literal disponible -- candidato a mejora futura del prompt, no a esta integracion."
     },
-    "status": "330/330 (100%) PROCESADO y 330/330 (100%) revisado externamente por Sol de forma ciega (75+255) -- 0 fabricaciones confirmadas en 809 proyectos evaluados en total. El contrato v3.3 sigue sin promoverse a produccion (dashboard/warehouse/src/dashboard_data.py, que siguen en v3.2) hasta decision explicita del usuario sobre la migracion.",
-    "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 (que sigue siendo el vigente en produccion) hasta que se decida promoverlo tras la validacion formal."
+    "status": "330/330 (100%) PROCESADO, 330/330 (100%) revisado externamente por Sol de forma ciega (75+255) -- 0 fabricaciones confirmadas en 809 proyectos evaluados en total. v3.3 YA esta integrado a produccion via Fix 1D (ver bloque fix_1d_integracion_v3_3_a_conflict abajo) -- el enrichment productivo (934 docs, warehouse_v3_2) sigue siendo v3.2, pero el case_mention_index verificado de v3.3 ya alimenta el detector de respaldo de la capa CONFLICT para los 330 documentos que cubre.",
+    "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 como enrichment productivo -- la integracion de Fix 1D consume el case_mention_index de v3.3 directamente desde Auditoria/enriquecimiento_v3_3_*/enrichment.jsonl, sin migrar la tabla enrichment_document."
+  },
+  "fix_1d_integracion_v3_3_a_conflict": {
+    "fecha": "2026-09-24",
+    "descripcion": "Integra el case_mention_index verificado de v3.3 (0 fabricaciones en 809 evaluaciones, 2 rondas de revision ciega de Sol) al detector de respaldo de Fix 1A, como una segunda fuente en la MISMA tabla conflict_evidence_backing (detector_version='v3_3_verified_index'), sin tocar el detector original (exact_substring_v1, congelado) para el resto del corpus.",
+    "cambios_codigo": [
+      "src/build_conflicts.py: load_v3_3_verified_links() (traduce case_mention_index->case_mention_id via sha256 pinneado de classifications.jsonl, excluye la URL del piloto fuera del universo de 330), _project_backing_evidence() modificado para usar el indice verificado directamente cuando la mencion esta cubierta por v3.3 (con o sin backing, nunca cae al substring en ese caso), reporte audit/conflict_evidence_backing_report.json con desglose por detector_version.",
+      "src/generate_run_manifest.py: expone all_detector_versions ademas del campo singular legado.",
+      "src/build_dashboard.py: nota del universo conservador actualizada para explicar los 2 detectores.",
+      "Eliminados src/project_case_mention.py, src/project_geography.py y sus tests dedicados -- codigo muerto (nunca conectado al pipeline productivo) que resolvia el mismo problema por texto, ahora completamente redundante. Decision explicita del usuario."
+    ],
+    "hallazgo_de_matching_real": "15.6% (126/809) de las menciones de proyecto de v3.3 no tienen ningun string identico en la lista proyectos_mencionados de v3.2 del mismo documento (son 2 corridas LLM separadas). Se usa match EXACTO normalizado (nunca substring) entre nombre v3.2 (project_mention_resolved, productivo) y nombre v3.3 -- cobertura real resultante: 575 filas de backing con detector v3_3_verified_index, no el maximo teorico.",
+    "resultado_medido": {
+      "conflicts_total": 839,
+      "conflicts_con_respaldo_antes": 331,
+      "conflicts_con_respaldo_despues": 368,
+      "conflicts_respaldados_solo_por_v3_3": 145,
+      "conflicts_respaldados_por_ambos_detectores": 45,
+      "backing_rows_exact_substring_v1": 374,
+      "backing_rows_v3_3_verified_index": 575,
+      "integrity_check": "ok",
+      "foreign_key_check_issues": 0,
+      "warehouse_sha256": "5add4f1d1ebad4457c86b53e452b4b92a36cf8a0fb2874a3629c0f65ffcabbdc"
+    },
+    "verificacion": "50 tests unitarios/integracion en tests/test_build_conflicts.py en verde (incluye 6 tests nuevos especificos de la integracion v3.3: uso directo del indice, supresion del fallback a substring tanto con null como con indice excluido por el filtro de decision, regresion identica para documentos no cubiertos por v3.3, parseo real de load_v3_3_verified_links con guard de sha256). Spot-check manual de 15 conflictos aleatorios que ganaron respaldo via v3.3 contra el warehouse real -- todos correctos (varios ya verificados a mano contra texto fuente durante la revision de Sol de esta misma sesion, ej. Zoccalo, Cerro Colorado 4661, Vicuna Mackenna 6161). Dashboard inspeccionado visualmente en el Browser pane (servido por HTTP, no file://) -- 0 errores de consola, cifras '839 conflictos registrados / 368 con respaldo' visibles.",
+    "hallazgo_colateral_importante": "Al intentar seguir el orden de reconstruccion documentado (build_projects.py primero), se descubrio que Auditoria/integracion_v1/warehouse_v3_2.sqlite (fuente que build_projects.py copia sobre data/warehouse.sqlite) fue mutado el 2026-09-23 por trabajo de investigacion de geografia (Fase 0 'congelar baseline') con un schema incompatible (tablas renombradas con sufijo _v3_2, sin document_case_unit). Correr build_projects.py sin darse cuenta sobreescribe data/warehouse.sqlite y BORRA document_case_unit de forma permanente si no se restaura desde git a tiempo -- ocurrio dos veces en esta sesion, ambas restauradas via 'git checkout -- data/warehouse.sqlite' antes de comitear nada. Se recupero corriendo python src/build_enrichment_tables.py (regenera warehouse_v3_2.sqlite con el schema correcto desde warehouse_v1.sqlite + enrichment.jsonl, deterministico). Para ESTA tarea no hizo falta: build_conflicts.py y build_dashboard.py son de solo lectura/DROP-CREATE de sus propias tablas contra data/warehouse.sqlite, nunca copian el warehouse completo, asi que se corrieron directo sin pasar por build_projects.py. PENDIENTE para una proxima sesion: decidir si Auditoria/integracion_v1/warehouse_v3_2.sqlite debe congelarse/protegerse explicitamente, o documentar mejor que build_enrichment_tables.py es la forma correcta de regenerarlo.",
+    "recomendacion": "Cerrado. v3.3 integrado a produccion via el mecanismo de backing ya validado de Fix 1A, sin regresion en el resto del corpus."
   },
   "gate_conflict_completo": {
-    "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c"],
+    "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c", "fix_1d_integracion_v3_3_a_conflict"],
     "status": "cerrado_tier_a_completo_tier_b_parcial",
-    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano. fix_1c.patron_2_tier_b_algun_solapamiento tiene 74/76 casos sin auditar individualmente, riesgo estimado bajo."
+    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano. fix_1c.patron_2_tier_b_algun_solapamiento tiene 74/76 casos sin auditar individualmente, riesgo estimado bajo. fix_1d integra v3.3 al detector de respaldo; el mapa publico (build_geography.py/manzana censal) no se toco en esta ronda."
   }
 }

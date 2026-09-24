@@ -198,6 +198,25 @@ DETECTOR_VERSION = "exact_substring_v1"
 MATCH_METHOD = "normalized_bidirectional_substring"
 BACKING_SCOPE = "document_level_case_mention_without_project_link"
 
+# Fix 1D (2026-09-24): fuente de verdad verificada, no heuristica -- ver
+# _project_backing_evidence() y load_v3_3_verified_links() mas abajo.
+DETECTOR_VERSION_V3_3 = "v3_3_verified_index"
+MATCH_METHOD_V3_3 = "model_verified_case_mention_index"
+BACKING_SCOPE_V3_3 = "mention_level_verified_index"
+
+CLASSIFICATIONS_PATH = PROJECT_ROOT / "Auditoria" / "clasificacion" / "classifications.jsonl"
+CLASSIFICATIONS_SHA256_EXPECTED = "fc96bf57a34e13a10016087efe856a30ce83b37e6a7af87631af57469d597af7"
+V3_3_ENRICHMENT_FILES = [
+    PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_3_piloto" / "enrichment.jsonl",
+    PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_3_calibracion" / "enrichment.jsonl",
+    PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_3_escalamiento" / "enrichment.jsonl",
+]
+# Unico documento del piloto v3.3 que quedo fuera de la definicion estricta
+# del universo de 330 (solo 1 case_mention) y que por eso nunca paso por
+# ninguna de las 2 rondas de revision ciega de Sol -- su dato v3.3 existe
+# pero no esta auditado externamente, asi que se excluye aqui a proposito.
+V3_3_URL_FUERA_DE_UNIVERSO = "https://www.chilevision.cl/noticias/reportajes/cronicas/suprema-falla-contra-proyecto-inmobiliario-de-dos-edificios-con-mas-de-mil-departamentos-en-estacion-central/"
+
 # El esquema actual no conserva un vinculo proyecto->case_mention. Por eso
 # las coincidencias del detector son documentales, y cualquier documento con
 # varias menciones incluidas y evidencia de objeto se marca como ambiguo.
@@ -226,15 +245,74 @@ def _mention_has_case_backing(raw_nombre_proyecto: str, objeto_quotes: list[str]
     return any(pn in q or q in pn for q in objeto_quotes if q)
 
 
+def load_v3_3_verified_links() -> dict[tuple[str, str], int | None]:
+    """Fix 1D (2026-09-24): dict[(url, nombre_normalizado)] -> case_mention_index
+    (o None si v3.3 determino explicitamente que ningun case_mention es el
+    objeto de esa mencion -- ver enrichment_prompt_v3_3.md regla 16).
+
+    Se indexa por URL (no document_id) porque se construye ANTES de tener
+    conexion al warehouse; main() lo traduce a document_id via la tabla
+    `document`. La clave de nombre usa _norm() -- el mismo normalizador que
+    ya usa este modulo para matching de evidencia -- porque v3.2 (que
+    alimenta project_mention_resolved, la tabla productiva) y v3.3 son dos
+    corridas LLM SEPARADAS sobre el mismo documento: el nombre de un mismo
+    proyecto puede venir fraseado distinto entre ambas (confirmado
+    empiricamente: 15.6% de las 809 menciones v3.3 no tienen ningun string
+    identico en la lista v3.2 del mismo documento). Se usa match exacto
+    normalizado, nunca substring -- un match impreciso aqui reasignaria el
+    indice verificado de UN proyecto a otro proyecto distinto del mismo
+    documento, que es justamente el error que v3.3 existe para eliminar."""
+    if not CLASSIFICATIONS_PATH.exists():
+        raise RuntimeError(f"No existe {CLASSIFICATIONS_PATH} -- no se puede traducir case_mention_index sin la fuente original.")
+    actual_sha256 = hashlib.sha256(CLASSIFICATIONS_PATH.read_bytes()).hexdigest()
+    if actual_sha256 != CLASSIFICATIONS_SHA256_EXPECTED:
+        raise RuntimeError(
+            f"{CLASSIFICATIONS_PATH} cambio de contenido (sha256 actual={actual_sha256}, "
+            f"esperado={CLASSIFICATIONS_SHA256_EXPECTED}). El case_mention_index de v3.3 es "
+            "posicional sobre ESE archivo especifico -- si cambio el orden o el contenido de "
+            "case_mentions, la traduccion index->case_mention_id ya no es valida. Abortando en "
+            "vez de seguir con una traduccion potencialmente incorrecta."
+        )
+
+    links: dict[tuple[str, str], int | None] = {}
+    for path in V3_3_ENRICHMENT_FILES:
+        if not path.exists():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            url = rec.get("url")
+            if not url or url == V3_3_URL_FUERA_DE_UNIVERSO:
+                continue
+            for p in rec.get("proyectos_mencionados") or []:
+                key = (url, _norm(p.get("nombre")))
+                links[key] = p.get("case_mention_index")
+    return links
+
+
 def _project_backing_evidence(
     project_id: str,
     mentions_by_project: dict[str, list[dict]],
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
+    v3_3_links_by_docid: dict[tuple[str, str], int | None],
 ) -> list[dict]:
     """Todas las filas de respaldo encontradas para este proyecto -- nunca
     solo un booleano. Cada fila es provenance completo: exactamente que
-    cita, de que case_mention, de que documento, justifica el vinculo."""
+    cita, de que case_mention, de que documento, justifica el vinculo.
+
+    Fix 1D: si esta mencion especifica esta cubierta por v3.3 (dato
+    verificado por 2 rondas de revision ciega externa, 0 fabricaciones en
+    809 evaluaciones), se usa DIRECTAMENTE el case_mention_id que v3.3
+    identifico -- se salta por completo la adivinanza por substring para
+    esa mencion, en cualquiera de los 2 sentidos: si v3.3 dio un indice
+    valido que pasa el filtro de decision/evidencia, genera backing con
+    detector_version='v3_3_verified_index'; si v3.3 dio null (o el indice
+    no pasa el filtro), NO genera backing por esta via -- tampoco cae al
+    substring, porque v3.3 ya es una fuente mas confiable que la heuristica
+    para esa mencion puntual. El substring (`exact_substring_v1`) sigue
+    intacto solo para menciones que v3.3 nunca evaluo."""
     rows = []
     for mention in mentions_by_project.get(project_id, []):
         document_id = mention["document_id"]
@@ -242,6 +320,32 @@ def _project_backing_evidence(
         pn = _norm(raw_nombre_proyecto)
         if not pn:
             continue
+
+        v3_3_key = (document_id, pn)
+        if v3_3_key in v3_3_links_by_docid:
+            idx = v3_3_links_by_docid[v3_3_key]
+            if idx is not None:
+                case_mention_id = f"{document_id}:{idx}"
+                if case_mention_id in included_by_doc.get(document_id, []):
+                    for ev in objeto_by_cm.get(case_mention_id, []):
+                        rows.append(
+                            {
+                                "project_id": project_id,
+                                "document_id": document_id,
+                                "case_mention_id": case_mention_id,
+                                "evidence_id": ev["evidence_id"],
+                                "raw_nombre_proyecto": raw_nombre_proyecto,
+                                "quote_text": ev["quote_text"],
+                                "backing_scope": BACKING_SCOPE_V3_3,
+                                "document_case_mention_count": len(included_by_doc.get(document_id, [])),
+                                "document_object_case_mention_count": 1,
+                                "ambiguous_multi_case_document": 0,
+                                "detector_version": DETECTOR_VERSION_V3_3,
+                                "match_method": MATCH_METHOD_V3_3,
+                            }
+                        )
+            continue  # cubierto por v3.3 (con o sin backing) -- nunca cae al substring
+
         included_case_mentions = included_by_doc.get(document_id, [])
         object_case_mentions = [cm_id for cm_id in included_case_mentions if objeto_by_cm.get(cm_id)]
         ambiguous_multi_case_document = int(len(set(object_case_mentions)) > 1)
@@ -264,6 +368,8 @@ def _project_backing_evidence(
                             "document_case_mention_count": len(included_case_mentions),
                             "document_object_case_mention_count": len(set(object_case_mentions)),
                             "ambiguous_multi_case_document": ambiguous_multi_case_document,
+                            "detector_version": DETECTOR_VERSION,
+                            "match_method": MATCH_METHOD,
                         }
                     )
     return rows
@@ -401,6 +507,7 @@ def _build_conflict_backing(
     mentions_by_project: dict[str, list[dict]],
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
+    v3_3_links_by_docid: dict[tuple[str, str], int | None],
 ) -> tuple[str | None, str, list[dict]]:
     """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
     (sin excepcion por n_case_ids) y decide label + respaldo_evidencia.
@@ -410,7 +517,7 @@ def _build_conflict_backing(
     backed_projects: list[tuple[str, str]] = []
     backing_rows: list[dict] = []
     for pid, canonical_name in projects:
-        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm)
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid)
         if rows:
             backed_projects.append((pid, canonical_name))
             case_id_of_pid = case_id_by_project[pid]
@@ -426,8 +533,8 @@ def _build_conflict_backing(
                         "raw_nombre_proyecto": r["raw_nombre_proyecto"],
                         "quote_text": r["quote_text"],
                         "quote_role": "objeto",
-                        "detector_version": DETECTOR_VERSION,
-                        "match_method": MATCH_METHOD,
+                        "detector_version": r["detector_version"],
+                        "match_method": r["match_method"],
                         "backing_scope": r["backing_scope"],
                         "document_case_mention_count": r["document_case_mention_count"],
                         "document_object_case_mention_count": r["document_object_case_mention_count"],
@@ -506,6 +613,15 @@ def main():
         mentions_by_project[pid].append({"document_id": doc_id, "raw_nombre_proyecto": raw_name})
     case_id_by_project: dict[str, str] = dict(conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL"))
 
+    # Fix 1D: traduce el dict de v3.3 (indexado por URL) a document_id real.
+    v3_3_links_by_url = load_v3_3_verified_links()
+    url_to_docid = dict(conn.execute("SELECT url, document_id FROM document"))
+    v3_3_links_by_docid: dict[tuple[str, str], int | None] = {}
+    for (url, norm_name), idx in v3_3_links_by_url.items():
+        doc_id = url_to_docid.get(url)
+        if doc_id:
+            v3_3_links_by_docid[(doc_id, norm_name)] = idx
+
     case_groups = build_case_groups(all_case_ids, documentos_63)
     case_id_to_conflict = {}
     conflict_rows = []
@@ -523,7 +639,7 @@ def main():
         # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
         # resultaron error_grave en la validacion N=150).
         label, respaldo_evidencia, backing_rows = _build_conflict_backing(
-            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm
+            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid
         )
         conflict_evidence_backing_rows.extend(backing_rows)
         backing_summary = _backing_summary(projects, backing_rows)
@@ -755,7 +871,7 @@ def main():
             quote_role TEXT NOT NULL,
             detector_version TEXT NOT NULL,
             match_method TEXT NOT NULL,
-            backing_scope TEXT NOT NULL CHECK (backing_scope = 'document_level_case_mention_without_project_link'),
+            backing_scope TEXT NOT NULL CHECK (backing_scope IN ('document_level_case_mention_without_project_link', 'mention_level_verified_index')),
             document_case_mention_count INTEGER NOT NULL CHECK (document_case_mention_count >= 0),
             document_object_case_mention_count INTEGER NOT NULL CHECK (document_object_case_mention_count >= 0),
             ambiguous_multi_case_document INTEGER NOT NULL CHECK (ambiguous_multi_case_document IN (0, 1)),
@@ -884,8 +1000,15 @@ def main():
     )
     n_projects_total = len(case_id_by_project)
     n_projects_with_backing = sum(
-        1 for pid in case_id_by_project if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm)
+        1 for pid in case_id_by_project
+        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid)
     )
+    backing_rows_by_detector: dict[str, int] = defaultdict(int)
+    conflicts_with_backing_by_detector: dict[str, set] = defaultdict(set)
+    for row in conflict_evidence_backing_rows:
+        backing_rows_by_detector[row["detector_version"]] += 1
+        conflicts_with_backing_by_detector[row["detector_version"]].add(row["conflict_id"])
+    conflicts_backed_by_both = conflicts_with_backing_by_detector[DETECTOR_VERSION] & conflicts_with_backing_by_detector[DETECTOR_VERSION_V3_3]
     summary = {
         "n_conflicts_total": len(conflict_rows),
         "n_conflicts_multi_case": n_multi,
@@ -934,6 +1057,14 @@ def main():
         "calibration_n": 150,
         "calibration_error_grave": CALIBRATION_ERROR_GRAVE,
         "calibration_target_categories": CALIBRATION_TARGET_CATEGORIES,
+        "detector_versions": [DETECTOR_VERSION, DETECTOR_VERSION_V3_3],
+        "backing_rows_by_detector": dict(backing_rows_by_detector),
+        "conflicts_with_backing_by_detector": {
+            DETECTOR_VERSION: len(conflicts_with_backing_by_detector[DETECTOR_VERSION]),
+            DETECTOR_VERSION_V3_3: len(conflicts_with_backing_by_detector[DETECTOR_VERSION_V3_3]),
+            "ambos": len(conflicts_backed_by_both),
+        },
+        "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json); 'exact_substring_v1' sigue siendo la heuristica original de Fix 1A para las menciones que v3.3 nunca cubrio.",
     }
     conn.close()
     audit_report["warehouse_sha256"] = hashlib.sha256(WAREHOUSE.read_bytes()).hexdigest()
