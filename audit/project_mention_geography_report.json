@@ -1,0 +1,10 @@
+{
+  "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
+  "descripcion": "Vinculo verificado proyecto->case_mention->comuna, mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT. Reemplaza la aproximacion vieja de dashboard_data.py (cualquier mencion del documento -> comuna del documento).",
+  "n_menciones_total": 1272,
+  "direct": 737,
+  "via_duplicate_group": 8,
+  "no_case_mention_index": 227,
+  "case_mention_no_incluido": 260,
+  "case_mention_sin_comuna": 40
+}
