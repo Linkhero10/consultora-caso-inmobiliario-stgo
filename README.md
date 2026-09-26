@@ -37,8 +37,26 @@ docs/           dashboard único publicado en GitHub Pages (docs/index.html) + a
 audit/          resumen de validación y calidad de datos
 ```
 
-Punto de entrada del pipeline: `src/classify.py` → `src/enrich.py` → `src/build_projects.py` →
-`src/build_conflicts.py` → `src/build_actor_registry.py` → `src/build_actor_network.py`. Ver
+Orden completo de reconstrucción (cada paso lee lo que dejó el anterior; `generate_run_manifest.py`
+siempre debe ser el último que toca `data/warehouse.sqlite`):
+
+```bash
+python src/build_enrichment_tables.py   # enrichment_document/enrichment_project_mention desde v3.3
+python src/build_projects.py            # identidad de proyecto/caso
+python src/resolve_project_review.py    # fusiona pares revisados de la cola
+python src/build_conflicts.py           # capa CONFLICT
+python src/build_actor_registry.py      # identidad de actor institucional
+python src/build_actor_network.py
+python src/apply_actor_registry_to_network.py
+python src/build_geography.py           # comuna resuelta + project_mention_geography (Fix 1F)
+python src/build_geography_manzana.py   # contexto censal (manzana)
+python src/build_dashboard.py           # docs/index.html
+python src/generate_run_manifest.py     # SIEMPRE el último paso
+pytest -q
+```
+
+`src/classify.py` y `src/enrich.py` (o su sucesor `src/_enrich_pipeline_v3_3_*.py`) son pasos
+aparte, de costo LLM real — no se re-corren en cada reconstrucción del warehouse. Ver
 [`docs/architecture.md`](docs/architecture.md) para el diagrama completo y
 [`docs/methodology.md`](docs/methodology.md) para los criterios de cada capa, el gate documental y
 qué queda deliberadamente sin resolver.

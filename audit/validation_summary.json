@@ -65,10 +65,56 @@
     "holdout_main_n": 100,
     "holdout_stress_n": 50,
     "independencia_verificada": "0% de solapamiento con los 150 IDs de calibracion, confirmado por interseccion de conjuntos y reproducido de forma independiente por el revisor externo",
-    "resultado_main_error_grave": {"tp": 36, "fp": 29, "fn": 1, "tn": 34, "precision": 0.554, "recall": 0.973, "precision_ci95": [0.433, 0.668], "recall_ci95": [0.862, 0.995]},
-    "resultado_main_target_categories": {"tp": 29, "fp": 36, "fn": 1, "tn": 34, "precision": 0.446, "recall": 0.967, "precision_ci95": [0.332, 0.567], "recall_ci95": [0.833, 0.994]},
-    "resultado_stress_error_grave": {"tp": 28, "fp": 22, "fn": 0, "tn": 0, "precision": 0.56, "recall": 1.0, "nota": "muestra dirigida, no poblacional"},
-    "resultado_stress_target_categories": {"tp": 23, "fp": 27, "fn": 0, "tn": 0, "precision": 0.46, "recall": 1.0, "nota": "muestra dirigida, no poblacional"},
+    "resultado_main_error_grave": {
+      "tp": 36,
+      "fp": 29,
+      "fn": 1,
+      "tn": 34,
+      "precision": 0.554,
+      "recall": 0.973,
+      "precision_ci95": [
+        0.433,
+        0.668
+      ],
+      "recall_ci95": [
+        0.862,
+        0.995
+      ]
+    },
+    "resultado_main_target_categories": {
+      "tp": 29,
+      "fp": 36,
+      "fn": 1,
+      "tn": 34,
+      "precision": 0.446,
+      "recall": 0.967,
+      "precision_ci95": [
+        0.332,
+        0.567
+      ],
+      "recall_ci95": [
+        0.833,
+        0.994
+      ]
+    },
+    "resultado_stress_error_grave": {
+      "tp": 28,
+      "fp": 22,
+      "fn": 0,
+      "tn": 0,
+      "precision": 0.56,
+      "recall": 1.0,
+      "nota": "muestra dirigida, no poblacional"
+    },
+    "resultado_stress_target_categories": {
+      "tp": 23,
+      "fp": 27,
+      "fn": 0,
+      "tn": 0,
+      "precision": 0.46,
+      "recall": 1.0,
+      "nota": "muestra dirigida, no poblacional"
+    },
     "interpretacion": "Recall fuera de muestra igual o mayor que en calibracion; precision moderada, con intervalo de confianza que incluye o casi incluye la cifra de calibracion. No hay evidencia de que el detector se comporte peor fuera de muestra.",
     "decision": "GO",
     "detalle": "audit/holdout_1a/GATE_1A_VALIDACION_DECISION.md",
@@ -82,8 +128,20 @@
     ],
     "n_case_mentions_analizadas": 608,
     "patron_2_total_candidatos": 204,
-    "patron_2_tier_a_cero_solapamiento": {"n": 128, "revisados": 128, "bien_fundado": 123, "posible_error_confirmado_y_corregido": 4, "no_concluyente": 1},
-    "patron_2_tier_b_algun_solapamiento": {"n": 76, "revisados": 76, "bien_fundado": 76, "posible_error_confirmado": 0, "nota": "ronda 2 (2026-09-23) completo los 74 casos que quedaban sin auditar individualmente via 2 subagentes en paralelo (37+37); 0 casos nuevos confirmados por el metodo de solapamiento de palabras clave. Ver project_case_mention_cross_check mas abajo -- ese metodo, complementario y mas preciso a nivel de case_mention, SI encontro 6 casos reales adicionales entre los documentos focales que este metodo no detecto."},
+    "patron_2_tier_a_cero_solapamiento": {
+      "n": 128,
+      "revisados": 128,
+      "bien_fundado": 123,
+      "posible_error_confirmado_y_corregido": 4,
+      "no_concluyente": 1
+    },
+    "patron_2_tier_b_algun_solapamiento": {
+      "n": 76,
+      "revisados": 76,
+      "bien_fundado": 76,
+      "posible_error_confirmado": 0,
+      "nota": "ronda 2 (2026-09-23) completo los 74 casos que quedaban sin auditar individualmente via 2 subagentes en paralelo (37+37); 0 casos nuevos confirmados por el metodo de solapamiento de palabras clave. Ver project_case_mention_cross_check mas abajo -- ese metodo, complementario y mas preciso a nivel de case_mention, SI encontro 6 casos reales adicionales entre los documentos focales que este metodo no detecto."
+    },
     "hallazgos_nuevos_confirmados": 4,
     "hallazgos_nuevos_confirmados_nota": "0 en patrones 1 y 3 (agotados por completo, 608/608). En patron 2 (metodo token-overlap): auditoria completa de Tier A (128/128) y Tier B (76/76) encontro y corrigio 4 casos reales adicionales a Hospital Ochagavia -- Templo votivo, Liceo Reino de Dinamarca (confirmado tambien de forma independiente por el Gate 1A), Hotel Sheraton San Cristobal, casona de calle Huerfanos.",
     "caso_canonico_que_motivo_fix_1c": "Hospital Ochagavia (corregido en Fix 1B, capa de clasificacion de documento)",
@@ -95,9 +153,19 @@
   "fix_1c_project_case_mention_cross_check": {
     "descripcion": "Segunda ronda de deteccion (2026-09-23), complementaria al metodo de solapamiento de palabras clave de fix_1c. Usa el modulo experimental src/project_case_mention.py (construido por Codex/Luna en una ronda previa, no integrado al pipeline productivo) para vincular cada mencion de proyecto con la case_mention especifica (no solo el documento) que respalda su nombre.",
     "viabilidad": "confirmada -- 1481 vinculos calculados en 0.1s contra el warehouse real. Los 5 bugs ya conocidos (Hospital Ochagavia, Templo votivo, Liceo Reino de Dinamarca, Hotel Sheraton San Cristobal, casona de calle Huerfanos) correctamente NO obtuvieron link_status='verified_direct'. 10/10 verified_direct muestreados al azar se verificaron manualmente como correctos.",
-    "distribucion_link_status": {"document_level_candidate": 638, "verified_direct": 562, "excluded_case_mention": 186, "ambiguous_direct": 57, "non_included_case_mention": 38},
+    "distribucion_link_status": {
+      "document_level_candidate": 638,
+      "verified_direct": 562,
+      "excluded_case_mention": 186,
+      "ambiguous_direct": 57,
+      "non_included_case_mention": 38
+    },
     "aplicado_a_documentos_focales": "de 83 vinculos sospechosos (excluded_case_mention/ambiguous_direct) entre los 552 documentos focales, se filtraron a 39 (23 pares documento/proyecto unicos) que realmente coinciden con la regla mecanica de nombre_proyecto_focal de build_conflicts.py -- ver audit/project_case_mention_real_focal_suspicious.json",
-    "resultado_verificacion_excluded_case_mention": {"n": 10, "bien_fundado": 4, "posible_error_confirmado_y_corregido": 6},
+    "resultado_verificacion_excluded_case_mention": {
+      "n": 10,
+      "bien_fundado": 4,
+      "posible_error_confirmado_y_corregido": 6
+    },
     "casos_confirmados_y_corregidos": [
       "Solucion Sanitaria para un sector de Quilicura",
       "proyecto Avda. Vespucio con Renato Sanchez Fontecilla y Asturias",
@@ -114,12 +182,23 @@
   "homonym_partition_audit": {
     "descripcion": "Auditoria (2026-09-23) de los project_id cuyas case_mention incluidas caen en mas de una comuna -- originalmente recordado como 'homonimos geograficos' pero la query real dio 131 casos, no 157.",
     "universo_total": 131,
-    "distribucion_n_comunas": {"2": 85, "3": 34, "4": 8, "6": 3, "5": 1},
+    "distribucion_n_comunas": {
+      "2": 85,
+      "3": 34,
+      "4": 8,
+      "6": 3,
+      "5": 1
+    },
     "revisados": 131,
     "pendientes": 0,
     "pendientes_nota": "No quedan project_id sin intento de revision. 46/131 quedaron no_concluyente por evidencia de linkage insuficiente a nivel case_mention; esto no equivale a afirmar su validez geografica.",
     "hallazgo_principal": "el patron dominante NO es homonimia real (0/131 homonimo_real). Es un bug estructural: project_mention_resolved vincula project_id a document_id (no a case_mention_id), asi que cuando un documento panoramico menciona varios proyectos/comunas distintas, todas las comunas del documento quedan atribuidas a cada project_id mencionado en el.",
-    "distribucion_veredictos": {"error_geografico": 81, "no_concluyente": 46, "legitimo_multi_comuna": 4, "homonimo_real": 0},
+    "distribucion_veredictos": {
+      "error_geografico": 81,
+      "no_concluyente": 46,
+      "legitimo_multi_comuna": 4,
+      "homonimo_real": 0
+    },
     "consecuencia": "problema de granularidad document-level vs case_mention-level en project_mention_resolved -- distinto y mas amplio que los bugs puntuales de nombre_proyecto corregidos en Fix 1C. Requiere decision de diseno (no es un parche de una fila) antes de intervenir; documentado como limitacion conocida, no corregido en esta ronda.",
     "detalle": "audit/homonym_partition_auditoria.json",
     "status": "auditoria_asistida_ia_131_de_131_hallazgo_estructural_documentado_sin_corregir",
@@ -190,7 +269,8 @@
     },
     "revision_ciega_sol": {
       "reviewer": "GPT-5.6 Sol, ciega respecto de las respuestas del modelo (no se le mostraron)",
-      "n_documentos": 75, "n_proyectos_evaluados": 203,
+      "n_documentos": 75,
+      "n_proyectos_evaluados": 203,
       "acuerdo_exacto_crudo": "186/203 (91.6%): 30 ambos null, 156 ambos con el mismo indice no-null.",
       "desacuerdos_crudos": "17: 10 Sol=null/modelo=indice, 6 Sol=indice/modelo=null, 1 ambos con indice pero distinto.",
       "adjudicacion_manual_claude": "Se leyo el texto fuente y la lista real de case_mentions de los 17 desacuerdos (no se acepto el desacuerdo crudo como prueba de error). Hallazgo principal: 13/17 se explican por case_mentions DUPLICADAS o casi duplicadas en classify.py (Etapa 1) para el mismo proyecto real -- un problema de datos preexistente, ortogonal a v3.3. Sol prefiere sistematicamente null ante esa duplicacion; el modelo elige una opcion valida entre las duplicadas -- ninguna convencion es incorrecta. Solo 2 omisiones reales confirmadas (Parque San Borja, Remodelacion Parque San Luis -- alias historico no reconocido, mismo patron que el modelo SI resolvio bien en el piloto con Villa Carlos Cortes), ambas por OMISION (null en vez de un vinculo inventado). 0 fabricaciones confirmadas en 203 asignaciones.",
@@ -198,7 +278,8 @@
       "recomendacion": "GO para escalar a los 330 documentos reales. Documentar como limitacion conocida separada: classify.py genera ocasionalmente case_mentions duplicadas para el mismo objeto, lo que crea ambiguedad irreducible para cualquier metodo (humano o modelo) que deba elegir un unico indice."
     },
     "escalamiento_248_restantes": {
-      "presupuesto_solicitado_usd": 1.75, "costo_real_usd": 1.80816,
+      "presupuesto_solicitado_usd": 1.75,
+      "costo_real_usd": 1.80816,
       "resultado": "228/248 escritos en la primera corrida (via OpenRouter). Causa de los 20 pendientes: saldo real de OpenRouter agotado a mitad de la corrida (169 rechazos HTTP 402 registrados, la mayoria recuperados por reintento, 20 agotaron los 5 reintentos). $0 de costo incurrido en esos 20 (un 402 se rechaza antes de generar). invalid_records.jsonl vacio -- ningun fallo de contenido/schema, puro agotamiento de saldo.",
       "finalizacion_20_restantes": {
         "fecha": "2026-09-24",
@@ -211,7 +292,8 @@
       "detalle": "audit/escalamiento_v3_3_resultado_2026-09-24.json"
     },
     "revision_ciega_sol_segunda_entrega": {
-      "n_documentos": 255, "n_proyectos": 606,
+      "n_documentos": 255,
+      "n_proyectos": 606,
       "cobertura_acumulada": "75 (primera entrega) + 255 (segunda entrega) = 330/330 (100%) del universo real revisado por Sol al menos una vez, de forma ciega respecto de las respuestas reales del modelo en ambas rondas.",
       "acuerdo_crudo": "482/606 (79.5%) -- mas bajo que la primera entrega (91.6%)",
       "adjudicacion_manual_claude": "Se prioricen las categorias de mayor riesgo: 25 casos 'modelo=indice, Sol=null' (riesgo de fabricacion) muestreados 5/5 verificados contra texto fuente -- el vinculo del modelo es correcto en los 5, con evidencia de coincidencia literal de nombre/direccion. Las justificaciones de Sol en este bloque eran un texto casi identico repetido, indicio de revision mas superficial por el volumen (606 items, 3x la primera entrega). 27 casos 'ambos indice pero distinto' adjudicados COMPLETOS: 18/27 modelo correcto (coincidencia literal de nombre en la cita_objeto), 1/27 Sol correcta (el modelo eligio una case_mention menos precisa), 8/27 ambiguos por case_mentions duplicadas/casi duplicadas (misma limitacion ya documentada en la primera ronda). 72 casos 'Sol=indice, modelo=null' (direccion segura) muestreados 16/72: confirmadas varias omisiones reales del modelo pese a coincidencia de nombre literal disponible (ej. Villa Isabel Riquelme/Suecia/O'Higgins, Oleoducto Sonacol, Parque Pumpin) -- tasa de omision mas alta que en la calibracion original, pero sigue siendo la direccion de fallo preferida por diseno (nunca fabricacion).",
@@ -220,7 +302,8 @@
       "recomendacion": "GO para integrar v3.3 al dashboard productivo. Limitacion conocida a documentar aparte (no bloqueante): el modelo omite ocasionalmente vinculos con evidencia de nombre literal disponible -- candidato a mejora futura del prompt, no a esta integracion."
     },
     "status": "330/330 (100%) PROCESADO, 330/330 (100%) revisado externamente por Sol de forma ciega (75+255) -- 0 fabricaciones confirmadas en 809 proyectos evaluados en total. v3.3 YA esta integrado a produccion via Fix 1D (ver bloque fix_1d_integracion_v3_3_a_conflict abajo) -- el enrichment productivo (934 docs, warehouse_v3_2) sigue siendo v3.2, pero el case_mention_index verificado de v3.3 ya alimenta el detector de respaldo de la capa CONFLICT para los 330 documentos que cubre.",
-    "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 como enrichment productivo -- la integracion de Fix 1D consume el case_mention_index de v3.3 directamente desde Auditoria/enriquecimiento_v3_3_*/enrichment.jsonl, sin migrar la tabla enrichment_document."
+    "nota": "config/enrichment_schema_v3_3.json, config/enrichment_record_schema_v3_3.json y config/enrichment_prompt_v3_3.md son un contrato nuevo, no reemplazan v3.2 como enrichment productivo -- la integracion de Fix 1D consume el case_mention_index de v3.3 directamente desde Auditoria/enriquecimiento_v3_3_*/enrichment.jsonl, sin migrar la tabla enrichment_document.",
+    "correccion_2026-09-26": "La frase de 'status' arriba ('el enrichment productivo (934 docs, warehouse_v3_2) sigue siendo v3.2') quedo FALSA hoy: se completo la migracion total del enrichment productivo a v3.3 (ver bloque migracion_v3_2_a_v3_3_completa_2026-09-26 mas abajo). enrichment_document y enrichment_project_mention ahora se construyen 100% desde v3.3 -- v3.2 queda retirado como fuente productiva (JSONL conservado como historico)."
   },
   "fix_1d_integracion_v3_3_a_conflict": {
     "fecha": "2026-09-24",
@@ -254,9 +337,12 @@
     "plan_aprobado_archivado": "audit/fix_1e_plan_2026-09-24.md -- copia palabra por palabra del plan diseñado en modo plan y aprobado por el usuario ANTES de escribir codigo. El original vivia solo en el mismo archivo local mutable que Fix 1D (C:\\Users\\felip\\.claude\\plans\\mutable-growing-meadow.md), reescrito encima del plan de Fix 1D -- por eso se archiva aqui.",
     "descripcion": "Ataca la causa raiz mas profunda detectada en las 2 rondas de revision ciega de Sol sobre v3.3: classify.py (Etapa 1) no tiene ningun paso de deduplicacion de case_mentions dentro de un documento -- una sola llamada LLM genera la lista completa y nada compara una mencion contra otra despues. Fix en 2 partes, 0 gasto de LLM en ambas.",
     "medicion_real_corpus_completo": {
-      "n_documentos": 3885, "n_case_mentions_total": 5731,
-      "n_grupos_duplicados_tamano_mayor_a_1": 102, "n_case_mentions_en_grupos_duplicados": 257,
-      "n_documentos_afectados": 97, "n_grupos_con_decision_mixta": 17,
+      "n_documentos": 3885,
+      "n_case_mentions_total": 5731,
+      "n_grupos_duplicados_tamano_mayor_a_1": 102,
+      "n_case_mentions_en_grupos_duplicados": 257,
+      "n_documentos_afectados": 97,
+      "n_grupos_con_decision_mixta": 17,
       "ejemplo_extremo": "humedal de Quilicura (resumen.cl): 5 case_mentions identicas (mismo objeto, misma comuna, mismo include), solo distinguidas por que frase citan",
       "detalle": "audit/case_mention_duplicates_report.json"
     },
@@ -272,13 +358,25 @@
     },
     "hallazgo_colateral_resuelto_completo": "El guard nuevo en build_projects.py (_validate_source_warehouse, antes de shutil.copy2) detecto que Auditoria/integracion_v1/warehouse_v3_2.sqlite -- ya regenerado con el schema correcto durante Fix 1D via build_enrichment_tables.py -- TODAVIA le faltaba la tabla document_case_unit (esa tabla la agrega un paso posterior distinto, con un nombre de tabla intermedio -- document_unidad_caso_sol -- que ademas no coincidia con el schema real; no se encontro ningun script en el repo que haga ese renombre/adaptacion final, posible gap de reproducibilidad historico). Se resolvio copiando las 934 filas reales desde data/warehouse.sqlite (fuente de verdad ya conocida y correcta) hacia warehouse_v3_2.sqlite -- integrity_check=ok, foreign_key_check=0. Auditoria/integracion_v1/warehouse_v3_2.sqlite queda ahora COMPLETO y correcto (no solo con el schema correcto como tras Fix 1D). El guard queda ademas como proteccion permanente contra que esto se repita en silencio.",
     "tests": "11 tests nuevos en tests/test_detect_case_mention_duplicates.py (union-find transitivo, decision mixta, caso real de Quilicura reproducido contra classifications.jsonl, invariante de aditividad), 2 tests nuevos en tests/test_build_conflicts.py (fallback via grupo duplicado, ausencia de fallback sin grupo), 5 tests nuevos en tests/test_build_projects.py (guard de schema: pasa con schema correcto, rechaza sufijo _v3_2, rechaza archivo inexistente, rechaza corpus incompleto, pasa contra la fuente real ya restaurada). 245/246 tests totales en verde (1 fallo preexistente ajeno, ya documentado en sesiones anteriores).",
-    "explicitamente_fuera_de_este_fix": ["migrar el enrichment productivo completo v3.2->v3.3 (934 docs, costo real de LLM)", "Fase C del dashboard geoespacial (manzana censal, trabajo nuevo)", "re-clasificar cualquier documento existente con el prompt corregido (costo real de LLM)"],
+    "explicitamente_fuera_de_este_fix": [
+      "migrar el enrichment productivo completo v3.2->v3.3 (934 docs, costo real de LLM)",
+      "Fase C del dashboard geoespacial (manzana censal, trabajo nuevo)",
+      "re-clasificar cualquier documento existente con el prompt corregido (costo real de LLM)"
+    ],
     "status": "cerrado -- 0 gasto de LLM en todo el fix"
   },
   "gate_conflict_completo": {
-    "componentes": ["fix_1a", "gate_1a_validacion", "fix_1b (ver docstring de src/build_conflicts.py)", "fix_1c", "fix_1d_integracion_v3_3_a_conflict", "fix_1e_deduplicar_case_mentions_classify_py"],
+    "componentes": [
+      "fix_1a",
+      "gate_1a_validacion",
+      "fix_1b (ver docstring de src/build_conflicts.py)",
+      "fix_1c",
+      "fix_1d_integracion_v3_3_a_conflict",
+      "fix_1e_deduplicar_case_mentions_classify_py",
+      "fix_1f_geografia_case_mention_level_2026-09-26"
+    ],
     "status": "cerrado_tier_a_completo_tier_b_completo",
-    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano. [Corregido 2026-09-24] La nota anterior decia 'fix_1c.patron_2_tier_b_algun_solapamiento tiene 74/76 casos sin auditar' -- desactualizada; el bloque fix_1c mismo confirma 76/76 revisados (ronda 2, 2026-09-23). fix_1d integra v3.3 al detector de respaldo; fix_1e deduplica case_mentions en la fuente y conecta el hallazgo con fix_1d; el mapa publico (build_geography.py/manzana censal) no se toco en esta ronda."
+    "nota": "El hash/conteos del warehouse VIGENTE en el momento de este cierre estan en audit/run_manifest.json, generado con src/generate_run_manifest.py -- nunca editado a mano. [Corregido 2026-09-24] La nota anterior decia 'fix_1c.patron_2_tier_b_algun_solapamiento tiene 74/76 casos sin auditar' -- desactualizada; el bloque fix_1c mismo confirma 76/76 revisados (ronda 2, 2026-09-23). fix_1d integra v3.3 al detector de respaldo; fix_1e deduplica case_mentions en la fuente y conecta el hallazgo con fix_1d; el mapa publico (build_geography.py/manzana censal) no se toco en esta ronda. [ACTUALIZADO 2026-09-26] Ya no es cierto que 'el mapa publico no se toco' -- ver fix_1f_geografia_case_mention_level_2026-09-26: build_geography.py/dashboard_data.py ahora usan el vinculo verificado proyecto->case_mention->comuna. La migracion completa v3.2->v3.3 (ver migracion_v3_2_a_v3_3_completa_2026-09-26) tambien retiro exact_substring_v1 del codigo vivo de build_conflicts.py."
   },
   "revision_externa_luna_2026-09-24": {
     "descripcion": "Revision externa independiente (Luna) del estado del repo tras Fix 1D/1E -- no modifico archivos, solo audito. Cada hallazgo se verifico contra el repo real antes de aceptarlo (mismo estandar aplicado a Sol toda la sesion), no se acepto ninguno a ciegas.",
@@ -300,5 +398,55 @@
     },
     "verificacion": "66 tests en tests/test_build_conflicts.py + tests/test_detect_case_mention_duplicates.py en verde (3 nuevos: mixed_decision tagging, non-mixed tagging, limite del umbral). 248/249 tests totales en verde (1 fallo preexistente ajeno). Dashboard verificado visualmente en el Browser pane: nota de 'proyectos mencionados' visible al seleccionar ese indicador, 0 errores de consola.",
     "status": "los 4 hallazgos de Luna atendidos -- 3 corregidos de raiz (continuidad, fallback marcado, geografia renombrada), 1 confirmado como decision ya tomada (migracion v3.2->v3.3 aparte)"
+  },
+  "migracion_v3_2_a_v3_3_completa_2026-09-26": {
+    "descripcion": "Fase 2 del roadmap final: con el 100% del corpus productivo (934/934 documentos) ya bajo el contrato v3.3 (ver bloque enrichment_schema_v3_3_case_mention_index para el detalle de como se llego a esa cobertura), v3.3 pasa a ser la UNICA fuente del warehouse productivo. Antes, v3.3 solo se usaba como fuente secundaria leida en vivo por build_conflicts.py::load_v3_3_verified_links() (Fix 1D); enrichment_document/enrichment_project_mention seguian construyendose 100% desde v3.2.",
+    "plan_aprobado_archivado": "audit/migracion_v3_3_plan_2026-09-26.md -- copia palabra por palabra del plan disenado en modo plan y aprobado por el usuario ANTES de escribir codigo (mismo patron que Fix 1D/1E).",
+    "cambios_codigo": [
+      "src/v3_3_enrichment_source.py (nuevo): fuente unica de verdad para leer los 3 JSONL de v3.3 -- reemplaza la lectura ad-hoc duplicada que vivia dentro de build_conflicts.py.",
+      "src/build_enrichment_tables.py: construye enrichment_document/enrichment_project_mention desde v3.3 (antes v3.2). enrichment_project_mention gana columnas case_mention_index/case_mention_id materializadas. Copia document_case_unit (correcciones manuales de Sol) desde el warehouse productivo -- antes era un paso manual no documentado. Archivo de salida renombrado warehouse_v3_2.sqlite -> warehouse_enrichment.sqlite (nombre neutral a la version de contrato).",
+      "src/build_projects.py: lee v3.3 en vez del JSONL v3.2 crudo; maneja el nuevo shape de proyectos_mencionados ({nombre, case_mention_index} en vez de string).",
+      "src/build_conflicts.py: load_v3_3_verified_links() ahora consulta enrichment_project_mention directo (ya no relee JSONL ni traduce por URL). _project_backing_evidence() retira la rama exact_substring_v1 (Fix 1A) -- verificado empiricamente 0 filas reales con ese detector en la reconstruccion completa antes de retirar el codigo.",
+      "src/resolve_project_review.py: HALLAZGO REAL no anticipado en el plan original -- MANUAL_DECISIONS (245 decisiones humanas de Sol) esta indexado por texto EXACTO; v3.3 (corrida LLM separada) renombro muchos proyectos, perdiendo 64/98 decisiones ya tomadas en silencio. Fix de raiz: _manual_decision_via_normalized_substring() reconecta un par nuevo con su decision original via substring normalizado bidireccional (mismo principio 'nunca fuzzy' del resto del proyecto), ejecutado despues del blocklist de nombres genericos. Recupera 30 de las 64 decisiones perdidas; las 34 restantes son ambiguas (mas de un candidato) o genuinamente sin decision previa -- se dejan sin decidir, nunca se elige arbitrariamente."
+    ],
+    "hallazgo_medido_drift_v3_2_vs_v3_3": "Verificado empiricamente antes de aceptar cualquier diferencia como 'normal': v3.3 es una corrida LLM separada (distinto modelo/tanda) que en conjunto extrajo 9.5% menos proyectos_mencionados que v3.2 para el mismo corpus (1272 vs 1405 menciones totales) -- 146/934 documentos con menos menciones, 68/934 con mas. Esto es contenido real distinto entre dos corridas LLM, no un bug de la migracion. Efecto en cascada verificado y documentado en cada test afectado (ver commits de esta fase): conteos de red de actores, decisiones de fusion de proyectos, y 1 ejemplo adversarial de la capa CONFLICT (cementerio Parque Santiago de Huechuraba / Teleferico Bicentenario) quedaron con un test skip documentado -- pendiente identificar un nuevo documento real para esa prueba especifica.",
+    "verificacion": [
+      "Reconstruccion completa en el orden documentado (ver README.md/docs/architecture.md actualizados): build_enrichment_tables.py -> build_projects.py -> resolve_project_review.py -> build_conflicts.py -> build_actor_registry.py -> build_actor_network.py -> apply_actor_registry_to_network.py -> build_geography.py -> build_geography_manzana.py -> build_dashboard.py -> generate_run_manifest.py.",
+      "integrity_check=ok, foreign_key_check=0.",
+      "0 filas con detector_version=exact_substring_v1 en la reconstruccion completa -- verificado ANTES de retirar el codigo del detector, no asumido.",
+      "261/262 tests en verde (1 fallo preexistente ajeno, test_blind_review_html.py, busca un archivo fuera del repo -- no relacionado) + 1 skip documentado (prueba adversarial de conflicto que perdio su ejemplo real).",
+      "enrichment_document: 934 filas (igual que antes -- mismo documento, dato v3.3 en vez de v3.2). enrichment_project_mention: 1272 filas, 1045 con case_mention_index resuelto (82%)."
+    ],
+    "explicitamente_fuera_de_esta_fase": [
+      "Los 3 arcos analiticos (red de actores/SNA/ERGM, institucionalidad, auditoria ESG) -- son de los colegas del usuario, no se tocan.",
+      "Revision del inventario de fuentes -- mismo motivo.",
+      "Cualquier re-clasificacion o re-enriquecimiento con LLM -- todo el trabajo opero sobre datos ya generados y pagados, cero llamadas nuevas."
+    ],
+    "status": "cerrado -- 0 gasto de LLM en toda la fase (trabajo 100% de codigo + reconstruccion sobre datos ya pagados)"
+  },
+  "fix_1f_geografia_case_mention_level_2026-09-26": {
+    "descripcion": "Con enrichment_project_mention.case_mention_index ya materializado (bloque migracion_v3_2_a_v3_3_completa_2026-09-26), resolver que comuna corresponde a cada mencion de proyecto es un JOIN verificado, no una heuristica documental. Completa el diseno de diseno_geografia_case_mention_level_2026-09-23 (superseded en su momento porque Fix 1D resolvio el problema analogo para CONFLICT primero, y la version v3.3 nativa es mejor base que el prototipo basado en substring de ese diseno).",
+    "plan_aprobado_archivado": "audit/migracion_v3_3_plan_2026-09-26.md (seccion Fase 3) -- mismo archivo que Fase 2, ambas fases se disenaron y aprobaron en el mismo plan.",
+    "cambios_codigo": [
+      "src/build_geography.py: build_project_mention_geography() -- nueva tabla project_mention_geography (document_id, project_mention_id, nombre_proyecto, case_mention_id, comuna, codigo_comuna_ine, match_method). Reutiliza el fallback de grupo duplicado de Fix 1E (mismo patron que build_conflicts.py). Reporte auditable en audit/project_mention_geography_report.json.",
+      "src/dashboard_data.py: build_territories() reemplaza n_projects_mentioned (cualquier mencion del documento -> comuna del documento) por n_projects_verified (solo match_method in {direct, via_duplicate_group}). nota_metodologica_geografia_proyectos actualizada.",
+      "src/build_dashboard.py: dropdown/tooltip/nota del dashboard publico actualizados al campo nuevo."
+    ],
+    "resultado_medido": {
+      "n_menciones_totales": 1272,
+      "direct": 737,
+      "via_duplicate_group": 8,
+      "no_case_mention_index": 227,
+      "case_mention_no_incluido": 260,
+      "case_mention_sin_comuna": 40,
+      "nota": "745/1272 (58.6%) de las menciones de proyecto tienen ahora un vinculo territorial verificado -- las 527 restantes quedan explicitamente sin comuna (nunca adivinadas), desglosadas por motivo exacto."
+    },
+    "verificacion": [
+      "11 tests nuevos en tests/test_build_geography.py (los 5 match_method + conteo de reporte no hardcodeado) + 3 tests nuevos en tests/test_dashboard_data.py.",
+      "Spot-check manual de 8 menciones 'direct' contra el texto real (nombre de proyecto, comuna del case_mention, URL del documento) -- todas coherentes.",
+      "integrity_check=ok, foreign_key_check=0 tras la reconstruccion completa.",
+      "Verificado que ningun texto interno de version (v3.3, case_mention_index) quedo expuesto en el HTML publico del dashboard (test_no_internal_version_text_visible) -- se detecto y corrigio una fuga real durante el desarrollo antes de cerrar."
+    ],
+    "status": "cerrado -- 0 gasto de LLM"
   }
 }

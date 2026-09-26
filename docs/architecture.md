@@ -22,8 +22,22 @@ CONFLICTO (puede agrupar 2+ casos cuando corresponde al mismo litigio, nunca al 
     │  resolución de identidad de actor (src/build_actor_registry.py)
     ▼
 ACTOR / ENTIDAD (institución nacional consolidada cuando la evidencia lo permite;
-                  el resto conserva su identidad textual sin resolver)
+    │              el resto conserva su identidad textual sin resolver)
+    │  geografía derivada (src/build_geography.py, src/build_geography_manzana.py)
+    ▼
+COMUNA / MANZANA CENSAL (comuna resuelta de forma determinista por case_mention;
+    │                     project_mention_geography vincula proyecto→case_mention→comuna
+    │                     con el mismo mecanismo que Fix 1D usa para el respaldo de CONFLICT)
+    │  publicación (src/build_dashboard.py, luego src/generate_run_manifest.py)
+    ▼
+DASHBOARD PÚBLICO (docs/index.html) + MANIFIESTO DE AUDITORÍA (audit/run_manifest.json)
 ```
+
+Orden real de ejecución (ver README.md para el bloque de comandos completo):
+`build_enrichment_tables.py` → `build_projects.py` → `resolve_project_review.py` →
+`build_conflicts.py` → `build_actor_registry.py` → `build_actor_network.py` →
+`apply_actor_registry_to_network.py` → `build_geography.py` → `build_geography_manzana.py` →
+`build_dashboard.py` → `generate_run_manifest.py` (siempre el último paso que toca el warehouse).
 
 Ver `docs/methodology.md` para los criterios de cada capa, el gate documental y qué queda
 deliberadamente sin resolver.
