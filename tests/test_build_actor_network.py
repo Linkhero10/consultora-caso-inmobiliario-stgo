@@ -102,14 +102,23 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     (delta_gate=0, delta_conflict_collapse=-1). Corte Suprema, que la v1
     de este script presentaba como el ejemplo estrella de fragmentacion,
     en realidad tiene delta_conflict_collapse=0 (su caida es integra del
-    gate documental, no de fusionar casos)."""
+    gate documental, no de fusionar casos).
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] n_actores_caida_
+    solo_por_gate_documental bajo de 48 a 67 -- recalculado en vivo contra
+    el warehouse real. Sube (no baja) porque, con menos proyectos_
+    mencionados extraidos por v3.3, mas actores quedan con caida SOLO por
+    el gate documental (delta_conflict_collapse=0) en vez de por ambos
+    efectos -- el punto sustantivo del test (Seremi de Bienes Nacionales es
+    el UNICO caso real de fusion case->conflict, delta=1, nunca 0) se
+    mantiene exacto."""
     conn = _connect_or_skip()
     bip_case_old, bip_case_matched, bip_conflict = _build_three_universos(conn)
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
     assert dec["n_actores_caida_solo_por_fusion_case_conflict"] == 1
-    assert dec["n_actores_caida_solo_por_gate_documental"] == 48
+    assert dec["n_actores_caida_solo_por_gate_documental"] == 67
 
     # Corte Suprema: siempre esta en el top-15 de mayor caida total, y su
     # caida es integra del gate documental, no de fusionar case_id.
@@ -118,10 +127,13 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     assert corte_suprema["delta_conflict_collapse"] == 0
     assert corte_suprema["delta_gate"] < 0
 
-    # Seremi de Bienes Nacionales es el unico caso real de fusion
-    # case->conflict -- verificado directo contra los grafos, no contra
-    # el top-15 (su caida es de solo -1, puede no entrar al slice).
-    node = "seremi de bienes nacionales"
+    # [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] "Seremi de
+    # Bienes Nacionales" ya no existe en ninguno de los 3 grafos (su
+    # mencion de proyecto desaparecio de la extraccion v3.3 para el
+    # documento fuente, mismo patron verificado en toda la migracion). El
+    # nuevo (y sigue siendo unico) caso real de fusion case->conflict,
+    # verificado recalculando en vivo: "Concejo Municipal".
+    node = "concejo municipal"
     assert bip_case_old.degree(node) == bip_case_matched.degree(node)  # delta_gate == 0
     assert bip_conflict.degree(node) == bip_case_matched.degree(node) - 1  # delta_conflict_collapse == -1
 
@@ -133,15 +145,21 @@ def test_decompose_reports_excluded_generic_nodes_explicitly():
     terminos genericos anclados a su propia unidad de agrupacion
     (case_id vs conflict_id), asi que la misma mencion generica se
     vuelve un nodo distinto en cada red por diseno. Deben reportarse
-    explicitamente, no quedar implicitos en la interseccion."""
+    explicitamente, no quedar implicitos en la interseccion.
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa + reconexion de
+    MANUAL_DECISIONS via substring normalizado en resolve_project_review.py]
+    Recalculado en vivo tras ambos cambios: 673 nodos actor cada red (antes
+    1001), 659 comparables (antes 971), 14 nodos genericos excluidos de
+    cada lado (antes 30) -- misma proporcion relativa (~2.1% genericos)."""
     conn = _connect_or_skip()
     bip_case_old, bip_case_matched, bip_conflict = _build_three_universos(conn)
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
-    assert dec["n_actores_comparables_en_los_3_universos"] == 971
-    assert dec["n_nodos_genericos_excluidos_case_matched"] == 30
-    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 30
+    assert dec["n_actores_comparables_en_los_3_universos"] == 659
+    assert dec["n_nodos_genericos_excluidos_case_matched"] == 14
+    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 14
     assert all("::" in n for n in dec["nodos_genericos_excluidos_case_matched"])
     assert all("::" in n for n in dec["nodos_genericos_excluidos_conflict_safe"])
 

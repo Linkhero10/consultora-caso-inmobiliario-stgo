@@ -136,25 +136,14 @@ def test_v3_2_record_contract_requires_its_own_hash():
     assert "record_schema_sha256" in schema["required"]
 
 
-def test_v3_2_etl_round_trip_preserves_project_and_analytical_fields(tmp_path):
-    source_db = tmp_path / "source.sqlite"
-    output_db = tmp_path / "warehouse_v3_2.sqlite"
-    enrichment_path = tmp_path / "enrichment.jsonl"
-    conn = sqlite3.connect(source_db)
-    conn.execute("CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL)")
-    conn.execute("INSERT INTO document VALUES (?, ?)", ("doc-1", "https://example.cl/multi"))
-    conn.commit()
-    conn.close()
-    enrichment_path.write_text(json.dumps(_record(), ensure_ascii=False) + "\n", encoding="utf-8")
-
-    counts = etl.build_database(source_db, enrichment_path, output_db)
-
-    assert counts["documents"] == 1
-    db = sqlite3.connect(output_db)
-    assert db.execute("SELECT proyectos_mencionados_json FROM enrichment_document").fetchone()[0] == json.dumps(["Proyecto A", "Proyecto B"], ensure_ascii=False)
-    assert db.execute("SELECT proyecto_asociado FROM enrichment_actor").fetchone()[0] == "Proyecto A"
-    assert db.execute("SELECT proyecto_asociado FROM enrichment_institution").fetchone()[0] == "Proyecto B"
-    assert db.execute("SELECT proyecto_asociado FROM enrichment_event").fetchone()[0] == "Proyecto A"
-    assert db.execute("SELECT objeto_disputa_raw, instrumento_raw, ubicacion_especifica FROM enrichment_document").fetchone() == ("permiso de edificación", "Permiso N° 1", "Calle 1")
-    assert db.execute("SELECT COUNT(*) FROM enrichment_project_mention").fetchone()[0] == 2
-    db.close()
+# [RETIRADO 2026-09-26, migracion v3.2->v3.3 completa]
+# test_v3_2_etl_round_trip_preserves_project_and_analytical_fields llamaba
+# etl.build_database(source_db, enrichment_path, output_db) -- firma vieja
+# (leia un unico JSONL v3.2 con proyectos_mencionados como lista de
+# strings). La firma nueva es build_database(source_db, output_db,
+# records=...), records es un dict[url] -> record ya con proyectos_
+# mencionados como {nombre, case_mention_index} (ver src/v3_3_enrichment_
+# source.py). El mismo round-trip (proyectos, actores, instituciones,
+# eventos, evidencia) ya se prueba con el shape v3.3 correcto en
+# tests/test_build_enrichment_tables.py -- no se duplica aqui con el shape
+# viejo, que ya no es un input valido para este ETL.

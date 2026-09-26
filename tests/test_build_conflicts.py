@@ -116,84 +116,65 @@ def test_norm_strips_accents_case_and_extra_whitespace():
     assert reg._norm("Línea 7") == "linea 7"
 
 
-def test_mention_has_case_backing_matches_raw_inside_quote():
-    assert reg._mention_has_case_backing("Torre Central", ["se aprobo la torre central en 2024"]) is True
-
-
-def test_mention_has_case_backing_matches_quote_inside_raw():
-    assert reg._mention_has_case_backing("Proyecto Línea 7 Metro de Santiago", ["linea 7 metro"]) is True
-
-
-def test_mention_has_case_backing_no_match_returns_false():
-    assert reg._mention_has_case_backing("Museo de la Memoria en Punta Arenas", ["guetos verticales en estacion central"]) is False
-
-
-def test_mention_has_case_backing_never_fuzzy():
-    """Palabras parecidas pero no en relacion de substring nunca deben
-    calzar -- el detector esta congelado a exact_substring_v1."""
-    assert reg._mention_has_case_backing("Edificio Central Park", ["torre parque central"]) is False
+# [RETIRADO 2026-09-26, migracion v3.2->v3.3 completa] _mention_has_case_backing()
+# (el detector exact_substring_v1) se elimino de build_conflicts.py -- ver el
+# docstring de _project_backing_evidence() para la medicion empirica que
+# justifico el retiro (0 filas reales con ese detector en la reconstruccion
+# completa). Los 4 tests que ejercitaban esa funcion directamente
+# (test_mention_has_case_backing_matches_raw_inside_quote,
+# ..._matches_quote_inside_raw, ..._no_match_returns_false, ..._never_fuzzy)
+# se retiraron junto con la funcion.
 
 
 def test_project_backing_evidence_finds_matching_quote_across_documents():
+    # [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] antes esta
+    # mencion caia al detector exact_substring_v1 (dict v3.3 vacio = "no
+    # cubierto"). Ahora TODA mencion viene de v3.3 -- se cubre explicitamente
+    # via v3_3_links, apuntando al case_mention_id real "d1:0".
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    included_by_doc = {"d1": ["cm1"]}
-    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 0}
+    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links)
     assert len(rows) == 1
-    assert rows[0]["case_mention_id"] == "cm1"
+    assert rows[0]["case_mention_id"] == "d1:0"
     assert rows[0]["evidence_id"] == "e1"
-    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION
+    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION_V3_3
 
 
-def test_project_backing_evidence_empty_when_case_mention_is_excluded():
-    """El documento tiene una mencion, pero su unico case_mention NO esta
-    incluido (decision_final_amplio != include) -- included_by_doc no lo
-    lista, asi que no puede haber respaldo."""
-    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    included_by_doc: dict = {}  # d1 no tiene ningun case_mention incluido
-    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
-    assert rows == []
-
-
-def test_project_backing_evidence_empty_when_no_objeto_evidence_for_that_mention():
-    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    included_by_doc = {"d1": ["cm1"]}
-    objeto_by_cm: dict = {}  # sin evidencia de objeto verificada para cm1
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
-    assert rows == []
-
-
-def test_project_backing_evidence_marks_document_level_multi_case_ambiguity():
-    """El esquema actual no vincula proyecto y case_mention dentro del
-    mismo documento. La fila debe conservar esa limitación explícitamente,
-    especialmente cuando hay más de una mención incluida con objeto."""
-    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    included_by_doc = {"d1": ["cm1", "cm2"]}
-    objeto_by_cm = {
-        "cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}],
-        "cm2": [{"evidence_id": "e2", "quote_text": "la Torre Central tambien", "quote_norm": "la torre central tambien"}],
-    }
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, {})
-    assert len(rows) == 2
-    assert {row["backing_scope"] for row in rows} == {"document_level_case_mention_without_project_link"}
-    assert {row["document_case_mention_count"] for row in rows} == {2}
-    assert {row["document_object_case_mention_count"] for row in rows} == {2}
-    assert {row["ambiguous_multi_case_document"] for row in rows} == {1}
+# [RETIRADOS 2026-09-26, migracion v3.2->v3.3 completa]
+# test_project_backing_evidence_empty_when_case_mention_is_excluded y
+# test_project_backing_evidence_empty_when_no_objeto_evidence_for_that_mention
+# ejercitaban el fallback a exact_substring_v1 con casos que ahora quedan
+# cubiertos, sin duplicacion util, por
+# test_project_backing_evidence_v3_3_index_excluded_gives_no_backing_no_fallback
+# y test_project_backing_evidence_v3_3_no_duplicate_group_sibling_still_empty
+# (mismos escenarios, expresados con la cobertura v3.3 real). Ver esos tests
+# mas abajo.
+#
+# test_project_backing_evidence_marks_document_level_multi_case_ambiguity se
+# retiro: el concepto de "ambiguedad documental sin vinculo a proyecto" que
+# probaba (backing_scope=document_level_case_mention_without_project_link)
+# pertenecia al detector retirado -- v3.3 resuelve la mencion a UN
+# case_mention_id especifico (o ninguno), la ambiguedad ya no se propaga
+# como una marca en la fila de respaldo.
 
 
 def test_build_conflict_backing_uniform_no_multi_case_exception():
     """Bug real que la validacion N=150 encontro: 'n_case_ids > 1 -> siempre
     respaldado' es incorrecto (Aeropuerto Los Cerrillos, Aldea del
     Encuentro). El detector debe aplicarse igual sin importar cuantos
-    case_id tenga el conflicto."""
+    case_id tenga el conflicto. [ACTUALIZADO 2026-09-26] cubierto por v3.3
+    (indice 0), pero ese case_mention no tiene evidencia de objeto real --
+    sigue sin respaldo, sin caer a ningun substring."""
     projects = [("p1", "Proyecto Sin Evidencia Real")]
     case_id_by_project = {"p1": "case1"}
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Proyecto Sin Evidencia Real"}]}
-    included_by_doc = {"d1": ["cm1"]}
-    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "algo completamente distinto", "quote_norm": "algo completamente distinto"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm: dict = {}
+    v3_3_links = {("d1", "proyecto sin evidencia real"): 0}
     label, respaldo, rows = reg._build_conflict_backing(
-        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, {}
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links
     )
     assert respaldo == "sin_respaldo_exact_quote_detectado"
     assert rows == []
@@ -203,22 +184,25 @@ def test_build_conflict_backing_label_prefers_backed_project_over_incidental_men
     """Caso real verificado (Museo de la Memoria / guetos verticales
     Estacion Central): el conflicto tiene 2 proyectos, solo 1 respaldado --
     el label debe salir del respaldado, no del primero alfabetico entre
-    todos (que era exactamente el bug encontrado)."""
+    todos (que era exactamente el bug encontrado). [ACTUALIZADO 2026-09-26]
+    solo el proyecto real tiene cobertura v3.3 con evidencia; el incidental
+    no esta cubierto -- sin fallback a substring, tampoco genera respaldo."""
     projects = [("p_incidental", "Aaa Proyecto Incidental Sin Evidencia"), ("p_real", "Zzz Proyecto Real Respaldado")]
     case_id_by_project = {"p_incidental": "case1", "p_real": "case1"}
     mentions_by_project = {
         "p_incidental": [{"document_id": "d1", "raw_nombre_proyecto": "Aaa Proyecto Incidental Sin Evidencia"}],
         "p_real": [{"document_id": "d1", "raw_nombre_proyecto": "Zzz Proyecto Real Respaldado"}],
     }
-    included_by_doc = {"d1": ["cm1"]}
-    objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "zzz proyecto real respaldado", "quote_norm": "zzz proyecto real respaldado"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "zzz proyecto real respaldado", "quote_norm": "zzz proyecto real respaldado"}]}
+    v3_3_links = {("d1", "zzz proyecto real respaldado"): 0}
     label, respaldo, rows = reg._build_conflict_backing(
-        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, {}
+        "conflict:x", projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links
     )
     assert label == "Zzz Proyecto Real Respaldado"
     assert respaldo == "respaldo_exact_quote_detectado"
     assert len(rows) == 1
-    assert rows[0]["backing_scope"] == "document_level_case_mention_without_project_link"
+    assert rows[0]["backing_scope"] == reg.BACKING_SCOPE_V3_3
     assert rows[0]["ambiguous_multi_case_document"] == 0
 
 
@@ -277,10 +261,12 @@ def test_project_backing_evidence_v3_3_index_excluded_gives_no_backing_no_fallba
     assert rows == []
 
 
-def test_project_backing_evidence_falls_back_to_substring_when_not_covered_by_v3_3():
-    """Documento fuera del universo v3.3 (no aparece en el dict): el
-    comportamiento debe ser IDENTICO al detector exact_substring_v1
-    original -- regresion cero para el resto del corpus."""
+def test_project_backing_evidence_no_backing_when_mention_not_covered_by_v3_3():
+    """[RENOMBRADO/ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa]
+    Antes esta mencion 'no cubierta' caia al fallback exact_substring_v1 --
+    ese fallback se retiro (verificado: 0 filas reales lo usaban con el
+    100% del corpus en v3.3). Una mencion que no aparece en v3_3_links_by_docid
+    ahora simplemente no genera respaldo, nunca adivina por substring."""
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc = {"d1": ["cm1"]}
     objeto_by_cm = {"cm1": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
@@ -288,9 +274,7 @@ def test_project_backing_evidence_falls_back_to_substring_when_not_covered_by_v3
     rows_with_unrelated_v3_3_dict = reg._project_backing_evidence(
         "p1", mentions_by_project, included_by_doc, objeto_by_cm, {("otro_doc", "otro proyecto"): 0}
     )
-    assert rows_without_v3_3_dict == rows_with_unrelated_v3_3_dict
-    assert len(rows_without_v3_3_dict) == 1
-    assert rows_without_v3_3_dict[0]["detector_version"] == reg.DETECTOR_VERSION
+    assert rows_without_v3_3_dict == rows_with_unrelated_v3_3_dict == []
 
 
 def test_project_backing_evidence_v3_3_index_excluded_falls_back_to_duplicate_group_sibling():
@@ -396,15 +380,32 @@ def _connect_or_skip():
 
 
 def test_cementerio_y_teleferico_terminan_en_el_mismo_conflict_id():
-    conn = _connect_or_skip()
-    rows = conn.execute(
-        "SELECT case_id, conflict_id FROM conflict_case WHERE case_id IN (?, ?)",
-        (CEMENTERIO_CASE, TELEFERICO_CASE),
-    ).fetchall()
-    conn.close()
-    by_case = dict(rows)
-    assert len(by_case) == 2
-    assert by_case[CEMENTERIO_CASE] == by_case[TELEFERICO_CASE]
+    """[HALLAZGO 2026-09-26, migracion v3.2->v3.3 completa] Este es el caso
+    de prueba adversarial explicito que motivo el diseno de la capa CONFLICT
+    (ver docstring del modulo, lineas 6-14): un documento real
+    (emol.com/.../inmobiliaria-cementerio-huechuraba-teleferico.html) donde
+    v3.2 extraia 2 proyectos_mencionados reales y distintos ('Teleférico
+    Bicentenario' y 'cementerio Parque Santiago de Huechuraba') en un solo
+    conflicto judicial. Verificado leyendo el JSONL real: v3.3 (corrida LLM
+    SEPARADA) extrajo solo 'Teleférico Bicentenario' para ese documento --
+    la mencion del cementerio desaparecio por completo, asi que
+    CEMENTERIO_CASE ya no existe como project_id/case_id en el registro.
+    No es un bug de esta migracion (el ETL no descarta nada -- el dato
+    simplemente no esta en el JSONL fuente); es una diferencia real de
+    contenido entre dos corridas LLM distintas. La capacidad del schema de
+    representar 2 case_id reales en 1 conflicto sigue intacta (ver
+    test_la_victoria_y_rancagua_express... para otro ejemplo real que si
+    sigue vigente) -- lo que se perdio es este ejemplo puntual como PRUEBA
+    de esa capacidad. Documentado en audit/validation_summary.json
+    (migracion_v3_2_a_v3_3_completa_2026-09-26) como hallazgo pendiente:
+    identificar un nuevo documento real con 2+ proyectos genuinamente
+    distintos en 1 conflicto para restaurar esta prueba adversarial."""
+    import pytest
+
+    pytest.skip(
+        "CEMENTERIO_CASE ya no existe en el registro de proyectos tras la migracion v3.2->v3.3 "
+        "(v3.3 extrajo un proyecto menos para el documento fuente) -- ver docstring de este test."
+    )
 
 
 def test_la_victoria_y_rancagua_express_quedan_en_conflictos_distintos_con_relacion_pendiente():
@@ -538,15 +539,23 @@ def test_upc_and_recuperacion_de_barrios_relations_are_resolved_not_pending():
     """Hallazgo real de Sol: UPC y Recuperacion de barrios ya fueron
     adjudicados (reclasificados a documento_comparativo_panoramico via
     apply_conflict_unit_gate_decisions.py) -- su conflict_relation no
-    deberia seguir marcada pending_human_decision."""
+    deberia seguir marcada pending_human_decision.
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] Verificado
+    leyendo el JSONL real: v3.3 extrajo un proyecto menos ('Villa Francia')
+    para el documento de Recuperacion de barrios -- ya no forma el mismo
+    agrupamiento de case_id que generaba esta conflict_relation especifica
+    en el registro v3.2. No es un bug (el ETL no descarta nada; el dato
+    fuente cambio entre corridas LLM). Se conserva la verificacion para UPC
+    (documento no afectado por esta diferencia) y se documenta el gap para
+    barrios en audit/validation_summary.json en vez de fabricar un valor."""
     conn = _connect_or_skip()
     upc_doc = "1b00c0136d4b855eed855b1a5f48ceb7f01e4c9b0d96c8d9666fafd292e043cb"
-    barrios_doc = "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8"
-    for doc_id in (upc_doc, barrios_doc):
-        note_rows = conn.execute("SELECT note, review_status FROM conflict_relation").fetchall()
-        matching = [row for row in note_rows if doc_id in row[0]]
-        assert matching, f"no se encontro conflict_relation para {doc_id}"
-        assert matching[0][1] == "resolved_keep_separate"
+    note_rows = conn.execute("SELECT note, review_status FROM conflict_relation").fetchall()
+    conn.close()
+    matching = [row for row in note_rows if upc_doc in row[0]]
+    assert matching, f"no se encontro conflict_relation para {upc_doc}"
+    assert matching[0][1] == "resolved_keep_separate"
     conn.close()
 
 
@@ -585,12 +594,19 @@ def test_museo_de_la_memoria_conflict_has_no_backing():
     Humanos en Punta Arenas' de pasada; la evidencia real del documento es
     sobre los guetos verticales de Estacion Central. Sin case_mention
     incluido que respalde ese nombre -- debe quedar sin respaldo."""
+    # [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] el conflict_id
+    # cambio (project_id/case_id se recalculan desde el nombre normalizado
+    # que extrae CADA corrida LLM; v3.3 extrajo "Museo de la Memoria y los
+    # DD.HH. en Punta Arenas" en vez de "...Derechos Humanos...", una
+    # corrida LLM distinta con fraseo distinto) -- el resultado esperado
+    # (sin respaldo) sigue siendo el mismo, verificado contra el warehouse
+    # real tras la migracion.
     conn = _connect_or_skip()
     row = conn.execute(
-        "SELECT respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:322c7c3d88d4ff08de440c56'"
+        "SELECT respaldo_evidencia FROM conflict WHERE conflict_id = 'conflict:12809d506a1f7335ee42fc4d'"
     ).fetchone()
     conn.close()
-    assert row is not None, "el caso Museo debe estar presente en el warehouse de Fix 1A"
+    assert row is not None, "el caso Museo debe estar presente en el warehouse (post-migracion v3.3)"
     assert row[0] == "sin_respaldo_exact_quote_detectado"
 
 
@@ -610,18 +626,32 @@ def test_aeropuerto_los_cerrillos_current_fix1a_state():
     verificadas distintas (evidence_id ...:objeto:0 a ...:objeto:3), y el
     diseno registra 1 fila de provenance por cada (case_mention, evidencia)
     -- mismo grano que ya usaba el detector exact_substring_v1 original.
-    Verificado a mano contra el warehouse real, no es una regresion."""
+    Verificado a mano contra el warehouse real, no es una regresion.
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] conflict_id
+    cambio (mismo motivo que el caso Museo: nombres re-extraidos por una
+    corrida LLM distinta cambian el project_id/case_id derivado). n_backing
+    se mantiene en 4 (mismo case_mention, misma evidencia), pero n_case_ids
+    bajo de 2 a 1: el segundo case_id que hacia este conflicto multi-caso
+    (un proyecto de Cerrillos separado) ya no se fusiona con Portal
+    Bicentenario en el registro de proyectos v3.3 -- verificado que ningun
+    proyecto llamado 'Aeropuerto Los Cerrillos' aparece ya en el registro.
+    El punto original del test (el detector se aplica sin excepcion
+    automatica por n_case_ids) sigue siendo verdad POR CONSTRUCCION del
+    codigo (_project_backing_evidence no bifurca por n_case_ids en ningun
+    punto) -- este caso puntual dejo de ser multi-caso, no vuelve a probar
+    esa propiedad, pero tampoco la contradice."""
     conn = _connect_or_skip()
     row = conn.execute(
         "SELECT n_case_ids, respaldo_evidencia, "
         "(SELECT COUNT(*) FROM conflict_evidence_backing b "
         "WHERE b.conflict_id = c.conflict_id) AS n_backing "
-        "FROM conflict c WHERE c.conflict_id = 'conflict:4f725d7265297513738bf370'"
+        "FROM conflict c WHERE c.conflict_id = 'conflict:b527b306c618e56f9928525e'"
     ).fetchone()
     conn.close()
-    assert row is not None, "el caso Aeropuerto debe estar presente en el warehouse de Fix 1A"
+    assert row is not None, "el caso Aeropuerto/Portal Bicentenario debe estar presente en el warehouse (post-migracion v3.3)"
     n_case_ids, respaldo, n_backing = row
-    assert n_case_ids == 2  # sigue siendo multi-case (Fix 1B no aplicado todavía)
+    assert n_case_ids == 1
     assert respaldo == "respaldo_exact_quote_detectado"
     assert n_backing == 4
 
@@ -674,15 +704,37 @@ def test_fix_1c_audit_completo_documentos_ya_no_focal():
     una case_mention EXCLUIDA o de una referencia retorica/periferica,
     mientras la case_mention realmente INCLUIDA describe un objeto distinto.
     Los 4 se corrigieron igual que Ochagavia: correccion_nombre_proyecto=''
-    protegido con tiene_error=1."""
+    protegido con tiene_error=1.
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] Verificado
+    empiricamente (no asumido): v3.3 es una corrida LLM separada de v3.2 y
+    en 146/934 documentos extrajo MENOS proyectos_mencionados que v3.2 (vs.
+    68/934 con mas) -- una diferencia real de contenido entre modelos, no un
+    bug de esta migracion. Para 2 de los 4 documentos de este test ('Templo
+    votivo', 'Liceo Reino de Dinamarca') la mencion completa desaparecio de
+    proyectos_mencionados en v3.3 (confirmado leyendo el JSONL real) -- ya
+    no generan NINGUNA fila en document_conflict, ni siquiera
+    'mentioned_unreviewed'. Es una version aun mas fuerte de "ya no cuenta
+    como evidencia focal" que la que el Fix 1C original corrigio a mano, asi
+    que no contradice el hallazgo -- pero cambia la aserción verificable.
+    Los otros 2 ('Hotel Sheraton San Cristóbal', 'casona de calle Huérfanos')
+    si conservaron la mencion y siguen en 'mentioned_unreviewed' como
+    antes."""
     conn = _connect_or_skip()
-    docs = [
+    docs_mencion_desaparecida = [
         "5d2f0680d21e1061790de468589132de52ff9cffd576ecee2fb4c0ad6b070f47",  # "Templo votivo"
         "2cb01a7a9e863f52c401b8f98df2af848a01c9b2d3354ee8dcc3a22554714db2",  # "Liceo Reino de Dinamarca"
+    ]
+    docs_mencion_conservada = [
         "b243ca1d3dd9948c4e15a7f8c41da3b3f10730236af8714d62cf942a16712523",  # "Hotel Sheraton San Cristóbal"
         "fb31947ee71b5386e1bcde4fa1b37570a867232120537d317dfdf5ad52249b76",  # "casona de calle Huérfanos"
     ]
-    for doc_id in docs:
+    for doc_id in docs_mencion_desaparecida:
+        row = conn.execute(
+            "SELECT role FROM document_conflict WHERE document_id = ?", (doc_id,)
+        ).fetchone()
+        assert row is None, f"{doc_id}: v3.3 elimino la mencion, no debe generar document_conflict"
+    for doc_id in docs_mencion_conservada:
         row = conn.execute(
             "SELECT role FROM document_conflict WHERE document_id = ?", (doc_id,)
         ).fetchone()
@@ -788,34 +840,58 @@ def test_backing_rows_declare_document_level_scope_and_ambiguity_columns():
     assert v3_3_rows_have_correct_scope == 0
 
 
-def _v3_3_sources_available() -> bool:
-    """Auditoria/ es gitignorada (trabajo interno) -- un clon publico limpio
-    (ej. CI) no tiene classifications.jsonl ni los enrichment.jsonl de v3.3.
-    Mismo patron que _connect_or_skip() para warehouse.sqlite."""
-    return reg.CLASSIFICATIONS_PATH.exists() and any(p.exists() for p in reg.V3_3_ENRICHMENT_FILES)
+# [RETIRADO 2026-09-26, migracion v3.2->v3.3 completa] Los tests
+# test_load_v3_3_verified_links_excludes_out_of_universe_url_and_parses_real_data
+# y test_load_v3_3_verified_links_aborts_on_classifications_sha256_mismatch
+# ejercitaban la version vieja de load_v3_3_verified_links() que releia los
+# 3 JSONL crudos de v3.3 y traducia por URL (Fix 1D, 2026-09-24). Esa
+# funcion se reescribio para consultar enrichment_project_mention
+# directamente (ver su docstring actual) -- ya no toma argumentos de
+# archivo, ya no indexa por URL, y el guard de sha256 de
+# classifications.jsonl se movio a src/v3_3_enrichment_source.py (ver
+# tests/test_v3_3_enrichment_source.py), porque ese guard solo hace falta
+# al traducir case_mention_index->case_mention_id en el ETL (build_
+# enrichment_tables.py), no al leer un valor ya materializado en el
+# warehouse. Reemplazados por los 2 tests de abajo, que ejercitan la
+# funcion nueva contra el warehouse real.
 
 
-def test_load_v3_3_verified_links_excludes_out_of_universe_url_and_parses_real_data():
-    if not _v3_3_sources_available():
+def test_load_v3_3_verified_links_reads_from_warehouse_table():
+    conn = _connect_or_skip()
+    has_table = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='enrichment_project_mention'"
+    ).fetchone()
+    if not has_table:
+        conn.close()
         import pytest
 
-        pytest.skip("Auditoria/clasificacion/classifications.jsonl o los enrichment.jsonl de v3.3 no existen en este entorno (gitignorados)")
-    links = reg.load_v3_3_verified_links()
+        pytest.skip("enrichment_project_mention no existe en este entorno (build_enrichment_tables.py no corrio)")
+    links = reg.load_v3_3_verified_links(conn)
+    conn.close()
     assert len(links) > 0
-    assert all(url != reg.V3_3_URL_FUERA_DE_UNIVERSO for (url, _name) in links)
     # al menos una entrada real con indice no nulo y una con null deben existir
     assert any(idx is not None for idx in links.values())
     assert any(idx is None for idx in links.values())
 
 
-def test_load_v3_3_verified_links_aborts_on_classifications_sha256_mismatch(monkeypatch):
-    import pytest
+def test_load_v3_3_verified_links_keys_are_normalized_document_id_name_pairs():
+    conn = _connect_or_skip()
+    has_table = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='enrichment_project_mention'"
+    ).fetchone()
+    if not has_table:
+        conn.close()
+        import pytest
 
-    if not reg.CLASSIFICATIONS_PATH.exists():
-        pytest.skip("Auditoria/clasificacion/classifications.jsonl no existe en este entorno (gitignorado)")
-    monkeypatch.setattr(reg, "CLASSIFICATIONS_SHA256_EXPECTED", "0" * 64)
-    with pytest.raises(RuntimeError, match="sha256"):
-        reg.load_v3_3_verified_links()
+        pytest.skip("enrichment_project_mention no existe en este entorno")
+    row = conn.execute(
+        "SELECT document_id, nombre_proyecto FROM enrichment_project_mention WHERE nombre_proyecto != '' LIMIT 1"
+    ).fetchone()
+    links = reg.load_v3_3_verified_links(conn)
+    conn.close()
+    if row:
+        document_id, nombre_proyecto = row
+        assert (document_id, reg._norm(nombre_proyecto)) in links
 
 
 def test_backing_report_count_matches_persisted_rows():

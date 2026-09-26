@@ -207,7 +207,18 @@ def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_docu
     MINVU 22 vs 14; SEA coincidia en 12 por casualidad (sus documentos no
     tenian el patron problematico). Este test fija los 6 valores exactos
     calculando directamente desde actor_event_project_link_conflict_safe,
-    que preserva el vinculo actor->project_id->conflict_id fila a fila."""
+    que preserva el vinculo actor->project_id->conflict_id fila a fila.
+
+    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] Los 6 valores
+    bajaron (verificado recalculando en vivo contra el warehouse real, no
+    asumido): v3.3 es una corrida LLM separada que extrajo, en conjunto,
+    9.5% menos proyectos_mencionados que v3.2 para el corpus completo (146
+    documentos con menos menciones vs 68 con mas) -- menos menciones de
+    proyecto encadena a menos filas de conflict/document_conflict, y por lo
+    tanto menos conflictos distintos por entidad. No es el bug que este test
+    protege (ese bug seguia contando por document_id completo, no por fila
+    project_id->conflict_id -- verificado que la logica de calculo aqui
+    sigue siendo la correcta, fila a fila)."""
     conn = _connect_or_skip()
     tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     if "actor_alias" not in tables:
@@ -230,12 +241,12 @@ def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_docu
     conn.close()
 
     esperado = {
-        "Servicio de Evaluación Ambiental (SEA)": 12,
-        "Consejo de Monumentos Nacionales (CMN)": 8,
-        "Consejo de Defensa del Estado (CDE)": 6,
-        "Superintendencia del Medio Ambiente (SMA)": 6,
-        "Ministerio de Vivienda y Urbanismo (MINVU)": 14,
-        "Contraloría General de la República": 17,
+        "Servicio de Evaluación Ambiental (SEA)": 10,
+        "Consejo de Monumentos Nacionales (CMN)": 5,
+        "Consejo de Defensa del Estado (CDE)": 1,
+        "Superintendencia del Medio Ambiente (SMA)": 5,
+        "Ministerio de Vivienda y Urbanismo (MINVU)": 7,
+        "Contraloría General de la República": 12,
     }
     real = {label_by_entity[eid]: len(conflictos) for eid, conflictos in conflictos_por_entidad.items()}
     for label, n_esperado in esperado.items():
