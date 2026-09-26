@@ -1,0 +1,135 @@
+{
+  "artifact_id": "project_identity_reconciliation_v3_2_v3_3_2026-09-26",
+  "created_date": "2026-09-26",
+  "status": "candidate_reconciliation_not_promoted",
+  "scope": "Reconcile two priority identity judgments and define evidence requirements after the v3.2-to-v3.3 migration audit.",
+  "repository_head_at_review": "5df2599a99322a72094c9dea35b4050cb9d12074",
+  "warehouse_sha256_at_review": "cf1fe698c022d8c7145660946b0cdbfcd19521cb18b6efb349619f2b2d9abd3e",
+  "production_changes_applied": false,
+  "warehouse_modified": false,
+  "decisions": [
+    {
+      "pair": {
+        "project_id_a": "6f5a7267b402f19352f4bf54",
+        "name_a": "Data Center de Google",
+        "project_id_b": "791f201362a8d6a8c0245a4c",
+        "name_b": "data center de Google Chile en Cerrillos"
+      },
+      "historical_separation_reusable_for_this_pair": false,
+      "candidate_relationship": "same_planned_project",
+      "identity_status": "candidate_same_project_pending_canonicalization",
+      "confidence": "high_for_same_Cerrillos_project_in_the_captured_source_context",
+      "canonical_project_id": null,
+      "merge_applied": false,
+      "rationale": "The source record behind project A explicitly says FIMA opposed Google's data-center project planned between Cerrillos and San Bernardo. The source record behind project B identifies Google's planned Cerrillos data center and separately mentions the earlier Quilicura facility. Therefore the historical decision against a generic 'Data Center' pair cannot be transferred to this exact pair. This is a same-project candidate, not authorization to rewrite project IDs, aliases, conflicts, or case-mention links.",
+      "sources": [
+        {
+          "source_type": "captured_press_fulltext",
+          "title": "Los contratos con el Estado de FIMA, la ONG favorita del Frente Amplio",
+          "url": "https://www.ex-ante.cl/economia/los-contratos-con-el-estado-de-fima-la-ong-favorita-del-frente-amplio/",
+          "local_capture": "Fuentes/fulltext/content/0f335ea6aa15231a56bbec7d49c9356c375c40dc628a34287bc3454820fcfeb1.json",
+          "local_capture_sha256": "4eea51a8044f118f3e171eb1bb59e49370c674aed551ea7952468c5eb0038efa",
+          "relevant_excerpt": "proyecto de Data Center de Google que se haría entre esa comuna y San Bernardo",
+          "supports": "Project A is explicitly contextualized as the Google data-center project between Cerrillos and San Bernardo."
+        },
+        {
+          "source_type": "captured_press_fulltext",
+          "title": "Guerra del agua en Cerrillos: Google enfrenta arremetida legal por megaproyecto de data center",
+          "url": "https://www.latercera.com/la-tercera-pm/noticia/guerra-del-agua-en-cerrillos-google-enfrenta-arremetida-legal-por-megaproyecto-de-data-center/3EESORSYUBFX3HZFGNWJU7PGP4/",
+          "local_capture": "Fuentes/fulltext/content/f3dd2d368d9214dd323b887fbe3d1025db497af9ae8dc1422bf0c9c2c6db6ea4.json",
+          "local_capture_sha256": "82485fd26a1f7cd605c768012f21ffbd485123382eb8a45eb1075f5ca1025565",
+          "relevant_excerpt": "megaproyecto de data center que Google Chile pretende construir en la comuna",
+          "supports": "Project B is the proposed Google data center in Cerrillos; the same article separately identifies Google’s first Latin American data center in Quilicura as an earlier facility."
+        }
+      ],
+      "remaining_gate": "A reviewer must confirm that both records represent the same project entity under the project's identity ontology and select a canonical ID explicitly before any production alias or merge."
+    },
+    {
+      "pair": {
+        "project_id_a": "3ce6d0d030381374a3c026f7",
+        "name_a": "Ciudad Parque Bicentenario",
+        "project_id_b": "7805069a696198e3d8e2b964",
+        "name_b": "Plan Maestro de Ciudad Parque Bicentenario"
+      },
+      "historical_separation_reusable_for_this_pair": false,
+      "candidate_relationship": "urban_development_related_to_its_master_plan",
+      "identity_status": "distinct_entity_types_no_merge_pending_ontology_review",
+      "confidence": "moderate_for_relatedness; identity merge not supported",
+      "canonical_project_id": null,
+      "merge_applied": false,
+      "rationale": "The historical separation reason concerned a different 'Parque Bicentenario' homonym and does not decide this pair. Official planning material describes Ciudad Parque Bicentenario as an urban development and its Plan Maestro as a planning instrument that guides development. They are related, but the evidence supports preserving project-versus-plan granularity rather than treating the labels as aliases. The typed relationship itself remains a candidate pending the ontology's accepted relation vocabulary.",
+      "sources": [
+        {
+          "source_type": "official_minu_article",
+          "title": "Ciudad Parque Bicentenario cumple 20 años y alcanza las 10 mil viviendas en distintas etapas de construcción",
+          "url": "https://www.minvu.gob.cl/noticia/ciudad-parque-bicentenario-cumple-20-anos-y-alcanza-las-10-mil-viviendas-en-distintas-etapas-de-construccion/",
+          "supports": "Official context for Ciudad Parque Bicentenario as a development in Cerrillos."
+        },
+        {
+          "source_type": "official_planning_document",
+          "title": "Anteproyecto y memoria de modificación del PRC de Cerrillos",
+          "url": "https://eae.mma.gob.cl/storage/documents/04_Anteproyecto-Memoria_PRC_Cerrillos_v2.pdf",
+          "supports": "Distinguishes the urban development from the Plan Maestro as an instrument guiding its development."
+        },
+        {
+          "source_type": "captured_press_fulltext",
+          "title": "La promesa de la Ciudad Parque Bicentenario de Cerrillos lleva 17 años sin cumplirse",
+          "url": "https://www.infraestructurapublica.cl/la-promesa-de-la-ciudad-parque-bicentenario-de-cerrillos-lleva-17-anos-sin-cumplirse/",
+          "supports": "Source context for the Plan Maestro record in the warehouse."
+        },
+        {
+          "source_type": "captured_press_fulltext",
+          "title": "Centro Nacional de Arte Cerrillos, Tomás Fontecilla",
+          "url": "https://artishockrevista.com/2019/05/17/centro-nacional-de-arte-cerrillos-tomas-fontecilla/",
+          "supports": "Source context for the Ciudad Parque Bicentenario record in the warehouse."
+        }
+      ],
+      "remaining_gate": "Keep the two project IDs separate. Add a typed project-to-plan relation only after the ontology explicitly supports it; do not use alias canonicalization."
+    }
+  ],
+  "migration_drift_reconciliation": {
+    "review_label": "omision respaldada",
+    "total_rows": 69,
+    "rows_present_on_v3_3_side": 65,
+    "rows_present_on_v3_2_side": 4,
+    "v3_3_side_current_case_mention_decisions": {
+      "include": 48,
+      "exclude": 16,
+      "uncertain": 1
+    },
+    "generic_justification_rows": 63,
+    "interpretation": "The label is directional: a v3.3-side row may indicate an item absent from v3.2; a v3.2-side row may indicate an item not carried into v3.3. These are not one undirected count of confirmed extraction errors. The four v3.2-side rows include three Line 7 descriptions whose difference may be granularity rather than omission."
+  },
+  "future_pair_adjudication_gate": {
+    "applies_to": "Any remaining unresolved pair and any historical decision being transferred to a new v3.3 pair.",
+    "required_per_pair": [
+      "Both exact project_ids and canonical names, plus the source document(s) attached to each ID.",
+      "A direct source URL and/or immutable local source reference with SHA-256.",
+      "A short exact quote or page/paragraph locator supporting the proposed identity or distinction for each side.",
+      "Explicit relation class: same identity, parent/component/phase, related plan or instrument, distinct entities, or unresolved.",
+      "Check for geographic, temporal, developer, project-stage, and homonym contradictions; do not transfer evidence across projects or case mentions.",
+      "Confidence, unresolved limitations, reviewer attribution, and production_promoted=false until a separate release gate approves the change."
+    ],
+    "insufficient_evidence_action": "Leave unresolved; do not infer from substring, shared case_id, or an inherited historical decision alone."
+  },
+  "audit_artifact_coverage": {
+    "reconnected_pairs_with_source_urls_or_external_evidence": 2,
+    "reconnected_pairs_total": 30,
+    "unresolved_pairs_with_source_urls_or_external_evidence": 0,
+    "unresolved_pairs_total": 68,
+    "interpretation": "These counts describe what the submitted review artifact preserves. They do not prove that no external research occurred; they mean most adjudications cannot be independently audited from that artifact."
+  },
+  "verification": {
+    "json_artifacts_parse": true,
+    "google_source_quotes_exact_substrings": 2,
+    "google_capture_sha256_matches": 2,
+    "warehouse_sha256_unchanged": true,
+    "test_suite": {
+      "passed": 268,
+      "skipped": 1,
+      "failed": 1,
+      "failure": "tests/test_blind_review_html.py expects D:/Felipe/Consultora/Productos/revision_humana_blind_v5_2_1_50.html, which is outside this repository and absent in this environment; unrelated to this JSON-only audit change."
+    },
+    "llm_calls": 0
+  }
+}

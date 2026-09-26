@@ -505,5 +505,19 @@
     "lfs_object": "data/warehouse.sqlite, 78 MB, upload confirmed",
     "verification": "5/5 tests_run_manifest; working tree clean immediately after push; full suite 268 passed, 1 skipped, 1 unrelated missing external artifact",
     "status": "publicado y verificado en GitHub"
+  },
+  "project_identity_reconciliation_v3_2_v3_3_2026-09-26": {
+    "authority": "reconciliación complementaria de identidad y deriva; no altera decisiones históricas ni datos productivos",
+    "artifact": "audit/project_identity_reconciliation_v3_2_v3_3_2026-09-26.json",
+    "source_head": "5df2599a99322a72094c9dea35b4050cb9d12074",
+    "warehouse_sha256": "cf1fe698c022d8c7145660946b0cdbfcd19521cb18b6efb349619f2b2d9abd3e",
+    "production_changes_applied": false,
+    "priority_pairs": {
+      "google_data_center_cerrillos": "same-project candidate; no merge or canonical ID selected",
+      "ciudad_parque_bicentenario_plan_maestro": "preserve separate project/plan entities; typed relation remains a candidate"
+    },
+    "evidence_gate": "No remaining pair is resolved without per-pair source references, exact supporting excerpts/locators, relation class, contradiction checks, confidence, and a separate promotion gate.",
+    "verification": "Both JSON files parse; both quoted Google excerpts are exact substrings of captured texts and both capture SHA-256 values match; warehouse hash unchanged. Suite: 268 passed, 1 skipped, 1 unrelated failure because tests/test_blind_review_html.py expects an external HTML file absent from this environment.",
+    "status": "reconciled as evidence-backed candidates; production remains unchanged"
   }
 }
