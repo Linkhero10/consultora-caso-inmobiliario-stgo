@@ -314,6 +314,15 @@ def test_project_mention_geography_mixed_duplicate_group_requires_review(tmp_pat
     assert row["case_mention_id"] == "cm4b"
     assert row["codigo_comuna_ine"] is None
     assert report["ambiguous_duplicate_group"] == 1
+    assert report["ambiguous_duplicate_group_rows"] == [
+        {
+            "document_id": "doc4",
+            "project_mention_id": "doc4:project:0",
+            "nombre_proyecto": "Villa X",
+            "source_case_mention_id": "cm4b",
+            "duplicate_group_id": "g1",
+        }
+    ]
 
 
 def test_project_mention_geography_mixed_duplicate_group_uses_reviewed_mapping(tmp_path):
@@ -424,6 +433,7 @@ def test_project_mention_geography_report_counts_match_persisted_rows(tmp_path):
     total_persisted = con.execute("SELECT COUNT(*) FROM project_mention_geography").fetchone()[0]
     assert report["n_menciones_total"] == total_persisted == 2
     assert report["direct"] == 1
+    assert report["ambiguous_duplicate_group_rows"] == []
     assert report["no_case_mention_index"] == 1
 
 

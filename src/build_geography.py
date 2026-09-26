@@ -41,8 +41,8 @@ tablas derivadas:
 
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 import sqlite3
 import subprocess
 import sys
@@ -230,7 +230,9 @@ def _duplicate_group_details(con: sqlite3.Connection) -> dict[str, dict[str, Any
     return by_case_mention
 
 
-def _load_reviewed_duplicate_group_links(path: Path | None = None) -> dict[str, dict[str, Any]]:
+def _load_reviewed_duplicate_group_links(
+    path: Path | None = None,
+) -> dict[str, dict[str, Any]]:
     path = path or REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH
     if not path.exists():
         return {}
@@ -269,7 +271,7 @@ def _git_head() -> str | None:
 def build_project_mention_geography(
     con: sqlite3.Connection,
     reviewed_duplicate_links: dict[str, dict[str, Any]] | None = None,
-) -> dict[str, int]:
+) -> dict[str, Any]:
     """Fix 1F (2026-09-26): geografia real de proyectos por case_mention,
     mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT -- ahora que
     enrichment_project_mention.case_mention_index esta materializado
@@ -301,6 +303,7 @@ def build_project_mention_geography(
         "case_mention_sin_comuna": 0,
     }
     rows_to_insert: list[tuple] = []
+    ambiguous_duplicate_group_rows: list[dict[str, str]] = []
     for pm_id, document_id, nombre, case_mention_id in con.execute(
         "SELECT project_mention_id, document_id, nombre_proyecto, case_mention_id FROM enrichment_project_mention"
     ):
@@ -321,6 +324,15 @@ def build_project_mention_geography(
             reviewed = reviewed_duplicate_links.get(pm_id)
             if reviewed is None:
                 counts["ambiguous_duplicate_group"] += 1
+                ambiguous_duplicate_group_rows.append(
+                    {
+                        "document_id": document_id,
+                        "project_mention_id": pm_id,
+                        "nombre_proyecto": nombre,
+                        "source_case_mention_id": case_mention_id,
+                        "duplicate_group_id": group["duplicate_group_id"],
+                    }
+                )
                 rows_to_insert.append(
                     (document_id, pm_id, nombre, case_mention_id, None, None, "ambiguous_duplicate_group")
                 )
@@ -381,6 +393,7 @@ def build_project_mention_geography(
         "reviewed_duplicate_group_links_configured": len(reviewed_duplicate_links),
         "reviewed_duplicate_group_links_applied": len(used_reviewed_links),
         "reviewed_duplicate_group_links_unmatched": len(reviewed_duplicate_links) - len(used_reviewed_links),
+        "ambiguous_duplicate_group_rows": ambiguous_duplicate_group_rows,
         **counts,
     }
 
@@ -492,7 +505,11 @@ def main(warehouse_path: Path = WAREHOUSE_PATH) -> int:
     build_commit = _git_head()
     script_sha256 = _sha256_file(Path(__file__))
     reviewed_links = _load_reviewed_duplicate_group_links()
-    review_config_sha256 = _sha256_file(REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH) if REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH.exists() else None
+    review_config_sha256 = (
+        _sha256_file(REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH)
+        if REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH.exists()
+        else None
+    )
     con = _connect(warehouse_path)
     try:
         ensure_schema(con)
