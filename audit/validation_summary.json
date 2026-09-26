@@ -487,12 +487,13 @@
       "run_id": "20260926T152132540839Z",
       "build_commit": "2eff0910402639b877e3ea5eaa14c6550b062323"
     },
+    "release_commit": "a95c348d97f42fbaecae2170e54d0a6d65fc1625",
     "verification": {
       "focused_tests": "36 passed",
       "full_suite": "268 passed, 1 skipped, 1 unrelated failure because a test expects an HTML file outside this repository that is absent in this environment",
       "api_calls": 0,
       "additional_api_cost_usd": 0
     },
-    "status": "warehouse, reporte y dashboard reconstruidos y validados localmente; falta cerrar commits de publicacion y release_commit"
+    "status": "artefactos publicados en release_commit a95c348d97f42fbaecae2170e54d0a6d65fc1625; manifiesto finalizado; push remoto pendiente"
   }
 }
