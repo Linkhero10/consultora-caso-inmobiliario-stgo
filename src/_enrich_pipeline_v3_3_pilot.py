@@ -179,6 +179,8 @@ def sanitize_project_associations_v3_3(parsed: dict[str, Any], n_case_mentions: 
 API_BASE_URLS = {
     "openrouter": "https://openrouter.ai/api/v1/chat/completions",
     "nanogpt": "https://nano-gpt.com/api/v1/chat/completions",
+    "vercel": "https://ai-gateway.vercel.sh/v1/chat/completions",
+    "requesty": "https://router.requesty.ai/v1/chat/completions",
 }
 
 # Precio de lista de gpt-6-luna (confirmado via WebSearch 2026-09-24, mismo en

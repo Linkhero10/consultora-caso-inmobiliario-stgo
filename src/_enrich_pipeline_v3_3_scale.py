@@ -162,8 +162,8 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=50)
     parser.add_argument("--max-cost-usd", type=float, required=True, help="Deja de someter documentos nuevos apenas el costo confirmado acumulado alcance este limite. El trabajo ya en vuelo termina igual.")
     parser.add_argument("--sample", type=str, default=str(DEFAULT_SAMPLE_PATH))
-    parser.add_argument("--provider", choices=["openrouter", "nanogpt"], default="openrouter",
-                         help="Transporte del mismo modelo/esfuerzo/schema. nanogpt = mismo openai/gpt-6-luna via NanoGPT (sin comision de deposito).")
+    parser.add_argument("--provider", choices=["openrouter", "nanogpt", "vercel", "requesty"], default="openrouter",
+                         help="Transporte del mismo modelo/esfuerzo/schema. nanogpt = mismo openai/gpt-6-luna via NanoGPT (sin comision de deposito). vercel = mismo modelo via Vercel AI Gateway. requesty = mismo modelo via Requesty (5% de comision, saldo prepago).")
     args = parser.parse_args()
 
     detail = {"escalamiento": True, "max_cost_usd": args.max_cost_usd, "workers": args.workers, "schema_version": "v3.3", "provider": args.provider}
@@ -177,7 +177,7 @@ def main() -> int:
         return exc.return_code
 
 
-ENV_KEY_BY_PROVIDER = {"openrouter": "OPENROUTER_API_KEY", "nanogpt": "NANOGPT_API_KEY"}
+ENV_KEY_BY_PROVIDER = {"openrouter": "OPENROUTER_API_KEY", "nanogpt": "NANOGPT_API_KEY", "vercel": "VERCEL_AI_GATEWAY_API_KEY", "requesty": "REQUESTY_API_KEY"}
 
 
 def _run(workers: int, max_cost_usd: float, sample_path: Path, provider: str = "openrouter") -> int:
