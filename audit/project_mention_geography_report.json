@@ -1,10 +1,71 @@
 {
   "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
-  "descripcion": "Vinculo verificado proyecto->case_mention->comuna, mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT. Reemplaza la aproximacion vieja de dashboard_data.py (cualquier mencion del documento -> comuna del documento).",
+  "run_id": "20260926T152132540839Z",
+  "generated_at": "2026-09-26T15:21:34.299490+00:00",
+  "generator": "src/build_geography.py::build_project_mention_geography",
+  "build_commit": "2eff0910402639b877e3ea5eaa14c6550b062323",
+  "generator_sha256": "a5e91c600b75ff6f9f7287d44b9586ee08f0a035d163e87a7be4af5ee3210ea5",
+  "review_config_path": "config/reviewed_duplicate_group_geography_links.json",
+  "review_config_sha256": "bee31515da166083ab4f4f8ad92b21a147de4c62c3c18820a74ec70218937009",
+  "input_warehouse_sha256": "c795b1496c0b284ddcb3e8961112607469bb0dbe36644d62cca5c523a6d85f0f",
+  "output_warehouse_sha256": "cf1fe698c022d8c7145660946b0cdbfcd19521cb18b6efb349619f2b2d9abd3e",
+  "descripcion": "Vinculo proyecto->case_mention->comuna; fallbacks desde grupos de duplicados con decision mixta quedan ambiguos salvo una adjudicacion manual explicita y limitada a geografia. Reemplaza la aproximacion documental anterior.",
+  "case_mention_geography": {
+    "n_candidatos": 980,
+    "n_resueltos": 31
+  },
+  "geocoded_location": {
+    "n_evidencia_geografica_total": 6862,
+    "n_omitidas_por_ser_comuna_pura": 330,
+    "n_intentadas": 6532,
+    "n_descartadas_fuera_del_area_de_estudio": 68,
+    "n_resueltas": 22,
+    "n_bridge_omitido_multiconflicto": 5,
+    "tasa_resolucion": 0.003,
+    "por_precision": {
+      "neighborhood": 17,
+      "poi": 5
+    }
+  },
   "n_menciones_total": 1272,
+  "reviewed_duplicate_group_links_configured": 1,
+  "reviewed_duplicate_group_links_applied": 1,
+  "reviewed_duplicate_group_links_unmatched": 0,
+  "ambiguous_duplicate_group_rows": [
+    {
+      "document_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93",
+      "project_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:project:0",
+      "nombre_proyecto": "Mejoramiento Integral de la Infraestructura FerroviariaTramo Santiago-Rancagua",
+      "source_case_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0",
+      "duplicate_group_id": "cmdup:b96b1b335487fbe9ac564c67"
+    },
+    {
+      "document_id": "e68a325e514f77eb6583c4c3aa1820412a3db6252556bc353375d2b7488d1d9d",
+      "project_mention_id": "e68a325e514f77eb6583c4c3aa1820412a3db6252556bc353375d2b7488d1d9d:project:0",
+      "nombre_proyecto": "Campamento Esperanza Andina",
+      "source_case_mention_id": "e68a325e514f77eb6583c4c3aa1820412a3db6252556bc353375d2b7488d1d9d:1",
+      "duplicate_group_id": "cmdup:5126ba11135018b30f470928"
+    },
+    {
+      "document_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615",
+      "project_mention_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615:project:0",
+      "nombre_proyecto": "mall en la comuna de Viña del Mar",
+      "source_case_mention_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615:0",
+      "duplicate_group_id": "cmdup:9a36cde4e250401785f2abb7"
+    },
+    {
+      "document_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615",
+      "project_mention_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615:project:1",
+      "nombre_proyecto": "mall sobre la Av. Kennedy, comuna de Vitacura",
+      "source_case_mention_id": "131b1ea5aeea033f91b10ace4549ffe71ed2722e0dbe1cc1e13f720eb171b615:1",
+      "duplicate_group_id": "cmdup:9a36cde4e250401785f2abb7"
+    }
+  ],
   "direct": 737,
-  "via_duplicate_group": 8,
+  "via_duplicate_group": 7,
+  "via_reviewed_duplicate_group": 1,
+  "ambiguous_duplicate_group": 4,
   "no_case_mention_index": 227,
-  "case_mention_no_incluido": 260,
-  "case_mention_sin_comuna": 40
+  "case_mention_no_incluido": 257,
+  "case_mention_sin_comuna": 39
 }
