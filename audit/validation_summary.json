@@ -495,5 +495,15 @@
       "additional_api_cost_usd": 0
     },
     "status": "artefactos publicados en release_commit a95c348d97f42fbaecae2170e54d0a6d65fc1625; manifiesto finalizado; push remoto pendiente"
+  },
+  "fix_1f_release_publication_2026-09-26": {
+    "authority": "corrige unicamente el estado de publicacion del bloque fix_1f_mixed_duplicate_group_guard_2026-09-26",
+    "release_commit": "a95c348d97f42fbaecae2170e54d0a6d65fc1625",
+    "manifest_followup_commit": "97fbd0eb837d4383105e98f7ed20a7fa83c600ea",
+    "remote": "origin/main",
+    "remote_head_verified": "97fbd0eb837d4383105e98f7ed20a7fa83c600ea",
+    "lfs_object": "data/warehouse.sqlite, 78 MB, upload confirmed",
+    "verification": "5/5 tests_run_manifest; working tree clean immediately after push; full suite 268 passed, 1 skipped, 1 unrelated missing external artifact",
+    "status": "publicado y verificado en GitHub"
   }
 }
