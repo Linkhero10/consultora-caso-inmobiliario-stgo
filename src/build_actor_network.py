@@ -112,8 +112,9 @@ def decompose_gate_vs_conflict_collapse(
     actors_conflict = set(net.actor_nodes(bip_conflict_safe))
     common = sorted(actors_old & actors_matched & actors_conflict)
 
-    # [AGREGADO 2026-09-18, precision pedida por la revisión] CASE_MATCHED y
-    # CONFLICT_SAFE tienen el mismo NUMERO de nodos actor (1001 cada uno),
+    # [AGREGADO 2026-09-18, precision pedida por la revisión; conteo
+    # actualizado 2026-09-26 tras la migracion v3.2->v3.3] CASE_MATCHED y
+    # CONFLICT_SAFE tienen el mismo NUMERO de nodos actor (673 cada uno),
     # pero no coinciden nodo por nodo: los terminos de GENERIC_ACTOR_TERMS
     # se anclan via scope_actor_id() a la clave de agrupacion misma
     # ('actor::case_id' en CASE_MATCHED vs 'actor::conflict_id' en
@@ -176,16 +177,19 @@ def decompose_gate_vs_conflict_collapse(
             "seria un bug, no un hallazgo."
         ),
         "nota_genericos": (
-            "CASE_MATCHED y CONFLICT_SAFE tienen el MISMO numero de nodos actor "
-            "(1001 cada uno) pero solo 971 son identidades persistentes "
-            "comparables entre ambos. Los 30 restantes de cada lado son terminos "
-            "de GENERIC_ACTOR_TERMS anclados a su unidad de agrupacion "
-            "(case_id o conflict_id segun la red) -- la MISMA mencion generica "
-            "('los vecinos', 'municipio', 'estado', 'la inmobiliaria'...) se "
-            "vuelve un nodo distinto en cada red por diseno (nunca deben "
-            "fusionarse globalmente entre unidades distintas). El 48/1 de la "
-            "descomposicion arriba se calcula SOLO sobre los 971 actores "
-            "persistentes -- no representa a los 1001 nodos totales de cada red."
+            "[ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] CASE_MATCHED "
+            "y CONFLICT_SAFE tienen el MISMO numero de nodos actor "
+            "(673 cada uno, antes 1001 con v3.2 -- v3.3 extrajo menos "
+            "proyectos_mencionados en promedio, ver audit/validation_summary.json) "
+            "pero solo 659 son identidades persistentes comparables entre ambos. "
+            "Los 14 restantes de cada lado son terminos de GENERIC_ACTOR_TERMS "
+            "anclados a su unidad de agrupacion (case_id o conflict_id segun la "
+            "red) -- la MISMA mencion generica ('los vecinos', 'municipio', "
+            "'estado', 'la inmobiliaria'...) se vuelve un nodo distinto en cada "
+            "red por diseno (nunca deben fusionarse globalmente entre unidades "
+            "distintas). La descomposicion gate/collapse arriba se calcula SOLO "
+            "sobre los 659 actores persistentes -- no representa a los 673 nodos "
+            "totales de cada red."
         ),
     }
 

@@ -58,19 +58,20 @@ otra sorpresa"):
    - `unresolved_no_project`: el documento no menciona ningun proyecto con
      nombre propio.
 
-No llama a la API. Copia warehouse_v3_2.sqlite a un archivo NUEVO
-(warehouse_v3_2_bridge.sqlite) y agrega las tablas del puente ahi.
+No llama a la API. Copia warehouse_enrichment.sqlite (construido por
+build_enrichment_tables.py desde v3.3, ver src/v3_3_enrichment_source.py) a
+data/warehouse.sqlite y agrega las tablas del puente ahi.
 
-[ACTUALIZADO 2026-09-18, precision pedida por la revisión] warehouse_v3_2.sqlite
-(sellado como produccion_completa) ya NO es estrictamente "nunca se
-modifica en el lugar" -- apply_sol_document_corrections.py le agrega la
-tabla document_case_unit (gate documento->unidad_de_caso). La
-garantia real, mas precisa, es: las tablas de ENRICHMENT ORIGINALES
-(enrichment_document y las demas) permanecen inmutables siempre; se
-permiten tablas NUEVAS de auditoria/gobernanza (append-only a nivel de
-esquema, nunca se borra ni edita una columna existente de una tabla de
-enrichment). Mismo patron que build_enrichment_tables_v3_2.py con
-warehouse_v1, adaptado a este matiz.
+[ACTUALIZADO 2026-09-26, migracion v3.2->v3.3] warehouse_enrichment.sqlite
+(el nombre viejo, warehouse_v3_2.sqlite, se retiro por confuso -- ya no
+esta atado a una version de contrato especifica) ya NO es estrictamente
+"nunca se modifica en el lugar" -- build_enrichment_tables.py le copia la
+tabla document_case_unit desde el warehouse productivo (correcciones
+manuales de Sol, gate documento->unidad_de_caso). La garantia real, mas
+precisa, es: las tablas de ENRICHMENT ORIGINALES (enrichment_document y las
+demas) permanecen inmutables siempre; se permiten tablas NUEVAS de
+auditoria/gobernanza (append-only a nivel de esquema, nunca se borra ni
+edita una columna existente de una tabla de enrichment).
 """
 
 from __future__ import annotations
@@ -80,16 +81,19 @@ import json
 import re
 import shutil
 import sqlite3
+import sys
 import unicodedata
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from v3_3_enrichment_source import load_v3_3_records  # noqa: E402
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SOURCE_WAREHOUSE = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_v3_2.sqlite"
+SOURCE_WAREHOUSE = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_enrichment.sqlite"
 OUTPUT_WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-ENRICHMENT_PATH = PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_2_934" / "enrichment.jsonl"
 ACTOR_SECOND_PASS_PATH = PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_2_934" / "actor_second_pass_v2" / "actor_second_pass_v2.jsonl"
 
 STOPWORDS = {"el", "la", "los", "las", "de", "del", "un", "una", "y", "en", "a", "proyecto", "edificio"}
@@ -150,8 +154,13 @@ def build_project_registry(enrichment_records: list[dict[str, Any]]) -> tuple[di
 
     for record in enrichment_records:
         document_id = record["document_id"]
-        for raw_name in record.get("proyectos_mencionados") or []:
-            raw_name = (raw_name or "").strip()
+        for item in record.get("proyectos_mencionados") or []:
+            # v3.3: cada item es {nombre, case_mention_index, ...} -- antes
+            # (v3.2) era un string suelto. Este registro es mention-based por
+            # nombre, no usa case_mention_index (ese vinculo vive en
+            # enrichment_project_mention, consumido directamente por
+            # build_conflicts.py/build_geography.py).
+            raw_name = ((item.get("nombre", "") if isinstance(item, dict) else str(item)) or "").strip()
             if not raw_name:
                 continue
             norm = normalize_project_name(raw_name)
@@ -368,9 +377,12 @@ def _validate_source_warehouse(path: Path) -> None:
 
 def main() -> int:
     _validate_source_warehouse(SOURCE_WAREHOUSE)
-    enrichment_records = [
-        json.loads(l) for l in ENRICHMENT_PATH.read_text(encoding="utf-8").splitlines() if l.strip()
-    ]
+    # include_fuera_de_universo=True: el registro de proyectos necesita las
+    # 934 filas productivas completas (mismo criterio que build_enrichment_
+    # tables.py) -- la exclusion de Fix 1D solo aplica al backing de
+    # CONFLICT verificado externamente por Sol, no a la identidad de
+    # proyecto en si.
+    enrichment_records = list(load_v3_3_records(include_fuera_de_universo=True).values())
     actor_second_pass_records = [
         json.loads(l) for l in ACTOR_SECOND_PASS_PATH.read_text(encoding="utf-8").splitlines() if l.strip()
     ] if ACTOR_SECOND_PASS_PATH.exists() else []
@@ -445,7 +457,16 @@ def main() -> int:
     for r in enrichment_records:
         corr = sol_corrections.get(r["document_id"])
         if corr and corr["proyectos_mencionados_corregido"] is not None:
-            r["proyectos_mencionados"] = corr["proyectos_mencionados_corregido"]
+            # correccion_proyectos_mencionados_json se guardo en 2026-09-18
+            # (pre-v3.3) como lista de strings sueltos -- se envuelve al
+            # shape v3.3 {nombre, case_mention_index} con indice null (la
+            # correccion de Sol nunca tuvo un case_mention_index verificado,
+            # asi que esa mencion simplemente queda sin vinculo verificado,
+            # nunca se inventa uno).
+            r["proyectos_mencionados"] = [
+                {"nombre": nombre, "case_mention_index": None}
+                for nombre in corr["proyectos_mencionados_corregido"]
+            ]
             n_docs_con_correccion_de_menciones += 1
 
     projects, mention_lookup = build_project_registry(enrichment_records)
@@ -639,7 +660,7 @@ def main() -> int:
                 dict(Counter(c["unidad_caso_tipo"] for c in sol_corrections.values())) if sol_corrections else {}
             ),
             "nota": (
-                "document_case_unit (copiada de warehouse_v3_2.sqlite a esta base) trae la "
+                "document_case_unit (copiada de warehouse_enrichment.sqlite a esta base) trae la "
                 "clasificacion de unidad de caso para los 934 documentos. [PRECISION 2026-09-18, "
                 "se encontro que la frase anterior era imprecisa] Este script aplico las 9 correcciones "
                 "de proyectos_mencionados al construir el registro de proyectos. Las 9 correcciones de "

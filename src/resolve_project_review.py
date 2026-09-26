@@ -496,15 +496,65 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
 }
 
 
+def _manual_decision_via_normalized_substring(name_a: str, name_b: str) -> tuple[bool, str] | None:
+    """[AGREGADO 2026-09-26, migracion v3.2->v3.3 completa] MANUAL_DECISIONS
+    esta indexado por texto EXACTO -- son decisiones humanas/LLM reales de
+    Sol sobre pares de nombres de v3.2. Al migrar el enrichment productivo a
+    v3.3 (corrida LLM separada), muchos nombres de proyecto cambiaron de
+    fraseo para el MISMO objeto real (verificado empiricamente en toda la
+    migracion). Sin este fallback, 64 de 245 decisiones ya tomadas se
+    perdian en silencio (el par ya no matcheaba exacto, classify() caia al
+    default 'sin regla aplicable' -- ni error ni aviso, solo trabajo humano
+    ya hecho quedando invisible).
+
+    Fallback: si (name_a, name_b) no matchea exacto, buscar una clave de
+    MANUAL_DECISIONS (x, y) tal que name_a este en relacion de substring
+    normalizado con x (o y) Y name_b con el otro lado -- mismo criterio
+    'nunca fuzzy' ya usado en todo el proyecto (_mention_has_case_backing,
+    _norm() bidireccional). Nunca decide un par nuevo por su cuenta: solo
+    reconecta un par ya decidido por un humano bajo su fraseo viejo con su
+    fraseo nuevo. Si hay mas de una clave candidata, se prefiere no decidir
+    (devuelve None) antes que elegir arbitrariamente -- ambiguedad real, no
+    error a ocultar."""
+    na, nb = _norm(name_a), _norm(name_b)
+    if not na or not nb:
+        return None
+    candidatos = []
+    for (x, y), decision in MANUAL_DECISIONS.items():
+        nx, ny = _norm(x), _norm(y)
+        matches_a_x_b_y = (na in nx or nx in na) and (nb in ny or ny in nb)
+        matches_a_y_b_x = (na in ny or ny in na) and (nb in nx or nx in nb)
+        if matches_a_x_b_y or matches_a_y_b_x:
+            candidatos.append(((x, y), decision))
+    if len(candidatos) != 1:
+        return None
+    (x, y), (decision, reason) = candidatos[0]
+    return decision, (
+        f"[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, "
+        f"decision original de ('{x}', '{y}')] {reason}"
+    )
+
+
 def classify(name_a: str, name_b: str) -> tuple[bool, str]:
     if (name_a, name_b) in MANUAL_DECISIONS:
         return MANUAL_DECISIONS[(name_a, name_b)]
     if (name_b, name_a) in MANUAL_DECISIONS:
         return MANUAL_DECISIONS[(name_b, name_a)]
+    # [ORDEN 2026-09-26] el blocklist de nombres genericos (GENERIC_BLOCKLIST:
+    # "vespucio", "supermercado lider", etc.) va ANTES del fallback de
+    # substring normalizado -- un nombre generico bare puede aparecer como
+    # substring de CUALQUIER decision manual que lo mencione, produciendo
+    # una reconexion espuria (ej. "Vespucio" matcheando por substring contra
+    # una decision real sobre "Jardines de Vespucio" que no tiene relacion).
+    # El blocklist ya resuelve estos casos de forma segura (False, nunca
+    # fusiona), asi que debe interceptarlos primero.
     if is_generic_bare_name(name_a, name_b) or is_generic_bare_name(name_b, name_a):
         return False, "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)"
     if has_explicit_stage_conflict(name_a, name_b):
         return False, "Etapa/Fase explicita distinta entre los dos nombres (palabra etapa/fase presente en el texto)"
+    reconectado = _manual_decision_via_normalized_substring(name_a, name_b)
+    if reconectado is not None:
+        return reconectado
     if has_bare_trailing_numeral_conflict(name_a, name_b):
         return None, (
             "numeral suelto al final de uno de los nombres, sin decision manual explicita -- "
