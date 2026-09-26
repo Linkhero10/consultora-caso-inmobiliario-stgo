@@ -48,6 +48,11 @@ datos poblacionales y de hacinamiento del Censo 2024 (INE). Un conflicto solo se
 comuna cuando al menos uno de sus documentos focales tiene una única comuna resuelta entre sus
 menciones de caso; si un documento mezcla más de una comuna, no se le atribuye ninguna --se
 prefiere "sin comuna resuelta" antes que asignar por aproximación.</p>
+<p>El conteo de proyectos por comuna se calcula aparte, enlazando cada mención de proyecto con
+su mención de caso y su comuna resuelta. Si un grupo de menciones duplicadas mezcla decisiones
+de inclusión y exclusión, no se propaga la comuna automáticamente; solo se permite una
+adjudicación explícita limitada a identidad geográfica, sin cambiar la inclusión ni transferir
+evidencia o conflicto.</p>
 """
 
 ARCHITECTURE_HTML = """
