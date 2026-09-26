@@ -41,6 +41,7 @@ tablas derivadas:
 
 from __future__ import annotations
 
+import json
 import sqlite3
 import sys
 from pathlib import Path
@@ -52,6 +53,7 @@ from geocode_locations import resolve_location  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
+PROJECT_MENTION_GEOGRAPHY_REPORT_PATH = PROJECT_ROOT / "audit" / "project_mention_geography_report.json"
 
 _KNOWN_COMUNA_KEYS = {_key(name) for name in COMUNA_INE_CODES}
 _COMUNA_NAME_BY_CODE = {code: name for name, code in COMUNA_INE_CODES.items()}
@@ -88,6 +90,20 @@ CREATE TABLE IF NOT EXISTS geocoded_location_conflict (
     conflict_id TEXT NOT NULL,
     relation_type TEXT NOT NULL,
     PRIMARY KEY (geocode_id, conflict_id)
+);
+
+CREATE TABLE IF NOT EXISTS project_mention_geography (
+    document_id TEXT NOT NULL,
+    project_mention_id TEXT NOT NULL,
+    nombre_proyecto TEXT NOT NULL,
+    case_mention_id TEXT,
+    comuna TEXT,
+    codigo_comuna_ine TEXT,
+    match_method TEXT NOT NULL CHECK (match_method IN (
+        'direct', 'via_duplicate_group', 'no_case_mention_index',
+        'case_mention_no_incluido', 'case_mention_sin_comuna'
+    )),
+    PRIMARY KEY (document_id, project_mention_id)
 );
 """
 
@@ -157,6 +173,100 @@ def _resolved_comuna_name_by_case_mention(con: sqlite3.Connection) -> dict[str, 
 
 def _table_exists(con: sqlite3.Connection, name: str) -> bool:
     return con.execute("SELECT 1 FROM sqlite_master WHERE name = ? AND type = 'table'", (name,)).fetchone() is not None
+
+
+def _resolved_comuna_code_by_case_mention(con: sqlite3.Connection) -> dict[str, str]:
+    """Igual que _resolved_comuna_name_by_case_mention() pero devuelve el
+    codigo_comuna_ine (no el nombre) -- lo que necesita project_mention_geography
+    para ser consistente con la columna que ya usa build_territories() en
+    dashboard_data.py."""
+    resolved: dict[str, str] = {}
+    for row in con.execute("SELECT case_mention_id, codigo_comuna_ine FROM case_mention"):
+        if row["codigo_comuna_ine"]:
+            resolved[row["case_mention_id"]] = row["codigo_comuna_ine"]
+    if _table_exists(con, "case_mention_geography"):
+        for row in con.execute("SELECT case_mention_id, codigo_comuna_ine FROM case_mention_geography"):
+            resolved.setdefault(row["case_mention_id"], row["codigo_comuna_ine"])
+    return resolved
+
+
+def _duplicate_group_members(con: sqlite3.Connection) -> dict[str, list[str]]:
+    """Mismo patron que build_conflicts.py::main() (Fix 1E) -- reusado aqui
+    tal cual, no reimplementado con logica distinta."""
+    groups: dict[str, list[str]] = {}
+    if not _table_exists(con, "case_mention_duplicate_link"):
+        return groups
+    groups_raw: dict[str, list[str]] = {}
+    for row in con.execute("SELECT case_mention_id, duplicate_group_id FROM case_mention_duplicate_link"):
+        groups_raw.setdefault(row["duplicate_group_id"], []).append(row["case_mention_id"])
+    for members in groups_raw.values():
+        if len(members) > 1:
+            for cm_id in members:
+                groups[cm_id] = members
+    return groups
+
+
+def build_project_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
+    """Fix 1F (2026-09-26): geografia real de proyectos por case_mention,
+    mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT -- ahora que
+    enrichment_project_mention.case_mention_index esta materializado
+    (migracion v3.2->v3.3), resolver que comuna corresponde a cada mencion
+    de proyecto es un JOIN directo contra case_mention/case_mention_geography,
+    no una heuristica documental. Reemplaza la aproximacion vieja de
+    dashboard_data.py (cualquier mencion del documento -> comuna del
+    documento) por un vinculo verificado a nivel de mencion."""
+    con.execute("DROP TABLE IF EXISTS project_mention_geography")
+    con.executescript(SCHEMA)  # idempotente (CREATE TABLE IF NOT EXISTS)
+
+    comuna_code_by_cm = _resolved_comuna_code_by_case_mention(con)
+    included_cms = {
+        row[0] for row in con.execute("SELECT case_mention_id FROM case_mention WHERE decision_final_amplio = 'include'")
+    }
+    duplicate_group_members = _duplicate_group_members(con)
+
+    counts = {"direct": 0, "via_duplicate_group": 0, "no_case_mention_index": 0, "case_mention_no_incluido": 0, "case_mention_sin_comuna": 0}
+    rows_to_insert: list[tuple] = []
+    for pm_id, document_id, nombre, case_mention_id in con.execute(
+        "SELECT project_mention_id, document_id, nombre_proyecto, case_mention_id FROM enrichment_project_mention"
+    ):
+        if case_mention_id is None:
+            counts["no_case_mention_index"] += 1
+            rows_to_insert.append((document_id, pm_id, nombre, None, None, None, "no_case_mention_index"))
+            continue
+        if case_mention_id in included_cms and case_mention_id in comuna_code_by_cm:
+            code = comuna_code_by_cm[case_mention_id]
+            counts["direct"] += 1
+            rows_to_insert.append((document_id, pm_id, nombre, case_mention_id, _COMUNA_NAME_BY_CODE.get(code, ""), code, "direct"))
+            continue
+        # Fix 1E: el case_mention que v3.3 indico puede no ser el que quedo
+        # con comuna resuelta -- un hermano de su grupo de duplicados si.
+        resolved_via_sibling = False
+        for sibling_id in duplicate_group_members.get(case_mention_id, []):
+            if sibling_id == case_mention_id or sibling_id not in included_cms:
+                continue
+            if sibling_id in comuna_code_by_cm:
+                code = comuna_code_by_cm[sibling_id]
+                counts["via_duplicate_group"] += 1
+                rows_to_insert.append((document_id, pm_id, nombre, sibling_id, _COMUNA_NAME_BY_CODE.get(code, ""), code, "via_duplicate_group"))
+                resolved_via_sibling = True
+                break
+        if resolved_via_sibling:
+            continue
+        if case_mention_id not in included_cms:
+            counts["case_mention_no_incluido"] += 1
+            rows_to_insert.append((document_id, pm_id, nombre, case_mention_id, None, None, "case_mention_no_incluido"))
+        else:
+            counts["case_mention_sin_comuna"] += 1
+            rows_to_insert.append((document_id, pm_id, nombre, case_mention_id, None, None, "case_mention_sin_comuna"))
+
+    con.executemany(
+        "INSERT INTO project_mention_geography "
+        "(document_id, project_mention_id, nombre_proyecto, case_mention_id, comuna, codigo_comuna_ine, match_method) "
+        "VALUES (?,?,?,?,?,?,?)",
+        rows_to_insert,
+    )
+    con.commit()
+    return {"n_menciones_total": len(rows_to_insert), **counts}
 
 
 def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
@@ -266,11 +376,31 @@ def main(warehouse_path: Path = WAREHOUSE_PATH) -> int:
         ensure_schema(con)
         comuna_report = backfill_case_mention_geography(con)
         geocode_report = geocode_evidence_locations(con)
+        project_geography_report = build_project_mention_geography(con)
     finally:
         con.close()
 
     print("case_mention_geography:", comuna_report)
     print("geocoded_location:", geocode_report)
+    print("project_mention_geography:", project_geography_report)
+
+    PROJECT_MENTION_GEOGRAPHY_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PROJECT_MENTION_GEOGRAPHY_REPORT_PATH.write_text(
+        json.dumps(
+            {
+                "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
+                "descripcion": (
+                    "Vinculo verificado proyecto->case_mention->comuna, mismo mecanismo que Fix 1D "
+                    "uso para el respaldo de CONFLICT. Reemplaza la aproximacion vieja de "
+                    "dashboard_data.py (cualquier mencion del documento -> comuna del documento)."
+                ),
+                **project_geography_report,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return 0
 
 

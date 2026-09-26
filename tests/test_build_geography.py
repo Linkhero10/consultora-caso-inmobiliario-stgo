@@ -17,6 +17,8 @@ def _build_fixture_db(path: Path) -> None:
         CREATE TABLE case_mention(case_mention_id TEXT, document_id TEXT, mention_index INTEGER, comuna TEXT, codigo_comuna_ine TEXT, tipo_objeto_norm TEXT, decision_final_amplio TEXT, decision_final_residencial TEXT);
         CREATE TABLE evidence(evidence_id TEXT, document_id TEXT, case_mention_id TEXT, quote_role TEXT, quote_index INTEGER, quote_text TEXT, verified INTEGER);
         CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
+        CREATE TABLE enrichment_project_mention(project_mention_id TEXT, document_id TEXT, idx INTEGER, nombre_proyecto TEXT, case_mention_index INTEGER, case_mention_id TEXT);
+        CREATE TABLE case_mention_duplicate_link(case_mention_id TEXT, document_id TEXT, duplicate_group_id TEXT, canonical_case_mention_id TEXT, group_size INTEGER, match_method TEXT, decision_mixed_in_group INTEGER);
         """
     )
     # Caso 1: comuna simple ya conocida, resuelve.
@@ -173,3 +175,129 @@ def test_geocode_evidence_locations_discards_out_of_area_homonyms(tmp_path):
     matched_names = {r["matched_name"] for r in con.execute("SELECT * FROM geocoded_location")}
     assert "Monterrey" not in matched_names
     assert report["n_descartadas_fuera_del_area_de_estudio"] == 1
+
+
+# --- Fix 1F (2026-09-26): geografia real de proyectos por case_mention ---
+
+
+def test_project_mention_geography_direct_match(tmp_path):
+    """cm4 ya tiene codigo_comuna_ine directo y decision_final_amplio=include
+    -- una mencion de proyecto que apunta a cm4 debe resolver 'direct'."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',0,'cm4')")
+    con.commit()
+
+    report = target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "direct"
+    assert row["case_mention_id"] == "cm4"
+    assert row["codigo_comuna_ine"] == "13101"
+    assert report["direct"] == 1
+
+
+def test_project_mention_geography_no_case_mention_index(tmp_path):
+    """case_mention_index nulo (v3.3 no vinculo la mencion a ningun
+    case_mention) -- nunca se adivina, queda explicito sin comuna."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Proyecto Ambiguo',NULL,NULL)")
+    con.commit()
+
+    target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "no_case_mention_index"
+    assert row["case_mention_id"] is None
+    assert row["codigo_comuna_ine"] is None
+
+
+def test_project_mention_geography_case_mention_no_incluido(tmp_path):
+    """El indice apunta a un case_mention real, pero su decision_final_amplio
+    no es 'include' -- no se usa su comuna, se marca explicito."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute("UPDATE case_mention SET decision_final_amplio='exclude' WHERE case_mention_id='cm4'")
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',0,'cm4')")
+    con.commit()
+
+    target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "case_mention_no_incluido"
+    assert row["codigo_comuna_ine"] is None
+
+
+def test_project_mention_geography_case_mention_sin_comuna(tmp_path):
+    """El case_mention esta incluido pero no tiene ninguna comuna resuelta
+    (ni codigo_comuna_ine directo ni backfill) -- explicito, no se inventa."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm_sin_comuna','doc7',0,'','','edificio_residencial','include','include')"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc7:project:0','doc7',0,'Proyecto X',0,'cm_sin_comuna')")
+    con.commit()
+
+    target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc7:project:0'").fetchone()
+    assert row["match_method"] == "case_mention_sin_comuna"
+    assert row["codigo_comuna_ine"] is None
+
+
+def test_project_mention_geography_via_duplicate_group_sibling(tmp_path):
+    """Fix 1E: el case_mention que v3.3 indico no esta incluido, pero un
+    hermano de su grupo de duplicados si y tiene comuna resuelta -- se usa
+    el hermano, marcado explicito como via_duplicate_group."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    # v3.3 apunto a cm4b (excluido); su hermano cm4 SI esta incluido y tiene comuna.
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',1,'cm4b')")
+    con.commit()
+
+    target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "via_duplicate_group"
+    assert row["case_mention_id"] == "cm4"
+    assert row["codigo_comuna_ine"] == "13101"
+
+
+def test_project_mention_geography_report_counts_match_persisted_rows(tmp_path):
+    """El reporte devuelto nunca debe estar hardcodeado -- se recalcula
+    desde las filas realmente insertadas."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',0,'cm4')")
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:1','doc4',1,'Proyecto Ambiguo',NULL,NULL)")
+    con.commit()
+
+    report = target.build_project_mention_geography(con)
+
+    total_persisted = con.execute("SELECT COUNT(*) FROM project_mention_geography").fetchone()[0]
+    assert report["n_menciones_total"] == total_persisted == 2
+    assert report["direct"] == 1
+    assert report["no_case_mention_index"] == 1

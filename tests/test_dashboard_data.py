@@ -145,6 +145,83 @@ def test_ambiguous_comuna_document_contributes_to_no_territory(tmp_path):
     assert providencia["n_conflicts_backed"] == 0
 
 
+def test_n_projects_verified_absent_table_defaults_to_zero_never_crashes(tmp_path):
+    """[Fix 1F, 2026-09-26] Si project_mention_geography no existe (warehouse
+    de fixture que no corrio build_geography.py), n_projects_verified debe
+    ser 0 para todas las comunas -- nunca un crash, nunca caer de vuelta al
+    metodo viejo (comuna del documento) en silencio."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    territories = target.build_territories(con)
+    con.close()
+    assert territories
+    assert all(t["n_projects_verified"] == 0 for t in territories)
+
+
+def test_n_projects_verified_uses_case_mention_comuna_not_document_comuna(tmp_path):
+    """[Fix 1F, 2026-09-26] n_projects_verified cuenta project_id distintos
+    via project_mention_geography con match_method in {direct,
+    via_duplicate_group} -- nunca la comuna del documento como proxy. doc1
+    tiene comuna Santiago (13101), pero si su mencion de proyecto resuelve
+    (via case_mention) a Providencia (13102), debe contar en Providencia,
+    no en Santiago."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.executescript(
+        """
+        CREATE TABLE project_mention_geography (
+            document_id TEXT NOT NULL, project_mention_id TEXT NOT NULL, nombre_proyecto TEXT NOT NULL,
+            case_mention_id TEXT, comuna TEXT, codigo_comuna_ine TEXT, match_method TEXT NOT NULL,
+            PRIMARY KEY (document_id, project_mention_id)
+        );
+        """
+    )
+    con.execute(
+        "INSERT INTO project_mention_geography VALUES "
+        "('doc1','doc1:project:0','Proyecto A','doc1:0','PROVIDENCIA','13102','direct')"
+    )
+    con.commit()
+
+    territories = target.build_territories(con)
+    con.close()
+
+    by_code = {t["codigo_comuna_ine"]: t for t in territories}
+    assert by_code["13102"]["n_projects_verified"] == 1
+    assert by_code["13101"]["n_projects_verified"] == 0
+
+
+def test_n_projects_verified_ignores_unresolved_match_methods(tmp_path):
+    """Filas con match_method distinto de direct/via_duplicate_group (ej.
+    no_case_mention_index) no deben contar -- solo vinculos verificados."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.executescript(
+        """
+        CREATE TABLE project_mention_geography (
+            document_id TEXT NOT NULL, project_mention_id TEXT NOT NULL, nombre_proyecto TEXT NOT NULL,
+            case_mention_id TEXT, comuna TEXT, codigo_comuna_ine TEXT, match_method TEXT NOT NULL,
+            PRIMARY KEY (document_id, project_mention_id)
+        );
+        """
+    )
+    con.execute(
+        "INSERT INTO project_mention_geography VALUES "
+        "('doc1','doc1:project:0','Proyecto A',NULL,NULL,NULL,'no_case_mention_index')"
+    )
+    con.commit()
+
+    territories = target.build_territories(con)
+    con.close()
+
+    assert all(t["n_projects_verified"] == 0 for t in territories)
+
+
 def test_non_focal_mentions_never_contribute_actors_or_events(tmp_path):
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
