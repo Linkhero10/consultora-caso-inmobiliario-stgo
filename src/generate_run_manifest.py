@@ -30,15 +30,16 @@ SHA-256 distinto al que este manifiesto registra. Un revisor externo señaló
 correctamente que eso deja ambiguo a qué commit describe realmente el
 manifiesto. Ahora se registran dos campos separados:
 `parent_commit_at_generation` (informativo, el HEAD real al generar) y
-`release_commit` (el commit que efectivamente incluye este manifiesto junto
-a este warehouse exacto -- necesariamente `null` al generar, porque ese
-commit todavía no existe; se completa en un commit de seguimiento inmediato
-que cite el hash real ya creado). Ninguno de los dos es lo que CI verifica
+`release_commit` (el commit que publicó por primera vez este warehouse y el
+manifiesto generado para él; se completa en un commit de seguimiento cuando
+el commit de publicación ya existe, evitando una referencia autorreferencial).
+Ninguno de los dos es lo que CI verifica
 -- la garantía fuerte es el SHA-256 del warehouse, no el commit.
 """
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import subprocess
@@ -60,7 +61,7 @@ TRACKED_TABLES = [
     "document_conflict", "conflict_relation", "conflict_evidence_backing",
     "actor_registry", "actor_alias", "actor_event_project_link",
     "manzana_censal", "geocoded_location", "geocoded_location_conflict",
-    "case_mention_duplicate_link",
+    "case_mention_duplicate_link", "project_mention_geography",
 ]
 
 
@@ -77,15 +78,37 @@ def _git_head() -> str | None:
         return None
 
 
+def _validate_release_commit(release_commit: str | None) -> str | None:
+    if release_commit is None:
+        return None
+    candidate = release_commit.lower()
+    if len(candidate) != 40 or any(char not in "0123456789abcdef" for char in candidate):
+        raise ValueError("release_commit debe ser un SHA-1 completo de 40 caracteres hexadecimales")
+    try:
+        subprocess.check_output(
+            ["git", "cat-file", "-e", f"{candidate}^{{commit}}"],
+            cwd=PROJECT_ROOT,
+            stderr=subprocess.DEVNULL,
+        )
+    except Exception as exc:
+        raise ValueError(f"release_commit no existe como commit en este repositorio: {release_commit}") from exc
+    return candidate
+
+
 def _table_exists(con: sqlite3.Connection, name: str) -> bool:
     return con.execute(
         "SELECT 1 FROM sqlite_master WHERE type IN ('table','view') AND name = ?", (name,)
     ).fetchone() is not None
 
 
-def generate(warehouse_path: Path = WAREHOUSE_PATH, manifest_path: Path = MANIFEST_PATH) -> dict[str, Any]:
+def generate(
+    warehouse_path: Path = WAREHOUSE_PATH,
+    manifest_path: Path = MANIFEST_PATH,
+    release_commit: str | None = None,
+) -> dict[str, Any]:
     if not warehouse_path.exists():
         raise FileNotFoundError(warehouse_path)
+    release_commit = _validate_release_commit(release_commit)
 
     con = sqlite3.connect(str(warehouse_path))
     try:
@@ -138,15 +161,13 @@ def generate(warehouse_path: Path = WAREHOUSE_PATH, manifest_path: Path = MANIFE
         # arriba, precisamente porque este manifiesto describe un warehouse
         # regenerado que todavia no esta committeado en ese momento. No usar
         # este campo para verificar que sha256 corresponde a un commit dado.
-        # "release_commit" es el commit que efectivamente incluye ESTE
-        # archivo de manifiesto junto a este data/warehouse.sqlite exacto --
-        # no puede conocerse antes de crear el commit (no existe todavia), asi
-        # que queda null hasta un commit de seguimiento inmediato que lo
-        # complete citando el hash real ya creado (mismo patron ya usado en
-        # el commit 23339cc). El SHA-256 del warehouse es la unica garantia
+        # "release_commit" identifica el commit que primero publico los
+        # artefactos descritos. Se completa en un commit de seguimiento,
+        # evitando una referencia autorreferencial. El SHA-256 del warehouse
+        # es la unica garantia
         # fuerte; ambos campos de commit son informativos, no verificados por CI.
         "parent_commit_at_generation": _git_head(),
-        "release_commit": None,
+        "release_commit": release_commit,
         "note": (
             "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse "
             "vigente en cada ronda de reconstruccion -- nunca se edita a mano. "
@@ -162,7 +183,13 @@ def generate(warehouse_path: Path = WAREHOUSE_PATH, manifest_path: Path = MANIFE
 
 
 def main() -> int:
-    manifest = generate()
+    parser = argparse.ArgumentParser(description="Genera audit/run_manifest.json desde el warehouse actual.")
+    parser.add_argument(
+        "--release-commit",
+        help="SHA completo del commit que publico los artefactos; usar en el commit de seguimiento.",
+    )
+    args = parser.parse_args()
+    manifest = generate(release_commit=args.release_commit)
     print(json.dumps(manifest, ensure_ascii=False, indent=2))
     return 0
 

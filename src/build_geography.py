@@ -42,8 +42,11 @@ tablas derivadas:
 from __future__ import annotations
 
 import json
+import hashlib
 import sqlite3
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -54,6 +57,7 @@ from geocode_locations import resolve_location  # noqa: E402
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 PROJECT_MENTION_GEOGRAPHY_REPORT_PATH = PROJECT_ROOT / "audit" / "project_mention_geography_report.json"
+REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH = PROJECT_ROOT / "config" / "reviewed_duplicate_group_geography_links.json"
 
 _KNOWN_COMUNA_KEYS = {_key(name) for name in COMUNA_INE_CODES}
 _COMUNA_NAME_BY_CODE = {code: name for name, code in COMUNA_INE_CODES.items()}
@@ -100,7 +104,8 @@ CREATE TABLE IF NOT EXISTS project_mention_geography (
     comuna TEXT,
     codigo_comuna_ine TEXT,
     match_method TEXT NOT NULL CHECK (match_method IN (
-        'direct', 'via_duplicate_group', 'no_case_mention_index',
+        'direct', 'via_duplicate_group', 'via_reviewed_duplicate_group',
+        'ambiguous_duplicate_group', 'no_case_mention_index',
         'case_mention_no_incluido', 'case_mention_sin_comuna'
     )),
     PRIMARY KEY (document_id, project_mention_id)
@@ -190,23 +195,81 @@ def _resolved_comuna_code_by_case_mention(con: sqlite3.Connection) -> dict[str, 
     return resolved
 
 
-def _duplicate_group_members(con: sqlite3.Connection) -> dict[str, list[str]]:
-    """Mismo patron que build_conflicts.py::main() (Fix 1E) -- reusado aqui
-    tal cual, no reimplementado con logica distinta."""
-    groups: dict[str, list[str]] = {}
+def _duplicate_group_details(con: sqlite3.Connection) -> dict[str, dict[str, Any]]:
+    """Devuelve membresía y bandera de decisión mixta para cada duplicado.
+
+    La bandera debe propagarse hasta este consumidor: un grupo que contiene
+    decisiones include/exclude no puede alimentar fallback geográfico
+    automático.
+    """
+    by_case_mention: dict[str, dict[str, Any]] = {}
     if not _table_exists(con, "case_mention_duplicate_link"):
-        return groups
-    groups_raw: dict[str, list[str]] = {}
-    for row in con.execute("SELECT case_mention_id, duplicate_group_id FROM case_mention_duplicate_link"):
-        groups_raw.setdefault(row["duplicate_group_id"], []).append(row["case_mention_id"])
-    for members in groups_raw.values():
-        if len(members) > 1:
-            for cm_id in members:
-                groups[cm_id] = members
-    return groups
+        return by_case_mention
+    groups_raw: dict[str, dict[str, Any]] = {}
+    for row in con.execute(
+        "SELECT case_mention_id, document_id, duplicate_group_id, "
+        "COALESCE(decision_mixed_in_group, 0) AS decision_mixed_in_group "
+        "FROM case_mention_duplicate_link "
+        "WHERE duplicate_group_id IS NOT NULL AND duplicate_group_id != ''"
+    ):
+        group = groups_raw.setdefault(
+            row["duplicate_group_id"],
+            {"document_id": row["document_id"], "members": [], "decision_mixed_in_group": False},
+        )
+        group["members"].append(row["case_mention_id"])
+        if group["document_id"] != row["document_id"]:
+            raise ValueError(f"Grupo de duplicados cruza documentos: {row['duplicate_group_id']}")
+        group["decision_mixed_in_group"] = bool(
+            group["decision_mixed_in_group"] or row["decision_mixed_in_group"]
+        )
+    for group_id, detail in groups_raw.items():
+        if len(detail["members"]) > 1:
+            frozen = {**detail, "duplicate_group_id": group_id}
+            for cm_id in detail["members"]:
+                by_case_mention[cm_id] = frozen
+    return by_case_mention
 
 
-def build_project_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
+def _load_reviewed_duplicate_group_links(path: Path | None = None) -> dict[str, dict[str, Any]]:
+    path = path or REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "1.0" or not isinstance(payload.get("links"), list):
+        raise ValueError(f"Contrato invalido en {path}")
+    required = {
+        "project_mention_id", "document_id", "source_case_mention_id",
+        "duplicate_group_id", "resolved_case_mention_id", "status", "rationale", "source",
+    }
+    links: dict[str, dict[str, Any]] = {}
+    for entry in payload["links"]:
+        missing = required - entry.keys()
+        if missing:
+            raise ValueError(f"Enlace revisado incompleto en {path}: faltan {sorted(missing)}")
+        if entry["status"] != "reviewed_geography_only":
+            raise ValueError(f"Estado de adjudicacion no permitido: {entry['status']}")
+        key = entry["project_mention_id"]
+        if key in links:
+            raise ValueError(f"project_mention_id duplicado en {path}: {key}")
+        links[key] = entry
+    return links
+
+
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _git_head() -> str | None:
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=PROJECT_ROOT, text=True).strip()
+    except Exception:
+        return None
+
+
+def build_project_mention_geography(
+    con: sqlite3.Connection,
+    reviewed_duplicate_links: dict[str, dict[str, Any]] | None = None,
+) -> dict[str, int]:
     """Fix 1F (2026-09-26): geografia real de proyectos por case_mention,
     mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT -- ahora que
     enrichment_project_mention.case_mention_index esta materializado
@@ -222,9 +285,21 @@ def build_project_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
     included_cms = {
         row[0] for row in con.execute("SELECT case_mention_id FROM case_mention WHERE decision_final_amplio = 'include'")
     }
-    duplicate_group_members = _duplicate_group_members(con)
+    duplicate_group_by_cm = _duplicate_group_details(con)
+    reviewed_duplicate_links = (
+        _load_reviewed_duplicate_group_links() if reviewed_duplicate_links is None else reviewed_duplicate_links
+    )
+    used_reviewed_links: set[str] = set()
 
-    counts = {"direct": 0, "via_duplicate_group": 0, "no_case_mention_index": 0, "case_mention_no_incluido": 0, "case_mention_sin_comuna": 0}
+    counts = {
+        "direct": 0,
+        "via_duplicate_group": 0,
+        "via_reviewed_duplicate_group": 0,
+        "ambiguous_duplicate_group": 0,
+        "no_case_mention_index": 0,
+        "case_mention_no_incluido": 0,
+        "case_mention_sin_comuna": 0,
+    }
     rows_to_insert: list[tuple] = []
     for pm_id, document_id, nombre, case_mention_id in con.execute(
         "SELECT project_mention_id, document_id, nombre_proyecto, case_mention_id FROM enrichment_project_mention"
@@ -238,10 +313,45 @@ def build_project_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
             counts["direct"] += 1
             rows_to_insert.append((document_id, pm_id, nombre, case_mention_id, _COMUNA_NAME_BY_CODE.get(code, ""), code, "direct"))
             continue
-        # Fix 1E: el case_mention que v3.3 indico puede no ser el que quedo
-        # con comuna resuelta -- un hermano de su grupo de duplicados si.
+        group = duplicate_group_by_cm.get(case_mention_id)
+        # Los grupos con decisiones mixtas requieren adjudicación explícita.
+        # La excepción aprobada solo transmite identidad geográfica; nunca
+        # cambia el estado include/exclude ni atribuye conflicto/evidencia.
+        if group and group["decision_mixed_in_group"]:
+            reviewed = reviewed_duplicate_links.get(pm_id)
+            if reviewed is None:
+                counts["ambiguous_duplicate_group"] += 1
+                rows_to_insert.append(
+                    (document_id, pm_id, nombre, case_mention_id, None, None, "ambiguous_duplicate_group")
+                )
+                continue
+
+            if reviewed.get("status") != "reviewed_geography_only":
+                raise ValueError(f"Adjudicacion sin estado reviewed_geography_only: {pm_id}")
+            if (
+                reviewed["document_id"] != document_id
+                or group["document_id"] != document_id
+                or reviewed["source_case_mention_id"] != case_mention_id
+                or reviewed["duplicate_group_id"] != group["duplicate_group_id"]
+                or reviewed["resolved_case_mention_id"] not in group["members"]
+                or reviewed["resolved_case_mention_id"] == case_mention_id
+            ):
+                raise ValueError(f"Adjudicacion de geografia no coincide con el registro real: {pm_id}")
+            sibling_id = reviewed["resolved_case_mention_id"]
+            if sibling_id not in included_cms or sibling_id not in comuna_code_by_cm:
+                raise ValueError(f"La mention aprobada no tiene inclusion/comuna resuelta: {pm_id}")
+            code = comuna_code_by_cm[sibling_id]
+            counts["via_reviewed_duplicate_group"] += 1
+            used_reviewed_links.add(pm_id)
+            rows_to_insert.append(
+                (document_id, pm_id, nombre, sibling_id, _COMUNA_NAME_BY_CODE.get(code, ""), code,
+                 "via_reviewed_duplicate_group")
+            )
+            continue
+
+        # Para grupos no mixtos se conserva el fallback previo.
         resolved_via_sibling = False
-        for sibling_id in duplicate_group_members.get(case_mention_id, []):
+        for sibling_id in (group["members"] if group else []):
             if sibling_id == case_mention_id or sibling_id not in included_cms:
                 continue
             if sibling_id in comuna_code_by_cm:
@@ -266,7 +376,13 @@ def build_project_mention_geography(con: sqlite3.Connection) -> dict[str, int]:
         rows_to_insert,
     )
     con.commit()
-    return {"n_menciones_total": len(rows_to_insert), **counts}
+    return {
+        "n_menciones_total": len(rows_to_insert),
+        "reviewed_duplicate_group_links_configured": len(reviewed_duplicate_links),
+        "reviewed_duplicate_group_links_applied": len(used_reviewed_links),
+        "reviewed_duplicate_group_links_unmatched": len(reviewed_duplicate_links) - len(used_reviewed_links),
+        **counts,
+    }
 
 
 def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
@@ -371,14 +487,25 @@ def geocode_evidence_locations(con: sqlite3.Connection) -> dict[str, Any]:
 
 
 def main(warehouse_path: Path = WAREHOUSE_PATH) -> int:
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    input_warehouse_sha256 = _sha256_file(warehouse_path)
+    build_commit = _git_head()
+    script_sha256 = _sha256_file(Path(__file__))
+    reviewed_links = _load_reviewed_duplicate_group_links()
+    review_config_sha256 = _sha256_file(REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH) if REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH.exists() else None
     con = _connect(warehouse_path)
     try:
         ensure_schema(con)
         comuna_report = backfill_case_mention_geography(con)
         geocode_report = geocode_evidence_locations(con)
-        project_geography_report = build_project_mention_geography(con)
+        project_geography_report = build_project_mention_geography(con, reviewed_duplicate_links=reviewed_links)
     finally:
         con.close()
+
+    if project_geography_report["reviewed_duplicate_group_links_unmatched"]:
+        raise RuntimeError(
+            "Hay adjudicaciones manuales de geografia sin aplicar; revisar ids/datos antes de publicar el reporte."
+        )
 
     print("case_mention_geography:", comuna_report)
     print("geocoded_location:", geocode_report)
@@ -389,11 +516,22 @@ def main(warehouse_path: Path = WAREHOUSE_PATH) -> int:
         json.dumps(
             {
                 "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
+                "run_id": run_id,
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "generator": "src/build_geography.py::build_project_mention_geography",
+                "build_commit": build_commit,
+                "generator_sha256": script_sha256,
+                "review_config_path": "config/reviewed_duplicate_group_geography_links.json",
+                "review_config_sha256": review_config_sha256,
+                "input_warehouse_sha256": input_warehouse_sha256,
+                "output_warehouse_sha256": _sha256_file(warehouse_path),
                 "descripcion": (
-                    "Vinculo verificado proyecto->case_mention->comuna, mismo mecanismo que Fix 1D "
-                    "uso para el respaldo de CONFLICT. Reemplaza la aproximacion vieja de "
-                    "dashboard_data.py (cualquier mencion del documento -> comuna del documento)."
+                    "Vinculo proyecto->case_mention->comuna; fallbacks desde grupos de duplicados "
+                    "con decision mixta quedan ambiguos salvo una adjudicacion manual explicita "
+                    "y limitada a geografia. Reemplaza la aproximacion documental anterior."
                 ),
+                "case_mention_geography": comuna_report,
+                "geocoded_location": geocode_report,
                 **project_geography_report,
             },
             ensure_ascii=False,

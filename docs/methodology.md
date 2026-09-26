@@ -58,6 +58,21 @@ Esto es una señal de calidad y no una adjudicación directa ni una prueba de qu
 del documento sean parte del mismo conflicto. La cobertura por conflicto se informa como `total`,
 `parcial` o `ninguna`; la ausencia de respaldo no equivale a falsedad.
 
+## Geografía de menciones de proyecto (Fix 1F)
+
+`project_mention_geography` resuelve territorio en la unidad de la mención:
+`project_mention → case_mention → comuna`. Se aceptan como verificados los
+vínculos `direct` y los fallbacks `via_duplicate_group` cuando el grupo no
+tiene decisiones mixtas. Un grupo que mezcla `include` y `exclude` no propaga
+geografía automáticamente: queda como `ambiguous_duplicate_group` sin comuna.
+Una adjudicación humana explícita puede producir
+`via_reviewed_duplicate_group`, limitado a la identidad geográfica del
+proyecto. No altera `include/exclude`, no transfiere focalidad y no atribuye
+conflicto ni evidencia entre menciones. El dashboard cuenta solo los tres
+métodos verificados; las filas ambiguas o sin resolución no se usan para
+inventar ubicación. El reporte de auditoría registra los hashes del warehouse
+de entrada/salida, del código y de la configuración de adjudicaciones.
+
 ## Capa de contexto social fino: manzana censal (Censo 2024)
 
 El mapa por comuna (32 unidades) puede activar una capa opcional de manzanas censales del Censo

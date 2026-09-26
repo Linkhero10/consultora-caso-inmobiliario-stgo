@@ -77,6 +77,7 @@ enrichment_document, enrichment_actor,
   enrichment_project_mention           -- salida cruda del enriquecimiento LLM
 territory, geocoded_location,
   geocoded_location_conflict,
+  project_mention_geography,
   manzana_censal                       -- geografia: comuna (agregado) y manzana censal (contexto)
 ```
 

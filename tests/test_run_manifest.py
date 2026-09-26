@@ -9,7 +9,13 @@ solo contra el puntero de Git LFS."""
 import hashlib
 import json
 import sqlite3
+import sys
 from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parents[1] / "src"
+sys.path.insert(0, str(SCRIPT_DIR))
+
+import generate_run_manifest as manifest_generator  # noqa: E402
 
 import pytest
 
@@ -53,3 +59,37 @@ def test_manifest_counts_match_real_warehouse_where_present():
             assert real == expected, f"conteo desactualizado para {table}: manifest={expected} real={real}"
     finally:
         con.close()
+
+
+def test_generate_manifest_can_finalize_release_commit_and_tracks_project_geography(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    con = sqlite3.connect(str(db_path))
+    con.execute(
+        "CREATE TABLE project_mention_geography "
+        "(document_id TEXT, project_mention_id TEXT, codigo_comuna_ine TEXT)"
+    )
+    con.execute("INSERT INTO project_mention_geography VALUES ('doc1','doc1:project:0','13114')")
+    con.commit()
+    con.close()
+
+    manifest_path = tmp_path / "run_manifest.json"
+    manifest = manifest_generator.generate(
+        warehouse_path=db_path,
+        manifest_path=manifest_path,
+        release_commit=manifest_generator._git_head(),
+    )
+
+    assert manifest["release_commit"] == manifest_generator._git_head()
+    assert manifest["warehouse"]["counts"]["project_mention_geography"] == 1
+    assert json.loads(manifest_path.read_text(encoding="utf-8"))["release_commit"] == manifest_generator._git_head()
+
+
+def test_generate_manifest_rejects_unknown_release_commit(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    sqlite3.connect(str(db_path)).close()
+    with pytest.raises(ValueError, match="no existe como commit"):
+        manifest_generator.generate(
+            warehouse_path=db_path,
+            manifest_path=tmp_path / "run_manifest.json",
+            release_commit="a" * 40,
+        )

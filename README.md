@@ -51,9 +51,15 @@ python src/apply_actor_registry_to_network.py
 python src/build_geography.py           # comuna resuelta + project_mention_geography (Fix 1F)
 python src/build_geography_manzana.py   # contexto censal (manzana)
 python src/build_dashboard.py           # docs/index.html
-python src/generate_run_manifest.py     # SIEMPRE el último paso
+python src/generate_run_manifest.py     # regenerar manifiesto tras el warehouse
 pytest -q
 ```
+
+Al publicar una reconstrucción, después del commit que primero incluye el
+warehouse y el reporte generado, completar el manifiesto en un commit de
+seguimiento: `python src/generate_run_manifest.py --release-commit <SHA-del-commit-de-publicacion>`.
+El SHA completo debe existir en el repositorio; el manifiesto conserva además
+el hash del warehouse como verificación fuerte.
 
 `src/classify.py` y `src/enrich.py` (o su sucesor `src/_enrich_pipeline_v3_3_*.py`) son pasos
 aparte, de costo LLM real — no se re-corren en cada reconstrucción del warehouse. Ver

@@ -162,8 +162,8 @@ def test_n_projects_verified_absent_table_defaults_to_zero_never_crashes(tmp_pat
 
 def test_n_projects_verified_uses_case_mention_comuna_not_document_comuna(tmp_path):
     """[Fix 1F, 2026-09-26] n_projects_verified cuenta project_id distintos
-    via project_mention_geography con match_method in {direct,
-    via_duplicate_group} -- nunca la comuna del documento como proxy. doc1
+    via project_mention_geography con match_method directo, fallback limpio,
+    o fallback mixto adjudicado explícitamente -- nunca la comuna del documento como proxy. doc1
     tiene comuna Santiago (13101), pero si su mencion de proyecto resuelve
     (via case_mention) a Providencia (13102), debe contar en Providencia,
     no en Santiago."""
@@ -184,19 +184,25 @@ def test_n_projects_verified_uses_case_mention_comuna_not_document_comuna(tmp_pa
         "INSERT INTO project_mention_geography VALUES "
         "('doc1','doc1:project:0','Proyecto A','doc1:0','PROVIDENCIA','13102','direct')"
     )
+    con.execute("INSERT INTO project VALUES ('proj2','Proyecto B','proyecto b','[]',1,1,NULL,'case2')")
+    con.execute("INSERT INTO project_mention_resolved VALUES ('doc1','Proyecto B','proj2')")
+    con.execute(
+        "INSERT INTO project_mention_geography VALUES "
+        "('doc1','doc1:project:1','Proyecto B','doc1:0','PROVIDENCIA','13102','via_reviewed_duplicate_group')"
+    )
     con.commit()
 
     territories = target.build_territories(con)
     con.close()
 
     by_code = {t["codigo_comuna_ine"]: t for t in territories}
-    assert by_code["13102"]["n_projects_verified"] == 1
+    assert by_code["13102"]["n_projects_verified"] == 2
     assert by_code["13101"]["n_projects_verified"] == 0
 
 
 def test_n_projects_verified_ignores_unresolved_match_methods(tmp_path):
-    """Filas con match_method distinto de direct/via_duplicate_group (ej.
-    no_case_mention_index) no deben contar -- solo vinculos verificados."""
+    """Indices no resueltos y grupos mixtos sin revisión no deben contar,
+    aunque por error traigan una comuna no nula."""
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
     con = sqlite3.connect(str(db_path))
@@ -213,6 +219,12 @@ def test_n_projects_verified_ignores_unresolved_match_methods(tmp_path):
     con.execute(
         "INSERT INTO project_mention_geography VALUES "
         "('doc1','doc1:project:0','Proyecto A',NULL,NULL,NULL,'no_case_mention_index')"
+    )
+    con.execute("INSERT INTO project VALUES ('proj2','Proyecto B','proyecto b','[]',1,1,NULL,'case2')")
+    con.execute("INSERT INTO project_mention_resolved VALUES ('doc1','Proyecto B','proj2')")
+    con.execute(
+        "INSERT INTO project_mention_geography VALUES "
+        "('doc1','doc1:project:1','Proyecto B','doc1:1','PROVIDENCIA','13102','ambiguous_duplicate_group')"
     )
     con.commit()
 

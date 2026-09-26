@@ -151,8 +151,9 @@ def _column_exists(con: sqlite3.Connection, table: str, column: str) -> bool:
 def _projects_verified_by_comuna(con: sqlite3.Connection) -> dict[str, set[str]]:
     """[Fix 1F, 2026-09-26] codigo_comuna_ine -> set(project_id) usando
     SOLO menciones con vinculo verificado proyecto->case_mention->comuna
-    (project_mention_geography, match_method in {direct, via_duplicate_group}
-    -- ver src/build_geography.py::build_project_mention_geography()).
+    (project_mention_geography, match_method directo, fallback de grupo limpio,
+    o fallback de grupo mixto adjudicado manualmente solo para geografía -- ver
+    src/build_geography.py::build_project_mention_geography()).
     Reemplaza la aproximacion vieja (cualquier mencion del documento
     atribuida a la comuna del documento) por el mismo mecanismo que Fix 1D
     ya uso para el respaldo de CONFLICT. Si la tabla no existe (warehouse
@@ -167,7 +168,8 @@ def _projects_verified_by_comuna(con: sqlite3.Connection) -> dict[str, set[str]]
         "FROM project_mention_geography pmg "
         "JOIN project_mention_resolved pmr "
         "  ON pmr.document_id = pmg.document_id AND pmr.raw_nombre_proyecto = pmg.nombre_proyecto "
-        "WHERE pmg.match_method IN ('direct', 'via_duplicate_group') AND pmg.codigo_comuna_ine IS NOT NULL",
+        "WHERE pmg.match_method IN ('direct', 'via_duplicate_group', 'via_reviewed_duplicate_group') "
+        "AND pmg.codigo_comuna_ine IS NOT NULL",
     ):
         by_comuna[row["codigo_comuna_ine"]].add(row["project_id"])
     return by_comuna
@@ -235,8 +237,10 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 # Con el 100% del corpus en v3.3 (migracion 2026-09-26), cada mencion de
                 # proyecto tiene (o no) un vinculo verificado a un case_mention real con su
                 # PROPIA comuna resuelta (ver build_geography.py::build_project_mention_geography(),
-                # match_method='direct'/'via_duplicate_group') -- este conteo usa SOLO esos
-                # vinculos verificados, nunca la comuna del documento como proxy. Renombrado
+                # match_method='direct'/'via_duplicate_group'/'via_reviewed_duplicate_group')
+                # -- este conteo usa SOLO esos vinculos verificados, nunca la comuna del
+                # documento como proxy. Los grupos mixtos no revisados quedan ambiguos.
+                # Renombrado
                 # a n_projects_verified porque ya no es una aproximacion.
                 "n_projects_verified": len(projects_verified_by_comuna.get(code, ())),
                 "n_documents": len(by_comuna_documents.get(code, ())),
@@ -495,7 +499,7 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
         # proyecto->case_mention->comuna (build_geography.py::build_project_mention_geography(),
         # mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT), no la comuna del
         # documento como proxy. Ver nota completa en el codigo de build_territories().
-        "nota_metodologica_geografia_proyectos": "n_projects_verified por comuna usa unicamente menciones con vinculo verificado a un case_mention real con su propia comuna resuelta (indice de mencion verificado por el modelo + comuna del case_mention) -- ya no es una aproximacion documental. Las menciones sin ese vinculo (indice nulo, case_mention excluido, o sin comuna resuelta) se excluyen del conteo en vez de adivinarse; ver audit/project_mention_geography_report.json para el desglose completo por match_method.",
+        "nota_metodologica_geografia_proyectos": "n_projects_verified por comuna usa menciones enlazadas a un case_mention con comuna resuelta: indice del modelo, grupo duplicado no mixto o adjudicacion manual explícita limitada a identidad geografica. Los grupos con decisiones mixtas sin adjudicacion, indices nulos y menciones sin comuna resuelta se excluyen; no se usa la comuna del documento como proxy. Ver audit/project_mention_geography_report.json.",
     }
 
 

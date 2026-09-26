@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "links": [
+    {
+      "project_mention_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b:project:1",
+      "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+      "source_case_mention_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b:1",
+      "duplicate_group_id": "cmdup:20df0f3f2ea8a89a1b60d584",
+      "resolved_case_mention_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b:0",
+      "status": "reviewed_geography_only",
+      "reviewed_at": "2026-09-26",
+      "source": {
+        "title": "Villa San Luis: ¿Más que viviendas sociales, un Monumento Nacional?",
+        "publisher": "La Tercera",
+        "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/"
+      },
+      "rationale": "La fuente identifica Villa Ministro Carlos Cortés como el nombre inicial del complejo y explica que luego fue renombrado Villa San Luis; ubica el mismo complejo en Las Condes. La case_mention index 1 corresponde al desalojo histórico de 1976 (exclude), mientras index 0 cubre la controversia posterior del Lote 18 y su protección/desarrollo (include). Se resuelve solo la identidad geográfica del proyecto; no se transfiere la decisión de inclusión, focalidad, conflicto ni evidencia."
+    }
+  ]
+}

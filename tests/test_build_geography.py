@@ -1,7 +1,11 @@
 import sqlite3
+import json
+import hashlib
 import sys
 from pathlib import Path
 from unittest.mock import patch
+
+import pytest
 
 SCRIPT_DIR = Path(__file__).parents[1] / "src"
 sys.path.insert(0, str(SCRIPT_DIR))
@@ -284,6 +288,126 @@ def test_project_mention_geography_via_duplicate_group_sibling(tmp_path):
     assert row["codigo_comuna_ine"] == "13101"
 
 
+def test_project_mention_geography_mixed_duplicate_group_requires_review(tmp_path):
+    """Un grupo con decisiones include/exclude no puede transferir comuna
+    automaticamente desde un hermano incluido al indice excluido."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
+    con.commit()
+
+    report = target.build_project_mention_geography(con)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "ambiguous_duplicate_group"
+    assert row["case_mention_id"] == "cm4b"
+    assert row["codigo_comuna_ine"] is None
+    assert report["ambiguous_duplicate_group"] == 1
+
+
+def test_project_mention_geography_mixed_duplicate_group_uses_reviewed_mapping(tmp_path):
+    """Solo una adjudicacion explicita y acotada puede permitir el fallback
+    desde una mention excluida a su hermano incluido dentro de un grupo mixto."""
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
+    con.commit()
+
+    reviewed_links = {
+        "doc4:project:0": {
+            "document_id": "doc4",
+            "source_case_mention_id": "cm4b",
+            "duplicate_group_id": "g1",
+            "resolved_case_mention_id": "cm4",
+            "status": "reviewed_geography_only",
+        }
+    }
+    report = target.build_project_mention_geography(con, reviewed_duplicate_links=reviewed_links)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "via_reviewed_duplicate_group"
+    assert row["case_mention_id"] == "cm4"
+    assert row["codigo_comuna_ine"] == "13101"
+    assert report["via_reviewed_duplicate_group"] == 1
+
+
+def test_project_mention_geography_rejects_unreviewed_override_for_mixed_group(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',1)"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
+    con.commit()
+
+    unreviewed_links = {
+        "doc4:project:0": {
+            "document_id": "doc4",
+            "source_case_mention_id": "cm4b",
+            "duplicate_group_id": "g1",
+            "resolved_case_mention_id": "cm4",
+            "status": "proposed",
+        }
+    }
+    with pytest.raises(ValueError, match="sin estado reviewed_geography_only"):
+        target.build_project_mention_geography(con, reviewed_duplicate_links=unreviewed_links)
+
+
+def test_project_mention_geography_clean_duplicate_group_keeps_existing_fallback(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
+    con.commit()
+
+    target.build_project_mention_geography(con, reviewed_duplicate_links={})
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "via_duplicate_group"
+    assert row["case_mention_id"] == "cm4"
+    assert row["codigo_comuna_ine"] == "13101"
+
+
 def test_project_mention_geography_report_counts_match_persisted_rows(tmp_path):
     """El reporte devuelto nunca debe estar hardcodeado -- se recalcula
     desde las filas realmente insertadas."""
@@ -301,3 +425,37 @@ def test_project_mention_geography_report_counts_match_persisted_rows(tmp_path):
     assert report["n_menciones_total"] == total_persisted == 2
     assert report["direct"] == 1
     assert report["no_case_mention_index"] == 1
+
+
+def test_main_writes_hash_pinned_geography_report(tmp_path, monkeypatch):
+    db_path = tmp_path / "warehouse.sqlite"
+    con = sqlite3.connect(str(db_path))
+    con.executescript(
+        """
+        CREATE TABLE case_mention(case_mention_id TEXT, document_id TEXT, mention_index INTEGER, comuna TEXT, codigo_comuna_ine TEXT, tipo_objeto_norm TEXT, decision_final_amplio TEXT, decision_final_residencial TEXT);
+        CREATE TABLE enrichment_project_mention(project_mention_id TEXT, document_id TEXT, idx INTEGER, nombre_proyecto TEXT, case_mention_index INTEGER, case_mention_id TEXT);
+        CREATE TABLE evidence(evidence_id TEXT, document_id TEXT, case_mention_id TEXT, quote_role TEXT, quote_index INTEGER, quote_text TEXT, verified INTEGER);
+        CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
+        INSERT INTO case_mention VALUES ('cm1','doc1',0,'Santiago','13101','edificio_residencial','include','include');
+        INSERT INTO enrichment_project_mention VALUES ('doc1:project:0','doc1',0,'Proyecto A',0,'cm1');
+        """
+    )
+    con.commit()
+    con.close()
+    report_path = tmp_path / "project_mention_geography_report.json"
+    review_config_path = tmp_path / "reviewed_links.json"
+    review_config_path.write_text(json.dumps({"schema_version": "1.0", "links": []}), encoding="utf-8")
+    monkeypatch.setattr(target, "PROJECT_MENTION_GEOGRAPHY_REPORT_PATH", report_path)
+    monkeypatch.setattr(target, "REVIEWED_DUPLICATE_GROUP_GEOGRAPHY_PATH", review_config_path)
+
+    assert target.main(db_path) == 0
+
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["run_id"]
+    assert report["build_commit"] == target._git_head()
+    assert report["review_config_sha256"] == hashlib.sha256(review_config_path.read_bytes()).hexdigest()
+    assert report["input_warehouse_sha256"]
+    assert report["output_warehouse_sha256"] == hashlib.sha256(db_path.read_bytes()).hexdigest()
+    assert report["direct"] == 1
+    assert report["case_mention_geography"]["n_resueltos"] == 0
+    assert report["geocoded_location"]["n_resueltas"] == 0
