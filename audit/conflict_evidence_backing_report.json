@@ -1,25 +1,25 @@
 {
-  "detector_version": "exact_substring_v1",
-  "backing_scope": "document_level_case_mention_without_project_link",
-  "backing_scope_note": "El warehouse no conserva vinculo proyecto-case_mention; las coincidencias son documentales y los documentos multi-caso quedan senalados como ambiguos.",
-  "projects_total": 990,
-  "projects_with_backing": 438,
-  "projects_without_backing": 552,
-  "conflicts_total": 839,
-  "trivial_conflicts_total": 819,
-  "trivial_conflicts_without_backing": 469,
-  "conflicts_with_backing": 368,
-  "conflicts_without_backing": 471,
-  "backing_rows": 956,
-  "backing_rows_detected_raw": 956,
-  "backing_rows_persisted": 956,
-  "backing_rows_deduplicated": 0,
+  "detector_version": "v3_3_verified_index",
+  "backing_scope": "mention_level_verified_index",
+  "backing_scope_note": "[ACTUALIZADO 2026-09-26] v3_3_verified_index es el UNICO detector activo desde la migracion completa v3.2->v3.3: enrichment_project_mention.case_mention_index vincula cada mencion de proyecto a su case_mention real, ya no hay adivinanza documental.",
+  "projects_total": 941,
+  "projects_with_backing": 572,
+  "projects_without_backing": 369,
+  "conflicts_total": 834,
+  "trivial_conflicts_total": 820,
+  "trivial_conflicts_without_backing": 331,
+  "conflicts_with_backing": 503,
+  "conflicts_without_backing": 331,
+  "backing_rows": 1717,
+  "backing_rows_detected_raw": 1721,
+  "backing_rows_persisted": 1717,
+  "backing_rows_deduplicated": 4,
   "coverage_backing": {
-    "total": 323,
-    "parcial": 45,
-    "ninguna": 471
+    "total": 474,
+    "parcial": 29,
+    "ninguna": 331
   },
-  "conflicts_with_ambiguous_multi_case_backing": 31,
+  "conflicts_with_ambiguous_multi_case_backing": 0,
   "calibration_n": 150,
   "calibration_error_grave": {
     "tp": 49,
@@ -46,14 +46,13 @@
     "v3_3_verified_index"
   ],
   "backing_rows_by_detector": {
-    "exact_substring_v1": 374,
-    "v3_3_verified_index": 582
+    "v3_3_verified_index": 1721
   },
   "conflicts_with_backing_by_detector": {
-    "exact_substring_v1": 223,
-    "v3_3_verified_index": 190,
-    "ambos": 45
+    "exact_substring_v1": 0,
+    "v3_3_verified_index": 503,
+    "ambos": 0
   },
-  "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json); 'exact_substring_v1' sigue siendo la heuristica original de Fix 1A para las menciones que v3.3 nunca cubrio.",
-  "warehouse_sha256": "b56f85267000f58ecb5cf9a1a7796278272558b8e246487aa59fe3bfa5fccf45"
+  "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
+  "warehouse_sha256": "451dd748c038f2dacbd8803815965db17682283c203ad6bf4ff254c5064415ef"
 }

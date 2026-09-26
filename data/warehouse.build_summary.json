@@ -1,0 +1,39 @@
+{
+  "built_at": "2026-09-26T04:29:36.008083+00:00",
+  "output_warehouse": "data\\warehouse.sqlite",
+  "n_projects": 941,
+  "n_project_mentions_resolved": 1267,
+  "n_review_candidates": 256,
+  "n_links_total": 15245,
+  "resolution_status_counts": {
+    "resolved_explicit": 3472,
+    "inferred_single_project": 6186,
+    "unresolved_no_project": 3250,
+    "unresolved_ambiguous": 2048,
+    "unresolved_inconsistent_association": 289
+  },
+  "vistas_analiticas": {
+    "actor_event_project_link_case_safe": {
+      "n_links": 2119,
+      "filtro": "unidad_caso_tipo='caso_unico' AND resolution_status='resolved_explicit'"
+    },
+    "actor_event_project_link_include_inferred": {
+      "n_links": 7950,
+      "filtro": "unidad_caso_tipo='caso_unico' AND resolution_status IN ('resolved_explicit','inferred_single_project')"
+    }
+  },
+  "gate_documento_unidad_caso_sol": {
+    "disponible": true,
+    "n_documentos_con_gate": 934,
+    "n_documentos_con_correccion_de_proyectos_mencionados_aplicada": 9,
+    "n_documentos_con_correccion_de_nombre_proyecto_preservada_no_aplicada": 21,
+    "unidad_caso_tipo_counts": {
+      "multiples_casos_documentados": 45,
+      "caso_unico": 747,
+      "caso_focal_fuera_del_universo": 9,
+      "documento_comparativo_panoramico": 86,
+      "contexto_sin_caso_individualizable": 47
+    },
+    "nota": "document_case_unit (copiada de warehouse_enrichment.sqlite a esta base) trae la clasificacion de unidad de caso para los 934 documentos. [PRECISION 2026-09-18, se encontro que la frase anterior era imprecisa] Este script aplico las 9 correcciones de proyectos_mencionados al construir el registro de proyectos. Las 9 correcciones de nombre_proyecto NO se aplican aqui -- quedan preservadas y consultables en document_case_unit.correccion_nombre_proyecto, pero el registro de proyectos siempre fue mention-based (recorre proyectos_mencionados), nunca focal-based, y los 2 conjuntos de 9 correcciones no son los mismos documentos (ver active-context.md). NO se excluye ningun documento por su unidad_caso_tipo -- si el analisis de redes quiere excluir documento_comparativo_panoramico/contexto_sin_caso_individualizable/caso_focal_fuera_del_universo, debe filtrar explicitamente usando esa tabla via document_id (ver tambien actor_event_project_link_case_safe, vista conservadora agregada para no depender de que cada consumidor recuerde el filtro correcto)."
+  }
+}

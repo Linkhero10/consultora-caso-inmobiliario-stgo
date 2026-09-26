@@ -1,38 +1,38 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-09-24",
+  "generated_at": "2026-09-26",
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "b56f85267000f58ecb5cf9a1a7796278272558b8e246487aa59fe3bfa5fccf45",
+    "sha256": "3741e17164d1278aadbce75a0d51398c943bab700b97f72069cd9679eecd6679",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
       "document": 3884,
-      "project": 990,
-      "conflict": 839,
-      "conflict_case": 862,
-      "conflict_project": 990,
-      "document_conflict": 1268,
-      "conflict_relation": 3,
-      "conflict_evidence_backing": 956,
+      "project": 941,
+      "conflict": 834,
+      "conflict_case": 851,
+      "conflict_project": 941,
+      "document_conflict": 1157,
+      "conflict_relation": 2,
+      "conflict_evidence_backing": 1717,
       "actor_registry": 6,
       "actor_alias": 29,
-      "actor_event_project_link": 17227,
+      "actor_event_project_link": 15245,
       "manzana_censal": 46864,
       "geocoded_location": 22,
-      "geocoded_location_conflict": 7,
+      "geocoded_location_conflict": 8,
       "case_mention_duplicate_link": 5731
     }
   },
   "detector_versions": {
     "conflict_evidence_backing": {
-      "detector_version": "exact_substring_v1",
+      "detector_version": "v3_3_verified_index",
       "all_detector_versions": [
         "exact_substring_v1",
         "v3_3_verified_index"
       ],
-      "generated_from_warehouse_sha256": "b56f85267000f58ecb5cf9a1a7796278272558b8e246487aa59fe3bfa5fccf45",
+      "generated_from_warehouse_sha256": "451dd748c038f2dacbd8803815965db17682283c203ad6bf4ff254c5064415ef",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
@@ -41,7 +41,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "b609379c7dd6aad962b984c80c6f76b29c19b7d9",
-  "release_commit": "95e0c43",
+  "parent_commit_at_generation": "c426b43f860e26cab4bfe1f3eef043e50dcf5e70",
+  "release_commit": null,
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }
