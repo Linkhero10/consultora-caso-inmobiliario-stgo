@@ -519,5 +519,18 @@
     "evidence_gate": "No remaining pair is resolved without per-pair source references, exact supporting excerpts/locators, relation class, contradiction checks, confidence, and a separate promotion gate.",
     "verification": "Both JSON files parse; both quoted Google excerpts are exact substrings of captured texts and both capture SHA-256 values match; warehouse hash unchanged. Suite: 268 passed, 1 skipped, 1 unrelated failure because tests/test_blind_review_html.py expects an external HTML file absent from this environment.",
     "status": "reconciled as evidence-backed candidates; production remains unchanged"
+  },
+  "google_cerrillos_identity_merge_promoted_2026-09-26": {
+    "authority": "promocion explicita del usuario del par candidato registrado en project_identity_reconciliation_v3_2_v3_3_2026-09-26.json (Luna/Codex); Ciudad Parque Bicentenario/Plan Maestro NO se promueve -- Luna concluyo mantenerlos separados, que ya coincide con la decision productiva vigente, sin cambio de codigo necesario",
+    "decision": "El usuario declaro mayor confianza en la reconciliacion de Luna que en la adjudicacion previa de Sol para este par especifico, y autorizo aplicar el merge a produccion.",
+    "cambio_de_codigo": "src/resolve_project_review.py::MANUAL_DECISIONS -- nueva entrada exacta ('Data Center de Google', 'data center de Google Chile en Cerrillos'): (True, ...), que tiene precedencia sobre la reconexion generica heredada de ('Data Center de Google', 'Data Center')",
+    "evidencia": [
+      "ex-ante.cl (FIMA): Data Center de Google es el proyecto entre Cerrillos y San Bernardo, sha256 4eea51a8044f118f3e171eb1bb59e49370c674aed551ea7952468c5eb0038efa",
+      "La Tercera: data center de Google Chile en Cerrillos es ese mismo proyecto propuesto en Cerrillos, distinto del centro operativo de Quilicura (2015), sha256 82485fd26a1f7cd605c768012f21ffbd485123382eb8a45eb1075f5ca1025565"
+    ],
+    "reconstruccion": "resolve_project_review.py -> build_conflicts.py -> build_actor_registry.py -> build_actor_network.py -> apply_actor_registry_to_network.py -> build_geography.py -> build_geography_manzana.py -> build_dashboard.py -> generate_run_manifest.py",
+    "resultado_medido": "n_projects_merged_away 90->91; project_id 6f5a7267b402f19352f4bf54 (Data Center de Google) y 791f201362a8d6a8c0245a4c (data center de Google Chile en Cerrillos) comparten ahora case_id=791f201362a8d6a8c0245a4c -- ambos project_id se conservan intactos (nunca se borran), solo se unifica el case_id, mismo principio de siempre en este proyecto.",
+    "verificacion": "integrity_check=ok, foreign_key_check=0. Suite: 268 passed, 1 skipped, 1 fallo preexistente ajeno (tests/test_blind_review_html.py, archivo externo al repo).",
+    "status": "promovido a produccion 2026-09-26"
   }
 }

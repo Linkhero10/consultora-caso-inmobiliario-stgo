@@ -1,17 +1,17 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-09-26",
+  "generated_at": "2026-09-27",
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "cf1fe698c022d8c7145660946b0cdbfcd19521cb18b6efb349619f2b2d9abd3e",
+    "sha256": "04d6c39a904979f0c378528d817b138d4467d17a294ec8b460e151e9d306fcf9",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
       "document": 3884,
       "project": 941,
-      "conflict": 834,
-      "conflict_case": 851,
+      "conflict": 833,
+      "conflict_case": 850,
       "conflict_project": 941,
       "document_conflict": 1157,
       "conflict_relation": 2,
@@ -33,7 +33,7 @@
         "exact_substring_v1",
         "v3_3_verified_index"
       ],
-      "generated_from_warehouse_sha256": "451dd748c038f2dacbd8803815965db17682283c203ad6bf4ff254c5064415ef",
+      "generated_from_warehouse_sha256": "887d0c781371bd9fc5084db9e9c0ae4497421757a1fa1b4caf427aeea8b286ac",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
@@ -42,7 +42,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "a95c348d97f42fbaecae2170e54d0a6d65fc1625",
-  "release_commit": "a95c348d97f42fbaecae2170e54d0a6d65fc1625",
+  "parent_commit_at_generation": "673896cc0cc766cef3cf93a54cffb44d33fd609b",
+  "release_commit": null,
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }

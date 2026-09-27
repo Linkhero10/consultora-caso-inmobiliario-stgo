@@ -226,6 +226,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Recreo", "Recreo 321"): (True, "mismo desarrollo, direccion especifica"),
     ("PDUC Urbanya", "Urbanya"): (True, "PDUC es el instrumento de planificacion del mismo proyecto Urbanya"),
     ("Data Center de Google", "Data Center"): (False, "Data Center es termino generico, multiples proyectos distintos en el corpus"),
+    ("Data Center de Google", "data center de Google Chile en Cerrillos"): (True, "[revision 2026-09-26, reconciliacion v3.2->v3.3 tras hallazgo de Codex/Luna, aprobado por el usuario -- ver audit/project_identity_reconciliation_v3_2_v3_3_2026-09-26.json] la separacion generica heredada de ('Data Center de Google', 'Data Center') no aplica a este par especifico: ex-ante.cl confirma que 'Data Center de Google' es el proyecto entre Cerrillos y San Bernardo (no el de Quilicura), y La Tercera confirma que 'data center de Google Chile en Cerrillos' es ese mismo proyecto propuesto en Cerrillos -- distinto del centro operativo de Quilicura (2015) citado por Google. Mismo proyecto."),
     ("Mall Vivo Santiago Etapa II", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "misma etapa II, nombre completo"),
     ("supermercado Lider", "supermercado Líder San Francisco"): (False, "Lider es cadena generica con multiples locales distintos en el corpus"),
     ("estacionamientos de Alonso de Córdova", "Concesionaria de Estacionamientos Alonso de Córdova (Zoccalo)"): (True, "misma concesion de estacionamientos"),
