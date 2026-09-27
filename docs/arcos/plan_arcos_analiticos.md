@@ -1,16 +1,25 @@
 # Plan paso a paso — 3 arcos analíticos
 
-Base de datos disponible para los tres: `data/warehouse.sqlite`
-(990 `project_id` → 862 `case_id`, 839 conflictos, ~17.200 vínculos actor/institución/evento→proyecto).
+Base vigente para desarrollo exploratorio: `data/warehouse.sqlite` (snapshot observado el
+2026-09-27, SHA-256 `378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db`):
+941 `project_id` → 850 `case_id`, 833 conflictos, 15.245 vínculos actor/institución/evento→proyecto.
+Hay 502 conflictos con respaldo automático y 331 sin respaldo detectado; estos últimos no son
+negativos sustantivos.
 Ver el [README](../../README.md) y [`docs/methodology.md`](../methodology.md) para el detalle de
 capas, tablas y vistas.
 
-Bloqueante común antes de sacar conclusiones publicables: la validación muestral del enrichment
-(ver [`audit/validation_summary.json`](../../audit/validation_summary.json), n=50: 21 ok, 17 error
-menor, 12 error grave) ya identificó errores reales de unidad de caso, motivando el gate
-documental descrito en la metodología. Una muestra más grande sobre el corpus completo sigue
-pendiente. Los tres arcos pueden empezar a construir metodología y código sobre los datos ya
-existentes, pero ningún hallazgo debería publicarse sin ampliar esa validación.
+**Bloqueante de reconstrucción/publicación integral:** el preflight de referencias históricas
+(`audit/historical_case_reference_preflight.json`) conserva 48 IDs sin destino verificado: 15
+afectan la topología de conflictos y bloquean `build_conflicts`; 33 referencias no topológicas se
+preservan sin forzar aliases. La base publicada no se modificó. No presentar una reconstrucción
+completa de CONFLICT ni productos que dependan de ella como cerrados hasta resolver los 15 casos.
+
+Los tres arcos pueden desarrollar metodología y análisis exploratorio sobre el snapshot vigente,
+siempre citando su hash y limitación. La validación inicial N=50 (21 ok, 17 error menor, 12 grave)
+es histórica; hubo validaciones posteriores, descritas con procedencia en
+[`audit/validation_summary.json`](../../audit/validation_summary.json). El holdout de Fix 1A no
+sustituye una validación independiente del linker proyecto↔mención ni resuelve los bloqueos
+históricos.
 
 Los tres arcos son estructuralmente paralelos — cada uno parte de una tabla distinta del mismo
 warehouse y ninguno necesita el resultado de otro para arrancar.

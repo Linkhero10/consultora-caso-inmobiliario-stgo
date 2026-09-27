@@ -158,6 +158,135 @@ def test_historical_case_id_preflight_aggregates_unresolved_ids_and_skips_projec
     ) == []
 
 
+def test_unresolved_historical_references_block_topology_but_preserve_non_topological_refs():
+    docs = [
+        {
+            **_doc(
+                "d1",
+                [
+                    {"case_ids": ["legacy_union", "case_current"], "relacion": "mismo_conflicto"},
+                    {"case_ids": ["legacy_context"], "relacion": "contextual"},
+                    {"case_ids": ["legacy_project"], "relacion": "mismo_proyecto", "project_relation": "alias"},
+                ],
+            ),
+            "case_groups": [
+                {"case_id": "legacy_union", "canonical_names": ["Caso sin mapear"]},
+                {"case_id": "legacy_context", "canonical_names": ["Mención contextual"]},
+                {"case_id": "legacy_project", "canonical_names": ["Identidad de proyecto"]},
+            ],
+        }
+    ]
+
+    analysis = reg.analyze_historical_case_references(docs, {"case_current"})
+
+    assert [row["historical_case_id"] for row in analysis["topology_blockers"]] == ["legacy_union"]
+    assert {
+        (row["historical_case_id"], row["impact_scope"])
+        for row in analysis["preserved_references"]
+    } == {
+        ("legacy_context", "document_conflict_membership"),
+        ("legacy_project", "project_identity_not_resolved"),
+    }
+
+
+def test_unknown_relation_type_fails_closed_as_topology_blocker():
+    docs = [
+        {
+            **_doc("d1", [{"case_ids": ["legacy_unknown"], "relacion": "new_relation_type"}]),
+            "case_groups": [{"case_id": "legacy_unknown", "canonical_names": ["Unknown"]}],
+        }
+    ]
+    analysis = reg.analyze_historical_case_references(docs, set())
+    assert analysis["topology_blockers"][0]["historical_case_id"] == "legacy_unknown"
+    assert analysis["topology_blockers"][0]["impact_scope"] == "unknown_relation_fail_closed"
+    with pytest.raises(ValueError, match="relacion_case_groups_sol desconocida"):
+        reg.build_historical_case_reference_rows(docs, set())
+    with pytest.raises(ValueError, match="relacion_case_groups_sol desconocida"):
+        reg.build_case_groups(["legacy_unknown"], docs)
+
+
+def test_collect_unresolved_historical_case_ids_fails_closed_on_unknown_relation_with_current_id():
+    docs = [_doc("d-current", [{"case_ids": ["case_current"], "relacion": "future_relation"}])]
+
+    with pytest.raises(ValueError, match="relaciones desconocidas"):
+        reg.collect_unresolved_historical_case_ids(docs, {"case_current"})
+
+
+def test_unknown_relation_type_blocks_even_when_case_ids_are_current():
+    docs = [_doc("d-current", [{"case_ids": ["case_current"], "relacion": "new_relation_type"}])]
+
+    analysis = reg.analyze_historical_case_references(docs, {"case_current"})
+
+    assert analysis["all_unresolved"] == []
+    assert len(analysis["topology_blockers"]) == 1
+    assert analysis["topology_blockers"][0]["case_ids"] == ["case_current"]
+    assert analysis["unsupported_relations"] == analysis["topology_blockers"]
+
+
+def test_non_topological_historical_references_are_serialized_without_project_or_conflict_ids():
+    docs = [
+        {
+            **_doc(
+                "doc-context",
+                [
+                    {"case_ids": ["legacy_context"], "relacion": "contextual", "project_relation": "context"},
+                    {"case_ids": ["legacy_project"], "relacion": "mismo_proyecto", "project_relation": "alias"},
+                ],
+            ),
+            "case_groups": [
+                {"case_id": "legacy_context", "canonical_names": ["Contexto histórico"]},
+                {"case_id": "legacy_project", "canonical_names": ["Alias histórico"]},
+            ],
+        }
+    ]
+
+    rows = reg.build_historical_case_reference_rows(docs, set())
+
+    assert len(rows) == 2
+    assert {row["historical_case_id"] for row in rows} == {"legacy_context", "legacy_project"}
+    assert all(row["status"] == "preserved_unresolved_not_projected" for row in rows)
+    assert all("project_id" not in row and "conflict_id" not in row for row in rows)
+
+
+def test_non_topological_historical_references_persist_in_separate_fk_table():
+    docs = [
+        {
+            **_doc(
+                "doc-context",
+                [
+                    {"case_ids": ["legacy_context"], "relacion": "contextual", "project_relation": "context"},
+                    {"case_ids": ["legacy_project"], "relacion": "mismo_proyecto", "project_relation": "alias"},
+                ],
+            ),
+            "case_groups": [
+                {"case_id": "legacy_context", "canonical_names": ["Contexto histórico"]},
+                {"case_id": "legacy_project", "canonical_names": ["Alias histórico"]},
+            ],
+        }
+    ]
+    db = sqlite3.connect(":memory:")
+    db.execute("PRAGMA foreign_keys=ON")
+    db.execute("CREATE TABLE document (document_id TEXT PRIMARY KEY)")
+    db.execute("INSERT INTO document VALUES ('doc-context')")
+    rows = reg.build_historical_case_reference_rows(docs, set())
+
+    reg.create_historical_case_reference_table(db)
+    assert reg.persist_historical_case_reference_rows(db, rows) == 2
+
+    persisted_columns = {row[1] for row in db.execute("PRAGMA table_info(historical_case_reference)")}
+    assert "project_id" not in persisted_columns
+    assert "conflict_id" not in persisted_columns
+    assert db.execute(
+        "SELECT historical_case_id, relation_type, impact_scope, status "
+        "FROM historical_case_reference ORDER BY historical_case_id"
+    ).fetchall() == [
+        ("legacy_context", "contextual", "document_conflict_membership", "preserved_unresolved_not_projected"),
+        ("legacy_project", "mismo_proyecto", "project_identity_not_resolved", "preserved_unresolved_not_projected"),
+    ]
+    assert db.execute("PRAGMA foreign_key_check").fetchall() == []
+    db.close()
+
+
 def test_case_id_alias_rows_must_match_baseline_targets_and_hash():
     baseline_hash = "a" * 64
     expected = {"case_old": "case_new", "case_new": "case_new"}
@@ -229,7 +358,7 @@ def test_sql_script_executor_preserves_outer_transaction():
     db.close()
 
 
-def test_build_conflicts_blocks_unresolved_historical_ids_without_database_or_report_writes(
+def test_build_conflicts_blocks_topology_and_writes_only_dedicated_preflight_report(
     tmp_path, monkeypatch, capsys
 ):
     db = sqlite3.connect(":memory:")
@@ -252,7 +381,8 @@ def test_build_conflicts_blocks_unresolved_historical_ids_without_database_or_re
                         "document_id": "doc1",
                         "case_groups": [{"case_id": "case_legacy", "canonical_names": ["Caso legado"]}],
                         "relaciones_case_groups_sol": [
-                            {"relacion": "mismo_conflicto", "case_ids": ["case_legacy", "case_current"]}
+                            {"relacion": "mismo_conflicto", "case_ids": ["case_legacy", "case_current"]},
+                            {"relacion": "future_relation", "case_ids": ["case_current"]},
                         ],
                     }
                 ]
@@ -262,8 +392,10 @@ def test_build_conflicts_blocks_unresolved_historical_ids_without_database_or_re
         encoding="utf-8",
     )
     report = tmp_path / "report.json"
+    preflight_report = tmp_path / "historical_case_reference_preflight.json"
     monkeypatch.setattr(reg, "CLASSIFIED_63", classified)
     monkeypatch.setattr(reg, "AUDIT_REPORT_PATH", report)
+    monkeypatch.setattr(reg, "HISTORICAL_CASE_PREFLIGHT_REPORT_PATH", preflight_report)
     before_schema = db.execute(
         "SELECT type, name, sql FROM sqlite_master ORDER BY type, name"
     ).fetchall()
@@ -278,6 +410,17 @@ def test_build_conflicts_blocks_unresolved_historical_ids_without_database_or_re
     assert db.execute("SELECT type, name, sql FROM sqlite_master ORDER BY type, name").fetchall() == before_schema
     assert db.execute("SELECT project_id, case_id FROM project").fetchall() == before_rows
     assert not report.exists()
+    preflight = json.loads(preflight_report.read_text(encoding="utf-8"))
+    assert preflight["status"] == "blocked_before_database_write"
+    assert preflight["n_topology_blockers"] == 2
+    assert any(
+        row.get("historical_case_id") == "case_legacy"
+        for row in preflight["topology_blockers"]
+    )
+    assert preflight["unsupported_relations"][0]["relation"] == "future_relation"
+    assert preflight["unsupported_relations"][0]["impact_scope"] == "unknown_relation_fail_closed"
+    assert preflight["source_hashes"]["classified_63_sha256"] == reg._sha256_file_if_present(classified)
+    assert preflight["source_hashes"]["preflight_script_sha256"] == reg._sha256_file_if_present(Path(reg.__file__))
     assert '"status": "blocked_before_database_write"' in capsys.readouterr().err
     db.close()
 

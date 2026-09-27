@@ -77,6 +77,7 @@ def test_generate_manifest_can_finalize_release_commit_and_tracks_project_geogra
         warehouse_path=db_path,
         manifest_path=manifest_path,
         release_commit=manifest_generator._git_head(),
+        enforce_publication_gate=False,
     )
 
     assert manifest["release_commit"] == manifest_generator._git_head()
@@ -92,4 +93,28 @@ def test_generate_manifest_rejects_unknown_release_commit(tmp_path):
             warehouse_path=db_path,
             manifest_path=tmp_path / "run_manifest.json",
             release_commit="a" * 40,
+            enforce_publication_gate=False,
         )
+
+
+def test_generate_manifest_refuses_when_historical_case_gate_is_blocked(tmp_path, monkeypatch):
+    warehouse = tmp_path / "warehouse.sqlite"
+    sqlite3.connect(warehouse).close()
+    classified = tmp_path / "classified.json"
+    classified.write_text("{}", encoding="utf-8")
+    builder = tmp_path / "build_conflicts.py"
+    builder.write_text("source", encoding="utf-8")
+    report = tmp_path / "preflight.json"
+    report.write_text(
+        json.dumps({"status": "blocked_before_database_write", "n_topology_blockers": 15}),
+        encoding="utf-8",
+    )
+    manifest_path = tmp_path / "run_manifest.json"
+    monkeypatch.setattr(manifest_generator, "HISTORICAL_CASE_PREFLIGHT_PATH", report)
+    monkeypatch.setattr(manifest_generator, "CLASSIFIED_63_PATH", classified)
+    monkeypatch.setattr(manifest_generator, "CONFLICT_BUILDER_PATH", builder)
+
+    with pytest.raises(RuntimeError, match="build CONFLICT completo"):
+        manifest_generator.generate(warehouse, manifest_path)
+
+    assert not manifest_path.exists()

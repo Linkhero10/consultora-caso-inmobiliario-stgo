@@ -48,10 +48,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from historical_case_publication_gate import require_conflict_publication_ready
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 MANIFEST_PATH = PROJECT_ROOT / "audit" / "run_manifest.json"
 BACKING_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
+HISTORICAL_CASE_PREFLIGHT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
+CONFLICT_AUDIT_REPORT_PATH = BACKING_REPORT_PATH
+CLASSIFIED_63_PATH = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+CONFLICT_BUILDER_PATH = PROJECT_ROOT / "src" / "build_conflicts.py"
 
 # Tablas cuyo conteo se registra si existen -- el manifiesto no asume un
 # esquema fijo, porque distintas fases agregan tablas nuevas (Fase C agrego
@@ -105,10 +111,20 @@ def generate(
     warehouse_path: Path = WAREHOUSE_PATH,
     manifest_path: Path = MANIFEST_PATH,
     release_commit: str | None = None,
+    enforce_publication_gate: bool = True,
 ) -> dict[str, Any]:
     if not warehouse_path.exists():
         raise FileNotFoundError(warehouse_path)
     release_commit = _validate_release_commit(release_commit)
+    publication_gate = None
+    if enforce_publication_gate:
+        publication_gate = require_conflict_publication_ready(
+            warehouse_path,
+            HISTORICAL_CASE_PREFLIGHT_PATH,
+            CONFLICT_AUDIT_REPORT_PATH,
+            CLASSIFIED_63_PATH,
+            CONFLICT_BUILDER_PATH,
+        )
 
     con = sqlite3.connect(str(warehouse_path))
     try:
@@ -148,6 +164,7 @@ def generate(
             "counts": counts,
         },
         "detector_versions": detector_versions,
+        "conflict_publication_gate": publication_gate,
         "tests": {
             "path": "tests/",
             "ci_workflow": ".github/workflows/tests.yml",

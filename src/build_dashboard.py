@@ -14,10 +14,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dashboard_data import build_dashboard_dataset  # noqa: E402
+from historical_case_publication_gate import require_conflict_publication_ready  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LABELS_PATH = PROJECT_ROOT / "config" / "dashboard_labels.json"
 OUTPUT_PATH = PROJECT_ROOT / "docs" / "index.html"
+HISTORICAL_CASE_PREFLIGHT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
+CONFLICT_AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
+CLASSIFIED_63_PATH = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+CONFLICT_BUILDER_PATH = PROJECT_ROOT / "src" / "build_conflicts.py"
+WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 
 BASEMAP = {
     "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -355,6 +361,13 @@ renderConflictList();
 
 
 def main() -> int:
+    require_conflict_publication_ready(
+        WAREHOUSE_PATH,
+        HISTORICAL_CASE_PREFLIGHT_PATH,
+        CONFLICT_AUDIT_REPORT_PATH,
+        CLASSIFIED_63_PATH,
+        CONFLICT_BUILDER_PATH,
+    )
     dataset = build_dashboard_dataset()
     labels = _load_labels()
     html = build_html(dataset, labels)

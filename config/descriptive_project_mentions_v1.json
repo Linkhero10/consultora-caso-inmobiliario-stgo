@@ -1,0 +1,45 @@
+{
+  "schema_version": "descriptive_project_mentions_v1",
+  "mentions": [
+    {
+      "reference_key": "ukamau_estacion_central_descriptive_mention",
+      "document_id": "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81",
+      "case_mention_id": "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0",
+      "subject_label": "UKAMAU",
+      "descriptive_label": "Mención de iniciativa comunitaria de vivienda social asociada a UKAMAU; no constituye una identidad formal de proyecto resuelta.",
+      "identity_status": "descriptive_only_identity_unresolved",
+      "source_url": "https://elquintopoder.cl/municipales/movimientos-sociales-al-poder-local-vea-ukamau-en-estacion-central/",
+      "source_text_sha256": "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81",
+      "source_file_path": "Fuentes/fulltext/content/b480c5bb78ed7683591d97696f01a663b9b01df65cafc51c41217230c9db2d81.json",
+      "source_file_sha256": "5c6ad40c1c4ede267b99f719e0fc3f55d7794dd68d43273e2ee164b043b88e43",
+      "citations": [
+        {
+          "quote": "UKAMAU y su candidata a Alcaldesa de Estación Central, exhiben una obra colectiva que da sustento a la campaña electoral. Hechos tras la organización: Proyecto inmobiliario comunitario",
+          "quote_sha256": "d66d988cd1095aded8c52c39d1485b9bcf5f1d0503ecfb544edfbba44d8d5954",
+          "evidence_ids": [
+            "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:objeto:2"
+          ]
+        },
+        {
+          "quote": "Que la vivienda social sea un conjunto habitacional distinto del estándar",
+          "quote_sha256": "4a12e9f985297a4c29cc323a279ff371acde446b85ad29a02c9d43ae075736f0",
+          "evidence_ids": [
+            "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:objeto:1"
+          ]
+        },
+        {
+          "quote": "sector aledaño a la Maestranza de San Eugenio (Estación Central)",
+          "quote_sha256": "28398834d3168006ab231c2fdccc0bfc8831eca6fb1dc2e17ae2194e91f85083",
+          "evidence_ids": [
+            "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:geografica:0"
+          ]
+        }
+      ],
+      "linked_evidence_ids": [
+        "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:objeto:1",
+        "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:objeto:2",
+        "6c3cc0907c294610f7d9c0d1cebaa31238ed9c13f1d15f77eb0253ea6d3d4c81:0:geografica:0"
+      ]
+    }
+  ]
+}

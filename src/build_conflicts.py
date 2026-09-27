@@ -190,13 +190,17 @@ import sys
 import tempfile
 import unicodedata
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
+
+from historical_case_publication_gate import conflict_topology_fingerprint
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
 CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
 CLASSIFIED_63 = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
 AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
+HISTORICAL_CASE_PREFLIGHT_REPORT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
 
 DETECTOR_VERSION = "exact_substring_v1"
 MATCH_METHOD = "normalized_bidirectional_substring"
@@ -378,6 +382,14 @@ RELACIONES_QUE_UNEN = {"mismo_conflicto"}
 # nivel de project_review_queue antes de calcular case_id, asi que esos
 # case_id ya llegan identicos. 'focal'/'contextual'/'conflictos_distintos'
 # son precisamente los casos que la capa CONFLICT existe para NO unir.
+RELACIONES_QUE_CAMBIAN_TOPOLOGIA = {"mismo_conflicto", "conflictos_distintos"}
+RELACIONES_DE_MEMBRESIA_DOCUMENTAL = {"focal", "contextual"}
+RELACIONES_IDENTIDAD_PROYECTO = {"mismo_proyecto"}
+RELACIONES_CASE_CONOCIDAS = (
+    RELACIONES_QUE_CAMBIAN_TOPOLOGIA
+    | RELACIONES_DE_MEMBRESIA_DOCUMENTAL
+    | RELACIONES_IDENTIDAD_PROYECTO
+)
 
 
 def _stable_conflict_id(case_ids: list[str]) -> str:
@@ -592,18 +604,73 @@ def collect_unresolved_historical_case_ids(
     de PROJECT y esta capa ya las omite deliberadamente. El reporte conserva
     nombres, documentos y tipos de relacion; no propone aliases por similitud.
     """
+    references = analyze_historical_case_references(
+        documentos_63, current_case_ids, case_id_alias
+    )
+    if references["unsupported_relations"]:
+        unsupported = references["unsupported_relations"]
+        raise ValueError(
+            "relacion_case_groups_sol contiene relaciones desconocidas; "
+            "preflight bloqueado: "
+            + ", ".join(
+                f"{row.get('relation')!r} en {row.get('document_id')!r}"
+                for row in unsupported
+            )
+        )
+    # Compatibilidad con el preflight histórico: `mismo_proyecto` no es una
+    # referencia consumida por CONFLICT. El nuevo análisis sí la conserva en
+    # una capa de provenance, pero no la trata como bloqueo de esta función.
+    return [
+        row for row in references["all_unresolved"]
+        if any(occ["relation"] != "mismo_proyecto" for occ in row["occurrences"])
+    ]
+
+
+def analyze_historical_case_references(
+    documentos_63: list[dict], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+) -> dict[str, list[dict]]:
+    """Clasifica referencias históricas no resueltas sin inventar aliases.
+
+    Solo `mismo_conflicto` y `conflictos_distintos` alteran la topología de
+    CONFLICT y bloquean una reconstrucción completa si contienen IDs sin
+    destino validado. Las relaciones focal/contextual y mismo_proyecto se
+    preservan como referencias históricas no proyectadas. Cualquier relación
+    nueva/desconocida falla cerrada como bloqueante.
+    """
     aliases = case_id_alias or {}
     missing: dict[str, dict] = {}
+    unsupported_relations: list[dict] = []
     for doc in documentos_63:
         groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
-        for relation in doc.get("relaciones_case_groups_sol", []):
+        for relation_index, relation in enumerate(doc.get("relaciones_case_groups_sol", [])):
             relation_type = relation.get("relacion")
-            if relation_type == "mismo_proyecto":
+            relation_case_ids = relation.get("case_ids", [])
+            if relation_type not in RELACIONES_CASE_CONOCIDAS:
+                unsupported_relations.append(
+                    {
+                        "document_id": doc.get("document_id"),
+                        "relation_index": relation_index,
+                        "relation": relation_type,
+                        "case_ids": relation_case_ids,
+                        "historical_case_id": relation_case_ids[0] if relation_case_ids else None,
+                        "impact_scope": "unknown_relation_fail_closed",
+                        "topology_blocking": True,
+                    }
+                )
                 continue
-            for historical_id in relation.get("case_ids", []):
+            for historical_id in relation_case_ids:
                 resolved_id = aliases.get(historical_id, historical_id)
                 if resolved_id in current_case_ids:
                     continue
+                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
+                    impact_scope = "conflict_topology"
+                    topology_blocking = True
+                elif relation_type in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
+                    impact_scope = "document_conflict_membership"
+                    topology_blocking = False
+                elif relation_type in RELACIONES_IDENTIDAD_PROYECTO:
+                    impact_scope = "project_identity_not_resolved"
+                    topology_blocking = False
                 item = missing.setdefault(
                     historical_id,
                     {
@@ -611,29 +678,206 @@ def collect_unresolved_historical_case_ids(
                         "resolved_case_id": resolved_id,
                         "canonical_names": set(),
                         "occurrences": [],
+                        "impact_scopes": set(),
+                        "topology_blocking": False,
                     },
                 )
                 group = groups.get(historical_id, {})
                 item["canonical_names"].update(group.get("canonical_names", []))
+                item["impact_scopes"].add(impact_scope)
+                item["topology_blocking"] = item["topology_blocking"] or topology_blocking
                 item["occurrences"].append(
                     {
                         "document_id": doc.get("document_id"),
                         "relation": relation_type,
                         "project_relation": relation.get("project_relation"),
                         "case_ids": relation.get("case_ids", []),
+                        "impact_scope": impact_scope,
                     }
                 )
-    return [
-        {
+    rows = []
+    for _historical_id, item in sorted(missing.items()):
+        row = {
             **item,
             "canonical_names": sorted(item["canonical_names"]),
+            "impact_scopes": sorted(item["impact_scopes"]),
+            "impact_scope": (
+                "unknown_relation_fail_closed"
+                if "unknown_relation_fail_closed" in item["impact_scopes"]
+                else "conflict_topology"
+                if item["topology_blocking"]
+                else sorted(item["impact_scopes"])[0]
+            ),
             "occurrences": sorted(
                 item["occurrences"],
-                key=lambda row: (row["document_id"] or "", row["relation"] or "", row["project_relation"] or ""),
+                key=lambda occurrence: (
+                    occurrence["document_id"] or "",
+                    occurrence["relation"] or "",
+                    occurrence["project_relation"] or "",
+                ),
             ),
         }
-        for _historical_id, item in sorted(missing.items())
-    ]
+        rows.append(row)
+    topology_blockers = [row for row in rows if row["topology_blocking"]]
+    topology_blockers.extend(unsupported_relations)
+    return {
+        "all_unresolved": rows,
+        "topology_blockers": topology_blockers,
+        "preserved_references": [row for row in rows if not row["topology_blocking"]],
+        "unsupported_relations": unsupported_relations,
+    }
+
+
+def build_historical_case_reference_rows(
+    documentos_63: list[dict], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+) -> list[dict]:
+    """Serializa referencias no resueltas sin asignar `case_id`, proyecto ni conflicto.
+
+    La tabla resultante es provenance, no una entidad de conflicto. Relaciones
+    topológicas permanecen bloqueadas por `analyze_historical_case_references`.
+    """
+    aliases = case_id_alias or {}
+    rows = []
+    for doc in documentos_63:
+        groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
+        for relation_index, relation in enumerate(doc.get("relaciones_case_groups_sol", [])):
+            relation_type = relation.get("relacion")
+            if relation_type not in RELACIONES_CASE_CONOCIDAS:
+                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+            for historical_id in relation.get("case_ids", []):
+                resolved_id = aliases.get(historical_id, historical_id)
+                if resolved_id in current_case_ids:
+                    continue
+                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
+                    # No se materializa una topología incompleta; el caller
+                    # debe haber abortado antes de DDL.
+                    continue
+                if relation_type in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
+                    impact_scope = "document_conflict_membership"
+                else:
+                    impact_scope = "project_identity_not_resolved"
+                group = groups.get(historical_id, {})
+                occurrence_key = "|".join(
+                    [
+                        str(doc.get("document_id") or ""),
+                        str(historical_id),
+                        str(relation_type or ""),
+                        str(relation.get("project_relation") or ""),
+                        str(relation_index),
+                    ]
+                )
+                rows.append(
+                    {
+                        "reference_id": hashlib.sha256(occurrence_key.encode("utf-8")).hexdigest()[:32],
+                        "document_id": doc.get("document_id"),
+                        "historical_case_id": historical_id,
+                        "canonical_names_json": json.dumps(
+                            sorted(group.get("canonical_names", [])), ensure_ascii=False
+                        ),
+                        "relation_type": relation_type or "",
+                        "project_relation": relation.get("project_relation"),
+                        "case_ids_json": json.dumps(relation.get("case_ids", []), ensure_ascii=False),
+                        "impact_scope": impact_scope,
+                        "status": "preserved_unresolved_not_projected",
+                        "source": "conflict_unit_63_historical_reference",
+                    }
+                )
+    return rows
+
+
+def create_historical_case_reference_table(conn: sqlite3.Connection) -> None:
+    """Crea la tabla lateral de provenance sin claves de identidad proyectadas."""
+    conn.execute(
+        """
+        CREATE TABLE historical_case_reference (
+            reference_id TEXT PRIMARY KEY,
+            document_id TEXT NOT NULL REFERENCES document(document_id),
+            historical_case_id TEXT NOT NULL,
+            canonical_names_json TEXT NOT NULL,
+            relation_type TEXT NOT NULL,
+            project_relation TEXT,
+            case_ids_json TEXT NOT NULL,
+            impact_scope TEXT NOT NULL CHECK (impact_scope IN ('document_conflict_membership', 'project_identity_not_resolved')),
+            status TEXT NOT NULL CHECK (status = 'preserved_unresolved_not_projected'),
+            source TEXT NOT NULL
+        )
+        """
+    )
+    conn.execute(
+        "CREATE INDEX idx_historical_case_reference_document ON historical_case_reference(document_id)"
+    )
+    conn.execute(
+        "CREATE INDEX idx_historical_case_reference_id ON historical_case_reference(historical_case_id)"
+    )
+
+
+def persist_historical_case_reference_rows(conn: sqlite3.Connection, rows: list[dict]) -> int:
+    conn.executemany(
+        "INSERT INTO historical_case_reference (reference_id, document_id, historical_case_id, canonical_names_json, "
+        "relation_type, project_relation, case_ids_json, impact_scope, status, source) "
+        "VALUES (:reference_id, :document_id, :historical_case_id, :canonical_names_json, :relation_type, "
+        ":project_relation, :case_ids_json, :impact_scope, :status, :source)",
+        rows,
+    )
+    return len(rows)
+
+
+def split_case_ids_for_projection(
+    case_ids: list[str], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+) -> tuple[list[str], list[str]]:
+    """Devuelve IDs vigentes proyectables y los históricos que quedan preservados."""
+    aliases = case_id_alias or {}
+    projected: list[str] = []
+    unresolved: list[str] = []
+    for historical_id in case_ids:
+        resolved_id = aliases.get(historical_id, historical_id)
+        if resolved_id in current_case_ids:
+            projected.append(resolved_id)
+        else:
+            unresolved.append(historical_id)
+    return sorted(set(projected)), sorted(set(unresolved))
+
+
+def _sha256_file_if_present(path: Path) -> str | None:
+    path = Path(path)
+    if not path.is_file():
+        return None
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def build_historical_case_preflight_report(
+    analysis: dict[str, list[dict]], classified_path: Path = CLASSIFIED_63, warehouse_path: Path = WAREHOUSE
+) -> dict:
+    """Reporte durable de bloqueo, separado del reporte de una build exitosa."""
+    blockers = analysis["topology_blockers"]
+    return {
+        "schema_version": "historical_case_reference_preflight_v1",
+        "run_id": datetime.now(timezone.utc).isoformat(),
+        "status": "blocked_before_database_write" if blockers else "topology_preflight_passed",
+        "policy": {
+            "topology_blocking_relations": sorted(RELACIONES_QUE_CAMBIAN_TOPOLOGIA),
+            "preserve_without_alias": sorted(
+                RELACIONES_DE_MEMBRESIA_DOCUMENTAL | RELACIONES_IDENTIDAD_PROYECTO
+            ),
+            "unknown_relation_types": "fail_closed",
+        },
+        "source_hashes": {
+            "classified_63_sha256": _sha256_file_if_present(classified_path),
+            "warehouse_file_sha256": _sha256_file_if_present(warehouse_path),
+            "preflight_script_sha256": _sha256_file_if_present(Path(__file__)),
+        },
+        "n_unresolved_ids": len(analysis["all_unresolved"]),
+        "n_topology_blockers": len(blockers),
+        "n_preserved_non_topological_ids": len(analysis["preserved_references"]),
+        "unsupported_relations": analysis.get("unsupported_relations", []),
+        "topology_blockers": blockers,
+        "preserved_references": analysis["preserved_references"],
+        "publication_note": (
+            "Una preflight que bloquea no modifica tablas ni sustituye el reporte de una build exitosa. "
+            "Las referencias no topológicas quedan preservadas en una tabla separada en una build futura; "
+            "no se proyectan como project_id, case_id ni conflict_id."
+        ),
+    }
 
 
 def remap_historical_case_ids(
@@ -662,7 +906,10 @@ def build_case_groups(
     aliases = case_id_alias or {}
     for doc in documentos_63:
         for rel in doc.get("relaciones_case_groups_sol", []):
-            if rel.get("relacion") not in RELACIONES_QUE_UNEN:
+            relation_type = rel.get("relacion")
+            if relation_type not in RELACIONES_CASE_CONOCIDAS:
+                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+            if relation_type not in RELACIONES_QUE_UNEN:
                 continue
             ids = remap_historical_case_ids(rel["case_ids"], current_ids, aliases)
             for cid in ids[1:]:
@@ -707,7 +954,10 @@ def build_conflict_relations(
         gate_status = gate_status_by_document.get(doc["document_id"], "caso_unico")
         review_status = "pending_human_decision" if gate_status == "caso_unico" else "resolved_keep_separate"
         for rel in doc.get("relaciones_case_groups_sol", []):
-            if rel.get("relacion") != "conflictos_distintos":
+            relation_type = rel.get("relacion")
+            if relation_type not in RELACIONES_CASE_CONOCIDAS:
+                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+            if relation_type != "conflictos_distintos":
                 continue
             current_ids = remap_historical_case_ids(
                 rel["case_ids"], set(case_id_to_conflict), case_id_alias
@@ -923,25 +1173,20 @@ def _build_conflicts(conn: sqlite3.Connection):
         )
     else:
         case_id_alias = {case_id: case_id for case_id in all_case_ids}
-    unresolved_ids = collect_unresolved_historical_case_ids(
+    reference_analysis = analyze_historical_case_references(
         documentos_63, set(all_case_ids), case_id_alias
     )
-    if unresolved_ids:
-        print(
-            json.dumps(
-                {
-                    "status": "blocked_before_database_write",
-                    "reason": "historical case_id mappings missing or not identity-verified",
-                    "n_unresolved_ids": len(unresolved_ids),
-                    "unresolved": unresolved_ids,
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            file=sys.stderr,
-        )
+    preflight_report = build_historical_case_preflight_report(
+        reference_analysis, classified_path=CLASSIFIED_63, warehouse_path=WAREHOUSE
+    )
+    atomic_write_json(HISTORICAL_CASE_PREFLIGHT_REPORT_PATH, preflight_report)
+    if reference_analysis["topology_blockers"]:
+        print(json.dumps(preflight_report, ensure_ascii=False, indent=2), file=sys.stderr)
         conn.rollback()
         return 2
+    historical_reference_rows = build_historical_case_reference_rows(
+        documentos_63, set(all_case_ids), case_id_alias
+    )
     case_groups = build_case_groups(all_case_ids, documentos_63, case_id_alias=case_id_alias)
     case_id_to_conflict = {}
     conflict_rows = []
@@ -1036,12 +1281,21 @@ def _build_conflicts(conn: sqlite3.Connection):
             relacion = rel.get("relacion")
             if relacion == "mismo_proyecto":
                 continue  # identidad de proyecto (alias), no evidencia de conflicto
+            if relacion not in RELACIONES_CASE_CONOCIDAS:
+                raise ValueError(f"relacion_case_groups_sol desconocida: {relacion!r}")
             role = ROLE_BY_RELACION.get(relacion, "mentioned_unreviewed")
-            remapped_case_ids = remap_historical_case_ids(
+            remapped_case_ids, unresolved_case_ids = split_case_ids_for_projection(
                 rel["case_ids"], set(case_id_to_conflict), case_id_alias
             )
+            if unresolved_case_ids and relacion not in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
+                raise ValueError(
+                    "referencia histórica no topológica no proyectable en document_conflict: "
+                    f"{doc['document_id']} {relacion} {unresolved_case_ids}"
+                )
             for cid in remapped_case_ids:
                 cflt = case_id_to_conflict.get(cid)
+                if cflt is None:
+                    raise ValueError(f"case_id proyectable sin conflict_id: {cid}")
                 entry = por_conflicto.setdefault(cflt, {"role": role, "evidence": []})
                 entry["role"] = _mejor_rol(entry["role"], role)
                 entry["evidence"].append(
@@ -1117,6 +1371,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         DROP VIEW IF EXISTS document_conflict_case_safe;
         DROP VIEW IF EXISTS document_conflict_case_extended;
         DROP TABLE IF EXISTS conflict_relation;
+        DROP TABLE IF EXISTS historical_case_reference;
         DROP TABLE IF EXISTS document_conflict;
         DROP TABLE IF EXISTS conflict_evidence_backing;
         DROP TABLE IF EXISTS conflict_project;
@@ -1260,6 +1515,7 @@ def _build_conflicts(conn: sqlite3.Connection):
             WHERE l.resolution_status = 'resolved_explicit';
         """,
     )
+    create_historical_case_reference_table(conn)
 
     conn.executemany(
         "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence, respaldo_evidencia, "
@@ -1306,6 +1562,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         "VALUES (:conflict_id_a, :conflict_id_b, :relation_type, :review_status, :note)",
         conflict_relation_rows,
     )
+    n_historical_references_persisted = persist_historical_case_reference_rows(conn, historical_reference_rows)
     conn.commit()
 
     # `conflict_evidence_backing_rows` conserva todas las coincidencias
@@ -1321,6 +1578,9 @@ def _build_conflicts(conn: sqlite3.Connection):
         role_counts[r["role"]] += 1
     n_conflicts_backed = sum(1 for c in conflict_rows if c["respaldo_evidencia"] == "respaldo_exact_quote_detectado")
     n_trivial = len(conflict_rows) - n_multi
+    historical_reference_scope_counts: dict[str, int] = defaultdict(int)
+    for row in historical_reference_rows:
+        historical_reference_scope_counts[row["impact_scope"]] += 1
     n_trivial_backed = sum(
         1 for c in conflict_rows if c["n_case_ids"] == 1 and c["respaldo_evidencia"] == "respaldo_exact_quote_detectado"
     )
@@ -1348,6 +1608,8 @@ def _build_conflicts(conn: sqlite3.Connection):
         "n_document_conflict_links": len(document_conflict_rows),
         "n_document_conflict_from_sol_evidence": sum(1 for r in document_conflict_rows if r["source"] == "conflict_unit_63_sol"),
         "n_document_conflict_trivial": sum(1 for r in document_conflict_rows if r["source"] == "trivial_from_project_mention"),
+        "n_historical_case_references_preserved_unprojected": n_historical_references_persisted,
+        "historical_case_reference_impact_scope_counts": dict(historical_reference_scope_counts),
         "document_conflict_role_counts": dict(role_counts),
         "n_conflict_relations_total": len(conflict_relation_rows),
         "n_conflict_relations_pending_human_decision": sum(1 for r in conflict_relation_rows if r["review_status"] == "pending_human_decision"),
@@ -1409,6 +1671,15 @@ def _build_conflicts(conn: sqlite3.Connection):
     # El reporte es otro recurso distinto de SQLite: el replace evita JSON
     # parcial, aunque un fallo aquí después del commit no puede revertir DB.
     atomic_write_json(AUDIT_REPORT_PATH, audit_report)
+    # Solo un cierre de build posterior al commit y a la escritura del audit
+    # habilita manifiesto/dashboard. Un preflight pasado pero una corrida
+    # interrumpida permanece no publicable.
+    preflight_report["status"] = "conflict_build_completed"
+    preflight_report["n_topology_blockers"] = 0
+    preflight_report["completed_conflict_topology_sha256"] = conflict_topology_fingerprint(conn)
+    preflight_report["completed_warehouse_sha256"] = warehouse_hash["sha256"]
+    preflight_report["completed_audit_report_sha256"] = _sha256_file_if_present(AUDIT_REPORT_PATH)
+    atomic_write_json(HISTORICAL_CASE_PREFLIGHT_REPORT_PATH, preflight_report)
     summary["audit_report_path"] = str(AUDIT_REPORT_PATH.relative_to(PROJECT_ROOT))
     return summary
 

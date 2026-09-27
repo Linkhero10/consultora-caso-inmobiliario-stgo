@@ -1,5 +1,7 @@
 # Conflictividad inmobiliaria en Santiago
 
+Punto de entrada: [START HERE](START_HERE.md).
+
 Proyecto de portafolio de la consultora formada por Felipe Muñoz, Darío Briceño, Nicolás Gajardo y
 Christian Nass, construido sobre fuentes de acceso público. Ver [DATA_NOTICE.md](DATA_NOTICE.md)
 sobre el estatus de redistribución de los datos de terceros y [LICENSE](LICENSE) sobre el código y
@@ -86,9 +88,11 @@ Plan paso a paso de cada arco analítico (2-4):
 
 ## Estado
 
-El corpus base y la capa de identidad (proyecto → caso → conflicto → actor institucional) están
-construidos y verificados. La validación muestral del enrichment (n=50: 21 ok, 17 error menor, 12
-error grave — ver [`audit/validation_summary.json`](audit/validation_summary.json)) identificó
-errores reales de unidad de caso que motivaron el gate documental descrito en la metodología. Las
-conclusiones analíticas de fondo siguen pendientes de que arranquen los arcos sustantivos
-(Darío/Nicolás/Christian).
+El warehouse versionado es un snapshot existente, con 941 proyectos, 850 `case_id` y 833
+conflictos. No debe confundirse con una reconstrucción integral recién cerrada: el preflight
+mantiene bloqueada la publicación de una nueva capa CONFLICT mientras queden 15 referencias
+históricas que afectan su topología. Otras 33 referencias se preservan sin forzar aliases. El
+estado, los hashes y los límites de lectura vigentes están en [START HERE](START_HERE.md),
+[`audit/validation_summary.json`](audit/validation_summary.json) y
+[`audit/data_quality_report.md`](audit/data_quality_report.md). Los arcos pueden desarrollar
+métodos sobre el snapshot vigente, pero sus resultados deben conservar esa limitación.
