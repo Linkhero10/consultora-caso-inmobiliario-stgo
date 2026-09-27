@@ -1,1 +1,2 @@
 *.sqlite filter=lfs diff=lfs merge=lfs -text
+audit/identity_followup_2026-09-26/** text eol=lf

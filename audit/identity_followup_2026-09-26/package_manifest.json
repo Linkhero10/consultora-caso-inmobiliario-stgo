@@ -6,8 +6,8 @@
   "warehouse_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
   "contents": {
     "identity_review_bundle.json": {
-      "bytes": 264302,
-      "sha256": "f788c8b519562d96232f89fb95b4719c2611609a1b46a38e09d9dbac9ea293c0",
+      "bytes": 259876,
+      "sha256": "b1a793348667f34891dabfe5d305628e22bd3040e72a006e7f4eeedb28124dc5",
       "records": 68
     },
     "migration_review_original.json": {
