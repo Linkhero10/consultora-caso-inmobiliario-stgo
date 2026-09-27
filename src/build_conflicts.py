@@ -183,15 +183,18 @@ este modulo. El documento mal clasificado queda registrado como caso de prueba p
 
 import hashlib
 import json
+import os
 import re
 import sqlite3
 import sys
+import tempfile
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
+CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
 CLASSIFIED_63 = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
 AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
 
@@ -255,6 +258,11 @@ def load_v3_3_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], 
         "SELECT document_id, nombre_proyecto, case_mention_index FROM enrichment_project_mention"
     ):
         key = (document_id, _norm(nombre_proyecto))
+        if key in links and links[key] != case_mention_index:
+            raise ValueError(
+                "enrichment_project_mention tiene colisión tras normalizar "
+                f"(document_id, nombre_proyecto)={key!r}: {links[key]!r} vs {case_mention_index!r}"
+            )
         links[key] = case_mention_index
     return links
 
@@ -316,6 +324,7 @@ def _project_backing_evidence(
                         "document_case_mention_count": len(doc_included),
                         "document_object_case_mention_count": 1,
                         "ambiguous_multi_case_document": 0,
+                        "duplicate_group_mixed_decision": 0,
                         "detector_version": DETECTOR_VERSION_V3_3,
                         "match_method": MATCH_METHOD_V3_3,
                     }
@@ -351,6 +360,7 @@ def _project_backing_evidence(
                             "document_case_mention_count": len(doc_included),
                             "document_object_case_mention_count": 1,
                             "ambiguous_multi_case_document": 0,
+                            "duplicate_group_mixed_decision": int(is_mixed_group),
                             "detector_version": DETECTOR_VERSION_V3_3,
                             "match_method": fallback_match_method,
                         }
@@ -392,19 +402,269 @@ class UnionFind:
 
 def load_classified_63() -> list[dict]:
     if not CLASSIFIED_63.exists():
-        return []
-    return json.loads(CLASSIFIED_63.read_text(encoding="utf-8"))["documentos"]
+        raise FileNotFoundError(f"CLASSIFIED_63 requerido para construir CONFLICT: {CLASSIFIED_63}")
+    payload = json.loads(CLASSIFIED_63.read_text(encoding="utf-8"))
+    documentos = payload.get("documentos") if isinstance(payload, dict) else None
+    if not isinstance(documentos, list):
+        raise ValueError(f"CLASSIFIED_63 debe contener una lista 'documentos': {CLASSIFIED_63}")
+    return documentos
 
 
-def build_case_groups(all_case_ids: list[str], documentos_63: list[dict]) -> dict[str, list[str]]:
+def _validate_sha256_field(payload: dict, field: str) -> str:
+    value = payload.get(field)
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        raise ValueError(f"{field} debe ser SHA-256 hexadecimal de 64 caracteres")
+    return value
+
+
+def validate_case_id_alias_rows(
+    rows: list[tuple[str, str, str, str]],
+    current_case_ids: set[str],
+    expected_aliases: dict[str, str],
+    expected_baseline_sha256: str,
+) -> dict[str, str]:
+    """Valida aliases contra el baseline y el estado actual, sin confiar en la tabla.
+
+    Detecta duplicados antes de construir un dict, destinos inexistentes,
+    cadenas/ciclos y cualquier deriva respecto del mapeo que se deduce del
+    baseline project_id→case_id. Un alias manual solo se añadirá aquí cuando
+    exista un manifiesto de evidencia versionado y validado por separado.
+    """
+    aliases: dict[str, str] = {}
+    for old_case_id, canonical_case_id, mapping_basis, baseline_sha256 in rows:
+        if old_case_id in aliases:
+            raise ValueError(f"case_id_alias tiene old_case_id duplicado: {old_case_id!r}")
+        if canonical_case_id not in current_case_ids:
+            raise ValueError(
+                f"case_id_alias apunta a canonical_case_id inexistente: {old_case_id!r}→{canonical_case_id!r}"
+            )
+        if mapping_basis not in {"preserved", "merged"}:
+            raise ValueError(f"case_id_alias tiene mapping_basis no permitido: {mapping_basis!r}")
+        if (mapping_basis == "preserved") != (old_case_id == canonical_case_id):
+            raise ValueError(
+                f"case_id_alias mapping_basis contradice el par {old_case_id!r}→{canonical_case_id!r}"
+            )
+        if baseline_sha256 != expected_baseline_sha256:
+            raise ValueError(f"case_id_alias usa baseline hash distinto en {old_case_id!r}")
+        aliases[old_case_id] = canonical_case_id
+
+    if aliases != expected_aliases:
+        missing = sorted(set(expected_aliases) - set(aliases))
+        extra = sorted(set(aliases) - set(expected_aliases))
+        mismatched = sorted(
+            key for key in set(aliases) & set(expected_aliases)
+            if aliases[key] != expected_aliases[key]
+        )
+        raise ValueError(
+            "case_id_alias no coincide con el baseline; "
+            f"missing={missing[:10]}, extra={extra[:10]}, mismatched={mismatched[:10]}"
+        )
+    for old_case_id, canonical_case_id in aliases.items():
+        if canonical_case_id in aliases and aliases[canonical_case_id] != canonical_case_id:
+            raise ValueError(
+                f"case_id_alias contiene cadena/ciclo: {old_case_id!r}→{canonical_case_id!r}"
+            )
+    return aliases
+
+
+def expected_case_id_aliases_from_baseline(
+    baseline_path: Path, current_project_to_case: dict[str, str]
+) -> tuple[dict[str, str], str]:
+    """Deriva el único alias de baseline permitido y comprueba sus hashes."""
+    payload = json.loads(baseline_path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "project_case_baseline_v1":
+        raise ValueError("schema_version de project_case_baseline no reconocido")
+    _validate_sha256_field(payload, "source_warehouse_sha256")
+    rows = payload.get("projects")
+    if not isinstance(rows, list):
+        raise ValueError("baseline.projects debe ser una lista")
+    project_to_old_case = {row["project_id"]: row["case_id"] for row in rows}
+    if len(project_to_old_case) != len(rows) or set(project_to_old_case) != set(current_project_to_case):
+        raise ValueError("baseline project_id set no coincide con el warehouse actual")
+    mapping_bytes = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    baseline_sha256 = hashlib.sha256(mapping_bytes).hexdigest()
+    if payload.get("mapping_sha256") != baseline_sha256:
+        raise ValueError("mapping_sha256 del baseline no coincide con su contenido")
+    project_ids_bytes = ("\n".join(sorted(project_to_old_case)) + "\n").encode("utf-8")
+    if payload.get("project_id_set_sha256") != hashlib.sha256(project_ids_bytes).hexdigest():
+        raise ValueError("project_id_set_sha256 del baseline no coincide con su contenido")
+
+    old_to_current: dict[str, set[str]] = defaultdict(set)
+    for project_id, old_case_id in project_to_old_case.items():
+        current_case_id = current_project_to_case[project_id]
+        if not current_case_id:
+            raise ValueError(f"project.case_id vacío para {project_id!r}")
+        old_to_current[old_case_id].add(current_case_id)
+    split = {old: sorted(targets) for old, targets in old_to_current.items() if len(targets) != 1}
+    if split:
+        raise ValueError(f"un case_id del baseline se dividió: {split}")
+    return {old: next(iter(targets)) for old, targets in old_to_current.items()}, baseline_sha256
+
+
+def execute_sql_statements(conn: sqlite3.Connection, script: str) -> None:
+    """Ejecuta un script SQL sin el COMMIT implícito de Connection.executescript()."""
+    pending = ""
+    for line in script.splitlines(keepends=True):
+        pending += line
+        if sqlite3.complete_statement(pending):
+            if pending.strip():
+                conn.execute(pending)
+            pending = ""
+    if pending.strip():
+        raise ValueError("script SQL incompleto; falta terminar una sentencia")
+
+
+def begin_build_transaction(conn: sqlite3.Connection) -> None:
+    """Abre la transacción exclusiva que este builder debe poseer por completo.
+
+    `_build_conflicts` confirma o revierte el reemplazo de sus tablas. Aceptar
+    una transacción abierta por el llamador permitiría confirmar o descartar
+    cambios ajenos, por lo que se rechaza antes de tocar el estado de conexión.
+    """
+    if conn.in_transaction:
+        raise RuntimeError("_build_conflicts no acepta una caller-owned transaction")
+    conn.execute("PRAGMA foreign_keys = ON")
+    conn.execute("BEGIN IMMEDIATE")
+
+
+def hash_committed_warehouse(conn: sqlite3.Connection, warehouse_path: Path) -> dict:
+    """Hash del archivo principal solo tras hacer checkpoint completo de WAL.
+
+    El reporte identifica el archivo SQLite publicado. En modo WAL el hash del
+    archivo principal omite páginas confirmadas aún residentes en `-wal`; por
+    eso truncamos/checkpointeamos antes de calcularlo y fallamos si SQLite no
+    confirma que todos los frames están en el archivo principal.
+    """
+    warehouse_path = Path(warehouse_path)
+    journal_mode = str(conn.execute("PRAGMA journal_mode").fetchone()[0]).lower()
+    if journal_mode not in {"delete", "wal"}:
+        raise RuntimeError(f"journal_mode no soportado para hash de warehouse: {journal_mode!r}")
+
+    checkpoint = None
+    wal_path = warehouse_path.with_name(warehouse_path.name + "-wal")
+    if journal_mode == "wal":
+        checkpoint = tuple(conn.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone())
+        busy, log_frames, checkpointed_frames = checkpoint
+        if busy or (log_frames >= 0 and checkpointed_frames < log_frames):
+            raise RuntimeError(
+                "no se puede anclar el hash del warehouse: WAL checkpoint incompleto "
+                f"(busy={busy}, log_frames={log_frames}, checkpointed_frames={checkpointed_frames})"
+            )
+    elif wal_path.exists() and wal_path.stat().st_size > 0:
+        raise RuntimeError(
+            f"journal_mode=delete pero hay un WAL no vacío; no se calcula un hash parcial: {wal_path}"
+        )
+
+    return {
+        "sha256": hashlib.sha256(warehouse_path.read_bytes()).hexdigest(),
+        "journal_mode": journal_mode,
+        "wal_checkpoint": checkpoint,
+    }
+
+
+def atomic_write_json(path: Path, payload: dict, indent: int = 2) -> None:
+    """Reemplaza un reporte JSON completo sin exponer archivos truncados."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temp_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
+    temp_path = Path(temp_name)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(payload, handle, ensure_ascii=False, indent=indent)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp_path, path)
+    except BaseException:
+        try:
+            temp_path.unlink(missing_ok=True)
+        except OSError:
+            pass
+        raise
+
+
+def collect_unresolved_historical_case_ids(
+    documentos_63: list[dict], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+) -> list[dict]:
+    """Devuelve todos los IDs historicos que consumira CONFLICT y aun no resuelven.
+
+    Las relaciones ``mismo_proyecto`` se excluyen porque describen identidad
+    de PROJECT y esta capa ya las omite deliberadamente. El reporte conserva
+    nombres, documentos y tipos de relacion; no propone aliases por similitud.
+    """
+    aliases = case_id_alias or {}
+    missing: dict[str, dict] = {}
+    for doc in documentos_63:
+        groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
+        for relation in doc.get("relaciones_case_groups_sol", []):
+            relation_type = relation.get("relacion")
+            if relation_type == "mismo_proyecto":
+                continue
+            for historical_id in relation.get("case_ids", []):
+                resolved_id = aliases.get(historical_id, historical_id)
+                if resolved_id in current_case_ids:
+                    continue
+                item = missing.setdefault(
+                    historical_id,
+                    {
+                        "historical_case_id": historical_id,
+                        "resolved_case_id": resolved_id,
+                        "canonical_names": set(),
+                        "occurrences": [],
+                    },
+                )
+                group = groups.get(historical_id, {})
+                item["canonical_names"].update(group.get("canonical_names", []))
+                item["occurrences"].append(
+                    {
+                        "document_id": doc.get("document_id"),
+                        "relation": relation_type,
+                        "project_relation": relation.get("project_relation"),
+                        "case_ids": relation.get("case_ids", []),
+                    }
+                )
+    return [
+        {
+            **item,
+            "canonical_names": sorted(item["canonical_names"]),
+            "occurrences": sorted(
+                item["occurrences"],
+                key=lambda row: (row["document_id"] or "", row["relation"] or "", row["project_relation"] or ""),
+            ),
+        }
+        for _historical_id, item in sorted(missing.items())
+    ]
+
+
+def remap_historical_case_ids(
+    case_ids: list[str], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+) -> list[str]:
+    aliases = case_id_alias or {}
+    remapped = []
+    for original_id in case_ids:
+        current_id = aliases.get(original_id, original_id)
+        if current_id not in current_case_ids:
+            raise ValueError(f"case_id histórico {original_id!r} no existe en el baseline ni en case_id_alias")
+        remapped.append(current_id)
+    return sorted(set(remapped))
+
+
+def build_case_groups(
+    all_case_ids: list[str],
+    documentos_63: list[dict],
+    case_id_alias: dict[str, str] | None = None,
+) -> dict[str, list[str]]:
     """case_id -> lista ordenada de case_id de su grupo (incluyendose a si
-    mismo si es trivial)."""
+    mismo si es trivial). Los IDs históricos se remapean explícitamente; un
+    ID desconocido falla, en vez de desaparecer silenciosamente."""
     uf = UnionFind(all_case_ids)
+    current_ids = set(all_case_ids)
+    aliases = case_id_alias or {}
     for doc in documentos_63:
         for rel in doc.get("relaciones_case_groups_sol", []):
             if rel.get("relacion") not in RELACIONES_QUE_UNEN:
                 continue
-            ids = [cid for cid in rel["case_ids"] if cid in uf.parent]
+            ids = remap_historical_case_ids(rel["case_ids"], current_ids, aliases)
             for cid in ids[1:]:
                 uf.union(ids[0], cid)
 
@@ -415,7 +675,10 @@ def build_case_groups(all_case_ids: list[str], documentos_63: list[dict]) -> dic
 
 
 def build_conflict_relations(
-    documentos_63: list[dict], case_id_to_conflict: dict[str, str], gate_status_by_document: dict[str, str]
+    documentos_63: list[dict],
+    case_id_to_conflict: dict[str, str],
+    gate_status_by_document: dict[str, str],
+    case_id_alias: dict[str, str] | None = None,
 ) -> list[dict]:
     """Relaciones entre conflictos que NO se fusionan -- 'conflictos_distintos'
     marcado explicitamente por la revisión como posible trayectoria longitudinal
@@ -446,7 +709,10 @@ def build_conflict_relations(
         for rel in doc.get("relaciones_case_groups_sol", []):
             if rel.get("relacion") != "conflictos_distintos":
                 continue
-            conflict_ids = sorted({case_id_to_conflict[cid] for cid in rel["case_ids"] if cid in case_id_to_conflict})
+            current_ids = remap_historical_case_ids(
+                rel["case_ids"], set(case_id_to_conflict), case_id_alias
+            )
+            conflict_ids = sorted({case_id_to_conflict[cid] for cid in current_ids})
             if len(conflict_ids) < 2:
                 continue
             for i in range(len(conflict_ids)):
@@ -524,6 +790,7 @@ def _build_conflict_backing(
                         "document_case_mention_count": r["document_case_mention_count"],
                         "document_object_case_mention_count": r["document_object_case_mention_count"],
                         "ambiguous_multi_case_document": r["ambiguous_multi_case_document"],
+                        "duplicate_group_mixed_decision": r["duplicate_group_mixed_decision"],
                     }
                 )
 
@@ -572,12 +839,16 @@ def _backing_summary(projects: list[tuple[str, str]], backing_rows: list[dict]) 
         "n_documents_ambiguous_backing": len({
             row["document_id"] for row in backing_rows if row.get("ambiguous_multi_case_document")
         }),
+        "n_documents_mixed_duplicate_group_backing": len({
+            row["document_id"] for row in backing_rows if row.get("duplicate_group_mixed_decision")
+        }),
     }
 
 
-def main():
-    conn = sqlite3.connect(WAREHOUSE)
-    conn.execute("PRAGMA foreign_keys = ON")
+def _build_conflicts(conn: sqlite3.Connection):
+    # Bloquea escrituras concurrentes antes de leer cualquier tabla fuente;
+    # las tablas derivadas se reemplazan después dentro de esta transacción.
+    begin_build_transaction(conn)
 
     all_case_ids = sorted({r[0] for r in conn.execute("SELECT DISTINCT case_id FROM project WHERE case_id IS NOT NULL")})
     documentos_63 = load_classified_63()
@@ -622,7 +893,56 @@ def main():
     else:
         print("[aviso] case_mention_duplicate_link no existe -- correr src/detect_case_mention_duplicates.py antes para activar el fallback de Fix 1E.", file=sys.stderr)
 
-    case_groups = build_case_groups(all_case_ids, documentos_63)
+    alias_table_exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='case_id_alias'"
+    ).fetchone() is not None
+    if alias_table_exists:
+        current_project_to_case = dict(
+            conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL")
+        )
+        expected_aliases, baseline_sha256 = expected_case_id_aliases_from_baseline(
+            CASE_BASELINE, current_project_to_case
+        )
+        alias_columns = {
+            row[1] for row in conn.execute("PRAGMA table_info(case_id_alias)").fetchall()
+        }
+        required_alias_columns = {
+            "old_case_id", "canonical_case_id", "mapping_basis", "baseline_mapping_sha256"
+        }
+        if not required_alias_columns <= alias_columns:
+            raise ValueError(
+                "case_id_alias carece de columnas requeridas: "
+                f"{sorted(required_alias_columns - alias_columns)}"
+            )
+        alias_rows = conn.execute(
+            "SELECT old_case_id, canonical_case_id, mapping_basis, baseline_mapping_sha256 "
+            "FROM case_id_alias"
+        ).fetchall()
+        case_id_alias = validate_case_id_alias_rows(
+            alias_rows, set(all_case_ids), expected_aliases, baseline_sha256
+        )
+    else:
+        case_id_alias = {case_id: case_id for case_id in all_case_ids}
+    unresolved_ids = collect_unresolved_historical_case_ids(
+        documentos_63, set(all_case_ids), case_id_alias
+    )
+    if unresolved_ids:
+        print(
+            json.dumps(
+                {
+                    "status": "blocked_before_database_write",
+                    "reason": "historical case_id mappings missing or not identity-verified",
+                    "n_unresolved_ids": len(unresolved_ids),
+                    "unresolved": unresolved_ids,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        conn.rollback()
+        return 2
+    case_groups = build_case_groups(all_case_ids, documentos_63, case_id_alias=case_id_alias)
     case_id_to_conflict = {}
     conflict_rows = []
     conflict_case_rows = []
@@ -671,7 +991,9 @@ def main():
     # y Recuperacion de barrios, ya reclasificados).
     gate_status_by_document = dict(conn.execute("SELECT document_id, unidad_caso_tipo FROM document_case_unit"))
 
-    conflict_relation_rows = build_conflict_relations(documentos_63, case_id_to_conflict, gate_status_by_document)
+    conflict_relation_rows = build_conflict_relations(
+        documentos_63, case_id_to_conflict, gate_status_by_document, case_id_alias=case_id_alias
+    )
 
     # [CORREGIDO 2026-09-18, bug real de la revisión] role tenia 2 fallas: (1)
     # relaciones 'mismo_proyecto' (alias de identidad de proyecto, ya
@@ -715,10 +1037,11 @@ def main():
             if relacion == "mismo_proyecto":
                 continue  # identidad de proyecto (alias), no evidencia de conflicto
             role = ROLE_BY_RELACION.get(relacion, "mentioned_unreviewed")
-            for cid in rel["case_ids"]:
+            remapped_case_ids = remap_historical_case_ids(
+                rel["case_ids"], set(case_id_to_conflict), case_id_alias
+            )
+            for cid in remapped_case_ids:
                 cflt = case_id_to_conflict.get(cid)
-                if cflt is None:
-                    continue
                 entry = por_conflicto.setdefault(cflt, {"role": role, "evidence": []})
                 entry["role"] = _mejor_rol(entry["role"], role)
                 entry["evidence"].append(
@@ -786,7 +1109,8 @@ def main():
             dedup[key] = r
     document_conflict_rows = list(dedup.values())
 
-    conn.executescript(
+    execute_sql_statements(
+        conn,
         """
         DROP VIEW IF EXISTS actor_event_project_link_conflict_safe;
         DROP VIEW IF EXISTS actor_event_project_link_conflict_extended;
@@ -813,7 +1137,8 @@ def main():
             n_projects_unbacked INTEGER NOT NULL CHECK (n_projects_unbacked >= 0),
             coverage_backing TEXT NOT NULL CHECK (coverage_backing IN ('total', 'parcial', 'ninguna')),
             label_source_project_id TEXT,
-            n_documents_ambiguous_backing INTEGER NOT NULL CHECK (n_documents_ambiguous_backing >= 0)
+            n_documents_ambiguous_backing INTEGER NOT NULL CHECK (n_documents_ambiguous_backing >= 0),
+            n_documents_mixed_duplicate_group_backing INTEGER NOT NULL CHECK (n_documents_mixed_duplicate_group_backing >= 0)
         );
         CREATE TABLE conflict_case (
             conflict_id TEXT NOT NULL REFERENCES conflict(conflict_id),
@@ -875,6 +1200,7 @@ def main():
             document_case_mention_count INTEGER NOT NULL CHECK (document_case_mention_count >= 0),
             document_object_case_mention_count INTEGER NOT NULL CHECK (document_object_case_mention_count >= 0),
             ambiguous_multi_case_document INTEGER NOT NULL CHECK (ambiguous_multi_case_document IN (0, 1)),
+            duplicate_group_mixed_decision INTEGER NOT NULL CHECK (duplicate_group_mixed_decision IN (0, 1)),
             PRIMARY KEY (conflict_id, project_id, document_id, case_mention_id, evidence_id)
         );
         CREATE INDEX idx_conflict_backing_conflict ON conflict_evidence_backing(conflict_id);
@@ -932,16 +1258,16 @@ def main():
             JOIN conflict_project cp ON cp.project_id = l.project_id
             JOIN document_conflict_case_extended dce ON dce.document_id = l.document_id AND dce.conflict_id = cp.conflict_id
             WHERE l.resolution_status = 'resolved_explicit';
-        """
+        """,
     )
 
     conn.executemany(
         "INSERT INTO conflict (conflict_id, label, n_case_ids, origen, confidence, respaldo_evidencia, "
         "n_projects_backed, n_projects_unbacked, coverage_backing, label_source_project_id, "
-        "n_documents_ambiguous_backing) "
+        "n_documents_ambiguous_backing, n_documents_mixed_duplicate_group_backing) "
         "VALUES (:conflict_id, :label, :n_case_ids, :origen, :confidence, :respaldo_evidencia, "
         ":n_projects_backed, :n_projects_unbacked, :coverage_backing, :label_source_project_id, "
-        ":n_documents_ambiguous_backing)",
+        ":n_documents_ambiguous_backing, :n_documents_mixed_duplicate_group_backing)",
         conflict_rows,
     )
     # INSERT OR IGNORE: un mismo project_id puede tener 2 raw_nombre_proyecto
@@ -956,11 +1282,11 @@ def main():
         "INSERT OR IGNORE INTO conflict_evidence_backing (conflict_id, case_id, project_id, document_id, case_mention_id, "
         "evidence_id, raw_nombre_proyecto, quote_text, quote_role, detector_version, match_method, "
         "backing_scope, document_case_mention_count, document_object_case_mention_count, "
-        "ambiguous_multi_case_document) "
+        "ambiguous_multi_case_document, duplicate_group_mixed_decision) "
         "VALUES (:conflict_id, :case_id, :project_id, :document_id, :case_mention_id, :evidence_id, "
         ":raw_nombre_proyecto, :quote_text, :quote_role, :detector_version, :match_method, "
         ":backing_scope, :document_case_mention_count, :document_object_case_mention_count, "
-        ":ambiguous_multi_case_document)",
+        ":ambiguous_multi_case_document, :duplicate_group_mixed_decision)",
         conflict_evidence_backing_rows,
     )
     conn.executemany(
@@ -1015,6 +1341,9 @@ def main():
         "n_conflicts_trivial": n_trivial,
         "n_conflicts_evidence_backed": n_conflicts_backed,
         "n_conflicts_without_exact_backing": len(conflict_rows) - n_conflicts_backed,
+        "n_conflicts_with_mixed_duplicate_group_backing": sum(
+            1 for c in conflict_rows if c["n_documents_mixed_duplicate_group_backing"] > 0
+        ),
         "n_conflict_project_links": len(conflict_project_rows),
         "n_document_conflict_links": len(document_conflict_rows),
         "n_document_conflict_from_sol_evidence": sum(1 for r in document_conflict_rows if r["source"] == "conflict_unit_63_sol"),
@@ -1054,6 +1383,12 @@ def main():
         "conflicts_with_ambiguous_multi_case_backing": sum(
             1 for c in conflict_rows if c["n_documents_ambiguous_backing"] > 0
         ),
+        "conflicts_with_mixed_duplicate_group_backing": sum(
+            1 for c in conflict_rows if c["n_documents_mixed_duplicate_group_backing"] > 0
+        ),
+        "backing_rows_via_mixed_duplicate_group_decision": sum(
+            1 for row in conflict_evidence_backing_rows if row["duplicate_group_mixed_decision"]
+        ),
         "calibration_n": 150,
         "calibration_error_grave": CALIBRATION_ERROR_GRAVE,
         "calibration_target_categories": CALIBRATION_TARGET_CATEGORIES,
@@ -1066,13 +1401,33 @@ def main():
         },
         "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
     }
-    conn.close()
-    audit_report["warehouse_sha256"] = hashlib.sha256(WAREHOUSE.read_bytes()).hexdigest()
+    warehouse_hash = hash_committed_warehouse(conn, WAREHOUSE)
+    audit_report["warehouse_sha256"] = warehouse_hash["sha256"]
+    audit_report["sqlite_journal_mode"] = warehouse_hash["journal_mode"]
+    audit_report["wal_checkpoint"] = warehouse_hash["wal_checkpoint"]
     AUDIT_REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    AUDIT_REPORT_PATH.write_text(json.dumps(audit_report, ensure_ascii=False, indent=2), encoding="utf-8")
+    # El reporte es otro recurso distinto de SQLite: el replace evita JSON
+    # parcial, aunque un fallo aquí después del commit no puede revertir DB.
+    atomic_write_json(AUDIT_REPORT_PATH, audit_report)
     summary["audit_report_path"] = str(AUDIT_REPORT_PATH.relative_to(PROJECT_ROOT))
     return summary
 
 
+def main() -> int:
+    conn = sqlite3.connect(WAREHOUSE)
+    try:
+        result = _build_conflicts(conn)
+        # _build_conflicts returns an integer only for its explicit blocked
+        # path; successful runs return the printed summary object. The CLI
+        # contract is strictly an exit status, never SystemExit(dict).
+        return result if isinstance(result, int) else 0
+    except BaseException:
+        if conn.in_transaction:
+            conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

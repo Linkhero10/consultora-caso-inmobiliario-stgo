@@ -7,7 +7,12 @@ manual explicita) antes de aplicar nada a la base de datos.
 """
 
 import sys
+import sqlite3
+import hashlib
+import json
 from pathlib import Path
+
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -38,6 +43,294 @@ def test_generic_blocklist_blocks_merge_with_specific_name():
 
 def test_generic_blocklist_does_not_flag_two_specific_names():
     assert rpq.is_generic_bare_name("torre Bellavista", "proyecto Bellavista") is False
+
+
+def test_mixed_alto_las_condes_project_cluster_is_not_merged_with_existing_mall():
+    # The project_id "Alto Las Condes" currently aggregates five documents:
+    # two describe the proposed Alto Las Condes 2 expansion, while others
+    # mention the existing mall. A project-level merge would therefore pull
+    # the expansion into the existing-mall case. Keep the pair unresolved
+    # until project mentions can be split/attributed at finer granularity.
+    decision, _ = rpq.classify("Alto Las Condes", "Cenco Alto Las Condes")
+    assert decision is None
+
+    # The adjacent proposed expansion remains explicitly distinct.
+    expansion_decision, _ = rpq.classify("Alto Las Condes", "Alto Las Condes 2")
+    assert expansion_decision is False
+
+
+def test_portal_la_dehesa_brand_name_is_same_mall_identity():
+    decision, reason = rpq.classify("Portal La Dehesa", "Cenco Portal La Dehesa")
+    assert decision is True
+    assert "La Tercera" in reason
+    assert "Infobae" in reason
+
+
+def test_decision_provenance_is_structured_not_inferred_from_reason_text():
+    decision, reason, source, actor = rpq.classify_with_provenance(
+        "Portal La Dehesa", "Cenco Portal La Dehesa"
+    )
+    assert decision is True
+    assert "La Tercera" in reason
+    assert "Infobae" in reason
+    assert source == "manual_adjudication"
+    assert actor is None
+
+    decision, _, source, actor = rpq.classify_with_provenance("Data Center", "Data Center en Chile")
+    assert decision is False
+    assert source == "deterministic_rule"
+    assert actor is None
+
+    decision, _, source, actor = rpq.classify_with_provenance("nombre sin regla", "otro")
+    assert decision is None
+    assert source == "unresolved"
+    assert actor is None
+
+
+def test_source_adjudications_are_exactly_keyed_and_have_structured_evidence_refs():
+    pairs = [
+        ("Portal La Dehesa", "Cenco Portal La Dehesa"),
+        ("Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "Centro Nacional de Arte Contemporáneo Cerrillos"),
+        ("Flor del Valle", "proyecto de condominio de viviendas sociales Flor del Valle"),
+        ("Línea 3 de Metro", "Línea 3 del Metro de Santiago"),
+        ("Línea 3 de Metro", "nueva Línea 3 del Metro"),
+        ("San Nicolás", "proyecto inmobiliario San Nicolás"),
+        ("Supermercado Líder San Francisco", "supermercado Líder San Francisco de Walmart Chile"),
+        ("Torres Alameda", "tres torres Alameda"),
+        ("block 14 de la Villa San Luis", "block 14"),
+        ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"),
+    ]
+    assert len(pairs) == len(set(pairs))
+    assert set(pairs) == set(rpq.MANUAL_DECISION_EVIDENCE)
+    for a, b in pairs:
+        decision, _, source, actor = rpq.classify_with_provenance(a, b)
+        ref = rpq.decision_provenance_ref(a, b, source)
+        assert decision is True
+        assert source == "manual_adjudication"
+        assert actor is None
+        payload = json.loads(ref)
+        assert payload["source"] == "manual_adjudication"
+        assert len(payload["references"]) >= 2
+        for evidence in payload["references"]:
+            assert evidence["source_text_sha256"] == evidence["document_id"]
+            assert evidence["content_record_sha256"]
+            assert evidence["quote"]
+
+
+def test_manual_evidence_bundle_has_fixed_complete_pair_set():
+    assert set(rpq.MANUAL_DECISION_EVIDENCE) == set(rpq.REQUIRED_SOURCE_BACKED_MANUAL_PAIRS)
+    assert all(rpq.MANUAL_DECISIONS[pair][0] is True for pair in rpq.REQUIRED_SOURCE_BACKED_MANUAL_PAIRS)
+
+
+def test_case_component_roots_are_order_independent_and_preserve_registered_ids():
+    projects = {"p-z": "Z", "p-a": "A", "p-m": "M", "p-b": "B"}
+    rows = [
+        (1, "p-z", "Z", "p-a", "A"),
+        (2, "p-m", "M", "p-b", "B"),
+    ]
+    decisions = {
+        frozenset(("Z", "A")): (True, "same", "manual_adjudication", None),
+        frozenset(("M", "B")): (True, "same", "manual_adjudication", None),
+    }
+
+    def classify_pair(name_a, name_b):
+        return decisions[frozenset((name_a, name_b))]
+
+    forward = rpq.resolve_case_components(
+        projects, rows, {}, {"p-z": "p-z", "p-a": "p-a", "p-m": "p-m", "p-b": "p-b"}, classify_pair
+    )
+    reverse = rpq.resolve_case_components(
+        projects, list(reversed(rows)), {}, {"p-z": "p-z", "p-a": "p-a", "p-m": "p-m", "p-b": "p-b"}, classify_pair
+    )
+    assert forward.project_to_case == reverse.project_to_case
+    assert forward.project_to_case == {"p-z": "p-a", "p-a": "p-a", "p-m": "p-b", "p-b": "p-b"}
+
+
+def test_transitive_merge_cannot_violate_explicit_kept_separate():
+    projects = {"a": "A", "b": "B", "c": "C"}
+    rows = [(1, "a", "A", "b", "B"), (2, "b", "B", "c", "C"), (3, "a", "A", "c", "C")]
+    decisions = {
+        frozenset(("A", "B")): (True, "merge", "manual_adjudication", None),
+        frozenset(("B", "C")): (True, "merge", "manual_adjudication", None),
+        frozenset(("A", "C")): (False, "do not merge", "manual_adjudication", None),
+    }
+    try:
+        rpq.resolve_case_components(projects, rows, {}, {p: p for p in projects}, lambda a, b: decisions[frozenset((a, b))])
+    except ValueError as exc:
+        assert "kept_separate" in str(exc)
+    else:
+        raise AssertionError("merge transitivo contradijo una decision explicitamente separada")
+
+
+def test_review_queue_preflight_rejects_missing_or_mismatched_project_names():
+    projects = {"p1": "Proyecto uno", "p2": "Proyecto dos"}
+    with pytest.raises(ValueError, match="missing project_id"):
+        rpq.validate_review_queue_rows(projects, [(1, "p1", "Proyecto uno", "missing", "Otro")])
+    with pytest.raises(ValueError, match="canonical_name mismatch"):
+        rpq.validate_review_queue_rows(projects, [(1, "p1", "Nombre viejo", "p2", "Proyecto dos")])
+
+
+def test_atomic_resolution_rolls_back_mutations_on_late_error():
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE state (value TEXT)")
+    conn.execute("INSERT INTO state VALUES ('before')")
+
+    def failing_operation(connection):
+        connection.execute("UPDATE state SET value='partial'")
+        raise RuntimeError("late validation failed")
+
+    with pytest.raises(RuntimeError, match="late validation failed"):
+        rpq.run_atomically(conn, failing_operation)
+    assert conn.execute("SELECT value FROM state").fetchone()[0] == "before"
+    conn.close()
+
+
+def test_main_holds_immediate_transaction_across_preflight_and_resolution(tmp_path, monkeypatch):
+    db_path = tmp_path / "warehouse.sqlite"
+    conn = sqlite3.connect(db_path)
+    conn.execute("CREATE TABLE state (value TEXT)")
+    conn.execute("INSERT INTO state VALUES ('before')")
+    conn.commit()
+    conn.close()
+    monkeypatch.setattr(rpq, "WAREHOUSE", db_path)
+    monkeypatch.setattr(rpq, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(rpq, "validate_initial_baseline_warehouse_hash", lambda *_args, **_kwargs: True)
+
+    def preflight(connection, project_root):
+        assert project_root == tmp_path
+        assert connection.in_transaction
+        assert connection.execute("SELECT value FROM state").fetchone()[0] == "before"
+        return {"pairs": 10, "references": 20, "literal_raw_mentions": 20, "nonliteral_raw_mentions": []}
+
+    def resolve(connection):
+        assert connection.in_transaction
+        connection.execute("UPDATE state SET value='after'")
+        return 0
+
+    monkeypatch.setattr(rpq, "validate_manual_decision_evidence", preflight)
+    monkeypatch.setattr(rpq, "_resolve_database", resolve)
+    assert rpq.main() == 0
+    check = sqlite3.connect(db_path)
+    assert check.execute("SELECT value FROM state").fetchone()[0] == "after"
+    check.close()
+
+
+def test_initial_baseline_hash_is_checked_once_and_skipped_after_alias_table_exists(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    conn = sqlite3.connect(db_path)
+    conn.execute("CREATE TABLE project (project_id TEXT)")
+    conn.commit()
+    conn.close()
+    baseline_path = tmp_path / "baseline.json"
+    source_hash = hashlib.sha256(db_path.read_bytes()).hexdigest()
+    baseline_path.write_text(
+        json.dumps({"schema_version": "project_case_baseline_v1", "source_warehouse_sha256": source_hash}),
+        encoding="utf-8",
+    )
+
+    conn = sqlite3.connect(db_path)
+    assert rpq.validate_initial_baseline_warehouse_hash(conn, baseline_path, db_path) is True
+    conn.close()
+    wal_path = Path(f"{db_path}-wal")
+    wal_path.write_bytes(b"uncheckpointed-frame")
+    conn = sqlite3.connect(":memory:")
+    with pytest.raises(ValueError, match="WAL no vacío"):
+        rpq.validate_initial_baseline_warehouse_hash(conn, baseline_path, db_path)
+    conn.close()
+    wal_path.unlink()
+    baseline_path.write_text(
+        json.dumps({"schema_version": "project_case_baseline_v1", "source_warehouse_sha256": "0" * 64}),
+        encoding="utf-8",
+    )
+    conn = sqlite3.connect(db_path)
+    with pytest.raises(ValueError, match="source_warehouse_sha256 no coincide"):
+        rpq.validate_initial_baseline_warehouse_hash(conn, baseline_path, db_path)
+
+    conn.execute("CREATE TABLE case_id_alias (old_case_id TEXT)")
+    assert rpq.validate_initial_baseline_warehouse_hash(conn, baseline_path, db_path) is False
+    conn.close()
+
+
+def test_manual_decision_source_provenance_discloses_not_checking_structured_evidence_rows():
+    decision, _, source, _ = rpq.classify_with_provenance("Portal La Dehesa", "Cenco Portal La Dehesa")
+    payload = json.loads(rpq.decision_provenance_ref("Portal La Dehesa", "Cenco Portal La Dehesa", source))
+    assert decision is True
+    assert payload["validation_scope"] == "source_text_quote_and_project_mention_not_structured_evidence_row"
+    assert payload["structured_evidence_row_checked"] is False
+
+
+def test_manual_decision_evidence_validator_checks_project_url_hash_and_literal_quote(tmp_path):
+    conn = sqlite3.connect(":memory:")
+    conn.executescript(
+        """
+        CREATE TABLE project (project_id TEXT PRIMARY KEY, canonical_name TEXT NOT NULL);
+        CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL);
+        CREATE TABLE project_mention_resolved (
+            document_id TEXT NOT NULL, project_id TEXT NOT NULL, raw_nombre_proyecto TEXT NOT NULL
+        );
+        """
+    )
+    source_text = "El proyecto es Portal La Dehesa y también Cenco Portal La Dehesa."
+    document_id = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+    source_url = "https://example.test/source"
+    content_file = tmp_path / "Fuentes" / "fulltext" / "content" / "source.json"
+    content_file.parent.mkdir(parents=True)
+    content_file.write_text(
+        json.dumps({"url": source_url, "text": source_text}, ensure_ascii=False), encoding="utf-8"
+    )
+    record_sha256 = hashlib.sha256(content_file.read_bytes()).hexdigest()
+    conn.executemany(
+        "INSERT INTO project VALUES (?,?)",
+        [
+            ("p1", "Portal La Dehesa"),
+            ("p2", "Cenco Portal La Dehesa"),
+        ],
+    )
+    conn.execute("INSERT INTO document VALUES (?,?)", (document_id, source_url))
+    conn.executemany(
+        "INSERT INTO project_mention_resolved VALUES (?,?,?)",
+        [(document_id, "p1", "Portal La Dehesa"), (document_id, "p2", "Cenco Portal La Dehesa")],
+    )
+    refs = {
+        ("Portal La Dehesa", "Cenco Portal La Dehesa"): {
+            "source": "manual_adjudication",
+            "references": [
+                {
+                    "project_id": "p1",
+                    "project_name": "Portal La Dehesa",
+                    "raw_mention": "Portal La Dehesa",
+                    "document_id": document_id,
+                    "url": source_url,
+                    "content_file": "Fuentes/fulltext/content/source.json",
+                    "source_text_sha256": document_id,
+                    "content_record_sha256": record_sha256,
+                    "quote": "Portal La Dehesa",
+                },
+                {
+                    "project_id": "p2",
+                    "project_name": "Cenco Portal La Dehesa",
+                    "raw_mention": "Cenco Portal La Dehesa",
+                    "document_id": document_id,
+                    "url": source_url,
+                    "content_file": "Fuentes/fulltext/content/source.json",
+                    "source_text_sha256": document_id,
+                    "content_record_sha256": record_sha256,
+                    "quote": "Cenco Portal La Dehesa",
+                },
+            ],
+        }
+    }
+
+    rpq.validate_manual_decision_evidence(conn, tmp_path, refs)
+
+    refs[("Portal La Dehesa", "Cenco Portal La Dehesa")]["references"][1]["quote"] = "Cenco Portals"
+    with pytest.raises(ValueError, match="quote no es substring literal"):
+        rpq.validate_manual_decision_evidence(conn, tmp_path, refs)
+    refs[("Portal La Dehesa", "Cenco Portal La Dehesa")]["references"][1]["quote"] = "Cenco Portal La Dehesa"
+    refs[("Portal La Dehesa", "Cenco Portal La Dehesa")]["references"][1]["content_file"] = "../outside.json"
+    with pytest.raises(ValueError, match="queda fuera de Fuentes/fulltext/content"):
+        rpq.validate_manual_decision_evidence(conn, tmp_path, refs)
+    conn.close()
 
 
 def test_no_duplicate_keys_in_manual_decisions():
@@ -504,14 +797,22 @@ def test_all_real_pairs_are_covered_by_rule_or_manual_decision():
     # Esto recupero 30 de esas 64 decisiones perdidas (verificado a mano:
     # las que no se recuperan son genuinamente ambiguas -- mas de una
     # decision candidata por substring, y el fallback prefiere no decidir
-    # antes que elegir arbitrariamente). Los 68 pares que siguen sin
+    # antes que elegir arbitrariamente). Los 68 pares que seguían sin
     # decision son, en su mayoria, candidatos GENUINAMENTE NUEVOS que v3.3
     # introdujo (nunca existieron como par bajo v3.2) -- correcto que
-    # queden pendientes de revision humana, no un bug."""
+    # queden pendientes de revision humana, no un bug. En 2026-09-27 se
+    # agregaron diez decisiones fuente-primero, exactas y acotadas, con una
+    # referencia documental hash-pinned por pareja. La pareja Alto Las
+    # Condes/Cenco Alto Las Condes permanece sin resolver porque su
+    # project_id mezcla menciones del mall y de su expansión. Ninguna regla
+    # amplia cambió; el saldo esperado queda en 58."""
     uncovered = [(a, b) for a, b in rows if rpq.classify(a, b)[0] is None]
-    assert len(uncovered) == 68, (
+    assert len(uncovered) == 58, (
         f"cambio el numero de pares sin decision (era 68 tras la migracion v3.2->v3.3 "
-        f"y la reconexion via substring normalizado): {len(uncovered)}. Si subio, investigar "
+        f"y 58 despues de diez adjudicaciones fuente-primero): {len(uncovered)}. Si subio, investigar "
         f"si el fallback dejo de reconectar algo que deberia; si bajo, verificar que fue "
         f"por una decision real nueva, no por relajar el fallback."
     )
+    unresolved_pairs = {frozenset(pair) for pair in uncovered}
+    assert frozenset(("Alto Las Condes", "Cenco Alto Las Condes")) in unresolved_pairs
+    assert frozenset(("Portal La Dehesa", "Cenco Portal La Dehesa")) not in unresolved_pairs

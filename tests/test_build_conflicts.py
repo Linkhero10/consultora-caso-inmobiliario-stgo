@@ -13,8 +13,13 @@ adversarial que motivaron el diseno (Sol, 2026-09-18):
    conflict_relation pendiente de decision humana, NUNCA fusionados.
 """
 
+import json
+import hashlib
+import sqlite3
 import sys
 from pathlib import Path
+
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -27,6 +32,54 @@ def test_stable_conflict_id_is_deterministic_and_order_independent():
     b = reg._stable_conflict_id(["case_a", "case_b"])
     assert a == b
     assert a.startswith("conflict:")
+
+
+def test_load_classified_63_fails_closed_when_required_human_source_is_missing(tmp_path, monkeypatch):
+    missing = tmp_path / "classified.json"
+    monkeypatch.setattr(reg, "CLASSIFIED_63", missing)
+    with pytest.raises(FileNotFoundError, match="CLASSIFIED_63 requerido"):
+        reg.load_classified_63()
+
+
+def test_missing_classified_63_aborts_before_schema_changes(tmp_path, monkeypatch):
+    db_path = tmp_path / "warehouse.sqlite"
+    conn = sqlite3.connect(db_path)
+    conn.execute("CREATE TABLE project (project_id TEXT, case_id TEXT)")
+    conn.commit()
+    conn.close()
+    missing = tmp_path / "classified.json"
+    monkeypatch.setattr(reg, "CLASSIFIED_63", missing)
+    monkeypatch.setattr(reg, "WAREHOUSE", db_path)
+    before_hash = hashlib.sha256(db_path.read_bytes()).hexdigest()
+
+    with pytest.raises(FileNotFoundError, match="CLASSIFIED_63 requerido"):
+        reg.main()
+
+    check = sqlite3.connect(db_path)
+    assert check.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall() == [("project",)]
+    check.close()
+    assert hashlib.sha256(db_path.read_bytes()).hexdigest() == before_hash
+
+
+def test_v3_3_link_loader_rejects_conflicting_normalized_keys_but_allows_exact_duplicates():
+    conn = sqlite3.connect(":memory:")
+    conn.execute(
+        "CREATE TABLE enrichment_project_mention (document_id TEXT, nombre_proyecto TEXT, case_mention_index INTEGER)"
+    )
+    conn.executemany(
+        "INSERT INTO enrichment_project_mention VALUES (?,?,?)",
+        [("d1", "Árbol Norte", 1), ("d1", "Arbol Norte", 2)],
+    )
+    with pytest.raises(ValueError, match="colisión tras normalizar"):
+        reg.load_v3_3_verified_links(conn)
+
+    conn.execute("DELETE FROM enrichment_project_mention")
+    conn.executemany(
+        "INSERT INTO enrichment_project_mention VALUES (?,?,?)",
+        [("d1", "Árbol Norte", 1), ("d1", "Arbol Norte", 1)],
+    )
+    assert reg.load_v3_3_verified_links(conn) == {("d1", "arbol norte"): 1}
+    conn.close()
 
 
 def test_union_find_unions_only_via_transitive_closure():
@@ -61,6 +114,236 @@ def test_build_case_groups_does_not_union_conflictos_distintos():
     documentos = [_doc("d1", [{"case_ids": ["case_a", "case_b"], "relacion": "conflictos_distintos", "project_relation": "distinct_conflict_objects"}])]
     groups = reg.build_case_groups(all_case_ids, documentos)
     assert sorted(groups.values()) == [["case_a"], ["case_b"]]
+
+
+def test_build_case_groups_remaps_historical_case_ids_and_rejects_unknown_ids():
+    current_ids = ["case_new", "case_other"]
+    alias = {"case_old": "case_new", "case_new": "case_new", "case_other": "case_other"}
+    docs = [_doc("d1", [{"case_ids": ["case_old", "case_other"], "relacion": "mismo_conflicto"}])]
+    groups = reg.build_case_groups(current_ids, docs, case_id_alias=alias)
+    assert sorted(groups.values()) == [["case_new", "case_other"]]
+
+    unknown_docs = [_doc("d2", [{"case_ids": ["unknown_case"], "relacion": "mismo_conflicto"}])]
+    with pytest.raises(ValueError, match="no existe en el baseline ni en case_id_alias"):
+        reg.build_case_groups(current_ids, unknown_docs, case_id_alias=alias)
+
+
+def test_historical_case_id_preflight_aggregates_unresolved_ids_and_skips_project_aliases():
+    docs = [
+        {
+            **_doc(
+                "d1",
+                [
+                    {"case_ids": ["legacy_a", "case_current"], "relacion": "mismo_conflicto"},
+                    {"case_ids": ["legacy_project_only"], "relacion": "mismo_proyecto"},
+                ],
+            ),
+            "case_groups": [
+                {"case_id": "legacy_a", "canonical_names": ["Caso A"]},
+                {"case_id": "case_current", "canonical_names": ["Caso vigente"]},
+                {"case_id": "legacy_project_only", "canonical_names": ["Alias de proyecto"]},
+            ],
+        },
+        {
+            **_doc("d2", [{"case_ids": ["legacy_b"], "relacion": "focal"}]),
+            "case_groups": [{"case_id": "legacy_b", "canonical_names": ["Caso B"]}],
+        },
+    ]
+    unresolved = reg.collect_unresolved_historical_case_ids(docs, {"case_current"})
+    assert [row["historical_case_id"] for row in unresolved] == ["legacy_a", "legacy_b"]
+    assert unresolved[0]["canonical_names"] == ["Caso A"]
+    assert unresolved[0]["occurrences"][0]["document_id"] == "d1"
+    assert reg.collect_unresolved_historical_case_ids(
+        docs, {"case_current"}, {"legacy_a": "case_current", "legacy_b": "case_current"}
+    ) == []
+
+
+def test_case_id_alias_rows_must_match_baseline_targets_and_hash():
+    baseline_hash = "a" * 64
+    expected = {"case_old": "case_new", "case_new": "case_new"}
+    rows = [
+        ("case_old", "case_new", "merged", baseline_hash),
+        ("case_new", "case_new", "preserved", baseline_hash),
+    ]
+    assert reg.validate_case_id_alias_rows(rows, {"case_new"}, expected, baseline_hash) == expected
+
+    with pytest.raises(ValueError, match="old_case_id duplicado"):
+        reg.validate_case_id_alias_rows(rows + [rows[0]], {"case_new"}, expected, baseline_hash)
+    with pytest.raises(ValueError, match="baseline hash distinto"):
+        reg.validate_case_id_alias_rows(
+            [rows[0], ("case_new", "case_new", "preserved", "b" * 64)],
+            {"case_new"}, expected, baseline_hash,
+        )
+    with pytest.raises(ValueError, match="no coincide con el baseline"):
+        reg.validate_case_id_alias_rows(
+            rows + [("invented", "case_new", "merged", baseline_hash)],
+            {"case_new"}, expected, baseline_hash,
+        )
+    cycle = [
+        ("case_a", "case_b", "merged", baseline_hash),
+        ("case_b", "case_a", "merged", baseline_hash),
+    ]
+    with pytest.raises(ValueError, match="cadena/ciclo"):
+        reg.validate_case_id_alias_rows(
+            cycle, {"case_a", "case_b"}, {"case_a": "case_b", "case_b": "case_a"}, baseline_hash
+        )
+
+
+def test_baseline_alias_derivation_rejects_tampered_mapping_and_project_set(tmp_path):
+    projects = [{"project_id": "p1", "case_id": "old1"}, {"project_id": "p2", "case_id": "old2"}]
+    mapping_hash = hashlib.sha256(
+        json.dumps(projects, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    project_set_hash = hashlib.sha256(b"p1\np2\n").hexdigest()
+    payload = {
+        "schema_version": "project_case_baseline_v1",
+        "source_warehouse_sha256": "a" * 64,
+        "projects": projects,
+        "mapping_sha256": mapping_hash,
+        "project_id_set_sha256": project_set_hash,
+    }
+    path = tmp_path / "baseline.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    aliases, observed_hash = reg.expected_case_id_aliases_from_baseline(path, {"p1": "new1", "p2": "new2"})
+    assert aliases == {"old1": "new1", "old2": "new2"}
+    assert observed_hash == mapping_hash
+
+    payload["mapping_sha256"] = "0" * 64
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="mapping_sha256"):
+        reg.expected_case_id_aliases_from_baseline(path, {"p1": "new1", "p2": "new2"})
+
+    payload["mapping_sha256"] = mapping_hash
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="project_id set"):
+        reg.expected_case_id_aliases_from_baseline(path, {"p1": "new1"})
+
+
+def test_sql_script_executor_preserves_outer_transaction():
+    db = sqlite3.connect(":memory:")
+    db.execute("BEGIN IMMEDIATE")
+    reg.execute_sql_statements(db, "CREATE TABLE transient (value TEXT);\nINSERT INTO transient VALUES ('x');\n")
+    assert db.in_transaction
+    db.rollback()
+    assert db.execute("SELECT 1 FROM sqlite_master WHERE name='transient'").fetchone() is None
+    db.close()
+
+
+def test_build_conflicts_blocks_unresolved_historical_ids_without_database_or_report_writes(
+    tmp_path, monkeypatch, capsys
+):
+    db = sqlite3.connect(":memory:")
+    db.executescript(
+        """
+        CREATE TABLE project (project_id TEXT, case_id TEXT);
+        CREATE TABLE case_mention (document_id TEXT, case_mention_id TEXT, decision_final_amplio TEXT);
+        CREATE TABLE evidence (document_id TEXT, case_mention_id TEXT, evidence_id TEXT, quote_role TEXT, quote_text TEXT, verified INTEGER);
+        CREATE TABLE project_mention_resolved (project_id TEXT, document_id TEXT, raw_nombre_proyecto TEXT);
+        CREATE TABLE enrichment_project_mention (document_id TEXT, nombre_proyecto TEXT, case_mention_index INTEGER);
+        INSERT INTO project VALUES ('p1', 'case_current');
+        """
+    )
+    classified = tmp_path / "classified.json"
+    classified.write_text(
+        json.dumps(
+            {
+                "documentos": [
+                    {
+                        "document_id": "doc1",
+                        "case_groups": [{"case_id": "case_legacy", "canonical_names": ["Caso legado"]}],
+                        "relaciones_case_groups_sol": [
+                            {"relacion": "mismo_conflicto", "case_ids": ["case_legacy", "case_current"]}
+                        ],
+                    }
+                ]
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    report = tmp_path / "report.json"
+    monkeypatch.setattr(reg, "CLASSIFIED_63", classified)
+    monkeypatch.setattr(reg, "AUDIT_REPORT_PATH", report)
+    before_schema = db.execute(
+        "SELECT type, name, sql FROM sqlite_master ORDER BY type, name"
+    ).fetchall()
+    before_rows = db.execute("SELECT project_id, case_id FROM project").fetchall()
+    # The builder owns its transaction; commit fixture setup so this test
+    # exercises the normal standalone invocation.
+    db.commit()
+
+    status = reg._build_conflicts(db)
+
+    assert status == 2
+    assert db.execute("SELECT type, name, sql FROM sqlite_master ORDER BY type, name").fetchall() == before_schema
+    assert db.execute("SELECT project_id, case_id FROM project").fetchall() == before_rows
+    assert not report.exists()
+    assert '"status": "blocked_before_database_write"' in capsys.readouterr().err
+    db.close()
+
+
+def test_begin_build_transaction_rejects_outer_transaction_without_rollback():
+    db = sqlite3.connect(":memory:")
+    db.execute("CREATE TABLE marker (value TEXT)")
+    db.commit()
+    db.execute("BEGIN IMMEDIATE")
+    db.execute("INSERT INTO marker VALUES ('caller-owned')")
+
+    with pytest.raises(RuntimeError, match="caller-owned transaction"):
+        reg.begin_build_transaction(db)
+
+    assert db.in_transaction
+    assert db.execute("SELECT value FROM marker").fetchone() == ("caller-owned",)
+    db.rollback()
+    db.close()
+
+
+def test_hash_committed_warehouse_checkpoints_wal_before_hash(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    db = sqlite3.connect(db_path)
+    assert db.execute("PRAGMA journal_mode=WAL").fetchone()[0].lower() == "wal"
+    db.execute("CREATE TABLE marker (value TEXT)")
+    db.execute("INSERT INTO marker VALUES ('committed')")
+    db.commit()
+
+    result = reg.hash_committed_warehouse(db, db_path)
+
+    assert result["journal_mode"] == "wal"
+    assert result["wal_checkpoint"][0] == 0
+    assert result["sha256"] == reg.hashlib.sha256(db_path.read_bytes()).hexdigest()
+    assert db.execute("SELECT value FROM marker").fetchone() == ("committed",)
+    db.close()
+
+
+def test_build_conflict_relations_remaps_historical_case_ids_and_rejects_unknown_ids():
+    case_id_to_conflict = {"case_new_a": "conflict:A", "case_new_b": "conflict:B"}
+    aliases = {"case_old_a": "case_new_a", "case_old_b": "case_new_b"}
+    docs = [_doc("d1", [{"case_ids": ["case_old_a", "case_old_b"], "relacion": "conflictos_distintos"}])]
+    relations = reg.build_conflict_relations(docs, case_id_to_conflict, {"d1": "caso_unico"}, aliases)
+    assert len(relations) == 1
+    assert {relations[0]["conflict_id_a"], relations[0]["conflict_id_b"]} == {"conflict:A", "conflict:B"}
+
+    bad_docs = [_doc("d2", [{"case_ids": ["missing_case"], "relacion": "conflictos_distintos"}])]
+    with pytest.raises(ValueError, match="no existe en el baseline ni en case_id_alias"):
+        reg.build_conflict_relations(bad_docs, case_id_to_conflict, {"d2": "caso_unico"}, aliases)
+
+
+def test_atomic_json_report_replaces_complete_file_and_leaves_no_temp_file(tmp_path):
+    target = tmp_path / "report.json"
+    target.write_text('{"old": true}', encoding="utf-8")
+    reg.atomic_write_json(target, {"new": [1, 2]}, indent=2)
+    assert json.loads(target.read_text(encoding="utf-8")) == {"new": [1, 2]}
+    assert sorted(path.name for path in tmp_path.iterdir()) == ["report.json"]
+
+
+def test_build_conflicts_main_returns_cli_status_not_summary_or_ignored_block(tmp_path, monkeypatch):
+    db_path = tmp_path / "warehouse.sqlite"
+    sqlite3.connect(db_path).close()
+    monkeypatch.setattr(reg, "WAREHOUSE", db_path)
+    monkeypatch.setattr(reg, "_build_conflicts", lambda _conn: 2)
+    assert reg.main() == 2
+    monkeypatch.setattr(reg, "_build_conflicts", lambda _conn: {"n_conflicts_total": 1})
+    assert reg.main() == 0
 
 
 def test_build_conflict_relations_flags_conflictos_distintos_as_pending_when_gate_still_caso_unico():
@@ -318,6 +601,8 @@ def test_project_backing_evidence_v3_3_duplicate_group_fallback_tags_mixed_decis
     assert len(rows) == 1
     assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION
     assert rows[0]["match_method"] != reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
+    assert rows[0]["duplicate_group_mixed_decision"] == 1
+    assert rows[0]["ambiguous_multi_case_document"] == 0
 
 
 def test_project_backing_evidence_v3_3_duplicate_group_fallback_non_mixed_uses_plain_match_method():
@@ -334,6 +619,7 @@ def test_project_backing_evidence_v3_3_duplicate_group_fallback_non_mixed_uses_p
     )
     assert len(rows) == 1
     assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
+    assert rows[0]["duplicate_group_mixed_decision"] == 0
 
 
 def test_project_backing_evidence_v3_3_no_duplicate_group_sibling_still_empty():
@@ -358,6 +644,7 @@ def test_backing_summary_exposes_partial_coverage_and_label_source():
         "coverage_backing": "parcial",
         "label_source_project_id": "p1",
         "n_documents_ambiguous_backing": 0,
+        "n_documents_mixed_duplicate_group_backing": 0,
     }
 
 

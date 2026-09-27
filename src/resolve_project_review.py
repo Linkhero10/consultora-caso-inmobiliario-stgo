@@ -53,6 +53,7 @@ import json
 import re
 import sqlite3
 import unicodedata
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -64,6 +65,7 @@ def _stable_phase_id(*parts: str) -> str:
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
+CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
 
 GENERIC_BLOCKLIST = {"data center", "vespucio", "ciudad empresarial", "lo aguirre", "las americas", "supermercado lider"}
 
@@ -496,7 +498,115 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Egaña Eco Sustentable", "Eco Egaña"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: mismo actor (Inmobiliaria Fundamenta, Pablo Medina), misma causa judicial de recusacion contra el ministro Sergio Muñoz por intervencion de su hija -- 'Eco Egaña' es la forma abreviada de 'Egaña Eco Sustentable' dentro del mismo articulo/caso."),
     ("LA PLANTA DE CACA", "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: 'LA PLANTA DE CACA' es el apodo coloquial que la comunidad (Accion Vecinal, Resistencia Socioambiental Quilicura) usa para la misma planta de tratamiento de aguas servidas cuyo nombre formal en el SEA es 'Solucion transitoria para la provision de los servicios de tratamiento y disposicion de Aguas Servidas' -- mismo emplazamiento, mismos actores comunitarios opositores, mismo tramite ante el SEA."),
     ("Alto Las Condes 2", "Alto Norte"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: la nota de Diario Financiero es explicita en que el desarrollo se denomina 'Alto Las Condes 2' en la prensa/negocio pero el litigio y el permiso municipal lo refieren como 'Alto Norte' -- mismo actor (Cencosud Shopping), mismo permiso impugnado ante la Municipalidad de Vitacura y la Corte Suprema."),
+
+    # Las adjudicaciones de este bloque se apoyan en fulltexts locales hash-pinned,
+    # no en similitud del nombre ni en transferencias desde casos vecinos.
+    # Portal La Dehesa es el mall existente; el proyecto de ampliación "Alto Las
+    # Condes 2" sigue separado de la entidad del mall existente.
+    ("Portal La Dehesa", "Cenco Portal La Dehesa"): (True, "La Tercera nombra el centro existente como 'Portal La Dehesa (Cencosud)' e Infobae documenta la marca 'Cenco Portal La Dehesa'; se conserva la referencia a ambos textos locales y no se usa la URL externa anterior como si fuera el documento de La Tercera."),
+    ("Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "Centro Nacional de Arte Contemporáneo Cerrillos"): (True, "Misma institución cultural ubicada en el antiguo edificio del aeropuerto de Cerrillos: una fuente desarrolla el nombre y su sigla CNAC; otra usa el mismo nombre sin la preposición. No se transfiere ninguna decisión de casos vecinos."),
+    ("Flor del Valle", "proyecto de condominio de viviendas sociales Flor del Valle"): (True, "Mismo proyecto de vivienda social para familias de Maipú: TECHO lo identifica como 'proyecto de vivienda Flor del Valle' y una fuente local lo denomina 'proyecto de condominio de viviendas sociales Flor del Valle'."),
+    ("Línea 3 de Metro", "Línea 3 del Metro de Santiago"): (True, "Misma línea de transporte: la SMA identifica el proyecto de Línea 3 de Metro y Emol describe la Línea 3 del Metro de Santiago en marcha blanca en La Reina."),
+    ("Línea 3 de Metro", "nueva Línea 3 del Metro"): (True, "VCM Emol describe la nueva Línea 3, su extensión y estaciones; la SMA identifica el mismo proyecto de infraestructura como Línea 3 de Metro. Se reemplaza la antigua referencia a una página genérica de etiquetas USACH."),
+    ("San Nicolás", "proyecto inmobiliario San Nicolás"): (True, "Mismo proyecto residencial de Delabase III en San Miguel: el Segundo Tribunal Ambiental identifica el proyecto San Nicolás y Ex-Ante atribuye el proyecto inmobiliario San Nicolás a Delabase III en esa comuna."),
+    ("Supermercado Líder San Francisco", "supermercado Líder San Francisco de Walmart Chile"): (True, "Mismo supermercado de Pudahuel: Radio Universidad de Chile lo identifica como el supermercado Líder San Francisco de Walmart Chile; el otro registro usa el nombre abreviado del mismo activo."),
+    ("Torres Alameda", "tres torres Alameda"): (True, "Mismo desarrollo de Su Ksa junto a Alameda Plaza: dos artículos de La Tercera repiten la descripción literal 'tres torres Alameda de la inmobiliaria Su Ksa'."),
+    ("block 14 de la Villa San Luis", "block 14"): (True, "Mismo bloque físico de Villa San Luis: Radio JGM lo nombra como 'block 14 de la Villa San Luis'; La Tercera indica que el block 14 es el único edificio del conjunto que permanece en pie."),
+    ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"): (True, "Mismo edificio histórico UNCTAD III; el primer nombre añade su denominación y uso actual como GAM, no otro inmueble."),
 }
+
+
+# Cada adjudicacion positiva incorporada en 2026-09-26 tiene dos referencias
+# locales, una por cada project_id. Los hashes distinguen texto fuente e
+# instancia JSON; no se interpretan por el nombre del archivo ni por una URL
+# ajena al documento. El preflight valida estas referencias antes de escribir.
+MANUAL_DECISION_EVIDENCE: dict[tuple[str, str], dict[str, Any]] = {
+    ("Portal La Dehesa", "Cenco Portal La Dehesa"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "378e8d25e8e3edf01183be0f", "project_name": "Portal La Dehesa", "raw_mention": "Portal La Dehesa", "document_id": "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce", "url": "https://www.latercera.com/la-tercera-pm/noticia/14-edificios-y-dos-centros-comerciales-el-megaproyecto-inmobiliario-de-schiess-en-pausa-en-lo-barnechea/7WFDO7MBGVH7TNTLWJJ7NH3W6M/", "content_file": "Fuentes/fulltext/content/daac0305347d918de647e225877ec0f7691562932c1c7ca5559d645b7241ed1b.json", "source_text_sha256": "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce", "content_record_sha256": "aca259f4e384f1753ec4242b667f6a674fd570e9607dc446ed4969aba9f9f530", "quote": "Esto, si se considera a Portal La Dehesa (Cencosud)"},
+            {"project_id": "d345a25ce92499d24ad13a08", "project_name": "Cenco Portal La Dehesa", "raw_mention": "Cenco Portal La Dehesa", "document_id": "415ddc301212a5f3478237b33d46344a30ccc9d8de8ac6d6a4bebebd0e5c8200", "url": "https://www.infobae.com/peru/2025/12/04/cencosud-cancela-la-construccion-de-uno-de-sus-centros-comerciales-mas-ambiciosos/", "content_file": "Fuentes/fulltext/content/b11ecb98e7a1105e6f9b8ae3dd372aac0a01e839c4c70f648462b5c97fb50a10.json", "source_text_sha256": "415ddc301212a5f3478237b33d46344a30ccc9d8de8ac6d6a4bebebd0e5c8200", "content_record_sha256": "575d85ed16a0cae4709889108477e134cb719f12f95cf809ddc59b194be3db22", "quote": "Cenco Portal La Dehesa"},
+        ],
+    },
+    ("Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "Centro Nacional de Arte Contemporáneo Cerrillos"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "7118b7a4dde32efbb6d1a4b5", "project_name": "Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "raw_mention": "Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "document_id": "e0b6c752c9d0070e77b69e77d5a84f0b8a0694c7eda40fe2eb47fcca20b85851", "url": "https://artishockrevista.com/2019/05/17/centro-nacional-de-arte-cerrillos-tomas-fontecilla/", "content_file": "Fuentes/fulltext/content/a5fa37ec650ead32792f7f1c56c75523d73ece8b0a8b42537f6722136de194af.json", "source_text_sha256": "e0b6c752c9d0070e77b69e77d5a84f0b8a0694c7eda40fe2eb47fcca20b85851", "content_record_sha256": "a3ae9c1763077102d306a9b87c05f162cf318d505d5db685130fcff9194df579", "quote": "Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)"},
+            {"project_id": "58301ba7dde63dc4c91fbb38", "project_name": "Centro Nacional de Arte Contemporáneo Cerrillos", "raw_mention": "Centro Nacional de Arte Contemporáneo Cerrillos", "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd", "url": "https://urbano.wikiexplora.com/Parque_Bicentenario_Cerrillos", "content_file": "Fuentes/fulltext/content/b3b8d229294944cc976a7455bb2e27678896b71353645191072677b6c7ff52ea.json", "source_text_sha256": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd", "content_record_sha256": "4ec1a6ed8716a1ff5c8f4b9d7d3ec2513181fdf1dbec90339155ccf2fb6efd2b", "quote": "Estación 2: Centro Nacional de Arte Contemporáneo Cerrillos"},
+        ],
+    },
+    ("Flor del Valle", "proyecto de condominio de viviendas sociales Flor del Valle"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "cc06d5ea5e77c8c4e0bbee16", "project_name": "Flor del Valle", "raw_mention": "Flor del Valle", "document_id": "54cb746fcbf382396bfe15118afcc796553cc39991b1192489f85a0b2c4a152a", "url": "https://cl.techo.org/entrega-de-proyecto-flor-del-valle/", "content_file": "Fuentes/fulltext/content/d6c8f2b1f6f0d782fd70fda0331283b549258304320f7f12bb19829992218afe.json", "source_text_sha256": "54cb746fcbf382396bfe15118afcc796553cc39991b1192489f85a0b2c4a152a", "content_record_sha256": "20f4d555ea05bfa32d9ec29eccddcca42ed59d4783087b69556f567a457f749f", "quote": "entregamos el proyecto de vivienda Flor del Valle, para 104 familias de los campamentos La Isla y Pueblito la Farfana de Maipú"},
+            {"project_id": "1306ef2f8017be09c7a6591e", "project_name": "proyecto de condominio de viviendas sociales Flor del Valle", "raw_mention": "proyecto de condominio de viviendas sociales Flor del Valle", "document_id": "1db5406b237c5d2f53dd5c987323ee7db803c8570e982b4fb303af19d500dd42", "url": "https://www.labatalla.cl/conociendo-a-carlos-carvacho-candidato-a-concejal-de-maipu/", "content_file": "Fuentes/fulltext/content/0fa3707fafb230e36db18067cb77dceacfbd7e5d8727dce5af3b015866fca532.json", "source_text_sha256": "1db5406b237c5d2f53dd5c987323ee7db803c8570e982b4fb303af19d500dd42", "content_record_sha256": "14303af65be998cecadce2d01cb6552403f504722a18391ab65480b0d6d93bb5", "quote": "proyecto de condominio de viviendas sociales Flor del Valle"},
+        ],
+    },
+    ("Línea 3 de Metro", "Línea 3 del Metro de Santiago"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "e456549a9815284f66aeb631", "project_name": "Línea 3 de Metro", "raw_mention": "Línea 3 de Metro", "document_id": "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9", "url": "https://portal.sma.gob.cl/index.php/sma-formula-cargos-por-ruido-contra-proyecto-linea-3-de-metro/", "content_file": "Fuentes/fulltext/content/c5a07447d2798c2ec5921ca0c1b1a077f57221cb5764bb5df2678f3733e0eb7e.json", "source_text_sha256": "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9", "content_record_sha256": "9684fe947b1dedd239dac000552e2e0f53b407c712b2d11f3c69a66aa44b3643", "quote": "Línea 3 de Metro"},
+            {"project_id": "c842b3fe450afe684c1bfb14", "project_name": "Línea 3 del Metro de Santiago", "raw_mention": "Línea 3 del Metro de Santiago", "document_id": "e12e4c1b0ddd3d0689e8cc09508f6dadde58aa2976b51d5851517d23cde698d1", "url": "https://www.emol.com/noticias/Nacional/2019/01/21/935071/Vecinos-de-La-Reina-presentan-recurso-contra-Metro-por-vibraciones-y-ruido-de-la-Linea-3.html", "content_file": "Fuentes/fulltext/content/f0c886e788e110c3bd07f250fc7112fdb2ce84e9de251ef0bb847c7a61002b33.json", "source_text_sha256": "e12e4c1b0ddd3d0689e8cc09508f6dadde58aa2976b51d5851517d23cde698d1", "content_record_sha256": "a505daa8f0cd8c577918e07c119d17fc4e7c55306d540adc603a080ad22489c9", "quote": "la Línea 3 del Metro de Santiago -que se encuentra en marcha blanca-"},
+        ],
+    },
+    ("Línea 3 de Metro", "nueva Línea 3 del Metro"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "e456549a9815284f66aeb631", "project_name": "Línea 3 de Metro", "raw_mention": "Línea 3 de Metro", "document_id": "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9", "url": "https://portal.sma.gob.cl/index.php/sma-formula-cargos-por-ruido-contra-proyecto-linea-3-de-metro/", "content_file": "Fuentes/fulltext/content/c5a07447d2798c2ec5921ca0c1b1a077f57221cb5764bb5df2678f3733e0eb7e.json", "source_text_sha256": "4a101509be1d8631632fd2d617fc853c9135eaa53ba1abcd30d2f541d2eb04e9", "content_record_sha256": "9684fe947b1dedd239dac000552e2e0f53b407c712b2d11f3c69a66aa44b3643", "quote": "Línea 3 de Metro"},
+            {"project_id": "49f1d8ab180d18d361bb2b67", "project_name": "nueva Línea 3 del Metro", "raw_mention": "nueva Línea 3 del Metro", "document_id": "b68e4bf5677760b6306cd4f9545239834fdb9fd0d7bf245ce95039ed8de32e6d", "url": "https://vcm.emol.com/4365/noticias/experto-valora-que-no-se-aplace-la-inauguracion-de-la-linea-3-del-metro-pese-a-reclamos-de-vecinos/", "content_file": "Fuentes/fulltext/content/4891dc6d9c29164b8d29f84a8bf9e8328605a61ca0b51a1a5df77eeecca8b299.json", "source_text_sha256": "b68e4bf5677760b6306cd4f9545239834fdb9fd0d7bf245ce95039ed8de32e6d", "content_record_sha256": "aed2a58883a7b6b790aefaf43cf5ecf9784a476578b417236f7dc15913342c29", "quote": "el estreno de la nueva Línea 3 del Metro, que incluye una extensión de 22 kilómetros, con 18 estaciones"},
+        ],
+    },
+    ("San Nicolás", "proyecto inmobiliario San Nicolás"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "1ef9a6090c8fed40c1289147", "project_name": "San Nicolás", "raw_mention": "San Nicolás", "document_id": "1efad5e5d1644ba0ce0880f146d307241eeb72c3f927a8b1e32aa2362d727033", "url": "https://tribunalambiental.cl/sentencia-r-463-2024-proyecto-inmobiliario-en-san-miguel", "content_file": "Fuentes/fulltext/content/bddecebeebbe09c1d121a542fc4a914cd4e435d39e9b5a6796f8314456665da5.json", "source_text_sha256": "1efad5e5d1644ba0ce0880f146d307241eeb72c3f927a8b1e32aa2362d727033", "content_record_sha256": "1f11b45809a0212b0b0cc0e9bc1549e21a9eda23410def339d9191f956b5d362", "quote": "el proyecto inmobiliario “San Nicolás”, ubicado en dicha comuna de la región Metropolitana"},
+            {"project_id": "cc283a51b0c5fb88ffa32953", "project_name": "proyecto inmobiliario San Nicolás", "raw_mention": "proyecto inmobiliario San Nicolás", "document_id": "0cbc85c7a802a791483fae5cdea69c7808eb8fac80a2d858e8d9bab7a7015fda", "url": "https://x.com/exantecl/status/1959941577087877440", "content_file": "Fuentes/fulltext/content/dd294d30c41433fa1527e72657195391b25c0ec51dce5602eaee65a191002f2a.json", "source_text_sha256": "0cbc85c7a802a791483fae5cdea69c7808eb8fac80a2d858e8d9bab7a7015fda", "content_record_sha256": "3e98eac9264880c83a253cb438d9e03f4e60316c416df9862f3108075238bca0", "quote": "El proyecto inmobiliario San Nicolás, impulsado por la Inmobiliaria y Constructora Delabase III en la comuna de San Miguel"},
+        ],
+    },
+    ("Supermercado Líder San Francisco", "supermercado Líder San Francisco de Walmart Chile"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "0913ce433cf7906fb082e70c", "project_name": "Supermercado Líder San Francisco", "raw_mention": "Supermercado Líder San Francisco", "document_id": "86403e92169aadc3b6d8fac3a53a19321d7c7292d5a9b15f4c5c519713d328c4", "url": "https://eldesconcierto.cl/2019/03/23/despelote-total-en-la-comuna-de-pudahuel", "content_file": "Fuentes/fulltext/content/2c1d4382ada0a4329caec6ef7ce6f4275c9fc8f9f0f76b005ed1934a0179f8b8.json", "source_text_sha256": "86403e92169aadc3b6d8fac3a53a19321d7c7292d5a9b15f4c5c519713d328c4", "content_record_sha256": "a3fda26d0aa95414cc81df7a7efe3afbf377a88086f2e9187693949c8562caa0", "quote": "el supermercado Líder San Francisco, proyectos de la empresa Bodegas San Francisco"},
+            {"project_id": "b44b728dbea54c5543970e73", "project_name": "supermercado Líder San Francisco de Walmart Chile", "raw_mention": "supermercado Líder San Francisco de Walmart Chile", "document_id": "f82135e32d545685995d1b166aa69c0b5022849afad2c16f77394c770a96b5ec", "url": "https://radio.uchile.cl/2021/07/19/matriz-de-walmart-en-ee-uu-impartira-clases-de-etica-comercial-a-walmart-chile/", "content_file": "Fuentes/fulltext/content/fa36fc7bd69cdabf9a9b1a4688be10a0c643812218445f9661a647f1d7407cf8.json", "source_text_sha256": "f82135e32d545685995d1b166aa69c0b5022849afad2c16f77394c770a96b5ec", "content_record_sha256": "844f830238d2bcfd4c4ec4b2aa239dbaf59699f72d7ed82cfcae114f779fa9ff", "quote": "el supermercado Líder San Francisco de Walmart Chile"},
+        ],
+    },
+    ("Torres Alameda", "tres torres Alameda"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "3221064a885933e8f6ba63b2", "project_name": "Torres Alameda", "raw_mention": "Torres Alameda", "document_id": "cf871c7091dafecfbac7dfe5b2f12b78859d05d0d692954875b52f0675a220e5", "url": "https://www.latercera.com/paula/una-semana-viviendo-gueto-vertical/", "content_file": "Fuentes/fulltext/content/04b01e92a7c15712acbf3a86f6beffe086b63520cdade4df5dcc8d87bbdf7973.json", "source_text_sha256": "cf871c7091dafecfbac7dfe5b2f12b78859d05d0d692954875b52f0675a220e5", "content_record_sha256": "33dc86a66ee51a1dffae7d952a31c3b041be91f1030a6781c63e8ee6167ee5ef", "quote": "tres torres Alameda de la inmobiliaria Su Ksa junto al edificio Alameda Plaza"},
+            {"project_id": "cdec0bfb572bc21f30fbda83", "project_name": "tres torres Alameda", "raw_mention": "tres torres Alameda", "document_id": "1b00c0136d4b855eed855b1a5f48ceb7f01e4c9b0d96c8d9666fafd292e043cb", "url": "https://www.latercera.com/pulso-pm/noticia/otra-constructora-en-crisis-upc-que-levanto-32-edificios-en-10-anos-pide-su-reorganizacion-y-registra-deudas-por-casi-10-mil-millones/Z43T42D6NNADVGW6WJAOFTSQPI/", "content_file": "Fuentes/fulltext/content/a352f3e81259a817f93a656f98cee307444ad25cdf8069646fd660633b7072b2.json", "source_text_sha256": "1b00c0136d4b855eed855b1a5f48ceb7f01e4c9b0d96c8d9666fafd292e043cb", "content_record_sha256": "e9cdfaf107588dedc67f934cfcae54ea7cc63298e98237856a63cd37d0092f64", "quote": "tres torres Alameda de la inmobiliaria Su Ksa junto al edificio Alameda Plaza"},
+        ],
+    },
+    ("block 14 de la Villa San Luis", "block 14"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "f71d8d73041a68164ecd5413", "project_name": "block 14 de la Villa San Luis", "raw_mention": "block 14 de la Villa San Luis", "document_id": "4f6bfedb769650ad5d6e7ff0d0a665e4c0589271c691f216e5a10be062876381", "url": "https://radiojgm.uchile.cl/fundacion-villa-san-luis-el-consejo-de-monumentos-nacionales-baila-al-ritmo-de-las-inmobiliarias/", "content_file": "Fuentes/fulltext/content/35ec399a7ec1908d16cb367813b72bf0009e0ff52edad40fcd289dcaa4cd7b4c.json", "source_text_sha256": "4f6bfedb769650ad5d6e7ff0d0a665e4c0589271c691f216e5a10be062876381", "content_record_sha256": "a89e5da6e2d99f64eb383896989da0e783eee193ab19b03a944f541added06ee", "quote": "la demolición del block 14 de la Villa San Luis"},
+            {"project_id": "526b792badf047862c170a4e", "project_name": "block 14", "raw_mention": "block 14", "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a", "url": "https://www.latercera.com/nacional/noticia/patrimonio-ruinas-la-villa-san-luis-las-condes-se-niega-morir/808323/", "content_file": "Fuentes/fulltext/content/d525383ddec8ed609e2df90d3e306cb6e21c255115eb9e5e85f61754788db348.json", "source_text_sha256": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a", "content_record_sha256": "d9e0197a41884989ca14f57459d1bd60010dae5a5912947ee02c1310c536624e", "quote": "En ese paño está el block 14, el único que queda en pie de los 27 edificios originales"},
+        ],
+    },
+    ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"): {
+        "source": "manual_adjudication",
+        "references": [
+            {"project_id": "49e36d5e154797526cb7ac7f", "project_name": "edificio de la UNCTAD III (hoy GAM)", "raw_mention": "edificio de la UNCTAD III (hoy GAM)", "document_id": "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805", "url": "https://www.latercera.com/culto/2019/04/09/miguel-lawner-premio-2019/", "content_file": "Fuentes/fulltext/content/c0251b51795b6a6db317585d4a1c99da879077679010b578afe7f0bf1c7eff80.json", "source_text_sha256": "39001903d30d8d1e7c5822559143b132f268fb5b3e4ebf5c046e30eec94e3805", "content_record_sha256": "a094d4dc6dcaf7ff238357dfc118f5462fc3f964c6c7d580417bf248ea218a6f", "quote": "la construcción del edificio de la UNCTAD III, hoy GAM"},
+            {"project_id": "e6e1dcbb49d300864229e9e5", "project_name": "edificio UNCTAD III", "raw_mention": "edificio UNCTAD III", "document_id": "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a", "url": "https://www.urbanlivinglab.net/hospital-ochagavia/", "content_file": "Fuentes/fulltext/content/29b6dd9801c0f903809aa8e2da350a3b77d99ea6a671e9a83a353262c7d8869b.json", "source_text_sha256": "8d7516a9774a5d4ebe5db68bb031b230f5e3ada0dd6a1af7ecbd16dbe2dd055a", "content_record_sha256": "663e516c351114bda5d12032ebbc49486940d54641001ce7be9590a5df9988de", "quote": "construcción del edificio UNCTAD III"},
+        ],
+    },
+}
+
+REQUIRED_SOURCE_BACKED_MANUAL_PAIRS = frozenset(
+    {
+        ("Portal La Dehesa", "Cenco Portal La Dehesa"),
+        ("Centro Nacional de Arte Contemporáneo de Cerrillos (CNAC)", "Centro Nacional de Arte Contemporáneo Cerrillos"),
+        ("Flor del Valle", "proyecto de condominio de viviendas sociales Flor del Valle"),
+        ("Línea 3 de Metro", "Línea 3 del Metro de Santiago"),
+        ("Línea 3 de Metro", "nueva Línea 3 del Metro"),
+        ("San Nicolás", "proyecto inmobiliario San Nicolás"),
+        ("Supermercado Líder San Francisco", "supermercado Líder San Francisco de Walmart Chile"),
+        ("Torres Alameda", "tres torres Alameda"),
+        ("block 14 de la Villa San Luis", "block 14"),
+        ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"),
+    }
+)
 
 
 def _manual_decision_via_normalized_substring(name_a: str, name_b: str) -> tuple[bool, str] | None:
@@ -538,11 +648,16 @@ def _manual_decision_via_normalized_substring(name_a: str, name_b: str) -> tuple
     )
 
 
-def classify(name_a: str, name_b: str) -> tuple[bool, str]:
+def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str, str, str | None]:
+    """Clasifica y devuelve el origen estructurado, nunca inferido del texto."""
     if (name_a, name_b) in MANUAL_DECISIONS:
-        return MANUAL_DECISIONS[(name_a, name_b)]
+        decision, reason = MANUAL_DECISIONS[(name_a, name_b)]
+        meta = MANUAL_DECISION_EVIDENCE.get((name_a, name_b))
+        return decision, reason, (meta or {}).get("source", "legacy_manual_adjudication"), None
     if (name_b, name_a) in MANUAL_DECISIONS:
-        return MANUAL_DECISIONS[(name_b, name_a)]
+        decision, reason = MANUAL_DECISIONS[(name_b, name_a)]
+        meta = MANUAL_DECISION_EVIDENCE.get((name_b, name_a))
+        return decision, reason, (meta or {}).get("source", "legacy_manual_adjudication"), None
     # [ORDEN 2026-09-26] el blocklist de nombres genericos (GENERIC_BLOCKLIST:
     # "vespucio", "supermercado lider", etc.) va ANTES del fallback de
     # substring normalizado -- un nombre generico bare puede aparecer como
@@ -552,19 +667,450 @@ def classify(name_a: str, name_b: str) -> tuple[bool, str]:
     # El blocklist ya resuelve estos casos de forma segura (False, nunca
     # fusiona), asi que debe interceptarlos primero.
     if is_generic_bare_name(name_a, name_b) or is_generic_bare_name(name_b, name_a):
-        return False, "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)"
+        return False, "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)", "deterministic_rule", None
     if has_explicit_stage_conflict(name_a, name_b):
-        return False, "Etapa/Fase explicita distinta entre los dos nombres (palabra etapa/fase presente en el texto)"
+        return False, "Etapa/Fase explicita distinta entre los dos nombres (palabra etapa/fase presente en el texto)", "deterministic_rule", None
     reconectado = _manual_decision_via_normalized_substring(name_a, name_b)
     if reconectado is not None:
-        return reconectado
+        return reconectado[0], reconectado[1], "recovered_historical_adjudication", None
     if has_bare_trailing_numeral_conflict(name_a, name_b):
         return None, (
             "numeral suelto al final de uno de los nombres, sin decision manual explicita -- "
             "[hallazgo de Sol 2026-09-18] un numeral suelto suele ser una direccion, no una fase; "
             "requiere revision humana, no se asume kept_separate automaticamente"
+        ), "unresolved", None
+    return None, "sin regla aplicable ni decision manual -- requiere revision humana adicional", "unresolved", None
+
+
+def classify(name_a: str, name_b: str) -> tuple[bool | None, str]:
+    decision, reason, _source, _actor = classify_with_provenance(name_a, name_b)
+    return decision, reason
+
+
+def decision_provenance_ref(name_a: str, name_b: str, source: str) -> str:
+    """Devuelve una referencia estable sin analizar la razón narrativa."""
+    meta = MANUAL_DECISION_EVIDENCE.get((name_a, name_b)) or MANUAL_DECISION_EVIDENCE.get((name_b, name_a))
+    if meta:
+        payload = dict(meta)
+        payload["validation_scope"] = "source_text_quote_and_project_mention_not_structured_evidence_row"
+        payload["structured_evidence_row_checked"] = False
+        return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    pair_hash = hashlib.sha256("\0".join(sorted((name_a, name_b))).encode("utf-8")).hexdigest()
+    return f"{source}:pair_sha256={pair_hash}"
+
+
+def validate_manual_decision_evidence(
+    conn: sqlite3.Connection,
+    project_root: Path,
+    evidence_map: dict[tuple[str, str], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Valida las referencias a fuentes de adjudicaciones positivas antes de mutar SQLite.
+
+    Comprueba en conjunto la identidad del proyecto, la mencion resuelta,
+    la URL del documento, la ruta permitida, el hash del texto y del registro
+    JSON, y que la cita sea un substring literal del texto congelado. No afirma
+    que la cita exista como fila estructurada en ``evidence``: estas son
+    adjudicaciones humanas directas sobre la fuente y esa relación no está
+    disponible de forma fiable para todas las referencias.
+    """
+    references_by_pair = evidence_map if evidence_map is not None else MANUAL_DECISION_EVIDENCE
+    failures: list[str] = []
+    expected_pairs = REQUIRED_SOURCE_BACKED_MANUAL_PAIRS
+    supplied_pairs = set(references_by_pair)
+    if evidence_map is None and supplied_pairs != expected_pairs:
+        missing = sorted(expected_pairs - supplied_pairs)
+        extra = sorted(supplied_pairs - expected_pairs)
+        if missing:
+            failures.append(f"faltan referencias para adjudicaciones positivas: {missing}")
+        if extra:
+            failures.append(f"referencias sin adjudicacion positiva exacta: {extra}")
+    elif evidence_map is not None and not supplied_pairs <= expected_pairs:
+        failures.append(
+            f"evidence_map de prueba contiene adjudicaciones fuera del allowlist: "
+            f"{sorted(supplied_pairs - expected_pairs)}"
         )
-    return None, "sin regla aplicable ni decision manual -- requiere revision humana adicional"
+
+    root = Path(project_root).resolve()
+    content_root = (root / "Fuentes" / "fulltext" / "content").resolve()
+    conn.row_factory = sqlite3.Row
+    valid_references = 0
+    literal_raw_mentions = 0
+    nonliteral_raw_mentions: list[dict[str, str]] = []
+    for pair, meta in sorted(references_by_pair.items()):
+        references = meta.get("references") if isinstance(meta, dict) else None
+        if not isinstance(meta, dict):
+            failures.append(f"{pair}: metadata no es objeto")
+            continue
+        if meta.get("source") != "manual_adjudication":
+            failures.append(f"{pair}: source debe ser manual_adjudication")
+        if not isinstance(references, list) or not references:
+            failures.append(f"{pair}: references debe ser una lista no vacia")
+            continue
+        pair_projects: set[str] = set()
+        for index, ref in enumerate(references):
+            label = f"{pair}[{index}]"
+            required = {
+                "project_id", "project_name", "raw_mention", "document_id", "url",
+                "content_file", "source_text_sha256", "content_record_sha256", "quote",
+            }
+            if not isinstance(ref, dict):
+                failures.append(f"{label}: referencia no es objeto")
+                continue
+            absent = sorted(required - set(ref))
+            if absent:
+                failures.append(f"{label}: faltan campos {absent}")
+                continue
+            project_id = str(ref["project_id"])
+            project_name = str(ref["project_name"])
+            pair_projects.add(project_name)
+            if project_name not in pair:
+                failures.append(f"{label}: project_name {project_name!r} no pertenece al par")
+            project = conn.execute(
+                "SELECT canonical_name FROM project WHERE project_id=?", (project_id,)
+            ).fetchone()
+            if project is None:
+                failures.append(f"{label}: project_id inexistente {project_id!r}")
+            elif project["canonical_name"] != project_name:
+                failures.append(
+                    f"{label}: canonical_name DB {project['canonical_name']!r} != {project_name!r}"
+                )
+            mention = conn.execute(
+                "SELECT 1 FROM project_mention_resolved WHERE document_id=? AND project_id=? AND raw_nombre_proyecto=?",
+                (ref["document_id"], project_id, ref["raw_mention"]),
+            ).fetchone()
+            if mention is None:
+                failures.append(f"{label}: project_mention_resolved no confirma raw_mention exacta")
+            document = conn.execute(
+                "SELECT url FROM document WHERE document_id=?", (ref["document_id"],)
+            ).fetchone()
+            if document is None:
+                failures.append(f"{label}: document_id inexistente {ref['document_id']!r}")
+                continue
+            if document["url"] != ref["url"]:
+                failures.append(f"{label}: URL no coincide exactamente con document.url")
+
+            rel_path = Path(str(ref["content_file"]))
+            if rel_path.is_absolute():
+                failures.append(f"{label}: content_file debe ser ruta relativa")
+                continue
+            candidate = (root / rel_path).resolve()
+            try:
+                candidate.relative_to(content_root)
+            except ValueError:
+                failures.append(f"{label}: content_file queda fuera de Fuentes/fulltext/content")
+                continue
+            if not candidate.is_file():
+                failures.append(f"{label}: no existe content_file {ref['content_file']!r}")
+                continue
+            raw_bytes = candidate.read_bytes()
+            if hashlib.sha256(raw_bytes).hexdigest() != ref["content_record_sha256"]:
+                failures.append(f"{label}: content_record_sha256 no coincide")
+                continue
+            try:
+                record = json.loads(raw_bytes.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                failures.append(f"{label}: JSON invalido ({exc})")
+                continue
+            text = record.get("text")
+            if not isinstance(text, str):
+                failures.append(f"{label}: record.text no es texto")
+                continue
+            if record.get("url") != ref["url"]:
+                failures.append(f"{label}: URL del JSON no coincide con la fuente")
+            text_sha256 = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            if text_sha256 != ref["source_text_sha256"] or text_sha256 != ref["document_id"]:
+                failures.append(f"{label}: source_text_sha256/document_id no coincide con record.text")
+            if not ref["quote"] or ref["quote"] not in text:
+                failures.append(f"{label}: quote no es substring literal del texto")
+            if ref["raw_mention"] in text:
+                literal_raw_mentions += 1
+            else:
+                nonliteral_raw_mentions.append(
+                    {"pair": " / ".join(pair), "project_id": project_id, "raw_mention": ref["raw_mention"]}
+                )
+            if (
+                project is not None and mention is not None and document["url"] == ref["url"]
+                and text_sha256 == ref["source_text_sha256"] == ref["document_id"]
+                and hashlib.sha256(raw_bytes).hexdigest() == ref["content_record_sha256"]
+                and ref["quote"] in text
+            ):
+                valid_references += 1
+        if pair_projects != set(pair):
+            failures.append(f"{pair}: referencias no cubren ambos nombres del par ({sorted(pair_projects)})")
+
+    if failures:
+        raise ValueError(
+            "preflight de evidencia manual bloqueado antes de escribir SQLite:\n - "
+            + "\n - ".join(failures)
+        )
+    return {
+        "pairs": len(references_by_pair),
+        "references": valid_references,
+        "literal_raw_mentions": literal_raw_mentions,
+        "nonliteral_raw_mentions": nonliteral_raw_mentions,
+    }
+
+
+@dataclass(frozen=True)
+class ResolutionPlan:
+    project_to_case: dict[str, str]
+    row_decisions: dict[int, tuple[bool | None, str, str, str | None]]
+    homonym_vetoes: int
+
+
+def validate_review_queue_rows(projects: dict[str, str], rows: list[tuple[int, str, str, str, str]]) -> None:
+    """Falla antes de escribir ante una cola obsoleta, ambigua o duplicada."""
+    seen_pairs: set[tuple[str, str]] = set()
+    for rowid, pid_a, name_a, pid_b, name_b in rows:
+        for pid, supplied_name in ((pid_a, name_a), (pid_b, name_b)):
+            if pid not in projects:
+                raise ValueError(f"project_review_queue rowid={rowid}: missing project_id {pid!r}")
+            if projects[pid] != supplied_name:
+                raise ValueError(
+                    f"project_review_queue rowid={rowid}: canonical_name mismatch for {pid!r}: "
+                    f"queue={supplied_name!r}, project={projects[pid]!r}"
+                )
+        if pid_a == pid_b:
+            raise ValueError(f"project_review_queue rowid={rowid}: self-pair {pid_a!r}")
+        pair = tuple(sorted((pid_a, pid_b)))
+        if pair in seen_pairs:
+            raise ValueError(f"project_review_queue rowid={rowid}: duplicate project pair {pair!r}")
+        seen_pairs.add(pair)
+
+
+def resolve_case_components(
+    projects: dict[str, str],
+    rows: list[tuple[int, str, str, str, str]],
+    partitions: dict[str, str],
+    baseline_case_id_by_project: dict[str, str],
+    classifier,
+) -> ResolutionPlan:
+    """Resuelve componentes de forma determinista y fail-closed.
+
+    Conserva los componentes ya establecidos en el baseline. Una separación
+    explícita no puede ser contradicha por un cierre transitivo.
+    """
+    validate_review_queue_rows(projects, rows)
+    project_ids = set(projects)
+    if set(baseline_case_id_by_project) != project_ids:
+        missing = sorted(project_ids - set(baseline_case_id_by_project))[:10]
+        stale = sorted(set(baseline_case_id_by_project) - project_ids)[:10]
+        raise ValueError(f"baseline project_id set mismatch; missing={missing}, stale={stale}")
+    for pid, case_id in baseline_case_id_by_project.items():
+        if case_id not in project_ids:
+            raise ValueError(f"baseline case_id {case_id!r} for {pid!r} is not a current project_id")
+    if set(partitions) - project_ids:
+        raise ValueError(f"homonym partitions reference missing project_ids: {sorted(set(partitions)-project_ids)[:10]}")
+
+    parent = {pid: pid for pid in project_ids}
+
+    def find(pid: str) -> str:
+        root = pid
+        while parent[root] != root:
+            root = parent[root]
+        while parent[pid] != pid:
+            nxt = parent[pid]
+            parent[pid] = root
+            pid = nxt
+        return root
+
+    def union(pid_a: str, pid_b: str) -> None:
+        root_a, root_b = find(pid_a), find(pid_b)
+        if root_a != root_b:
+            low, high = sorted((root_a, root_b))
+            parent[high] = low
+
+    baseline_groups: dict[str, list[str]] = {}
+    for pid, case_id in baseline_case_id_by_project.items():
+        baseline_groups.setdefault(case_id, []).append(pid)
+    for members in baseline_groups.values():
+        ordered = sorted(members)
+        for pid in ordered[1:]:
+            union(ordered[0], pid)
+
+    def component_partitions(root: str) -> dict[str, set[str]]:
+        result: dict[str, set[str]] = {}
+        for pid, value in partitions.items():
+            if find(pid) == root:
+                result.setdefault(value.split("::", 1)[0], set()).add(value)
+        return result
+
+    def has_partition_collision(root_a: str, root_b: str) -> bool:
+        parts_a = component_partitions(root_a)
+        parts_b = component_partitions(root_b)
+        for base in parts_a.keys() & parts_b.keys():
+            if len(parts_a[base] | parts_b[base]) > 1:
+                return True
+        return False
+
+    for root in sorted({find(pid) for pid in project_ids}):
+        for base, values in component_partitions(root).items():
+            if len(values) > 1:
+                raise ValueError(f"baseline homonym_partition collision in {base!r}: {sorted(values)!r}")
+
+    classified = []
+    for rowid, pid_a, name_a, pid_b, name_b in rows:
+        decision, reason, source, actor = classifier(name_a, name_b)
+        classified.append((tuple(sorted((pid_a, pid_b))), rowid, pid_a, name_a, pid_b, name_b, decision, reason, source, actor))
+
+    row_decisions: dict[int, tuple[bool | None, str, str, str | None]] = {}
+    explicit_separations: list[tuple[int, str, str, str]] = []
+    homonym_vetoes = 0
+    for _pair, rowid, pid_a, name_a, pid_b, name_b, decision, reason, source, actor in sorted(classified):
+        if decision is True:
+            root_a, root_b = find(pid_a), find(pid_b)
+            if root_a != root_b and has_partition_collision(root_a, root_b):
+                decision = False
+                source = "homonym_partition_safety_veto"
+                reason = f"VETO homonym_partition: proposed merge would reconnect incompatible partitions; original={reason}"
+                actor = None
+                homonym_vetoes += 1
+            else:
+                union(pid_a, pid_b)
+        elif decision is False:
+            explicit_separations.append((rowid, pid_a, pid_b, reason))
+        row_decisions[rowid] = (decision, reason, source, actor)
+
+    for rowid, pid_a, pid_b, reason in explicit_separations:
+        if find(pid_a) == find(pid_b):
+            raise ValueError(
+                f"transitive merge violates kept_separate rowid={rowid}: {pid_a!r} / {pid_b!r}; {reason}"
+            )
+
+    members_by_root: dict[str, list[str]] = {}
+    for pid in sorted(project_ids):
+        members_by_root.setdefault(find(pid), []).append(pid)
+    project_to_case: dict[str, str] = {}
+    for members in members_by_root.values():
+        prior_roots: dict[str, int] = {}
+        for pid in members:
+            prior = baseline_case_id_by_project[pid]
+            prior_roots[prior] = prior_roots.get(prior, 0) + 1
+        chosen = min(prior_roots, key=lambda case_id: (-prior_roots[case_id], case_id))
+        for pid in members:
+            project_to_case[pid] = chosen
+    return ResolutionPlan(project_to_case, row_decisions, homonym_vetoes)
+
+
+def run_atomically(conn: sqlite3.Connection, operation):
+    """Ejecuta la reconstrucción completa en una sola transacción SQLite."""
+    nested = conn.in_transaction
+    savepoint = "resolve_project_review_atomic"
+    if nested:
+        conn.execute(f"SAVEPOINT {savepoint}")
+    else:
+        conn.execute("BEGIN IMMEDIATE")
+    try:
+        result = operation(conn)
+        if nested:
+            conn.execute(f"RELEASE SAVEPOINT {savepoint}")
+        else:
+            conn.commit()
+        return result
+    except BaseException:
+        if nested:
+            conn.execute(f"ROLLBACK TO SAVEPOINT {savepoint}")
+            conn.execute(f"RELEASE SAVEPOINT {savepoint}")
+        else:
+            conn.rollback()
+        raise
+
+
+def _project_id_set_sha256(project_ids: set[str]) -> str:
+    return hashlib.sha256(("\n".join(sorted(project_ids)) + "\n").encode("utf-8")).hexdigest()
+
+
+def load_case_baseline(projects: dict[str, str], path: Path = CASE_BASELINE) -> tuple[dict[str, str], str]:
+    if not path.exists():
+        raise FileNotFoundError(f"case_id baseline no existe: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "project_case_baseline_v1":
+        raise ValueError("schema_version de project_case_baseline no reconocido")
+    source_hash = payload.get("source_warehouse_sha256")
+    if not isinstance(source_hash, str) or re.fullmatch(r"[0-9a-f]{64}", source_hash) is None:
+        raise ValueError("source_warehouse_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
+    project_ids = set(projects)
+    if payload.get("project_id_set_sha256") != _project_id_set_sha256(project_ids):
+        raise ValueError("el conjunto actual de project_id no coincide con el baseline versionado")
+    rows = payload.get("projects")
+    if not isinstance(rows, list):
+        raise ValueError("baseline.projects debe ser una lista")
+    baseline = {row["project_id"]: row["case_id"] for row in rows}
+    if len(baseline) != len(rows) or set(baseline) != project_ids:
+        raise ValueError("el mapeo project_id→case_id del baseline no cubre exactamente los proyectos actuales")
+    for pid, case_id in baseline.items():
+        if case_id not in project_ids:
+            raise ValueError(f"baseline case_id inválido {case_id!r} para {pid!r}")
+    mapping_bytes = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    mapping_sha256 = hashlib.sha256(mapping_bytes).hexdigest()
+    if payload.get("mapping_sha256") != mapping_sha256:
+        raise ValueError("mapping_sha256 del baseline no coincide con su contenido")
+    return baseline, mapping_sha256
+
+
+def validate_initial_baseline_warehouse_hash(
+    conn: sqlite3.Connection,
+    baseline_path: Path = CASE_BASELINE,
+    warehouse_path: Path = WAREHOUSE,
+) -> bool:
+    """En la primera aplicación, ata el baseline al warehouse fuente exacto.
+
+    Una vez que existe case_id_alias, el warehouse ya es posterior a la
+    migración y su hash necesariamente cambió; entonces se valida el mapeo,
+    no el hash histórico de origen.
+    """
+    alias_exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='case_id_alias'"
+    ).fetchone() is not None
+    if alias_exists:
+        return False
+    payload = json.loads(Path(baseline_path).read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "project_case_baseline_v1":
+        raise ValueError("schema_version de project_case_baseline no reconocido")
+    expected = payload.get("source_warehouse_sha256")
+    if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
+        raise ValueError("source_warehouse_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
+    warehouse_path = Path(warehouse_path)
+    wal_path = Path(f"{warehouse_path}-wal")
+    if wal_path.exists() and wal_path.stat().st_size > 0:
+        raise ValueError(
+            "baseline inicial no puede verificarse solo contra el archivo SQLite mientras existe un WAL no vacío; "
+            "preservar el WAL y crear/verificar un snapshot SQLite consistente primero"
+        )
+    actual = hashlib.sha256(warehouse_path.read_bytes()).hexdigest()
+    if actual != expected:
+        raise ValueError(
+            "source_warehouse_sha256 no coincide con el warehouse previo a la primera resolución: "
+            f"baseline={expected}, actual={actual}"
+        )
+    return True
+
+
+def rebuild_case_id_alias(conn: sqlite3.Connection, baseline: dict[str, str], project_to_case: dict[str, str], baseline_sha256: str) -> int:
+    old_case_to_new: dict[str, set[str]] = {}
+    for pid, old_case_id in baseline.items():
+        old_case_to_new.setdefault(old_case_id, set()).add(project_to_case[pid])
+    inconsistent = {old: sorted(new) for old, new in old_case_to_new.items() if len(new) != 1}
+    if inconsistent:
+        raise ValueError(f"un case_id previo se dividió durante resolución, no se puede aliasar: {inconsistent}")
+    conn.execute("DROP TABLE IF EXISTS case_id_alias")
+    conn.execute(
+        """CREATE TABLE case_id_alias (
+            old_case_id TEXT PRIMARY KEY,
+            canonical_case_id TEXT NOT NULL,
+            mapping_basis TEXT NOT NULL,
+            baseline_mapping_sha256 TEXT NOT NULL
+        )"""
+    )
+    rows = [
+        (old_case_id, next(iter(new_case_ids)), "preserved" if old_case_id in new_case_ids else "merged", baseline_sha256)
+        for old_case_id, new_case_ids in sorted(old_case_to_new.items())
+    ]
+    conn.executemany(
+        "INSERT INTO case_id_alias (old_case_id, canonical_case_id, mapping_basis, baseline_mapping_sha256) VALUES (?,?,?,?)",
+        rows,
+    )
+    return len(rows)
 
 
 def _add_column_if_missing(conn: sqlite3.Connection, table: str, column: str, coltype: str = "TEXT") -> None:
@@ -587,119 +1133,61 @@ def _drop_column_if_exists(conn: sqlite3.Connection, table: str, column: str) ->
             pass
 
 
-def main() -> int:
-    conn = sqlite3.connect(WAREHOUSE)
-    # [AGREGADO 2026-09-18, ultima precision de la revisión] SQLite declara las
-    # FOREIGN KEY de project_phase_link pero no las hace cumplir por
-    # conexion salvo que se active explicitamente -- sin esto, las FK son
-    # solo documentacion del schema, no una restriccion real.
-    conn.execute("PRAGMA foreign_keys = ON")
-    # Idempotente: este script puede correr mas de una vez sobre la misma base
-    # (ej. para aplicar una corrección como la auditoría de 2026-09-18)
-    # sin fallar por "duplicate column name" en una segunda corrida.
+def _resolve_database(conn: sqlite3.Connection) -> int:
     _add_column_if_missing(conn, "project_review_queue", "decision")
     _add_column_if_missing(conn, "project_review_queue", "decision_reason")
     _add_column_if_missing(conn, "project_review_queue", "decided_by")
+    _add_column_if_missing(conn, "project_review_queue", "decided_by_legacy")
+    _add_column_if_missing(conn, "project_review_queue", "decision_source")
+    _add_column_if_missing(conn, "project_review_queue", "decision_actor")
+    _add_column_if_missing(conn, "project_review_queue", "decision_provenance_ref")
+    conn.execute(
+        "UPDATE project_review_queue SET decided_by_legacy=decided_by "
+        "WHERE decided_by IS NOT NULL AND decided_by_legacy IS NULL"
+    )
 
-    rows = conn.execute("SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b FROM project_review_queue").fetchall()
-
-    # [AGREGADO 2026-09-18, hallazgo BLOQUEANTE de la revisión] "separar un homonimo a
-    # nivel de project_id no basta": Costanera Center Chile y Costanera
-    # Center Argentina (KNOWN_HOMONYM_SPLITS en build_case_project_bridge.py)
-    # volvian a conectarse por case_id porque AMBAS pasaban por el mismo par
-    # con nombre identico ("Costanera Center" vs "mall Costanera Center" ->
-    # merged), y classify() decide por NOMBRE, sin saber que hay 2 project_id
-    # distintos detras. homonym_partition (columna nueva en `project`) marca
-    # la particion de cada mitad de un homonimo conocido -- una union entre
-    # dos project_id de particiones DISTINTAS del mismo homonimo se veta
-    # aqui, sin importar lo que diga classify() para ese par de nombres.
-    partitions = dict(conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL").fetchall())
-
-    union_find: dict[str, str] = {}
-    # Por cada raiz actual del union-find, el conjunto de homonym_partition
-    # (de KNOWN_HOMONYM_SPLITS) ya absorbidas transitivamente en ese
-    # componente -- permite vetar una union INDIRECTA (via un tercer
-    # project_id sin particion propia, ej. "mall Costanera Center" haciendo
-    # de puente entre las dos mitades de "Costanera Center"), no solo una
-    # union directa entre dos project_id con particiones distintas.
-    partitions_in_component: dict[str, set[str]] = {
-        pid: {partition} for pid, partition in partitions.items()
-    }
-
-    def find(x: str) -> str:
-        while union_find.get(x, x) != x:
-            x = union_find.get(x, x)
-        return x
-
-    def would_reconnect_incompatible_homonym(a: str, b: str) -> bool:
-        ra, rb = find(a), find(b)
-        if ra == rb:
-            return False
-        merged = partitions_in_component.get(ra, set()) | partitions_in_component.get(rb, set())
-        bases: dict[str, set[str]] = {}
-        for p in merged:
-            bases.setdefault(p.split("::", 1)[0], set()).add(p)
-        return any(len(v) > 1 for v in bases.values())
-
-    def union(a: str, b: str) -> None:
-        ra, rb = find(a), find(b)
-        if ra != rb:
-            merged = partitions_in_component.pop(ra, set()) | partitions_in_component.pop(rb, set())
-            union_find[ra] = rb
-            if merged:
-                partitions_in_component[rb] = merged
+    rows = conn.execute(
+        "SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b "
+        "FROM project_review_queue ORDER BY rowid"
+    ).fetchall()
+    projects = dict(conn.execute("SELECT project_id, canonical_name FROM project ORDER BY project_id"))
+    partitions = dict(
+        conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL")
+    )
+    baseline, baseline_sha256 = load_case_baseline(projects)
+    plan = resolve_case_components(projects, rows, partitions, baseline, classify_with_provenance)
 
     counts = {"merged": 0, "kept_separate": 0, "needs_human_review": 0}
-    n_homonym_vetoes = 0
     for rowid, pid_a, name_a, pid_b, name_b in rows:
-        decision, reason = classify(name_a, name_b)
-        if decision is True and would_reconnect_incompatible_homonym(pid_a, pid_b):
-            n_homonym_vetoes += 1
-            decision = False
-            reason = (
-                f"VETO homonym_partition [Sol 2026-09-18]: classify() decidia merged por nombre "
-                f"('{reason}'), pero fusionar project_id_a y project_id_b reconectaria (directa o "
-                f"transitivamente, ej. via un tercer project_id puente sin particion propia) dos "
-                f"particiones distintas de un homonimo conocido (KNOWN_HOMONYM_SPLITS) -- vetado."
-            )
-        if decision is True:
-            counts["merged"] += 1
-            status = "merged"
-            union(pid_a, pid_b)
-        elif decision is False:
-            counts["kept_separate"] += 1
-            status = "kept_separate"
-        else:
-            counts["needs_human_review"] += 1
-            status = "needs_human_review"
-        # [CORRECCION 2026-09-18, hallazgo de la revisión punto 5] resolved=1 se
-        # escribia incondicionalmente para las 3 ramas, incluida
-        # needs_human_review -- contradictorio (una fila sin decision no
-        # deberia marcarse como resuelta). Sin efecto visible en los 253
-        # actuales porque terminaron con needs_human_review=0, pero es un bug
-        # real y latente para cualquier cola futura con pares sin regla ni
-        # decision manual.
+        decision, reason, source, actor = plan.row_decisions[rowid]
+        status = "merged" if decision is True else "kept_separate" if decision is False else "needs_human_review"
+        counts[status] += 1
         conn.execute(
-            "UPDATE project_review_queue SET resolved=?, decision=?, decision_reason=?, decided_by=? WHERE rowid=?",
+            "UPDATE project_review_queue SET resolved=?, decision=?, decision_reason=?, decision_source=?, "
+            "decision_actor=?, decision_provenance_ref=?, decided_by=NULL WHERE rowid=?",
             (
                 0 if status == "needs_human_review" else 1,
                 status,
                 reason,
-                "claude_sonnet_5_manual_review_2026-09-17_corregido_2026-09-18_tras_auditoria_sol",
+                source,
+                actor,
+                decision_provenance_ref(name_a, name_b, source),
                 rowid,
             ),
         )
 
-    all_pids = [r[0] for r in conn.execute("SELECT project_id FROM project").fetchall()]
-    for pid in all_pids:
-        find(pid)  # asegura que cada project_id tenga una raiz (a si mismo si no fue fusionado)
-
+    all_pids = sorted(projects)
     _add_column_if_missing(conn, "project", "case_id")
-    for pid in all_pids:
-        conn.execute("UPDATE project SET case_id=? WHERE project_id=?", (find(pid), pid))
-    conn.commit()
+    conn.executemany(
+        "UPDATE project SET case_id=? WHERE project_id=?",
+        [(plan.project_to_case[pid], pid) for pid in all_pids],
+    )
+    n_case_alias_rows = rebuild_case_id_alias(conn, baseline, plan.project_to_case, baseline_sha256)
+    n_cases = len(set(plan.project_to_case.values()))
+    n_homonym_vetoes = plan.homonym_vetoes
 
-    n_cases = len(set(find(pid) for pid in all_pids))
+    def find(pid: str) -> str:
+        return plan.project_to_case[pid]
 
     # [REDISENADO 2026-09-18, hallazgo conceptual de la revisión] nivel PROJECT_PHASE
     # del modelo de 3 niveles, con 3 relaciones explicitas (has_phase /
@@ -786,6 +1274,12 @@ def main() -> int:
     # ahora coincide con como se lee la fila (PROJECT has_phase PHASE).
     # (3) constraints explicitos (PK compuesta + FOREIGN KEY) para que la
     # tabla sea auditable, no solo funcional.
+    if missing_phase_names:
+        raise RuntimeError(
+            "Faltan nombres de proyecto configurados para PROJECT_PHASE; no se reemplazan las tablas: "
+            f"{sorted(set(missing_phase_names))}"
+        )
+
     # [CORREGIDO 2026-09-18, consecuencia real de activar PRAGMA
     # foreign_keys=ON] con las FK ahora exigidas de verdad, hay que borrar
     # la tabla HIJA (project_phase_link, que referencia a project_phase)
@@ -890,7 +1384,6 @@ def main() -> int:
         phase_link_rows,
     )
     relation_counts = rebuild_project_relations(conn)
-    conn.commit()
 
     n_phases = len(phase_rows)
     n_has_phase_links = sum(1 for r in phase_link_rows if r[2] == "has_phase")
@@ -929,6 +1422,12 @@ def main() -> int:
         "project_relations": relation_counts,
         "n_homonym_partition_vetoes": n_homonym_vetoes,
         "homonym_partitions_checked": len(partitions_by_base),
+        "case_id_baseline": {
+            "path": str(CASE_BASELINE.relative_to(PROJECT_ROOT)),
+            "mapping_sha256": baseline_sha256,
+            "n_project_ids": len(baseline),
+            "n_old_case_ids_mapped": n_case_alias_rows,
+        },
         "modelo_3_niveles": {
             "n_project_ids": len(all_pids),
             "n_cases_after_merge": n_cases,
@@ -963,9 +1462,36 @@ def main() -> int:
             ),
         },
     }
-    conn.close()
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
+
+
+def main() -> int:
+    conn = sqlite3.connect(WAREHOUSE)
+    try:
+        # PRAGMA debe ejecutarse antes de BEGIN; la transacción abarca DDL,
+        # decisiones, case_id, aliases y relaciones de fases.
+        conn.execute("PRAGMA foreign_keys = ON")
+
+        def operation(connection: sqlite3.Connection) -> int:
+            # Se valida dentro del BEGIN IMMEDIATE para que otra escritura no
+            # pueda cambiar el warehouse entre el preflight y la resolución.
+            evidence_check = validate_manual_decision_evidence(connection, PROJECT_ROOT)
+            print(
+                "[preflight evidencia manual] "
+                f"{evidence_check['pairs']} pares, {evidence_check['references']} referencias verificadas; "
+                f"{evidence_check['literal_raw_mentions']} raw_mention literales, "
+                f"{len(evidence_check['nonliteral_raw_mentions'])} derivadas/no literales"
+            )
+            baseline_hash_checked = validate_initial_baseline_warehouse_hash(
+                connection, CASE_BASELINE, WAREHOUSE
+            )
+            print(f"[preflight baseline] source_warehouse_sha256 verificado={baseline_hash_checked}")
+            return _resolve_database(connection)
+
+        return run_atomically(conn, operation)
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":
