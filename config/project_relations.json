@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "relation_types": [
+    {
+      "relation_type": "has_plan",
+      "label_es": "tiene plan maestro",
+      "description": "El desarrollo urbano es objeto o ámbito de un plan maestro. La relación no afirma que ambos registros sean la misma entidad."
+    }
+  ],
+  "relations": [
+    {
+      "subject_project_id": "3ce6d0d030381374a3c026f7",
+      "object_project_id": "7805069a696198e3d8e2b964",
+      "relation_type": "has_plan",
+      "evidence_url": "https://eae.mma.gob.cl/storage/documents/02_IAC_PRC_Cerrillos.pdf",
+      "source_title": "Informe Ambiental Complementario de la actualización del PRC de Cerrillos",
+      "source_locator": "Sección VIII.1.2.3.1.1, Proyecto Ciudad Parque Bicentenario",
+      "evidence_quote": "se elabora el Plan Maestro de la Ciudad Parque Bicentenario, definiendo la imagen objetivo",
+      "source_accessed_at": "2026-09-26",
+      "source_sha256": null,
+      "verification_status": "source_verified"
+    }
+  ]
+}

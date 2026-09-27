@@ -52,6 +52,9 @@ deliberadamente sin resolver.
   la conservadora y usa la extendida solo como prueba de sensibilidad.
 - **Todo cambio de fusión/separación queda en una cola de revisión con razón explícita**
   (`project_review_queue`), nunca en un script que decide en silencio.
+- **Las relaciones tipadas no fusionan identidades.** `project_relation` registra, por
+  ejemplo, que un desarrollo urbano tiene un plan maestro asociado; conserva ambos
+  `project_id` y `case_id`, y exige URL, localizador y cita de fuente.
 - **El respaldo documental no se confunde con un vínculo directo ausente.** `conflict_evidence_backing`
   registra coincidencias verificadas a nivel de documento/case_mention; cuando el documento contiene
   varios casos se conserva una señal explícita de ambigüedad y la cobertura del conflicto puede ser
@@ -65,6 +68,7 @@ deliberadamente sin resolver.
 document, evidence, claim              -- corpus y evidencia extraída
 project, project_mention_resolved,
   project_phase, project_phase_link,
+  project_relation_type, project_relation,
   project_review_queue                 -- identidad de proyecto
 conflict, conflict_case,
   conflict_project, conflict_relation,

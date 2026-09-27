@@ -4,7 +4,7 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "04d6c39a904979f0c378528d817b138d4467d17a294ec8b460e151e9d306fcf9",
+    "sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
@@ -23,7 +23,8 @@
       "geocoded_location": 22,
       "geocoded_location_conflict": 8,
       "case_mention_duplicate_link": 5731,
-      "project_mention_geography": 1272
+      "project_mention_geography": 1272,
+      "project_relation": 1
     }
   },
   "detector_versions": {
@@ -42,7 +43,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "673896cc0cc766cef3cf93a54cffb44d33fd609b",
+  "parent_commit_at_generation": "a68aab02ac283443c5a2ae6ff22c458418134145",
   "release_commit": null,
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }

@@ -56,6 +56,8 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
+from build_project_relations import rebuild_project_relations
+
 
 def _stable_phase_id(*parts: str) -> str:
     return "phase:" + hashlib.sha256("::".join(parts).encode("utf-8")).hexdigest()[:24]
@@ -887,6 +889,7 @@ def main() -> int:
         "INSERT INTO project_phase_link (project_id, phase_id, relation_type, evidence_source) VALUES (?,?,?,?)",
         phase_link_rows,
     )
+    relation_counts = rebuild_project_relations(conn)
     conn.commit()
 
     n_phases = len(phase_rows)
@@ -923,6 +926,7 @@ def main() -> int:
         "n_projects_before": len(all_pids),
         "n_cases_after_merge": n_cases,
         "n_projects_merged_away": len(all_pids) - n_cases,
+        "project_relations": relation_counts,
         "n_homonym_partition_vetoes": n_homonym_vetoes,
         "homonym_partitions_checked": len(partitions_by_base),
         "modelo_3_niveles": {

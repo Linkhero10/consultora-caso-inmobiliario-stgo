@@ -473,6 +473,8 @@ def main() -> int:
     review_candidates = find_review_candidates(projects)
 
     conn.executescript("""
+        DROP TABLE IF EXISTS project_relation;
+        DROP TABLE IF EXISTS project_relation_type;
         DROP TABLE IF EXISTS project;
         DROP TABLE IF EXISTS project_mention_resolved;
         DROP TABLE IF EXISTS project_review_queue;

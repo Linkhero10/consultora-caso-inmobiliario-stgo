@@ -532,5 +532,48 @@
     "resultado_medido": "n_projects_merged_away 90->91; project_id 6f5a7267b402f19352f4bf54 (Data Center de Google) y 791f201362a8d6a8c0245a4c (data center de Google Chile en Cerrillos) comparten ahora case_id=791f201362a8d6a8c0245a4c -- ambos project_id se conservan intactos (nunca se borran), solo se unifica el case_id, mismo principio de siempre en este proyecto.",
     "verificacion": "integrity_check=ok, foreign_key_check=0. Suite: 268 passed, 1 skipped, 1 fallo preexistente ajeno (tests/test_blind_review_html.py, archivo externo al repo).",
     "status": "promovido a produccion 2026-09-26"
+  },
+  "identity_followup_2026-09-26": {
+    "authority": "actualizacion aditiva del seguimiento de identidad; el artefacto de reconciliacion anterior se conserva como historia",
+    "review_package": "audit/identity_followup_2026-09-26/",
+    "warehouse": {
+      "sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+      "integrity_check": "ok",
+      "foreign_key_issues": 0,
+      "project_count": 941,
+      "open_project_review_queue_rows": 68
+    },
+    "typed_relation": {
+      "relation_id": "project-rel:9a9cc63a1bbde683c995b8a6",
+      "relation_type": "has_plan",
+      "subject_project_id": "3ce6d0d030381374a3c026f7",
+      "object_project_id": "7805069a696198e3d8e2b964",
+      "identity_merge": false,
+      "source_sha256": null,
+      "status": "materializada en candidato local; fuente oficial/localizador registrados; revisión ontológica incluida en paquete"
+    },
+    "open_pair_review": {
+      "pairs": 68,
+      "source_documents_exported": 219,
+      "project_sides_without_source_url": 0,
+      "production_queue_decisions_changed": 0
+    },
+    "migration_drift_review": {
+      "labeled_adjudications": 69,
+      "v3_3_side": 65,
+      "v3_2_side": 4,
+      "v3_2_rows_reconstructed_with_record_and_source_hashes": 4,
+      "production_promotions": 0,
+      "original_item_level_review_included": true
+    },
+    "verification": {
+      "focused_tests": "7 passed",
+      "full_suite_excluding_known_external_artifact_test": "275 passed, 1 skipped",
+      "known_external_artifact_test": "tests/test_blind_review_html.py requires D:/Felipe/Consultora/Productos/revision_humana_blind_v5_2_1_50.html, absent from this repository/environment",
+      "llm_calls": 0,
+      "external_api_cost_usd": 0,
+      "manual_adjudication_pending": "reviewer response for the 68 open pairs and 69 drift rows; no decision inferred from prior recommendations"
+    },
+    "status": "technical follow-up prepared; no unreviewed identity decisions promoted"
   }
 }

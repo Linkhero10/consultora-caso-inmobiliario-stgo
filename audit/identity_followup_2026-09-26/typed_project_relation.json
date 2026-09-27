@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "typed_relation_city_park_master_plan_2026-09-26",
+  "warehouse_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+  "production_promoted": false,
+  "release_state": "materialized_in_local_warehouse_candidate; pending_tests_commit_and_CI",
+  "relation": {
+    "relation_id": "project-rel:9a9cc63a1bbde683c995b8a6",
+    "subject_project_id": "3ce6d0d030381374a3c026f7",
+    "subject_name": "Ciudad Parque Bicentenario",
+    "subject_case_id": "3ce6d0d030381374a3c026f7",
+    "relation_type": "has_plan",
+    "object_project_id": "7805069a696198e3d8e2b964",
+    "object_name": "Plan Maestro de Ciudad Parque Bicentenario",
+    "object_case_id": "7805069a696198e3d8e2b964",
+    "evidence_url": "https://eae.mma.gob.cl/storage/documents/02_IAC_PRC_Cerrillos.pdf",
+    "source_title": "Informe Ambiental Complementario de la actualización del PRC de Cerrillos",
+    "source_locator": "Sección VIII.1.2.3.1.1, Proyecto Ciudad Parque Bicentenario",
+    "evidence_quote": "se elabora el Plan Maestro de la Ciudad Parque Bicentenario, definiendo la imagen objetivo",
+    "source_accessed_at": "2026-09-26",
+    "source_sha256": null,
+    "verification_status": "source_verified"
+  },
+  "interpretation": "El vínculo conserva separados el desarrollo urbano y su instrumento de planificación; no afirma que sean alias ni la misma entidad.",
+  "review_question": "¿La clase has_plan y la dirección del vínculo representan con precisión lo que el documento oficial demuestra, o conviene un tipo más acotado como governed_by_plan? Cualquier ajuste debe mantener identidades distintas y citar el texto oficial."
+}
