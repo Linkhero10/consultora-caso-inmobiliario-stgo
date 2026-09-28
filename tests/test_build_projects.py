@@ -16,6 +16,83 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 import build_projects as bridge  # noqa: E402
 
 
+def test_apply_verified_project_mention_index_corrections_fills_null_index_with_citation():
+    records = [
+        {
+            "document_id": "doc1",
+            "proyectos_mencionados": [{"nombre": "Línea 7 del Metro", "case_mention_index": None}],
+        }
+    ]
+    corrections = {("doc1", "Línea 7 del Metro"): 0}
+    n_applied = bridge.apply_verified_project_mention_index_corrections(records, corrections)
+    assert n_applied == 1
+    assert records[0]["proyectos_mencionados"][0]["case_mention_index"] == 0
+
+
+def test_apply_verified_project_mention_index_corrections_never_overwrites_existing_index():
+    records = [
+        {
+            "document_id": "doc1",
+            "proyectos_mencionados": [{"nombre": "Proyecto X", "case_mention_index": 2}],
+        }
+    ]
+    corrections = {("doc1", "Proyecto X"): 0}
+    n_applied = bridge.apply_verified_project_mention_index_corrections(records, corrections)
+    assert n_applied == 0
+    assert records[0]["proyectos_mencionados"][0]["case_mention_index"] == 2
+
+
+def test_apply_verified_project_mention_index_corrections_ignores_unrelated_mentions():
+    records = [
+        {
+            "document_id": "doc1",
+            "proyectos_mencionados": [{"nombre": "Proyecto sin correccion", "case_mention_index": None}],
+        }
+    ]
+    corrections = {("doc1", "Otro proyecto"): 0}
+    n_applied = bridge.apply_verified_project_mention_index_corrections(records, corrections)
+    assert n_applied == 0
+    assert records[0]["proyectos_mencionados"][0]["case_mention_index"] is None
+
+
+def test_load_verified_project_mention_index_corrections_returns_empty_dict_when_file_missing(tmp_path):
+    corrections = bridge.load_verified_project_mention_index_corrections(tmp_path / "no_existe.json")
+    assert corrections == {}
+
+
+def test_load_verified_project_mention_index_corrections_rejects_duplicate_entries(tmp_path):
+    import json
+
+    path = tmp_path / "corrections.json"
+    path.write_text(
+        json.dumps(
+            {
+                "corrections": [
+                    {"document_id": "doc1", "nombre_proyecto": "X", "case_mention_index": 0},
+                    {"document_id": "doc1", "nombre_proyecto": "X", "case_mention_index": 1},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    try:
+        bridge.load_verified_project_mention_index_corrections(path)
+        assert False, "debia lanzar ValueError por entrada duplicada"
+    except ValueError as e:
+        assert "duplicada" in str(e)
+
+
+def test_load_verified_project_mention_index_corrections_reads_real_linea7_entry():
+    """Verifica que la correccion real de Linea 7 versionada en config/ tiene la
+    forma esperada -- no un valor sintetico, el mismo archivo que usa build_projects.py."""
+    corrections = bridge.load_verified_project_mention_index_corrections()
+    key = (
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8",
+        "Línea 7 del Metro",
+    )
+    assert corrections.get(key) == 0
+
+
 def test_normalize_merges_real_writing_variants():
     """Casos reales encontrados en el corpus antes de construir el puente."""
     assert bridge.normalize_project_name("Torre Bellavista") == bridge.normalize_project_name("torre Bellavista")

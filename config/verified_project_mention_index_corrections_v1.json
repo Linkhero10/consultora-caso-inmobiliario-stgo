@@ -1,0 +1,38 @@
+{
+  "schema_version": "verified_project_mention_index_corrections_v1",
+  "description": "Correcciones puntuales de case_mention_index para menciones de proyecto de v3.3 que quedaron sin vinculo (null) pese a que la evidencia estructurada del warehouse identifica sin ambiguedad a que case_mention pertenecen. Nunca se inventa un indice sin evidencia literal verificada; cada entrada cita evidence_id reales y su texto exacto. Aditivo, nunca sobreescribe el shape v3.3 salvo el campo case_mention_index puntual.",
+  "corrections": [
+    {
+      "reference_key": "linea7_cochera_taller_renca_case_mention_index_fix",
+      "document_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8",
+      "nombre_proyecto": "Línea 7 del Metro",
+      "case_mention_index": 0,
+      "case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0",
+      "reason": "v3.3 comprimio 3 intervenciones de Linea 7 descritas en el mismo articulo (cochera/taller en Renca, pique en Parque Forestal, estacion en Parque Araucano; ver audit/identity_followup_2026-09-26/migration_drift_cases.json, casos drift-v3_2-only-001/002/003 y clasificacion independiente de Sol 'componente_etapa') en una sola mencion paraguas 'Linea 7 del Metro', sin vincularla a ningun case_mention (case_mention_index=null). De las 3 case_mention del documento, solo la 0 (Renca) tiene decision_final_amplio='include'; las otras 2 (Santiago, Las Condes) son 'uncertain' y quedan fuera del universo incluido -- no se les fuerza vinculo. La evidencia estructurada de case_mention 0 (accion:0, objeto:0, geografica:0) coincide literalmente con el texto de la mencion de proyecto, sin ambiguedad.",
+      "source_url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2021/12/06/aparecen-nuevas-quejas-contra-linea-7-de-metro-por-cochera-en-renca-y-obras-en-parque-araucano.shtml",
+      "source_file_path": "Fuentes/fulltext/content/2ac8ba31690408cb822d8ce95453f7761161451b24f496dc395be4ba5e3e917f.json",
+      "source_file_sha256": "3774d3641c0f04e4ef3501d48641643336dc5a3dd12bee34e158eda264172db9",
+      "linked_evidence_ids": [
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:accion:0",
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:objeto:0",
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:geografica:0"
+      ],
+      "citations": [
+        {
+          "quote": "la construcción de una cochera para los vagones y un taller para reparar los trenes",
+          "quote_sha256": "34a517b64c5159f00c7384cf27b9732e05f96f3d96ff0455d3efdcac9f200e2d"
+        },
+        {
+          "quote": "tanto vecinos de Renca como el municipio presentaron reclamos ante el Servicio de Evaluación Ambiental, como también al Tribunal Ambiental"
+        },
+        {
+          "quote": "Vecinos de Renca"
+        }
+      ],
+      "non_promoted_case_mentions": [
+        {"case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:1", "comuna": "Santiago", "decision_final_amplio": "uncertain", "note": "pique en Parque Forestal; queda sin vinculo mientras la decision siga 'uncertain'"},
+        {"case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:2", "comuna": "Las Condes", "decision_final_amplio": "uncertain", "note": "estacion en Parque Araucano; queda sin vinculo mientras la decision siga 'uncertain'"}
+      ]
+    }
+  ]
+}
