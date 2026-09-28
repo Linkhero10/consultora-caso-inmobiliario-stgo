@@ -201,6 +201,7 @@ CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
 CLASSIFIED_63 = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
 AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
 HISTORICAL_CASE_PREFLIGHT_REPORT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
+HISTORICAL_CASE_ID_RESOLUTIONS_PATH = PROJECT_ROOT / "config" / "historical_case_id_resolutions_v1.json"
 
 DETECTOR_VERSION = "exact_substring_v1"
 MATCH_METHOD = "normalized_bidirectional_substring"
@@ -626,8 +627,45 @@ def collect_unresolved_historical_case_ids(
     ]
 
 
+def load_historical_case_id_resolutions(
+    path: Path = HISTORICAL_CASE_ID_RESOLUTIONS_PATH,
+) -> tuple[dict[str, str], set[str]]:
+    """Lee resoluciones citadas de historical_case_id huérfanos de CLASSIFIED_63.
+
+    Devuelve (resolved_aliases, non_resolvable_ids). `resolved_aliases` son
+    alias historical_case_id->case_id vigente, cada uno citando el grado y la
+    justificación que Sol ya escribió en CLASSIFIED_63 (nunca se reinterpreta
+    esa decisión, solo se repara el destino tras fusiones posteriores).
+    `non_resolvable_ids` son IDs investigados contra el warehouse real sin
+    ningún anclaje vivo disponible -- se preservan como referencia histórica
+    explícita, nunca se les fuerza un destino. Si el archivo no existe,
+    devuelve vacío (esta corrección es opcional, no requerida)."""
+    if not path.exists():
+        return {}, set()
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    resolved_aliases: dict[str, str] = {}
+    for entry in payload.get("resolved", []):
+        hid = entry["historical_case_id"]
+        if hid in resolved_aliases:
+            raise ValueError(f"historical_case_id_resolutions tiene entrada 'resolved' duplicada: {hid!r}")
+        resolved_aliases[hid] = entry["resolved_case_id"]
+    non_resolvable_ids: set[str] = set()
+    for entry in payload.get("non_resolvable", []):
+        hid = entry["historical_case_id"]
+        if hid in non_resolvable_ids:
+            raise ValueError(f"historical_case_id_resolutions tiene entrada 'non_resolvable' duplicada: {hid!r}")
+        non_resolvable_ids.add(hid)
+    overlap = set(resolved_aliases) & non_resolvable_ids
+    if overlap:
+        raise ValueError(f"historical_case_id_resolutions tiene IDs en ambas listas: {sorted(overlap)}")
+    return resolved_aliases, non_resolvable_ids
+
+
 def analyze_historical_case_references(
-    documentos_63: list[dict], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+    documentos_63: list[dict],
+    current_case_ids: set[str],
+    case_id_alias: dict[str, str] | None = None,
+    non_resolvable_historical_ids: set[str] | None = None,
 ) -> dict[str, list[dict]]:
     """Clasifica referencias históricas no resueltas sin inventar aliases.
 
@@ -636,8 +674,14 @@ def analyze_historical_case_references(
     destino validado. Las relaciones focal/contextual y mismo_proyecto se
     preservan como referencias históricas no proyectadas. Cualquier relación
     nueva/desconocida falla cerrada como bloqueante.
-    """
+
+    `non_resolvable_historical_ids` son IDs investigados y confirmados sin
+    ningún anclaje vivo disponible (ver historical_case_id_resolutions_v1.json)
+    -- se preservan como referencia histórica explícita en vez de bloquear
+    indefinidamente. Nunca se infiere esta lista por ausencia de alias; debe
+    venir de una investigación documentada aparte."""
     aliases = case_id_alias or {}
+    non_resolvable = non_resolvable_historical_ids or set()
     missing: dict[str, dict] = {}
     unsupported_relations: list[dict] = []
     for doc in documentos_63:
@@ -662,7 +706,13 @@ def analyze_historical_case_references(
                 resolved_id = aliases.get(historical_id, historical_id)
                 if resolved_id in current_case_ids:
                     continue
-                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
+                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA and historical_id in non_resolvable:
+                    # Investigado y confirmado sin ningun anclaje vivo disponible (ver
+                    # historical_case_id_resolutions_v1.json) -- se preserva explicitamente
+                    # en vez de bloquear indefinidamente. Nunca se le asigna un destino.
+                    impact_scope = "confirmed_non_resolvable_historical_reference"
+                    topology_blocking = False
+                elif relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
                     impact_scope = "conflict_topology"
                     topology_blocking = True
                 elif relation_type in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
@@ -729,14 +779,21 @@ def analyze_historical_case_references(
 
 
 def build_historical_case_reference_rows(
-    documentos_63: list[dict], current_case_ids: set[str], case_id_alias: dict[str, str] | None = None
+    documentos_63: list[dict],
+    current_case_ids: set[str],
+    case_id_alias: dict[str, str] | None = None,
+    non_resolvable_historical_ids: set[str] | None = None,
 ) -> list[dict]:
     """Serializa referencias no resueltas sin asignar `case_id`, proyecto ni conflicto.
 
     La tabla resultante es provenance, no una entidad de conflicto. Relaciones
-    topológicas permanecen bloqueadas por `analyze_historical_case_references`.
+    topológicas permanecen bloqueadas por `analyze_historical_case_references`,
+    salvo que el ID esté en `non_resolvable_historical_ids` (investigado y
+    confirmado sin anclaje vivo) -- en ese caso sí se persiste como referencia
+    histórica explícita, nunca se descarta en silencio.
     """
     aliases = case_id_alias or {}
+    non_resolvable = non_resolvable_historical_ids or set()
     rows = []
     for doc in documentos_63:
         groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
@@ -748,11 +805,13 @@ def build_historical_case_reference_rows(
                 resolved_id = aliases.get(historical_id, historical_id)
                 if resolved_id in current_case_ids:
                     continue
-                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
+                if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA and historical_id in non_resolvable:
+                    impact_scope = "confirmed_non_resolvable_historical_reference"
+                elif relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA:
                     # No se materializa una topología incompleta; el caller
                     # debe haber abortado antes de DDL.
                     continue
-                if relation_type in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
+                elif relation_type in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
                     impact_scope = "document_conflict_membership"
                 else:
                     impact_scope = "project_identity_not_resolved"
@@ -797,7 +856,7 @@ def create_historical_case_reference_table(conn: sqlite3.Connection) -> None:
             relation_type TEXT NOT NULL,
             project_relation TEXT,
             case_ids_json TEXT NOT NULL,
-            impact_scope TEXT NOT NULL CHECK (impact_scope IN ('document_conflict_membership', 'project_identity_not_resolved')),
+            impact_scope TEXT NOT NULL CHECK (impact_scope IN ('document_conflict_membership', 'project_identity_not_resolved', 'confirmed_non_resolvable_historical_reference')),
             status TEXT NOT NULL CHECK (status = 'preserved_unresolved_not_projected'),
             source TEXT NOT NULL
         )
@@ -897,19 +956,26 @@ def build_case_groups(
     all_case_ids: list[str],
     documentos_63: list[dict],
     case_id_alias: dict[str, str] | None = None,
+    non_resolvable_historical_ids: set[str] | None = None,
 ) -> dict[str, list[str]]:
     """case_id -> lista ordenada de case_id de su grupo (incluyendose a si
     mismo si es trivial). Los IDs históricos se remapean explícitamente; un
-    ID desconocido falla, en vez de desaparecer silenciosamente."""
+    ID desconocido falla, en vez de desaparecer silenciosamente -- salvo que
+    esté en `non_resolvable_historical_ids` (investigado y confirmado sin
+    anclaje vivo, ver historical_case_id_resolutions_v1.json), en cuyo caso
+    esa relación puntual se omite en vez de forzar un destino inventado."""
     uf = UnionFind(all_case_ids)
     current_ids = set(all_case_ids)
     aliases = case_id_alias or {}
+    non_resolvable = non_resolvable_historical_ids or set()
     for doc in documentos_63:
         for rel in doc.get("relaciones_case_groups_sol", []):
             relation_type = rel.get("relacion")
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
                 raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
             if relation_type not in RELACIONES_QUE_UNEN:
+                continue
+            if non_resolvable & set(rel["case_ids"]):
                 continue
             ids = remap_historical_case_ids(rel["case_ids"], current_ids, aliases)
             for cid in ids[1:]:
@@ -926,6 +992,7 @@ def build_conflict_relations(
     case_id_to_conflict: dict[str, str],
     gate_status_by_document: dict[str, str],
     case_id_alias: dict[str, str] | None = None,
+    non_resolvable_historical_ids: set[str] | None = None,
 ) -> list[dict]:
     """Relaciones entre conflictos que NO se fusionan -- 'conflictos_distintos'
     marcado explicitamente por la revisión como posible trayectoria longitudinal
@@ -950,6 +1017,7 @@ def build_conflict_relations(
     'note' encontrado (provenance perdido). Ahora se acumulan todos los
     documentos de evidencia por par en 'documentos_evidencia'."""
     relations: dict[tuple, dict] = {}
+    non_resolvable = non_resolvable_historical_ids or set()
     for doc in documentos_63:
         gate_status = gate_status_by_document.get(doc["document_id"], "caso_unico")
         review_status = "pending_human_decision" if gate_status == "caso_unico" else "resolved_keep_separate"
@@ -958,6 +1026,8 @@ def build_conflict_relations(
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
                 raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
             if relation_type != "conflictos_distintos":
+                continue
+            if non_resolvable & set(rel["case_ids"]):
                 continue
             current_ids = remap_historical_case_ids(
                 rel["case_ids"], set(case_id_to_conflict), case_id_alias
@@ -1173,21 +1243,41 @@ def _build_conflicts(conn: sqlite3.Connection):
         )
     else:
         case_id_alias = {case_id: case_id for case_id in all_case_ids}
+
+    historical_resolved_aliases, non_resolvable_historical_ids = load_historical_case_id_resolutions(
+        HISTORICAL_CASE_ID_RESOLUTIONS_PATH
+    )
+    for hid, target_case_id in historical_resolved_aliases.items():
+        if target_case_id not in set(all_case_ids):
+            raise ValueError(
+                f"historical_case_id_resolutions apunta a case_id inexistente: {hid!r}->{target_case_id!r}"
+            )
+        if hid in case_id_alias and case_id_alias[hid] != target_case_id:
+            raise ValueError(
+                f"historical_case_id_resolutions choca con case_id_alias existente para {hid!r}: "
+                f"{case_id_alias[hid]!r} vs {target_case_id!r}"
+            )
+    case_id_alias = {**case_id_alias, **historical_resolved_aliases}
+
     reference_analysis = analyze_historical_case_references(
-        documentos_63, set(all_case_ids), case_id_alias
+        documentos_63, set(all_case_ids), case_id_alias, non_resolvable_historical_ids
     )
     preflight_report = build_historical_case_preflight_report(
         reference_analysis, classified_path=CLASSIFIED_63, warehouse_path=WAREHOUSE
     )
+    preflight_report["n_confirmed_non_resolvable_historical_references"] = len(non_resolvable_historical_ids)
     atomic_write_json(HISTORICAL_CASE_PREFLIGHT_REPORT_PATH, preflight_report)
     if reference_analysis["topology_blockers"]:
         print(json.dumps(preflight_report, ensure_ascii=False, indent=2), file=sys.stderr)
         conn.rollback()
         return 2
     historical_reference_rows = build_historical_case_reference_rows(
-        documentos_63, set(all_case_ids), case_id_alias
+        documentos_63, set(all_case_ids), case_id_alias, non_resolvable_historical_ids
     )
-    case_groups = build_case_groups(all_case_ids, documentos_63, case_id_alias=case_id_alias)
+    case_groups = build_case_groups(
+        all_case_ids, documentos_63, case_id_alias=case_id_alias,
+        non_resolvable_historical_ids=non_resolvable_historical_ids,
+    )
     case_id_to_conflict = {}
     conflict_rows = []
     conflict_case_rows = []
@@ -1237,7 +1327,8 @@ def _build_conflicts(conn: sqlite3.Connection):
     gate_status_by_document = dict(conn.execute("SELECT document_id, unidad_caso_tipo FROM document_case_unit"))
 
     conflict_relation_rows = build_conflict_relations(
-        documentos_63, case_id_to_conflict, gate_status_by_document, case_id_alias=case_id_alias
+        documentos_63, case_id_to_conflict, gate_status_by_document, case_id_alias=case_id_alias,
+        non_resolvable_historical_ids=non_resolvable_historical_ids,
     )
 
     # [CORREGIDO 2026-09-18, bug real de la revisión] role tenia 2 fallas: (1)
@@ -1287,10 +1378,13 @@ def _build_conflicts(conn: sqlite3.Connection):
             remapped_case_ids, unresolved_case_ids = split_case_ids_for_projection(
                 rel["case_ids"], set(case_id_to_conflict), case_id_alias
             )
-            if unresolved_case_ids and relacion not in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
+            genuinely_unresolved = [
+                cid for cid in unresolved_case_ids if cid not in non_resolvable_historical_ids
+            ]
+            if genuinely_unresolved and relacion not in RELACIONES_DE_MEMBRESIA_DOCUMENTAL:
                 raise ValueError(
                     "referencia histórica no topológica no proyectable en document_conflict: "
-                    f"{doc['document_id']} {relacion} {unresolved_case_ids}"
+                    f"{doc['document_id']} {relacion} {genuinely_unresolved}"
                 )
             for cid in remapped_case_ids:
                 cflt = case_id_to_conflict.get(cid)

@@ -128,6 +128,68 @@ def test_build_case_groups_remaps_historical_case_ids_and_rejects_unknown_ids():
         reg.build_case_groups(current_ids, unknown_docs, case_id_alias=alias)
 
 
+def test_build_case_groups_skips_relation_with_confirmed_non_resolvable_id_instead_of_raising():
+    current_ids = ["case_new", "case_other"]
+    docs = [_doc("d1", [{"case_ids": ["orphan_id", "case_other"], "relacion": "mismo_conflicto"}])]
+    with pytest.raises(ValueError, match="no existe en el baseline ni en case_id_alias"):
+        reg.build_case_groups(current_ids, docs)
+    groups = reg.build_case_groups(current_ids, docs, non_resolvable_historical_ids={"orphan_id"})
+    assert sorted(groups.values()) == [["case_new"], ["case_other"]]
+
+
+def test_build_conflict_relations_skips_relation_with_confirmed_non_resolvable_id():
+    docs = [_doc("d1", [{"case_ids": ["orphan_a", "orphan_b"], "relacion": "conflictos_distintos"}])]
+    with pytest.raises(ValueError, match="no existe en el baseline ni en case_id_alias"):
+        reg.build_conflict_relations(docs, {}, {})
+    relations = reg.build_conflict_relations(
+        docs, {}, {}, non_resolvable_historical_ids={"orphan_a", "orphan_b"}
+    )
+    assert relations == []
+
+
+def test_analyze_historical_case_references_downgrades_confirmed_non_resolvable_ids():
+    docs = [_doc("d1", [{"case_ids": ["orphan_id", "case_current"], "relacion": "mismo_conflicto"}])]
+    blocked = reg.analyze_historical_case_references(docs, {"case_current"})
+    assert [row["historical_case_id"] for row in blocked["topology_blockers"]] == ["orphan_id"]
+
+    preserved = reg.analyze_historical_case_references(
+        docs, {"case_current"}, non_resolvable_historical_ids={"orphan_id"}
+    )
+    assert preserved["topology_blockers"] == []
+    assert [row["historical_case_id"] for row in preserved["preserved_references"]] == ["orphan_id"]
+    assert preserved["preserved_references"][0]["impact_scope"] == "confirmed_non_resolvable_historical_reference"
+
+
+def test_load_historical_case_id_resolutions_returns_empty_when_file_missing(tmp_path):
+    resolved, non_resolvable = reg.load_historical_case_id_resolutions(tmp_path / "no_existe.json")
+    assert resolved == {}
+    assert non_resolvable == set()
+
+
+def test_load_historical_case_id_resolutions_rejects_id_in_both_lists(tmp_path):
+    path = tmp_path / "resolutions.json"
+    path.write_text(
+        json.dumps(
+            {
+                "resolved": [{"historical_case_id": "x", "resolved_case_id": "case_a"}],
+                "non_resolvable": [{"historical_case_id": "x"}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="en ambas listas"):
+        reg.load_historical_case_id_resolutions(path)
+
+
+def test_load_historical_case_id_resolutions_reads_real_file_with_expected_shape():
+    """Verifica que el archivo real versionado en config/ tiene la forma
+    esperada -- no un valor sintetico, el mismo archivo que usa build_conflicts.py."""
+    resolved, non_resolvable = reg.load_historical_case_id_resolutions()
+    assert len(resolved) == 10
+    assert len(non_resolvable) == 5
+    assert "f98c6a44db6a2c8187d959b9" in non_resolvable  # Villa Francia, sin anclaje vivo
+
+
 def test_historical_case_id_preflight_aggregates_unresolved_ids_and_skips_project_aliases():
     docs = [
         {
@@ -396,6 +458,7 @@ def test_build_conflicts_blocks_topology_and_writes_only_dedicated_preflight_rep
     monkeypatch.setattr(reg, "CLASSIFIED_63", classified)
     monkeypatch.setattr(reg, "AUDIT_REPORT_PATH", report)
     monkeypatch.setattr(reg, "HISTORICAL_CASE_PREFLIGHT_REPORT_PATH", preflight_report)
+    monkeypatch.setattr(reg, "HISTORICAL_CASE_ID_RESOLUTIONS_PATH", tmp_path / "no_existe_resolutions.json")
     before_schema = db.execute(
         "SELECT type, name, sql FROM sqlite_master ORDER BY type, name"
     ).fetchall()
@@ -1070,13 +1133,22 @@ def test_aeropuerto_los_cerrillos_current_fix1a_state():
     automatica por n_case_ids) sigue siendo verdad POR CONSTRUCCION del
     codigo (_project_backing_evidence no bifurca por n_case_ids en ningun
     punto) -- este caso puntual dejo de ser multi-caso, no vuelve a probar
-    esa propiedad, pero tampoco la contradice."""
+    esa propiedad, pero tampoco la contradice.
+
+    [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17 merges
+    de identidad] conflict_id volvio a cambiar: antes de esta ronda,
+    'Ciudad Portal Bicentenario' (08960f92...) tenia case_id fusionado a
+    96d6e7e0... (otro miembro del grupo); tras re-ejecutar resolve_project_review.py
+    con las nuevas decisiones, el case_id 'ganador' del mismo grupo de
+    fusion cambio a 08960f92... (el propio project_id). n_case_ids,
+    respaldo_evidencia y n_backing se verificaron sin cambios (1, exact_quote,
+    4) -- solo el hash derivado del case_id cambio, no la sustancia."""
     conn = _connect_or_skip()
     row = conn.execute(
         "SELECT n_case_ids, respaldo_evidencia, "
         "(SELECT COUNT(*) FROM conflict_evidence_backing b "
         "WHERE b.conflict_id = c.conflict_id) AS n_backing "
-        "FROM conflict c WHERE c.conflict_id = 'conflict:b527b306c618e56f9928525e'"
+        "FROM conflict c WHERE c.conflict_id = 'conflict:972023b05988e3bcf74f7fb1'"
     ).fetchone()
     conn.close()
     assert row is not None, "el caso Aeropuerto/Portal Bicentenario debe estar presente en el warehouse (post-migracion v3.3)"

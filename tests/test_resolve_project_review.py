@@ -1040,11 +1040,22 @@ def test_all_real_pairs_are_covered_by_rule_or_manual_decision():
     # referencia documental hash-pinned por pareja. La pareja Alto Las
     # Condes/Cenco Alto Las Condes permanece sin resolver porque su
     # project_id mezcla menciones del mall y de su expansión. Ninguna regla
-    # amplia cambió; el saldo esperado queda en 58."""
+    # amplia cambió; el saldo esperado queda en 58.
+    #
+    # [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17
+    # merges de identidad de Codex/Luna (68 pares, revision source-first
+    # 2026-09-27)] Se agregaron 7 decisiones True nuevas (Eco Egaña/Egaña
+    # Sustentable, Loteo de las 54 Casas, Nueva Alameda Providencia (NAP),
+    # Rotonda Atenas x2, tres torres de 19 pisos) y 4 decisiones False
+    # explicitas (Villa Panamericana-Lote B, Conjunto Armonico Bellavista
+    # (CAB)-segunda torre x3) para corregir una reconexion transitiva
+    # incorrecta que validate_project_identity_adjudication_topology()
+    # detecto (ver resolve_project_review.py). El saldo baja a 50."""
     uncovered = [(a, b) for a, b in rows if rpq.classify(a, b)[0] is None]
-    assert len(uncovered) == 58, (
-        f"cambio el numero de pares sin decision (era 68 tras la migracion v3.2->v3.3 "
-        f"y 58 despues de diez adjudicaciones fuente-primero): {len(uncovered)}. Si subio, investigar "
+    assert len(uncovered) == 50, (
+        f"cambio el numero de pares sin decision (era 68 tras la migracion v3.2->v3.3, "
+        f"58 despues de diez adjudicaciones fuente-primero, y 50 tras los 17 merges + 15 "
+        f"IDs historicos de 2026-09-28): {len(uncovered)}. Si subio, investigar "
         f"si el fallback dejo de reconectar algo que deberia; si bajo, verificar que fue "
         f"por una decision real nueva, no por relajar el fallback."
     )

@@ -1,7 +1,7 @@
 {
   "schema_version": "historical_case_reference_preflight_v1",
-  "run_id": "2026-09-27T22:54:14.433470+00:00",
-  "status": "blocked_before_database_write",
+  "run_id": "2026-09-28T11:35:12.164281+00:00",
+  "status": "conflict_build_completed",
   "policy": {
     "topology_blocking_relations": [
       "conflictos_distintos",
@@ -16,38 +16,15 @@
   },
   "source_hashes": {
     "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
-    "warehouse_file_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
-    "preflight_script_sha256": "ed7a2e8ee13e7e1d5f9363fbcd6e30866b3ff344644b6b37a20a967ef09f1958"
+    "warehouse_file_sha256": "f89ecd5b7f8984c397df4d84be2daca8caef87ef142e6cbe1605b86e829b76a0",
+    "preflight_script_sha256": "6c31a2966e3c8fca30e7f628b835eb2c9e072aed5ba034caba6515b1675b9b79"
   },
-  "n_unresolved_ids": 48,
-  "n_topology_blockers": 15,
-  "n_preserved_non_topological_ids": 33,
+  "n_unresolved_ids": 29,
+  "n_topology_blockers": 0,
+  "n_preserved_non_topological_ids": 29,
   "unsupported_relations": [],
-  "topology_blockers": [
-    {
-      "historical_case_id": "08960f92ad216bbb3341c52b",
-      "resolved_case_id": "08960f92ad216bbb3341c52b",
-      "canonical_names": [
-        "Ciudad Portal Bicentenario"
-      ],
-      "occurrences": [
-        {
-          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "08960f92ad216bbb3341c52b",
-            "9b0f2e6d08ee9ce06e292a24"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
+  "topology_blockers": [],
+  "preserved_references": [
     {
       "historical_case_id": "0cd234833ec6a07e68f905c1",
       "resolved_case_id": "0cd234833ec6a07e68f905c1",
@@ -63,373 +40,15 @@
             "0cd234833ec6a07e68f905c1",
             "7a0f4d45e4ac84c430b0bc49"
           ],
-          "impact_scope": "conflict_topology"
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
         }
       ],
       "impact_scopes": [
-        "conflict_topology"
+        "confirmed_non_resolvable_historical_reference"
       ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
     },
-    {
-      "historical_case_id": "11693429984c7a39a3f190da",
-      "resolved_case_id": "11693429984c7a39a3f190da",
-      "canonical_names": [
-        "Ciudad del Niño"
-      ],
-      "occurrences": [
-        {
-          "document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "11693429984c7a39a3f190da",
-            "b9138f1cb242ae8bb68f8434"
-          ],
-          "impact_scope": "conflict_topology"
-        },
-        {
-          "document_id": "af9420b65f6dc9aa58f57fb5423529d08b2a2d68c38e67790dd70271f3de9b31",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "11693429984c7a39a3f190da",
-            "b9138f1cb242ae8bb68f8434"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "13d3e8b584350274759e6065",
-      "resolved_case_id": "13d3e8b584350274759e6065",
-      "canonical_names": [
-        "paño en avenida Manquehue con Nueva Delhi"
-      ],
-      "occurrences": [
-        {
-          "document_id": "a67c3d4db0900541c2e12748ed9b6dd2b210a4bc8dcbeee7594dca08cb03ebec",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "13d3e8b584350274759e6065",
-            "cf1d620d80045e870e995d34"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "41fb53e6335113c4be27d7a4",
-      "resolved_case_id": "41fb53e6335113c4be27d7a4",
-      "canonical_names": [
-        "LA PLANTA DE CACA"
-      ],
-      "occurrences": [
-        {
-          "document_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "41fb53e6335113c4be27d7a4",
-            "839ff75b83c1e9bd1751aaf5",
-            "c2f17625bd6fe43791373e86"
-          ],
-          "impact_scope": "conflict_topology"
-        },
-        {
-          "document_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "41fb53e6335113c4be27d7a4",
-            "c2f17625bd6fe43791373e86"
-          ],
-          "impact_scope": "project_identity_not_resolved"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology",
-        "project_identity_not_resolved"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "54779b66552aefc8cb2779d3",
-      "resolved_case_id": "54779b66552aefc8cb2779d3",
-      "canonical_names": [
-        "Plan Maestro de Regeneración Urbana Villa Parinacota"
-      ],
-      "occurrences": [
-        {
-          "document_id": "8fd72f77200cba4a193999d45cc3805c8d67de3f198ea930645738ede27f8547",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "2bc6817db77993a8887b7b99",
-            "4ed7d38bea762d629a26b00c",
-            "54779b66552aefc8cb2779d3"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "5f80f397e76c32671b3744b6",
-      "resolved_case_id": "5f80f397e76c32671b3744b6",
-      "canonical_names": [
-        "diversos edificios en altura en Av. Santa Teresita 9.100 en el cerro Alvarado, Vitacura"
-      ],
-      "occurrences": [
-        {
-          "document_id": "b8301c5eaab3f8accdb2be481d80414cfca035d10580300fc6493e53619f2a7b",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "099b8381c05667526259843b",
-            "5f80f397e76c32671b3744b6"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "7a0f4d45e4ac84c430b0bc49",
-      "resolved_case_id": "7a0f4d45e4ac84c430b0bc49",
-      "canonical_names": [
-        "Cooperativa de Viviendas Oscar Heiremans"
-      ],
-      "occurrences": [
-        {
-          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "0cd234833ec6a07e68f905c1",
-            "7a0f4d45e4ac84c430b0bc49"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "7a87d757c00f1ad978505da1",
-      "resolved_case_id": "7a87d757c00f1ad978505da1",
-      "canonical_names": [
-        "Espacio de Memoria"
-      ],
-      "occurrences": [
-        {
-          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "1f44e66d31c41174eed3c165",
-            "7a87d757c00f1ad978505da1"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "92ddfd13158c1f43afb3e7c9",
-      "resolved_case_id": "92ddfd13158c1f43afb3e7c9",
-      "canonical_names": [
-        "Cementerio Parque Santiago",
-        "cementerio Parque Santiago de Huechuraba"
-      ],
-      "occurrences": [
-        {
-          "document_id": "096dfcf463da497534abddf2d4142891773942890e95335aa0689d8f15647eb1",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "92ddfd13158c1f43afb3e7c9",
-            "bfccc2aaade8650742980e81"
-          ],
-          "impact_scope": "conflict_topology"
-        },
-        {
-          "document_id": "27edd56a7c56e8d0cb6f11a89cbeb92387cd92a4dba40097a867fd3a5768814f",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "92ddfd13158c1f43afb3e7c9",
-            "dbd13b54a507a13e0677200c"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "9b0f2e6d08ee9ce06e292a24",
-      "resolved_case_id": "9b0f2e6d08ee9ce06e292a24",
-      "canonical_names": [
-        "Aeropuerto Los Cerrillos"
-      ],
-      "occurrences": [
-        {
-          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "08960f92ad216bbb3341c52b",
-            "9b0f2e6d08ee9ce06e292a24"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "a7b2129265f4580e899395bd",
-      "resolved_case_id": "a7b2129265f4580e899395bd",
-      "canonical_names": [
-        "PE N° 156 de 2015"
-      ],
-      "occurrences": [
-        {
-          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "a7b2129265f4580e899395bd",
-            "e7956ee9f4bb03683f70b454"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "b9138f1cb242ae8bb68f8434",
-      "resolved_case_id": "b9138f1cb242ae8bb68f8434",
-      "canonical_names": [
-        "ex Escuela Rebeca Catalán Vargas"
-      ],
-      "occurrences": [
-        {
-          "document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "11693429984c7a39a3f190da",
-            "b9138f1cb242ae8bb68f8434"
-          ],
-          "impact_scope": "conflict_topology"
-        },
-        {
-          "document_id": "af9420b65f6dc9aa58f57fb5423529d08b2a2d68c38e67790dd70271f3de9b31",
-          "relation": "mismo_conflicto",
-          "project_relation": "parent_subproject",
-          "case_ids": [
-            "11693429984c7a39a3f190da",
-            "b9138f1cb242ae8bb68f8434"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "e7956ee9f4bb03683f70b454",
-      "resolved_case_id": "e7956ee9f4bb03683f70b454",
-      "canonical_names": [
-        "PE N° 88 de 2016"
-      ],
-      "occurrences": [
-        {
-          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
-          "relation": "mismo_conflicto",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "a7b2129265f4580e899395bd",
-            "e7956ee9f4bb03683f70b454"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    },
-    {
-      "historical_case_id": "f98c6a44db6a2c8187d959b9",
-      "resolved_case_id": "f98c6a44db6a2c8187d959b9",
-      "canonical_names": [
-        "Villa Francia"
-      ],
-      "occurrences": [
-        {
-          "document_id": "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8",
-          "relation": "conflictos_distintos",
-          "project_relation": "distinct_conflict_objects",
-          "case_ids": [
-            "c9b912b6e9278401f77f49cd",
-            "f98c6a44db6a2c8187d959b9"
-          ],
-          "impact_scope": "conflict_topology"
-        }
-      ],
-      "impact_scopes": [
-        "conflict_topology"
-      ],
-      "topology_blocking": true,
-      "impact_scope": "conflict_topology"
-    }
-  ],
-  "preserved_references": [
     {
       "historical_case_id": "0d5398db0f9609d950f507e7",
       "resolved_case_id": "0d5398db0f9609d950f507e7",
@@ -452,77 +71,6 @@
       ],
       "topology_blocking": false,
       "impact_scope": "document_conflict_membership"
-    },
-    {
-      "historical_case_id": "148a7960ed520bda06f4155d",
-      "resolved_case_id": "148a7960ed520bda06f4155d",
-      "canonical_names": [
-        "Club de Golf Hacienda Santa Martina Nature - Lo Barnechea"
-      ],
-      "occurrences": [
-        {
-          "document_id": "4dd7e2fe05a56009e7ac0032cc9d2de5aced0dbe53edbf7e5ab2e2995f734329",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "148a7960ed520bda06f4155d",
-            "b45ee646207c2ade2f9fb18a"
-          ],
-          "impact_scope": "project_identity_not_resolved"
-        }
-      ],
-      "impact_scopes": [
-        "project_identity_not_resolved"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "project_identity_not_resolved"
-    },
-    {
-      "historical_case_id": "17f3b690577f9fd996b9c4bd",
-      "resolved_case_id": "17f3b690577f9fd996b9c4bd",
-      "canonical_names": [
-        "laguna artificial en el Parque Padre Hurtado"
-      ],
-      "occurrences": [
-        {
-          "document_id": "4fcfcc8a52b64677db91bc53e43a6f3004af221776a5734bd0a442b17c31fcb8",
-          "relation": "focal",
-          "project_relation": null,
-          "case_ids": [
-            "17f3b690577f9fd996b9c4bd"
-          ],
-          "impact_scope": "document_conflict_membership"
-        }
-      ],
-      "impact_scopes": [
-        "document_conflict_membership"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
-    },
-    {
-      "historical_case_id": "2666d97c7125f5a178d41c3b",
-      "resolved_case_id": "2666d97c7125f5a178d41c3b",
-      "canonical_names": [
-        "Egaña Eco Sustentable"
-      ],
-      "occurrences": [
-        {
-          "document_id": "6bb50ca40d1aea065127ef087d0d571e07698b6c4be7df03bc4025a76a8f8e01",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "2666d97c7125f5a178d41c3b",
-            "fdbfa9caacd35c44ad184538"
-          ],
-          "impact_scope": "project_identity_not_resolved"
-        }
-      ],
-      "impact_scopes": [
-        "project_identity_not_resolved"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "project_identity_not_resolved"
     },
     {
       "historical_case_id": "2e1f63f764e3f9bddcc89bf4",
@@ -793,30 +341,6 @@
       "impact_scope": "document_conflict_membership"
     },
     {
-      "historical_case_id": "5f33de46702f3740e762506d",
-      "resolved_case_id": "5f33de46702f3740e762506d",
-      "canonical_names": [
-        "Alto Las Condes 2"
-      ],
-      "occurrences": [
-        {
-          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "5f33de46702f3740e762506d",
-            "a05fdf045aeb8721bd7664b4"
-          ],
-          "impact_scope": "project_identity_not_resolved"
-        }
-      ],
-      "impact_scopes": [
-        "project_identity_not_resolved"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "project_identity_not_resolved"
-    },
-    {
       "historical_case_id": "5fd6d26afc0da9705016abeb",
       "resolved_case_id": "5fd6d26afc0da9705016abeb",
       "canonical_names": [
@@ -861,59 +385,28 @@
       "impact_scope": "document_conflict_membership"
     },
     {
-      "historical_case_id": "7e66e9745e63138bdbdf2c76",
-      "resolved_case_id": "7e66e9745e63138bdbdf2c76",
+      "historical_case_id": "7a0f4d45e4ac84c430b0bc49",
+      "resolved_case_id": "7a0f4d45e4ac84c430b0bc49",
       "canonical_names": [
-        "Rotonda Atenas"
+        "Cooperativa de Viviendas Oscar Heiremans"
       ],
       "occurrences": [
         {
-          "document_id": "3ce1ba0d8539eadeaf05abb82dcdb4608b73a14e1264e1dafa7aecb6b3f7396f",
-          "relation": "focal",
-          "project_relation": null,
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
           "case_ids": [
-            "7e66e9745e63138bdbdf2c76"
+            "0cd234833ec6a07e68f905c1",
+            "7a0f4d45e4ac84c430b0bc49"
           ],
-          "impact_scope": "document_conflict_membership"
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
         }
       ],
       "impact_scopes": [
-        "document_conflict_membership"
+        "confirmed_non_resolvable_historical_reference"
       ],
       "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
-    },
-    {
-      "historical_case_id": "8bd124387f08d8b887d706ca",
-      "resolved_case_id": "8bd124387f08d8b887d706ca",
-      "canonical_names": [
-        "Nueva Alameda Providencia"
-      ],
-      "occurrences": [
-        {
-          "document_id": "1410ad1368098950b59f745acbe939bbc9493c6ad1006600c452676e6e3cdf32",
-          "relation": "contextual",
-          "project_relation": "contextual",
-          "case_ids": [
-            "8bd124387f08d8b887d706ca"
-          ],
-          "impact_scope": "document_conflict_membership"
-        },
-        {
-          "document_id": "8271ad5019e63a746b9f2eb978404459386ed1206057a30659b38f9b12dbe68a",
-          "relation": "contextual",
-          "project_relation": "contextual",
-          "case_ids": [
-            "8bd124387f08d8b887d706ca"
-          ],
-          "impact_scope": "document_conflict_membership"
-        }
-      ],
-      "impact_scopes": [
-        "document_conflict_membership"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
     },
     {
       "historical_case_id": "8efd4a4bbd70a38291e41ef8",
@@ -1009,27 +502,28 @@
       "impact_scope": "document_conflict_membership"
     },
     {
-      "historical_case_id": "a6811f8738f0d36de648a860",
-      "resolved_case_id": "a6811f8738f0d36de648a860",
+      "historical_case_id": "a7b2129265f4580e899395bd",
+      "resolved_case_id": "a7b2129265f4580e899395bd",
       "canonical_names": [
-        "proyecto de subdivisión del Bosque Panul"
+        "PE N° 156 de 2015"
       ],
       "occurrences": [
         {
-          "document_id": "59aeb5dffad66b8843f6736a3dbb4f47fa8c37226a05039cf240130651db56f2",
-          "relation": "focal",
-          "project_relation": null,
+          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
           "case_ids": [
-            "a6811f8738f0d36de648a860"
+            "a7b2129265f4580e899395bd",
+            "e7956ee9f4bb03683f70b454"
           ],
-          "impact_scope": "document_conflict_membership"
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
         }
       ],
       "impact_scopes": [
-        "document_conflict_membership"
+        "confirmed_non_resolvable_historical_reference"
       ],
       "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
     },
     {
       "historical_case_id": "b14877c02c904926dcbdcc9b",
@@ -1068,38 +562,6 @@
           "project_relation": "contextual",
           "case_ids": [
             "b195d7c038b7418fa163a104"
-          ],
-          "impact_scope": "document_conflict_membership"
-        }
-      ],
-      "impact_scopes": [
-        "document_conflict_membership"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
-    },
-    {
-      "historical_case_id": "b514ae15ec31cf4b2bb17353",
-      "resolved_case_id": "b514ae15ec31cf4b2bb17353",
-      "canonical_names": [
-        "Conjunto Armónico Portezuelo"
-      ],
-      "occurrences": [
-        {
-          "document_id": "05e34b61d5c8ea47f96c686fb249ad34395e81113cc82c457f36eb8f078445ce",
-          "relation": "contextual",
-          "project_relation": "contextual",
-          "case_ids": [
-            "b514ae15ec31cf4b2bb17353"
-          ],
-          "impact_scope": "document_conflict_membership"
-        },
-        {
-          "document_id": "4f2ebe9f3f9d338e7ae1ec5c674565c45ef5bd869e3edeb4a8551d66f6873262",
-          "relation": "focal",
-          "project_relation": null,
-          "case_ids": [
-            "b514ae15ec31cf4b2bb17353"
           ],
           "impact_scope": "document_conflict_membership"
         }
@@ -1184,6 +646,30 @@
       "impact_scope": "document_conflict_membership"
     },
     {
+      "historical_case_id": "e7956ee9f4bb03683f70b454",
+      "resolved_case_id": "e7956ee9f4bb03683f70b454",
+      "canonical_names": [
+        "PE N° 88 de 2016"
+      ],
+      "occurrences": [
+        {
+          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "a7b2129265f4580e899395bd",
+            "e7956ee9f4bb03683f70b454"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    },
+    {
       "historical_case_id": "f209ef28bb3a37881a979990",
       "resolved_case_id": "f209ef28bb3a37881a979990",
       "canonical_names": [
@@ -1231,40 +717,33 @@
       "impact_scope": "document_conflict_membership"
     },
     {
-      "historical_case_id": "fdbfa9caacd35c44ad184538",
-      "resolved_case_id": "fdbfa9caacd35c44ad184538",
+      "historical_case_id": "f98c6a44db6a2c8187d959b9",
+      "resolved_case_id": "f98c6a44db6a2c8187d959b9",
       "canonical_names": [
-        "Eco Egaña",
-        "Eco Egaña Comunidad Sustentable"
+        "Villa Francia"
       ],
       "occurrences": [
         {
-          "document_id": "0d95504e340fa551ed899638deb65b6a00626ac983ba4a46fb0766cce094246e",
-          "relation": "focal",
-          "project_relation": null,
+          "document_id": "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8",
+          "relation": "conflictos_distintos",
+          "project_relation": "distinct_conflict_objects",
           "case_ids": [
-            "fdbfa9caacd35c44ad184538"
+            "c9b912b6e9278401f77f49cd",
+            "f98c6a44db6a2c8187d959b9"
           ],
-          "impact_scope": "document_conflict_membership"
-        },
-        {
-          "document_id": "6bb50ca40d1aea065127ef087d0d571e07698b6c4be7df03bc4025a76a8f8e01",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "2666d97c7125f5a178d41c3b",
-            "fdbfa9caacd35c44ad184538"
-          ],
-          "impact_scope": "project_identity_not_resolved"
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
         }
       ],
       "impact_scopes": [
-        "document_conflict_membership",
-        "project_identity_not_resolved"
+        "confirmed_non_resolvable_historical_reference"
       ],
       "topology_blocking": false,
-      "impact_scope": "document_conflict_membership"
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
     }
   ],
-  "publication_note": "Una preflight que bloquea no modifica tablas ni sustituye el reporte de una build exitosa. Las referencias no topológicas quedan preservadas en una tabla separada en una build futura; no se proyectan como project_id, case_id ni conflict_id. Recalculado en memoria contra la base de producción read-only; no se ejecutó builder ni se modificó SQLite."
+  "publication_note": "Una preflight que bloquea no modifica tablas ni sustituye el reporte de una build exitosa. Las referencias no topológicas quedan preservadas en una tabla separada en una build futura; no se proyectan como project_id, case_id ni conflict_id.",
+  "n_confirmed_non_resolvable_historical_references": 5,
+  "completed_conflict_topology_sha256": "146678c8d433d5a9a33a505b9115ca63df08c717788130c58fac9c354c712eb7",
+  "completed_warehouse_sha256": "17cc84b151972d529a2f07a6cacbe496a0a0760ea6ddb7e7e281ff4c785e44f4",
+  "completed_audit_report_sha256": "a226f53d33aa4202c60410a4fa0f63e5620a83e1b44b17b8683a539126a93e92"
 }
