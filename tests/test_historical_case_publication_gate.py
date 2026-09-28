@@ -19,6 +19,11 @@ def _warehouse(path: Path) -> None:
         """
         CREATE TABLE project (project_id TEXT, case_id TEXT);
         INSERT INTO project VALUES ('p1', 'case1');
+        CREATE TABLE project_review_queue (
+            project_id_a TEXT, canonical_name_a TEXT, project_id_b TEXT,
+            canonical_name_b TEXT, resolved INTEGER, decision TEXT
+        );
+        INSERT INTO project_review_queue VALUES ('p1', 'A', 'p2', 'B', 1, 'kept_separate');
         CREATE TABLE conflict (conflict_id TEXT, label TEXT);
         INSERT INTO conflict VALUES ('conflict1', 'Caso 1');
         CREATE TABLE conflict_case (conflict_id TEXT, case_id TEXT);
@@ -135,6 +140,28 @@ def test_gate_rejects_stale_case_topology_and_source_hashes(tmp_path):
         gate.require_conflict_publication_ready(warehouse, report, audit, classified, builder)
 
 
+def test_gate_rejects_unresolved_project_identity_even_with_completed_report(tmp_path):
+    warehouse = tmp_path / "warehouse.sqlite"
+    _warehouse(warehouse)
+    classified = tmp_path / "classified.json"
+    classified.write_text("{}", encoding="utf-8")
+    builder = tmp_path / "build_conflicts.py"
+    builder.write_text("source", encoding="utf-8")
+    report = tmp_path / "preflight.json"
+    audit = tmp_path / "conflict_audit.json"
+    _write_report(report, audit, classified, builder, warehouse)
+
+    con = sqlite3.connect(warehouse)
+    con.execute(
+        "UPDATE project_review_queue SET resolved = 0, decision = 'needs_human_review'"
+    )
+    con.commit()
+    con.close()
+
+    with pytest.raises(RuntimeError, match="pares de identidad PROJECT sin resolver"):
+        gate.require_conflict_publication_ready(warehouse, report, audit, classified, builder)
+
+
 def test_gate_rejects_missing_required_topology_tables(tmp_path):
     warehouse = tmp_path / "warehouse.sqlite"
     sqlite3.connect(warehouse).close()
@@ -161,7 +188,7 @@ def test_gate_rejects_missing_required_topology_tables(tmp_path):
         encoding="utf-8",
     )
 
-    with pytest.raises(RuntimeError, match="tablas requeridas"):
+    with pytest.raises(RuntimeError, match="project_review_queue"):
         gate.require_conflict_publication_ready(warehouse, report, audit, classified, builder)
 
 

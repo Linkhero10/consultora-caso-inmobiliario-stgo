@@ -904,6 +904,57 @@ def _sha256_file_if_present(path: Path) -> str | None:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def load_unresolved_project_identity_blockers(conn: sqlite3.Connection) -> list[dict]:
+    """Return every unresolved PROJECT identity pair as a publication blocker.
+
+    `project_review_queue` is upstream of CASE/CONFLICT topology. Missing or
+    malformed queue state fails closed instead of silently authorizing a full
+    rebuild from an incomplete identity review.
+    """
+    table_exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='project_review_queue'"
+    ).fetchone()
+    if not table_exists:
+        return [{"blocker_type": "project_review_queue_missing", "reason": "falta la cola de identidad PROJECT"}]
+
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(project_review_queue)")}
+    required = {"project_id_a", "canonical_name_a", "project_id_b", "canonical_name_b", "resolved"}
+    missing = sorted(required - columns)
+    if missing:
+        return [{
+            "blocker_type": "project_review_queue_invalid",
+            "reason": "faltan columnas requeridas para verificar la cola de identidad",
+            "missing_columns": missing,
+        }]
+
+    optional = {
+        name: (name if name in columns else f"NULL AS {name}")
+        for name in ("decision", "decision_reason", "decision_source")
+    }
+    where = "COALESCE(resolved, 0) = 0"
+    if "decision" in columns:
+        where += " OR decision = 'needs_human_review'"
+    rows = conn.execute(
+        "SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b, "
+        f"{optional['decision']}, {optional['decision_reason']}, {optional['decision_source']} "
+        f"FROM project_review_queue WHERE {where} ORDER BY rowid"
+    ).fetchall()
+    return [
+        {
+            "blocker_type": "unresolved_project_identity_pair",
+            "queue_rowid": row[0],
+            "project_id_a": row[1],
+            "project_name_a": row[2],
+            "project_id_b": row[3],
+            "project_name_b": row[4],
+            "decision": row[5],
+            "decision_reason": row[6],
+            "decision_source": row[7],
+        }
+        for row in rows
+    ]
+
+
 def build_historical_case_preflight_report(
     analysis: dict[str, list[dict]], classified_path: Path = CLASSIFIED_63, warehouse_path: Path = WAREHOUSE
 ) -> dict:
@@ -1169,6 +1220,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     # Bloquea escrituras concurrentes antes de leer cualquier tabla fuente;
     # las tablas derivadas se reemplazan después dentro de esta transacción.
     begin_build_transaction(conn)
+    project_identity_blockers = load_unresolved_project_identity_blockers(conn)
 
     all_case_ids = sorted({r[0] for r in conn.execute("SELECT DISTINCT case_id FROM project WHERE case_id IS NOT NULL")})
     documentos_63 = load_classified_63()
@@ -1262,12 +1314,23 @@ def _build_conflicts(conn: sqlite3.Connection):
     reference_analysis = analyze_historical_case_references(
         documentos_63, set(all_case_ids), case_id_alias, non_resolvable_historical_ids
     )
+    all_topology_blockers = [
+        *reference_analysis["topology_blockers"],
+        *project_identity_blockers,
+    ]
+    report_analysis = {**reference_analysis, "topology_blockers": all_topology_blockers}
     preflight_report = build_historical_case_preflight_report(
-        reference_analysis, classified_path=CLASSIFIED_63, warehouse_path=WAREHOUSE
+        report_analysis, classified_path=CLASSIFIED_63, warehouse_path=WAREHOUSE
     )
     preflight_report["n_confirmed_non_resolvable_historical_references"] = len(non_resolvable_historical_ids)
+    preflight_report["project_identity_review_gate"] = {
+        "status": "blocked" if project_identity_blockers else "clear",
+        "policy": "cada par PROJECT sin decisión final bloquea la reconstrucción integral de CONFLICT",
+        "n_unresolved_pairs": len(project_identity_blockers),
+        "unresolved_pairs": project_identity_blockers,
+    }
     atomic_write_json(HISTORICAL_CASE_PREFLIGHT_REPORT_PATH, preflight_report)
-    if reference_analysis["topology_blockers"]:
+    if all_topology_blockers:
         print(json.dumps(preflight_report, ensure_ascii=False, indent=2), file=sys.stderr)
         conn.rollback()
         return 2

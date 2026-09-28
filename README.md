@@ -88,11 +88,15 @@ Plan paso a paso de cada arco analítico (2-4):
 
 ## Estado
 
-El warehouse versionado es un snapshot existente, con 941 proyectos, 850 `case_id` y 833
-conflictos. No debe confundirse con una reconstrucción integral recién cerrada: el preflight
-mantiene bloqueada la publicación de una nueva capa CONFLICT mientras queden 15 referencias
-históricas que afectan su topología. Otras 33 referencias se preservan sin forzar aliases. El
-estado, los hashes y los límites de lectura vigentes están en [START HERE](START_HERE.md),
+El warehouse publicado en `main` sigue siendo un snapshot existente (941 proyectos, 850 `case_id`,
+833 conflictos), no una reconstrucción integral recién cerrada. La rama
+`codex/historical-case-references` mantiene una simulación aislada sobre otro snapshot versionado
+(941 proyectos, 837 `case_id`, 819 filas de conflicto preexistentes): el resolver se probó en una
+copia en memoria, pero no se reconstruyeron CONFLICT, dashboard ni manifiesto. La publicación
+integral continúa bloqueada por 10 pares de identidad PROJECT pendientes; 29 referencias
+históricas se conservan sin forzar aliases. Los hashes, conteos y límites vigentes están en
+[START HERE](START_HERE.md), el [checkpoint de identidad](audit/project_identity_resolution_checkpoint_2026-09-28.md),
 [`audit/validation_summary.json`](audit/validation_summary.json) y
 [`audit/data_quality_report.md`](audit/data_quality_report.md). Los arcos pueden desarrollar
-métodos sobre el snapshot vigente, pero sus resultados deben conservar esa limitación.
+métodos sobre el snapshot publicado, pero deben conservar sus límites y no presentar la simulación
+de rama como una capa CONFLICT validada.

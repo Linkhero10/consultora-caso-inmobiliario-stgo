@@ -53,6 +53,7 @@ import json
 import re
 import sqlite3
 import unicodedata
+import copy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -71,6 +72,10 @@ GENERIC_BLOCKLIST = {"data center", "vespucio", "ciudad empresarial", "lo aguirr
 
 _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
+HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
+PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
+PROJECT_IDENTITY_OVERRIDE_SHA256 = "a094f39f2d42f9b9636dfc13cfb3b7ebbabb37d7b15fc0d7836ee6cda9fd5566"
+PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
 
 
 def _norm(s: str) -> str:
@@ -620,45 +625,6 @@ REQUIRED_SOURCE_BACKED_MANUAL_PAIRS = frozenset(
 )
 
 
-def _manual_decision_via_normalized_substring(name_a: str, name_b: str) -> tuple[bool, str] | None:
-    """[AGREGADO 2026-09-26, migracion v3.2->v3.3 completa] MANUAL_DECISIONS
-    esta indexado por texto EXACTO -- son decisiones humanas/LLM reales de
-    Sol sobre pares de nombres de v3.2. Al migrar el enrichment productivo a
-    v3.3 (corrida LLM separada), muchos nombres de proyecto cambiaron de
-    fraseo para el MISMO objeto real (verificado empiricamente en toda la
-    migracion). Sin este fallback, 64 de 245 decisiones ya tomadas se
-    perdian en silencio (el par ya no matcheaba exacto, classify() caia al
-    default 'sin regla aplicable' -- ni error ni aviso, solo trabajo humano
-    ya hecho quedando invisible).
-
-    Fallback: si (name_a, name_b) no matchea exacto, buscar una clave de
-    MANUAL_DECISIONS (x, y) tal que name_a este en relacion de substring
-    normalizado con x (o y) Y name_b con el otro lado -- mismo criterio
-    'nunca fuzzy' ya usado en todo el proyecto (_mention_has_case_backing,
-    _norm() bidireccional). Nunca decide un par nuevo por su cuenta: solo
-    reconecta un par ya decidido por un humano bajo su fraseo viejo con su
-    fraseo nuevo. Si hay mas de una clave candidata, se prefiere no decidir
-    (devuelve None) antes que elegir arbitrariamente -- ambiguedad real, no
-    error a ocultar."""
-    na, nb = _norm(name_a), _norm(name_b)
-    if not na or not nb:
-        return None
-    candidatos = []
-    for (x, y), decision in MANUAL_DECISIONS.items():
-        nx, ny = _norm(x), _norm(y)
-        matches_a_x_b_y = (na in nx or nx in na) and (nb in ny or ny in nb)
-        matches_a_y_b_x = (na in ny or ny in na) and (nb in nx or nx in nb)
-        if matches_a_x_b_y or matches_a_y_b_x:
-            candidatos.append(((x, y), decision))
-    if len(candidatos) != 1:
-        return None
-    (x, y), (decision, reason) = candidatos[0]
-    return decision, (
-        f"[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, "
-        f"decision original de ('{x}', '{y}')] {reason}"
-    )
-
-
 def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str, str, str | None]:
     """Clasifica y devuelve el origen estructurado, nunca inferido del texto."""
     if (name_a, name_b) in MANUAL_DECISIONS:
@@ -681,9 +647,8 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
         return False, "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)", "deterministic_rule", None
     if has_explicit_stage_conflict(name_a, name_b):
         return False, "Etapa/Fase explicita distinta entre los dos nombres (palabra etapa/fase presente en el texto)", "deterministic_rule", None
-    reconectado = _manual_decision_via_normalized_substring(name_a, name_b)
-    if reconectado is not None:
-        return reconectado[0], reconectado[1], "recovered_historical_adjudication", None
+    # Name similarity is not an identity key. Historical decisions are only
+    # reusable through exact project-ID adjudications loaded by the caller.
     if has_bare_trailing_numeral_conflict(name_a, name_b):
         return None, (
             "numeral suelto al final de uno de los nombres, sin decision manual explicita -- "
@@ -702,10 +667,9 @@ def classify_project_pair_with_adjudications(
 ) -> tuple[bool | None, str, str, str | None]:
     """Apply source-reviewed project identity decisions by exact IDs only.
 
-    Reviewed pairs with a non-merge disposition deliberately return ``None``:
-    they must not inherit an older name-only rule, while the project baseline
-    remains untouched. A name pair present in the review package but attached
-    to different IDs is also held for review instead of inheriting that result.
+    A reviewed explicit non-identity returns ``False`` (persisted as
+    ``kept_separate``); an unresolved pair returns ``None``. Name similarity
+    is never used to transfer a human decision to a different project-ID pair.
     """
     pair_ids = tuple(sorted((str(project_id_a), str(project_id_b))))
     name_by_id = {str(project_id_a): name_a, str(project_id_b): name_b}
@@ -736,9 +700,11 @@ def classify_project_pair_with_adjudications(
         action = exact_entry.get("resolver_action")
         rationale = str(exact_entry.get("rationale") or "")
         if identity_class == "same_identity" and action == "merge_case":
-            return True, rationale, "identity_followup_2026-09-27", None
-        if action == "no_new_merge":
-            return None, rationale, "identity_followup_2026-09-27", None
+            return True, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+        if identity_class in {"parent_component_phase", "related_plan_or_instrument", "distinct_entities"} and action == "no_new_merge":
+            return False, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+        if identity_class == "unresolved" and action == "no_new_merge":
+            return None, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
         raise ValueError(
             f"unsupported resolver_action {action!r} for identity class {identity_class!r}"
         )
@@ -864,6 +830,287 @@ def load_project_identity_adjudications(
     return entries
 
 
+def load_historical_project_identity_adjudications(
+    artifact_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Load the hash-pinned exact-ID supplement for recovered legacy pairs.
+
+    This artifact is deliberately additive: it cannot overlap the reviewed
+    68-pair bundle, promote a decision by itself, or transfer a decision by
+    name. Unresolved entries remain unresolved.
+    """
+    root = Path(__file__).resolve().parents[1]
+    artifact_path = artifact_path or root / "audit" / "historical_project_pair_adjudications_v1.json"
+    raw = Path(artifact_path).read_bytes()
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if actual_sha != HISTORICAL_PAIR_ADJUDICATION_SHA256:
+        raise ValueError("historical project-pair adjudication SHA-256 mismatch")
+    payload = json.loads(raw.decode("utf-8"))
+    if payload.get("schema_version") != "historical_project_pair_adjudications_v1":
+        raise ValueError("unexpected historical project-pair adjudication schema_version")
+    if payload.get("artifact_id") != "historical_project_pair_adjudications_2026-09-28_v1":
+        raise ValueError("unexpected historical project-pair adjudication artifact_id")
+    if payload.get("generated_on") != "2026-09-28":
+        raise ValueError("unexpected historical project-pair adjudication date")
+    if payload.get("scope", {}).get("production_promoted") is not False:
+        raise ValueError("historical pair artifact must remain a non-promoted candidate")
+    entries = payload.get("adjudications")
+    if not isinstance(entries, list) or len(entries) != 27:
+        raise ValueError("historical project-pair artifact must contain exactly 27 pairs")
+    allowed_classes = {
+        "same_identity", "parent_component_phase", "related_plan_or_instrument",
+        "distinct_entities", "unresolved",
+    }
+    seen_pair_ids: set[str] = set()
+    seen_pairs: set[tuple[str, str]] = set()
+    snapshot = []
+    for entry in entries:
+        pair_id = str(entry.get("pair_id") or "")
+        ids = entry.get("project_ids")
+        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+            raise ValueError("historical pair_id/project_ids are missing or duplicated")
+        id_pair = tuple(sorted(str(value) for value in ids))
+        if len(set(id_pair)) != 2 or id_pair in seen_pairs:
+            raise ValueError(f"duplicate or invalid historical project-ID pair {id_pair!r}")
+        expected_pair_id = "historical_pair:" + hashlib.sha256("\0".join(id_pair).encode()).hexdigest()[:20]
+        if pair_id != expected_pair_id:
+            raise ValueError(f"historical pair_id does not match exact project IDs: {pair_id!r}")
+        if entry.get("identity_class") not in allowed_classes:
+            raise ValueError(f"historical pair {pair_id!r} has unsupported identity_class")
+        same = entry["identity_class"] == "same_identity"
+        if same:
+            if entry.get("resolver_action") != "merge_case" or entry.get("canonical_project_id") not in id_pair:
+                raise ValueError(f"historical same_identity pair {pair_id!r} has invalid merge/canonical ID")
+        elif entry.get("resolver_action") != "no_new_merge" or entry.get("canonical_project_id") is not None:
+            raise ValueError(f"historical non-identity pair {pair_id!r} must not merge or name a canonical ID")
+        if entry.get("decision_source") != "historical_pair_adjudication_2026-09-28":
+            raise ValueError(f"historical pair {pair_id!r} has unexpected decision_source")
+        if entry.get("typed_relation_persisted") is not False or entry.get("production_promoted") is not False:
+            raise ValueError(f"historical pair {pair_id!r} must remain an unpromoted candidate")
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(id_pair) or any(not names[pid] for pid in id_pair):
+            raise ValueError(f"historical pair {pair_id!r} has invalid project_names")
+        refs = entry.get("source_evidence")
+        if not isinstance(refs, list) or len(refs) != 2 or {ref.get("side") for ref in refs} != {"a", "b"}:
+            raise ValueError(f"historical pair {pair_id!r} must cite one source per side")
+        for ref in refs:
+            if ref.get("project_id") not in id_pair or names.get(ref.get("project_id")) != ref.get("project_name"):
+                raise ValueError(f"historical pair {pair_id!r} has evidence for a different project ID")
+            if ref.get("evidence_status") != "literal_anchor_verified" or not ref.get("quote"):
+                raise ValueError(f"historical pair {pair_id!r} lacks a literal source anchor")
+            if not ref.get("source_text_sha256") or not ref.get("content_record_sha256"):
+                raise ValueError(f"historical pair {pair_id!r} lacks source hashes")
+        seen_pair_ids.add(pair_id)
+        seen_pairs.add(id_pair)
+        snapshot.append({
+            "project_ids": ids,
+            "project_names": names,
+            "source_queue_rowid": entry.get("source_queue_rowid"),
+        })
+    snapshot_sha = hashlib.sha256(
+        json.dumps(snapshot, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    if payload.get("source_pair_snapshot_sha256") != snapshot_sha:
+        raise ValueError("historical project-pair snapshot SHA-256 mismatch")
+    base_pairs = {
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in load_project_identity_adjudications()
+    }
+    overlap = seen_pairs & base_pairs
+    if overlap:
+        raise ValueError(f"historical supplement overlaps the frozen 68-pair artifact: {sorted(overlap)!r}")
+    return entries
+
+
+def load_effective_project_identity_adjudications(
+    override_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Combine the frozen 68-pair review, exact-ID overrides, and 27 legacy pairs.
+
+    Overrides can only replace an ``unresolved`` entry in the exact frozen base
+    artifact. They cannot transfer by name, alter the historical supplement,
+    or mark themselves as production-promoted. The returned objects are copies;
+    the source adjudication artifacts remain immutable.
+    """
+    root = Path(__file__).resolve().parents[1]
+    base_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    historical_path = root / "audit" / "historical_project_pair_adjudications_v1.json"
+    override_path = override_path or root / "audit" / "project_identity_adjudication_overrides_2026-09-28_v1.json"
+
+    base_raw = base_path.read_bytes()
+    if hashlib.sha256(base_raw).hexdigest() != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
+        raise ValueError("base project identity adjudication SHA-256 mismatch")
+    bundle_raw = bundle_path.read_bytes()
+    payload_raw = Path(override_path).read_bytes()
+    override_sha = hashlib.sha256(payload_raw).hexdigest()
+    if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
+        raise ValueError("override SHA-256 mismatch")
+    payload = json.loads(payload_raw.decode("utf-8"))
+    if payload.get("schema_version") != "project_identity_adjudication_overrides_v1":
+        raise ValueError("unexpected project identity override schema_version")
+    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v1":
+        raise ValueError("unexpected project identity override artifact_id")
+    if payload.get("generated_on") != "2026-09-28":
+        raise ValueError("unexpected project identity override date")
+    if payload.get("source_base_adjudication_sha256") != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
+        raise ValueError("project identity override does not pin the frozen base adjudication")
+    if payload.get("source_base_bundle_sha256") != hashlib.sha256(bundle_raw).hexdigest():
+        raise ValueError("project identity override source bundle SHA-256 mismatch")
+    if payload.get("source_historical_adjudication_sha256") != HISTORICAL_PAIR_ADJUDICATION_SHA256:
+        raise ValueError("project identity override does not pin the historical supplement")
+    scope = payload.get("scope")
+    if not isinstance(scope, dict) or scope.get("production_promoted") is not False:
+        raise ValueError("project identity override must remain unpromoted")
+    if scope.get("typed_relation_persisted") is not False:
+        raise ValueError("project identity override cannot claim a typed relation was persisted")
+    topology_unresolved = scope.get("topology_unresolved_reviewed")
+    if not isinstance(topology_unresolved, list) or any(
+        not isinstance(item, dict) or not item.get("pair_id") or not item.get("reason")
+        for item in topology_unresolved
+    ):
+        raise ValueError("project identity override needs explicit topology-unresolved reasons")
+
+    base_entries = load_project_identity_adjudications()
+    historical_entries = load_historical_project_identity_adjudications(historical_path)
+    if len(base_entries) != 68 or len(historical_entries) != 27:
+        raise ValueError("effective identity input counts differ from the pinned contract")
+    base_by_pair = {
+        tuple(sorted(str(value) for value in entry["project_ids"])): entry
+        for entry in base_entries
+    }
+    historical_pairs = {
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in historical_entries
+    }
+    unresolved_base = {
+        entry["pair_id"]: tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in base_entries
+        if entry.get("identity_class") == "unresolved"
+    }
+    unresolved_history = {
+        entry["pair_id"]
+        for entry in historical_entries
+        if entry.get("identity_class") == "unresolved"
+    }
+    if set(scope.get("base_unresolved_retained", [])) != set(unresolved_base) - {
+        str(entry.get("pair_id")) for entry in payload.get("adjudications", [])
+    }:
+        raise ValueError("override unresolved-base inventory does not match the frozen base decisions")
+    if set(scope.get("historical_unresolved_retained", [])) != unresolved_history:
+        raise ValueError("override historical-unresolved inventory does not match the historical artifact")
+
+    overrides = payload.get("adjudications")
+    if not isinstance(overrides, list) or len(overrides) != 12 or scope.get("pair_count") != 12:
+        raise ValueError("project identity override must contain exactly 12 exact-ID pairs")
+    topology_unresolved_ids = {str(item["pair_id"]) for item in topology_unresolved}
+    if topology_unresolved_ids != {"d0fb99d977176b8fd90c", "7dfca97fba3dc5d6abd2"}:
+        raise ValueError("topology blocker inventory differs from the adjudicated exact pairs")
+    seen_pairs: set[tuple[str, str]] = set()
+    seen_pair_ids: set[str] = set()
+    override_by_pair: dict[tuple[str, str], dict[str, Any]] = {}
+    for override in overrides:
+        pair_id = str(override.get("pair_id") or "")
+        ids = override.get("project_ids")
+        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+            raise ValueError("project identity override has missing/duplicate pair_id or project_ids")
+        pair = tuple(sorted(str(value) for value in ids))
+        if pair[0] == pair[1] or pair in seen_pairs or pair in historical_pairs:
+            raise ValueError(f"duplicate, self, or historical override pair {pair!r}")
+        base = base_by_pair.get(pair)
+        if base is None or base.get("pair_id") != pair_id or base.get("identity_class") != "unresolved":
+            raise ValueError(f"override {pair_id!r} is not an exact unresolved pair in the frozen base")
+        names = override.get("project_names")
+        if names != base.get("project_names") or set(names or {}) != set(pair):
+            raise ValueError(f"override {pair_id!r} project names differ from the frozen base")
+        identity_class = override.get("identity_class")
+        action = override.get("resolver_action")
+        canonical = override.get("canonical_project_id")
+        if identity_class == "same_identity":
+            if action != "merge_case" or canonical not in pair:
+                raise ValueError(f"same_identity override {pair_id!r} needs merge_case and an exact canonical ID")
+            if not override.get("canonical_selection_note"):
+                raise ValueError(f"same_identity override {pair_id!r} needs a canonical-selection rationale")
+            if override.get("confidence") != "high":
+                raise ValueError(f"same_identity override {pair_id!r} needs high confidence before merging")
+        elif identity_class == "distinct_entities":
+            if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
+                raise ValueError(f"distinct_entities override {pair_id!r} must not merge or choose a canonical ID")
+        elif identity_class == "unresolved":
+            if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
+                raise ValueError(f"unresolved override {pair_id!r} must remain unmerged without a canonical ID")
+        else:
+            raise ValueError(f"unsupported project identity override class {identity_class!r}")
+        if override.get("decision_source") != PROJECT_IDENTITY_OVERRIDE_SOURCE:
+            raise ValueError(f"override {pair_id!r} has unexpected decision_source")
+        if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
+            raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
+        if override.get("confidence") not in {"high", "medium"} or not override.get("rationale"):
+            raise ValueError(f"override {pair_id!r} has incomplete decision rationale/confidence")
+        if pair_id in topology_unresolved_ids and identity_class != "unresolved":
+            raise ValueError(f"topology-blocking pair {pair_id!r} must remain unresolved")
+
+        base_refs = {
+            ref.get("evidence_ref_id"): ref
+            for ref in base.get("source_evidence", [])
+            if ref.get("evidence_ref_id")
+        }
+        evidence_ref_ids = override.get("source_evidence_ref_ids")
+        if not isinstance(evidence_ref_ids, list) or not evidence_ref_ids or len(set(evidence_ref_ids)) != len(evidence_ref_ids):
+            raise ValueError(f"override {pair_id!r} has missing or duplicate source evidence references")
+        cited_refs = [base_refs.get(ref_id) for ref_id in evidence_ref_ids]
+        if any(ref is None for ref in cited_refs) or {ref.get("side") for ref in cited_refs if ref} != {"a", "b"}:
+            raise ValueError(f"override {pair_id!r} must cite frozen source evidence for both exact project IDs")
+        if any(ref.get("project_id") not in pair for ref in cited_refs if ref):
+            raise ValueError(f"override {pair_id!r} source evidence references another project ID")
+        supporting_sources = override.get("supporting_sources")
+        if not isinstance(supporting_sources, list) or not supporting_sources:
+            raise ValueError(f"override {pair_id!r} has no supporting source links")
+        for source in supporting_sources:
+            if not isinstance(source, dict) or not str(source.get("url", "")).startswith("https://"):
+                raise ValueError(f"override {pair_id!r} has an invalid supporting source URL")
+            if not source.get("publisher") or not source.get("supports"):
+                raise ValueError(f"override {pair_id!r} has an incomplete supporting source record")
+
+        seen_pairs.add(pair)
+        seen_pair_ids.add(pair_id)
+        override_by_pair[pair] = override
+
+    if set(seen_pair_ids) != set(unresolved_base) - set(scope.get("base_unresolved_retained", [])):
+        raise ValueError("override pair set does not exactly cover the declared subset of base unresolved pairs")
+
+    effective_base: list[dict[str, Any]] = []
+    for original in base_entries:
+        pair = tuple(sorted(str(value) for value in original["project_ids"]))
+        override = override_by_pair.get(pair)
+        if override is None:
+            effective_base.append(copy.deepcopy(original))
+            continue
+        effective = copy.deepcopy(original)
+        effective["prior_adjudication"] = {
+            "identity_class": original.get("identity_class"),
+            "resolver_action": original.get("resolver_action"),
+            "canonical_project_id": original.get("canonical_project_id"),
+            "rationale": original.get("rationale"),
+            "decision_source": original.get("decision_source"),
+        }
+        for field in (
+            "identity_class", "resolver_action", "canonical_project_id", "canonical_selection_note",
+            "confidence", "rationale", "decision_source", "production_promoted", "typed_relation_persisted",
+        ):
+            effective[field] = override.get(field)
+        effective["override_artifact"] = "audit/project_identity_adjudication_overrides_2026-09-28_v1.json"
+        effective["override_artifact_sha256"] = override_sha
+        effective["override_source_evidence_ref_ids"] = list(override["source_evidence_ref_ids"])
+        effective["override_supporting_sources"] = copy.deepcopy(override["supporting_sources"])
+        effective_base.append(effective)
+
+    effective_pairs = [tuple(sorted(str(value) for value in entry["project_ids"])) for entry in effective_base + historical_entries]
+    if len(effective_pairs) != len(set(effective_pairs)):
+        raise ValueError("effective project identity artifacts contain a duplicate exact-ID pair")
+    return effective_base + copy.deepcopy(historical_entries)
+
+
 def validate_project_identity_adjudication_scope(
     projects: dict[str, str],
     rows: list[tuple[int, str, str, str, str]],
@@ -888,7 +1135,7 @@ def validate_project_identity_adjudication_scope(
 
 
 def validate_project_identity_adjudication_evidence(
-    adjudications: list[dict[str, Any]], project_root: Path
+    adjudications: list[dict[str, Any]], project_root: Path, content_root: Path | None = None
 ) -> dict[str, int]:
     """Verify every cited fulltext record, hash, URL and literal quote before resolving.
 
@@ -897,7 +1144,11 @@ def validate_project_identity_adjudication_evidence(
     present under the project's fulltext content root and match its hashes.
     """
     root = Path(project_root).resolve()
-    content_root = (root / "Fuentes" / "fulltext" / "content").resolve()
+    content_root = (
+        Path(content_root).resolve()
+        if content_root is not None
+        else (root / "Fuentes" / "fulltext" / "content").resolve()
+    )
     failures: list[str] = []
     valid_references = 0
     verified_literal_quotes = 0
@@ -921,10 +1172,15 @@ def validate_project_identity_adjudication_evidence(
                 failures.append(f"{label}: project_id/name no corresponde a la adjudicación")
                 continue
             relative = Path(str(ref["content_file"]))
-            if relative.is_absolute():
+            expected_prefix = ("Fuentes", "fulltext", "content")
+            if relative.is_absolute() or relative.parts[:3] != expected_prefix or ".." in relative.parts:
                 failures.append(f"{label}: content_file debe ser relativo")
                 continue
-            candidate = (root / relative).resolve()
+            candidate = (
+                Path(content_root).resolve() / Path(*relative.parts[3:])
+                if content_root is not None
+                else root / relative
+            ).resolve()
             try:
                 candidate.relative_to(content_root)
             except ValueError:
@@ -1041,7 +1297,11 @@ def decision_provenance_ref(
             sort_keys=True,
             separators=(",", ":"),
         )
-    if source == "identity_followup_2026-09-27":
+    if source in {
+        "identity_followup_2026-09-27",
+        "historical_pair_adjudication_2026-09-28",
+        PROJECT_IDENTITY_OVERRIDE_SOURCE,
+    }:
         if project_ids is None or identity_adjudications is None:
             raise ValueError("identity review provenance requires exact project IDs and adjudications")
         ids = tuple(sorted(str(value) for value in project_ids))
@@ -1051,12 +1311,26 @@ def decision_provenance_ref(
         )
         if entry is None:
             raise ValueError(f"missing identity review provenance for project pair {ids!r}")
+        entry_source = str(entry.get("decision_source") or "identity_followup_2026-09-27")
+        if entry_source != source:
+            raise ValueError(f"identity review provenance source mismatch for project pair {ids!r}")
+        artifact = {
+            "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+            "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
+            PROJECT_IDENTITY_OVERRIDE_SOURCE: "audit/project_identity_adjudication_overrides_2026-09-28_v1.json",
+        }[source]
+        artifact_path = Path(__file__).resolve().parents[1] / artifact
         return json.dumps(
             {
                 "source": source,
-                "artifact": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+                "artifact": artifact,
+                "artifact_sha256": hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
                 "pair_id": entry["pair_id"],
                 "identity_class": entry["identity_class"],
+                "source_evidence_ref_ids": entry.get("override_source_evidence_ref_ids"),
+                "supporting_source_urls": sorted(
+                    source_ref["url"] for source_ref in entry.get("override_supporting_sources", [])
+                ),
                 "source_evidence_sha256": sorted(
                     ref["content_record_sha256"] for ref in entry.get("source_evidence", [])
                 ),
@@ -1513,7 +1787,7 @@ def _drop_column_if_exists(conn: sqlite3.Connection, table: str, column: str) ->
             pass
 
 
-def _resolve_database(conn: sqlite3.Connection) -> int:
+def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path | None = None) -> int:
     _add_column_if_missing(conn, "project_review_queue", "decision")
     _add_column_if_missing(conn, "project_review_queue", "decision_reason")
     _add_column_if_missing(conn, "project_review_queue", "decided_by")
@@ -1531,7 +1805,7 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
         "FROM project_review_queue ORDER BY rowid"
     ).fetchall()
     projects = dict(conn.execute("SELECT project_id, canonical_name FROM project ORDER BY project_id"))
-    identity_adjudications = load_project_identity_adjudications()
+    identity_adjudications = load_effective_project_identity_adjudications()
     validate_project_identity_adjudication_scope(projects, rows, identity_adjudications)
     partitions = dict(
         conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL")
@@ -1547,7 +1821,9 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
             pid_a, name_a, pid_b, name_b, identity_adjudications
         ),
     )
-    validate_project_identity_adjudication_evidence(identity_adjudications, PROJECT_ROOT)
+    validate_project_identity_adjudication_evidence(
+        identity_adjudications, PROJECT_ROOT, content_root=evidence_content_root
+    )
     validate_project_identity_adjudication_topology(
         plan.project_to_case, baseline, identity_adjudications
     )

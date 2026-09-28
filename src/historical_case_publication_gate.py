@@ -16,6 +16,7 @@ from typing import Any
 
 TOPOLOGY_TABLES = (
     "project",
+    "project_review_queue",
     "conflict",
     "conflict_case",
     "conflict_project",
@@ -52,6 +53,27 @@ def conflict_topology_fingerprint(conn: sqlite3.Connection) -> str:
         snapshot[table] = {"columns": columns, "rows": serialized_rows}
     canonical = json.dumps(snapshot, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def unresolved_project_identity_pairs(conn: sqlite3.Connection) -> list[tuple]:
+    """Read unresolved exact PROJECT-pair decisions; fail closed on missing schema."""
+    exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='project_review_queue'"
+    ).fetchone()
+    if not exists:
+        raise ValueError("falta project_review_queue para validar la identidad de proyectos")
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(project_review_queue)")}
+    required = {"project_id_a", "project_id_b", "resolved"}
+    missing = sorted(required - columns)
+    if missing:
+        raise ValueError(f"project_review_queue incompleta; faltan columnas: {missing}")
+    where = "COALESCE(resolved, 0) = 0"
+    if "decision" in columns:
+        where += " OR decision = 'needs_human_review'"
+    return conn.execute(
+        "SELECT rowid, project_id_a, project_id_b FROM project_review_queue "
+        f"WHERE {where} ORDER BY rowid"
+    ).fetchall()
 
 
 def require_conflict_publication_ready(
@@ -98,6 +120,12 @@ def require_conflict_publication_ready(
     try:
         conn = sqlite3.connect(f"file:{Path(warehouse_path).resolve().as_posix()}?mode=ro", uri=True)
         try:
+            unresolved_pairs = unresolved_project_identity_pairs(conn)
+            if unresolved_pairs:
+                raise RuntimeError(
+                    "gate de publicación bloqueado: quedan pares de identidad PROJECT sin resolver "
+                    f"({len(unresolved_pairs)})"
+                )
             current_topology_sha256 = conflict_topology_fingerprint(conn)
         finally:
             conn.close()

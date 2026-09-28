@@ -1,18 +1,24 @@
 # Plan paso a paso — 3 arcos analíticos
 
-Base vigente para desarrollo exploratorio: `data/warehouse.sqlite` (snapshot observado el
-2026-09-27, SHA-256 `378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db`):
-941 `project_id` → 850 `case_id`, 833 conflictos, 15.245 vínculos actor/institución/evento→proyecto.
-Hay 502 conflictos con respaldo automático y 331 sin respaldo detectado; estos últimos no son
-negativos sustantivos.
+Base publicada para desarrollo exploratorio: `data/warehouse.sqlite` en `main` (snapshot observado
+el 2026-09-27, SHA-256
+`378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db`): 941 `project_id` → 850
+`case_id`, 833 conflictos. Hay 502 conflictos con respaldo automático y 331 sin respaldo
+detectado; estos últimos no son negativos sustantivos. La rama
+`codex/historical-case-references` usa para simulación un snapshot distinto (SHA-256
+`685af6a951356c0c7e7249525fcb89362f8801a4c259f614571d775fb329c33c`, 941 proyectos, 837 casos,
+819 filas de conflicto preexistentes); ese snapshot no recibió una reconstrucción de CONFLICT.
 Ver el [README](../../README.md) y [`docs/methodology.md`](../methodology.md) para el detalle de
 capas, tablas y vistas.
 
-**Bloqueante de reconstrucción/publicación integral:** el preflight de referencias históricas
-(`audit/historical_case_reference_preflight.json`) conserva 48 IDs sin destino verificado: 15
-afectan la topología de conflictos y bloquean `build_conflicts`; 33 referencias no topológicas se
-preservan sin forzar aliases. La base publicada no se modificó. No presentar una reconstrucción
-completa de CONFLICT ni productos que dependan de ella como cerrados hasta resolver los 15 casos.
+**Bloqueante de reconstrucción/publicación integral:** la simulación aislada del resolver dejó 10
+pares de identidad PROJECT sin decisión final. De los 52 inicialmente abiertos, 37 quedaron
+`kept_separate`, 7 `merged` y 8 continúan pendientes; dos pares previamente cerrados se reabrieron
+por insuficiencia de evidencia. Las 29 referencias históricas sin destino se preservan sin alias
+forzado; 5 están declaradas no resolubles y el preflight simulado no les atribuye impacto
+topológico. La base publicada no se modificó ni se reconstruyó la capa CONFLICT. No presentar una
+reconstrucción completa de CONFLICT ni productos dependientes como cerrados hasta resolver los 10
+pares. Ver el [checkpoint y reporte de simulación](../../audit/project_identity_resolution_checkpoint_2026-09-28.md).
 
 Los tres arcos pueden desarrollar metodología y análisis exploratorio sobre el snapshot vigente,
 siempre citando su hash y limitación. La validación inicial N=50 (21 ok, 17 error menor, 12 grave)

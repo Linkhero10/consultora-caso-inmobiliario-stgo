@@ -427,11 +427,18 @@ def test_build_conflicts_blocks_topology_and_writes_only_dedicated_preflight_rep
     db.executescript(
         """
         CREATE TABLE project (project_id TEXT, case_id TEXT);
+        CREATE TABLE project_review_queue (
+            project_id_a TEXT, canonical_name_a TEXT, project_id_b TEXT,
+            canonical_name_b TEXT, resolved INTEGER, decision TEXT,
+            decision_reason TEXT, decision_source TEXT
+        );
         CREATE TABLE case_mention (document_id TEXT, case_mention_id TEXT, decision_final_amplio TEXT);
         CREATE TABLE evidence (document_id TEXT, case_mention_id TEXT, evidence_id TEXT, quote_role TEXT, quote_text TEXT, verified INTEGER);
         CREATE TABLE project_mention_resolved (project_id TEXT, document_id TEXT, raw_nombre_proyecto TEXT);
         CREATE TABLE enrichment_project_mention (document_id TEXT, nombre_proyecto TEXT, case_mention_index INTEGER);
         INSERT INTO project VALUES ('p1', 'case_current');
+        INSERT INTO project_review_queue VALUES
+            ('p1', 'Proyecto A', 'p2', 'Proyecto B', 0, 'needs_human_review', 'identidad no resuelta', 'test');
         """
     )
     classified = tmp_path / "classified.json"
@@ -475,7 +482,10 @@ def test_build_conflicts_blocks_topology_and_writes_only_dedicated_preflight_rep
     assert not report.exists()
     preflight = json.loads(preflight_report.read_text(encoding="utf-8"))
     assert preflight["status"] == "blocked_before_database_write"
-    assert preflight["n_topology_blockers"] == 2
+    assert preflight["n_topology_blockers"] == 3
+    assert preflight["project_identity_review_gate"]["status"] == "blocked"
+    assert preflight["project_identity_review_gate"]["n_unresolved_pairs"] == 1
+    assert preflight["project_identity_review_gate"]["unresolved_pairs"][0]["project_id_a"] == "p1"
     assert any(
         row.get("historical_case_id") == "case_legacy"
         for row in preflight["topology_blockers"]
