@@ -378,6 +378,46 @@ KNOWN_HOMONYM_SPLITS: dict[tuple[str, str], str] = {
 }
 
 
+VERIFIED_INDEX_CORRECTIONS_PATH = PROJECT_ROOT / "config" / "verified_project_mention_index_corrections_v1.json"
+
+
+def load_verified_project_mention_index_corrections(path: Path = VERIFIED_INDEX_CORRECTIONS_PATH) -> dict[tuple[str, str], int]:
+    """Lee correcciones puntuales de case_mention_index citadas con evidencia real.
+
+    Nunca inventa un indice: cada entrada del archivo debe citar evidence_id
+    reales (verificados aparte contra el warehouse). Si el archivo no existe,
+    devuelve un dict vacio -- esta correccion es opcional, no requerida."""
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    corrections: dict[tuple[str, str], int] = {}
+    for entry in payload["corrections"]:
+        key = (entry["document_id"], entry["nombre_proyecto"])
+        if key in corrections:
+            raise ValueError(f"verified_project_mention_index_corrections tiene entrada duplicada: {key!r}")
+        corrections[key] = entry["case_mention_index"]
+    return corrections
+
+
+def apply_verified_project_mention_index_corrections(
+    enrichment_records: list[dict[str, Any]], corrections: dict[tuple[str, str], int]
+) -> int:
+    """Asigna case_mention_index solo donde hoy es null y hay una correccion citada.
+
+    Nunca sobreescribe un case_mention_index que v3.3 ya establecio -- esta
+    correccion es aditiva sobre menciones sin vinculo, no una reinterpretacion."""
+    n_aplicadas = 0
+    if not corrections:
+        return n_aplicadas
+    for r in enrichment_records:
+        for m in r.get("proyectos_mencionados") or []:
+            key = (r["document_id"], m.get("nombre"))
+            if key in corrections and m.get("case_mention_index") is None:
+                m["case_mention_index"] = corrections[key]
+                n_aplicadas += 1
+    return n_aplicadas
+
+
 def build_project_registry(enrichment_records: list[dict[str, Any]]) -> tuple[dict[str, dict], dict[tuple[str, str], str]]:
     """Devuelve (project_id -> info del proyecto, (document_id, raw_name) -> project_id).
 
@@ -674,6 +714,43 @@ def main() -> int:
     # aqui, para que el consumidor final decida si excluye documentos
     # documento_comparativo_panoramico/contexto_sin_caso_individualizable/
     # caso_focal_fuera_del_universo de su analisis).
+    sol_corrections: dict[str, dict] = {}
+    if SOURCE_WAREHOUSE.exists():
+        conn_check = sqlite3.connect(SOURCE_WAREHOUSE)
+        has_table = conn_check.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='document_case_unit'"
+        ).fetchone()
+        if has_table:
+            # [ACTUALIZADO 2026-09-18, hallazgo de la revisión] la consulta anterior
+            # NUNCA leia correccion_nombre_proyecto -- este script decia
+            # "usa las correcciones de la revisión" sin precisar que solo aplicaba
+            # las de proyectos_mencionados. Se agrega aqui para que quede
+            # registrada y visible en el summary, aunque -- por diseno, no
+            # por descuido -- NO se usa para alterar el registro de
+            # proyectos: nombre_proyecto ("caso/proyecto focal del
+            # documento") y proyectos_mencionados ("cualquier proyecto
+            # realmente mencionado") son dos conceptos distintos (la revisión lo
+            # aclaro explicitamente); el registro de proyectos siempre fue
+            # mention-based, nunca focal-based, asi que no corresponde
+            # sobreescribir una mencion real solo porque el documento no
+            # tiene caso focal univoco. Quien necesite el nombre_proyecto
+            # corregido (el caso focal) debe leerlo de
+            # document_case_unit directamente, no de este registry.
+            for row in conn_check.execute(
+                "SELECT document_id, unidad_caso_tipo, tiene_error, correccion_proyectos_mencionados_json, "
+                "correccion_nombre_proyecto "
+                "FROM document_case_unit"
+            ).fetchall():
+                document_id, unidad_caso_tipo, tiene_error, corr_menc_json, corr_nombre = row
+                sol_corrections[document_id] = {
+                    "unidad_caso_tipo": unidad_caso_tipo,
+                    "tiene_error": bool(tiene_error),
+                    "proyectos_mencionados_corregido": json.loads(corr_menc_json) if corr_menc_json is not None else None,
+                    "nombre_proyecto_corregido": corr_nombre,
+                }
+        conn_check.close()
+
+    verified_index_corrections = load_verified_project_mention_index_corrections()
     n_docs_con_correccion_de_menciones = 0
     n_docs_con_correccion_de_nombre_no_aplicada_al_registry = sum(
         1 for c in sol_corrections.values() if c["nombre_proyecto_corregido"] is not None
@@ -694,6 +771,10 @@ def main() -> int:
             n_docs_con_correccion_de_menciones += 1
 
     reject_descriptive_project_identity_collisions(enrichment_records, descriptive_project_mentions)
+    n_menciones_con_indice_verificado_corregido = apply_verified_project_mention_index_corrections(
+        enrichment_records, verified_index_corrections
+    )
+
     projects, mention_lookup = build_project_registry(enrichment_records)
     review_candidates = find_review_candidates(projects)
 
@@ -910,6 +991,19 @@ def main() -> int:
                 "fuera_del_universo, debe filtrar explicitamente usando esa tabla via document_id (ver "
                 "tambien actor_event_project_link_case_safe, vista conservadora agregada para no "
                 "depender de que cada consumidor recuerde el filtro correcto)."
+            ),
+        },
+        "verified_project_mention_index_corrections": {
+            "disponible": bool(verified_index_corrections),
+            "n_entradas_configuradas": len(verified_index_corrections),
+            "n_menciones_corregidas": n_menciones_con_indice_verificado_corregido,
+            "fuente": "config/verified_project_mention_index_corrections_v1.json",
+            "nota": (
+                "Corrige case_mention_index=null puntual para menciones donde la evidencia "
+                "estructurada del warehouse ya identifica sin ambiguedad el case_mention -- nunca "
+                "inventa un indice, cada entrada cita evidence_id reales. No reemplaza la lista de "
+                "proyectos_mencionados como sol_corrections; solo ajusta el indice de una mencion "
+                "que v3.3 ya extrajo."
             ),
         },
     }
