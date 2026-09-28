@@ -30,5 +30,14 @@
 - Siguiente paso de este checkpoint: revisar diff/estado, commit y push de este arreglo; después observar el CI del PR. No continuar la adjudicación de pares dentro de este mismo fix. Si CI remoto no puede consultarse, dejarlo como no verificado y conservar el comando/run esperado, sin repetir la suite local sobre el mismo fingerprint.
 - Estado exacto de la corrección: `tests/test_historical_project_pair_builder.py` usa paths relativos y compara defaults/argumentos explícitos ya resueltos; prueba focal y suite local pasan. No afirmar que el CI remoto está arreglado hasta observar un run verde.
 - Regla anti-bucle desde esta fecha: este log es el ledger operativo único para esta tarea. Cada checkpoint registra HEAD, pregunta cerrada, evidencia y solo el siguiente paso; no se vuelve a auditar ni recalcular un bloque cerrado salvo que cambie su hash/entrada o aparezca evidencia contradictoria. No repetir diagnósticos ya anotados ni reabrir el inventario completo al compactar.
-- Límite de la unidad actual: cerrar la corrección de portabilidad y publicar ese cambio si la verificación local focal pasa. El trabajo de identidad (10 pares bloqueantes y el universo mayor de pares) permanece separado y no se mezcla con este fix.
+- [CERRADO] Límite anterior: cerrar la corrección de portabilidad y publicar ese cambio si la verificación local focal pasa. El trabajo de identidad (10 pares bloqueantes y el universo mayor de pares) queda como siguiente unidad, no se mezcló con este fix.
+
+## 2026-09-28 — cierre del fix de portabilidad y continuación
+
+- El checkpoint quedó publicado como commit `5fdc610c44419392a07edc76bb26e68221c50df8` en `codex/historical-case-references`, PR #1.
+- CI remoto observado directamente: run `36495235721`, workflow `tests`, estado final `success`.
+- Verificación local del mismo fingerprint: prueba focal `1 passed`; suite completa `346 passed, 5 skipped`, exit 0. No se tocó lógica del resolver, warehouse, adjudicaciones ni `main`.
+- La falla reportada para `f24b377` queda cerrada: se eliminó la ruta Windows codificada del test y se validó en suite local y CI Linux. No volver a investigar esta falla salvo regresión o un run nuevo que la reproduzca.
+- Medida anti-bucle: este ledger es el checkpoint de continuación. En una reanudación, leer solo su último bloque, comprobar si cambió HEAD/CI, y pasar al siguiente ítem listado; no reconstruir otra vez las causas ni los conteos ya cerrados.
+- Próxima unidad: resolver conservadoramente los 10 pares PROJECT que bloquean la topología con la evidencia ya reunida; no reabrir los 68 pares ni repetir búsquedas salvo que una pareja carezca de fuente decisiva o cambie el warehouse/hash. Mantener separadas las fusiones, separaciones y relaciones padre/componente; no editar SQLite ni publicar hasta que el gate de topología quede satisfecho.
 
