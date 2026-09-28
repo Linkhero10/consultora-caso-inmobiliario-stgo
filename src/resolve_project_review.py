@@ -74,7 +74,7 @@ _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
 HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
 PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
-PROJECT_IDENTITY_OVERRIDE_SHA256 = "a094f39f2d42f9b9636dfc13cfb3b7ebbabb37d7b15fc0d7836ee6cda9fd5566"
+PROJECT_IDENTITY_OVERRIDE_SHA256 = "1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4"
 PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
 
 
@@ -936,7 +936,7 @@ def load_effective_project_identity_adjudications(
     base_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
     bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
     historical_path = root / "audit" / "historical_project_pair_adjudications_v1.json"
-    override_path = override_path or root / "audit" / "project_identity_adjudication_overrides_2026-09-28_v1.json"
+    override_path = override_path or root / "audit" / "project_identity_adjudication_overrides_2026-09-28_v2.json"
 
     base_raw = base_path.read_bytes()
     if hashlib.sha256(base_raw).hexdigest() != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
@@ -947,9 +947,9 @@ def load_effective_project_identity_adjudications(
     if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
         raise ValueError("override SHA-256 mismatch")
     payload = json.loads(payload_raw.decode("utf-8"))
-    if payload.get("schema_version") != "project_identity_adjudication_overrides_v1":
+    if payload.get("schema_version") != "project_identity_adjudication_overrides_v2":
         raise ValueError("unexpected project identity override schema_version")
-    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v1":
+    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v2":
         raise ValueError("unexpected project identity override artifact_id")
     if payload.get("generated_on") != "2026-09-28":
         raise ValueError("unexpected project identity override date")
@@ -1001,8 +1001,8 @@ def load_effective_project_identity_adjudications(
         raise ValueError("override historical-unresolved inventory does not match the historical artifact")
 
     overrides = payload.get("adjudications")
-    if not isinstance(overrides, list) or len(overrides) != 12 or scope.get("pair_count") != 12:
-        raise ValueError("project identity override must contain exactly 12 exact-ID pairs")
+    if not isinstance(overrides, list) or len(overrides) != 13 or scope.get("pair_count") != 13:
+        raise ValueError("project identity override must contain exactly 13 exact-ID pairs")
     topology_unresolved_ids = {str(item["pair_id"]) for item in topology_unresolved}
     if topology_unresolved_ids != {"d0fb99d977176b8fd90c", "7dfca97fba3dc5d6abd2"}:
         raise ValueError("topology blocker inventory differs from the adjudicated exact pairs")
@@ -1099,7 +1099,7 @@ def load_effective_project_identity_adjudications(
             "confidence", "rationale", "decision_source", "production_promoted", "typed_relation_persisted",
         ):
             effective[field] = override.get(field)
-        effective["override_artifact"] = "audit/project_identity_adjudication_overrides_2026-09-28_v1.json"
+        effective["override_artifact"] = "audit/project_identity_adjudication_overrides_2026-09-28_v2.json"
         effective["override_artifact_sha256"] = override_sha
         effective["override_source_evidence_ref_ids"] = list(override["source_evidence_ref_ids"])
         effective["override_supporting_sources"] = copy.deepcopy(override["supporting_sources"])
@@ -1317,7 +1317,7 @@ def decision_provenance_ref(
         artifact = {
             "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
             "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
-            PROJECT_IDENTITY_OVERRIDE_SOURCE: "audit/project_identity_adjudication_overrides_2026-09-28_v1.json",
+            PROJECT_IDENTITY_OVERRIDE_SOURCE: "audit/project_identity_adjudication_overrides_2026-09-28_v2.json",
         }[source]
         artifact_path = Path(__file__).resolve().parents[1] / artifact
         return json.dumps(

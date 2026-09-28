@@ -128,7 +128,7 @@ def source_hashes(args: argparse.Namespace) -> dict[str, str | None]:
         "base_identity_adjudications_sha256": ROOT / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json",
         "base_identity_bundle_sha256": ROOT / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json",
         "historical_pair_adjudications_sha256": ROOT / "audit" / "historical_project_pair_adjudications_v1.json",
-        "identity_overrides_sha256": ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v1.json",
+        "identity_overrides_sha256": ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v2.json",
         "historical_resolutions_sha256": ROOT / "config" / "historical_case_id_resolutions_v1.json",
     }
     manifest = args.evidence_root.parent / "fulltext_manifest.jsonl"

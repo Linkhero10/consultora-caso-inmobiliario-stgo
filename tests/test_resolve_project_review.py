@@ -1182,7 +1182,8 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
         ("a07066976e35eb7bd807ed77", "01d6668a9dc5aba908f81090"): "unresolved",
         ("922533b858c751fc8f5a8e3b", "fe0f38566717aa34de32376a"): "same_identity",
         ("cb1087cc68bd26d203011f18", "8e88d3996773e1c8ecf04a7c"): "same_identity",
-        ("bb5755a35f19ada504ca13a4", "de08d293dbbdbbb72d27e6ae"): "unresolved",
+        ("bb5755a35f19ada504ca13a4", "de08d293dbbdbbb72d27e6ae"): "same_identity",
+        ("89ddfb0616d12dccc7393b63", "cf65c362a0dd71489735dc57"): "distinct_entities",
         ("e986c115668629af6342f449", "e37655355ac179806569a998"): "same_identity",
         ("06cac2c4b094ac1ed38ac40b", "d8612c60e4f66ef4627d31c5"): "same_identity",
         ("06cac2c4b094ac1ed38ac40b", "623ed9e19dc274ad6b3ae8dd"): "same_identity",
@@ -1202,9 +1203,9 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
             )[0]
         )
     assert {value: outcomes.count(value) for value in (True, False, None)} == {
-        True: 34,
-        False: 51,
-        None: 10,
+        True: 35,
+        False: 52,
+        None: 8,
     }
     unresolved_reviewed = {
         entry["pair_id"]
@@ -1215,15 +1216,42 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
         "d0fb99d977176b8fd90c",
         "f46e5517d7ecee26f64d",
         "7dfca97fba3dc5d6abd2",
-        "4b4059b24dd41fe0f032",
     }
-    assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 10
+    assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 8
     assert all(
         entry["confidence"] == "high"
         for entry in adjudications
         if entry["identity_class"] == "same_identity" and entry.get("override_artifact")
     )
     assert all(entry["production_promoted"] is False for entry in adjudications)
+
+
+def test_topology_pair_dispositions_are_pinned_to_the_exact_reviewed_ids():
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    by_pair = {
+        tuple(sorted(entry["project_ids"])): entry
+        for entry in adjudications
+    }
+    plaza_pair = tuple(sorted((
+        "89ddfb0616d12dccc7393b63",
+        "cf65c362a0dd71489735dc57",
+    )))
+    fundamenta_pair = tuple(sorted((
+        "bb5755a35f19ada504ca13a4",
+        "de08d293dbbdbbb72d27e6ae",
+    )))
+
+    plaza = by_pair[plaza_pair]
+    fundamenta = by_pair[fundamenta_pair]
+    assert plaza["identity_class"] == "distinct_entities"
+    assert plaza["resolver_action"] == "no_new_merge"
+    assert plaza["production_promoted"] is False
+    assert fundamenta["identity_class"] == "same_identity"
+    assert fundamenta["resolver_action"] == "merge_case"
+    assert fundamenta["canonical_project_id"] == "bb5755a35f19ada504ca13a4"
+    assert fundamenta["production_promoted"] is False
+    assert plaza["override_artifact"].endswith("_v2.json")
+    assert fundamenta["override_artifact"].endswith("_v2.json")
 
 
 def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_scoped():
@@ -1246,7 +1274,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
             identity_adjudications=adjudications,
         )
     )
-    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v1.json"
+    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v2.json"
     assert provenance["artifact_sha256"] == rpq.PROJECT_IDENTITY_OVERRIDE_SHA256
 
     same_names_other_ids = rpq.classify_project_pair_with_adjudications(
@@ -1257,7 +1285,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
 
 
 def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeypatch):
-    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v1.json"
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v2.json"
     original_read_bytes = Path.read_bytes
 
     def tampered_read_bytes(path):

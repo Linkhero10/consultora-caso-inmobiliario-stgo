@@ -1,0 +1,2166 @@
+{
+  "historical_case_preflight_after_simulated_project_resolution": {
+    "historical_reference_gate": {
+      "n_topology_blockers": 0,
+      "status": "clear",
+      "topology_blockers": []
+    },
+    "n_confirmed_non_resolvable_historical_references": 5,
+    "n_preserved_non_topological_ids": 29,
+    "n_project_identity_blockers": 8,
+    "n_topology_blockers": 8,
+    "n_unresolved_ids": 29,
+    "policy": {
+      "preserve_without_alias": [
+        "contextual",
+        "focal",
+        "mismo_proyecto"
+      ],
+      "topology_blocking_relations": [
+        "conflictos_distintos",
+        "mismo_conflicto"
+      ],
+      "unknown_relation_types": "fail_closed"
+    },
+    "preserved_references": [
+      {
+        "canonical_names": [
+          "Población Oscar Heiremans"
+        ],
+        "historical_case_id": "0cd234833ec6a07e68f905c1",
+        "impact_scope": "confirmed_non_resolvable_historical_reference",
+        "impact_scopes": [
+          "confirmed_non_resolvable_historical_reference"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "0cd234833ec6a07e68f905c1",
+              "7a0f4d45e4ac84c430b0bc49"
+            ],
+            "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+            "impact_scope": "confirmed_non_resolvable_historical_reference",
+            "project_relation": "distinct_conflict_objects",
+            "relation": "mismo_conflicto"
+          }
+        ],
+        "resolved_case_id": "0cd234833ec6a07e68f905c1",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Costanera Center"
+        ],
+        "historical_case_id": "0d5398db0f9609d950f507e7",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "0d5398db0f9609d950f507e7"
+            ],
+            "document_id": "4ff897052e01ad8510fda07459b38cdfa5b1bdcd43e453c751ad2b1443b9ff83",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "0d5398db0f9609d950f507e7",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Roberto del Río 1641"
+        ],
+        "historical_case_id": "2e1f63f764e3f9bddcc89bf4",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "2e1f63f764e3f9bddcc89bf4"
+            ],
+            "document_id": "aca5f3a115e4e590d1b004005544952791afb942548aee08273c503399a360ab",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "2e1f63f764e3f9bddcc89bf4",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "edificio de 14 pisos en Vicuña Mackenna 385"
+        ],
+        "historical_case_id": "34dfed845b909bed9ca77737",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "34dfed845b909bed9ca77737",
+              "f7d6ad8c044247d2be5e72c1"
+            ],
+            "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "34dfed845b909bed9ca77737",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Proyecto Solar Lampa"
+        ],
+        "historical_case_id": "37cb2f39ea187d449ba42e50",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "0af3d8225fe80a4d513f1f3b",
+              "37cb2f39ea187d449ba42e50"
+            ],
+            "document_id": "5de9bf8c934fe3ef2939b6e24b026344128196f25b94930eef37c355749edf9e",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "37cb2f39ea187d449ba42e50",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "cuatro megaedificios ubicados en calle Toro Mazotte"
+        ],
+        "historical_case_id": "3b16f0ad34bb2713a609fe6f",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "3b16f0ad34bb2713a609fe6f"
+            ],
+            "document_id": "b3285315e92b4c7b946eaf2aa6c1a59e51f62414ffd5ef7b5463652b7a6e169b",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "3b16f0ad34bb2713a609fe6f",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Centro Integral de Gestión de Residuos Industriales"
+        ],
+        "historical_case_id": "3b90fc14060c12f4a8e25636",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "3b90fc14060c12f4a8e25636"
+            ],
+            "document_id": "0d95504e340fa551ed899638deb65b6a00626ac983ba4a46fb0766cce094246e",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "3b90fc14060c12f4a8e25636",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "centro de datos de Amazon"
+        ],
+        "historical_case_id": "3bbef574de08d7dcb2b3dc93",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "3bbef574de08d7dcb2b3dc93"
+            ],
+            "document_id": "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "3bbef574de08d7dcb2b3dc93",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Barrio Las Rejas"
+        ],
+        "historical_case_id": "3d04b66e52ea67a48a5d7394",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "3d04b66e52ea67a48a5d7394"
+            ],
+            "document_id": "1410ad1368098950b59f745acbe939bbc9493c6ad1006600c452676e6e3cdf32",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          },
+          {
+            "case_ids": [
+              "3d04b66e52ea67a48a5d7394"
+            ],
+            "document_id": "8271ad5019e63a746b9f2eb978404459386ed1206057a30659b38f9b12dbe68a",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "3d04b66e52ea67a48a5d7394",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "anteproyecto que consideraba la construcción de siete edificios en el lugar"
+        ],
+        "historical_case_id": "3f82a8828b9a9087546ada2e",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "3f82a8828b9a9087546ada2e",
+              "d8f164a032cd123a395453f1"
+            ],
+            "document_id": "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "3f82a8828b9a9087546ada2e",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480"
+        ],
+        "historical_case_id": "506de01b09f335809ac2221a",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "506de01b09f335809ac2221a"
+            ],
+            "document_id": "b3285315e92b4c7b946eaf2aa6c1a59e51f62414ffd5ef7b5463652b7a6e169b",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "506de01b09f335809ac2221a",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Juanita Aguirre"
+        ],
+        "historical_case_id": "5340a1321178040659239c2d",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5340a1321178040659239c2d",
+              "b5984a0245ab4bc8418035fb",
+              "d00e8de640419e0204314b6c"
+            ],
+            "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "5340a1321178040659239c2d",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "iniciativa en La Reina"
+        ],
+        "historical_case_id": "5e91790271617be16fba1bec",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5e91790271617be16fba1bec",
+              "b14877c02c904926dcbdcc9b"
+            ],
+            "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "5e91790271617be16fba1bec",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+          "Vital Apoquindo números 1.400, 1450 y 1.500",
+          "proyecto de 25 edificios en la calle Vital Apoquindo"
+        ],
+        "historical_case_id": "5fd6d26afc0da9705016abeb",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5fd6d26afc0da9705016abeb"
+            ],
+            "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          },
+          {
+            "case_ids": [
+              "5fd6d26afc0da9705016abeb"
+            ],
+            "document_id": "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          },
+          {
+            "case_ids": [
+              "5fd6d26afc0da9705016abeb",
+              "cc2300e4021749f70a0516c4"
+            ],
+            "document_id": "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "5fd6d26afc0da9705016abeb",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Cooperativa de Viviendas Oscar Heiremans"
+        ],
+        "historical_case_id": "7a0f4d45e4ac84c430b0bc49",
+        "impact_scope": "confirmed_non_resolvable_historical_reference",
+        "impact_scopes": [
+          "confirmed_non_resolvable_historical_reference"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "0cd234833ec6a07e68f905c1",
+              "7a0f4d45e4ac84c430b0bc49"
+            ],
+            "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+            "impact_scope": "confirmed_non_resolvable_historical_reference",
+            "project_relation": "distinct_conflict_objects",
+            "relation": "mismo_conflicto"
+          }
+        ],
+        "resolved_case_id": "7a0f4d45e4ac84c430b0bc49",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "proyecto que impulsa la inmobiliaria Nueva El Golf"
+        ],
+        "historical_case_id": "8efd4a4bbd70a38291e41ef8",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "8efd4a4bbd70a38291e41ef8"
+            ],
+            "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "8efd4a4bbd70a38291e41ef8",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Alto Norte"
+        ],
+        "historical_case_id": "a05fdf045aeb8721bd7664b4",
+        "impact_scope": "project_identity_not_resolved",
+        "impact_scopes": [
+          "project_identity_not_resolved"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5f33de46702f3740e762506d",
+              "a05fdf045aeb8721bd7664b4"
+            ],
+            "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+            "impact_scope": "project_identity_not_resolved",
+            "project_relation": "alias",
+            "relation": "mismo_proyecto"
+          }
+        ],
+        "resolved_case_id": "a05fdf045aeb8721bd7664b4",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "nuevo Hospital del Salvador"
+        ],
+        "historical_case_id": "a12b4664006ea0eb9aa21fbe",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "a12b4664006ea0eb9aa21fbe"
+            ],
+            "document_id": "f130cab02ead055e6189f232e4f885018d218895763a6f0b1c374a4f4e7c478e",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "a12b4664006ea0eb9aa21fbe",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "nuevo edificio institucional de la CCHC"
+        ],
+        "historical_case_id": "a276e5326758970075e057b5",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "a276e5326758970075e057b5"
+            ],
+            "document_id": "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "a276e5326758970075e057b5",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "PE N° 156 de 2015"
+        ],
+        "historical_case_id": "a7b2129265f4580e899395bd",
+        "impact_scope": "confirmed_non_resolvable_historical_reference",
+        "impact_scopes": [
+          "confirmed_non_resolvable_historical_reference"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "a7b2129265f4580e899395bd",
+              "e7956ee9f4bb03683f70b454"
+            ],
+            "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+            "impact_scope": "confirmed_non_resolvable_historical_reference",
+            "project_relation": "distinct_conflict_objects",
+            "relation": "mismo_conflicto"
+          }
+        ],
+        "resolved_case_id": "a7b2129265f4580e899395bd",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "soluciones habitacionales en La Dehesa"
+        ],
+        "historical_case_id": "b14877c02c904926dcbdcc9b",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5e91790271617be16fba1bec",
+              "b14877c02c904926dcbdcc9b"
+            ],
+            "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "b14877c02c904926dcbdcc9b",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "centro de datos de 200 millones de dólares en Cerrillos"
+        ],
+        "historical_case_id": "b195d7c038b7418fa163a104",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "b195d7c038b7418fa163a104"
+            ],
+            "document_id": "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "b195d7c038b7418fa163a104",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "La Granja"
+        ],
+        "historical_case_id": "b5984a0245ab4bc8418035fb",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5340a1321178040659239c2d",
+              "b5984a0245ab4bc8418035fb",
+              "d00e8de640419e0204314b6c"
+            ],
+            "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "b5984a0245ab4bc8418035fb",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "proyecto que levantará donde actualmente están las instalaciones de la Universidad Gabriela Mistral (UGM)"
+        ],
+        "historical_case_id": "c73555c14aa1c7d4b560979b",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "c73555c14aa1c7d4b560979b"
+            ],
+            "document_id": "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "c73555c14aa1c7d4b560979b",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Punta de Diamantes"
+        ],
+        "historical_case_id": "d00e8de640419e0204314b6c",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "5340a1321178040659239c2d",
+              "b5984a0245ab4bc8418035fb",
+              "d00e8de640419e0204314b6c"
+            ],
+            "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "d00e8de640419e0204314b6c",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "PE N° 88 de 2016"
+        ],
+        "historical_case_id": "e7956ee9f4bb03683f70b454",
+        "impact_scope": "confirmed_non_resolvable_historical_reference",
+        "impact_scopes": [
+          "confirmed_non_resolvable_historical_reference"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "a7b2129265f4580e899395bd",
+              "e7956ee9f4bb03683f70b454"
+            ],
+            "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+            "impact_scope": "confirmed_non_resolvable_historical_reference",
+            "project_relation": "distinct_conflict_objects",
+            "relation": "mismo_conflicto"
+          }
+        ],
+        "resolved_case_id": "e7956ee9f4bb03683f70b454",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "proyecto en calle Cerro Colorado"
+        ],
+        "historical_case_id": "f209ef28bb3a37881a979990",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "f209ef28bb3a37881a979990"
+            ],
+            "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": null,
+            "relation": "focal"
+          }
+        ],
+        "resolved_case_id": "f209ef28bb3a37881a979990",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos"
+        ],
+        "historical_case_id": "f7d6ad8c044247d2be5e72c1",
+        "impact_scope": "document_conflict_membership",
+        "impact_scopes": [
+          "document_conflict_membership"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "34dfed845b909bed9ca77737",
+              "f7d6ad8c044247d2be5e72c1"
+            ],
+            "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+            "impact_scope": "document_conflict_membership",
+            "project_relation": "contextual",
+            "relation": "contextual"
+          }
+        ],
+        "resolved_case_id": "f7d6ad8c044247d2be5e72c1",
+        "topology_blocking": false
+      },
+      {
+        "canonical_names": [
+          "Villa Francia"
+        ],
+        "historical_case_id": "f98c6a44db6a2c8187d959b9",
+        "impact_scope": "confirmed_non_resolvable_historical_reference",
+        "impact_scopes": [
+          "confirmed_non_resolvable_historical_reference"
+        ],
+        "occurrences": [
+          {
+            "case_ids": [
+              "c9b912b6e9278401f77f49cd",
+              "f98c6a44db6a2c8187d959b9"
+            ],
+            "document_id": "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8",
+            "impact_scope": "confirmed_non_resolvable_historical_reference",
+            "project_relation": "distinct_conflict_objects",
+            "relation": "conflictos_distintos"
+          }
+        ],
+        "resolved_case_id": "f98c6a44db6a2c8187d959b9",
+        "topology_blocking": false
+      }
+    ],
+    "project_identity_review_gate": {
+      "n_unresolved_pairs": 8,
+      "policy": "cada par PROJECT sin decision final bloquea la reconstruccion integral de CONFLICT",
+      "status": "blocked",
+      "unresolved_pairs": [
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "La expresión “Reserva La Dehesa, exChaguay” sí es evidencia de continuidad nominal. Sin embargo, el warehouse vigente ya enlaza por decisiones heredadas Chaguay (803b...) con el project_id genérico Reserva La Dehesa (01d...), mientras que el ID 01d también representa la iniciativa distinta del Cerro del Medio. Resolver solo este par como alias produciría una identidad compuesta contradictoria. Se conserva unresolved hasta reconstruir la procedencia exacta de esos IDs y corregir, con evidencia propia, la relación heredada; no se fuerza ni merge ni separación.",
+          "decision_source": "project_identity_adjudication_override_2026-09-28",
+          "project_id_a": "803b8601f7f58a2b25f694cd",
+          "project_id_b": "a07066976e35eb7bd807ed77",
+          "project_name_a": "Chaguay",
+          "project_name_b": "Reserva La Dehesa, exChaguay",
+          "queue_rowid": 40
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "Una fuente identifica un edificio PAZ Corp. en Santa Petronila; la otra describe una megatorre de 30 pisos y 1.053 departamentos. El material no prueba que sean el mismo inmueble y la calle tiene más de un proyecto. Sin permiso o predio común, no se fusiona ni se afirma diferencia.",
+          "decision_source": "historical_pair_adjudication_2026-09-28",
+          "project_id_a": "14537e43f763c717791c5b90",
+          "project_id_b": "00a49b2fac5c7887f0c4f628",
+          "project_name_a": "Edificio Santa Petronila",
+          "project_name_b": "edificio de la estrecha calle Santa Petronila",
+          "queue_rowid": 61
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "Una fuente usa Costanera Center para el activo santiaguino y la otra llama a Cenco Costanera su denominación anterior; pero el ID fuente mezcla menciones del activo con referencias a iniciativas Cencosud. No se asegura que la relación sea exclusivamente alias y no una mención de proyecto/expansión; queda pendiente hasta separar menciones.",
+          "decision_source": "historical_pair_adjudication_2026-09-28",
+          "project_id_a": "e8fd7b147a07358cd8e129e9",
+          "project_id_b": "d18b439c5be31864ad8f1e21",
+          "project_name_a": "Costanera Center",
+          "project_name_b": "Cenco Costanera (antes Mall Costanera Center)",
+          "queue_rowid": 79
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "Alto Las Condes mezcla menciones de varios desarrollos; Cenco es una etiqueta corporativa. La evidencia no aísla qué activo representa cada ID.",
+          "decision_source": "identity_followup_2026-09-27",
+          "project_id_a": "2cfcdb67a6274db8af9377f6",
+          "project_id_b": "2a40c16d17565173915c550d",
+          "project_name_a": "Alto Las Condes",
+          "project_name_b": "Cenco Alto Las Condes",
+          "queue_rowid": 84
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "La cobertura de 2019 identifica un desarrollo de 54 casas en Cerro del Medio, mientras la fuente de 2025 usa “Reserva La Dehesa, exChaguay”. Eso sugiere entidades distintas, pero el project_id genérico Reserva La Dehesa también está enlazado en el warehouse a referencias de exChaguay. La atribución del ID está contaminada/compuesta; no se afirma distinct_entities hasta separar sus menciones y reconciliar la relación heredada.",
+          "decision_source": "project_identity_adjudication_override_2026-09-28",
+          "project_id_a": "a07066976e35eb7bd807ed77",
+          "project_id_b": "01d6668a9dc5aba908f81090",
+          "project_name_a": "Reserva La Dehesa, exChaguay",
+          "project_name_b": "Reserva La Dehesa",
+          "queue_rowid": 93
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "La coincidencia de calle y titular, y la mención de CIPER a cambios en proyectos de las calles Recreo y Placilla, hacen plausible una relación. Pero el registro no aporta número predial, permiso, RCA ni otra clave que demuestre que el project_id genérico “Recreo” sea el mismo edificio/proyecto específico; la resolución SEA citada solo ancla una de las menciones. Se mantiene unresolved y no se fusionan por calle o titular compartido.",
+          "decision_source": "project_identity_adjudication_override_2026-09-28",
+          "project_id_a": "0a9d6730e059f72c2cdec2d8",
+          "project_id_b": "ad2b70567df6b8d44f952100",
+          "project_name_a": "Recreo",
+          "project_name_b": "proyecto ubicado en calle Recreo",
+          "queue_rowid": 126
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "Las fuentes difieren entre dos torres de 30 y una de 32, versus dos torres de 30 y 32; sin titular/ubicación coincidentes, no merge.",
+          "decision_source": "identity_followup_2026-09-27",
+          "project_id_a": "ffa5c9b29b95f230d34616d9",
+          "project_id_b": "4648a378b2f533657c23de7a",
+          "project_name_a": "proyecto de dos torres de 30 y una de 32 pisos",
+          "project_name_b": "dos torres de 30 y 32 pisos, con 295 departamentos en total y casi 35 mil metros cuadrados construidos",
+          "queue_rowid": 193
+        },
+        {
+          "blocker_type": "unresolved_project_identity_pair",
+          "decision": "needs_human_review",
+          "decision_reason": "Bellavista puede referir al desarrollo DIB de Dardignac 44, pero el ID es amplio y el cluster incluye campus, edificio y torres de distinta granularidad; falta delimitarlo.",
+          "decision_source": "identity_followup_2026-09-27",
+          "project_id_a": "1c1f2a962eca459282a98baa",
+          "project_id_b": "7a4072da49c6decfd6df3f01",
+          "project_name_a": "proyecto inmobiliario Bellavista",
+          "project_name_b": "proyecto Bellavista",
+          "queue_rowid": 226
+        }
+      ]
+    },
+    "publication_note": "Una preflight que bloquea no modifica tablas ni sustituye el reporte de una build exitosa. Las referencias no topológicas quedan preservadas en una tabla separada en una build futura; no se proyectan como project_id, case_id ni conflict_id.",
+    "run_id": "2026-09-28T23:43:01.191665+00:00",
+    "schema_version": "historical_case_reference_preflight_v1",
+    "source_hashes": {
+      "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
+      "preflight_script_sha256": "82bf139ff9119138346e150cd4c2e5b48c98da7179039f05a0c40bda3977b031",
+      "warehouse_file_sha256": "685af6a951356c0c7e7249525fcb89362f8801a4c259f614571d775fb329c33c"
+    },
+    "status": "blocked_before_database_write",
+    "topology_blockers": [
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "La expresión “Reserva La Dehesa, exChaguay” sí es evidencia de continuidad nominal. Sin embargo, el warehouse vigente ya enlaza por decisiones heredadas Chaguay (803b...) con el project_id genérico Reserva La Dehesa (01d...), mientras que el ID 01d también representa la iniciativa distinta del Cerro del Medio. Resolver solo este par como alias produciría una identidad compuesta contradictoria. Se conserva unresolved hasta reconstruir la procedencia exacta de esos IDs y corregir, con evidencia propia, la relación heredada; no se fuerza ni merge ni separación.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "803b8601f7f58a2b25f694cd",
+        "project_id_b": "a07066976e35eb7bd807ed77",
+        "project_name_a": "Chaguay",
+        "project_name_b": "Reserva La Dehesa, exChaguay",
+        "queue_rowid": 40
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "Una fuente identifica un edificio PAZ Corp. en Santa Petronila; la otra describe una megatorre de 30 pisos y 1.053 departamentos. El material no prueba que sean el mismo inmueble y la calle tiene más de un proyecto. Sin permiso o predio común, no se fusiona ni se afirma diferencia.",
+        "decision_source": "historical_pair_adjudication_2026-09-28",
+        "project_id_a": "14537e43f763c717791c5b90",
+        "project_id_b": "00a49b2fac5c7887f0c4f628",
+        "project_name_a": "Edificio Santa Petronila",
+        "project_name_b": "edificio de la estrecha calle Santa Petronila",
+        "queue_rowid": 61
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "Una fuente usa Costanera Center para el activo santiaguino y la otra llama a Cenco Costanera su denominación anterior; pero el ID fuente mezcla menciones del activo con referencias a iniciativas Cencosud. No se asegura que la relación sea exclusivamente alias y no una mención de proyecto/expansión; queda pendiente hasta separar menciones.",
+        "decision_source": "historical_pair_adjudication_2026-09-28",
+        "project_id_a": "e8fd7b147a07358cd8e129e9",
+        "project_id_b": "d18b439c5be31864ad8f1e21",
+        "project_name_a": "Costanera Center",
+        "project_name_b": "Cenco Costanera (antes Mall Costanera Center)",
+        "queue_rowid": 79
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "Alto Las Condes mezcla menciones de varios desarrollos; Cenco es una etiqueta corporativa. La evidencia no aísla qué activo representa cada ID.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "2cfcdb67a6274db8af9377f6",
+        "project_id_b": "2a40c16d17565173915c550d",
+        "project_name_a": "Alto Las Condes",
+        "project_name_b": "Cenco Alto Las Condes",
+        "queue_rowid": 84
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "La cobertura de 2019 identifica un desarrollo de 54 casas en Cerro del Medio, mientras la fuente de 2025 usa “Reserva La Dehesa, exChaguay”. Eso sugiere entidades distintas, pero el project_id genérico Reserva La Dehesa también está enlazado en el warehouse a referencias de exChaguay. La atribución del ID está contaminada/compuesta; no se afirma distinct_entities hasta separar sus menciones y reconciliar la relación heredada.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "a07066976e35eb7bd807ed77",
+        "project_id_b": "01d6668a9dc5aba908f81090",
+        "project_name_a": "Reserva La Dehesa, exChaguay",
+        "project_name_b": "Reserva La Dehesa",
+        "queue_rowid": 93
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "La coincidencia de calle y titular, y la mención de CIPER a cambios en proyectos de las calles Recreo y Placilla, hacen plausible una relación. Pero el registro no aporta número predial, permiso, RCA ni otra clave que demuestre que el project_id genérico “Recreo” sea el mismo edificio/proyecto específico; la resolución SEA citada solo ancla una de las menciones. Se mantiene unresolved y no se fusionan por calle o titular compartido.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "0a9d6730e059f72c2cdec2d8",
+        "project_id_b": "ad2b70567df6b8d44f952100",
+        "project_name_a": "Recreo",
+        "project_name_b": "proyecto ubicado en calle Recreo",
+        "queue_rowid": 126
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "Las fuentes difieren entre dos torres de 30 y una de 32, versus dos torres de 30 y 32; sin titular/ubicación coincidentes, no merge.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "ffa5c9b29b95f230d34616d9",
+        "project_id_b": "4648a378b2f533657c23de7a",
+        "project_name_a": "proyecto de dos torres de 30 y una de 32 pisos",
+        "project_name_b": "dos torres de 30 y 32 pisos, con 295 departamentos en total y casi 35 mil metros cuadrados construidos",
+        "queue_rowid": 193
+      },
+      {
+        "blocker_type": "unresolved_project_identity_pair",
+        "decision": "needs_human_review",
+        "decision_reason": "Bellavista puede referir al desarrollo DIB de Dardignac 44, pero el ID es amplio y el cluster incluye campus, edificio y torres de distinta granularidad; falta delimitarlo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "1c1f2a962eca459282a98baa",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "proyecto inmobiliario Bellavista",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 226
+      }
+    ],
+    "unsupported_relations": []
+  },
+  "initial_open_project_pairs": 52,
+  "preexisting_historical_preflight_artifact": {
+    "current_source_warehouse_sha256": "685af6a951356c0c7e7249525fcb89362f8801a4c259f614571d775fb329c33c",
+    "path": "audit/historical_case_reference_preflight.json",
+    "recorded_warehouse_sha256": "f89ecd5b7f8984c397df4d84be2daca8caef87ef142e6cbe1605b86e829b76a0",
+    "stale_for_current_snapshot": true,
+    "use_as_current_release_evidence": false
+  },
+  "production_promoted": false,
+  "project_identity_review": {
+    "identity_evidence_validation": {
+      "unanchored_references": 0,
+      "valid_references": 273,
+      "verified_literal_quotes": 273
+    },
+    "previously_closed_pairs_reclassified": [
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('edificio de la estrecha calle Santa Petronila', 'edificio Santa Petronila')] mismo edificio",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "needs_human_review",
+        "final_decision_reason": "Una fuente identifica un edificio PAZ Corp. en Santa Petronila; la otra describe una megatorre de 30 pisos y 1.053 departamentos. El material no prueba que sean el mismo inmueble y la calle tiene más de un proyecto. Sin permiso o predio común, no se fusiona ni se afirma diferencia.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": false,
+        "project_id_a": "14537e43f763c717791c5b90",
+        "project_id_b": "00a49b2fac5c7887f0c4f628",
+        "project_name_a": "Edificio Santa Petronila",
+        "project_name_b": "edificio de la estrecha calle Santa Petronila",
+        "queue_rowid": 61,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Costanera Center', 'mall Costanera Center')] mismo mall",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "needs_human_review",
+        "final_decision_reason": "Una fuente usa Costanera Center para el activo santiaguino y la otra llama a Cenco Costanera su denominación anterior; pero el ID fuente mezcla menciones del activo con referencias a iniciativas Cencosud. No se asegura que la relación sea exclusivamente alias y no una mención de proyecto/expansión; queda pendiente hasta separar menciones.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": false,
+        "project_id_a": "e8fd7b147a07358cd8e129e9",
+        "project_id_b": "d18b439c5be31864ad8f1e21",
+        "project_name_a": "Costanera Center",
+        "project_name_b": "Cenco Costanera (antes Mall Costanera Center)",
+        "queue_rowid": 79,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Seccional La Platina', 'La Platina')] mismo sitio, instrumento de planificacion en el nombre largo",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "Proyecto La Platina refiere al proceso del predio; Seccional La Platina es un instrumento de planificación con función propia. Compartir territorio no los hace la misma entidad.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "bc91dff975e756ec1d964ec3",
+        "project_id_b": "6802eb97ec3f72e304b12592",
+        "project_name_a": "Proyecto La Platina",
+        "project_name_b": "Seccional La Platina",
+        "queue_rowid": 101,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Bosque Panul', 'proyecto de subdivisión del Bosque Panul')] misma subdivision",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "Bosque Panul es el territorio/ecosistema; la subdivisión para urbanizarlo es una intervención dentro del territorio. Se relacionan, no son la misma entidad.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "44598b79177f378212cf10e4",
+        "project_id_b": "20559eb9ca09be77598a685e",
+        "project_name_a": "Bosque Panul",
+        "project_name_b": "proyecto de subdivisión para urbanizar el Bosque Panul",
+        "queue_rowid": 173,
+        "resolved": true
+      },
+      {
+        "decision": "kept_separate",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('proyecto de Inmobiliaria Nueva El Golf', 'Nueva El Golf')] [Sol+Claude 2026-09-18, idx original 86] Debería ser 'kept_separate'. 'Nueva El Golf' funciona como nombre de la inmobiliaria/desarrollador y no como un proyecto único. La evidencia abarca desarrollos distintos, por lo que no debe usarse como alias de un caso específico.",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "merged",
+        "final_decision_reason": "Las fuentes describen el proyecto Nueva El Golf de Peñalolén y la misma suspensión/controversia. Inmobiliaria identifica al titular, no otro proyecto en este par.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "708353b6e07226824317b02d",
+        "project_id_b": "a71127327712c32eb584b209",
+        "project_name_a": "proyecto de Inmobiliaria Nueva El Golf",
+        "project_name_b": "proyecto Nueva El Golf",
+        "queue_rowid": 177,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Parque Padre Hurtado', 'laguna artificial en el Parque Padre Hurtado')] misma laguna dentro del mismo parque, mismas fechas 2018-10",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "La laguna artificial es una obra propuesta dentro del Parque Padre Hurtado; el parque es el activo territorial mayor. No se colapsa la obra en el parque.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "17f3b690577f9fd996b9c4bd",
+        "project_id_b": "69daf84c98731696f403b9da",
+        "project_name_a": "Laguna artificial en el Parque Padre Hurtado",
+        "project_name_b": "Parque Padre Hurtado",
+        "queue_rowid": 200,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Conjunto Armónico Bellavista', 'Conjunto Armónico Bellavista (CAB)')] sigla del mismo nombre",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "La fuente llama a la torre una de las tres del conjunto. Una torre con controversia propia no es alias del conjunto completo.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "a812c5dd74897808e543d008",
+        "project_id_b": "a7582eea55bbe9571084de75",
+        "project_name_a": "Conjunto Armónico Bellavista",
+        "project_name_b": "torre del Conjunto Armónico Bellavista",
+        "queue_rowid": 215,
+        "resolved": true
+      },
+      {
+        "decision": "kept_separate",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Barrio Maestranza 1', 'barrio Maestranza')] [Sol+Claude 2026-09-18, idx original 145] Debería ser 'kept_separate'. 'Barrio Maestranza' es demasiado genérico y la evidencia apunta a sectores distintos (Santiago Watt/Exposición versus San Eugenio y eje Santiago-Pedro Aguirre Cerda). No hay identidad de proyecto demostrada.",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "merged",
+        "final_decision_reason": "Las fuentes identifican el conjunto Barrio Maestranza/Maestranza Ukamau, 424 familias, entre Santiago Watt y Exposición. Ukamau sigue como actor/mención descriptiva: no se crea project_id para la organización ni se fusiona la organización con el conjunto.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "79bd439d4af500f5546d2af6",
+        "project_id_b": "7fd73e29b6a6ccea8a40eb76",
+        "project_name_a": "barrio Maestranza",
+        "project_name_b": "Barrio Maestranza Ukamau",
+        "queue_rowid": 228,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Mall Sport', 'Mall Sport de Las Condes')] mismo mall, comuna agregada",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "La ampliación es intervención con alcance/autorización propios; Mall Sport es el centro existente. No son la misma unidad analítica.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "5f4d9617fe0e8aed5c2a5413",
+        "project_id_b": "07f2e2ce4fe660358aba5d28",
+        "project_name_a": "proyecto de ampliación del Mall Sport",
+        "project_name_b": "Mall Sport",
+        "queue_rowid": 232,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Conjunto Armónico Bellavista', 'proyecto Bellavista')] mismo complejo Universidad San Sebastian",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "La torre del Conjunto Armónico Bellavista no es el proyecto paraguas de tres torres DIB; titular/barrio común no elimina la diferencia de granularidad.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "a7582eea55bbe9571084de75",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "torre del Conjunto Armónico Bellavista",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 246,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Conjunto Armónico Bellavista', 'Proyecto Armónico Bellavista')] variante de escritura del mismo nombre",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "BioBioChile vincula una torre al conjunto; T13 usa Proyecto Armónico Bellavista para Dardignac 44. No hay base para alias torre↔conjunto ni cierre transitivo entre paraguas.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "a7582eea55bbe9571084de75",
+        "project_id_b": "3c3c53234cbce2dea5c38efc",
+        "project_name_a": "torre del Conjunto Armónico Bellavista",
+        "project_name_b": "Proyecto Armónico Bellavista",
+        "queue_rowid": 247,
+        "resolved": true
+      },
+      {
+        "decision": "merged",
+        "decision_reason": "[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, decision original de ('Parque Padre Hurtado', 'laguna artificial en el Parque Padre Hurtado')] misma laguna dentro del mismo parque, mismas fechas 2018-10",
+        "decision_source": "recovered_historical_adjudication",
+        "final_decision": "kept_separate",
+        "final_decision_reason": "El plan de mejoramiento/laguna es intervención sobre el Parque Padre Hurtado; el parque es activo territorial mayor, no el mismo proyecto.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "f8ddadd1807ecdd4188c0847",
+        "project_id_b": "69daf84c98731696f403b9da",
+        "project_name_a": "proyecto de mejoramiento del Parque Padre Hurtado",
+        "project_name_b": "Parque Padre Hurtado",
+        "queue_rowid": 250,
+        "resolved": true
+      }
+    ],
+    "previously_open_pairs_and_simulated_decisions": [
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Block 14 es componente específico de Villa San Luis, no el conjunto completo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"f6b3cd0dd1e2ffbfcd9d\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"034f7f39d5e05be7bd2aacf2c6aaa7e19df7ed1a44c57276bb17dc2b8d699d37\",\"049c6cd1a2e0472c395a41ebbb5f1f7a616cc91618fce9c9ccb2806daa435f93\",\"15d26d28523641498641b80bfaf206d8afc03b7793000c6ac80c5701167ac79c\",\"16f5749a8f3eeb129e954475712d4e64ec96e3fbb81a4116fc25da73f3104693\",\"22dea562c02a49a9d612dd1cf03ed32b53e6ba570dc9c22dd13c36809ae50f9c\",\"2ea8dae274cfc7765fc0b145edfb9f374b280f572de60ec5c1e2def7327dbe95\",\"426728ca0229d34721e46e142598357ec7b70a40e87b171cc74313154777340e\",\"472c1563909d9d2f382079d12ae589747b6f3ee0baad1741f67928ccab04c297\",\"548de96090af5e267e92ef7b0dab61bdb84cdf7564cadc65d414c963d95099e9\",\"56b4cf4525bc99d9178e061fe0e8409a0124287ecc02290163d2a81c95a26a95\",\"a094d4dc6dcaf7ff238357dfc118f5462fc3f964c6c7d580417bf248ea218a6f\",\"a89e5da6e2d99f64eb383896989da0e783eee193ab19b03a944f541added06ee\",\"ceabde947aa6c78dbca9e9d2a53555b15daf5963fc33bc2777e166d65ebb8608\",\"d247e0c4237cb87deb40e29acd7fe3e8acde206935923fdb0fba174be200a3a9\",\"d9e0197a41884989ca14f57459d1bd60010dae5a5912947ee02c1310c536624e\",\"e57b90bcf6a348ea1cedd1adad37335cd45ebbed3be887215d4a8cc5b753cb15\",\"ebed8c84ffb0898ffa2848b680e2b3705a008f1d1d0021995f62c586d9696ed9\",\"f7f3ae869394559cfbdf519d6ac7e018ce0269fbb7f8f0bffb3a1fbaecc64284\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Block 14 es componente específico de Villa San Luis, no el conjunto completo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "8f276ad881cff4c732236787",
+        "project_id_b": "f71d8d73041a68164ecd5413",
+        "project_name_a": "Villa San Luis",
+        "project_name_b": "block 14 de la Villa San Luis",
+        "queue_rowid": 4,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El cluster Vital Apoquindo parece común, pero la fuente y los IDs mantienen discrepancias de alcance/conteo; no se propaga identidad desde otra pareja.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"e4c1fbe6d25cd8141677\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"e4c1fbe6d25cd8141677:a:0\",\"e4c1fbe6d25cd8141677:b:0\"],\"source_evidence_sha256\":[\"5c6bf5fdb02070d7ccdc11d57a2d5ed80b095cf359ba692bf80d0be4d71097d6\",\"5fa880f8f14b2574fa8aa510e7c1f92ca7bc47340a1a0b7b52fb5824c1843307\"],\"supporting_source_urls\":[\"https://elquintopoder.cl/ciudadania/los-dictamenes-atrasados-de-la-contraloria-no-sirven-de-nada/\",\"https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html\"]}",
+        "final_decision_reason": "Ambas fuentes identifican Vital Apoquindo 1.400–1.450–1.500 en Las Condes, el mismo predio de 131.422 m², 443 viviendas y 12 locales comerciales, y la controversia sobre el permiso. La unidad del proyecto es consistente; no se altera ninguna cifra o cita original.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "922533b858c751fc8f5a8e3b",
+        "project_id_b": "fe0f38566717aa34de32376a",
+        "project_name_a": "Vital Apoquindo 1.400-1.450-1.500",
+        "project_name_b": "Vital Apoquindo",
+        "queue_rowid": 27,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Espacio Urbano El Rodeo está en Lo Barnechea; el Espacio Urbano de la otra fuente es de Estación Central. Cadena común no significa mismo activo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"acfe5ddbc023409343ee\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"aca259f4e384f1753ec4242b667f6a674fd570e9607dc446ed4969aba9f9f530\",\"fb936d80353bbc468f44bc6fa7f398db6e322d0e95473dd32e40adca5b455414\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Espacio Urbano El Rodeo está en Lo Barnechea; el Espacio Urbano de la otra fuente es de Estación Central. Cadena común no significa mismo activo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "b941de77e2cd63714c3a9030",
+        "project_id_b": "40207730410ab50ac63a04f4",
+        "project_name_a": "Espacio Urbano El Rodeo",
+        "project_name_b": "Espacio Urbano",
+        "queue_rowid": 35,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Chaguay aparece dentro de un registro con otros proyectos precordilleranos. “Reserva La Dehesa, exChaguay” sugiere continuidad, pero no identifica una sola entidad del cluster.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"d0fb99d977176b8fd90c\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"d0fb99d977176b8fd90c:a:3\",\"d0fb99d977176b8fd90c:b:0\"],\"source_evidence_sha256\":[\"0818baef4931f71c48e7d38ee0ecaf0b0f67d892b6b99935def2089498e162b5\",\"2e15d99fb5820259d95b136fcbf9c1e9101f2d4422d9346cbb2cafc4ef2894d9\",\"57483b67444a01c087b0c0c27629726312b2bb257872c870e28ba419801b45ff\",\"59a8283202acd72ee6a3f81c08105f2ce2a31c558c1d5f6c08f262f21726090b\",\"6aeeb1ed43989fcb7364edd1b010f1687183a81d224cdfa00cbc58f63ddb210f\",\"7a4f36ff11abad092f9569787d4133fa8568728a299428d01e4c510f45a09924\",\"7c312e47cc3c548da48324765831028cd739da5068a38f2c9449693242c67f9a\",\"87beb0fa96917201d1d781c50a15403d6a0b166a3402c24526e7e2426e53bd50\",\"c786b54393a61bb266ad8facd32b92e7854f50b06aefa170e29196edf67c8c39\",\"d18d7871e82cb1a0422c4ffe65900c7d42355d2bcc9bcdb0a6909edb80a6697e\",\"d8001ab31365a0581a5bdb73e1462af030bcfb9d5bed4db5843a0455ff7bff36\",\"dcfc98ea1a3c74b3368e78efe45ce04a38b4824daa967dfdebb43cd3edeb07d1\",\"ea3a6c80ab3185301748fa6592c247baccbd084b4e2af31513168dd5de44f59c\",\"eab816bc729c5e8c3afac981ca1ad3b1a2d66c1cb66c1c5bb7037fa3c1167365\",\"f84528dad52902cf669c048b317e56c2d33261bfa0c0a8ddb314311137dac94e\"],\"supporting_source_urls\":[\"https://lobarnechea.cl/Noticias/proyecto-chaguay-debe-ingresar-al-sistema-de-evaluacion-ambiental-sostiene-la-superintendencia-de-medio-ambiente/\",\"https://www.leylobby.gob.cl/instituciones/AP001/audiencias/2025/727203\"]}",
+        "final_decision_reason": "La expresión “Reserva La Dehesa, exChaguay” sí es evidencia de continuidad nominal. Sin embargo, el warehouse vigente ya enlaza por decisiones heredadas Chaguay (803b...) con el project_id genérico Reserva La Dehesa (01d...), mientras que el ID 01d también representa la iniciativa distinta del Cerro del Medio. Resolver solo este par como alias produciría una identidad compuesta contradictoria. Se conserva unresolved hasta reconstruir la procedencia exacta de esos IDs y corregir, con evidencia propia, la relación heredada; no se fuerza ni merge ni separación.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": false,
+        "project_id_a": "803b8601f7f58a2b25f694cd",
+        "project_id_b": "a07066976e35eb7bd807ed77",
+        "project_name_a": "Chaguay",
+        "project_name_b": "Reserva La Dehesa, exChaguay",
+        "queue_rowid": 40,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La estación Copec es instalación puntual dentro de Ciudad de Los Valles, no el desarrollo urbano completo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"f4de5ca44855cfe364f1\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0b67a57388e7eeb7fa783d88b74a3f5de920e8a7dd95900d4746ca7aadc2aa81\",\"2c87b6c34be6db1141d8cd88683bc669ee9db14b87ec8c6045f8d864e71be092\",\"2c87b6c34be6db1141d8cd88683bc669ee9db14b87ec8c6045f8d864e71be092\",\"9919e61d763ebbc5dba577dd3278544364a9aa10f3d21efd474eb9bd3763c1a2\",\"a594d41dc1baf6960b2c8b1c078df1d17e38c9d774736ec94aafac64ccfa6b1a\",\"cfd3698878ab0d08cb370612b238871285a881cb11ae8ec53faea358637977f5\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La estación Copec es instalación puntual dentro de Ciudad de Los Valles, no el desarrollo urbano completo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "ce6bb7fcce78e9fb3235e59b",
+        "project_id_b": "e1c30745abde8086367a9640",
+        "project_name_a": "estación de servicio de Copec en Ciudad de los Valles",
+        "project_name_b": "Ciudad de Los Valles",
+        "queue_rowid": 42,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El supermercado Líder está dentro de Ciudad de Los Valles; un local puntual no es el conjunto urbano completo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"8943f4cc424bed050d22\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0b67a57388e7eeb7fa783d88b74a3f5de920e8a7dd95900d4746ca7aadc2aa81\",\"2c87b6c34be6db1141d8cd88683bc669ee9db14b87ec8c6045f8d864e71be092\",\"9919e61d763ebbc5dba577dd3278544364a9aa10f3d21efd474eb9bd3763c1a2\",\"a3fda26d0aa95414cc81df7a7efe3afbf377a88086f2e9187693949c8562caa0\",\"a594d41dc1baf6960b2c8b1c078df1d17e38c9d774736ec94aafac64ccfa6b1a\",\"cfd3698878ab0d08cb370612b238871285a881cb11ae8ec53faea358637977f5\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El supermercado Líder está dentro de Ciudad de Los Valles; un local puntual no es el conjunto urbano completo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "e1c30745abde8086367a9640",
+        "project_id_b": "0ecfc02e7f34d476ee63e06c",
+        "project_name_a": "Ciudad de Los Valles",
+        "project_name_b": "Supermercado Líder de Ciudad de Los Valles",
+        "queue_rowid": 43,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El loteo/sector industrial es parte del ámbito de Ciudad de Los Valles, no el desarrollo urbano mayor.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"59d8e688fbe7420d9a85\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0b67a57388e7eeb7fa783d88b74a3f5de920e8a7dd95900d4746ca7aadc2aa81\",\"2c87b6c34be6db1141d8cd88683bc669ee9db14b87ec8c6045f8d864e71be092\",\"8bab2785957157197028896f760610687f34104f19ec75396821946bf3f9e9d9\",\"9919e61d763ebbc5dba577dd3278544364a9aa10f3d21efd474eb9bd3763c1a2\",\"a594d41dc1baf6960b2c8b1c078df1d17e38c9d774736ec94aafac64ccfa6b1a\",\"cfd3698878ab0d08cb370612b238871285a881cb11ae8ec53faea358637977f5\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El loteo/sector industrial es parte del ámbito de Ciudad de Los Valles, no el desarrollo urbano mayor.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "e1c30745abde8086367a9640",
+        "project_id_b": "34f7c51bc29d4adbc31de53e",
+        "project_name_a": "Ciudad de Los Valles",
+        "project_name_b": "loteo industrial de Ciudad de Los Valles",
+        "queue_rowid": 45,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La iniciativa de 1.700 departamentos se ubica en Plaza Egaña; la otra mención refiere al topónimo/equipamiento comercial o estación.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"9b2c50f403c65c06c60d\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"ec5b85c84847f1656e6b8be0046cb63f8bd6e3194bec5552b471df8c93902dc4\",\"ff6f4a7c0df520bd0c4543d4bf3ab032393eeb954cdebc7c55c3b57f47462066\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La iniciativa de 1.700 departamentos se ubica en Plaza Egaña; la otra mención refiere al topónimo/equipamiento comercial o estación.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "89ddfb0616d12dccc7393b63",
+        "project_id_b": "22d824710f8ffc9983e081e5",
+        "project_name_a": "iniciativa de más de 1.700 departamentos en Plaza Egaña",
+        "project_name_b": "Plaza Egaña",
+        "queue_rowid": 52,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El acta COSOC y la mención Plaza Egaña no aportan dirección, titular, permiso ni atributos para identificarla con la iniciativa de 1.700 viviendas.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"facad8bf50f968e5f69a\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"facad8bf50f968e5f69a:a:0\",\"facad8bf50f968e5f69a:b:0\"],\"source_evidence_sha256\":[\"db951d6a7201b074a5c4924bb596d73f99833360cb14bf0be2ad1386739fc642\",\"ff6f4a7c0df520bd0c4543d4bf3ab032393eeb954cdebc7c55c3b57f47462066\"],\"supporting_source_urls\":[\"https://blog.toctoc.com/las-2-razones-que-tienen-mal-a-vecinos-de-grandes-edificios/\",\"https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/\",\"https://www.nunoa.cl/app/uploads/2025/02/Acta_sesion_ordinaria_N_5_COSOC_26_05_2021.pdf\"]}",
+        "final_decision_reason": "Los IDs corresponden a objetos distintos. La fuente TOCTOC describe una iniciativa residencial específica de más de 1.700 departamentos en Plaza Egaña. El acta COSOC de Ñuñoa usa “Plaza Egaña” como comparación del resultado urbano de eliminar suelo absorbente y árboles en Parque Bustamante; no identifica la iniciativa residencial ni un alias suyo. La sentencia R-231-2020 confirma que Egaña-Comunidad Sustentable es un proyecto específico en Irarrázaval con Américo Vespucio, separado de esa referencia comparativa. Se conserva la separación exacta y no se crea relación de identidad.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "89ddfb0616d12dccc7393b63",
+        "project_id_b": "cf65c362a0dd71489735dc57",
+        "project_name_a": "iniciativa de más de 1.700 departamentos en Plaza Egaña",
+        "project_name_b": "Plaza Egaña",
+        "queue_rowid": 53,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La Línea 7 completa y su extensión futura a Lo Barnechea son escalas/etapas de planificación relacionadas, no idénticas.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"e76b4555706b7b574b3d\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"3774d3641c0f04e4ef3501d48641643336dc5a3dd12bee34e158eda264172db9\",\"5d424fcb0b61133088ab05b69c5e108a1f7a685e368a6c3f19813a71bab9c8e0\",\"6c7cac99131cd42da665536bb88d5f9214fedb0faa5bf3f965c1c53a07594d9f\",\"a34f6890a3fec33ea1f49f7598457ac2b779d4f3d0a04794c7f8da01f13a4cdc\",\"be69173e4cbb91521ea6d9bbba107508dc7bd7fed13feb533a0718c3b39c8418\",\"c2c22b213ddad11db136615221ecb3565de1d8a36411f0901481b4df7778a848\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La Línea 7 completa y su extensión futura a Lo Barnechea son escalas/etapas de planificación relacionadas, no idénticas.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "1116e5a6a061a1bd4fe3499b",
+        "project_id_b": "f32c129b3542f1a928851863",
+        "project_name_a": "Línea 7 del Metro",
+        "project_name_b": "futura Línea 7 de Metro",
+        "queue_rowid": 58,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Los talleres/cocheras de Renca son componente localizado de la Línea 7, no la línea completa.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"70f90b867719916657a5\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"133edfc564690918a836be3ea4565b1ec6d435724d655e07ce73f858341044e8\",\"3774d3641c0f04e4ef3501d48641643336dc5a3dd12bee34e158eda264172db9\",\"5d424fcb0b61133088ab05b69c5e108a1f7a685e368a6c3f19813a71bab9c8e0\",\"a34f6890a3fec33ea1f49f7598457ac2b779d4f3d0a04794c7f8da01f13a4cdc\",\"c2c22b213ddad11db136615221ecb3565de1d8a36411f0901481b4df7778a848\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Los talleres/cocheras de Renca son componente localizado de la Línea 7, no la línea completa.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "1116e5a6a061a1bd4fe3499b",
+        "project_id_b": "c0aec03825e1cfe75d8db6c1",
+        "project_name_a": "Línea 7 del Metro",
+        "project_name_b": "talleres de la Línea 7 del Metro",
+        "queue_rowid": 59,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Ukamau es una organización/movimiento y Barrio Maestranza un conjunto habitacional. Ukamau solo queda como mención descriptiva/actor, nunca alias de proyecto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"714a76fb5477f50ef820\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"720e89a2cfe13c3bac996e9fedfc63492485a896efa45b537da0f0e5bb375c04\",\"e96500d6c987f6a4c38d321a76632241559ff815fdf27c61db3c9f117d4d847e\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Ukamau es una organización/movimiento y Barrio Maestranza un conjunto habitacional. Ukamau solo queda como mención descriptiva/actor, nunca alias de proyecto.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "75ec211590ada14745d43bb8",
+        "project_id_b": "7fd73e29b6a6ccea8a40eb76",
+        "project_name_a": "Ukamau",
+        "project_name_b": "Barrio Maestranza Ukamau",
+        "queue_rowid": 62,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Block 73 es bloque/intervención dentro de Villa Olímpica, no el conjunto completo; la discrepancia del año de origen refuerza separar granularidad.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"0e9ec35286e806f3a15f\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0a8af37a8d7ec2613e2af20bda475724c5f94672c3514dac78a894e5874f3745\",\"905b89d19a06e6f6a3717e319ddad13c318516296bddaa59a17e7c1b61a7b2ff\",\"bb8626e2e0da12f8cd57112c43ef5d25cfb450998bea99660bd52117971f081d\",\"ebed8c84ffb0898ffa2848b680e2b3705a008f1d1d0021995f62c586d9696ed9\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Block 73 es bloque/intervención dentro de Villa Olímpica, no el conjunto completo; la discrepancia del año de origen refuerza separar granularidad.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "aef943251b1be918370edf5d",
+        "project_id_b": "21ef01a5f5ea1b84eb392920",
+        "project_name_a": "Villa Olímpica",
+        "project_name_b": "proyecto en el Block 73 de Villa Olímpica",
+        "queue_rowid": 66,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El centro comercial complementario se conectaría al mall Alto Las Condes mediante un túnel; propuesta complementaria no es el activo existente.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"00a08efefa934e87196e\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"1444ce4c67c98b98abfaa3f5e49d97e45251afafd0f62a72658f3fca7676e553\",\"7a6d7cc7900d60c1567a7867c540b9d83449ca9a3228db836c1d1a6bacca6656\",\"a7ed1208f7949ceba29efc392b081bed55a2e3cc6cd8951918785a7f223ab332\",\"be5e21d719d65aadffc993045d1259c9c7ed39c95c7775f7071f0918ac4f761b\",\"dad628627f90ee3426f63fa6fd15fe105209855554a721fcfc275b1ba18af64d\",\"fe168f76c976f3e0c6e024c27eb871e04455683cc5fc89e84cdcbfb6393dcae3\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El centro comercial complementario se conectaría al mall Alto Las Condes mediante un túnel; propuesta complementaria no es el activo existente.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "2cfcdb67a6274db8af9377f6",
+        "project_id_b": "55fe871bbd805f236d267066",
+        "project_name_a": "Alto Las Condes",
+        "project_name_b": "centro comercial complementario al mall Alto Las Condes",
+        "queue_rowid": 80,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Alto Las Condes mezcla menciones de varios desarrollos; Cenco es una etiqueta corporativa. La evidencia no aísla qué activo representa cada ID.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"6b84e4c69373bcadad41\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"1444ce4c67c98b98abfaa3f5e49d97e45251afafd0f62a72658f3fca7676e553\",\"575d85ed16a0cae4709889108477e134cb719f12f95cf809ddc59b194be3db22\",\"7a6d7cc7900d60c1567a7867c540b9d83449ca9a3228db836c1d1a6bacca6656\",\"a7ed1208f7949ceba29efc392b081bed55a2e3cc6cd8951918785a7f223ab332\",\"dad628627f90ee3426f63fa6fd15fe105209855554a721fcfc275b1ba18af64d\",\"fe168f76c976f3e0c6e024c27eb871e04455683cc5fc89e84cdcbfb6393dcae3\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Alto Las Condes mezcla menciones de varios desarrollos; Cenco es una etiqueta corporativa. La evidencia no aísla qué activo representa cada ID.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": false,
+        "project_id_a": "2cfcdb67a6274db8af9377f6",
+        "project_id_b": "2a40c16d17565173915c550d",
+        "project_name_a": "Alto Las Condes",
+        "project_name_b": "Cenco Alto Las Condes",
+        "queue_rowid": 84,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La columna de 2018 habla de viviendas sociales anunciadas en la Rotonda Atenas, pero no aporta dirección/unidades para probar que esa mención sea la torre construida después.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"3695e490944a9c19c06d\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"3695e490944a9c19c06d:a:0\",\"3695e490944a9c19c06d:b:0\"],\"source_evidence_sha256\":[\"b8fdecec267dff65b03ba7bc027607a02f91d424b64f71d41f67be84d4529922\",\"c1829d57e6db2cb01de98836e94d064255837700f62aaf801a359d4c69ab2cd8\",\"ed741fe685284f7bcea0bcf7f3feac4946708cd16ab5798efc0a19bb88c556f7\"],\"supporting_source_urls\":[\"https://www.elmostrador.cl/noticias/opinion/columnas/2018/07/15/rotonda-atenas-entre-la-integracion-social-y-el-clasismo/\",\"https://www.lascondes.cl/beneficios/vivienda-2/rotonda-atenas/\"]}",
+        "final_decision_reason": "Las fuentes describen el mismo proyecto de vivienda social en Rotonda Atenas, Las Condes, anunciado en 2018, con oposición vecinal por integración y efectos percibidos. La Municipalidad de Las Condes documenta el proyecto ejecutado de 85 viviendas. No se confunde con otros desarrollos cercanos a una rotonda o con la controversia por compraventa de terrenos mencionada en otro artículo.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "06cac2c4b094ac1ed38ac40b",
+        "project_id_b": "d8612c60e4f66ef4627d31c5",
+        "project_name_a": "proyecto de Rotonda Atenas",
+        "project_name_b": "vivienda sociales en la Rotonda Atenas",
+        "queue_rowid": 90,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Reserva La Dehesa exChaguay y Reserva La Dehesa pueden compartir historia, pero falta vínculo verificable de predio, RCA, rol o titular; Chaguay además integra un cluster mixto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"7dfca97fba3dc5d6abd2\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"7dfca97fba3dc5d6abd2:a:0\",\"7dfca97fba3dc5d6abd2:b:0\"],\"source_evidence_sha256\":[\"7a4f36ff11abad092f9569787d4133fa8568728a299428d01e4c510f45a09924\",\"a13edff3c4cf208ee203b5aec5e6a2f4b0eb7c55aea643b6062b143dee44587b\"],\"supporting_source_urls\":[\"https://www.elmostrador.cl/noticias/pais/2019/07/10/lo-barnechea-en-conflicto-proyecto-inmobiliario-autorizado-por-alcalde-felipe-guevara-amenaza-bosque-nativo/\",\"https://www.leylobby.gob.cl/instituciones/AP001/audiencias/2025/727203\",\"https://www.lobarnechea.cl/transparencia/DEC_DDC_094179_0144__07-09-2022_.pdf\"]}",
+        "final_decision_reason": "La cobertura de 2019 identifica un desarrollo de 54 casas en Cerro del Medio, mientras la fuente de 2025 usa “Reserva La Dehesa, exChaguay”. Eso sugiere entidades distintas, pero el project_id genérico Reserva La Dehesa también está enlazado en el warehouse a referencias de exChaguay. La atribución del ID está contaminada/compuesta; no se afirma distinct_entities hasta separar sus menciones y reconciliar la relación heredada.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": false,
+        "project_id_a": "a07066976e35eb7bd807ed77",
+        "project_id_b": "01d6668a9dc5aba908f81090",
+        "project_name_a": "Reserva La Dehesa, exChaguay",
+        "project_name_b": "Reserva La Dehesa",
+        "queue_rowid": 93,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El proyecto detallado y el ID genérico parecen del cluster Vital Apoquindo, pero hay desacuerdo 25/27 y canonicals competidores; no merge aislado.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"be23ed3f93026a81292d\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"be23ed3f93026a81292d:a:0\",\"be23ed3f93026a81292d:b:0\"],\"source_evidence_sha256\":[\"6d20f15728d3b773db29c082553a5d0153527778ff5d0517ec47b13689c33a38\",\"f4b3bcc1c96bb7fe111004d7b47ffa75e74c5aafdfcd861db7205d269da2b194\"],\"supporting_source_urls\":[\"https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2021/05/10/graves-ilegalidades-contenidas-en-el-permiso-del-edificio-institucional-de-la-cchc-en-las-condes.shtml\",\"https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/\"]}",
+        "final_decision_reason": "La nota de BioBioChile identifica expresamente el proyecto de 25 edificios en Vital Apoquindo como antecedente urbanístico/permiso de la controversia del edificio institucional de la CChC; la otra fuente describe ese mismo desarrollo y tramo 1.400–1.500. Se unen solo estos project_id exactos; la mención CChC permanece vinculada a su propio case_mention.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "e986c115668629af6342f449",
+        "project_id_b": "e37655355ac179806569a998",
+        "project_name_a": "proyecto de 25 edificios en la calle Vital Apoquindo",
+        "project_name_b": "Mega proyecto inmobiliario de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "queue_rowid": 94,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El centro comercial complementario es una nueva propuesta conectada al mall existente, no el mall Alto Las Condes.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"fac654d2b5230676ef96\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"14970dc899d59f8e37d52d37b46c9c386acc969d42a83709cea5062aaa328115\",\"be5e21d719d65aadffc993045d1259c9c7ed39c95c7775f7071f0918ac4f761b\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El centro comercial complementario es una nueva propuesta conectada al mall existente, no el mall Alto Las Condes.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "55fe871bbd805f236d267066",
+        "project_id_b": "e6cb0dc75e5923505b8c84ea",
+        "project_name_a": "centro comercial complementario al mall Alto Las Condes",
+        "project_name_b": "mall Alto Las Condes",
+        "queue_rowid": 102,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El cluster Vital Apoquindo apunta a un desarrollo común, pero alterna conteos de 25/27 edificios y etiquetas competidoras; no fusionar una parte aisladamente.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"871166e38c932b2ee95c\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"871166e38c932b2ee95c:a:0\",\"871166e38c932b2ee95c:b:0\"],\"source_evidence_sha256\":[\"5c6bf5fdb02070d7ccdc11d57a2d5ed80b095cf359ba692bf80d0be4d71097d6\",\"d4b60872e22573abb3b275c39ae72a543182c9e474f763dcba50e3ec43a6862c\"],\"supporting_source_urls\":[\"https://www.defendamoslaciudad.cl/noticias/item/8293-corrupcion-en-la-municipalidad-de-las-condes\",\"https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html\"]}",
+        "final_decision_reason": "Coinciden la inmobiliaria Mirador Oriente, la calle y el tramo 1.400–1.500 de Vital Apoquindo, además del permiso y la controversia ante Contraloría/DOM. Las diferencias publicadas entre 25 y 27 edificios se preservan como discrepancia de atributos; no justifican por sí solas separar el desarrollo.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "5997fefd9709a67727316bc2",
+        "project_id_b": "fe0f38566717aa34de32376a",
+        "project_name_a": "Mega proyecto inmobiliario de 25 edificios en altura, calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "project_name_b": "Vital Apoquindo",
+        "queue_rowid": 104,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Costanera Sur como parque/propuesta fluvial y la autopista son objetos y funciones distintos.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"39bcb0694be965c34c87\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"b3d9ec5c5034058320c7d4481f3742991069e7b83b31afb0a4871e8506bd5f7e\",\"c895e21fcc4059484fa07daf9c7efca32a82bca5e69988db908380e8914330de\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Costanera Sur como parque/propuesta fluvial y la autopista son objetos y funciones distintos.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "fd574f457d080f169da026f2",
+        "project_id_b": "c01a1b06c8532ef47b2c5523",
+        "project_name_a": "Costanera Sur",
+        "project_name_b": "Autopista Costanera Sur",
+        "queue_rowid": 117,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Lote D-1 de La Reina y El Castillo en La Pintana tienen predio, comuna, titularidad y finalidad diferentes.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"9dd1b938954e8410f145\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"7f5ae0f047b8f17fb0ce67deac14d1159469b1466b45f3aba0c9cd0b06b9ff17\",\"90763172ac2ae6a31373b7ccba270d2deb3caad81fc93707204064090ef46dc0\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Lote D-1 de La Reina y El Castillo en La Pintana tienen predio, comuna, titularidad y finalidad diferentes.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "160ed5b79e557124d6a7cb1e",
+        "project_id_b": "e833a979107986776b1e8bff",
+        "project_name_a": "Lote D-1 (avenida Alcalde Fernando Castillo Velasco N°9282)",
+        "project_name_b": "El Castillo",
+        "queue_rowid": 121,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La manzana/campus mixto USS incluye varios usos; el proyecto residencial DIB es un componente, no su alias.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"9a33972ef382934f8d2f\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0d7e311d564c54b6fed1b706495e933f93e49c4714bbdb436a062287ee0a3365\",\"35f2d223db6ca99b4404f86153c76199e9c495b4cede6947c7d8719cf39872a4\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La manzana/campus mixto USS incluye varios usos; el proyecto residencial DIB es un componente, no su alias.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "9090c40ee995197eae97909c",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "Proyecto inmobiliario de la Universidad San Sebastián en la manzana Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 123,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Alameda 4499 es el predio; el anteproyecto que se quería ejecutar allí es una propuesta/instrumento distinto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"8f69dfe89a3b258449c2\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"a3bb187cd92db8dba5540e379de4a379601fce006677b65029203ae32b9c5e93\",\"d91c9c45e905a77620debf17d3fc2d3804f00e1d96b04dc7805022a301ea2193\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Alameda 4499 es el predio; el anteproyecto que se quería ejecutar allí es una propuesta/instrumento distinto.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "5bfdd3a1b81e31fc927e9487",
+        "project_id_b": "eecb680314cf4c38d64391fb",
+        "project_name_a": "Alameda 4499",
+        "project_name_b": "anteproyecto en Alameda 4499",
+        "queue_rowid": 124,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "“Recreo” puede ser sector y el proyecto en calle Recreo un desarrollo puntual; falta rol/dirección o titular compartido que los conecte.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"f46e5517d7ecee26f64d\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"f46e5517d7ecee26f64d:a:0\",\"f46e5517d7ecee26f64d:b:0\"],\"source_evidence_sha256\":[\"30a30d5abffc387396183ebfc3440bef2fddfa42f7976567f8d7e697715c2d07\",\"9a1068e515dc6bb6d0fdb4b2c4b8ffce420c617dc0d3f6928f6e31fbf589c14d\"],\"supporting_source_urls\":[\"https://infofirma.sea.gob.cl/DocumentosSEA/MostrarDocumento?docId=16%2F57%2F822fcc73ba5f30bf3a351c7d9687d0563b32\",\"https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/\"]}",
+        "final_decision_reason": "La coincidencia de calle y titular, y la mención de CIPER a cambios en proyectos de las calles Recreo y Placilla, hacen plausible una relación. Pero el registro no aporta número predial, permiso, RCA ni otra clave que demuestre que el project_id genérico “Recreo” sea el mismo edificio/proyecto específico; la resolución SEA citada solo ancla una de las menciones. Se mantiene unresolved y no se fusionan por calle o titular compartido.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": false,
+        "project_id_a": "0a9d6730e059f72c2cdec2d8",
+        "project_id_b": "ad2b70567df6b8d44f952100",
+        "project_name_a": "Recreo",
+        "project_name_b": "proyecto ubicado en calle Recreo",
+        "queue_rowid": 126,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Carlos Valdovinos aparece en un registro contaminado por otros proyectos; la mención SuKasa no prueba que el ID amplio sea ese proyecto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"7d3556ba528bb38bd627\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"7d3556ba528bb38bd627:a:0\",\"7d3556ba528bb38bd627:b:0\"],\"source_evidence_sha256\":[\"2217dc19452d254b2c074b39ceaded40191f87baede498dc2ef626bc84cf8b37\",\"9a1068e515dc6bb6d0fdb4b2c4b8ffce420c617dc0d3f6928f6e31fbf589c14d\",\"f87013185c7d3d5baead2c7e07c93602bad415a0582f52b8f639e9bd335f3d22\"],\"supporting_source_urls\":[\"https://eldesconcierto.cl/2017/07/16/un-gueto-vertical-en-area-verde-que-era-de-dona-lucia\",\"https://www.munistgo.cl/municipio-detiene-construccion-de-megaproyecto-inmobiliario/\"]}",
+        "final_decision_reason": "La Municipalidad de Santiago identifica el megaproyecto Carlos Valdovinos en Parque Las Moscas con tres torres y 4.200 viviendas. La fuente de El Desconcierto vincula a Inmobiliaria Carlos Valdovinos/Armando Ide con Su Ksa, y la otra mención sitúa el plan de SuKasa en avenida Carlos Valdovinos sobre terreno vendido por Cema Chile. La coincidencia de predio, titularidad y configuración sustenta identidad. Se conservan las diferencias de redacción y cualquier cifra divergente como atributos de fuente, no se reescriben.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "91f2112803222891bec22245",
+        "project_id_b": "2501823afe7521d105456260",
+        "project_name_a": "Carlos Valdovinos",
+        "project_name_b": "proyecto de SuKasa en avenida Carlos Valdovinos",
+        "queue_rowid": 128,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Ambas menciones describen una colección de cuatro megaproyectos contiguos en Toro Mazzotte, no un proyecto individual; se conserva referencia agregada sin fusionar entidades singulares.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"8171815b9845b0a3eb2c\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"8171815b9845b0a3eb2c:a:0\",\"8171815b9845b0a3eb2c:b:0\"],\"source_evidence_sha256\":[\"8087e9affac8847a75887c754704edc8c7a68c8f63cbbd2292dea700ecdc08eb\",\"f8bf5980619bff5f9b52c6529c78350095c47513e3efac968fee80dedab8c3c2\"],\"supporting_source_urls\":[\"https://interferencia.cl/casos/guetos-verticales\",\"https://interferencia.cl/secciones/empresas?_url=/secciones/empresas&page=40\"]}",
+        "final_decision_reason": "Ambas páginas de Interferencia reproducen literalmente la misma oración sobre el agregado de cuatro megaproyectos contiguos de calle Toro Mazzote vinculados a SuKsa. La resolución se limita a esa referencia agregada duplicada; no declara que los cuatro proyectos miembros sean una sola obra ni los fusiona entre sí.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "cb1087cc68bd26d203011f18",
+        "project_id_b": "8e88d3996773e1c8ecf04a7c",
+        "project_name_a": "cuatro megaproyectos seguidos emplazados en calle Toro Mazzote",
+        "project_name_b": "cuatro megaproyectos seguidos emplazados en calle Toro Mazzote, de la Inmobiliaria SuKsa",
+        "queue_rowid": 129,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El edificio DIB es una torre/componente y Proyecto Bellavista el conjunto paraguas de tres torres; mismo titular/entorno no borra esa diferencia.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"a5f25fc9691551f03073\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"6acc4e8311c5e912cbf3475c53be1338b93f9bd49d2a951c323b938544f52a50\",\"f8bf5980619bff5f9b52c6529c78350095c47513e3efac968fee80dedab8c3c2\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El edificio DIB es una torre/componente y Proyecto Bellavista el conjunto paraguas de tres torres; mismo titular/entorno no borra esa diferencia.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "80119ee1c677f9875d29c4b3",
+        "project_id_b": "1c1f2a962eca459282a98baa",
+        "project_name_a": "edificio de Desarrollo Inmobiliario Bellavista",
+        "project_name_b": "proyecto inmobiliario Bellavista",
+        "queue_rowid": 130,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Lote B es una fracción/fase específica de la Villa Panamericana, no el conjunto completo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"178854a4dd1ca649a3b4\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35636c4b3e55248cc81d152cc59c4cece5e7c3d276300fb971fe87b120a03017\",\"4ec1a6ed8716a1ff5c8f4b9d7d3ec2513181fdf1dbec90339155ccf2fb6efd2b\",\"acb4b4f85283e3563046e0c6a805fa7c2e12c668babd80a100b9610e455e53f3\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Lote B es una fracción/fase específica de la Villa Panamericana, no el conjunto completo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "fdf3fc5067e1f4702d4d1926",
+        "project_id_b": "eb3643e037326f2ddbd80f9f",
+        "project_name_a": "Lote B de la Villa Panamericana de Cerrillos",
+        "project_name_b": "Villa Panamericana",
+        "queue_rowid": 137,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El plan de reconstrucción es instrumento/intervención sobre el sector El Olivar; no es idéntico al territorio/conjunto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"8742793c71b69d62e9e6\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35636c4b3e55248cc81d152cc59c4cece5e7c3d276300fb971fe87b120a03017\",\"acb4b4f85283e3563046e0c6a805fa7c2e12c668babd80a100b9610e455e53f3\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El plan de reconstrucción es instrumento/intervención sobre el sector El Olivar; no es idéntico al territorio/conjunto.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "97054633b8b0269ab708e8df",
+        "project_id_b": "349c92fd4c690e210f347e70",
+        "project_name_a": "Plan de reconstrucción de El Olivar",
+        "project_name_b": "El Olivar",
+        "queue_rowid": 139,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El megaproyecto privado de Maestra está en el predio Ciudad del Niño, pero no es la identidad del sitio histórico.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"942907e8fe497b72078e\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"2305b4d7e5063d8bd6ce069581b74c36cc5ec92c31ced75fbf8f049688868923\",\"2630d5f3be9de1a48444d5347dcf4cab70ce9691665b8d718571adb58f1f99b5\",\"3e893336e061547d45e84441486e85fdd52cbb68d2f4b4ffb4360447c5ccc758\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El megaproyecto privado de Maestra está en el predio Ciudad del Niño, pero no es la identidad del sitio histórico.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "56e38026f850dc7badd03854",
+        "project_id_b": "f7d8dd8863f08d9365fa846a",
+        "project_name_a": "Ciudad del Niño",
+        "project_name_b": "Ciudad del Niño — megaproyecto de Inmobiliaria Maestra S.A.",
+        "queue_rowid": 146,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El Plan Urbano Habitacional es una intervención/programa posterior sobre el sitio, no un alias de Ciudad del Niño.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"61dff4fb6f040834d32c\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"2305b4d7e5063d8bd6ce069581b74c36cc5ec92c31ced75fbf8f049688868923\",\"2630d5f3be9de1a48444d5347dcf4cab70ce9691665b8d718571adb58f1f99b5\",\"3e893336e061547d45e84441486e85fdd52cbb68d2f4b4ffb4360447c5ccc758\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El Plan Urbano Habitacional es una intervención/programa posterior sobre el sitio, no un alias de Ciudad del Niño.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "56e38026f850dc7badd03854",
+        "project_id_b": "731db7d39d5d7b083e5ce54a",
+        "project_name_a": "Ciudad del Niño",
+        "project_name_b": "Plan Urbano Habitacional (PUH) Ciudad del Niño",
+        "queue_rowid": 147,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Ciudad del Niño es el sitio histórico; las 23 torres y viviendas son una iniciativa posterior sobre ese sitio.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"4360da270c9cbfd3cf8c\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"2305b4d7e5063d8bd6ce069581b74c36cc5ec92c31ced75fbf8f049688868923\",\"2630d5f3be9de1a48444d5347dcf4cab70ce9691665b8d718571adb58f1f99b5\",\"9ce3eb5430780d2d33ca4d0f7a375da321831fbf875844c90e8cb9edc2c65469\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Ciudad del Niño es el sitio histórico; las 23 torres y viviendas son una iniciativa posterior sobre ese sitio.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "56e38026f850dc7badd03854",
+        "project_id_b": "8e7532434c76aa28d66f2f72",
+        "project_name_a": "Ciudad del Niño",
+        "project_name_b": "23 torres de 23 pisos y 5.400 viviendas en las 12 hectáreas de la Ciudad del Niño",
+        "queue_rowid": 149,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El Sheraton es el activo existente; el anteproyecto posterior en sus terrenos es una propuesta diferente.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"e39fb3a8ce190e9fbec5\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"7828cfaf08b5c03d816ae5464db4e3e05612df0f2403569befcc1ed8e6488043\",\"7cd5957500634853f5ea8da644b15a0d497272028d6ae0f037346d495cdc86ff\",\"7d10130d875c8b399cf082bb989c2488c15d687aa1b52245b0fbe5c6f59f7fe3\",\"b60450c34d8d807e81d1e90e09111e862e69457a83f781ebc1dbc1ea80ff3e3b\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El Sheraton es el activo existente; el anteproyecto posterior en sus terrenos es una propuesta diferente.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "803496aefc68167d7a9c2f7b",
+        "project_id_b": "2a928d93ec97331e7b4bb239",
+        "project_name_a": "Hotel Sheraton",
+        "project_name_b": "Anteproyecto en terrenos del hotel Sheraton (Emeterio Larraín Bunster 0390 y Av El Cerro 1745)",
+        "queue_rowid": 158,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Las torres de 30/32 pisos tienen proyecto y permiso propios junto/al interior del perímetro del Sheraton; el hotel no es ese proyecto.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"0107ef23b9ef34057881\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"3c8b21c99d7e973da1e4e2f3d41e08464239ae2320672a7f14de9b25de243fe1\",\"7cd5957500634853f5ea8da644b15a0d497272028d6ae0f037346d495cdc86ff\",\"7d10130d875c8b399cf082bb989c2488c15d687aa1b52245b0fbe5c6f59f7fe3\",\"b60450c34d8d807e81d1e90e09111e862e69457a83f781ebc1dbc1ea80ff3e3b\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Las torres de 30/32 pisos tienen proyecto y permiso propios junto/al interior del perímetro del Sheraton; el hotel no es ese proyecto.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "803496aefc68167d7a9c2f7b",
+        "project_id_b": "cf65ca873f68634f640f1bd0",
+        "project_name_a": "Hotel Sheraton",
+        "project_name_b": "dos torres habitacionales de 30 y 32 pisos junto al Hotel Sheraton Santiago",
+        "queue_rowid": 159,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La casona patrimonial y la torre propuesta para reemplazarla son objetos/etapas diferentes aunque compartan predio.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"dd148cf68a12f30e0537\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"478953fbafbc8b0dfaa1685ed827fbbdc9243800aff92e320dc89bfb2bd872ec\",\"478953fbafbc8b0dfaa1685ed827fbbdc9243800aff92e320dc89bfb2bd872ec\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La casona patrimonial y la torre propuesta para reemplazarla son objetos/etapas diferentes aunque compartan predio.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "2ba8340e7fe41a0e36637539",
+        "project_id_b": "75b6a3b9f4d56693fc466f55",
+        "project_name_a": "Casona de Morandé con Rosas",
+        "project_name_b": "Torre habitacional para reemplazar la casona de Morandé con Rosas",
+        "queue_rowid": 174,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Ambos registros apuntan a Fundamenta en Ñuñoa, pero difieren entre tres residenciales más una oficina y cuatro torres de 32; falta identificación predial/RCA inequívoca.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"4b4059b24dd41fe0f032\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"4b4059b24dd41fe0f032:a:0\",\"4b4059b24dd41fe0f032:b:0\"],\"source_evidence_sha256\":[\"17964fe775c0a5dc5d0cb983d1c4407ed1303d114217411ac0ed22e203601898\",\"6005089557d649a4b1d0148f596fdb978e2945aaceb2c15d88ad570a0fa294de\"],\"supporting_source_urls\":[\"https://segreader.emol.cl/2022/04/21/A/GN449AUI/light?gt=173001\",\"https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/\",\"https://tribunalambiental.cl/wp-content/uploads/2023/06/Sentencia_R_231-2020-25.11.2021.pdf\",\"https://www.elclarin.cl/2024/07/30/elefantes-blancos-y-abogados-chismosos/\"]}",
+        "final_decision_reason": "La fuente Emol de 2022 describe el proyecto de Fundamenta en Ñuñoa, la controversia de sombras y tres torres residenciales de 32 pisos junto a una torre de oficinas. La sentencia primaria R-231-2020 identifica Egaña-Comunidad Sustentable, Plaza Egaña SpA, en Irarrázaval con Américo Vespucio, con cuatro torres: tres residenciales de 32 pisos y una torre de oficinas de 26 pisos; el litigio trata precisamente la evaluación de sombras y refractación. La fuente de 2024 también refiere el proyecto de Fundamenta en Ñuñoa y la misma controversia, aunque simplifica erróneamente la altura de la torre de oficinas. Ubicación, configuración, titular/entidad del proyecto y controversia convergen en una misma obra; la discrepancia es un atributo de fuente, no evidencia de un segundo proyecto. Se fusionan solo estos dos project_id exactos y ambos permanecen preservados.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "bb5755a35f19ada504ca13a4",
+        "project_id_b": "de08d293dbbdbbb72d27e6ae",
+        "project_name_a": "proyecto inmobiliario de Fundamenta",
+        "project_name_b": "proyecto inmobiliario de Fundamenta en Ñuñoa (4 torres de 32 pisos)",
+        "queue_rowid": 175,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El proyecto SuKsa en calle Placilla y el de Santolaya/Conde del Maule son desarrollos distintos; Placilla funciona como homónimo/topónimo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"39416caa652a23804b10\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"181278f142b9cb245b119468997e541104bf8c5dfef028561be538e8ee13d70e\",\"30a30d5abffc387396183ebfc3440bef2fddfa42f7976567f8d7e697715c2d07\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El proyecto SuKsa en calle Placilla y el de Santolaya/Conde del Maule son desarrollos distintos; Placilla funciona como homónimo/topónimo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "c06ce253ffa7e99f4c51a727",
+        "project_id_b": "a91a4ec8177080fd3d7aaaec",
+        "project_name_a": "proyecto ubicado en calle Placilla",
+        "project_name_b": "Placilla",
+        "queue_rowid": 185,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Las fuentes difieren entre dos torres de 30 y una de 32, versus dos torres de 30 y 32; sin titular/ubicación coincidentes, no merge.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"70097cb05f72215db4b3\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"3657f33c5986ed7140e8489d644c8f0ad92cd70377a8ec234060ea2949ddf5c2\",\"7d8c0194ca349f6281b39a53338dd89df8d1e5b5a84fa9b2cc94eb275521fbce\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Las fuentes difieren entre dos torres de 30 y una de 32, versus dos torres de 30 y 32; sin titular/ubicación coincidentes, no merge.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": false,
+        "project_id_a": "ffa5c9b29b95f230d34616d9",
+        "project_id_b": "4648a378b2f533657c23de7a",
+        "project_name_a": "proyecto de dos torres de 30 y una de 32 pisos",
+        "project_name_b": "dos torres de 30 y 32 pisos, con 295 departamentos en total y casi 35 mil metros cuadrados construidos",
+        "queue_rowid": 193,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Las torres se proponen en terrenos del Estadio Santa Laura; el estadio y el proyecto inmobiliario son entidades distintas.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"bd5f3eef1d5480b5617f\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"0cf6f3bf425a07f01483bda098adb20cfd8052f73e8723f06a7a279b313eb27f\",\"0fe3298f4e7d8ff5ce995d47a198c4e02eac0db315710c45a941bff5465daf11\",\"d1ee2c81ceba9f1ab9b3c4b22ac96d1ba6915f50842aca1ef748e119958492a8\",\"f4f661283c14a3ed66a0804a3381d8ae34107434ebd0a05fab429947e7fd0b85\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Las torres se proponen en terrenos del Estadio Santa Laura; el estadio y el proyecto inmobiliario son entidades distintas.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "485aaa31c35c3f2b1e14efc8",
+        "project_id_b": "55eb38437615036668dbae8d",
+        "project_name_a": "Estadio Santa Laura",
+        "project_name_b": "Proyecto inmobiliario en terrenos del Estadio Santa Laura",
+        "queue_rowid": 195,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Cencosud/Cenco administra malls distintos; las referencias apuntan a ubicaciones diferentes, no a un mismo activo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"f2cfc42df0726e3108fe\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"18c8a93bfb0a8be66afab988f10ec90e6b0e0c25df1e9e1f57dcbb0baac8e275\",\"c994aa777f9616ce25f2cfd3f2cc1ec875aeb3680b4e6c016c0ad395679c9862\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Cencosud/Cenco administra malls distintos; las referencias apuntan a ubicaciones diferentes, no a un mismo activo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "6731bae15356326b5b1c79f8",
+        "project_id_b": "e547a9ec40a7c49c4cc84833",
+        "project_name_a": "mall de Cencosud",
+        "project_name_b": "proyecto de mall de Cenco",
+        "queue_rowid": 198,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La mención coincide con el cluster Vital Apoquindo, pero las cifras 25/27 y los IDs competidores impiden cerrar este enlace por separado.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "merged",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"same_identity\",\"pair_id\":\"6af7e1570bff9ddbb3be\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"6af7e1570bff9ddbb3be:a:0\",\"6af7e1570bff9ddbb3be:b:0\"],\"source_evidence_sha256\":[\"5c6bf5fdb02070d7ccdc11d57a2d5ed80b095cf359ba692bf80d0be4d71097d6\",\"f4b3bcc1c96bb7fe111004d7b47ffa75e74c5aafdfcd861db7205d269da2b194\"],\"supporting_source_urls\":[\"https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/\",\"https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html\"]}",
+        "final_decision_reason": "La fuente de 2020 y la de 2023 describen el desarrollo de Vital Apoquindo en el mismo tramo 1.400–1.500, con Mirador Oriente como titular/desarrolladora y la misma controversia de permisos. Se conserva sin resolver la discrepancia 25/27 edificios.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "e37655355ac179806569a998",
+        "project_id_b": "fe0f38566717aa34de32376a",
+        "project_name_a": "Mega proyecto inmobiliario de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "project_name_b": "Vital Apoquindo",
+        "queue_rowid": 199,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El Hotel Sheraton y las torres proyectadas junto a él son objetos distintos con permisos/controversias diferenciables.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"c81765a797dce77b9a16\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"3c8b21c99d7e973da1e4e2f3d41e08464239ae2320672a7f14de9b25de243fe1\",\"7828cfaf08b5c03d816ae5464db4e3e05612df0f2403569befcc1ed8e6488043\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El Hotel Sheraton y las torres proyectadas junto a él son objetos distintos con permisos/controversias diferenciables.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "29f501a90711537ce8851efe",
+        "project_id_b": "cf65ca873f68634f640f1bd0",
+        "project_name_a": "Sheraton Santiago",
+        "project_name_b": "dos torres habitacionales de 30 y 32 pisos junto al Hotel Sheraton Santiago",
+        "queue_rowid": 201,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "sin regla aplicable ni decision manual -- requiere revision humana adicional",
+        "decision_source": "unresolved",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/historical_project_pair_adjudications_v1.json\",\"artifact_sha256\":\"ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"historical_pair:1fe37161549a409e9636\",\"source\":\"historical_pair_adjudication_2026-09-28\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"7a0cc65d9bb9df190cad8e0d4bcc12a472689d582add27472cc3f7ffdbe71755\",\"babd763960824883018dc3ea94751ffb5ffee784ab3822ba34dd9d68a6d9610f\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Dardignac 44 es la segunda torre habitacional del Conjunto Armónico Bellavista; la torre es componente, no alias del conjunto.",
+        "final_decision_source": "historical_pair_adjudication_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "6787fa6cc302091a8ea27645",
+        "project_id_b": "a812c5dd74897808e543d008",
+        "project_name_a": "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)",
+        "project_name_b": "Conjunto Armónico Bellavista",
+        "queue_rowid": 209,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La segunda torre CAB es una torre específica del proyecto Bellavista de tres torres; se preserva relación parte–todo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"f123b7c3132c33fe6135\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35f2d223db6ca99b4404f86153c76199e9c495b4cede6947c7d8719cf39872a4\",\"7a0cc65d9bb9df190cad8e0d4bcc12a472689d582add27472cc3f7ffdbe71755\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La segunda torre CAB es una torre específica del proyecto Bellavista de tres torres; se preserva relación parte–todo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "6787fa6cc302091a8ea27645",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 210,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "La segunda torre habitacional es componente/etapa del Conjunto Armónico Bellavista, no el proyecto paraguas.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"675fac8049249f80d63d\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"6227cd62205c960538f78f91e8ebfa625a9f85e67fab289e2fd7042f01d04d64\",\"7a0cc65d9bb9df190cad8e0d4bcc12a472689d582add27472cc3f7ffdbe71755\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "La segunda torre habitacional es componente/etapa del Conjunto Armónico Bellavista, no el proyecto paraguas.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "6787fa6cc302091a8ea27645",
+        "project_id_b": "3c3c53234cbce2dea5c38efc",
+        "project_name_a": "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)",
+        "project_name_b": "Proyecto Armónico Bellavista",
+        "queue_rowid": 211,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Maestranza San Eugenio es el sitio; el proyecto de vivienda es una iniciativa asociada. Ukamau queda solo como mención descriptiva/actor, no alias.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"related_plan_or_instrument\",\"pair_id\":\"e690d5e1003bbf2b0f3a\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"487064e2ac493376a1d42cc2a64bf6650bd051ae1fa72d928ca4300ee123a73b\",\"8e8b6f71bc56862bfa7ecfb42a485b3f9b92b95e92c8e5c798ead52b3ea68201\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Maestranza San Eugenio es el sitio; el proyecto de vivienda es una iniciativa asociada. Ukamau queda solo como mención descriptiva/actor, no alias.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "5402e3ed69c8819cf762b7ad",
+        "project_id_b": "b726df124fb9bc06965e4326",
+        "project_name_a": "Maestranza San Eugenio",
+        "project_name_b": "proyecto de vivienda social para más de 400 familias en la Maestranza San Eugenio",
+        "queue_rowid": 214,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El campus USS es una unidad dentro de un ámbito Bellavista más amplio; no equivale al proyecto residencial de varias torres.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"parent_component_phase\",\"pair_id\":\"7377d80cbecc50eae757\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35f2d223db6ca99b4404f86153c76199e9c495b4cede6947c7d8719cf39872a4\",\"3ae74aee27816bbedb4625af5b45c236d0c4ef5124b4c4dcea4706d5d0294051\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El campus USS es una unidad dentro de un ámbito Bellavista más amplio; no equivale al proyecto residencial de varias torres.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "9ee8ce1998b0c98b9df9cada",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "Campus Bellavista de la Universidad San Sebastián",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 224,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Bellavista puede referir al desarrollo DIB de Dardignac 44, pero el ID es amplio y el cluster incluye campus, edificio y torres de distinta granularidad; falta delimitarlo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "needs_human_review",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"19a17e893f4747e113e9\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35f2d223db6ca99b4404f86153c76199e9c495b4cede6947c7d8719cf39872a4\",\"6acc4e8311c5e912cbf3475c53be1338b93f9bd49d2a951c323b938544f52a50\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Bellavista puede referir al desarrollo DIB de Dardignac 44, pero el ID es amplio y el cluster incluye campus, edificio y torres de distinta granularidad; falta delimitarlo.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": false,
+        "project_id_a": "1c1f2a962eca459282a98baa",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "proyecto inmobiliario Bellavista",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 226,
+        "resolved": false,
+        "still_open": true
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Una fuente secundaria distingue Humedal San Luis y Humedal San Luis Norte, pero falta delimitación oficial para afirmar si son polígonos separados o subunidades.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"d05ad73929fbcd8a82b6\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"d05ad73929fbcd8a82b6:a:0\",\"d05ad73929fbcd8a82b6:b:0\"],\"source_evidence_sha256\":[\"a297d960ba6713d209b42d6c0dc60b3b702f5346322db6ea1efd448d46c23bf3\",\"a297d960ba6713d209b42d6c0dc60b3b702f5346322db6ea1efd448d46c23bf3\"],\"supporting_source_urls\":[\"https://eae.mma.gob.cl/storage/documents/04_Anteproyecto-Memoria_Actualizaci%C3%B3n_PRC_Quilicura.pdf.pdf\"]}",
+        "final_decision_reason": "Humedal San Luis y Humedal San Luis Norte son unidades húmedas nominadas por separado dentro del sistema de humedales de Quilicura. Que formen parte de un sistema territorial mayor no las convierte en una misma unidad analítica; se preservan como entidades distintas y potencialmente relacionadas.",
+        "final_decision_source": "project_identity_adjudication_override_2026-09-28",
+        "final_resolved": true,
+        "project_id_a": "52431d07bb532a107713c2bd",
+        "project_id_b": "bcf9a9d46577aec285a3b590",
+        "project_name_a": "Humedal San Luis",
+        "project_name_b": "Humedal San Luis Norte",
+        "queue_rowid": 231,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "Ciudad Parque Bicentenario de Cerrillos y el proyecto habitacional de La Platina en La Pintana tienen ubicación y expediente diferentes.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"c0d61e5996928a3fba34\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"4a81c1e44f825b3b31fc3421d804db47a734432715cc2c585cb59abfb8e81608\",\"83698cb0f8ac4bc6ce75ecab5bac79bc090285080c9bbca9c3ddabb929f8f213\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "Ciudad Parque Bicentenario de Cerrillos y el proyecto habitacional de La Platina en La Pintana tienen ubicación y expediente diferentes.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "7805069a696198e3d8e2b964",
+        "project_id_b": "adfb19558de9f772aad491a5",
+        "project_name_a": "Plan Maestro de Ciudad Parque Bicentenario",
+        "project_name_b": "Proyecto Bicentenario",
+        "queue_rowid": 241,
+        "resolved": false,
+        "still_open": false
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_reason": "El Plan Maestro Ciudad Parque Bicentenario es de Cerrillos; Parque Bicentenario sin calificativo refiere a otro parque en Vitacura.",
+        "decision_source": "identity_followup_2026-09-27",
+        "final_decision": "kept_separate",
+        "final_decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"distinct_entities\",\"pair_id\":\"535d3e37851eb891e6f2\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"83698cb0f8ac4bc6ce75ecab5bac79bc090285080c9bbca9c3ddabb929f8f213\",\"e8185899c5386c28a4339831c52cbedf9db100d978894d4f62baa7425ddc6628\"],\"supporting_source_urls\":[]}",
+        "final_decision_reason": "El Plan Maestro Ciudad Parque Bicentenario es de Cerrillos; Parque Bicentenario sin calificativo refiere a otro parque en Vitacura.",
+        "final_decision_source": "identity_followup_2026-09-27",
+        "final_resolved": true,
+        "project_id_a": "7805069a696198e3d8e2b964",
+        "project_id_b": "173cac3bef57ca62781f56fb",
+        "project_name_a": "Plan Maestro de Ciudad Parque Bicentenario",
+        "project_name_b": "Parque Bicentenario",
+        "queue_rowid": 242,
+        "resolved": false,
+        "still_open": false
+      }
+    ],
+    "queue_counts_after": {
+      "kept_separate": 131,
+      "merged": 117,
+      "needs_human_review": 8,
+      "total": 256
+    },
+    "queue_counts_before": {
+      "kept_separate": 87,
+      "merged": 117,
+      "needs_human_review": 52,
+      "total": 256
+    },
+    "resolver_summary": {
+      "decisions": {
+        "kept_separate": 131,
+        "merged": 117,
+        "needs_human_review": 8
+      },
+      "n_cases_after_merge": 836,
+      "n_homonym_partition_vetoes": 0,
+      "n_pairs_reviewed": 256,
+      "n_projects_before": 941,
+      "n_projects_merged_away": 105,
+      "project_relations": {
+        "project_relations": 1,
+        "relation_types": 1
+      }
+    },
+    "still_unresolved_pairs": [
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"d0fb99d977176b8fd90c\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"d0fb99d977176b8fd90c:a:3\",\"d0fb99d977176b8fd90c:b:0\"],\"source_evidence_sha256\":[\"0818baef4931f71c48e7d38ee0ecaf0b0f67d892b6b99935def2089498e162b5\",\"2e15d99fb5820259d95b136fcbf9c1e9101f2d4422d9346cbb2cafc4ef2894d9\",\"57483b67444a01c087b0c0c27629726312b2bb257872c870e28ba419801b45ff\",\"59a8283202acd72ee6a3f81c08105f2ce2a31c558c1d5f6c08f262f21726090b\",\"6aeeb1ed43989fcb7364edd1b010f1687183a81d224cdfa00cbc58f63ddb210f\",\"7a4f36ff11abad092f9569787d4133fa8568728a299428d01e4c510f45a09924\",\"7c312e47cc3c548da48324765831028cd739da5068a38f2c9449693242c67f9a\",\"87beb0fa96917201d1d781c50a15403d6a0b166a3402c24526e7e2426e53bd50\",\"c786b54393a61bb266ad8facd32b92e7854f50b06aefa170e29196edf67c8c39\",\"d18d7871e82cb1a0422c4ffe65900c7d42355d2bcc9bcdb0a6909edb80a6697e\",\"d8001ab31365a0581a5bdb73e1462af030bcfb9d5bed4db5843a0455ff7bff36\",\"dcfc98ea1a3c74b3368e78efe45ce04a38b4824daa967dfdebb43cd3edeb07d1\",\"ea3a6c80ab3185301748fa6592c247baccbd084b4e2af31513168dd5de44f59c\",\"eab816bc729c5e8c3afac981ca1ad3b1a2d66c1cb66c1c5bb7037fa3c1167365\",\"f84528dad52902cf669c048b317e56c2d33261bfa0c0a8ddb314311137dac94e\"],\"supporting_source_urls\":[\"https://lobarnechea.cl/Noticias/proyecto-chaguay-debe-ingresar-al-sistema-de-evaluacion-ambiental-sostiene-la-superintendencia-de-medio-ambiente/\",\"https://www.leylobby.gob.cl/instituciones/AP001/audiencias/2025/727203\"]}",
+        "decision_reason": "La expresión “Reserva La Dehesa, exChaguay” sí es evidencia de continuidad nominal. Sin embargo, el warehouse vigente ya enlaza por decisiones heredadas Chaguay (803b...) con el project_id genérico Reserva La Dehesa (01d...), mientras que el ID 01d también representa la iniciativa distinta del Cerro del Medio. Resolver solo este par como alias produciría una identidad compuesta contradictoria. Se conserva unresolved hasta reconstruir la procedencia exacta de esos IDs y corregir, con evidencia propia, la relación heredada; no se fuerza ni merge ni separación.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "803b8601f7f58a2b25f694cd",
+        "project_id_b": "a07066976e35eb7bd807ed77",
+        "project_name_a": "Chaguay",
+        "project_name_b": "Reserva La Dehesa, exChaguay",
+        "queue_rowid": 40
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/historical_project_pair_adjudications_v1.json\",\"artifact_sha256\":\"ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1\",\"identity_class\":\"unresolved\",\"pair_id\":\"historical_pair:8bf36944edfe85c618e0\",\"source\":\"historical_pair_adjudication_2026-09-28\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"649242eb4007fd61b74938b5bb7d9ef61c6f349136a9075242b6fda52e3fba1f\",\"87e9bc51b413f80ece0844756ffe4aab11431d9f07ac9e6edb124ad81f7635df\"],\"supporting_source_urls\":[]}",
+        "decision_reason": "Una fuente identifica un edificio PAZ Corp. en Santa Petronila; la otra describe una megatorre de 30 pisos y 1.053 departamentos. El material no prueba que sean el mismo inmueble y la calle tiene más de un proyecto. Sin permiso o predio común, no se fusiona ni se afirma diferencia.",
+        "decision_source": "historical_pair_adjudication_2026-09-28",
+        "project_id_a": "14537e43f763c717791c5b90",
+        "project_id_b": "00a49b2fac5c7887f0c4f628",
+        "project_name_a": "Edificio Santa Petronila",
+        "project_name_b": "edificio de la estrecha calle Santa Petronila",
+        "queue_rowid": 61
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/historical_project_pair_adjudications_v1.json\",\"artifact_sha256\":\"ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1\",\"identity_class\":\"unresolved\",\"pair_id\":\"historical_pair:1a548f6ba2417a0e6aae\",\"source\":\"historical_pair_adjudication_2026-09-28\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"4939e79a6ab18a2ed11227be21e6ca0d9d7468702c901f115efd001796fba991\",\"575d85ed16a0cae4709889108477e134cb719f12f95cf809ddc59b194be3db22\"],\"supporting_source_urls\":[]}",
+        "decision_reason": "Una fuente usa Costanera Center para el activo santiaguino y la otra llama a Cenco Costanera su denominación anterior; pero el ID fuente mezcla menciones del activo con referencias a iniciativas Cencosud. No se asegura que la relación sea exclusivamente alias y no una mención de proyecto/expansión; queda pendiente hasta separar menciones.",
+        "decision_source": "historical_pair_adjudication_2026-09-28",
+        "project_id_a": "e8fd7b147a07358cd8e129e9",
+        "project_id_b": "d18b439c5be31864ad8f1e21",
+        "project_name_a": "Costanera Center",
+        "project_name_b": "Cenco Costanera (antes Mall Costanera Center)",
+        "queue_rowid": 79
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"6b84e4c69373bcadad41\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"1444ce4c67c98b98abfaa3f5e49d97e45251afafd0f62a72658f3fca7676e553\",\"575d85ed16a0cae4709889108477e134cb719f12f95cf809ddc59b194be3db22\",\"7a6d7cc7900d60c1567a7867c540b9d83449ca9a3228db836c1d1a6bacca6656\",\"a7ed1208f7949ceba29efc392b081bed55a2e3cc6cd8951918785a7f223ab332\",\"dad628627f90ee3426f63fa6fd15fe105209855554a721fcfc275b1ba18af64d\",\"fe168f76c976f3e0c6e024c27eb871e04455683cc5fc89e84cdcbfb6393dcae3\"],\"supporting_source_urls\":[]}",
+        "decision_reason": "Alto Las Condes mezcla menciones de varios desarrollos; Cenco es una etiqueta corporativa. La evidencia no aísla qué activo representa cada ID.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "2cfcdb67a6274db8af9377f6",
+        "project_id_b": "2a40c16d17565173915c550d",
+        "project_name_a": "Alto Las Condes",
+        "project_name_b": "Cenco Alto Las Condes",
+        "queue_rowid": 84
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"7dfca97fba3dc5d6abd2\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"7dfca97fba3dc5d6abd2:a:0\",\"7dfca97fba3dc5d6abd2:b:0\"],\"source_evidence_sha256\":[\"7a4f36ff11abad092f9569787d4133fa8568728a299428d01e4c510f45a09924\",\"a13edff3c4cf208ee203b5aec5e6a2f4b0eb7c55aea643b6062b143dee44587b\"],\"supporting_source_urls\":[\"https://www.elmostrador.cl/noticias/pais/2019/07/10/lo-barnechea-en-conflicto-proyecto-inmobiliario-autorizado-por-alcalde-felipe-guevara-amenaza-bosque-nativo/\",\"https://www.leylobby.gob.cl/instituciones/AP001/audiencias/2025/727203\",\"https://www.lobarnechea.cl/transparencia/DEC_DDC_094179_0144__07-09-2022_.pdf\"]}",
+        "decision_reason": "La cobertura de 2019 identifica un desarrollo de 54 casas en Cerro del Medio, mientras la fuente de 2025 usa “Reserva La Dehesa, exChaguay”. Eso sugiere entidades distintas, pero el project_id genérico Reserva La Dehesa también está enlazado en el warehouse a referencias de exChaguay. La atribución del ID está contaminada/compuesta; no se afirma distinct_entities hasta separar sus menciones y reconciliar la relación heredada.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "a07066976e35eb7bd807ed77",
+        "project_id_b": "01d6668a9dc5aba908f81090",
+        "project_name_a": "Reserva La Dehesa, exChaguay",
+        "project_name_b": "Reserva La Dehesa",
+        "queue_rowid": 93
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/project_identity_adjudication_overrides_2026-09-28_v2.json\",\"artifact_sha256\":\"1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4\",\"identity_class\":\"unresolved\",\"pair_id\":\"f46e5517d7ecee26f64d\",\"source\":\"project_identity_adjudication_override_2026-09-28\",\"source_evidence_ref_ids\":[\"f46e5517d7ecee26f64d:a:0\",\"f46e5517d7ecee26f64d:b:0\"],\"source_evidence_sha256\":[\"30a30d5abffc387396183ebfc3440bef2fddfa42f7976567f8d7e697715c2d07\",\"9a1068e515dc6bb6d0fdb4b2c4b8ffce420c617dc0d3f6928f6e31fbf589c14d\"],\"supporting_source_urls\":[\"https://infofirma.sea.gob.cl/DocumentosSEA/MostrarDocumento?docId=16%2F57%2F822fcc73ba5f30bf3a351c7d9687d0563b32\",\"https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/\"]}",
+        "decision_reason": "La coincidencia de calle y titular, y la mención de CIPER a cambios en proyectos de las calles Recreo y Placilla, hacen plausible una relación. Pero el registro no aporta número predial, permiso, RCA ni otra clave que demuestre que el project_id genérico “Recreo” sea el mismo edificio/proyecto específico; la resolución SEA citada solo ancla una de las menciones. Se mantiene unresolved y no se fusionan por calle o titular compartido.",
+        "decision_source": "project_identity_adjudication_override_2026-09-28",
+        "project_id_a": "0a9d6730e059f72c2cdec2d8",
+        "project_id_b": "ad2b70567df6b8d44f952100",
+        "project_name_a": "Recreo",
+        "project_name_b": "proyecto ubicado en calle Recreo",
+        "queue_rowid": 126
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"70097cb05f72215db4b3\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"3657f33c5986ed7140e8489d644c8f0ad92cd70377a8ec234060ea2949ddf5c2\",\"7d8c0194ca349f6281b39a53338dd89df8d1e5b5a84fa9b2cc94eb275521fbce\"],\"supporting_source_urls\":[]}",
+        "decision_reason": "Las fuentes difieren entre dos torres de 30 y una de 32, versus dos torres de 30 y 32; sin titular/ubicación coincidentes, no merge.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "ffa5c9b29b95f230d34616d9",
+        "project_id_b": "4648a378b2f533657c23de7a",
+        "project_name_a": "proyecto de dos torres de 30 y una de 32 pisos",
+        "project_name_b": "dos torres de 30 y 32 pisos, con 295 departamentos en total y casi 35 mil metros cuadrados construidos",
+        "queue_rowid": 193
+      },
+      {
+        "decision": "needs_human_review",
+        "decision_provenance_ref": "{\"artifact\":\"audit/identity_followup_2026-09-27/identity_adjudications_v1.json\",\"artifact_sha256\":\"78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f\",\"identity_class\":\"unresolved\",\"pair_id\":\"19a17e893f4747e113e9\",\"source\":\"identity_followup_2026-09-27\",\"source_evidence_ref_ids\":null,\"source_evidence_sha256\":[\"35f2d223db6ca99b4404f86153c76199e9c495b4cede6947c7d8719cf39872a4\",\"6acc4e8311c5e912cbf3475c53be1338b93f9bd49d2a951c323b938544f52a50\"],\"supporting_source_urls\":[]}",
+        "decision_reason": "Bellavista puede referir al desarrollo DIB de Dardignac 44, pero el ID es amplio y el cluster incluye campus, edificio y torres de distinta granularidad; falta delimitarlo.",
+        "decision_source": "identity_followup_2026-09-27",
+        "project_id_a": "1c1f2a962eca459282a98baa",
+        "project_id_b": "7a4072da49c6decfd6df3f01",
+        "project_name_a": "proyecto inmobiliario Bellavista",
+        "project_name_b": "proyecto Bellavista",
+        "queue_rowid": 226
+      }
+    ]
+  },
+  "run_id": "2026-09-28T23:43:01.791795+00:00",
+  "schema_version": "project_identity_resolution_simulation_v1",
+  "simulation_integrity": {
+    "case_id_count_after_resolution": 836,
+    "dashboard_or_manifest_published": false,
+    "foreign_key_violations": 0,
+    "full_conflict_rebuild_executed": false,
+    "project_count_after_resolution": 941,
+    "sqlite_integrity_check": "ok"
+  },
+  "simulation_only": true,
+  "source_hashes": {
+    "base_identity_adjudications_sha256": "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f",
+    "base_identity_bundle_sha256": "b1a793348667f34891dabfe5d305628e22bd3040e72a006e7f4eeedb28124dc5",
+    "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
+    "conflict_builder_sha256": "82bf139ff9119138346e150cd4c2e5b48c98da7179039f05a0c40bda3977b031",
+    "fulltext_manifest_sha256": "4497b3856966f5d7fdd44a1dd5eb62ce36779b637923febaeab99ffdccd39b1a",
+    "historical_pair_adjudications_sha256": "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1",
+    "historical_resolutions_sha256": "b5f0583619134b923ff1c47d48aa92753c3b2b583368af4e67dae5c5cbe45304",
+    "identity_overrides_sha256": "1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4",
+    "resolver_sha256": "fcdb953bd1ec41f88b9cd43a72486f339c423fdc2d3988ba3c92cc4aa67f9684",
+    "simulation_script_sha256": "fbdd3a67b9fbbb724db5c4bab786a6f66b47c7e388b05f89b915bde5d598ab18",
+    "warehouse_sha256": "685af6a951356c0c7e7249525fcb89362f8801a4c259f614571d775fb329c33c"
+  },
+  "source_warehouse_mutated": false,
+  "source_warehouse_sha256_after": "685af6a951356c0c7e7249525fcb89362f8801a4c259f614571d775fb329c33c"
+}
