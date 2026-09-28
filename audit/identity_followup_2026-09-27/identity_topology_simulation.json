@@ -1,0 +1,30 @@
+{
+  "schema_version": "project_identity_topology_simulation_v1",
+  "artifact_id": "identity_topology_simulation_2026-09-27",
+  "identity_adjudications_sha256": "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f",
+  "warehouse_sha256_before_after": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+  "sqlite_open_mode": "read-only",
+  "sqlite_modified": false,
+  "integrity_check": "ok",
+  "foreign_key_errors": 0,
+  "projects": 941,
+  "queue_rows": 256,
+  "baseline_project_count": 941,
+  "baseline_mapping_sha256": "6f5271853c546cac3d573bfd7ba096cf3b62f8070ee810b1222b4ebbd138ca3b",
+  "evidence_references_validated": 219,
+  "verified_literal_quotes": 219,
+  "unanchored_references": 0,
+  "topology_validation": {
+    "checked": 51,
+    "transitive_reconnections": 0
+  },
+  "queue_decisions_simulated": {
+    "kept_separate": 85,
+    "merged": 120,
+    "needs_human_review": 51
+  },
+  "case_groups_before": 850,
+  "case_groups_after": 835,
+  "homonym_vetoes": 0,
+  "production_promoted": false
+}

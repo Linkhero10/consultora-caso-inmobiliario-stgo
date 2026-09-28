@@ -682,13 +682,378 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
     return None, "sin regla aplicable ni decision manual -- requiere revision humana adicional", "unresolved", None
 
 
+def classify_project_pair_with_adjudications(
+    project_id_a: str,
+    name_a: str,
+    project_id_b: str,
+    name_b: str,
+    adjudications: list[dict[str, Any]],
+) -> tuple[bool | None, str, str, str | None]:
+    """Apply source-reviewed project identity decisions by exact IDs only.
+
+    Reviewed pairs with a non-merge disposition deliberately return ``None``:
+    they must not inherit an older name-only rule, while the project baseline
+    remains untouched. A name pair present in the review package but attached
+    to different IDs is also held for review instead of inheriting that result.
+    """
+    pair_ids = tuple(sorted((str(project_id_a), str(project_id_b))))
+    name_by_id = {str(project_id_a): name_a, str(project_id_b): name_b}
+    exact_entry = None
+    reviewed_name_pair = False
+    for entry in adjudications:
+        ids = entry.get("project_ids")
+        if not isinstance(ids, list) or len(ids) != 2 or len(set(ids)) != 2:
+            raise ValueError("identity adjudication requires two distinct project_ids")
+        entry_ids = tuple(sorted(str(value) for value in ids))
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(entry_ids):
+            raise ValueError(f"identity adjudication {entry.get('pair_id')!r} has invalid project_names")
+        entry_name_pair = tuple(sorted(_norm(str(names[value])) for value in entry_ids))
+        if entry_ids == pair_ids:
+            if any(str(names[pid]) != name_by_id[pid] for pid in pair_ids):
+                raise ValueError(
+                    f"canonical_name mismatch for exact identity adjudication {entry.get('pair_id')!r}"
+                )
+            if exact_entry is not None:
+                raise ValueError(f"duplicate exact identity adjudications for {pair_ids!r}")
+            exact_entry = entry
+        if entry_name_pair == tuple(sorted((_norm(name_a), _norm(name_b)))):
+            reviewed_name_pair = True
+
+    if exact_entry is not None:
+        identity_class = exact_entry.get("identity_class")
+        action = exact_entry.get("resolver_action")
+        rationale = str(exact_entry.get("rationale") or "")
+        if identity_class == "same_identity" and action == "merge_case":
+            return True, rationale, "identity_followup_2026-09-27", None
+        if action == "no_new_merge":
+            return None, rationale, "identity_followup_2026-09-27", None
+        raise ValueError(
+            f"unsupported resolver_action {action!r} for identity class {identity_class!r}"
+        )
+
+    if reviewed_name_pair:
+        return (
+            None,
+            "par de nombres revisado para otros project_id; no se hereda una decision por nombre",
+            "identity_followup_name_scope_guard",
+            None,
+        )
+    return classify_with_provenance(name_a, name_b)
+
+
+def load_project_identity_adjudications(
+    artifact_path: Path | None = None,
+    source_bundle_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Load and pin the exact-ID identity-review decisions consumed by the resolver."""
+    root = Path(__file__).resolve().parents[1]
+    artifact_path = artifact_path or root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    source_bundle_path = source_bundle_path or root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    payload = json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+    if payload.get("artifact_id") != "project_identity_adjudications_2026-09-27_v1":
+        raise ValueError("unexpected project identity adjudication artifact_id")
+    expected_bundle_sha = payload.get("source_bundle_sha256")
+    bundle_raw = Path(source_bundle_path).read_bytes()
+    actual_bundle_sha = hashlib.sha256(bundle_raw).hexdigest()
+    if expected_bundle_sha != actual_bundle_sha:
+        raise ValueError("identity review bundle SHA-256 mismatch")
+    source_bundle = json.loads(bundle_raw.decode("utf-8"))
+    bundle_pairs = {item["pair_id"]: item for item in source_bundle.get("unresolved_pairs", [])}
+    entries = payload.get("adjudications")
+    if not isinstance(entries, list) or len(entries) != 68:
+        raise ValueError("identity adjudication artifact must contain exactly 68 reviewed pairs")
+    allowed_classes = {
+        "same_identity",
+        "parent_component_phase",
+        "related_plan_or_instrument",
+        "distinct_entities",
+        "unresolved",
+    }
+    # Reuse the pure classifier as a structural validation pass: this rejects
+    # duplicate ID pairs, stale names and unsupported actions before mutation.
+    seen_pair_ids: set[str] = set()
+    seen_id_pairs: set[tuple[str, str]] = set()
+    for entry in entries:
+        pair_id = str(entry.get("pair_id") or "")
+        ids = entry.get("project_ids")
+        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+            raise ValueError("identity adjudication pair_id/project_ids are missing or duplicated")
+        id_pair = tuple(sorted(str(value) for value in ids))
+        if id_pair in seen_id_pairs:
+            raise ValueError(f"duplicate identity adjudication project_id pair {id_pair!r}")
+        seen_pair_ids.add(pair_id)
+        seen_id_pairs.add(id_pair)
+        identity_class = entry.get("identity_class")
+        canonical_project_id = entry.get("canonical_project_id")
+        if identity_class not in allowed_classes:
+            raise ValueError(f"identity adjudication {pair_id!r} has unsupported identity_class")
+        if identity_class == "same_identity":
+            if entry.get("resolver_action") != "merge_case":
+                raise ValueError(f"same_identity pair {pair_id!r} must be merge_case")
+            if canonical_project_id not in id_pair:
+                raise ValueError(f"same_identity pair {pair_id!r} requires an exact canonical_project_id")
+        elif entry.get("resolver_action") != "no_new_merge":
+            raise ValueError(f"non-identical or unresolved pair {pair_id!r} must not merge")
+        elif canonical_project_id is not None:
+            raise ValueError(f"no_new_merge pair {pair_id!r} cannot declare a canonical_project_id")
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(id_pair):
+            raise ValueError(f"identity adjudication {pair_id!r} has invalid project_names")
+        source_pair = bundle_pairs.get(pair_id)
+        if source_pair is None:
+            raise ValueError(f"identity adjudication pair_id {pair_id!r} is absent from source bundle")
+        source_ids = {
+            source_pair["project_a"]["project_id"],
+            source_pair["project_b"]["project_id"],
+        }
+        source_names = {
+            source_pair["project_a"]["project_id"]: source_pair["project_a"]["canonical_name"],
+            source_pair["project_b"]["project_id"]: source_pair["project_b"]["canonical_name"],
+        }
+        if set(id_pair) != source_ids or names != source_names:
+            raise ValueError(f"identity adjudication {pair_id!r} project IDs/names differ from source bundle")
+        source_evidence = entry.get("source_evidence")
+        if not isinstance(source_evidence, list) or not source_evidence:
+            raise ValueError(f"identity adjudication {pair_id!r} has no source_evidence")
+        seen_sides: set[str] = set()
+        literal_evidence_sides: set[str] = set()
+        for ref in source_evidence:
+            side = ref.get("side")
+            side_key = "project_a" if side == "a" else "project_b" if side == "b" else None
+            if side_key is None:
+                raise ValueError(f"identity adjudication {pair_id!r} has invalid evidence side")
+            source_project = source_pair[side_key]
+            project_id = source_project["project_id"]
+            if ref.get("project_id") != project_id or ref.get("project_name") != source_project["canonical_name"]:
+                raise ValueError(f"identity adjudication {pair_id!r} evidence has stale project identity")
+            expected_sources = {
+                (example.get("document_id"), example.get("url"), example.get("raw_project_mention"))
+                for example in source_project.get("source_examples", [])
+            }
+            if (
+                ref.get("document_id"), ref.get("url"), ref.get("raw_project_mention")
+            ) not in expected_sources:
+                raise ValueError(f"identity adjudication {pair_id!r} cites a source outside its bundle side")
+            if not ref.get("content_record_sha256") or not ref.get("source_text_sha256"):
+                raise ValueError(f"identity adjudication {pair_id!r} has incomplete source hashes")
+            if ref.get("evidence_status") == "literal_anchor_verified":
+                if not ref.get("quote") or not ref.get("matched_fragment"):
+                    raise ValueError(f"identity adjudication {pair_id!r} has incomplete literal evidence")
+                literal_evidence_sides.add(side)
+            elif ref.get("evidence_status") != "no_discriminative_literal_anchor":
+                raise ValueError(f"identity adjudication {pair_id!r} has unsupported evidence_status")
+            seen_sides.add(side)
+        if seen_sides != {"a", "b"}:
+            raise ValueError(f"identity adjudication {pair_id!r} must retain source references for both projects")
+        if literal_evidence_sides != {"a", "b"} and identity_class != "unresolved":
+            raise ValueError(f"identity adjudication {pair_id!r} needs a literal anchor for both projects")
+    if seen_pair_ids != set(bundle_pairs):
+        raise ValueError("identity adjudication pair_id set differs from the frozen source bundle")
+    return entries
+
+
+def validate_project_identity_adjudication_scope(
+    projects: dict[str, str],
+    rows: list[tuple[int, str, str, str, str]],
+    adjudications: list[dict[str, Any]],
+) -> None:
+    """Fail closed if a reviewed pair no longer matches the live review queue."""
+    queue_pairs = {tuple(sorted((str(pid_a), str(pid_b)))) for _, pid_a, _, pid_b, _ in rows}
+    for entry in adjudications:
+        ids = tuple(sorted(str(value) for value in entry["project_ids"]))
+        for project_id in ids:
+            actual_name = projects.get(project_id)
+            expected_name = entry["project_names"].get(project_id)
+            if actual_name is None:
+                raise ValueError(f"identity adjudication references missing project_id {project_id!r}")
+            if actual_name != expected_name:
+                raise ValueError(
+                    f"canonical_name mismatch for identity adjudication {entry['pair_id']!r}: "
+                    f"{actual_name!r} != {expected_name!r}"
+                )
+        if ids not in queue_pairs:
+            raise ValueError(f"reviewed identity pair {entry['pair_id']!r} is absent from project_review_queue")
+
+
+def validate_project_identity_adjudication_evidence(
+    adjudications: list[dict[str, Any]], project_root: Path
+) -> dict[str, int]:
+    """Verify every cited fulltext record, hash, URL and literal quote before resolving.
+
+    This validation is intentionally fail-closed. A checked-in adjudication is
+    not sufficient by itself: the exact external corpus record must still be
+    present under the project's fulltext content root and match its hashes.
+    """
+    root = Path(project_root).resolve()
+    content_root = (root / "Fuentes" / "fulltext" / "content").resolve()
+    failures: list[str] = []
+    valid_references = 0
+    verified_literal_quotes = 0
+    unanchored_references = 0
+    for entry in adjudications:
+        pair_id = str(entry.get("pair_id") or "")
+        project_ids = entry.get("project_ids") or []
+        project_names = entry.get("project_names") or {}
+        for index, ref in enumerate(entry.get("source_evidence", [])):
+            label = f"{pair_id}[{index}]"
+            required = {
+                "side", "project_id", "project_name", "document_id", "url",
+                "content_file", "source_text_sha256", "content_record_sha256",
+                "raw_project_mention", "evidence_status",
+            }
+            if not isinstance(ref, dict) or required - set(ref):
+                absent = sorted(required - set(ref)) if isinstance(ref, dict) else sorted(required)
+                failures.append(f"{label}: faltan campos de evidencia {absent}")
+                continue
+            if ref["project_id"] not in project_ids or project_names.get(ref["project_id"]) != ref["project_name"]:
+                failures.append(f"{label}: project_id/name no corresponde a la adjudicación")
+                continue
+            relative = Path(str(ref["content_file"]))
+            if relative.is_absolute():
+                failures.append(f"{label}: content_file debe ser relativo")
+                continue
+            candidate = (root / relative).resolve()
+            try:
+                candidate.relative_to(content_root)
+            except ValueError:
+                failures.append(f"{label}: content_file queda fuera de Fuentes/fulltext/content")
+                continue
+            if not candidate.is_file():
+                failures.append(f"{label}: no existe content_file {ref['content_file']!r}")
+                continue
+            raw = candidate.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != ref["content_record_sha256"]:
+                failures.append(f"{label}: content_record_sha256 no coincide")
+                continue
+            try:
+                record = json.loads(raw.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                failures.append(f"{label}: JSON de fulltext inválido ({exc})")
+                continue
+            text = record.get("text")
+            if not isinstance(text, str):
+                failures.append(f"{label}: record.text no es texto")
+                continue
+            text_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            if record.get("url") != ref["url"]:
+                failures.append(f"{label}: URL del registro no coincide")
+            if text_sha != ref["source_text_sha256"] or text_sha != ref["document_id"]:
+                failures.append(f"{label}: hash del texto/document_id no coincide")
+            if ref["evidence_status"] == "literal_anchor_verified":
+                quote = ref.get("quote")
+                fragment = ref.get("matched_fragment")
+                if not isinstance(quote, str) or not quote or quote not in text:
+                    failures.append(f"{label}: quote no es substring literal del fulltext")
+                if (
+                    not isinstance(fragment, str)
+                    or not fragment
+                    or not isinstance(quote, str)
+                    or fragment not in quote
+                ):
+                    failures.append(f"{label}: matched_fragment no aparece en la cita literal")
+                else:
+                    verified_literal_quotes += 1
+            elif ref["evidence_status"] == "no_discriminative_literal_anchor":
+                if ref.get("quote") is not None or ref.get("matched_fragment") is not None:
+                    failures.append(f"{label}: fuente sin ancla discriminante no debe inventar cita")
+                unanchored_references += 1
+            else:
+                failures.append(f"{label}: evidence_status no reconocido")
+            if record.get("url") == ref["url"] and text_sha == ref["document_id"]:
+                valid_references += 1
+    if failures:
+        raise ValueError("identity adjudication source evidence invalid: " + "; ".join(failures[:20]))
+    return {
+        "valid_references": valid_references,
+        "verified_literal_quotes": verified_literal_quotes,
+        "unanchored_references": unanchored_references,
+    }
+
+
+def validate_project_identity_adjudication_topology(
+    project_to_case: dict[str, str],
+    baseline_case_id_by_project: dict[str, str],
+    adjudications: list[dict[str, Any]],
+) -> dict[str, int]:
+    """Reject a transitive topology change that defeats any reviewed no-merge.
+
+    A no-new-merge pair may already share a legacy case_id. That historical
+    grouping is reported but is not newly applied. If it starts in separate
+    baseline groups and ends in one output group, fail before SQLite writes.
+    """
+    checked = 0
+    transitive_reconnections: list[str] = []
+    for entry in adjudications:
+        if entry.get("resolver_action") != "no_new_merge":
+            continue
+        ids = entry.get("project_ids") or []
+        if len(ids) != 2 or any(pid not in project_to_case for pid in ids):
+            raise ValueError(f"identity adjudication {entry.get('pair_id')!r} references missing topology IDs")
+        checked += 1
+        left, right = ids
+        if (
+            baseline_case_id_by_project[left] != baseline_case_id_by_project[right]
+            and project_to_case[left] == project_to_case[right]
+        ):
+            transitive_reconnections.append(str(entry.get("pair_id")))
+    if transitive_reconnections:
+        raise ValueError(
+            "no_new_merge pair became connected through another merge: "
+            + ", ".join(transitive_reconnections[:20])
+        )
+    return {"checked": checked, "transitive_reconnections": 0}
+
+
 def classify(name_a: str, name_b: str) -> tuple[bool | None, str]:
     decision, reason, _source, _actor = classify_with_provenance(name_a, name_b)
     return decision, reason
 
 
-def decision_provenance_ref(name_a: str, name_b: str, source: str) -> str:
+def decision_provenance_ref(
+    name_a: str,
+    name_b: str,
+    source: str,
+    project_ids: tuple[str, str] | None = None,
+    identity_adjudications: list[dict[str, Any]] | None = None,
+) -> str:
     """Devuelve una referencia estable sin analizar la razón narrativa."""
+    if source == "identity_followup_name_scope_guard":
+        return json.dumps(
+            {
+                "source": source,
+                "artifact": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+                "project_ids": sorted(str(value) for value in (project_ids or ())),
+                "note": "decision not transferred because reviewed names belong to different project IDs",
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    if source == "identity_followup_2026-09-27":
+        if project_ids is None or identity_adjudications is None:
+            raise ValueError("identity review provenance requires exact project IDs and adjudications")
+        ids = tuple(sorted(str(value) for value in project_ids))
+        entry = next(
+            (item for item in identity_adjudications if tuple(sorted(item["project_ids"])) == ids),
+            None,
+        )
+        if entry is None:
+            raise ValueError(f"missing identity review provenance for project pair {ids!r}")
+        return json.dumps(
+            {
+                "source": source,
+                "artifact": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+                "pair_id": entry["pair_id"],
+                "identity_class": entry["identity_class"],
+                "source_evidence_sha256": sorted(
+                    ref["content_record_sha256"] for ref in entry.get("source_evidence", [])
+                ),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
     meta = MANUAL_DECISION_EVIDENCE.get((name_a, name_b)) or MANUAL_DECISION_EVIDENCE.get((name_b, name_a))
     if meta:
         payload = dict(meta)
@@ -884,6 +1249,7 @@ def resolve_case_components(
     partitions: dict[str, str],
     baseline_case_id_by_project: dict[str, str],
     classifier,
+    pair_classifier=None,
 ) -> ResolutionPlan:
     """Resuelve componentes de forma determinista y fail-closed.
 
@@ -950,7 +1316,10 @@ def resolve_case_components(
 
     classified = []
     for rowid, pid_a, name_a, pid_b, name_b in rows:
-        decision, reason, source, actor = classifier(name_a, name_b)
+        if pair_classifier is None:
+            decision, reason, source, actor = classifier(name_a, name_b)
+        else:
+            decision, reason, source, actor = pair_classifier(pid_a, name_a, pid_b, name_b)
         classified.append((tuple(sorted((pid_a, pid_b))), rowid, pid_a, name_a, pid_b, name_b, decision, reason, source, actor))
 
     row_decisions: dict[int, tuple[bool | None, str, str, str | None]] = {}
@@ -1151,11 +1520,26 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
         "FROM project_review_queue ORDER BY rowid"
     ).fetchall()
     projects = dict(conn.execute("SELECT project_id, canonical_name FROM project ORDER BY project_id"))
+    identity_adjudications = load_project_identity_adjudications()
+    validate_project_identity_adjudication_scope(projects, rows, identity_adjudications)
     partitions = dict(
         conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL")
     )
     baseline, baseline_sha256 = load_case_baseline(projects)
-    plan = resolve_case_components(projects, rows, partitions, baseline, classify_with_provenance)
+    plan = resolve_case_components(
+        projects,
+        rows,
+        partitions,
+        baseline,
+        classify_with_provenance,
+        pair_classifier=lambda pid_a, name_a, pid_b, name_b: classify_project_pair_with_adjudications(
+            pid_a, name_a, pid_b, name_b, identity_adjudications
+        ),
+    )
+    validate_project_identity_adjudication_evidence(identity_adjudications, PROJECT_ROOT)
+    validate_project_identity_adjudication_topology(
+        plan.project_to_case, baseline, identity_adjudications
+    )
 
     counts = {"merged": 0, "kept_separate": 0, "needs_human_review": 0}
     for rowid, pid_a, name_a, pid_b, name_b in rows:
@@ -1171,7 +1555,13 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
                 reason,
                 source,
                 actor,
-                decision_provenance_ref(name_a, name_b, source),
+                decision_provenance_ref(
+                    name_a,
+                    name_b,
+                    source,
+                    project_ids=(pid_a, pid_b),
+                    identity_adjudications=identity_adjudications,
+                ),
                 rowid,
             ),
         )

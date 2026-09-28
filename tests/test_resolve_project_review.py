@@ -10,6 +10,7 @@ import sys
 import sqlite3
 import hashlib
 import json
+import importlib.util
 from pathlib import Path
 
 import pytest
@@ -19,6 +20,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 import resolve_project_review as rpq  # noqa: E402
 import build_projects as bridge  # noqa: E402
+
+_IDENTITY_BUILDER_PATH = PROJECT_ROOT / "audit" / "identity_followup_2026-09-27" / "build_identity_followup.py"
+_IDENTITY_BUILDER_SPEC = importlib.util.spec_from_file_location("identity_followup_builder", _IDENTITY_BUILDER_PATH)
+assert _IDENTITY_BUILDER_SPEC and _IDENTITY_BUILDER_SPEC.loader
+identity_builder = importlib.util.module_from_spec(_IDENTITY_BUILDER_SPEC)
+_IDENTITY_BUILDER_SPEC.loader.exec_module(identity_builder)
 
 
 def test_conflicting_numeral_blocks_merge():
@@ -85,6 +92,234 @@ def test_decision_provenance_is_structured_not_inferred_from_reason_text():
     assert decision is None
     assert source == "unresolved"
     assert actor is None
+
+
+def test_exact_project_id_adjudication_wins_and_does_not_leak_by_name():
+    adjudications = [
+        {
+            "project_ids": ["project-a", "project-b"],
+            "project_names": {
+                "project-a": "Portal La Dehesa",
+                "project-b": "Cenco Portal La Dehesa",
+            },
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "pair_id": "pair-exact",
+            "rationale": "same named shopping center",
+        },
+        {
+            "project_ids": ["project-c", "project-d"],
+            "project_names": {
+                "project-c": "Portal La Dehesa",
+                "project-d": "Cenco Portal La Dehesa",
+            },
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "pair_id": "pair-same-names-different-ids",
+            "rationale": "the records have different source scope",
+        },
+    ]
+
+    exact = rpq.classify_project_pair_with_adjudications(
+        "project-a", "Portal La Dehesa", "project-b", "Cenco Portal La Dehesa", adjudications
+    )
+    assert exact == (
+        True,
+        "same named shopping center",
+        "identity_followup_2026-09-27",
+        None,
+    )
+
+    # A name-level rule would merge these names, but a reviewed ID pair with
+    # another identity must not transfer its decision to different IDs.
+    unresolved = rpq.classify_project_pair_with_adjudications(
+        "project-c", "Portal La Dehesa", "project-d", "Cenco Portal La Dehesa", adjudications
+    )
+    assert unresolved[0] is None
+    assert unresolved[2] == "identity_followup_2026-09-27"
+
+    # An unreviewed ID pair with the same names is also fail-closed once those
+    # names have an ID-scoped adjudication; it must not inherit it by text.
+    other_ids = rpq.classify_project_pair_with_adjudications(
+        "project-x", "Portal La Dehesa", "project-y", "Cenco Portal La Dehesa", adjudications
+    )
+    assert other_ids[0] is None
+    assert other_ids[2] == "identity_followup_name_scope_guard"
+
+
+def test_exact_project_id_adjudication_rejects_stale_names():
+    adjudications = [
+        {
+            "project_ids": ["project-a", "project-b"],
+            "project_names": {"project-a": "Name A", "project-b": "Name B"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "pair_id": "pair-exact",
+            "rationale": "verified identity",
+        }
+    ]
+    with pytest.raises(ValueError, match="canonical_name mismatch"):
+        rpq.classify_project_pair_with_adjudications(
+            "project-a", "Renamed A", "project-b", "Name B", adjudications
+        )
+
+
+def test_identity_adjudication_scope_requires_exact_queue_pair_and_names():
+    projects = {"p-a": "Project A", "p-b": "Project B"}
+    entries = [
+        {
+            "pair_id": "p-a-b",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Project A", "p-b": "Project B"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "rationale": "same source-backed identity",
+        }
+    ]
+    rpq.validate_project_identity_adjudication_scope(
+        projects, [(7, "p-a", "Project A", "p-b", "Project B")], entries
+    )
+    with pytest.raises(ValueError, match="absent from project_review_queue"):
+        rpq.validate_project_identity_adjudication_scope(
+            projects, [(7, "p-a", "Project A", "p-x", "Project X")], entries
+        )
+    with pytest.raises(ValueError, match="canonical_name mismatch"):
+        rpq.validate_project_identity_adjudication_scope(
+            {"p-a": "Renamed A", "p-b": "Project B"},
+            [(7, "p-a", "Renamed A", "p-b", "Project B")],
+            entries,
+        )
+
+
+def test_identity_adjudication_artifact_pins_exact_ids_names_mentions_and_canonical(tmp_path):
+    root = Path(rpq.__file__).resolve().parents[1]
+    artifact_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    adjudications = rpq.load_project_identity_adjudications(artifact_path, bundle_path)
+    assert len(adjudications) == 68
+    assert sum(entry["resolver_action"] == "merge_case" for entry in adjudications) == 17
+
+    payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+    payload["adjudications"][0]["source_evidence"][0]["raw_project_mention"] = "different mention"
+    altered_path = tmp_path / "altered_identity_adjudications.json"
+    altered_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="cites a source outside its bundle side"):
+        rpq.load_project_identity_adjudications(altered_path, bundle_path)
+
+    payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+    merged = next(entry for entry in payload["adjudications"] if entry["resolver_action"] == "merge_case")
+    merged["canonical_project_id"] = "not-a-project-id"
+    altered_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="requires an exact canonical_project_id"):
+        rpq.load_project_identity_adjudications(altered_path, bundle_path)
+
+
+def test_identity_evidence_anchor_cannot_be_generic_location_word():
+    with pytest.raises(ValueError, match="no literal name fragment"):
+        identity_builder.find_fragment(
+            "El edificio ubicado en el sector se discutió en la reunión.",
+            "proyecto ubicado en calle Recreo",
+            "proyecto ubicado en calle Recreo",
+        )
+
+    _, _, fragment, method = identity_builder.find_fragment(
+        "El edificio ubicado en calle Recreo fue observado por la comunidad.",
+        "proyecto ubicado en calle Recreo",
+        "proyecto ubicado en calle Recreo",
+    )
+    assert method == "normalized_literal_subphrase"
+    assert "recreo" in fragment.casefold()
+    assert fragment.casefold() != "ubicado"
+
+
+def test_identity_source_evidence_requires_exact_hashes_urls_and_literal_quotes(tmp_path):
+    text = "El proyecto verificable se llama Proyecto Alfa, en Ñuñoa."
+    record = {"url": "https://example.test/alfa", "text": text}
+    raw = json.dumps(record, ensure_ascii=False).encode("utf-8")
+    content_dir = tmp_path / "Fuentes" / "fulltext" / "content"
+    content_dir.mkdir(parents=True)
+    content_path = content_dir / "record.json"
+    content_path.write_bytes(raw)
+    text_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    record_sha = hashlib.sha256(raw).hexdigest()
+    entries = [
+        {
+            "pair_id": "pair-alfa",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Proyecto Alfa", "p-b": "Proyecto Alfa (Ñuñoa)"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "rationale": "La mención literal identifica el mismo proyecto.",
+            "source_evidence": [
+                {
+                    "side": "a",
+                    "project_id": "p-a",
+                    "project_name": "Proyecto Alfa",
+                    "document_id": text_sha,
+                    "url": "https://example.test/alfa",
+                    "raw_project_mention": "Proyecto Alfa",
+                    "content_file": "Fuentes/fulltext/content/record.json",
+                    "source_text_sha256": text_sha,
+                    "content_record_sha256": record_sha,
+                    "evidence_status": "literal_anchor_verified",
+                    "quote": "Proyecto Alfa",
+                    "matched_fragment": "Proyecto Alfa",
+                }
+            ],
+        }
+    ]
+
+    summary = rpq.validate_project_identity_adjudication_evidence(entries, tmp_path)
+    assert summary["valid_references"] == 1
+
+    bad = json.loads(json.dumps(entries))
+    bad[0]["source_evidence"][0]["quote"] = "Texto que no está en el artículo"
+    with pytest.raises(ValueError, match="quote no es substring literal"):
+        rpq.validate_project_identity_adjudication_evidence(bad, tmp_path)
+
+
+def test_no_new_merge_cannot_be_reconnected_transitively():
+    baseline = {"p-a": "p-a", "p-b": "p-b", "p-c": "p-c"}
+    plan = rpq.ResolutionPlan(
+        project_to_case={"p-a": "p-a", "p-b": "p-a", "p-c": "p-a"},
+        row_decisions={},
+        homonym_vetoes=0,
+    )
+    entries = [
+        {
+            "pair_id": "pair-a-c",
+            "project_ids": ["p-a", "p-c"],
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "rationale": "No compartir grupo automáticamente.",
+        }
+    ]
+    with pytest.raises(ValueError, match="no_new_merge pair became connected"):
+        rpq.validate_project_identity_adjudication_topology(
+            plan.project_to_case, baseline, entries
+        )
+
+
+def test_no_new_merge_topology_accepts_unchanged_baseline_members():
+    baseline = {"p-a": "p-a", "p-b": "p-a"}
+    plan = rpq.ResolutionPlan(
+        project_to_case={"p-a": "p-a", "p-b": "p-a"},
+        row_decisions={},
+        homonym_vetoes=0,
+    )
+    entries = [
+        {
+            "pair_id": "pair-a-b",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Project A", "p-b": "Project B"},
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "rationale": "El baseline ya los agrupaba antes de esta auditoría.",
+        }
+    ]
+    assert rpq.validate_project_identity_adjudication_topology(
+        plan.project_to_case, baseline, entries
+    ) == {"checked": 1, "transitive_reconnections": 0}
 
 
 def test_source_adjudications_are_exactly_keyed_and_have_structured_evidence_refs():
