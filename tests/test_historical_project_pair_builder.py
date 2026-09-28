@@ -11,15 +11,18 @@ BUILDER_SPEC.loader.exec_module(builder)
 
 
 def test_resolve_source_paths_uses_repo_defaults_and_allows_separate_evidence_root():
-    repo = Path("C:/checkout")
-    warehouse = Path("D:/candidate.sqlite")
-    fulltext = Path("D:/fulltext")
+    repo = Path("checkout")
+    warehouse = Path("candidate.sqlite")
+    fulltext = Path("fulltext")
 
     default_paths = builder.resolve_source_paths(repo)
     assert default_paths == {
-        "warehouse": repo / "data" / "warehouse.sqlite",
-        "fulltext_root": repo / "Fuentes" / "fulltext",
+        "warehouse": repo.resolve() / "data" / "warehouse.sqlite",
+        "fulltext_root": repo.resolve() / "Fuentes" / "fulltext",
     }
 
     explicit_paths = builder.resolve_source_paths(repo, warehouse=warehouse, fulltext_root=fulltext)
-    assert explicit_paths == {"warehouse": warehouse, "fulltext_root": fulltext}
+    assert explicit_paths == {
+        "warehouse": warehouse.resolve(),
+        "fulltext_root": fulltext.resolve(),
+    }
