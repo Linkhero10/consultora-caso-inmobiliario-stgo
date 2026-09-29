@@ -15,7 +15,7 @@ auditoria de los 63 documentos 'caso_unico' con >1 case_id:
 
 Objeto de prueba adversarial explicito (pedido por la revisión): el esquema debe
 poder representar AMBOS extremos sin forzar una decision en el segundo
-caso, que queda como PENDIENTE humano en este docstring historico; cerrado el 2026-09-29 (ver config/document_case_unit_decisions_v1.json).
+caso, que queda deliberadamente sin resolver como PENDIENTE humano.
 
 ## Esquema
 
