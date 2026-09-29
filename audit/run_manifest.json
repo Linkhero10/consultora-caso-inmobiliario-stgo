@@ -49,7 +49,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "bca445da11e18c9b35fd56c330de5af24a4aaecb",
-  "release_commit": null,
+  "parent_commit_at_generation": "47b9f3be60d1c585829e8d219d7d5f5657d5068e",
+  "release_commit": "47b9f3be60d1c585829e8d219d7d5f5657d5068e",
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }
