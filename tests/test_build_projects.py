@@ -806,7 +806,7 @@ def test_adjudicated_index_corrections_are_consistent_with_the_warehouse_and_the
 
     path = bridge.VERIFIED_INDEX_CORRECTIONS_PATH
     corrections = _json.loads(path.read_text(encoding="utf-8"))["corrections"]
-    assert len(corrections) == 18
+    assert len(corrections) == 26
     warehouse = PROJECT_ROOT / "data" / "warehouse.sqlite"
     if not warehouse.exists():
         pytest.skip("warehouse.sqlite no existe en este entorno")
@@ -834,8 +834,12 @@ def test_adjudicated_index_corrections_are_consistent_with_the_warehouse_and_the
     content_root = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
     if not content_root.exists():
         pytest.skip("fulltext local no disponible en este entorno")
-    squash = lambda s: _re.sub(r"\s+", " ", s)
+    # la verificacion de evidencia del pipeline normaliza espacios y mayusculas
+    squash = lambda s: _re.sub(r"\s+", " ", s).lower()
     for c in corrections:
         text = _json.loads((PROJECT_ROOT / c["source_file_path"]).read_text(encoding="utf-8"))["text"]
         for citation in c["citations"]:
-            assert squash(citation["quote"]) in squash(text), (c["reference_key"], citation["quote"][:60])
+            # algunas evidencias verificadas unen fragmentos no contiguos con '...'; cada fragmento debe ser literal
+            for fragment in _re.split(r"\s*(?:\.\.\.|…)\s*", citation["quote"]):
+                if fragment.strip():
+                    assert squash(fragment.strip()) in squash(text), (c["reference_key"], fragment[:60])

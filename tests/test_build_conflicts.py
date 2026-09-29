@@ -1501,7 +1501,7 @@ def test_adjudicated_case_mention_backs_a_project_only_with_a_distinct_match_met
 def test_real_eligibility_adjudications_match_the_warehouse_and_are_the_only_adjudicated_backing():
     conn = _connect_or_skip()
     result = reg.load_case_mention_eligibility_adjudications(conn, reg.CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH)
-    assert len(result) == 2
+    assert len(result) == 3
     rows = conn.execute(
         "SELECT DISTINCT case_mention_id FROM conflict_evidence_backing WHERE match_method = ?",
         (reg.MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY,),

@@ -3,21 +3,21 @@
   "backing_scope": "mention_level_verified_index",
   "backing_scope_note": "[ACTUALIZADO 2026-09-26] v3_3_verified_index es el UNICO detector activo desde la migracion completa v3.2->v3.3: enrichment_project_mention.case_mention_index vincula cada mencion de proyecto a su case_mention real, ya no hay adivinanza documental.",
   "projects_total": 942,
-  "projects_with_backing": 588,
-  "projects_without_backing": 354,
+  "projects_with_backing": 596,
+  "projects_without_backing": 346,
   "conflicts_total": 817,
   "trivial_conflicts_total": 802,
-  "trivial_conflicts_without_backing": 319,
-  "conflicts_with_backing": 498,
-  "conflicts_without_backing": 319,
-  "backing_rows": 1763,
-  "backing_rows_detected_raw": 1763,
-  "backing_rows_persisted": 1763,
+  "trivial_conflicts_without_backing": 311,
+  "conflicts_with_backing": 506,
+  "conflicts_without_backing": 311,
+  "backing_rows": 1782,
+  "backing_rows_detected_raw": 1782,
+  "backing_rows_persisted": 1782,
   "backing_rows_deduplicated": 0,
   "coverage_backing": {
-    "total": 473,
+    "total": 481,
     "parcial": 25,
-    "ninguna": 319
+    "ninguna": 311
   },
   "conflicts_with_ambiguous_multi_case_backing": 0,
   "conflicts_with_mixed_duplicate_group_backing": 1,
@@ -48,15 +48,15 @@
     "v3_3_verified_index"
   ],
   "backing_rows_by_detector": {
-    "v3_3_verified_index": 1763
+    "v3_3_verified_index": 1782
   },
   "conflicts_with_backing_by_detector": {
     "exact_substring_v1": 0,
-    "v3_3_verified_index": 498,
+    "v3_3_verified_index": 506,
     "ambos": 0
   },
   "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
-  "warehouse_sha256": "d2728da622034359c824ff9618feb43d6470144473003e3d1f5ae1acf862bf36",
+  "warehouse_sha256": "c21c85c58cf4bd4979d117fff2269430da3c3f41b70e0204e8fa877aca6be42a",
   "sqlite_journal_mode": "delete",
   "wal_checkpoint": null
 }

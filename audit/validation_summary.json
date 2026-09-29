@@ -784,19 +784,20 @@
     "fecha": "2026-09-29",
     "documento": "audit/data_gap_closure_2026-09-29.md",
     "origen": "auditoria de huecos de Luna (rama local audit-open-data-gaps, no publicada)",
-    "warehouse_sha256": "9f328ad4884b26f1b49e98ab2b7c889e6438384e208b41eefd024d2598828926",
+    "warehouse_sha256": "9c4d2da86daebf19b1b84aa6007687fc503aecd61cd54ce45eb5e20a5abd4179",
     "antes_despues": {
-      "menciones_sin_case_mention_index": "227 -> 209",
-      "conflictos_con_respaldo": "488 -> 498",
-      "conflictos_sin_respaldo": "329 -> 319",
+      "menciones_sin_case_mention_index": "227 -> 201",
+      "conflictos_con_respaldo": "488 -> 506",
+      "conflictos_sin_respaldo": "329 -> 311",
       "referencias_historicas_identidad_sin_resolver": "1 -> 0"
     },
     "indices": {
-      "enlaces_adjudicados": 17,
+      "enlaces_adjudicados": 25,
       "de_las_26_candidatas": 15,
       "focales_extra": 2,
-      "candidatas_no_enlazadas": 11,
-      "materializados_en_tabla": 18
+      "de_las_13_candidatas_U": 8,
+      "candidatas_26_no_enlazadas": 11,
+      "materializados_en_tabla": 26
     },
     "elegibilidad_133": {
       "exclusion_confirmada": 131,
@@ -807,10 +808,28 @@
     "defecto_corregido": "las correcciones de case_mention_index solo se aplicaban a registros en memoria y nunca llegaban a enrichment_project_mention; el enlace de Linea 7 ya existente no surtia efecto",
     "tests": "366 passed, 1 skipped (excluido tests/test_blind_review_html.py)",
     "no_verificado": [
-      "196 conflictos sin respaldo fuera de los 133 sin lectura semantica",
-      "198 menciones sin candidata literal siguen sin indice",
+      "los veredictos de los 196 no tuvieron segunda lectura independiente completa",
+      "198 menciones sin candidata literal siguen sin indice (menos los enlaces posteriores)",
       "79 grupos con senales de riesgo de fusion automatica sin adjudicar uno por uno",
-      "Pastor Fernandez 18.580 sin adjudicar (dos case_mention plausibles)"
-    ]
+      "el detector de duplicados de case_mention agrupa proyectos distintos con una cita generica comun (caso Suksa); no se modifico"
+    ],
+    "elegibilidad_adjudicada": {
+      "total": 3,
+      "de_133": 2,
+      "de_las_13_candidatas_U": 1
+    },
+    "revision_196_luna": {
+      "naturaleza": "diagnostica privada: primera pasada de agentes en 12 lotes; Luna verifico citas (321/321 literales) y hashes y hizo QA focalizado; sin segunda lectura independiente completa",
+      "veredictos": {
+        "A_fuera_area": 29,
+        "B_mencion_pasajera": 72,
+        "C_sin_disputa": 24,
+        "D_disputa_secundaria": 30,
+        "U_elegible_candidata": 18,
+        "N_no_resoluble": 23
+      },
+      "candidatas_U_revisadas_aqui": 13,
+      "detalle": "audit/eligibility_review_13_2026-09-29.json"
+    }
   }
 }
