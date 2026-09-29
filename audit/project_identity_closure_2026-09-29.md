@@ -61,3 +61,27 @@ La relación `same_document_distinct_conflicts` de Población La Victoria / Ranc
 **Efectos medidos:** relaciones pendientes 1 → 0; conflictos siguen en 817; `n_actores_caida_solo_por_gate_documental` 67 → 66 porque los vínculos de actor del documento salen de la vista `case_safe`.
 
 **No se hizo:** los dos `document_conflict` del documento conservan el rol `panoramic_mention` que fijó la relación de Sol, así que siguen fuera de las vistas `safe` y de la red de actores. Incluir a La Victoria en la red exigiría adjudicar como `focal` el conflicto de Población La Victoria; no se hizo.
+
+## Addendum — revisión de los tres expedientes insuficientes (candidato v4, 2026-09-29)
+
+Se revisaron las tres identidades restantes por ID y por objeto, buscando evidencia primaria cuando estuvo disponible. El overlay v3 se preserva; las adjudicaciones nuevas están en `audit/project_identity_adjudication_overrides_2026-09-29_v4.json`. Este overlay permanece como candidato: `production_promoted=false`, el warehouse publicado no se reconstruyó y no se publicó dashboard ni manifest.
+
+### Recreo ↔ proyecto en calle Recreo — misma identidad, alta confianza
+
+Se cambió únicamente el par exacto `0a9d6730e059f72c2cdec2d8` ↔ `ad2b70567df6b8d44f952100` de `insufficient_evidence` a `same_identity`. La resolución SEA Exenta 528/2017 identifica “Edificio Recreo”, Inmobiliaria Recreo 321 SpA y las direcciones Recreo 321/331; la resolución MINVU Exenta 1802/2025 vuelve a vincular la sociedad con el proyecto de Recreo 321 y su controversia de recepción. El oficio CGR E547184/2024 lista “Recreo 321” y su Permiso de Edificación N.º 221, aprobado el 13-10-2016, más la solicitud de modificación N.º 5. La copia consultada de ese oficio está hospedada en un tercero, no en el dominio de Contraloría; el propio PDF muestra folio y código de validación. Interferencia y CIPER describen los proyectos de Su Ksa en Recreo, y La Tercera nombra Recreo 321 entre los edificios con recepción pendiente. La identidad se sustenta en la convergencia de nombre, dirección, sociedad, permiso y trayectoria del conflicto, no solo en desarrollador/calle compartidos.
+
+La fusión es exclusivamente de identidad PROJECT. En particular, la mención de CIPER sigue vinculada a su propia `case_mention` excluida: no se transfiere ni altera elegibilidad, decisión ni evidencia entre menciones. No se reconstruyó el warehouse para producción.
+
+### Santa Petronila — permanece `insufficient_evidence`
+
+La tabla de permisos reproducida por el artículo académico de Revista de Urbanismo (datos atribuidos a la Municipalidad de Estación Central, 2019) registra Santa Petronila 22 (338 departamentos), 28 (438) y 38 (616), mientras asigna 1.053 departamentos a Coronel Souper 4058–4060. Hogar de Cristo atribuye 1.053 departamentos a la megatorre que llama de Santa Petronila; El Ciudadano identifica otro edificio de PAZ Corp. en esa calle, sin numeración predial. El desajuste es una alerta de localización, no evidencia suficiente para afirmar que los dos IDs son distintos ni que son el mismo activo. No se fusiona. Para reabrir: dirección/rol/permiso DOM del edificio PAZ y correspondencia oficial de la torre descrita por Hogar de Cristo.
+
+### Alto Las Condes ↔ Cenco Alto Las Condes — permanece `insufficient_evidence`
+
+El ID `Alto Las Condes` agrupa menciones al mall existente y a “Alto Las Condes 2”. Cenco identifica su mall en Av. Presidente Kennedy 9001; la prensa ubica Alto Las Condes 2 en Kennedy 8950, frente al mall, y describe usos mixtos. Una fusión global contaminaría las menciones de la ampliación con la identidad del centro comercial. No se fusiona ni se afirma diferencia para todas las menciones. Para reabrir: separar primero las menciones del ID agregado entre mall existente y proyecto Alto Las Condes 2, y adjudicar cada subgrupo con evidencia propia.
+
+### Resultado de la simulación y cierre de alcance
+
+La simulación en SQLite en memoria cambió una sola fila previamente cerrada, Recreo, de `kept_separate` a `merged`; dejó 256 pares (119 `merged`, 137 `kept_separate`, 0 `needs_human_review`). Validó 273/273 referencias literales, `integrity_check=ok`, cero violaciones FK y cero bloqueos topológicos. La fila resultante enlaza explícitamente el overlay v4, su SHA y las referencias de evidencia. El warehouse de entrada conservó su SHA-256 `0af8c08c812113ccb1aac3895783438644b28cdd0ea8bd73c077901aadbe7d47`; el overlay v4 tiene SHA-256 `58ab0191c454a7eab7fa2651ef507ebf39b5c8190c0684e40a4d3d9895d530c3` y el informe de simulación SHA-256 `a65f310e2a760a00d2450382fa392e89459418227d5b0c7aa8eac7c9982403f7`. La relación de Población La Victoria ya figura `resolved_keep_separate`; los 29 IDs históricos sin destino se conservan sin alias, sin bloquear la topología por la política vigente.
+
+**Cierre:** los tres expedientes ya no requieren más búsqueda indiscriminada. Recreo queda adjudicado en el candidato v4; Santa Petronila y Alto Las Condes quedan cerrados por ahora como insuficiencia documentada, con criterios concretos de reapertura. La cola revisada queda sin pares abiertos. Cualquier promoción del candidato requiere la decisión de release correspondiente; este trabajo no la ejecutó.

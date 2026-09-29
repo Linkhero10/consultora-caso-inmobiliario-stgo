@@ -96,10 +96,11 @@ def all_queue_rows(conn: sqlite3.Connection) -> list[dict]:
             "decision": row[6],
             "decision_reason": row[7],
             "decision_source": row[8],
+            "decision_provenance_ref": row[9],
         }
         for row in conn.execute(
             "SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b, "
-            "resolved, decision, decision_reason, decision_source "
+            "resolved, decision, decision_reason, decision_source, decision_provenance_ref "
             "FROM project_review_queue ORDER BY rowid"
         )
     ]
@@ -128,7 +129,7 @@ def source_hashes(args: argparse.Namespace) -> dict[str, str | None]:
         "base_identity_adjudications_sha256": ROOT / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json",
         "base_identity_bundle_sha256": ROOT / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json",
         "historical_pair_adjudications_sha256": ROOT / "audit" / "historical_project_pair_adjudications_v1.json",
-        "identity_overrides_sha256": ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json",
+        "identity_overrides_sha256": ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-29_v4.json",
         "historical_resolutions_sha256": ROOT / "config" / "historical_case_id_resolutions_v1.json",
     }
     manifest = args.evidence_root.parent / "fulltext_manifest.jsonl"
@@ -221,6 +222,7 @@ def simulate(args: argparse.Namespace) -> dict:
                 "final_decision": final["decision"],
                 "final_decision_reason": final["decision_reason"],
                 "final_decision_source": final["decision_source"],
+                "final_decision_provenance_ref": final["decision_provenance_ref"],
             })
     preexisting_decisions_changed = final_decisions_for_previously_closed
 

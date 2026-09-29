@@ -714,5 +714,44 @@
     },
     "no_hecho": "roles panoramic_mention de los dos document_conflict no se readjudicaron; La Victoria sigue fuera de las vistas safe y de la red de actores",
     "tests": "358 passed, 1 skipped (excluido tests/test_blind_review_html.py)"
+  },
+  "identity_case_followup_v4_candidate_2026-09-29": {
+    "fecha": "2026-09-29",
+    "estado": "candidate_not_promoted",
+    "artefacto": "audit/project_identity_adjudication_overrides_2026-09-29_v4.json",
+    "artefacto_sha256": "58ab0191c454a7eab7fa2651ef507ebf39b5c8190c0684e40a4d3d9895d530c3",
+    "simulation_report_sha256": "a65f310e2a760a00d2450382fa392e89459418227d5b0c7aa8eac7c9982403f7",
+    "source_warehouse_sha256": "0af8c08c812113ccb1aac3895783438644b28cdd0ea8bd73c077901aadbe7d47",
+    "decisiones": {
+      "Recreo_0a9d6730e059f72c2cdec2d8__proyecto_calle_Recreo_ad2b70567df6b8d44f952100": "same_identity_high_confidence_exact_pair_only",
+      "Santa_Petronila": "insufficient_evidence_no_merge_no_distinctness_claim",
+      "Alto_Las_Condes__Cenco_Alto_Las_Condes": "insufficient_evidence_aggregate_mentions_must_be_split_first"
+    },
+    "simulation": {
+      "queue_total": 256,
+      "merged": 119,
+      "kept_separate": 137,
+      "needs_human_review": 0,
+      "identity_evidence_refs_literal_validated": "273/273",
+      "sqlite_integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "topology_blockers": 0,
+      "warehouse_source_mutated": false,
+      "production_rebuild_or_publication": false
+    },
+    "tests": {
+      "identity_resolution_module": "53 passed",
+      "full_suite": "353 passed, 6 skipped; tests/test_blind_review_html.py excluded because it depends on an unversioned local file"
+    },
+    "limitations": [
+      "El oficio CGR E547184/2024 se cita desde una copia PDF alojada en un dominio tercero; el PDF muestra folio y código de validación, pero esta sesión no archivó ni verificó independientemente una copia desde el repositorio oficial.",
+      "La decisión de identidad no cambia decision_final de ninguna case_mention.",
+      "Los 29 IDs históricos sin destino permanecen preservados sin alias; 5 están documentados como no resolubles y ninguno bloquea la topología bajo la política actual."
+    ],
+    "documentos": [
+      "START_HERE.md (estado vigente)",
+      "audit/project_identity_closure_2026-09-29.md (addendum v4)",
+      "audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json"
+    ]
   }
 }

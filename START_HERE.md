@@ -3,6 +3,18 @@
 Este archivo orienta la lectura del repositorio y da el estado del snapshot actual. Para el
 propósito, alcance y composición del corpus, sigue con el [README](README.md).
 
+## Estado actual — identidad de proyectos, candidato v4 (2026-09-29)
+
+La cola revisada de identidad PROJECT conserva 256 pares: 119 fusionados, 137 mantenidos sin
+fusión y 0 abiertos. El candidato v4 resuelve Recreo ↔ proyecto en calle Recreo como misma
+identidad (par de IDs exactos, confianza alta), apoyado por SEA/MINVU y fuentes complementarias;
+la elegibilidad de cada `case_mention` permanece independiente. Santa Petronila y Alto Las Condes
+siguen como `insufficient_evidence`: no se afirma que sean distintos, y se especifica qué dato
+permitiría reabrirlos. La simulación no mutó el warehouse ni publicó dashboard/manifest. El overlay
+v4 sigue sin promoverse a producción; esta sección supersede para estos tres pares el resumen v3
+que sigue abajo. Ver [acta v4](audit/project_identity_closure_2026-09-29.md) y [simulación candidata
+v4](audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json).
+
 ## Recorrido recomendado
 
 1. [Dashboard](docs/index.html): exploración visual del warehouse publicado.

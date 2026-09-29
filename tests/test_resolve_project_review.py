@@ -1178,7 +1178,7 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
         ("52431d07bb532a107713c2bd", "bcf9a9d46577aec285a3b590"): "distinct_entities",
         ("5997fefd9709a67727316bc2", "fe0f38566717aa34de32376a"): "same_identity",
         ("e37655355ac179806569a998", "fe0f38566717aa34de32376a"): "same_identity",
-        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "insufficient_evidence",
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "same_identity",
         ("a07066976e35eb7bd807ed77", "01d6668a9dc5aba908f81090"): "distinct_entities",
         ("922533b858c751fc8f5a8e3b", "fe0f38566717aa34de32376a"): "same_identity",
         ("cb1087cc68bd26d203011f18", "8e88d3996773e1c8ecf04a7c"): "same_identity",
@@ -1208,8 +1208,8 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
             )[0]
         )
     assert {value: outcomes.count(value) for value in (True, False, None)} == {
-        True: 38,
-        False: 57,
+        True: 39,
+        False: 56,
         None: 0,
     }
     unresolved_reviewed = {
@@ -1219,7 +1219,7 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
     }
     assert unresolved_reviewed == set()
     assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 0
-    assert sum(entry["identity_class"] == "insufficient_evidence" for entry in adjudications) == 3
+    assert sum(entry["identity_class"] == "insufficient_evidence" for entry in adjudications) == 2
     assert all(
         entry["confidence"] == "high"
         for entry in adjudications
@@ -1252,8 +1252,8 @@ def test_topology_pair_dispositions_are_pinned_to_the_exact_reviewed_ids():
     assert fundamenta["resolver_action"] == "merge_case"
     assert fundamenta["canonical_project_id"] == "bb5755a35f19ada504ca13a4"
     assert fundamenta["production_promoted"] is False
-    assert plaza["override_artifact"].endswith("_v3.json")
-    assert fundamenta["override_artifact"].endswith("_v3.json")
+    assert plaza["override_artifact"].endswith("_v4.json")
+    assert fundamenta["override_artifact"].endswith("_v4.json")
 
 
 def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_scoped():
@@ -1276,7 +1276,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
             identity_adjudications=adjudications,
         )
     )
-    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
+    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-29_v4.json"
     assert provenance["artifact_sha256"] == rpq.PROJECT_IDENTITY_OVERRIDE_SHA256
 
     same_names_other_ids = rpq.classify_project_pair_with_adjudications(
@@ -1287,7 +1287,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
 
 
 def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeypatch):
-    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-29_v4.json"
     original_read_bytes = Path.read_bytes
 
     def tampered_read_bytes(path):
@@ -1300,27 +1300,51 @@ def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeyp
 
 
 def test_closed_overlay_leaves_no_unresolved_pair_and_keeps_uncertainty_explicit():
-    """[2026-09-29] Cierre de los 8 pares PROJECT abiertos: ninguna entrada efectiva queda
-    `unresolved`; los 3 casos sin evidencia positiva se mantienen separados como
-    `insufficient_evidence` (no se afirma que sean objetos distintos) y los historicos
-    Santa Petronila/Costanera Center se adjudican por ID exacto."""
+    """[2026-09-29] Cierre de los 8 pares PROJECT abiertos: Recreo se identifica con
+    respaldo oficial de dirección/entidad; Santa Petronila y Alto Las Condes permanecen
+    sin fusión por agregación/identificadores insuficientes, no como diferencias probadas."""
     adjudications = rpq.load_effective_project_identity_adjudications()
     assert not [a for a in adjudications if a["identity_class"] == "unresolved"]
     by_pair = {tuple(sorted(a["project_ids"])): a for a in adjudications}
-    for ids in (
-        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"),
-        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"),
-        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"),
-    ):
+    expected = {
+        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"): "insufficient_evidence",
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "same_identity",
+        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"): "insufficient_evidence",
+    }
+    for ids, identity_class in expected.items():
         entry = by_pair[tuple(sorted(ids))]
-        assert entry["identity_class"] == "insufficient_evidence"
-        assert entry["resolver_action"] == "no_new_merge"
-        assert entry["canonical_project_id"] is None
+        assert entry["identity_class"] == identity_class
         a, b = ids
         result = rpq.classify_project_pair_with_adjudications(
             a, entry["project_names"][a], b, entry["project_names"][b], adjudications
         )
-        assert result[0] is False
+        assert result[0] is (identity_class == "same_identity")
+        if identity_class == "same_identity":
+            assert entry["resolver_action"] == "merge_case"
+            assert entry["canonical_project_id"] == "0a9d6730e059f72c2cdec2d8"
+            assert entry["confidence"] == "high"
+            assert entry["decision_source"] == "project_identity_adjudication_override_2026-09-29_v4"
+            source_urls = {source["url"] for source in entry["override_supporting_sources"]}
+            assert "https://infofirma.sea.gob.cl/DocumentosSEA/MostrarDocumento?docId=16%2F57%2F822fcc73ba5f30bf3a351c7d9687d0563b32" in source_urls
+            assert "https://documentos.minvu.cl/bitstreams/008434c5-0b80-41cc-8319-a294cda25405/download" in source_urls
+            assert "https://mercadosinmobiliarios.cl/wp-content/uploads/2024/10/E547184.pdf" in source_urls
+            assert entry["production_promoted"] is False
+            provenance = json.loads(
+                rpq.decision_provenance_ref(
+                    entry["project_names"][entry["project_ids"][0]],
+                    entry["project_names"][entry["project_ids"][1]],
+                    entry["decision_source"],
+                    project_ids=tuple(entry["project_ids"]),
+                    identity_adjudications=adjudications,
+                )
+            )
+            assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-29_v4.json"
+            assert provenance["artifact_sha256"] == rpq.PROJECT_IDENTITY_OVERRIDE_SHA256
+            assert provenance["source_evidence_ref_ids"] == entry["override_source_evidence_ref_ids"]
+            assert "https://mercadosinmobiliarios.cl/wp-content/uploads/2024/10/E547184.pdf" in provenance["supporting_source_urls"]
+        else:
+            assert entry["resolver_action"] == "no_new_merge"
+            assert entry["canonical_project_id"] is None
 
 
 def test_legacy_name_level_merges_contradicted_by_sources_are_reverted():
@@ -1335,7 +1359,7 @@ def test_legacy_name_level_merges_contradicted_by_sources_are_reverted():
 def test_override_rejects_merge_without_high_confidence_or_for_insufficient_evidence(monkeypatch, tmp_path):
     """Ruta negativa: el loader falla cerrado si un override intenta fusionar con confianza media
     o si una clase sin merge declara un canonical_project_id."""
-    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-29_v4.json"
     payload = json.loads(artifact.read_text(encoding="utf-8"))
 
     def load_with(mutator):
