@@ -1,8 +1,8 @@
 {
   "schema_version": "project_case_baseline_v1",
   "generated_at_utc": "2026-09-28T11:30:03.467817+00:00",
-  "source_warehouse_sha256": "1526d8f2910b7aa54a6e55412d118a9d8f61823e80b31447ac14450e65f11e3d",
-  "description": "Snapshot inmediatamente despues de build_projects.py, regenerado para aplicar los 17 merges de identidad (Luna, 68 pares) y los 15 IDs historicos (10 resueltos + 5 preservados).",
+  "source_warehouse_sha256": "d38fab6990962b6af471b8152aaa7a3c86312c10795d4d8f3947db3e4aafd839",
+  "description": "Snapshot inmediatamente despues de build_projects.py, regenerado para aplicar los 17 merges de identidad (Luna, 68 pares) y los 15 IDs historicos (10 resueltos + 5 preservados). [2026-09-29] source_warehouse_sha256 corresponde al build_projects reproducible desde el warehouse committeado (build_enrichment_tables -> build_projects) tras la decision versionada de document_case_unit (La Victoria); el mapeo project_id->case_id y mapping_sha256 no cambian.",
   "project_id_set_sha256": "153d2734e848778e865bbe918cd4364fbf59ec43006215b0d458ed34974e4c5c",
   "mapping_sha256": "b67416a664b5541cb62c13e8fde32a40a0fee4f0ab0c967d4a50f3ef06a0af64",
   "projects": [

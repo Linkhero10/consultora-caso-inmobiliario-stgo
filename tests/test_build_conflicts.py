@@ -927,7 +927,10 @@ def test_la_victoria_y_rancagua_express_quedan_en_conflictos_distintos_con_relac
         (rows[LA_VICTORIA_CASE], rows[RANCAGUA_EXPRESS_CASE], rows[RANCAGUA_EXPRESS_CASE], rows[LA_VICTORIA_CASE]),
     ).fetchone()
     assert pending is not None
-    assert pending[1] == "pending_human_decision"
+    # [ACTUALIZADO 2026-09-29] el pendiente humano se cerro: el gate del documento paso a
+    # multiples_casos_documentados (config/document_case_unit_decisions_v1.json); los conflictos
+    # siguen separados y la relacion queda resuelta, no fusionada.
+    assert pending[1] == "resolved_keep_separate"
     conn.close()
 
 
@@ -1062,14 +1065,14 @@ def test_upc_and_recuperacion_de_barrios_relations_are_resolved_not_pending():
     conn.close()
 
 
-def test_la_victoria_relation_stays_pending_human_decision():
+def test_la_victoria_relation_is_resolved_keep_separate_after_gate_decision():
     conn = _connect_or_skip()
     la_victoria_doc = "34c26e5aaf4f48a74d16ad587a7b0384cb459c157714e592725284560dea1ce9"
     note_rows = conn.execute("SELECT note, review_status FROM conflict_relation").fetchall()
     matching = [row for row in note_rows if la_victoria_doc in row[0]]
     conn.close()
     assert matching
-    assert matching[0][1] == "pending_human_decision"
+    assert matching[0][1] == "resolved_keep_separate"
 
 
 # --- Fix 1A: regresion real contra el warehouse ---

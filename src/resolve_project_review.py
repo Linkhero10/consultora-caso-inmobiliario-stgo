@@ -74,9 +74,11 @@ _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
 HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
 PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
-PROJECT_IDENTITY_OVERRIDE_SHA256 = "82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626"
+PROJECT_IDENTITY_OVERRIDE_SHA256 = "58ab0191c454a7eab7fa2651ef507ebf39b5c8190c0684e40a4d3d9895d530c3"
 PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
-PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH = "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
+PROJECT_IDENTITY_OVERRIDE_V4_SOURCE = "project_identity_adjudication_override_2026-09-29_v4"
+PROJECT_IDENTITY_OVERRIDE_V4_SOURCE_PAIR_IDS = frozenset({"f46e5517d7ecee26f64d"})
+PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH = "audit/project_identity_adjudication_overrides_2026-09-29_v4.json"
 
 
 def _norm(s: str) -> str:
@@ -948,11 +950,11 @@ def load_effective_project_identity_adjudications(
     if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
         raise ValueError("override SHA-256 mismatch")
     payload = json.loads(payload_raw.decode("utf-8"))
-    if payload.get("schema_version") != "project_identity_adjudication_overrides_v3":
+    if payload.get("schema_version") != "project_identity_adjudication_overrides_v4":
         raise ValueError("unexpected project identity override schema_version")
-    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v3":
+    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-29_v4":
         raise ValueError("unexpected project identity override artifact_id")
-    if payload.get("generated_on") != "2026-09-28":
+    if payload.get("generated_on") != "2026-09-29":
         raise ValueError("unexpected project identity override date")
     if payload.get("source_base_adjudication_sha256") != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
         raise ValueError("project identity override does not pin the frozen base adjudication")
@@ -1051,7 +1053,12 @@ def load_effective_project_identity_adjudications(
                     raise ValueError(f"{identity_class} override {pair_id!r} must not merge or choose a canonical ID")
             else:
                 raise ValueError(f"unsupported project identity override class {identity_class!r}")
-            if override.get("decision_source") != PROJECT_IDENTITY_OVERRIDE_SOURCE:
+            expected_decision_source = (
+                PROJECT_IDENTITY_OVERRIDE_V4_SOURCE
+                if pair_id in PROJECT_IDENTITY_OVERRIDE_V4_SOURCE_PAIR_IDS
+                else PROJECT_IDENTITY_OVERRIDE_SOURCE
+            )
+            if override.get("decision_source") != expected_decision_source:
                 raise ValueError(f"override {pair_id!r} has unexpected decision_source")
             if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
                 raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
@@ -1326,6 +1333,7 @@ def decision_provenance_ref(
         "identity_followup_2026-09-27",
         "historical_pair_adjudication_2026-09-28",
         PROJECT_IDENTITY_OVERRIDE_SOURCE,
+        PROJECT_IDENTITY_OVERRIDE_V4_SOURCE,
     }:
         if project_ids is None or identity_adjudications is None:
             raise ValueError("identity review provenance requires exact project IDs and adjudications")
@@ -1343,6 +1351,7 @@ def decision_provenance_ref(
             "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
             "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
             PROJECT_IDENTITY_OVERRIDE_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
+            PROJECT_IDENTITY_OVERRIDE_V4_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
         }[source]
         artifact_path = Path(__file__).resolve().parents[1] / artifact
         return json.dumps(

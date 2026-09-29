@@ -44,9 +44,70 @@ DEFAULT_OUTPUT_DB = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_e
 # aqui desde el warehouse productivo (fuente actual de esas correcciones)
 # para que este script sea reproducible sin ese paso manual oculto.
 PRODUCTIVE_WAREHOUSE_FOR_CASE_UNIT = PROJECT_ROOT / "data" / "warehouse.sqlite"
+DOCUMENT_CASE_UNIT_DECISIONS_PATH = PROJECT_ROOT / "config" / "document_case_unit_decisions_v1.json"
+ALLOWED_UNIDAD_CASO_TIPO = frozenset(
+    {
+        "caso_unico",
+        "multiples_casos_documentados",
+        "caso_focal_fuera_del_universo",
+        "documento_comparativo_panoramico",
+        "contexto_sin_caso_individualizable",
+    }
+)
 
 
-def _copy_document_case_unit(conn: sqlite3.Connection, source_path: Path) -> int:
+def load_document_case_unit_decisions(path: Path) -> list[dict]:
+    """Lee las decisiones versionadas sobre unidad_caso_tipo; falla cerrado ante datos incompletos."""
+    if not path.exists():
+        return []
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "document_case_unit_decisions_v1":
+        raise ValueError("schema_version de document_case_unit_decisions no reconocido")
+    decisions = payload.get("decisions")
+    if not isinstance(decisions, list):
+        raise ValueError("document_case_unit_decisions.decisions debe ser una lista")
+    seen: set[str] = set()
+    for item in decisions:
+        for field in ("document_id", "expected_previous_unidad_caso_tipo", "unidad_caso_tipo", "source_url", "quote", "nota"):
+            if not item.get(field):
+                raise ValueError(f"decision de document_case_unit sin {field!r}: {item.get('document_id')!r}")
+        if item["document_id"] in seen:
+            raise ValueError(f"decision duplicada para {item['document_id']!r}")
+        seen.add(item["document_id"])
+        for field in ("expected_previous_unidad_caso_tipo", "unidad_caso_tipo"):
+            if item[field] not in ALLOWED_UNIDAD_CASO_TIPO:
+                raise ValueError(f"unidad_caso_tipo no permitido: {item[field]!r}")
+    return decisions
+
+
+def apply_document_case_unit_decisions(conn: sqlite3.Connection, decisions: list[dict]) -> int:
+    """Aplica las decisiones de forma idempotente y sin sobrescribir una correccion distinta a la esperada."""
+    applied = 0
+    for item in decisions:
+        row = conn.execute(
+            "SELECT unidad_caso_tipo, nota_sol FROM document_case_unit WHERE document_id = ?",
+            (item["document_id"],),
+        ).fetchone()
+        if row is None:
+            raise ValueError(f"document_id no encontrado en document_case_unit: {item['document_id']!r}")
+        current = row[0]
+        if current == item["unidad_caso_tipo"]:
+            continue
+        if current != item["expected_previous_unidad_caso_tipo"]:
+            raise ValueError(
+                f"document_case_unit {item['document_id']!r} tiene {current!r}; se esperaba "
+                f"{item['expected_previous_unidad_caso_tipo']!r} antes de la decision versionada"
+            )
+        nota = (row[1] + " | " if row[1] else "") + f"[{item['decided_on']}, {item['decided_by']}] {item['nota']}"
+        conn.execute(
+            "UPDATE document_case_unit SET unidad_caso_tipo = ?, nota_sol = ?, revisado_por = ? WHERE document_id = ?",
+            (item["unidad_caso_tipo"], nota, f"decision_versionada_{item['decided_on']}", item["document_id"]),
+        )
+        applied += 1
+    return applied
+
+
+def _copy_document_case_unit(conn: sqlite3.Connection, source_path: Path, decisions: list[dict] | None = None) -> int:
     """Copia document_case_unit (correcciones de Sol) desde el warehouse
     productivo, si existe. Devuelve el numero de filas copiadas (0 si la
     fuente no existe o no tiene la tabla -- nunca aborta, esta tabla es
@@ -70,6 +131,7 @@ def _copy_document_case_unit(conn: sqlite3.Connection, source_path: Path) -> int
     conn.execute(f"CREATE TABLE document_case_unit ({col_defs})")
     placeholders = ",".join("?" for _ in columns)
     conn.executemany(f"INSERT INTO document_case_unit ({','.join(columns)}) VALUES ({placeholders})", rows)
+    apply_document_case_unit_decisions(conn, decisions or [])
     return len(rows)
 
 
@@ -390,7 +452,11 @@ def build_database(source_db: Path, output_db: Path, records: dict[str, dict[str
         quote = record.get("evidencia_objeto_disputa", "") or ""
         add_evidence("objeto_disputa", 0, quote, record.get("evidencia_objeto_disputa_original_modelo", "") or "", bool(record.get("evidencia_objeto_disputa_verificada")))
 
-    counts["document_case_unit_rows"] = _copy_document_case_unit(conn, PRODUCTIVE_WAREHOUSE_FOR_CASE_UNIT)
+    counts["document_case_unit_rows"] = _copy_document_case_unit(
+        conn,
+        PRODUCTIVE_WAREHOUSE_FOR_CASE_UNIT,
+        load_document_case_unit_decisions(DOCUMENT_CASE_UNIT_DECISIONS_PATH),
+    )
 
     conn.commit()
     conn.close()

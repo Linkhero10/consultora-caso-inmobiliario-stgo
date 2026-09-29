@@ -118,7 +118,10 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
     assert dec["n_actores_caida_solo_por_fusion_case_conflict"] == 1
-    assert dec["n_actores_caida_solo_por_gate_documental"] == 67
+    # [ACTUALIZADO 2026-09-29] 67 -> 66: el documento de Poblacion La Victoria salio del gate
+    # caso_unico (decision versionada, multiples_casos_documentados) y sus vinculos de actor dejan la
+    # vista case_safe; un actor menos cae solo por el gate documental.
+    assert dec["n_actores_caida_solo_por_gate_documental"] == 66
 
     # Corte Suprema: siempre esta en el top-15 de mayor caida total, y su
     # caida es integra del gate documental, no de fusionar case_id.

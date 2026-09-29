@@ -658,15 +658,16 @@
     },
     "cola_identidad": {
       "total": 256,
-      "merged": 118,
-      "kept_separate": 138,
+      "merged": 119,
+      "kept_separate": 137,
       "abiertos": 0
     },
     "decisiones": {
       "same_identity": [
         "d0fb99d977176b8fd90c",
         "70097cb05f72215db4b3",
-        "19a17e893f4747e113e9"
+        "19a17e893f4747e113e9",
+        "f46e5517d7ecee26f64d (via overlay v4)"
       ],
       "distinct_entities": [
         "7dfca97fba3dc5d6abd2"
@@ -675,7 +676,6 @@
         "historical_pair:1a548f6ba2417a0e6aae"
       ],
       "insufficient_evidence": [
-        "f46e5517d7ecee26f64d",
         "6b84e4c69373bcadad41",
         "historical_pair:8bf36944edfe85c618e0"
       ]
@@ -685,14 +685,14 @@
       "proyecto Bellavista / edificio de Desarrollo Inmobiliario Bellavista"
     ],
     "warehouse": {
-      "sha256": "ef776d1f9294021751d1b74f602523eaabe6d02e18f7d6b4b68c61bfa6d1436d",
+      "sha256": "53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08",
       "proyectos": 941,
-      "case_id": 835,
-      "conflictos": 817,
+      "case_id": 834,
+      "conflictos": 816,
       "integrity_check": "ok",
       "foreign_key_check_issues": 0
     },
-    "tests": "354 passed, 1 skipped (excluido tests/test_blind_review_html.py, archivo local fuera del repo)",
+    "tests": "358 passed, 1 skipped (excluido tests/test_blind_review_html.py)",
     "alcance_no_verificado": [
       "Los tres insufficient_evidence no estan demostrados como distintos ni como iguales.",
       "No se re-audito fuente por fuente el resto de las 256 decisiones.",
@@ -700,6 +700,59 @@
       "Relacion de conflicto pending_human_decision (Poblacion La Victoria) sigue abierta; es de la capa de relaciones.",
       "El mecanismo de reconexion por subcadena no se redisenio."
     ],
-    "status": "cerrado en rama; no promovido a main hasta fusionar el PR #1"
+    "status": "cerrado en rama; no promovido a main hasta fusionar el PR #1",
+    "overlay_vigente": "audit/project_identity_adjudication_overrides_2026-09-29_v4.json"
+  },
+  "poblacion_la_victoria_gate_closed_2026-09-29": {
+    "fecha": "2026-09-29",
+    "documento": "audit/project_identity_closure_2026-09-29.md (addendum)",
+    "decision": "document 34c26e5a... pasa de caso_unico a multiples_casos_documentados; conflict_relation resolved_keep_separate",
+    "config": "config/document_case_unit_decisions_v1.json",
+    "efectos": {
+      "relaciones_pendientes": "1 -> 0",
+      "conflictos": "817 antes; 816 tras aplicar el overlay v4",
+      "actores_caida_solo_por_gate_documental": "67 -> 66"
+    },
+    "no_hecho": "roles panoramic_mention de los dos document_conflict no se readjudicaron; La Victoria sigue fuera de las vistas safe y de la red de actores",
+    "tests": "358 passed, 1 skipped (excluido tests/test_blind_review_html.py)"
+  },
+  "identity_case_followup_v4_candidate_2026-09-29": {
+    "fecha": "2026-09-29",
+    "estado": "applied_in_rebuild_pending_merge",
+    "artefacto": "audit/project_identity_adjudication_overrides_2026-09-29_v4.json",
+    "artefacto_sha256": "58ab0191c454a7eab7fa2651ef507ebf39b5c8190c0684e40a4d3d9895d530c3",
+    "simulation_report_sha256": "a65f310e2a760a00d2450382fa392e89459418227d5b0c7aa8eac7c9982403f7",
+    "source_warehouse_sha256": "0af8c08c812113ccb1aac3895783438644b28cdd0ea8bd73c077901aadbe7d47",
+    "decisiones": {
+      "Recreo_0a9d6730e059f72c2cdec2d8__proyecto_calle_Recreo_ad2b70567df6b8d44f952100": "same_identity_high_confidence_exact_pair_only",
+      "Santa_Petronila": "insufficient_evidence_no_merge_no_distinctness_claim",
+      "Alto_Las_Condes__Cenco_Alto_Las_Condes": "insufficient_evidence_aggregate_mentions_must_be_split_first"
+    },
+    "simulation": {
+      "queue_total": 256,
+      "merged": 119,
+      "kept_separate": 137,
+      "needs_human_review": 0,
+      "identity_evidence_refs_literal_validated": "273/273",
+      "sqlite_integrity_check": "ok",
+      "foreign_key_violations": 0,
+      "topology_blockers": 0,
+      "warehouse_source_mutated": false,
+      "production_rebuild_or_publication": false
+    },
+    "tests": {
+      "identity_resolution_module": "53 passed",
+      "full_suite": "353 passed, 6 skipped; tests/test_blind_review_html.py excluded because it depends on an unversioned local file"
+    },
+    "limitations": [
+      "El oficio CGR E547184/2024 se cita desde una copia PDF alojada en un dominio tercero; el PDF muestra folio y código de validación, pero esta sesión no archivó ni verificó independientemente una copia desde el repositorio oficial.",
+      "La decisión de identidad no cambia decision_final de ninguna case_mention.",
+      "Los 29 IDs históricos sin destino permanecen preservados sin alias; 5 están documentados como no resolubles y ninguno bloquea la topología bajo la política actual."
+    ],
+    "documentos": [
+      "START_HERE.md (estado vigente)",
+      "audit/project_identity_closure_2026-09-29.md (addendum v4)",
+      "audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json"
+    ]
   }
 }
