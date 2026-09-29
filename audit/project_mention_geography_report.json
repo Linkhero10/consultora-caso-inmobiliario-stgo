@@ -1,14 +1,14 @@
 {
   "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
-  "run_id": "20260927T004801263126Z",
-  "generated_at": "2026-09-27T00:48:03.111879+00:00",
+  "run_id": "20260929T010057743655Z",
+  "generated_at": "2026-09-29T01:00:59.181542+00:00",
   "generator": "src/build_geography.py::build_project_mention_geography",
-  "build_commit": "673896cc0cc766cef3cf93a54cffb44d33fd609b",
+  "build_commit": "bca445da11e18c9b35fd56c330de5af24a4aaecb",
   "generator_sha256": "a5e91c600b75ff6f9f7287d44b9586ee08f0a035d163e87a7be4af5ee3210ea5",
   "review_config_path": "config/reviewed_duplicate_group_geography_links.json",
   "review_config_sha256": "bee31515da166083ab4f4f8ad92b21a147de4c62c3c18820a74ec70218937009",
-  "input_warehouse_sha256": "e1b841d32098714aa48ad81345e8ca6eb76575a0dcea17a8c58dc2f66f4547a8",
-  "output_warehouse_sha256": "8b8db7c0aa41dbd5fbb2a4cbaa0f3802ff66671869eaf37b4e236f9c9d76afd4",
+  "input_warehouse_sha256": "50a3ce033d3bf210f4e2ad44436b9265b333161b82f81f3bdb67a7bb7bcb3e4d",
+  "output_warehouse_sha256": "e5bf734cd94f9f8403eb55dbb66eb6368313753174647e55b531a76bd34e201e",
   "descripcion": "Vinculo proyecto->case_mention->comuna; fallbacks desde grupos de duplicados con decision mixta quedan ambiguos salvo una adjudicacion manual explicita y limitada a geografia. Reemplaza la aproximacion documental anterior.",
   "case_mention_geography": {
     "n_candidatos": 980,
@@ -20,7 +20,7 @@
     "n_intentadas": 6532,
     "n_descartadas_fuera_del_area_de_estudio": 68,
     "n_resueltas": 22,
-    "n_bridge_omitido_multiconflicto": 5,
+    "n_bridge_omitido_multiconflicto": 6,
     "tasa_resolucion": 0.003,
     "por_precision": {
       "neighborhood": 17,

@@ -1,9 +1,10 @@
 {
-  "built_at": "2026-09-26T04:29:36.008083+00:00",
+  "built_at": "2026-09-29T00:59:15.883734+00:00",
   "output_warehouse": "data\\warehouse.sqlite",
   "n_projects": 941,
   "n_project_mentions_resolved": 1267,
   "n_review_candidates": 256,
+  "n_descriptive_project_references_identity_unresolved": 1,
   "n_links_total": 15245,
   "resolution_status_counts": {
     "resolved_explicit": 3472,
@@ -35,5 +36,12 @@
       "contexto_sin_caso_individualizable": 47
     },
     "nota": "document_case_unit (copiada de warehouse_enrichment.sqlite a esta base) trae la clasificacion de unidad de caso para los 934 documentos. [PRECISION 2026-09-18, se encontro que la frase anterior era imprecisa] Este script aplico las 9 correcciones de proyectos_mencionados al construir el registro de proyectos. Las 9 correcciones de nombre_proyecto NO se aplican aqui -- quedan preservadas y consultables en document_case_unit.correccion_nombre_proyecto, pero el registro de proyectos siempre fue mention-based (recorre proyectos_mencionados), nunca focal-based, y los 2 conjuntos de 9 correcciones no son los mismos documentos (ver active-context.md). NO se excluye ningun documento por su unidad_caso_tipo -- si el analisis de redes quiere excluir documento_comparativo_panoramico/contexto_sin_caso_individualizable/caso_focal_fuera_del_universo, debe filtrar explicitamente usando esa tabla via document_id (ver tambien actor_event_project_link_case_safe, vista conservadora agregada para no depender de que cada consumidor recuerde el filtro correcto)."
+  },
+  "verified_project_mention_index_corrections": {
+    "disponible": true,
+    "n_entradas_configuradas": 1,
+    "n_menciones_corregidas": 1,
+    "fuente": "config/verified_project_mention_index_corrections_v1.json",
+    "nota": "Corrige case_mention_index=null puntual para menciones donde la evidencia estructurada del warehouse ya identifica sin ambiguedad el case_mention -- nunca inventa un indice, cada entrada cita evidence_id reales. No reemplaza la lista de proyectos_mencionados como sol_corrections; solo ajusta el indice de una mencion que v3.3 ya extrajo."
   }
 }

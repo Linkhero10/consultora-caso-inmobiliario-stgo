@@ -1,0 +1,129 @@
+{
+  "schema_version": "historical_case_id_resolutions_v1",
+  "description": "Resolucion source-first de los 15 historical_case_id que bloqueaban la topologia de CONFLICT (ver audit/historical_case_reference_preflight.json). Cada entrada de 'resolved' cita el grado y la justificacion que Sol ya escribio en CLASSIFIED_63 (paquete_revision_conflict_unit_63_clasificado_sol.json) -- nunca se reinterpreta esa decision, solo se repara el destino porque el project_id/case_id original quedo huerfano tras fusiones posteriores (v3.3, resolve_project_review.py). Cada entrada de 'non_resolvable' se investigo contra el warehouse real (busqueda de nombre alternativo vigente) y no tiene ningun anclaje vivo disponible -- por politica explicita del usuario (2026-09-27), no se persigue investigacion primaria fuera de las fuentes ya capturadas.",
+  "resolved": [
+    {
+      "historical_case_id": "08960f92ad216bbb3341c52b",
+      "canonical_name": "Ciudad Portal Bicentenario",
+      "resolved_case_id": "08960f92ad216bbb3341c52b",
+      "resolved_via": "El project_id 08960f92... (hoy canonical_name 'Portal Bicentenario') ya fue fusionado por resolve_project_review.py a case_id 96d6e7e0...; solo se repara el destino del alias historico. [Actualizado 2026-09-28: el case_id 'ganador' del grupo cambio tras re-ejecutar resolve_project_review.py con los merges nuevos; se corrigio al valor vigente.]",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "Ciudad Portal Bicentenario y el antiguo Aeropuerto Los Cerrillos estan directamente ligados por la reconversion del suelo aeroportuario; Ciudad del Viento es una propuesta/alternativa dentro de esa historia de planificacion.",
+      "source_document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd"
+    },
+    {
+      "historical_case_id": "9b0f2e6d08ee9ce06e292a24",
+      "canonical_name": "Aeropuerto Los Cerrillos",
+      "resolved_case_id": "08960f92ad216bbb3341c52b",
+      "resolved_via": "mismo_conflicto con 08960f92... (Ciudad Portal Bicentenario), cuyo case_id vigente es 96d6e7e0... [Actualizado 2026-09-28: el case_id 'ganador' del grupo cambio tras re-ejecutar resolve_project_review.py con los merges nuevos; se corrigio al valor vigente.]",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "Ciudad Portal Bicentenario y el antiguo Aeropuerto Los Cerrillos estan directamente ligados por la reconversion del suelo aeroportuario.",
+      "source_document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd"
+    },
+    {
+      "historical_case_id": "11693429984c7a39a3f190da",
+      "canonical_name": "ex Ciudad del Niño",
+      "resolved_case_id": "11693429984c7a39a3f190da",
+      "resolved_via": "El project_id 11693429... ya fue fusionado por resolve_project_review.py a case_id a6f02232... (grupo Ciudad del Niño); solo se repara el destino del alias historico. [Actualizado 2026-09-28: el case_id 'ganador' del grupo cambio tras re-ejecutar resolve_project_review.py con los merges nuevos; se corrigio al valor vigente.]",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "La ex Escuela Rebeca Catalan Vargas y sus murales son un componente patrimonial del predio Ciudad del Niño amenazado por el megaproyecto; la oposicion urbana y la proteccion patrimonial forman un mismo conflicto.",
+      "source_document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8"
+    },
+    {
+      "historical_case_id": "b9138f1cb242ae8bb68f8434",
+      "canonical_name": "ex Escuela Rebeca Catalán Vargas",
+      "resolved_case_id": "11693429984c7a39a3f190da",
+      "resolved_via": "mismo_conflicto/parent_subproject con 11693429... (ex Ciudad del Niño), cuyo case_id vigente es a6f02232... [Actualizado 2026-09-28: el case_id 'ganador' del grupo cambio tras re-ejecutar resolve_project_review.py con los merges nuevos; se corrigio al valor vigente.]",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "La ex Escuela Rebeca Catalan Vargas y sus murales son parte del predio Ciudad del Niño y su proteccion esta directamente inserta en la oposicion al megaproyecto de torres.",
+      "source_document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8"
+    },
+    {
+      "historical_case_id": "13d3e8b584350274759e6065",
+      "canonical_name": "paño en avenida Manquehue con Nueva Delhi",
+      "resolved_case_id": "cf1d620d80045e870e995d34",
+      "resolved_via": "cf1d620d... (tercer Cesfam de Las Condes) es case_id vigente por si mismo; ambos objetos aparecen en el mismo articulo de Ex-Ante.",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "El paño de Manquehue con Nueva Delhi es el suelo adquirido para levantar el tercer Cesfam; la denuncia de sobreprecio y el proyecto sanitario forman partes de la misma operacion controvertida.",
+      "source_document_id": "a67c3d4db0900541c2e12748ed9b6dd2b210a4bc8dcbeee7594dca08cb03ebec"
+    },
+    {
+      "historical_case_id": "41fb53e6335113c4be27d7a4",
+      "canonical_name": "LA PLANTA DE CACA",
+      "resolved_case_id": "41fb53e6335113c4be27d7a4",
+      "resolved_via": "Sol registro ademas una relacion mismo_proyecto/alias explicita entre 41fb53e6... y c2f17625... (Solucion transitoria para la provision de los servicios de tratamiento y disposicion de Aguas Servidas), que es case_id vigente por si mismo. [Actualizado 2026-09-28: el case_id 'ganador' del grupo cambio tras re-ejecutar resolve_project_review.py con los merges nuevos; se corrigio al valor vigente.]",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "La planta apodada 'LA PLANTA DE CACA' y el proyecto formal de tratamiento corresponden al mismo nucleo de la controversia; el Loteo Lo Cruzat aparece ligado al desarrollo territorial que da contexto al conflicto.",
+      "source_document_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74"
+    },
+    {
+      "historical_case_id": "54779b66552aefc8cb2779d3",
+      "canonical_name": "Plan Maestro de Regeneración Urbana Villa Parinacota",
+      "resolved_case_id": "2bc6817db77993a8887b7b99",
+      "resolved_via": "mismo_conflicto/parent_subproject con 2bc6817d... (Conjunto Habitacional Villa Parinacota, case_id vigente por si mismo) y 4ed7d38b... (Habilitacion de Terrenos, Poblacion Parinacota, tambien vigente). El union-find de build_case_groups agrupa transitivamente los tres bajo el mismo case_id -- consistente con la propia justificacion de Sol de que son 'componentes jerarquicos de un mismo proceso'.",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "Villa Parinacota, la habilitacion de terrenos y el Plan Maestro son componentes jerarquicos de un mismo proceso de regeneracion urbana, desocupacion, demolicion y relocalizacion.",
+      "source_document_id": "8fd72f77200cba4a193999d45cc3805c8d67de3f198ea930645738ede27f8547"
+    },
+    {
+      "historical_case_id": "5f80f397e76c32671b3744b6",
+      "canonical_name": "diversos edificios en altura en Av. Santa Teresita 9.100 en el cerro Alvarado, Vitacura",
+      "resolved_case_id": "099b8381c05667526259843b",
+      "resolved_via": "099b8381... (mall en Presidente Kennedy 8950) es case_id vigente por si mismo; ambos permisos son analizados en el mismo dictamen de Contraloria.",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "El mall de Kennedy 8950 y los edificios de Santa Teresita son permisos de proyectos distintos, pero la presentacion y decision de Contraloria los trata conjuntamente bajo la misma controversia sobre caducidad de permisos antiguos.",
+      "source_document_id": "b8301c5eaab3f8accdb2be481d80414cfca035d10580300fc6493e53619f2a7b"
+    },
+    {
+      "historical_case_id": "7a87d757c00f1ad978505da1",
+      "canonical_name": "Espacio de Memoria",
+      "resolved_case_id": "1f44e66d31c41174eed3c165",
+      "resolved_via": "1f44e66d... (Villa Compañero Ministro Carlos Cortés / Villa San Luis) es case_id vigente por si mismo.",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "El Espacio de Memoria es una intervencion de conservacion dentro de Villa San Luis y surge directamente de la disputa por demolicion y proteccion patrimonial de los blocks.",
+      "source_document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a"
+    },
+    {
+      "historical_case_id": "92ddfd13158c1f43afb3e7c9",
+      "canonical_name": "Cementerio Parque Santiago",
+      "resolved_case_id": "bfccc2aaade8650742980e81",
+      "resolved_via": "Verificado con evidencia estructurada real (tabla evidence) de ambos documentos: mismo litigio (recurso de proteccion, MOP demandado, Corte de Apelaciones/Suprema), mismo objeto (trazado del teleferico a 22m sobre el camposanto), misma geografia (cementerio de Huechuraba, ruta Providencia-Las Condes-Vitacura-Huechuraba). bfccc2aa... (Teleferico Bicentenario) y dbd13b54... (nuevo teleferico que unira Huechuraba con Providencia) describen el MISMO proyecto real en dos articulos distintos -- el union-find de build_case_groups los agrupa transitivamente via esta resolucion, respaldado por la evidencia literal comparada, no como efecto colateral no verificado.",
+      "sol_clasificacion": "A (dos documentos, ambos grado A)",
+      "sol_justificacion": "El cementerio y el Teleferico Bicentenario son proyectos/objetos distintos, pero el recurso judicial surge precisamente por la interaccion entre ambos: el trazado del teleferico sobre el camposanto.",
+      "source_document_id": "096dfcf463da497534abddf2d4142891773942890e95335aa0689d8f15647eb1",
+      "additional_source_document_id": "27edd56a7c56e8d0cb6f11a89cbeb92387cd92a4dba40097a867fd3a5768814f"
+    }
+  ],
+  "non_resolvable": [
+    {
+      "historical_case_id": "0cd234833ec6a07e68f905c1",
+      "canonical_name": "Población Oscar Heiremans",
+      "reason": "Sin project_id vigente bajo ningun nombre (busqueda LIKE '%Heiremans%' en la tabla project: 0 resultados). La pareja mismo_conflicto (0cd234833.../7a0f4d45...) tiene grado A y justificacion clara, pero AMBOS lados quedaron huerfanos -- no hay ningun anclaje vivo al que aliasar sin inventar un destino. Requeriria investigacion primaria (verificar si el caso sigue activo) fuera de las fuentes ya capturadas; por politica del usuario, no se persigue.",
+      "source_document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0"
+    },
+    {
+      "historical_case_id": "7a0f4d45e4ac84c430b0bc49",
+      "canonical_name": "Cooperativa de Viviendas Oscar Heiremans",
+      "reason": "Misma situacion que 0cd234833... (pareja mismo_conflicto entre ambos, ninguno con anclaje vivo). No hay project_id vigente bajo ningun nombre relacionado a Heiremans.",
+      "source_document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0"
+    },
+    {
+      "historical_case_id": "a7b2129265f4580e899395bd",
+      "canonical_name": "PE N° 156 de 2015",
+      "reason": "Sin project_id vigente bajo ningun nombre (busqueda de 'PE N', '156' en la tabla project: sin resultados relacionados). La pareja mismo_conflicto con e7956ee9... (PE N 88) tiene grado A, pero ambos son numeros de permiso de edificacion sin nombre de proyecto propio, y ninguno de los dos quedo con anclaje vivo.",
+      "source_document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234"
+    },
+    {
+      "historical_case_id": "e7956ee9f4bb03683f70b454",
+      "canonical_name": "PE N° 88 de 2016",
+      "reason": "Misma situacion que a7b2129265... (pareja mismo_conflicto entre ambos, ninguno con anclaje vivo).",
+      "source_document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234"
+    },
+    {
+      "historical_case_id": "f98c6a44db6a2c8187d959b9",
+      "canonical_name": "Villa Francia",
+      "reason": "Sin project_id vigente bajo el nombre 'Villa Francia' (0 resultados). Ademas, la relacion es 'conflictos_distintos' (Sol clasificacion D -- confianza baja, 'no hay evidencia de que sean episodios de un mismo conflicto socioterritorial'): no corresponde aliasar al partner c9b912b6... (centro comunitario El Cabildo) porque son explicitamente objetos distintos, no la misma identidad -- hacerlo seria exactamente el error que este proyecto evita. La mencion de Villa Francia desaparecio de la extraccion v3.3 para este documento (hallazgo ya conocido de la migracion v3.2->v3.3).",
+      "source_document_id": "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8"
+    }
+  ]
+}

@@ -4,6 +4,31 @@ Resumen de los hallazgos de validación que dieron forma al diseño actual del s
 registro paso a paso del desarrollo — es la síntesis de qué se encontró y qué cambió como
 consecuencia. El detalle completo de cada corrección vive en el archivo de desarrollo privado.
 
+## Estado operativo vigente — 2026-09-27
+
+La base publicada inspeccionada en esta fecha tiene SHA-256
+`378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db`, integridad SQLite `ok` y
+cero violaciones de claves foráneas. Contiene 941 proyectos, 850 `case_id`, 833 conflictos y
+15.245 vínculos actor→proyecto; 502 conflictos tienen alguna fila de respaldo automático y 331 no.
+La cobertura del respaldo es total en 473 conflictos, parcial en 29 y ninguna en 331. “Sin respaldo”
+no significa “falso” ni “sin conflicto”.
+
+La reconciliación del paquete histórico `CLASSIFIED_63` encontró 48 IDs ausentes del universo actual:
+15 afectan la topología (`mismo_conflicto`/`conflictos_distintos`) y bloquean una reconstrucción
+completa; 33 son referencias no topológicas que se preservarán sin alias ni proyección a conflicto.
+No se promovieron fusiones de proyecto en esta pasada. El preflight es
+`audit/historical_case_reference_preflight.json`; la base publicada no fue modificada. UKAMAU se
+registra en una capa descriptiva sustentada por tres evidencias verificadas, sin crear un
+`project_id` ni fusionarla con otra identidad.
+
+La validación N=100 + stress N=50 de Fix 1A está completada para su detector y sus conclusiones
+están registradas en `audit/validation_summary.json`. El stress es dirigido, no estima prevalencia;
+además, sus resultados no validan por sí solos esta reconciliación histórica ni una futura relación
+proyecto↔mención. No publicar una reconstrucción integral de CONFLICT hasta resolver con evidencia
+los 15 bloqueos topológicos. Los arcos analíticos pueden desarrollar métodos en el warehouse
+vigente, pero sus productos deben identificar esta limitación y no presentarse como una nueva
+reconstrucción cerrada.
+
 ## 1. La unidad "documento" no es la unidad "conflicto"
 
 Una muestra aleatoria estratificada de 50 documentos enriquecidos, revisada caso por caso, encontró:
@@ -64,12 +89,14 @@ multiafiliación, 48 se explicaban por el requisito de evidencia más estricto, 
 fusión real de unidades. La propiedad matemática (un conflicto nunca puede tener más multiafiliación
 que la suma de sus casos) quedó protegida con un test dedicado, no solo documentada.
 
-## 5. Estado de la validación
+## 5. Estado de la validación — contexto histórico y vigencia
 
-La validación muestral N=50 identificó el problema real; no se ha corrido todavía una segunda
-muestra más grande sobre el corpus completo. Las conclusiones analíticas de fondo (más allá de la
-infraestructura de identidad, que sí está verificada y cerrada) siguen pendientes de los arcos
-sustantivos de análisis.
+La muestra N=50 de esta sección fue la auditoría inicial y motivó cambios de diseño. Después se
+ejecutaron validaciones posteriores, incluida la N=150 de calibración y el holdout N=100 + stress
+N=50 de Fix 1A. El estado y sus métricas con procedencia están en
+`audit/validation_summary.json`; no reutilizar estos resultados como validación de los gates
+históricos ni de una nueva versión del linker. Las conclusiones analíticas sustantivas siguen
+pendientes de los arcos y deben usar el snapshot vigente señalado arriba.
 
 ## 6. Fix 1A: respaldo documental y ambigüedad multi-caso
 
@@ -85,7 +112,9 @@ mención incluida con evidencia de objeto, `ambiguous_multi_case_document=1` hac
 limitación. La tabla `conflict_evidence_backing` conserva la cita, documento, mención, versión del
 detector y método de coincidencia.
 
-En el warehouse vigente: 839 conflictos, 331 con respaldo documental detectado, 508 sin respaldo;
-281 con cobertura total de proyectos, 50 parcial y 508 ninguna. Estos estados no equivalen a
-"verdadero/falso": la ausencia de respaldo solo excluye del universo analítico conservador hasta
-pasar el holdout N=100 y stress sample N=50 pendiente.
+En el snapshot histórico de cierre de Fix 1A: 839 conflictos, 331 con respaldo documental detectado,
+508 sin respaldo; 281 con cobertura total y 50 parcial. Esos conteos no son los del warehouse
+vigente (ver el encabezado). Los estados no equivalen a “verdadero/falso”: ausencia de respaldo
+significa que la regla conservadora no lo detectó. El holdout N=100 y stress N=50 ya se completaron;
+su interpretación y las limitaciones de independencia están anotadas en el bloque de validación
+correspondiente de `audit/validation_summary.json`.

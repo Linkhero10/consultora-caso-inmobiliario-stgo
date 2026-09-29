@@ -151,15 +151,26 @@ def test_decompose_reports_excluded_generic_nodes_explicitly():
     MANUAL_DECISIONS via substring normalizado en resolve_project_review.py]
     Recalculado en vivo tras ambos cambios: 673 nodos actor cada red (antes
     1001), 659 comparables (antes 971), 14 nodos genericos excluidos de
-    cada lado (antes 30) -- misma proporcion relativa (~2.1% genericos)."""
+    cada lado (antes 30) -- misma proporcion relativa (~2.1% genericos).
+
+    [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17 merges
+    de identidad de Codex/Luna (68 pares)] Recalculado en vivo: 706 nodos
+    actor cada red (antes 673), 687 comparables (antes 659), 19 nodos
+    genericos excluidos de cada lado (antes 14) -- mas fusiones de proyecto
+    consolidan mas menciones de actor bajo el mismo case_id/conflict_id.
+
+    [ACTUALIZADO 2026-09-29, cierre de los 8 pares PROJECT abiertos] Recalculado
+    en vivo: 688 comparables (antes 687); los 19 genericos excluidos no cambian.
+    Las 3 fusiones nuevas (Chaguay/exChaguay, torres Sheraton, Bellavista DIB)
+    consolidan un actor mas bajo el mismo conflict_id."""
     conn = _connect_or_skip()
     bip_case_old, bip_case_matched, bip_conflict = _build_three_universos(conn)
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
-    assert dec["n_actores_comparables_en_los_3_universos"] == 659
-    assert dec["n_nodos_genericos_excluidos_case_matched"] == 14
-    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 14
+    assert dec["n_actores_comparables_en_los_3_universos"] == 688
+    assert dec["n_nodos_genericos_excluidos_case_matched"] == 19
+    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 19
     assert all("::" in n for n in dec["nodos_genericos_excluidos_case_matched"])
     assert all("::" in n for n in dec["nodos_genericos_excluidos_conflict_safe"])
 

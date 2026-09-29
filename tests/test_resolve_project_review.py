@@ -10,6 +10,7 @@ import sys
 import sqlite3
 import hashlib
 import json
+import importlib.util
 from pathlib import Path
 
 import pytest
@@ -19,6 +20,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 import resolve_project_review as rpq  # noqa: E402
 import build_projects as bridge  # noqa: E402
+
+_IDENTITY_BUILDER_PATH = PROJECT_ROOT / "audit" / "identity_followup_2026-09-27" / "build_identity_followup.py"
+_IDENTITY_BUILDER_SPEC = importlib.util.spec_from_file_location("identity_followup_builder", _IDENTITY_BUILDER_PATH)
+assert _IDENTITY_BUILDER_SPEC and _IDENTITY_BUILDER_SPEC.loader
+identity_builder = importlib.util.module_from_spec(_IDENTITY_BUILDER_SPEC)
+_IDENTITY_BUILDER_SPEC.loader.exec_module(identity_builder)
 
 
 def test_conflicting_numeral_blocks_merge():
@@ -85,6 +92,308 @@ def test_decision_provenance_is_structured_not_inferred_from_reason_text():
     assert decision is None
     assert source == "unresolved"
     assert actor is None
+
+
+def test_exact_project_id_adjudication_wins_and_does_not_leak_by_name():
+    adjudications = [
+        {
+            "project_ids": ["project-a", "project-b"],
+            "project_names": {
+                "project-a": "Portal La Dehesa",
+                "project-b": "Cenco Portal La Dehesa",
+            },
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "pair_id": "pair-exact",
+            "rationale": "same named shopping center",
+        },
+        {
+            "project_ids": ["project-c", "project-d"],
+            "project_names": {
+                "project-c": "Portal La Dehesa",
+                "project-d": "Cenco Portal La Dehesa",
+            },
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "pair_id": "pair-same-names-different-ids",
+            "rationale": "the records have different source scope",
+        },
+    ]
+
+    exact = rpq.classify_project_pair_with_adjudications(
+        "project-a", "Portal La Dehesa", "project-b", "Cenco Portal La Dehesa", adjudications
+    )
+    assert exact == (
+        True,
+        "same named shopping center",
+        "identity_followup_2026-09-27",
+        None,
+    )
+
+    # A name-level rule would merge these names, but a reviewed ID pair with
+    # another identity must not transfer its decision to different IDs.
+    unresolved = rpq.classify_project_pair_with_adjudications(
+        "project-c", "Portal La Dehesa", "project-d", "Cenco Portal La Dehesa", adjudications
+    )
+    assert unresolved[0] is None
+    assert unresolved[2] == "identity_followup_2026-09-27"
+
+    # An unreviewed ID pair with the same names is also fail-closed once those
+    # names have an ID-scoped adjudication; it must not inherit it by text.
+    other_ids = rpq.classify_project_pair_with_adjudications(
+        "project-x", "Portal La Dehesa", "project-y", "Cenco Portal La Dehesa", adjudications
+    )
+    assert other_ids[0] is None
+    assert other_ids[2] == "identity_followup_name_scope_guard"
+
+
+def test_exact_reviewed_nonidentity_is_persisted_as_kept_separate():
+    adjudications = [
+        {
+            "project_ids": ["site", "component"],
+            "project_names": {"site": "Villa San Luis", "component": "Block 14 de Villa San Luis"},
+            "identity_class": "parent_component_phase",
+            "resolver_action": "no_new_merge",
+            "pair_id": "site-component",
+            "rationale": "El block 14 es una parte del conjunto, no su alias.",
+        }
+    ]
+    result = rpq.classify_project_pair_with_adjudications(
+        "site", "Villa San Luis", "component", "Block 14 de Villa San Luis", adjudications
+    )
+    assert result == (
+        False,
+        "El block 14 es una parte del conjunto, no su alias.",
+        "identity_followup_2026-09-27",
+        None,
+    )
+
+
+def test_exact_pair_uses_its_own_decision_source_not_the_last_adjudication():
+    adjudications = [
+        {
+            "project_ids": ["legacy-a", "legacy-b"],
+            "project_names": {"legacy-a": "Old A", "legacy-b": "Old B"},
+            "identity_class": "distinct_entities",
+            "resolver_action": "no_new_merge",
+            "decision_source": "historical_pair_adjudication_2026-09-28",
+            "pair_id": "legacy-exact-pair",
+            "rationale": "Exact historical pair remains separate.",
+        },
+        {
+            "project_ids": ["new-a", "new-b"],
+            "project_names": {"new-a": "New A", "new-b": "New B"},
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "decision_source": "identity_followup_2026-09-27",
+            "pair_id": "new-exact-pair",
+            "rationale": "Different exact pair remains unresolved.",
+        },
+    ]
+
+    result = rpq.classify_project_pair_with_adjudications(
+        "legacy-a", "Old A", "legacy-b", "Old B", adjudications
+    )
+
+    assert result == (
+        False,
+        "Exact historical pair remains separate.",
+        "historical_pair_adjudication_2026-09-28",
+        None,
+    )
+
+
+def test_exact_reviewed_unresolved_pair_stays_pending():
+    adjudications = [
+        {
+            "project_ids": ["a", "b"],
+            "project_names": {"a": "Vital Apoquindo", "b": "Vital Apoquindo 25 edificios"},
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "pair_id": "vital-uncertain",
+            "rationale": "El cluster tiene conteos incompatibles y no se resuelve pairwise.",
+        }
+    ]
+    result = rpq.classify_project_pair_with_adjudications(
+        "a", "Vital Apoquindo", "b", "Vital Apoquindo 25 edificios", adjudications
+    )
+    assert result[0] is None
+    assert result[2] == "identity_followup_2026-09-27"
+
+
+def test_exact_project_id_adjudication_rejects_stale_names():
+    adjudications = [
+        {
+            "project_ids": ["project-a", "project-b"],
+            "project_names": {"project-a": "Name A", "project-b": "Name B"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "pair_id": "pair-exact",
+            "rationale": "verified identity",
+        }
+    ]
+    with pytest.raises(ValueError, match="canonical_name mismatch"):
+        rpq.classify_project_pair_with_adjudications(
+            "project-a", "Renamed A", "project-b", "Name B", adjudications
+        )
+
+
+def test_identity_adjudication_scope_requires_exact_queue_pair_and_names():
+    projects = {"p-a": "Project A", "p-b": "Project B"}
+    entries = [
+        {
+            "pair_id": "p-a-b",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Project A", "p-b": "Project B"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "rationale": "same source-backed identity",
+        }
+    ]
+    rpq.validate_project_identity_adjudication_scope(
+        projects, [(7, "p-a", "Project A", "p-b", "Project B")], entries
+    )
+    with pytest.raises(ValueError, match="absent from project_review_queue"):
+        rpq.validate_project_identity_adjudication_scope(
+            projects, [(7, "p-a", "Project A", "p-x", "Project X")], entries
+        )
+    with pytest.raises(ValueError, match="canonical_name mismatch"):
+        rpq.validate_project_identity_adjudication_scope(
+            {"p-a": "Renamed A", "p-b": "Project B"},
+            [(7, "p-a", "Renamed A", "p-b", "Project B")],
+            entries,
+        )
+
+
+def test_identity_adjudication_artifact_pins_exact_ids_names_mentions_and_canonical(tmp_path):
+    root = Path(rpq.__file__).resolve().parents[1]
+    artifact_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    adjudications = rpq.load_project_identity_adjudications(artifact_path, bundle_path)
+    assert len(adjudications) == 68
+    assert sum(entry["resolver_action"] == "merge_case" for entry in adjudications) == 17
+
+    payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+    payload["adjudications"][0]["source_evidence"][0]["raw_project_mention"] = "different mention"
+    altered_path = tmp_path / "altered_identity_adjudications.json"
+    altered_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="cites a source outside its bundle side"):
+        rpq.load_project_identity_adjudications(altered_path, bundle_path)
+
+    payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+    merged = next(entry for entry in payload["adjudications"] if entry["resolver_action"] == "merge_case")
+    merged["canonical_project_id"] = "not-a-project-id"
+    altered_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="requires an exact canonical_project_id"):
+        rpq.load_project_identity_adjudications(altered_path, bundle_path)
+
+
+def test_identity_evidence_anchor_cannot_be_generic_location_word():
+    with pytest.raises(ValueError, match="no literal name fragment"):
+        identity_builder.find_fragment(
+            "El edificio ubicado en el sector se discutió en la reunión.",
+            "proyecto ubicado en calle Recreo",
+            "proyecto ubicado en calle Recreo",
+        )
+
+    _, _, fragment, method = identity_builder.find_fragment(
+        "El edificio ubicado en calle Recreo fue observado por la comunidad.",
+        "proyecto ubicado en calle Recreo",
+        "proyecto ubicado en calle Recreo",
+    )
+    assert method == "normalized_literal_subphrase"
+    assert "recreo" in fragment.casefold()
+    assert fragment.casefold() != "ubicado"
+
+
+def test_identity_source_evidence_requires_exact_hashes_urls_and_literal_quotes(tmp_path):
+    text = "El proyecto verificable se llama Proyecto Alfa, en Ñuñoa."
+    record = {"url": "https://example.test/alfa", "text": text}
+    raw = json.dumps(record, ensure_ascii=False).encode("utf-8")
+    content_dir = tmp_path / "Fuentes" / "fulltext" / "content"
+    content_dir.mkdir(parents=True)
+    content_path = content_dir / "record.json"
+    content_path.write_bytes(raw)
+    text_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    record_sha = hashlib.sha256(raw).hexdigest()
+    entries = [
+        {
+            "pair_id": "pair-alfa",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Proyecto Alfa", "p-b": "Proyecto Alfa (Ñuñoa)"},
+            "identity_class": "same_identity",
+            "resolver_action": "merge_case",
+            "rationale": "La mención literal identifica el mismo proyecto.",
+            "source_evidence": [
+                {
+                    "side": "a",
+                    "project_id": "p-a",
+                    "project_name": "Proyecto Alfa",
+                    "document_id": text_sha,
+                    "url": "https://example.test/alfa",
+                    "raw_project_mention": "Proyecto Alfa",
+                    "content_file": "Fuentes/fulltext/content/record.json",
+                    "source_text_sha256": text_sha,
+                    "content_record_sha256": record_sha,
+                    "evidence_status": "literal_anchor_verified",
+                    "quote": "Proyecto Alfa",
+                    "matched_fragment": "Proyecto Alfa",
+                }
+            ],
+        }
+    ]
+
+    summary = rpq.validate_project_identity_adjudication_evidence(entries, tmp_path)
+    assert summary["valid_references"] == 1
+
+    bad = json.loads(json.dumps(entries))
+    bad[0]["source_evidence"][0]["quote"] = "Texto que no está en el artículo"
+    with pytest.raises(ValueError, match="quote no es substring literal"):
+        rpq.validate_project_identity_adjudication_evidence(bad, tmp_path)
+
+
+def test_no_new_merge_cannot_be_reconnected_transitively():
+    baseline = {"p-a": "p-a", "p-b": "p-b", "p-c": "p-c"}
+    plan = rpq.ResolutionPlan(
+        project_to_case={"p-a": "p-a", "p-b": "p-a", "p-c": "p-a"},
+        row_decisions={},
+        homonym_vetoes=0,
+    )
+    entries = [
+        {
+            "pair_id": "pair-a-c",
+            "project_ids": ["p-a", "p-c"],
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "rationale": "No compartir grupo automáticamente.",
+        }
+    ]
+    with pytest.raises(ValueError, match="no_new_merge pair became connected"):
+        rpq.validate_project_identity_adjudication_topology(
+            plan.project_to_case, baseline, entries
+        )
+
+
+def test_no_new_merge_topology_accepts_unchanged_baseline_members():
+    baseline = {"p-a": "p-a", "p-b": "p-a"}
+    plan = rpq.ResolutionPlan(
+        project_to_case={"p-a": "p-a", "p-b": "p-a"},
+        row_decisions={},
+        homonym_vetoes=0,
+    )
+    entries = [
+        {
+            "pair_id": "pair-a-b",
+            "project_ids": ["p-a", "p-b"],
+            "project_names": {"p-a": "Project A", "p-b": "Project B"},
+            "identity_class": "unresolved",
+            "resolver_action": "no_new_merge",
+            "rationale": "El baseline ya los agrupaba antes de esta auditoría.",
+        }
+    ]
+    assert rpq.validate_project_identity_adjudication_topology(
+        plan.project_to_case, baseline, entries
+    ) == {"checked": 1, "transitive_reconnections": 0}
 
 
 def test_source_adjudications_are_exactly_keyed_and_have_structured_evidence_refs():
@@ -667,45 +976,18 @@ def test_sol_audit_31_corrections_2026_09_18():
         assert decision is False, f"deberia mantenerse separado: {a!r} / {b!r}"
 
 
-# --- migracion v3.2->v3.3 (2026-09-26): reconexion de MANUAL_DECISIONS via
-# substring normalizado, cuando el fraseo del proyecto cambio entre corridas
-# LLM pero MANUAL_DECISIONS quedo indexado por el fraseo viejo ---
-
-
-def test_manual_decision_via_normalized_substring_reconnects_renamed_pair(monkeypatch):
+def test_renamed_names_do_not_inherit_a_manual_decision_by_substring(monkeypatch):
     fake_manual = {("Torre Central", "proyecto Torre Central"): (True, "mismo proyecto")}
     monkeypatch.setattr(rpq, "MANUAL_DECISIONS", fake_manual)
-    result = rpq._manual_decision_via_normalized_substring("Torre Central 2024", "proyecto Torre Central en Ñuñoa")
-    assert result is not None
-    decision, reason = result
-    assert decision is True
-    assert "reconectado" in reason
+    result = rpq.classify_with_provenance(
+        "Torre Central 2024", "proyecto Torre Central en Ñuñoa"
+    )
+    assert result[0] is None
+    assert result[2] == "unresolved"
 
 
-def test_manual_decision_via_normalized_substring_returns_none_when_no_match(monkeypatch):
-    fake_manual = {("Torre Central", "proyecto Torre Central"): (True, "mismo proyecto")}
-    monkeypatch.setattr(rpq, "MANUAL_DECISIONS", fake_manual)
-    assert rpq._manual_decision_via_normalized_substring("Edificio Completamente Distinto", "Otro Proyecto Sin Relacion") is None
-
-
-def test_manual_decision_via_normalized_substring_never_picks_ambiguous_match(monkeypatch):
-    """Si mas de una clave de MANUAL_DECISIONS matchea por substring, el
-    fallback debe preferir NO decidir antes que elegir arbitrariamente --
-    ambiguedad real, no un error a ocultar."""
-    fake_manual = {
-        ("Torre Central", "proyecto Torre Central Norte"): (True, "decision A"),
-        ("Torre Central", "proyecto Torre Central Sur"): (True, "decision B"),
-    }
-    monkeypatch.setattr(rpq, "MANUAL_DECISIONS", fake_manual)
-    assert rpq._manual_decision_via_normalized_substring("Torre Central", "Torre Central") is None
-
-
-def test_classify_checks_generic_blocklist_before_substring_fallback(monkeypatch):
-    """Regresion real encontrada al implementar el fallback: 'Vespucio' (en
-    GENERIC_BLOCKLIST) matcheaba por substring contra CUALQUIER decision
-    manual que mencionara 'Vespucio' (ej. 'Jardines de Vespucio'), una
-    reconexion espuria. El blocklist debe interceptar antes de llegar al
-    fallback de substring."""
+def test_generic_blocklist_still_blocks_unqualified_name(monkeypatch):
+    """A generic bare name remains a deterministic non-merge guard."""
     fake_manual = {("Vespucio", "Jardines de Vespucio"): (True, "no deberia aplicar aqui")}
     monkeypatch.setattr(rpq, "MANUAL_DECISIONS", fake_manual)
     decision, reason = rpq.classify("edificio en Avenida Vespucio 7550", "Vespucio")
@@ -713,7 +995,7 @@ def test_classify_checks_generic_blocklist_before_substring_fallback(monkeypatch
     assert "generico" in reason
 
 
-def test_all_real_pairs_are_covered_by_rule_or_manual_decision():
+def test_frozen_68_identity_adjudications_keep_pair_level_counts_and_evidence():
     """Hallazgo real: antes de aplicar nada a la base de datos se verifico
     que TODAS las filas reales de project_review_queue tuvieran una decision
     -- 1 par quedo sin cubrir en la primera pasada (Nueva El Golf) por un
@@ -780,39 +1062,300 @@ def test_all_real_pairs_are_covered_by_rule_or_manual_decision():
         decision, _ = rpq.classify(name_a, name_b)
         assert decision is True, f"'{name_a}' / '{name_b}' deberia estar merged"
 
-    # [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] HALLAZGO REAL,
-    # no solo un test desactualizado: al migrar el enrichment productivo a
-    # v3.3, muchos nombres de proyecto cambiaron de fraseo para el MISMO
-    # objeto real -- 98/256 pares quedaron sin decision (antes: 0/260).
-    # Verificado que 64 de esos 98 correspondian a decisiones YA TOMADAS por
-    # Sol/Claude bajo el fraseo viejo de v3.2, perdidas en silencio porque
-    # MANUAL_DECISIONS matchea por texto EXACTO. Se corrigio de raiz en
-    # classify() (ver _manual_decision_via_normalized_substring(), agregada
-    # 2026-09-26): reconecta un par nuevo con una decision ya tomada si hay
-    # EXACTAMENTE una clave de MANUAL_DECISIONS en relacion de substring
-    # normalizado bidireccional con el par nuevo -- mismo principio 'nunca
-    # fuzzy' que el resto del proyecto, corrido DESPUES del blocklist de
-    # nombres genericos (para no reconectar por accidente un termino como
-    # 'Vespucio' o 'Data Center' que aparece en muchas decisiones distintas).
-    # Esto recupero 30 de esas 64 decisiones perdidas (verificado a mano:
-    # las que no se recuperan son genuinamente ambiguas -- mas de una
-    # decision candidata por substring, y el fallback prefiere no decidir
-    # antes que elegir arbitrariamente). Los 68 pares que seguían sin
-    # decision son, en su mayoria, candidatos GENUINAMENTE NUEVOS que v3.3
-    # introdujo (nunca existieron como par bajo v3.2) -- correcto que
-    # queden pendientes de revision humana, no un bug. En 2026-09-27 se
-    # agregaron diez decisiones fuente-primero, exactas y acotadas, con una
-    # referencia documental hash-pinned por pareja. La pareja Alto Las
-    # Condes/Cenco Alto Las Condes permanece sin resolver porque su
-    # project_id mezcla menciones del mall y de su expansión. Ninguna regla
-    # amplia cambió; el saldo esperado queda en 58."""
-    uncovered = [(a, b) for a, b in rows if rpq.classify(a, b)[0] is None]
-    assert len(uncovered) == 58, (
-        f"cambio el numero de pares sin decision (era 68 tras la migracion v3.2->v3.3 "
-        f"y 58 despues de diez adjudicaciones fuente-primero): {len(uncovered)}. Si subio, investigar "
-        f"si el fallback dejo de reconectar algo que deberia; si bajo, verificar que fue "
-        f"por una decision real nueva, no por relajar el fallback."
+    # Las decisiones históricas se aplican solo por pareja exacta de
+    # project_id. No hay transferencia por substring/nombre. La muestra base
+    # conserva sus 3 estados (merge, separación explícita, pendiente); un
+    # suplemento separado cubre 27 pares históricos con evidencia literal.
+    with sqlite3.connect(warehouse) as conn:
+        id_rows = conn.execute(
+            "SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b "
+            "FROM project_review_queue"
+        ).fetchall()
+    with sqlite3.connect(warehouse) as conn:
+        projects = dict(conn.execute("SELECT project_id, canonical_name FROM project"))
+    identity_adjudications = rpq.load_project_identity_adjudications()
+    rpq.validate_project_identity_adjudication_scope(projects, id_rows, identity_adjudications)
+    adjudicated_ids = {tuple(sorted(entry["project_ids"])) for entry in identity_adjudications}
+    observed = {True: 0, False: 0, None: 0}
+    for _rowid, pid_a, name_a, pid_b, name_b in id_rows:
+        if tuple(sorted((pid_a, pid_b))) in adjudicated_ids:
+            outcome = rpq.classify_project_pair_with_adjudications(
+                pid_a, name_a, pid_b, name_b, identity_adjudications
+            )[0]
+            observed[outcome] += 1
+    assert observed == {True: 17, False: 35, None: 16}
+
+
+def test_recovered_historical_pairs_use_exact_id_adjudications_only():
+    """The supplemental 27 decisions cover exact pairs and preserve uncertainty."""
+    warehouse = PROJECT_ROOT / "data" / "warehouse.sqlite"
+    if not warehouse.exists():
+        pytest.skip("warehouse.sqlite no existe en este entorno")
+    adjudications = rpq.load_historical_project_identity_adjudications()
+    with sqlite3.connect(warehouse) as conn:
+        rows = conn.execute(
+            "SELECT rowid, project_id_a, canonical_name_a, project_id_b, canonical_name_b "
+            "FROM project_review_queue"
+        ).fetchall()
+        projects = dict(conn.execute("SELECT project_id, canonical_name FROM project"))
+    assert len(adjudications) == 27
+    rpq.validate_project_identity_adjudication_scope(projects, rows, adjudications)
+    adjudication_pairs = {tuple(sorted(entry["project_ids"])) for entry in adjudications}
+    assert len(adjudication_pairs) == 27
+    assert tuple(sorted(("6787fa6cc302091a8ea27645", "a812c5dd74897808e543d008"))) in adjudication_pairs
+
+    queue_by_pair = {tuple(sorted((pid_a, pid_b))): (name_a, name_b) for _rowid, pid_a, name_a, pid_b, name_b in rows}
+    decisions = {}
+    for entry in adjudications:
+        pid_a, pid_b = entry["project_ids"]
+        name_a, name_b = entry["project_names"][pid_a], entry["project_names"][pid_b]
+        assert tuple(sorted((pid_a, pid_b))) in queue_by_pair
+        result = rpq.classify_project_pair_with_adjudications(
+            pid_a, name_a, pid_b, name_b, adjudications
+        )
+        decisions[tuple(sorted((pid_a, pid_b)))] = result
+
+    expected = {True: 10, False: 15, None: 2}
+    assert {value: sum(result[0] is value for result in decisions.values()) for value in expected} == expected
+    # El texto sugiere un alias histórico, pero el project_id de Cenco Costanera
+    # mezcla activo e iniciativas; se mantiene pendiente hasta separar menciones.
+    assert decisions[tuple(sorted(("e8fd7b147a07358cd8e129e9", "d18b439c5be31864ad8f1e21")))][0] is None
+    assert decisions[tuple(sorted(("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628")))][0] is None
+    assert decisions[tuple(sorted(("17f3b690577f9fd996b9c4bd", "69daf84c98731696f403b9da")))][0] is False
+    assert decisions[tuple(sorted(("a812c5dd74897808e543d008", "a7582eea55bbe9571084de75")))][0] is False
+    assert decisions[tuple(sorted(("5f4d9617fe0e8aed5c2a5413", "07f2e2ce4fe660358aba5d28")))][0] is False
+    assert decisions[tuple(sorted(("f8ddadd1807ecdd4188c0847", "69daf84c98731696f403b9da")))][0] is False
+
+    cab_pair = tuple(sorted(("6787fa6cc302091a8ea27645", "a812c5dd74897808e543d008")))
+    assert decisions[cab_pair][0] is False
+
+
+def test_historical_pair_artifact_is_hash_pinned_and_has_exact_case_counts():
+    adjudications = rpq.load_historical_project_identity_adjudications()
+    assert len(adjudications) == 27
+    outcomes = [
+        rpq.classify_project_pair_with_adjudications(
+            entry["project_ids"][0],
+            entry["project_names"][entry["project_ids"][0]],
+            entry["project_ids"][1],
+            entry["project_names"][entry["project_ids"][1]],
+            adjudications,
+        )[0]
+        for entry in adjudications
+    ]
+    assert {value: outcomes.count(value) for value in (True, False, None)} == {
+        True: 10,
+        False: 15,
+        None: 2,
+    }
+    assert all(entry["production_promoted"] is False for entry in adjudications)
+
+
+def test_historical_pair_loader_rejects_tampered_artifact(monkeypatch):
+    artifact = PROJECT_ROOT / "audit" / "historical_project_pair_adjudications_v1.json"
+    original_read_bytes = Path.read_bytes
+
+    def tampered_read_bytes(path):
+        raw = original_read_bytes(path)
+        return raw + b" " if path.resolve() == artifact.resolve() else raw
+
+    monkeypatch.setattr(Path, "read_bytes", tampered_read_bytes)
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        rpq.load_historical_project_identity_adjudications(artifact)
+
+
+def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    assert len(adjudications) == 95
+    by_pair = {
+        tuple(sorted(entry["project_ids"])): entry
+        for entry in adjudications
+    }
+
+    expected = {
+        ("91f2112803222891bec22245", "2501823afe7521d105456260"): "same_identity",
+        ("803b8601f7f58a2b25f694cd", "a07066976e35eb7bd807ed77"): "same_identity",
+        ("52431d07bb532a107713c2bd", "bcf9a9d46577aec285a3b590"): "distinct_entities",
+        ("5997fefd9709a67727316bc2", "fe0f38566717aa34de32376a"): "same_identity",
+        ("e37655355ac179806569a998", "fe0f38566717aa34de32376a"): "same_identity",
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "insufficient_evidence",
+        ("a07066976e35eb7bd807ed77", "01d6668a9dc5aba908f81090"): "distinct_entities",
+        ("922533b858c751fc8f5a8e3b", "fe0f38566717aa34de32376a"): "same_identity",
+        ("cb1087cc68bd26d203011f18", "8e88d3996773e1c8ecf04a7c"): "same_identity",
+        ("bb5755a35f19ada504ca13a4", "de08d293dbbdbbb72d27e6ae"): "same_identity",
+        ("89ddfb0616d12dccc7393b63", "cf65c362a0dd71489735dc57"): "distinct_entities",
+        ("e986c115668629af6342f449", "e37655355ac179806569a998"): "same_identity",
+        ("06cac2c4b094ac1ed38ac40b", "d8612c60e4f66ef4627d31c5"): "same_identity",
+        ("06cac2c4b094ac1ed38ac40b", "623ed9e19dc274ad6b3ae8dd"): "same_identity",
+        ("06cac2c4b094ac1ed38ac40b", "7e66e9745e63138bdbdf2c76"): "same_identity",
+        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"): "insufficient_evidence",
+        ("ffa5c9b29b95f230d34616d9", "4648a378b2f533657c23de7a"): "same_identity",
+        ("1c1f2a962eca459282a98baa", "7a4072da49c6decfd6df3f01"): "same_identity",
+        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"): "insufficient_evidence",
+        ("e8fd7b147a07358cd8e129e9", "d18b439c5be31864ad8f1e21"): "parent_component_phase",
+    }
+    for pair, identity_class in expected.items():
+        assert by_pair[tuple(sorted(pair))]["identity_class"] == identity_class
+
+    outcomes = []
+    for entry in adjudications:
+        pid_a, pid_b = entry["project_ids"]
+        name_a = entry["project_names"][pid_a]
+        name_b = entry["project_names"][pid_b]
+        outcomes.append(
+            rpq.classify_project_pair_with_adjudications(
+                pid_a, name_a, pid_b, name_b, adjudications
+            )[0]
+        )
+    assert {value: outcomes.count(value) for value in (True, False, None)} == {
+        True: 38,
+        False: 57,
+        None: 0,
+    }
+    unresolved_reviewed = {
+        entry["pair_id"]
+        for entry in adjudications
+        if entry["identity_class"] == "unresolved" and entry.get("override_artifact")
+    }
+    assert unresolved_reviewed == set()
+    assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 0
+    assert sum(entry["identity_class"] == "insufficient_evidence" for entry in adjudications) == 3
+    assert all(
+        entry["confidence"] == "high"
+        for entry in adjudications
+        if entry["identity_class"] == "same_identity" and entry.get("override_artifact")
     )
-    unresolved_pairs = {frozenset(pair) for pair in uncovered}
-    assert frozenset(("Alto Las Condes", "Cenco Alto Las Condes")) in unresolved_pairs
-    assert frozenset(("Portal La Dehesa", "Cenco Portal La Dehesa")) not in unresolved_pairs
+    assert all(entry["production_promoted"] is False for entry in adjudications)
+
+
+def test_topology_pair_dispositions_are_pinned_to_the_exact_reviewed_ids():
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    by_pair = {
+        tuple(sorted(entry["project_ids"])): entry
+        for entry in adjudications
+    }
+    plaza_pair = tuple(sorted((
+        "89ddfb0616d12dccc7393b63",
+        "cf65c362a0dd71489735dc57",
+    )))
+    fundamenta_pair = tuple(sorted((
+        "bb5755a35f19ada504ca13a4",
+        "de08d293dbbdbbb72d27e6ae",
+    )))
+
+    plaza = by_pair[plaza_pair]
+    fundamenta = by_pair[fundamenta_pair]
+    assert plaza["identity_class"] == "distinct_entities"
+    assert plaza["resolver_action"] == "no_new_merge"
+    assert plaza["production_promoted"] is False
+    assert fundamenta["identity_class"] == "same_identity"
+    assert fundamenta["resolver_action"] == "merge_case"
+    assert fundamenta["canonical_project_id"] == "bb5755a35f19ada504ca13a4"
+    assert fundamenta["production_promoted"] is False
+    assert plaza["override_artifact"].endswith("_v3.json")
+    assert fundamenta["override_artifact"].endswith("_v3.json")
+
+
+def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_scoped():
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    result = rpq.classify_project_pair_with_adjudications(
+        "91f2112803222891bec22245",
+        "Carlos Valdovinos",
+        "2501823afe7521d105456260",
+        "proyecto de SuKasa en avenida Carlos Valdovinos",
+        adjudications,
+    )
+    assert result[0] is True
+    assert result[2] == "project_identity_adjudication_override_2026-09-28"
+    provenance = json.loads(
+        rpq.decision_provenance_ref(
+            "Carlos Valdovinos",
+            "proyecto de SuKasa en avenida Carlos Valdovinos",
+            result[2],
+            project_ids=("91f2112803222891bec22245", "2501823afe7521d105456260"),
+            identity_adjudications=adjudications,
+        )
+    )
+    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
+    assert provenance["artifact_sha256"] == rpq.PROJECT_IDENTITY_OVERRIDE_SHA256
+
+    same_names_other_ids = rpq.classify_project_pair_with_adjudications(
+        "unreviewed-a", "Carlos Valdovinos", "unreviewed-b", "proyecto de SuKasa en avenida Carlos Valdovinos", adjudications
+    )
+    assert same_names_other_ids[0] is None
+    assert same_names_other_ids[2] == "identity_followup_name_scope_guard"
+
+
+def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeypatch):
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
+    original_read_bytes = Path.read_bytes
+
+    def tampered_read_bytes(path):
+        raw = original_read_bytes(path)
+        return raw + b" " if path.resolve() == artifact.resolve() else raw
+
+    monkeypatch.setattr(Path, "read_bytes", tampered_read_bytes)
+    with pytest.raises(ValueError, match="override SHA-256 mismatch"):
+        rpq.load_effective_project_identity_adjudications()
+
+
+def test_closed_overlay_leaves_no_unresolved_pair_and_keeps_uncertainty_explicit():
+    """[2026-09-29] Cierre de los 8 pares PROJECT abiertos: ninguna entrada efectiva queda
+    `unresolved`; los 3 casos sin evidencia positiva se mantienen separados como
+    `insufficient_evidence` (no se afirma que sean objetos distintos) y los historicos
+    Santa Petronila/Costanera Center se adjudican por ID exacto."""
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    assert not [a for a in adjudications if a["identity_class"] == "unresolved"]
+    by_pair = {tuple(sorted(a["project_ids"])): a for a in adjudications}
+    for ids in (
+        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"),
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"),
+        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"),
+    ):
+        entry = by_pair[tuple(sorted(ids))]
+        assert entry["identity_class"] == "insufficient_evidence"
+        assert entry["resolver_action"] == "no_new_merge"
+        assert entry["canonical_project_id"] is None
+        a, b = ids
+        result = rpq.classify_project_pair_with_adjudications(
+            a, entry["project_names"][a], b, entry["project_names"][b], adjudications
+        )
+        assert result[0] is False
+
+
+def test_legacy_name_level_merges_contradicted_by_sources_are_reverted():
+    """La coincidencia de nombre o de desarrollador no es identidad: 'Reserva La Dehesa'
+    (54 casas, Cerro del Medio) != Reserva La Dehesa (ex Chaguay), y el edificio de
+    Desarrollo Inmobiliario Bellavista (Estacion Central) != proyecto Bellavista (Recoleta)."""
+    assert rpq.classify("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)")[0] is False
+    assert rpq.classify("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista")[0] is False
+    assert rpq.classify("Chaguay", "Reserva La Dehesa (ex Chaguay)")[0] is True
+
+
+def test_override_rejects_merge_without_high_confidence_or_for_insufficient_evidence(monkeypatch, tmp_path):
+    """Ruta negativa: el loader falla cerrado si un override intenta fusionar con confianza media
+    o si una clase sin merge declara un canonical_project_id."""
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
+    payload = json.loads(artifact.read_text(encoding="utf-8"))
+
+    def load_with(mutator):
+        mutated = json.loads(json.dumps(payload))
+        mutator(mutated)
+        raw = json.dumps(mutated, ensure_ascii=False, indent=2).encode("utf-8")
+        path = tmp_path / "overlay.json"
+        path.write_bytes(raw)
+        monkeypatch.setattr(rpq, "PROJECT_IDENTITY_OVERRIDE_SHA256", hashlib.sha256(raw).hexdigest())
+        return rpq.load_effective_project_identity_adjudications(path)
+
+    def medium_merge(p):
+        next(e for e in p["adjudications"] if e["identity_class"] == "same_identity")["confidence"] = "medium"
+
+    def canonical_on_no_merge(p):
+        next(e for e in p["adjudications"] if e["identity_class"] == "insufficient_evidence")[
+            "canonical_project_id"
+        ] = p["adjudications"][0]["project_ids"][0]
+
+    with pytest.raises(ValueError, match="needs high confidence"):
+        load_with(medium_merge)
+    with pytest.raises(ValueError, match="must not merge or choose a canonical ID"):
+        load_with(canonical_on_no_merge)

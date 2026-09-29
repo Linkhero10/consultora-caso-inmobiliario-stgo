@@ -240,12 +240,15 @@ def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_docu
             conflictos_por_entidad[entity_id].add(conflict_id)
     conn.close()
 
+    # [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17 merges
+    # de identidad de Codex/Luna (68 pares)] Recalculado en vivo contra el
+    # warehouse real tras la reconstruccion completa.
     esperado = {
-        "Servicio de Evaluación Ambiental (SEA)": 10,
+        "Servicio de Evaluación Ambiental (SEA)": 11,
         "Consejo de Monumentos Nacionales (CMN)": 5,
-        "Consejo de Defensa del Estado (CDE)": 1,
+        "Consejo de Defensa del Estado (CDE)": 2,
         "Superintendencia del Medio Ambiente (SMA)": 5,
-        "Ministerio de Vivienda y Urbanismo (MINVU)": 7,
+        "Ministerio de Vivienda y Urbanismo (MINVU)": 8,
         "Contraloría General de la República": 12,
     }
     real = {label_by_entity[eid]: len(conflictos) for eid, conflictos in conflictos_por_entidad.items()}

@@ -7,8 +7,13 @@ documentos, y 280/934 documentos reales mencionan 2+ proyectos (ambiguedad
 real, no un caso raro).
 """
 
+import hashlib
+import json
+import sqlite3
 import sys
 from pathlib import Path
+
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -120,6 +125,380 @@ def test_project_registry_clusters_exact_normalized_matches_only():
     bellavista = projects[pid_d1]
     assert bellavista["n_documents"] == 2
     assert set(bellavista["aliases"]) == {"Torre Bellavista", "torre Bellavista"}
+
+
+def test_descriptive_ukamau_reference_keeps_evidence_but_never_creates_project_id(tmp_path, monkeypatch):
+    monkeypatch.setattr(bridge, "PROJECT_ROOT", tmp_path)
+    quote_texts = [
+        "UKAMAU y su candidata a Alcaldesa de Estación Central, exhiben una obra colectiva que da sustento a la campaña electoral. Hechos tras la organización: Proyecto inmobiliario comunitario",
+        "Que la vivienda social sea un conjunto habitacional distinto del estándar que se otorga mediante el subsidio que otorga el Estado.",
+        "sector aledaño a la Maestranza de San Eugenio (Estación Central)",
+    ]
+    source_text = " ".join(quote_texts)
+    document_id = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+    case_mention_id = f"{document_id}:0"
+    object_evidence_id = f"{case_mention_id}:objeto:2"
+    social_housing_evidence_id = f"{case_mention_id}:objeto:1"
+    geography_evidence_id = f"{case_mention_id}:geografica:0"
+    citations = [
+        {
+            "quote": quote_texts[0],
+            "evidence_ids": [object_evidence_id],
+        },
+        {
+            "quote": quote_texts[1],
+            "evidence_ids": [social_housing_evidence_id],
+        },
+        {
+            "quote": quote_texts[2],
+            "evidence_ids": [geography_evidence_id],
+        },
+    ]
+    for citation in citations:
+        citation["quote_sha256"] = hashlib.sha256(citation["quote"].encode("utf-8")).hexdigest()
+    source_relpath = Path("Fuentes/fulltext/content/ukamau.json")
+    source_path = tmp_path / source_relpath
+    source_path.parent.mkdir(parents=True)
+    source_bytes = json.dumps(
+        {"text": source_text, "url": "https://example.invalid/article"}, ensure_ascii=False
+    ).encode("utf-8")
+    source_path.write_bytes(source_bytes)
+    payload = {
+        "schema_version": "descriptive_project_mentions_v1",
+        "mentions": [
+            {
+                "reference_key": "ukamau_housing_initiative_2016",
+                "document_id": document_id,
+                "case_mention_id": case_mention_id,
+                "subject_label": "UKAMAU",
+                "descriptive_label": "Mención de iniciativa comunitaria de vivienda social asociada a UKAMAU, sin identidad de proyecto resuelta",
+                "identity_status": "descriptive_only_identity_unresolved",
+                "source_url": "https://example.invalid/article",
+                "source_text_sha256": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
+                "source_file_sha256": hashlib.sha256(source_bytes).hexdigest(),
+                "source_file_path": source_relpath.as_posix(),
+                "citations": citations,
+                "linked_evidence_ids": [object_evidence_id, social_housing_evidence_id, geography_evidence_id],
+            }
+        ],
+    }
+    config_path = tmp_path / "descriptive_project_mentions.json"
+    config_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    conn = sqlite3.connect(":memory:")
+    conn.execute("PRAGMA foreign_keys=ON")
+    conn.executescript(
+        """
+        CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL);
+        CREATE TABLE case_mention (
+            case_mention_id TEXT PRIMARY KEY,
+            document_id TEXT NOT NULL,
+            decision_final_amplio TEXT NOT NULL
+        );
+        CREATE TABLE evidence (
+            evidence_id TEXT PRIMARY KEY,
+            case_mention_id TEXT NOT NULL,
+            verified INTEGER NOT NULL,
+            quote_text TEXT NOT NULL
+        );
+        """
+    )
+    conn.execute("INSERT INTO document VALUES (?, ?)", (document_id, "https://example.invalid/article"))
+    conn.execute("INSERT INTO case_mention VALUES (?, ?, 'include')", (case_mention_id, document_id))
+    conn.executemany(
+        "INSERT INTO evidence VALUES (?, ?, 1, ?)",
+        [
+                (object_evidence_id, case_mention_id, citations[0]["quote"]),
+                (social_housing_evidence_id, case_mention_id, citations[1]["quote"]),
+            (geography_evidence_id, case_mention_id, citations[2]["quote"]),
+        ],
+    )
+
+    rows = bridge.load_descriptive_project_mentions(conn, config_path)
+
+    payload["mentions"][0]["source_url"] = "https://example.invalid/another-article"
+    config_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="URL del fulltext fuente no coincide"):
+        bridge.load_descriptive_project_mentions(conn, config_path)
+    payload["mentions"][0]["source_url"] = "https://example.invalid/article"
+    config_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+    assert len(rows) == 1
+    assert rows[0]["identity_status"] == "descriptive_only_identity_unresolved"
+    assert rows[0]["case_mention_id"] == case_mention_id
+    assert rows[0]["linked_evidence_ids"] == [object_evidence_id, social_housing_evidence_id, geography_evidence_id]
+    assert "project_id" not in rows[0]
+    assert "canonical_project_id" not in rows[0]
+    assert all(citation["quote_sha256"] == hashlib.sha256(citation["quote"].encode("utf-8")).hexdigest() for citation in rows[0]["citations"])
+    assert bridge.persist_descriptive_project_mentions(conn, rows) == 1
+    persisted_columns = {
+        row[1] for row in conn.execute("PRAGMA table_info(descriptive_project_reference)")
+    }
+    assert "project_id" not in persisted_columns
+    assert "canonical_project_id" not in persisted_columns
+    persisted = conn.execute(
+        "SELECT case_mention_id, identity_status "
+        "FROM descriptive_project_reference WHERE reference_key = ?",
+        ("ukamau_housing_initiative_2016",),
+    ).fetchone()
+    assert persisted == (
+        case_mention_id,
+        "descriptive_only_identity_unresolved",
+    )
+    persisted_evidence_ids = [
+        row[0]
+        for row in conn.execute(
+        "SELECT evidence_id FROM descriptive_project_reference_evidence "
+            "WHERE reference_key = ? ORDER BY evidence_id",
+            ("ukamau_housing_initiative_2016",),
+        )
+    ]
+    assert persisted_evidence_ids == sorted([object_evidence_id, social_housing_evidence_id, geography_evidence_id])
+    evidence_columns = {
+        row[1] for row in conn.execute("PRAGMA table_info(descriptive_project_reference_evidence)")
+    }
+    assert {"reference_key", "evidence_id", "quote_text", "quote_sha256"} <= evidence_columns
+    assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+    conn.close()
+
+
+def test_descriptive_project_reference_rejects_quote_not_equal_to_verified_evidence(tmp_path, monkeypatch):
+    monkeypatch.setattr(bridge, "PROJECT_ROOT", tmp_path)
+    quote = "Texto alterado pero con hash recalculado"
+    source_text = quote
+    document_id = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+    case_mention_id = f"{document_id}:0"
+    evidence_id = f"{case_mention_id}:objeto:1"
+    source_relpath = Path("Fuentes/fulltext/content/tampered.json")
+    source_path = tmp_path / source_relpath
+    source_path.parent.mkdir(parents=True)
+    source_bytes = json.dumps(
+        {"text": source_text, "url": "https://example.invalid/article"}, ensure_ascii=False
+    ).encode("utf-8")
+    source_path.write_bytes(source_bytes)
+    payload = {
+        "schema_version": "descriptive_project_mentions_v1",
+        "mentions": [
+            {
+                "reference_key": "tampered-quote",
+                "document_id": document_id,
+                "case_mention_id": case_mention_id,
+                "subject_label": "UKAMAU",
+                "descriptive_label": "Iniciativa descriptiva sin identidad resuelta",
+                "identity_status": "descriptive_only_identity_unresolved",
+                "source_url": "https://example.invalid/article",
+                "source_text_sha256": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
+                "source_file_sha256": hashlib.sha256(source_bytes).hexdigest(),
+                "source_file_path": source_relpath.as_posix(),
+                "citations": [
+                    {
+                        "quote": quote,
+                        "quote_sha256": hashlib.sha256(quote.encode("utf-8")).hexdigest(),
+                        "evidence_ids": [evidence_id],
+                    }
+                ],
+                "linked_evidence_ids": [evidence_id],
+            }
+        ],
+    }
+    config_path = tmp_path / "descriptive_project_mentions.json"
+    config_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    conn = sqlite3.connect(":memory:")
+    conn.executescript(
+        """
+        CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL);
+        CREATE TABLE case_mention (
+            case_mention_id TEXT PRIMARY KEY,
+            document_id TEXT NOT NULL,
+            decision_final_amplio TEXT NOT NULL
+        );
+        CREATE TABLE evidence (
+            evidence_id TEXT PRIMARY KEY,
+            case_mention_id TEXT NOT NULL,
+            verified INTEGER NOT NULL,
+            quote_text TEXT NOT NULL
+        );
+        """
+    )
+    conn.execute("INSERT INTO document VALUES (?, ?)", (document_id, "https://example.invalid/article"))
+    conn.execute("INSERT INTO case_mention VALUES (?, ?, 'include')", (case_mention_id, document_id))
+    conn.execute(
+        "INSERT INTO evidence VALUES (?, ?, 1, ?)",
+        (evidence_id, case_mention_id, "Cita verdadera distinta almacenada en evidence"),
+    )
+
+    with pytest.raises(ValueError, match="no contiene literalmente evidence.quote_text"):
+        bridge.load_descriptive_project_mentions(conn, config_path)
+    conn.close()
+
+
+def test_descriptive_project_reference_rejects_stale_source_hashes(tmp_path, monkeypatch):
+    monkeypatch.setattr(bridge, "PROJECT_ROOT", tmp_path)
+    source_text = "fulltext estable"
+    document_id = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+    source_relpath = Path("Fuentes/fulltext/content/source.json")
+    source_path = tmp_path / source_relpath
+    source_path.parent.mkdir(parents=True)
+    source_bytes = json.dumps(
+        {"text": source_text, "url": "https://example.invalid/article"}, ensure_ascii=False
+    ).encode("utf-8")
+    source_path.write_bytes(source_bytes)
+    mention = {
+        "reference_key": "stale-source-test",
+        "document_id": document_id,
+        "case_mention_id": f"{document_id}:0",
+        "subject_label": "X",
+        "descriptive_label": "Descriptive test",
+        "identity_status": "descriptive_only_identity_unresolved",
+        "source_url": "https://example.invalid/article",
+        "source_text_sha256": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
+        "source_file_path": source_relpath.as_posix(),
+        "source_file_sha256": "0" * 64,
+        "citations": [],
+        "linked_evidence_ids": [],
+    }
+    config_path = tmp_path / "descriptive_project_mentions.json"
+    conn = sqlite3.connect(":memory:")
+
+    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions_v1", "mentions": [mention]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="source_file_sha256 no coincide"):
+        bridge.load_descriptive_project_mentions(conn, config_path)
+
+    mention["source_file_sha256"] = hashlib.sha256(source_bytes).hexdigest()
+    mention["source_text_sha256"] = "1" * 64
+    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions_v1", "mentions": [mention]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="source_text_sha256/document_id no coincide"):
+        bridge.load_descriptive_project_mentions(conn, config_path)
+    conn.close()
+
+
+def test_descriptive_project_reference_rejects_non_included_case_mention(tmp_path, monkeypatch):
+    monkeypatch.setattr(bridge, "PROJECT_ROOT", tmp_path)
+    source_text = "Artículo fuente sin citas, usado solo para probar elegibilidad."
+    document_id = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+    source_relpath = Path("Fuentes/fulltext/content/nonincluded.json")
+    source_path = tmp_path / source_relpath
+    source_path.parent.mkdir(parents=True)
+    source_bytes = json.dumps(
+        {"text": source_text, "url": "https://example.invalid/article"}, ensure_ascii=False
+    ).encode("utf-8")
+    source_path.write_bytes(source_bytes)
+    payload = {
+        "schema_version": "descriptive_project_mentions_v1",
+        "mentions": [
+            {
+                "reference_key": "not-eligible",
+                "document_id": document_id,
+                "case_mention_id": f"{document_id}:0",
+                "subject_label": "X",
+                "descriptive_label": "descriptive only",
+                "identity_status": "descriptive_only_identity_unresolved",
+                "source_url": "https://example.invalid/article",
+                "source_text_sha256": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
+                "source_file_sha256": hashlib.sha256(source_bytes).hexdigest(),
+                "source_file_path": source_relpath.as_posix(),
+                "citations": [],
+                "linked_evidence_ids": [],
+            }
+        ],
+    }
+    config_path = tmp_path / "descriptive_project_mentions.json"
+    config_path.write_text(json.dumps(payload), encoding="utf-8")
+    conn = sqlite3.connect(":memory:")
+    conn.executescript(
+        """
+        CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL);
+        CREATE TABLE case_mention (case_mention_id TEXT PRIMARY KEY, document_id TEXT, decision_final_amplio TEXT);
+        CREATE TABLE evidence (evidence_id TEXT PRIMARY KEY, case_mention_id TEXT, verified INTEGER);
+        """
+    )
+    conn.execute("INSERT INTO document VALUES (?, ?)", (document_id, "https://example.invalid/article"))
+    conn.execute("INSERT INTO case_mention VALUES (?, ?, 'exclude')", (f"{document_id}:0", document_id))
+
+    with pytest.raises(ValueError, match="no está en estado include"):
+        bridge.load_descriptive_project_mentions(conn, config_path)
+    conn.close()
+
+
+def test_descriptive_subject_cannot_become_project_from_same_document():
+    descriptive_mentions = [
+        {
+            "reference_key": "ukamau_descriptive",
+            "document_id": "doc-1",
+            "subject_label": "UKAMAU",
+        }
+    ]
+    records = [
+        {
+            "document_id": "doc-1",
+            "proyectos_mencionados": [{"nombre": "Proyecto inmobiliario comunitario UKAMAU"}],
+        }
+    ]
+
+    with pytest.raises(ValueError, match="requiere adjudicación antes de crear PROJECT"):
+        bridge.reject_descriptive_project_identity_collisions(records, descriptive_mentions)
+
+    # La guarda no bloquea proyectos diferentes en el mismo artículo ni una
+    # mención UKAMAU perteneciente a otro documento/caso.
+    bridge.reject_descriptive_project_identity_collisions(
+        [
+            {"document_id": "doc-1", "proyectos_mencionados": ["Proyecto Las Rejas"]},
+            {"document_id": "doc-2", "proyectos_mencionados": ["UKAMAU"]},
+        ],
+        descriptive_mentions,
+    )
+
+
+def test_project_build_rejects_identity_collision_before_overwriting_output(tmp_path, monkeypatch):
+    source_path = tmp_path / "source.sqlite"
+    output_path = tmp_path / "output.sqlite"
+    output_path.write_bytes(b"existing-output-must-survive")
+    source_conn = sqlite3.connect(source_path)
+    source_conn.executescript(
+        """
+        CREATE TABLE document (document_id TEXT PRIMARY KEY, url TEXT NOT NULL);
+        CREATE TABLE document_case_unit (
+            document_id TEXT PRIMARY KEY,
+            unidad_caso_tipo TEXT,
+            tiene_error INTEGER,
+            correccion_proyectos_mencionados_json TEXT,
+            correccion_nombre_proyecto TEXT
+        );
+        """
+    )
+    source_conn.execute("INSERT INTO document VALUES ('doc-ukamau', 'https://example.invalid/article')")
+    source_conn.commit()
+    source_conn.close()
+
+    monkeypatch.setattr(bridge, "SOURCE_WAREHOUSE", source_path)
+    monkeypatch.setattr(bridge, "OUTPUT_WAREHOUSE", output_path)
+    monkeypatch.setattr(bridge, "ACTOR_SECOND_PASS_PATH", tmp_path / "missing-second-pass.jsonl")
+    monkeypatch.setattr(bridge, "_validate_source_warehouse", lambda _path: None)
+    monkeypatch.setattr(
+        bridge,
+        "load_descriptive_project_mentions",
+        lambda _conn, _path: [
+            {
+                "reference_key": "ukamau_descriptive",
+                "document_id": "doc-ukamau",
+                "subject_label": "UKAMAU",
+            }
+        ],
+    )
+    monkeypatch.setattr(
+        bridge,
+        "load_v3_3_records",
+        lambda **_kwargs: {
+            "record-1": {
+                "url": "https://example.invalid/article",
+                "proyectos_mencionados": [{"nombre": "Proyecto inmobiliario comunitario UKAMAU"}],
+            }
+        },
+    )
+
+    with pytest.raises(ValueError, match="requiere adjudicación antes de crear PROJECT"):
+        bridge.main()
+
+    assert output_path.read_bytes() == b"existing-output-must-survive"
 
 
 def test_review_queue_flags_substring_candidates_without_merging():

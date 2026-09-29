@@ -1,5 +1,7 @@
 # Conflictividad inmobiliaria en Santiago
 
+Punto de entrada: [START HERE](START_HERE.md).
+
 Proyecto de portafolio de la consultora formada por Felipe Muñoz, Darío Briceño, Nicolás Gajardo y
 Christian Nass, construido sobre fuentes de acceso público. Ver [DATA_NOTICE.md](DATA_NOTICE.md)
 sobre el estatus de redistribución de los datos de terceros y [LICENSE](LICENSE) sobre el código y
@@ -44,6 +46,7 @@ siempre debe ser el último que toca `data/warehouse.sqlite`):
 python src/build_enrichment_tables.py   # enrichment_document/enrichment_project_mention desde v3.3
 python src/build_projects.py            # identidad de proyecto/caso
 python src/resolve_project_review.py    # fusiona pares revisados de la cola
+python src/detect_case_mention_duplicates.py  # grupos de case_mention duplicadas (requerido por CONFLICT)
 python src/build_conflicts.py           # capa CONFLICT
 python src/build_actor_registry.py      # identidad de actor institucional
 python src/build_actor_network.py
@@ -86,9 +89,14 @@ Plan paso a paso de cada arco analítico (2-4):
 
 ## Estado
 
-El corpus base y la capa de identidad (proyecto → caso → conflicto → actor institucional) están
-construidos y verificados. La validación muestral del enrichment (n=50: 21 ok, 17 error menor, 12
-error grave — ver [`audit/validation_summary.json`](audit/validation_summary.json)) identificó
-errores reales de unidad de caso que motivaron el gate documental descrito en la metodología. Las
-conclusiones analíticas de fondo siguen pendientes de que arranquen los arcos sustantivos
-(Darío/Nicolás/Christian).
+El warehouse publicado en `main` es aún el snapshot anterior (941 proyectos, 850 `case_id`,
+833 conflictos). La rama `codex/historical-case-references` (PR #1) contiene la reconstrucción
+integral cerrada del 2026-09-29: 941 proyectos, 835 `case_id`, 817 conflictos, cola de identidad
+PROJECT sin pares abiertos (118 fusionados, 138 separados), `integrity_check=ok`, publicación
+`ready`. Tres pares se mantienen separados como `insufficient_evidence` (sin afirmar que sean
+objetos distintos) y 29 referencias históricas se conservan sin forzar aliases. Los hashes,
+conteos y límites vigentes están en [START HERE](START_HERE.md), el
+[cierre de identidad](audit/project_identity_closure_2026-09-29.md),
+[`audit/validation_summary.json`](audit/validation_summary.json) y
+[`audit/data_quality_report.md`](audit/data_quality_report.md). Mientras el PR no se fusione, los
+arcos deben citar el hash del warehouse que usen y sus límites.

@@ -53,6 +53,7 @@ import json
 import re
 import sqlite3
 import unicodedata
+import copy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -71,6 +72,11 @@ GENERIC_BLOCKLIST = {"data center", "vespucio", "ciudad empresarial", "lo aguirr
 
 _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
+HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
+PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
+PROJECT_IDENTITY_OVERRIDE_SHA256 = "82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626"
+PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
+PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH = "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
 
 
 def _norm(s: str) -> str:
@@ -193,6 +199,9 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Conjunto Armónico Bellavista", "proyecto Bellavista"): (True, "mismo complejo Universidad San Sebastian"),
     ("Conjunto Armónico Bellavista", "Proyecto Armónico Bellavista"): (True, "variante de escritura del mismo nombre"),
     ("Conjunto Armónico Bellavista", "Conjunto Armónico Bellavista (CAB)"): (True, "sigla del mismo nombre"),
+    ("Conjunto Armónico Bellavista (CAB)", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, validate_project_identity_adjudication_topology detecto una reconexion transitiva incorrecta] 'segunda torre habitacional...' describe una torre/fase especifica dentro del complejo, no el complejo completo; la reconexion por substring normalizado encontraba un unico candidato -- la decision de sigla 'Conjunto Armónico Bellavista'/'Conjunto Armónico Bellavista (CAB)' -- e ignoraba que el nombre completo describe un componente, no la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
+    ("Proyecto Armónico Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, misma logica que la entrada anterior] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
+    ("proyecto Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, misma logica] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id f123b7c3132c33fe6135): parent_component_phase, no_new_merge."),
     ("subdivisión del resto del Lote C", "resto del Lote C"): (True, "mismo lote"),
     ("Ciudad del Niño", "megaproyecto de 23 torres en Ciudad del Niño"): (True, "descripcion del mismo desarrollo"),
     ("Ciudad del Niño", "ex Ciudad del Niño"): (True, "mismo sitio, nombre historico"),
@@ -207,14 +216,17 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Centro Cívico del Portal Bicentenario", "Portal Bicentenario"): (False, "componente especifico dentro del proyecto mayor"),
     ("Villa Panamericana", "Villa Panamericana de Cerrillos"): (True, "mismo proyecto, comuna agregada"),
     ("Villa Panamericana", "Villa Panamericana-Lote B"): (False, "lote especifico dentro del proyecto mayor, probable permiso distinto"),
+    ("Villa Panamericana de Cerrillos", "Lote B de la Villa Panamericana de Cerrillos"): (False, "[hallazgo 2026-09-28, validate_project_identity_adjudication_topology detecto una reconexion transitiva incorrecta] Lote B es un lote especifico dentro del proyecto mayor (misma logica que 'Villa Panamericana'/'Villa Panamericana-Lote B' ya decidida arriba); la reconexion por substring normalizado encontraba un unico candidato -- la decision generica de 'Villa Panamericana'/'Villa Panamericana de Cerrillos' (comuna agregada) -- e ignoraba que el nombre completo describe un lote, no la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 178854a4dd1ca649a3b4): parent_component_phase, no_new_merge."),
     ("Hotel Sheraton", "Hotel Sheraton Santiago"): (True, "mismo hotel"),
     ("Hotel Sheraton", "proyecto de construcción en perímetro del Hotel Sheraton Santiago"): (False, "proyecto de construccion distinto, adyacente al hotel"),
-    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (True, "mismo sitio, nombre anterior entre parentesis"),
+    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'mismo sitio' REVERTIDA: el project_id 'Reserva La Dehesa' tiene una unica mencion (El Mostrador 2019) que refiere el proyecto de 54 casas del Cerro del Medio impulsado por la inmobiliaria Reserva La Dehesa, mientras 'Reserva La Dehesa (ex Chaguay)'/Chaguay es el proyecto de 158 parcelas de Desarrollos La Dehesa SpA; Kilometro Cero (2022) los enumera como proyectos distintos. La coincidencia de nombre no es identidad. Ver override 7dfca97fba3dc5d6abd2."),
     ("Desnitrificador SCR para Caldera de Ciclo Combinado de Central Nueva Renca", "Nueva Renca"): (True, "obra especifica en la misma central"),
     ("Chaguay", "Habilitación de caminos de acceso e instalaciones complementarias de la subdivisión agrícola Chaguay"): (True, "misma subdivision Chaguay"),
     ("Chaguay", "Reserva La Dehesa (ex Chaguay)"): (True, "Chaguay es el nombre anterior del mismo sitio"),
     ("Eco Egaña Sustentable", "Eco Egaña"): (True, "mismo proyecto"),
     ("Eco Egaña Sustentable", "Egaña Sustentable"): (True, "mismo proyecto"),
+    ("Eco Egaña", "Egaña Sustentable / Eco Egaña"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Fuentes de Fundamenta usan Eco Egaña y Egaña Sustentable/Eco Egaña para la misma obra, titular y emplazamiento."),
+    ("Egaña Sustentable", "Egaña Sustentable / Eco Egaña"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] La fuente de Corte Suprema identifica Egaña Sustentable de Fundamenta; La Tercera usa conjuntamente Egaña Sustentable/Eco Egaña para la misma obra."),
     ("Lo Aguirre", "Izarra de Lo Aguirre"): (False, "Lo Aguirre es un sector con multiples desarrollos distintos, no un solo proyecto"),
     ("Lo Aguirre", "PDUC Ciudad Lo Aguirre"): (False, "sector con multiples desarrollos distintos"),
     ("Lo Aguirre", "Centro de Distribución Lo Aguirre"): (False, "desarrollo especifico dentro del sector"),
@@ -310,6 +322,8 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("edificio de 13 pisos", "edificio de 13 pisos junto al pasaje El Almendral"): (False, "sin evidencia de ser el mismo edificio de La Florida"),
     ("Rotonda Atenas", "edificio con 85 viviendas sociales en plena rotonda Atenas"): (True, "mismo proyecto Rotonda Atenas"),
     ("Rotonda Atenas", "departamentos de Rotonda Atenas"): (True, "mismo proyecto Rotonda Atenas"),
+    ("proyecto de Rotonda Atenas", "85 departamentos de viviendas sociales en el sector de Rotonda Atenas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Le Monde Diplomatique identifica el proyecto de Rotonda Atenas; Hogar de Cristo describe 85 viviendas sociales en el mismo sector y finalidad -- el mismo desarrollo historico de Rotonda Atenas (no el proyecto distinto de 2023 en Cerro Colorado 4661)."),
+    ("proyecto de Rotonda Atenas", "condominio Rotonda Atenas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Le Monde Diplomatique describe el proyecto de Rotonda Atenas; La Tercera identifica el condominio Rotonda Atenas y sus 85 unidades -- la misma torre/proyecto historico."),
     ("Centro Comunitario Padre Hurtado", "Edificación Centro Comunitario Padre Hurtado"): (True, "mismo centro"),
     ("Teleférico Bicentenario", "Proyecto Bicentenario"): (False, "Bicentenario es marca generica usada en multiples proyectos distintos del corpus"),
     ("El Rincón", "Central Hidroeléctrica de Pasada El Rincón"): (False, "tipo de proyecto distinto, sin evidencia de ser el mismo sitio"),
@@ -331,6 +345,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Intercontinental", "Hotel Intercontinental Santiago"): (True, "mismo hotel"),
     ("Crowne Plaza", "Galería de los Músicos del Crowne Plaza"): (False, "instalacion especifica dentro del hotel"),
     ("Alameda-Providencia", "Nueva Alameda Providencia"): (True, "mismo proyecto de corredor"),
+    ("Nueva Alameda Providencia", "Nueva Alameda Providencia (NAP)"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] NAP es el acronimo explicito de Nueva Alameda Providencia; ambas fuentes describen la estrategia del mismo eje Alameda-Providencia."),
     ("Alameda-Providencia", "Eje Alameda-Providencia"): (True, "mismo corredor"),
     ("La Farfana", "Planta de Tratamiento de Aguas Servidas en La Farfana"): (True, "misma planta"),
     ("ex Escuela Rebeca Catalán Vargas", "ex Escuela Rebeca Catalán"): (True, "misma escuela, nombre truncado"),
@@ -344,7 +359,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Centro de Eventos", "Centro de Eventos Espacio Riesco"): (False, "Centro de Eventos es termino generico"),
     ("proyecto Bellavista", "casa de dos pisos de calle Bellavista"): (False, "propiedad pequeña sin relacion evidente con el proyecto de torres"),
     ("proyecto Bellavista", "torres en el barrio Bellavista"): (True, "coincide con las tres torres del complejo Universidad San Sebastian"),
-    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (True, "Desarrollo Inmobiliario Bellavista S.A. es la empresa del mismo proyecto, ya identificada en esta sesion"),
+    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'es la empresa del mismo proyecto' REVERTIDA: mismo desarrollador no es mismo proyecto. La mencion 'edificio de Desarrollo Inmobiliario Bellavista' proviene de Interferencia (guetos verticales) y refiere un edificio en Estacion Central (al frente de la Escuela de Derecho de la Universidad de Chile, en el contexto de calle Toro Mazzote), mientras 'proyecto Bellavista' (La Tercera, 2019) es el proyecto de tres torres de DIB en Recoleta. Coincide con la adjudicacion source-first que separa el edificio DIB del proyecto inmobiliario Bellavista (pair_id de la fila 130)."),
     ("proyecto Bellavista", "proyecto del terreno en Bellavista"): (True, "descripcion generica del mismo proyecto"),
     ("proyecto Bellavista", "una especie de mall del Fondo de Inversión Inmobiliaria Cimenta en el barrio Bellavista"): (False, "desarrollador y tipo de proyecto distintos (Fondo Cimenta, no Desarrollo Inmobiliario Bellavista)"),
     ("ex clínica Sierra Bella", "Sierra Bella"): (True, "mismo sitio"),
@@ -357,6 +372,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Unidad Vecinal Providencia", "Proyecto Vecinal"): (False, "Proyecto Vecinal es termino generico"),
     ("Proyecto de las 54 Casas", "Loteo 54 casas"): (True, "mismo proyecto de 54 casas"),
     ("Proyecto de las 54 Casas", "54 casas del Cerro del Medio"): (True, "mismo proyecto de 54 casas"),
+    ("Loteo de las 54 Casas", "Proyecto de las 54 Casas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] El Tribunal Ambiental usa 'Loteo de las 54 Casas' y 'Proyecto de las 54 Casas' para el mismo titular Miradores de La Dehesa SpA y la causa R-373-2022."),
     ("El Castillo", "Castillo Hidalgo"): (False, "nombres distintos, sin evidencia de ser el mismo sitio"),
     ("Granja Educativa Terra Viva", "La Granja"): (False, "La Granja es la comuna, generico"),
     ("el pique que se hará en el Parque Forestal", "Parque Forestal"): (False, "Parque Forestal es un lugar con multiples intervenciones especificas distintas"),
@@ -513,6 +529,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Torres Alameda", "tres torres Alameda"): (True, "Mismo desarrollo de Su Ksa junto a Alameda Plaza: dos artículos de La Tercera repiten la descripción literal 'tres torres Alameda de la inmobiliaria Su Ksa'."),
     ("block 14 de la Villa San Luis", "block 14"): (True, "Mismo bloque físico de Villa San Luis: Radio JGM lo nombra como 'block 14 de la Villa San Luis'; La Tercera indica que el block 14 es el único edificio del conjunto que permanece en pie."),
     ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"): (True, "Mismo edificio histórico UNCTAD III; el primer nombre añade su denominación y uso actual como GAM, no otro inmueble."),
+    ("proyecto de tres torres de 19 pisos cada una", "tres torres de 19 pisos"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Pauta y La Tercera describen el desarrollo de DIB en Recoleta como tres torres de 19 pisos y la misma disputa en Dardignac."),
 }
 
 
@@ -609,45 +626,6 @@ REQUIRED_SOURCE_BACKED_MANUAL_PAIRS = frozenset(
 )
 
 
-def _manual_decision_via_normalized_substring(name_a: str, name_b: str) -> tuple[bool, str] | None:
-    """[AGREGADO 2026-09-26, migracion v3.2->v3.3 completa] MANUAL_DECISIONS
-    esta indexado por texto EXACTO -- son decisiones humanas/LLM reales de
-    Sol sobre pares de nombres de v3.2. Al migrar el enrichment productivo a
-    v3.3 (corrida LLM separada), muchos nombres de proyecto cambiaron de
-    fraseo para el MISMO objeto real (verificado empiricamente en toda la
-    migracion). Sin este fallback, 64 de 245 decisiones ya tomadas se
-    perdian en silencio (el par ya no matcheaba exacto, classify() caia al
-    default 'sin regla aplicable' -- ni error ni aviso, solo trabajo humano
-    ya hecho quedando invisible).
-
-    Fallback: si (name_a, name_b) no matchea exacto, buscar una clave de
-    MANUAL_DECISIONS (x, y) tal que name_a este en relacion de substring
-    normalizado con x (o y) Y name_b con el otro lado -- mismo criterio
-    'nunca fuzzy' ya usado en todo el proyecto (_mention_has_case_backing,
-    _norm() bidireccional). Nunca decide un par nuevo por su cuenta: solo
-    reconecta un par ya decidido por un humano bajo su fraseo viejo con su
-    fraseo nuevo. Si hay mas de una clave candidata, se prefiere no decidir
-    (devuelve None) antes que elegir arbitrariamente -- ambiguedad real, no
-    error a ocultar."""
-    na, nb = _norm(name_a), _norm(name_b)
-    if not na or not nb:
-        return None
-    candidatos = []
-    for (x, y), decision in MANUAL_DECISIONS.items():
-        nx, ny = _norm(x), _norm(y)
-        matches_a_x_b_y = (na in nx or nx in na) and (nb in ny or ny in nb)
-        matches_a_y_b_x = (na in ny or ny in na) and (nb in nx or nx in nb)
-        if matches_a_x_b_y or matches_a_y_b_x:
-            candidatos.append(((x, y), decision))
-    if len(candidatos) != 1:
-        return None
-    (x, y), (decision, reason) = candidatos[0]
-    return decision, (
-        f"[reconectado 2026-09-26 via substring normalizado tras migracion v3.2->v3.3, "
-        f"decision original de ('{x}', '{y}')] {reason}"
-    )
-
-
 def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str, str, str | None]:
     """Clasifica y devuelve el origen estructurado, nunca inferido del texto."""
     if (name_a, name_b) in MANUAL_DECISIONS:
@@ -670,9 +648,8 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
         return False, "nombre generico en lista de bloqueo (aparece en multiples proyectos distintos del corpus)", "deterministic_rule", None
     if has_explicit_stage_conflict(name_a, name_b):
         return False, "Etapa/Fase explicita distinta entre los dos nombres (palabra etapa/fase presente en el texto)", "deterministic_rule", None
-    reconectado = _manual_decision_via_normalized_substring(name_a, name_b)
-    if reconectado is not None:
-        return reconectado[0], reconectado[1], "recovered_historical_adjudication", None
+    # Name similarity is not an identity key. Historical decisions are only
+    # reusable through exact project-ID adjudications loaded by the caller.
     if has_bare_trailing_numeral_conflict(name_a, name_b):
         return None, (
             "numeral suelto al final de uno de los nombres, sin decision manual explicita -- "
@@ -682,13 +659,711 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
     return None, "sin regla aplicable ni decision manual -- requiere revision humana adicional", "unresolved", None
 
 
+def classify_project_pair_with_adjudications(
+    project_id_a: str,
+    name_a: str,
+    project_id_b: str,
+    name_b: str,
+    adjudications: list[dict[str, Any]],
+) -> tuple[bool | None, str, str, str | None]:
+    """Apply source-reviewed project identity decisions by exact IDs only.
+
+    A reviewed explicit non-identity returns ``False`` (persisted as
+    ``kept_separate``); an unresolved pair returns ``None``. Name similarity
+    is never used to transfer a human decision to a different project-ID pair.
+    """
+    pair_ids = tuple(sorted((str(project_id_a), str(project_id_b))))
+    name_by_id = {str(project_id_a): name_a, str(project_id_b): name_b}
+    exact_entry = None
+    reviewed_name_pair = False
+    for entry in adjudications:
+        ids = entry.get("project_ids")
+        if not isinstance(ids, list) or len(ids) != 2 or len(set(ids)) != 2:
+            raise ValueError("identity adjudication requires two distinct project_ids")
+        entry_ids = tuple(sorted(str(value) for value in ids))
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(entry_ids):
+            raise ValueError(f"identity adjudication {entry.get('pair_id')!r} has invalid project_names")
+        entry_name_pair = tuple(sorted(_norm(str(names[value])) for value in entry_ids))
+        if entry_ids == pair_ids:
+            if any(str(names[pid]) != name_by_id[pid] for pid in pair_ids):
+                raise ValueError(
+                    f"canonical_name mismatch for exact identity adjudication {entry.get('pair_id')!r}"
+                )
+            if exact_entry is not None:
+                raise ValueError(f"duplicate exact identity adjudications for {pair_ids!r}")
+            exact_entry = entry
+        if entry_name_pair == tuple(sorted((_norm(name_a), _norm(name_b)))):
+            reviewed_name_pair = True
+
+    if exact_entry is not None:
+        identity_class = exact_entry.get("identity_class")
+        action = exact_entry.get("resolver_action")
+        rationale = str(exact_entry.get("rationale") or "")
+        if identity_class == "same_identity" and action == "merge_case":
+            return True, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+        if identity_class in {"parent_component_phase", "related_plan_or_instrument", "distinct_entities", "insufficient_evidence"} and action == "no_new_merge":
+            return False, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+        if identity_class == "unresolved" and action == "no_new_merge":
+            return None, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+        raise ValueError(
+            f"unsupported resolver_action {action!r} for identity class {identity_class!r}"
+        )
+
+    if reviewed_name_pair:
+        return (
+            None,
+            "par de nombres revisado para otros project_id; no se hereda una decision por nombre",
+            "identity_followup_name_scope_guard",
+            None,
+        )
+    return classify_with_provenance(name_a, name_b)
+
+
+def load_project_identity_adjudications(
+    artifact_path: Path | None = None,
+    source_bundle_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Load and pin the exact-ID identity-review decisions consumed by the resolver."""
+    root = Path(__file__).resolve().parents[1]
+    artifact_path = artifact_path or root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    source_bundle_path = source_bundle_path or root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    payload = json.loads(Path(artifact_path).read_text(encoding="utf-8"))
+    if payload.get("artifact_id") != "project_identity_adjudications_2026-09-27_v1":
+        raise ValueError("unexpected project identity adjudication artifact_id")
+    expected_bundle_sha = payload.get("source_bundle_sha256")
+    bundle_raw = Path(source_bundle_path).read_bytes()
+    actual_bundle_sha = hashlib.sha256(bundle_raw).hexdigest()
+    if expected_bundle_sha != actual_bundle_sha:
+        raise ValueError("identity review bundle SHA-256 mismatch")
+    source_bundle = json.loads(bundle_raw.decode("utf-8"))
+    bundle_pairs = {item["pair_id"]: item for item in source_bundle.get("unresolved_pairs", [])}
+    entries = payload.get("adjudications")
+    if not isinstance(entries, list) or len(entries) != 68:
+        raise ValueError("identity adjudication artifact must contain exactly 68 reviewed pairs")
+    allowed_classes = {
+        "same_identity",
+        "parent_component_phase",
+        "related_plan_or_instrument",
+        "distinct_entities",
+        "unresolved",
+    }
+    # Reuse the pure classifier as a structural validation pass: this rejects
+    # duplicate ID pairs, stale names and unsupported actions before mutation.
+    seen_pair_ids: set[str] = set()
+    seen_id_pairs: set[tuple[str, str]] = set()
+    for entry in entries:
+        pair_id = str(entry.get("pair_id") or "")
+        ids = entry.get("project_ids")
+        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+            raise ValueError("identity adjudication pair_id/project_ids are missing or duplicated")
+        id_pair = tuple(sorted(str(value) for value in ids))
+        if id_pair in seen_id_pairs:
+            raise ValueError(f"duplicate identity adjudication project_id pair {id_pair!r}")
+        seen_pair_ids.add(pair_id)
+        seen_id_pairs.add(id_pair)
+        identity_class = entry.get("identity_class")
+        canonical_project_id = entry.get("canonical_project_id")
+        if identity_class not in allowed_classes:
+            raise ValueError(f"identity adjudication {pair_id!r} has unsupported identity_class")
+        if identity_class == "same_identity":
+            if entry.get("resolver_action") != "merge_case":
+                raise ValueError(f"same_identity pair {pair_id!r} must be merge_case")
+            if canonical_project_id not in id_pair:
+                raise ValueError(f"same_identity pair {pair_id!r} requires an exact canonical_project_id")
+        elif entry.get("resolver_action") != "no_new_merge":
+            raise ValueError(f"non-identical or unresolved pair {pair_id!r} must not merge")
+        elif canonical_project_id is not None:
+            raise ValueError(f"no_new_merge pair {pair_id!r} cannot declare a canonical_project_id")
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(id_pair):
+            raise ValueError(f"identity adjudication {pair_id!r} has invalid project_names")
+        source_pair = bundle_pairs.get(pair_id)
+        if source_pair is None:
+            raise ValueError(f"identity adjudication pair_id {pair_id!r} is absent from source bundle")
+        source_ids = {
+            source_pair["project_a"]["project_id"],
+            source_pair["project_b"]["project_id"],
+        }
+        source_names = {
+            source_pair["project_a"]["project_id"]: source_pair["project_a"]["canonical_name"],
+            source_pair["project_b"]["project_id"]: source_pair["project_b"]["canonical_name"],
+        }
+        if set(id_pair) != source_ids or names != source_names:
+            raise ValueError(f"identity adjudication {pair_id!r} project IDs/names differ from source bundle")
+        source_evidence = entry.get("source_evidence")
+        if not isinstance(source_evidence, list) or not source_evidence:
+            raise ValueError(f"identity adjudication {pair_id!r} has no source_evidence")
+        seen_sides: set[str] = set()
+        literal_evidence_sides: set[str] = set()
+        for ref in source_evidence:
+            side = ref.get("side")
+            side_key = "project_a" if side == "a" else "project_b" if side == "b" else None
+            if side_key is None:
+                raise ValueError(f"identity adjudication {pair_id!r} has invalid evidence side")
+            source_project = source_pair[side_key]
+            project_id = source_project["project_id"]
+            if ref.get("project_id") != project_id or ref.get("project_name") != source_project["canonical_name"]:
+                raise ValueError(f"identity adjudication {pair_id!r} evidence has stale project identity")
+            expected_sources = {
+                (example.get("document_id"), example.get("url"), example.get("raw_project_mention"))
+                for example in source_project.get("source_examples", [])
+            }
+            if (
+                ref.get("document_id"), ref.get("url"), ref.get("raw_project_mention")
+            ) not in expected_sources:
+                raise ValueError(f"identity adjudication {pair_id!r} cites a source outside its bundle side")
+            if not ref.get("content_record_sha256") or not ref.get("source_text_sha256"):
+                raise ValueError(f"identity adjudication {pair_id!r} has incomplete source hashes")
+            if ref.get("evidence_status") == "literal_anchor_verified":
+                if not ref.get("quote") or not ref.get("matched_fragment"):
+                    raise ValueError(f"identity adjudication {pair_id!r} has incomplete literal evidence")
+                literal_evidence_sides.add(side)
+            elif ref.get("evidence_status") != "no_discriminative_literal_anchor":
+                raise ValueError(f"identity adjudication {pair_id!r} has unsupported evidence_status")
+            seen_sides.add(side)
+        if seen_sides != {"a", "b"}:
+            raise ValueError(f"identity adjudication {pair_id!r} must retain source references for both projects")
+        if literal_evidence_sides != {"a", "b"} and identity_class != "unresolved":
+            raise ValueError(f"identity adjudication {pair_id!r} needs a literal anchor for both projects")
+    if seen_pair_ids != set(bundle_pairs):
+        raise ValueError("identity adjudication pair_id set differs from the frozen source bundle")
+    return entries
+
+
+def load_historical_project_identity_adjudications(
+    artifact_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Load the hash-pinned exact-ID supplement for recovered legacy pairs.
+
+    This artifact is deliberately additive: it cannot overlap the reviewed
+    68-pair bundle, promote a decision by itself, or transfer a decision by
+    name. Unresolved entries remain unresolved.
+    """
+    root = Path(__file__).resolve().parents[1]
+    artifact_path = artifact_path or root / "audit" / "historical_project_pair_adjudications_v1.json"
+    raw = Path(artifact_path).read_bytes()
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if actual_sha != HISTORICAL_PAIR_ADJUDICATION_SHA256:
+        raise ValueError("historical project-pair adjudication SHA-256 mismatch")
+    payload = json.loads(raw.decode("utf-8"))
+    if payload.get("schema_version") != "historical_project_pair_adjudications_v1":
+        raise ValueError("unexpected historical project-pair adjudication schema_version")
+    if payload.get("artifact_id") != "historical_project_pair_adjudications_2026-09-28_v1":
+        raise ValueError("unexpected historical project-pair adjudication artifact_id")
+    if payload.get("generated_on") != "2026-09-28":
+        raise ValueError("unexpected historical project-pair adjudication date")
+    if payload.get("scope", {}).get("production_promoted") is not False:
+        raise ValueError("historical pair artifact must remain a non-promoted candidate")
+    entries = payload.get("adjudications")
+    if not isinstance(entries, list) or len(entries) != 27:
+        raise ValueError("historical project-pair artifact must contain exactly 27 pairs")
+    allowed_classes = {
+        "same_identity", "parent_component_phase", "related_plan_or_instrument",
+        "distinct_entities", "unresolved",
+    }
+    seen_pair_ids: set[str] = set()
+    seen_pairs: set[tuple[str, str]] = set()
+    snapshot = []
+    for entry in entries:
+        pair_id = str(entry.get("pair_id") or "")
+        ids = entry.get("project_ids")
+        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+            raise ValueError("historical pair_id/project_ids are missing or duplicated")
+        id_pair = tuple(sorted(str(value) for value in ids))
+        if len(set(id_pair)) != 2 or id_pair in seen_pairs:
+            raise ValueError(f"duplicate or invalid historical project-ID pair {id_pair!r}")
+        expected_pair_id = "historical_pair:" + hashlib.sha256("\0".join(id_pair).encode()).hexdigest()[:20]
+        if pair_id != expected_pair_id:
+            raise ValueError(f"historical pair_id does not match exact project IDs: {pair_id!r}")
+        if entry.get("identity_class") not in allowed_classes:
+            raise ValueError(f"historical pair {pair_id!r} has unsupported identity_class")
+        same = entry["identity_class"] == "same_identity"
+        if same:
+            if entry.get("resolver_action") != "merge_case" or entry.get("canonical_project_id") not in id_pair:
+                raise ValueError(f"historical same_identity pair {pair_id!r} has invalid merge/canonical ID")
+        elif entry.get("resolver_action") != "no_new_merge" or entry.get("canonical_project_id") is not None:
+            raise ValueError(f"historical non-identity pair {pair_id!r} must not merge or name a canonical ID")
+        if entry.get("decision_source") != "historical_pair_adjudication_2026-09-28":
+            raise ValueError(f"historical pair {pair_id!r} has unexpected decision_source")
+        if entry.get("typed_relation_persisted") is not False or entry.get("production_promoted") is not False:
+            raise ValueError(f"historical pair {pair_id!r} must remain an unpromoted candidate")
+        names = entry.get("project_names")
+        if not isinstance(names, dict) or set(names) != set(id_pair) or any(not names[pid] for pid in id_pair):
+            raise ValueError(f"historical pair {pair_id!r} has invalid project_names")
+        refs = entry.get("source_evidence")
+        if not isinstance(refs, list) or len(refs) != 2 or {ref.get("side") for ref in refs} != {"a", "b"}:
+            raise ValueError(f"historical pair {pair_id!r} must cite one source per side")
+        for ref in refs:
+            if ref.get("project_id") not in id_pair or names.get(ref.get("project_id")) != ref.get("project_name"):
+                raise ValueError(f"historical pair {pair_id!r} has evidence for a different project ID")
+            if ref.get("evidence_status") != "literal_anchor_verified" or not ref.get("quote"):
+                raise ValueError(f"historical pair {pair_id!r} lacks a literal source anchor")
+            if not ref.get("source_text_sha256") or not ref.get("content_record_sha256"):
+                raise ValueError(f"historical pair {pair_id!r} lacks source hashes")
+        seen_pair_ids.add(pair_id)
+        seen_pairs.add(id_pair)
+        snapshot.append({
+            "project_ids": ids,
+            "project_names": names,
+            "source_queue_rowid": entry.get("source_queue_rowid"),
+        })
+    snapshot_sha = hashlib.sha256(
+        json.dumps(snapshot, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    if payload.get("source_pair_snapshot_sha256") != snapshot_sha:
+        raise ValueError("historical project-pair snapshot SHA-256 mismatch")
+    base_pairs = {
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in load_project_identity_adjudications()
+    }
+    overlap = seen_pairs & base_pairs
+    if overlap:
+        raise ValueError(f"historical supplement overlaps the frozen 68-pair artifact: {sorted(overlap)!r}")
+    return entries
+
+
+def load_effective_project_identity_adjudications(
+    override_path: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Combine the frozen 68-pair review, exact-ID overrides, and 27 legacy pairs.
+
+    Overrides can only replace an ``unresolved`` entry in the exact frozen base
+    artifact. They cannot transfer by name, alter the historical supplement,
+    or mark themselves as production-promoted. The returned objects are copies;
+    the source adjudication artifacts remain immutable.
+    """
+    root = Path(__file__).resolve().parents[1]
+    base_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
+    bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
+    historical_path = root / "audit" / "historical_project_pair_adjudications_v1.json"
+    override_path = override_path or root / PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
+
+    base_raw = base_path.read_bytes()
+    if hashlib.sha256(base_raw).hexdigest() != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
+        raise ValueError("base project identity adjudication SHA-256 mismatch")
+    bundle_raw = bundle_path.read_bytes()
+    payload_raw = Path(override_path).read_bytes()
+    override_sha = hashlib.sha256(payload_raw).hexdigest()
+    if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
+        raise ValueError("override SHA-256 mismatch")
+    payload = json.loads(payload_raw.decode("utf-8"))
+    if payload.get("schema_version") != "project_identity_adjudication_overrides_v3":
+        raise ValueError("unexpected project identity override schema_version")
+    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v3":
+        raise ValueError("unexpected project identity override artifact_id")
+    if payload.get("generated_on") != "2026-09-28":
+        raise ValueError("unexpected project identity override date")
+    if payload.get("source_base_adjudication_sha256") != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
+        raise ValueError("project identity override does not pin the frozen base adjudication")
+    if payload.get("source_base_bundle_sha256") != hashlib.sha256(bundle_raw).hexdigest():
+        raise ValueError("project identity override source bundle SHA-256 mismatch")
+    if payload.get("source_historical_adjudication_sha256") != HISTORICAL_PAIR_ADJUDICATION_SHA256:
+        raise ValueError("project identity override does not pin the historical supplement")
+    scope = payload.get("scope")
+    if not isinstance(scope, dict) or scope.get("production_promoted") is not False:
+        raise ValueError("project identity override must remain unpromoted")
+    if scope.get("typed_relation_persisted") is not False:
+        raise ValueError("project identity override cannot claim a typed relation was persisted")
+    topology_unresolved = scope.get("topology_unresolved_reviewed")
+    if not isinstance(topology_unresolved, list) or any(
+        not isinstance(item, dict) or not item.get("pair_id") or not item.get("reason")
+        for item in topology_unresolved
+    ):
+        raise ValueError("project identity override needs explicit topology-unresolved reasons")
+
+    base_entries = load_project_identity_adjudications()
+    historical_entries = load_historical_project_identity_adjudications(historical_path)
+    if len(base_entries) != 68 or len(historical_entries) != 27:
+        raise ValueError("effective identity input counts differ from the pinned contract")
+    base_by_pair = {
+        tuple(sorted(str(value) for value in entry["project_ids"])): entry
+        for entry in base_entries
+    }
+    historical_pairs = {
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in historical_entries
+    }
+    unresolved_base = {
+        entry["pair_id"]: tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in base_entries
+        if entry.get("identity_class") == "unresolved"
+    }
+    unresolved_history = {
+        entry["pair_id"]
+        for entry in historical_entries
+        if entry.get("identity_class") == "unresolved"
+    }
+    if set(scope.get("base_unresolved_retained", [])) != set(unresolved_base) - {
+        str(entry.get("pair_id")) for entry in payload.get("adjudications", [])
+    }:
+        raise ValueError("override unresolved-base inventory does not match the frozen base decisions")
+
+    overrides = payload.get("adjudications")
+    historical_overrides = payload.get("historical_adjudications")
+    if not isinstance(overrides, list) or len(overrides) != 16 or scope.get("pair_count") != 16:
+        raise ValueError("project identity override must contain exactly 16 exact-ID base pairs")
+    if (
+        not isinstance(historical_overrides, list)
+        or len(historical_overrides) != 2
+        or scope.get("historical_pair_count") != 2
+    ):
+        raise ValueError("project identity override must contain exactly 2 exact-ID historical pairs")
+    if {str(item["pair_id"]) for item in topology_unresolved} != set():
+        raise ValueError("no topology-blocking pair may remain unresolved in the closed overlay")
+    override_no_merge_classes = {"distinct_entities", "parent_component_phase", "insufficient_evidence", "unresolved"}
+
+    def validate_overrides(
+        entries: list[dict[str, Any]],
+        original_by_pair: dict[tuple[str, str], dict[str, Any]],
+        forbidden_pairs: set[tuple[str, str]],
+        label: str,
+    ) -> dict[tuple[str, str], dict[str, Any]]:
+        seen_pairs: set[tuple[str, str]] = set()
+        seen_pair_ids: set[str] = set()
+        result: dict[tuple[str, str], dict[str, Any]] = {}
+        for override in entries:
+            pair_id = str(override.get("pair_id") or "")
+            ids = override.get("project_ids")
+            if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+                raise ValueError("project identity override has missing/duplicate pair_id or project_ids")
+            pair = tuple(sorted(str(value) for value in ids))
+            if pair[0] == pair[1] or pair in seen_pairs or pair in forbidden_pairs:
+                raise ValueError(f"duplicate, self, or cross-artifact override pair {pair!r}")
+            original = original_by_pair.get(pair)
+            if original is None or original.get("pair_id") != pair_id or original.get("identity_class") != "unresolved":
+                raise ValueError(f"override {pair_id!r} is not an exact unresolved {label} pair")
+            names = override.get("project_names")
+            if names != original.get("project_names") or set(names or {}) != set(pair):
+                raise ValueError(f"override {pair_id!r} project names differ from the frozen {label} entry")
+            identity_class = override.get("identity_class")
+            action = override.get("resolver_action")
+            canonical = override.get("canonical_project_id")
+            if identity_class == "same_identity":
+                if action != "merge_case" or canonical not in pair:
+                    raise ValueError(f"same_identity override {pair_id!r} needs merge_case and an exact canonical ID")
+                if not override.get("canonical_selection_note"):
+                    raise ValueError(f"same_identity override {pair_id!r} needs a canonical-selection rationale")
+                if override.get("confidence") != "high":
+                    raise ValueError(f"same_identity override {pair_id!r} needs high confidence before merging")
+            elif identity_class in override_no_merge_classes:
+                if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
+                    raise ValueError(f"{identity_class} override {pair_id!r} must not merge or choose a canonical ID")
+            else:
+                raise ValueError(f"unsupported project identity override class {identity_class!r}")
+            if override.get("decision_source") != PROJECT_IDENTITY_OVERRIDE_SOURCE:
+                raise ValueError(f"override {pair_id!r} has unexpected decision_source")
+            if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
+                raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
+            if override.get("confidence") not in {"high", "medium"} or not override.get("rationale"):
+                raise ValueError(f"override {pair_id!r} has incomplete decision rationale/confidence")
+
+            original_refs = {
+                ref.get("evidence_ref_id"): ref
+                for ref in original.get("source_evidence", [])
+                if ref.get("evidence_ref_id")
+            }
+            evidence_ref_ids = override.get("source_evidence_ref_ids")
+            if not isinstance(evidence_ref_ids, list) or not evidence_ref_ids or len(set(evidence_ref_ids)) != len(evidence_ref_ids):
+                raise ValueError(f"override {pair_id!r} has missing or duplicate source evidence references")
+            cited_refs = [original_refs.get(ref_id) for ref_id in evidence_ref_ids]
+            if any(ref is None for ref in cited_refs) or {ref.get("side") for ref in cited_refs if ref} != {"a", "b"}:
+                raise ValueError(f"override {pair_id!r} must cite frozen source evidence for both exact project IDs")
+            if any(ref.get("project_id") not in pair for ref in cited_refs if ref):
+                raise ValueError(f"override {pair_id!r} source evidence references another project ID")
+            supporting_sources = override.get("supporting_sources")
+            if not isinstance(supporting_sources, list) or not supporting_sources:
+                raise ValueError(f"override {pair_id!r} has no supporting source links")
+            for source in supporting_sources:
+                if not isinstance(source, dict) or not str(source.get("url", "")).startswith("https://"):
+                    raise ValueError(f"override {pair_id!r} has an invalid supporting source URL")
+                if not source.get("publisher") or not source.get("supports"):
+                    raise ValueError(f"override {pair_id!r} has an incomplete supporting source record")
+            seen_pairs.add(pair)
+            seen_pair_ids.add(pair_id)
+            result[pair] = override
+        return result
+
+    historical_by_pair = {
+        tuple(sorted(str(value) for value in entry["project_ids"])): entry
+        for entry in historical_entries
+    }
+    override_by_pair = validate_overrides(overrides, base_by_pair, historical_pairs, "base")
+    historical_override_by_pair = validate_overrides(
+        historical_overrides, historical_by_pair, set(base_by_pair), "historical"
+    )
+    if {str(o["pair_id"]) for o in overrides} != set(unresolved_base) - set(scope.get("base_unresolved_retained", [])):
+        raise ValueError("override pair set does not exactly cover the declared subset of base unresolved pairs")
+    if {str(o["pair_id"]) for o in historical_overrides} | set(scope.get("historical_unresolved_retained", [])) != unresolved_history:
+        raise ValueError("historical override set does not exactly cover the historical unresolved pairs")
+
+    def apply_override(original: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+        effective = copy.deepcopy(original)
+        effective["prior_adjudication"] = {
+            "identity_class": original.get("identity_class"),
+            "resolver_action": original.get("resolver_action"),
+            "canonical_project_id": original.get("canonical_project_id"),
+            "rationale": original.get("rationale"),
+            "decision_source": original.get("decision_source"),
+        }
+        for field in (
+            "identity_class", "resolver_action", "canonical_project_id", "canonical_selection_note",
+            "confidence", "rationale", "decision_source", "production_promoted", "typed_relation_persisted",
+        ):
+            effective[field] = override.get(field)
+        effective["override_artifact"] = PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
+        effective["override_artifact_sha256"] = override_sha
+        effective["override_source_evidence_ref_ids"] = list(override["source_evidence_ref_ids"])
+        effective["override_supporting_sources"] = copy.deepcopy(override["supporting_sources"])
+        return effective
+
+    effective_base = []
+    for original in base_entries:
+        pair = tuple(sorted(str(value) for value in original["project_ids"]))
+        override = override_by_pair.get(pair)
+        effective_base.append(apply_override(original, override) if override else copy.deepcopy(original))
+    effective_historical = []
+    for original in historical_entries:
+        pair = tuple(sorted(str(value) for value in original["project_ids"]))
+        override = historical_override_by_pair.get(pair)
+        effective_historical.append(apply_override(original, override) if override else copy.deepcopy(original))
+    effective_pairs = [
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in effective_base + effective_historical
+    ]
+    if len(effective_pairs) != len(set(effective_pairs)):
+        raise ValueError("effective project identity artifacts contain a duplicate exact-ID pair")
+    return effective_base + effective_historical
+
+
+def validate_project_identity_adjudication_scope(
+    projects: dict[str, str],
+    rows: list[tuple[int, str, str, str, str]],
+    adjudications: list[dict[str, Any]],
+) -> None:
+    """Fail closed if a reviewed pair no longer matches the live review queue."""
+    queue_pairs = {tuple(sorted((str(pid_a), str(pid_b)))) for _, pid_a, _, pid_b, _ in rows}
+    for entry in adjudications:
+        ids = tuple(sorted(str(value) for value in entry["project_ids"]))
+        for project_id in ids:
+            actual_name = projects.get(project_id)
+            expected_name = entry["project_names"].get(project_id)
+            if actual_name is None:
+                raise ValueError(f"identity adjudication references missing project_id {project_id!r}")
+            if actual_name != expected_name:
+                raise ValueError(
+                    f"canonical_name mismatch for identity adjudication {entry['pair_id']!r}: "
+                    f"{actual_name!r} != {expected_name!r}"
+                )
+        if ids not in queue_pairs:
+            raise ValueError(f"reviewed identity pair {entry['pair_id']!r} is absent from project_review_queue")
+
+
+def validate_project_identity_adjudication_evidence(
+    adjudications: list[dict[str, Any]], project_root: Path, content_root: Path | None = None
+) -> dict[str, int]:
+    """Verify every cited fulltext record, hash, URL and literal quote before resolving.
+
+    This validation is intentionally fail-closed. A checked-in adjudication is
+    not sufficient by itself: the exact external corpus record must still be
+    present under the project's fulltext content root and match its hashes.
+    """
+    root = Path(project_root).resolve()
+    content_root = (
+        Path(content_root).resolve()
+        if content_root is not None
+        else (root / "Fuentes" / "fulltext" / "content").resolve()
+    )
+    failures: list[str] = []
+    valid_references = 0
+    verified_literal_quotes = 0
+    unanchored_references = 0
+    for entry in adjudications:
+        pair_id = str(entry.get("pair_id") or "")
+        project_ids = entry.get("project_ids") or []
+        project_names = entry.get("project_names") or {}
+        for index, ref in enumerate(entry.get("source_evidence", [])):
+            label = f"{pair_id}[{index}]"
+            required = {
+                "side", "project_id", "project_name", "document_id", "url",
+                "content_file", "source_text_sha256", "content_record_sha256",
+                "raw_project_mention", "evidence_status",
+            }
+            if not isinstance(ref, dict) or required - set(ref):
+                absent = sorted(required - set(ref)) if isinstance(ref, dict) else sorted(required)
+                failures.append(f"{label}: faltan campos de evidencia {absent}")
+                continue
+            if ref["project_id"] not in project_ids or project_names.get(ref["project_id"]) != ref["project_name"]:
+                failures.append(f"{label}: project_id/name no corresponde a la adjudicación")
+                continue
+            relative = Path(str(ref["content_file"]))
+            expected_prefix = ("Fuentes", "fulltext", "content")
+            if relative.is_absolute() or relative.parts[:3] != expected_prefix or ".." in relative.parts:
+                failures.append(f"{label}: content_file debe ser relativo")
+                continue
+            candidate = (
+                Path(content_root).resolve() / Path(*relative.parts[3:])
+                if content_root is not None
+                else root / relative
+            ).resolve()
+            try:
+                candidate.relative_to(content_root)
+            except ValueError:
+                failures.append(f"{label}: content_file queda fuera de Fuentes/fulltext/content")
+                continue
+            if not candidate.is_file():
+                failures.append(f"{label}: no existe content_file {ref['content_file']!r}")
+                continue
+            raw = candidate.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != ref["content_record_sha256"]:
+                failures.append(f"{label}: content_record_sha256 no coincide")
+                continue
+            try:
+                record = json.loads(raw.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                failures.append(f"{label}: JSON de fulltext inválido ({exc})")
+                continue
+            text = record.get("text")
+            if not isinstance(text, str):
+                failures.append(f"{label}: record.text no es texto")
+                continue
+            text_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            if record.get("url") != ref["url"]:
+                failures.append(f"{label}: URL del registro no coincide")
+            if text_sha != ref["source_text_sha256"] or text_sha != ref["document_id"]:
+                failures.append(f"{label}: hash del texto/document_id no coincide")
+            if ref["evidence_status"] == "literal_anchor_verified":
+                quote = ref.get("quote")
+                fragment = ref.get("matched_fragment")
+                if not isinstance(quote, str) or not quote or quote not in text:
+                    failures.append(f"{label}: quote no es substring literal del fulltext")
+                if (
+                    not isinstance(fragment, str)
+                    or not fragment
+                    or not isinstance(quote, str)
+                    or fragment not in quote
+                ):
+                    failures.append(f"{label}: matched_fragment no aparece en la cita literal")
+                else:
+                    verified_literal_quotes += 1
+            elif ref["evidence_status"] == "no_discriminative_literal_anchor":
+                if ref.get("quote") is not None or ref.get("matched_fragment") is not None:
+                    failures.append(f"{label}: fuente sin ancla discriminante no debe inventar cita")
+                unanchored_references += 1
+            else:
+                failures.append(f"{label}: evidence_status no reconocido")
+            if record.get("url") == ref["url"] and text_sha == ref["document_id"]:
+                valid_references += 1
+    if failures:
+        raise ValueError("identity adjudication source evidence invalid: " + "; ".join(failures[:20]))
+    return {
+        "valid_references": valid_references,
+        "verified_literal_quotes": verified_literal_quotes,
+        "unanchored_references": unanchored_references,
+    }
+
+
+def validate_project_identity_adjudication_topology(
+    project_to_case: dict[str, str],
+    baseline_case_id_by_project: dict[str, str],
+    adjudications: list[dict[str, Any]],
+) -> dict[str, int]:
+    """Reject a transitive topology change that defeats any reviewed no-merge.
+
+    A no-new-merge pair may already share a legacy case_id. That historical
+    grouping is reported but is not newly applied. If it starts in separate
+    baseline groups and ends in one output group, fail before SQLite writes.
+    """
+    checked = 0
+    transitive_reconnections: list[str] = []
+    for entry in adjudications:
+        if entry.get("resolver_action") != "no_new_merge":
+            continue
+        ids = entry.get("project_ids") or []
+        if len(ids) != 2 or any(pid not in project_to_case for pid in ids):
+            raise ValueError(f"identity adjudication {entry.get('pair_id')!r} references missing topology IDs")
+        checked += 1
+        left, right = ids
+        if (
+            baseline_case_id_by_project[left] != baseline_case_id_by_project[right]
+            and project_to_case[left] == project_to_case[right]
+        ):
+            transitive_reconnections.append(str(entry.get("pair_id")))
+    if transitive_reconnections:
+        raise ValueError(
+            "no_new_merge pair became connected through another merge: "
+            + ", ".join(transitive_reconnections[:20])
+        )
+    return {"checked": checked, "transitive_reconnections": 0}
+
+
 def classify(name_a: str, name_b: str) -> tuple[bool | None, str]:
     decision, reason, _source, _actor = classify_with_provenance(name_a, name_b)
     return decision, reason
 
 
-def decision_provenance_ref(name_a: str, name_b: str, source: str) -> str:
+def decision_provenance_ref(
+    name_a: str,
+    name_b: str,
+    source: str,
+    project_ids: tuple[str, str] | None = None,
+    identity_adjudications: list[dict[str, Any]] | None = None,
+) -> str:
     """Devuelve una referencia estable sin analizar la razón narrativa."""
+    if source == "identity_followup_name_scope_guard":
+        return json.dumps(
+            {
+                "source": source,
+                "artifact": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+                "project_ids": sorted(str(value) for value in (project_ids or ())),
+                "note": "decision not transferred because reviewed names belong to different project IDs",
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+    if source in {
+        "identity_followup_2026-09-27",
+        "historical_pair_adjudication_2026-09-28",
+        PROJECT_IDENTITY_OVERRIDE_SOURCE,
+    }:
+        if project_ids is None or identity_adjudications is None:
+            raise ValueError("identity review provenance requires exact project IDs and adjudications")
+        ids = tuple(sorted(str(value) for value in project_ids))
+        entry = next(
+            (item for item in identity_adjudications if tuple(sorted(item["project_ids"])) == ids),
+            None,
+        )
+        if entry is None:
+            raise ValueError(f"missing identity review provenance for project pair {ids!r}")
+        entry_source = str(entry.get("decision_source") or "identity_followup_2026-09-27")
+        if entry_source != source:
+            raise ValueError(f"identity review provenance source mismatch for project pair {ids!r}")
+        artifact = {
+            "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+            "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
+            PROJECT_IDENTITY_OVERRIDE_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
+        }[source]
+        artifact_path = Path(__file__).resolve().parents[1] / artifact
+        return json.dumps(
+            {
+                "source": source,
+                "artifact": artifact,
+                "artifact_sha256": hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
+                "pair_id": entry["pair_id"],
+                "identity_class": entry["identity_class"],
+                "source_evidence_ref_ids": entry.get("override_source_evidence_ref_ids"),
+                "supporting_source_urls": sorted(
+                    source_ref["url"] for source_ref in entry.get("override_supporting_sources", [])
+                ),
+                "source_evidence_sha256": sorted(
+                    ref["content_record_sha256"] for ref in entry.get("source_evidence", [])
+                ),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
     meta = MANUAL_DECISION_EVIDENCE.get((name_a, name_b)) or MANUAL_DECISION_EVIDENCE.get((name_b, name_a))
     if meta:
         payload = dict(meta)
@@ -884,6 +1559,7 @@ def resolve_case_components(
     partitions: dict[str, str],
     baseline_case_id_by_project: dict[str, str],
     classifier,
+    pair_classifier=None,
 ) -> ResolutionPlan:
     """Resuelve componentes de forma determinista y fail-closed.
 
@@ -950,7 +1626,10 @@ def resolve_case_components(
 
     classified = []
     for rowid, pid_a, name_a, pid_b, name_b in rows:
-        decision, reason, source, actor = classifier(name_a, name_b)
+        if pair_classifier is None:
+            decision, reason, source, actor = classifier(name_a, name_b)
+        else:
+            decision, reason, source, actor = pair_classifier(pid_a, name_a, pid_b, name_b)
         classified.append((tuple(sorted((pid_a, pid_b))), rowid, pid_a, name_a, pid_b, name_b, decision, reason, source, actor))
 
     row_decisions: dict[int, tuple[bool | None, str, str, str | None]] = {}
@@ -1133,7 +1812,7 @@ def _drop_column_if_exists(conn: sqlite3.Connection, table: str, column: str) ->
             pass
 
 
-def _resolve_database(conn: sqlite3.Connection) -> int:
+def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path | None = None) -> int:
     _add_column_if_missing(conn, "project_review_queue", "decision")
     _add_column_if_missing(conn, "project_review_queue", "decision_reason")
     _add_column_if_missing(conn, "project_review_queue", "decided_by")
@@ -1151,11 +1830,28 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
         "FROM project_review_queue ORDER BY rowid"
     ).fetchall()
     projects = dict(conn.execute("SELECT project_id, canonical_name FROM project ORDER BY project_id"))
+    identity_adjudications = load_effective_project_identity_adjudications()
+    validate_project_identity_adjudication_scope(projects, rows, identity_adjudications)
     partitions = dict(
         conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL")
     )
     baseline, baseline_sha256 = load_case_baseline(projects)
-    plan = resolve_case_components(projects, rows, partitions, baseline, classify_with_provenance)
+    plan = resolve_case_components(
+        projects,
+        rows,
+        partitions,
+        baseline,
+        classify_with_provenance,
+        pair_classifier=lambda pid_a, name_a, pid_b, name_b: classify_project_pair_with_adjudications(
+            pid_a, name_a, pid_b, name_b, identity_adjudications
+        ),
+    )
+    validate_project_identity_adjudication_evidence(
+        identity_adjudications, PROJECT_ROOT, content_root=evidence_content_root
+    )
+    validate_project_identity_adjudication_topology(
+        plan.project_to_case, baseline, identity_adjudications
+    )
 
     counts = {"merged": 0, "kept_separate": 0, "needs_human_review": 0}
     for rowid, pid_a, name_a, pid_b, name_b in rows:
@@ -1171,7 +1867,13 @@ def _resolve_database(conn: sqlite3.Connection) -> int:
                 reason,
                 source,
                 actor,
-                decision_provenance_ref(name_a, name_b, source),
+                decision_provenance_ref(
+                    name_a,
+                    name_b,
+                    source,
+                    project_ids=(pid_a, pid_b),
+                    identity_adjudications=identity_adjudications,
+                ),
                 rowid,
             ),
         )

@@ -11,20 +11,63 @@
     "consecuencia": "El 24% de error_grave revelo que un documento no es de forma fiable la misma unidad que un conflicto -- motivo la capa posterior de gate y resolucion PROJECT -> CASE -> CONFLICT descrita en docs/architecture.md. No se trato como ruido aceptable; cambio el diseno del sistema."
   },
   "identidad_resuelta": {
-    "proyectos": 990,
-    "casos": 862,
-    "conflictos": 839,
-    "conflictos_multi_proyecto": 20,
+    "proyectos": 941,
+    "casos": 850,
+    "conflictos": 833,
+    "conflictos_multi_proyecto": 65,
     "relaciones_pendientes_decision_humana": 1,
     "entidades_actor_resueltas": 6,
-    "alias_actor_resueltos": 29
+    "alias_actor_resueltos": 29,
+    "warehouse_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+    "observado_en": "audit/run_manifest.json, generado 2026-09-27"
   },
   "integridad_base_datos": {
     "archivo": "data/warehouse.sqlite",
     "integrity_check": "ok",
     "foreign_key_check_violaciones": 0,
-    "vinculos_actor_proyecto": 17227,
-    "vinculos_no_resueltos_inconsistentes": 37
+    "vinculos_actor_proyecto": 15245,
+    "vinculos_no_resueltos_inconsistentes": 289,
+    "warehouse_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db"
+  },
+  "historical_case_identity_current_gate_2026_09_27": {
+    "status": "blocked_before_conflict_build",
+    "authority": "preflight reproducible del paquete CLASSIFIED_63; no modifica el warehouse publicado",
+    "policy": {
+      "topology_relations_block_build": [
+        "mismo_conflicto",
+        "conflictos_distintos"
+      ],
+      "non_topological_relations_preserved_without_alias": [
+        "contextual",
+        "focal",
+        "mismo_proyecto"
+      ],
+      "unknown_relation_types": "fail_closed"
+    },
+    "counts": {
+      "historical_ids_unresolved": 48,
+      "topology_blockers": 15,
+      "non_topological_references_preserved": 33,
+      "unsupported_relation_types": 0,
+      "open_project_identity_review_pairs": 68,
+      "project_aliases_or_merges_promoted_in_this_pass": 0
+    },
+    "source_hashes": {
+      "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
+      "warehouse_sha256": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+      "preflight_script_sha256": "ed7a2e8ee13e7e1d5f9363fbcd6e30866b3ff344644b6b37a20a967ef09f1958"
+    },
+    "preflight_report": "audit/historical_case_reference_preflight.json",
+    "warehouse_mutated": false,
+    "ukamau_descriptive_reference": {
+      "config": "config/descriptive_project_mentions_v1.json",
+      "count": 1,
+      "linked_verified_evidence_ids": 3,
+      "identity_status": "descriptive_only_identity_unresolved",
+      "project_id_created": false,
+      "production_build_validated_against_local_fulltext_and_read_only_warehouse": true
+    },
+    "publication_note": "No forzar aliases ni relaciones para cerrar el preflight. El builder CONFLICT debe detenerse antes de DDL mientras existan blockers topológicos; las 33 referencias no topológicas se preservan sin proyectarlas como identidad."
   },
   "pruebas_automatizadas": {
     "descripcion": "Tests correspondientes al pipeline vigente, incluidos casos de regresion sobre bugs reales encontrados en revision (ver tests/). Un numero de tests fijo aqui se desactualiza en cada cambio -- el conteo real y actualizado esta en el ultimo run de CI, no en este archivo.",
@@ -575,5 +618,88 @@
       "manual_adjudication_pending": "reviewer response for the 68 open pairs and 69 drift rows; no decision inferred from prior recommendations"
     },
     "status": "technical follow-up prepared; no unreviewed identity decisions promoted"
+  },
+  "conflict_publication_gate_closed_2026-09-28": {
+    "authority": "cierre del gate de publicacion de CONFLICT que Luna endurecio en 206cb90/0c20acf (PR #1). El usuario autorizo explicitamente: \"aplica los 17 merges y resuelve los 15 IDs historicos\".",
+    "quince_ids_historicos": {
+      "resueltos_10": "Cada uno investigado contra CLASSIFIED_63 (grado y justificacion de Sol ya escritos) y verificado contra evidencia estructurada real (tabla evidence) antes de aliasar -- nunca se reinterpreto una decision de Sol, solo se reparo el destino tras fusiones posteriores. Detalle completo con citas en config/historical_case_id_resolutions_v1.json.",
+      "no_resolubles_5": "Poblacion/Cooperativa Oscar Heiremans, PE N156, PE N88, Villa Francia -- ninguno con anclaje vivo en el warehouse bajo ningun nombre (verificado con busqueda real, no solo ausencia de alias). Villa Francia ademas es clasificacion D de Sol (baja confianza) y su relacion es conflictos_distintos -- aliasarla al partner habria sido exactamente el error que este proyecto evita. Por politica explicita del usuario (2026-09-27): no se persigue investigacion primaria fuera de lo ya capturado.",
+      "mecanismo_nuevo": "config/historical_case_id_resolutions_v1.json + build_conflicts.py: load_historical_case_id_resolutions(), nueva categoria de impact_scope 'confirmed_non_resolvable_historical_reference' (antes no existia via de codigo para 'confirmado no-resoluble, preservar sin bloquear' -- solo bloqueaba o se resolvia). build_case_groups/build_conflict_relations/build_historical_case_reference_rows actualizados para omitir la relacion puntual en vez de fallar cuando el ID esta confirmado no-resoluble.",
+      "hallazgo_cementerio_teleferico": "Se verifico con evidencia estructurada real (no solo texto) que Teleferico Bicentenario y 'nuevo teleferico que unira Huechuraba con Providencia' son el MISMO proyecto real descrito en 2 articulos distintos -- resucita el caso adversarial que quedo con skip documentado desde la migracion v3.2->v3.3."
+    },
+    "diecisiete_merges_identidad": {
+      "fuente": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json (revision source-first de Codex/Luna sobre los 68 pares, verificada por Claude el 2026-09-27).",
+      "aplicados": "10 ya existian en MANUAL_DECISIONS (agregados por Luna el 2026-09-27); 7 son nuevos, agregados ahora citando la evidencia real de cada adjudicacion (Eco Egana/Egana Sustentable, Loteo de las 54 Casas, Nueva Alameda Providencia (NAP), Rotonda Atenas x2, tres torres de 19 pisos)."
+    },
+    "hallazgo_real_reconexion_transitiva_incorrecta": {
+      "descripcion": "validate_project_identity_adjudication_topology() (Luna, nunca antes ejecutada de punta a punta) detecto que _manual_decision_via_normalized_substring() -- el mecanismo de reconexion de 2026-09-26 -- estaba fusionando incorrectamente 'componente/fase de X' con 'X' cuando el nombre del componente contiene el nombre completo de la matriz como substring literal (ej. 'segunda torre habitacional del proyecto Conjunto Armonico Bellavista (CAB)' contiene 'Conjunto Armonico Bellavista (CAB)').",
+      "casos_encontrados": "Villa Panamericana/Lote B de la Villa Panamericana de Cerrillos; Conjunto Armonico Bellavista (CAB)/segunda torre habitacional (x2 variantes de matriz). Ambos ya tenian project_relation=parent_component_phase en la adjudicacion de Luna (no_new_merge) -- el bug del mecanismo automatico contradecia una decision ya tomada explicitamente.",
+      "correccion": "4 decisiones False explicitas agregadas a MANUAL_DECISIONS (chequeo de par exacto, que corre antes del fallback de substring, por lo que tiene precedencia). El mecanismo automatico de reconexion en si NO se redisenio -- se corrigieron las instancias encontradas; queda como hallazgo sistemico documentado, no resuelto de raiz para el mecanismo general.",
+      "alcance_no_verificado": "No se audito exhaustivamente si existen otras instancias del mismo patron entre los 941 proyectos -- solo se encontraron y corrigieron las que aparecieron al ejecutar validate_project_identity_adjudication_topology() contra los 17 merges de esta ronda. Podria haber otras sin detectar."
+    },
+    "verificacion": {
+      "reconstruccion_completa": "build_projects.py -> resolve_project_review.py -> build_conflicts.py -> detect_case_mention_duplicates.py (paso que faltaba, corregido a mitad de camino) -> build_conflicts.py (re-corrido) -> build_actor_registry.py -> build_actor_network.py -> apply_actor_registry_to_network.py -> build_geography.py -> build_geography_manzana.py -> build_dashboard.py -> generate_run_manifest.py.",
+      "gate_status": "conflict_publication_gate.status = 'ready' (antes bloqueado) -- primera vez que el gate de Luna llega a este estado.",
+      "integrity_check": "ok, foreign_key_check=0.",
+      "suite": "341 passed, 1 skipped, 1 fallo preexistente ajeno (test_blind_review_html.py, archivo local no versionado).",
+      "tests_nuevos": "6 tests nuevos para el mecanismo de resolucion historica (load_historical_case_id_resolutions, analyze_historical_case_references con non_resolvable, build_case_groups/build_conflict_relations con skip explicito)."
+    },
+    "status": "cerrado 2026-09-28"
+  },
+  "project_identity_queue_closed_2026-09-29": {
+    "fecha": "2026-09-29",
+    "descripcion": "Cierre de los 8 pares PROJECT que seguian abiertos tras el checkpoint de Luna y reconstruccion integral del pipeline en la rama codex/historical-case-references.",
+    "documento": "audit/project_identity_closure_2026-09-29.md",
+    "overlay": {
+      "path": "audit/project_identity_adjudication_overrides_2026-09-28_v3.json",
+      "sha256": "82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626",
+      "pares_base": 16,
+      "pares_historicos": 2
+    },
+    "cola_identidad": {
+      "total": 256,
+      "merged": 118,
+      "kept_separate": 138,
+      "abiertos": 0
+    },
+    "decisiones": {
+      "same_identity": [
+        "d0fb99d977176b8fd90c",
+        "70097cb05f72215db4b3",
+        "19a17e893f4747e113e9"
+      ],
+      "distinct_entities": [
+        "7dfca97fba3dc5d6abd2"
+      ],
+      "parent_component_phase": [
+        "historical_pair:1a548f6ba2417a0e6aae"
+      ],
+      "insufficient_evidence": [
+        "f46e5517d7ecee26f64d",
+        "6b84e4c69373bcadad41",
+        "historical_pair:8bf36944edfe85c618e0"
+      ]
+    },
+    "decisiones_legacy_revertidas": [
+      "Reserva La Dehesa / Reserva La Dehesa (ex Chaguay)",
+      "proyecto Bellavista / edificio de Desarrollo Inmobiliario Bellavista"
+    ],
+    "warehouse": {
+      "sha256": "ef776d1f9294021751d1b74f602523eaabe6d02e18f7d6b4b68c61bfa6d1436d",
+      "proyectos": 941,
+      "case_id": 835,
+      "conflictos": 817,
+      "integrity_check": "ok",
+      "foreign_key_check_issues": 0
+    },
+    "tests": "354 passed, 1 skipped (excluido tests/test_blind_review_html.py, archivo local fuera del repo)",
+    "alcance_no_verificado": [
+      "Los tres insufficient_evidence no estan demostrados como distintos ni como iguales.",
+      "No se re-audito fuente por fuente el resto de las 256 decisiones.",
+      "Fuentes web externas consultadas por busqueda, sin copia local con hash.",
+      "Relacion de conflicto pending_human_decision (Poblacion La Victoria) sigue abierta; es de la capa de relaciones.",
+      "El mecanismo de reconexion por subcadena no se redisenio."
+    ],
+    "status": "cerrado en rama; no promovido a main hasta fusionar el PR #1"
   }
 }

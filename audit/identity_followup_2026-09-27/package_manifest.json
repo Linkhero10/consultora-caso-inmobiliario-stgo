@@ -1,0 +1,54 @@
+{
+  "schema_version": "identity_followup_build_manifest_v1",
+  "artifact_id": "identity_followup_2026-09-27_build_manifest",
+  "repository_head_at_build": "d0e3009f2c65be396283a5b0f4fa7a6527caff03",
+  "source_hashes": {
+    "bundle": "b1a793348667f34891dabfe5d305628e22bd3040e72a006e7f4eeedb28124dc5",
+    "warehouse": "378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db",
+    "fulltext_manifest": "4497b3856966f5d7fdd44a1dd5eb62ce36779b637923febaeab99ffdccd39b1a",
+    "previous_review": "667159fe984484616b1d50499993ebc862af454729f81b16cdc94b5f0cb79499"
+  },
+  "generator_sha256": "c5949460089b2a5053dffc98017f0fd5d989a15cdbcd71969420436db76f1c49",
+  "source_project_root_stored": false,
+  "counts": {
+    "pairs": 68,
+    "source_references_checked": 219,
+    "literal_quotes_verified": 219,
+    "references_without_discriminative_anchor": 0,
+    "minimum_anchor_quote_words_total": 848,
+    "sources_with_anchor_quotes": 153,
+    "maximum_anchor_quote_words_per_source": 19,
+    "merge_case_candidates": 17,
+    "unresolved": 16,
+    "preliminary_aligned": 36,
+    "preliminary_different_or_more_specific": 32
+  },
+  "class_counts": {
+    "distinct_entities": 9,
+    "parent_component_phase": 16,
+    "related_plan_or_instrument": 10,
+    "same_identity": 17,
+    "unresolved": 16
+  },
+  "files": {
+    "identity_adjudications_v1.json": {
+      "sha256": "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f",
+      "bytes": 417618
+    },
+    "identity_review_report.md": {
+      "sha256": "83ad6da9b38c1878618dbb1965457793356bbae65934195d23f237d85e848e87",
+      "bytes": 8377
+    },
+    "identity_topology_simulation.json": {
+      "sha256": "344a682209bfd77d1deb8c46c68c23734ccc2e899e36ec01e95f3fddc0400eea",
+      "bytes": 1031
+    }
+  },
+  "release_boundary": {
+    "sqlite_modified": false,
+    "project_ids_deleted_or_rewritten": 0,
+    "eligibility_overrides": 0,
+    "production_promoted": false,
+    "full_release_gate": "blocked_pending_historical_and_topology_resolution"
+  }
+}

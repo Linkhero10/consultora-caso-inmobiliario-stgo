@@ -95,6 +95,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_WAREHOUSE = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_enrichment.sqlite"
 OUTPUT_WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
 ACTOR_SECOND_PASS_PATH = PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_2_934" / "actor_second_pass_v2" / "actor_second_pass_v2.jsonl"
+DESCRIPTIVE_PROJECT_MENTIONS_CONFIG = PROJECT_ROOT / "config" / "descriptive_project_mentions_v1.json"
 
 STOPWORDS = {"el", "la", "los", "las", "de", "del", "un", "una", "y", "en", "a", "proyecto", "edificio"}
 
@@ -108,6 +109,242 @@ def normalize_project_name(name: str) -> str:
 
 def _stable_id(*parts: str) -> str:
     return hashlib.sha256("|".join(parts).encode("utf-8")).hexdigest()[:24]
+
+
+def load_descriptive_project_mentions(
+    conn: sqlite3.Connection, config_path: Path = DESCRIPTIVE_PROJECT_MENTIONS_CONFIG
+) -> list[dict[str, Any]]:
+    """Valida menciones descriptivas sustentadas sin resolver PROJECT.
+
+    El contrato prohíbe campos de identidad de proyecto. Cada cita enlaza a
+    evidencia verificada de la misma case_mention; las citas breves se
+    verificaron contra el fulltext local al preparar el config (el fulltext no
+    se versiona en el repositorio público).
+    """
+    config_path = Path(config_path)
+    payload = json.loads(config_path.read_text(encoding="utf-8"))
+    if set(payload) != {"schema_version", "mentions"} or payload.get("schema_version") != "descriptive_project_mentions_v1":
+        raise ValueError("config de menciones descriptivas: schema_version/keys inválidos")
+    if not isinstance(payload["mentions"], list):
+        raise ValueError("config de menciones descriptivas: mentions debe ser una lista")
+
+    allowed_fields = {
+        "reference_key", "document_id", "case_mention_id", "subject_label",
+        "descriptive_label", "identity_status", "source_url", "source_text_sha256",
+        "source_file_path", "source_file_sha256", "citations", "linked_evidence_ids",
+    }
+    seen_keys: set[str] = set()
+    prepared: list[dict[str, Any]] = []
+    for item in payload["mentions"]:
+        if set(item) != allowed_fields:
+            raise ValueError(
+                "config de mención descriptiva: campos inválidos; "
+                f"extra={sorted(set(item) - allowed_fields)}, missing={sorted(allowed_fields - set(item))}"
+            )
+        key = item["reference_key"]
+        if not isinstance(key, str) or not key.strip() or key in seen_keys:
+            raise ValueError(f"reference_key vacío o duplicado: {key!r}")
+        seen_keys.add(key)
+        if item["identity_status"] != "descriptive_only_identity_unresolved":
+            raise ValueError(f"identity_status no permitido en {key}: {item['identity_status']!r}")
+        if any(not isinstance(item[field], str) or not item[field].strip() for field in (
+            "document_id", "case_mention_id", "subject_label", "descriptive_label", "source_url"
+        )):
+            raise ValueError(f"campos descriptivos requeridos vacíos en {key}")
+        if item["case_mention_id"].split(":", 1)[0] != item["document_id"]:
+            raise ValueError(f"case_mention_id no pertenece al document_id en {key}")
+        for hash_field in ("source_text_sha256", "source_file_sha256"):
+            value = item[hash_field]
+            if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                raise ValueError(f"{hash_field} inválido en {key}")
+
+        source_relpath = item["source_file_path"]
+        if not isinstance(source_relpath, str) or not source_relpath.strip():
+            raise ValueError(f"source_file_path vacío en {key}")
+        relative_path = Path(source_relpath)
+        if relative_path.is_absolute() or ".." in relative_path.parts:
+            raise ValueError(f"source_file_path debe ser relativo y permanecer en el proyecto en {key}")
+        project_root = PROJECT_ROOT.resolve()
+        source_path = (project_root / relative_path).resolve()
+        try:
+            source_path.relative_to(project_root)
+        except ValueError as exc:
+            raise ValueError(f"source_file_path escapa del directorio del proyecto en {key}") from exc
+        if not source_path.is_file():
+            raise FileNotFoundError(f"fulltext fuente requerido para validar {key}: {source_path}")
+        source_bytes = source_path.read_bytes()
+        observed_file_sha256 = hashlib.sha256(source_bytes).hexdigest()
+        if observed_file_sha256 != item["source_file_sha256"]:
+            raise ValueError(f"source_file_sha256 no coincide con el fulltext en {key}")
+        try:
+            source_payload = json.loads(source_bytes.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError(f"fulltext fuente no es JSON UTF-8 válido en {key}") from exc
+        source_text = source_payload.get("text") if isinstance(source_payload, dict) else None
+        if not isinstance(source_text, str):
+            raise ValueError(f"fulltext fuente no contiene un campo text válido en {key}")
+        if source_payload.get("url") != item["source_url"]:
+            raise ValueError(f"URL del fulltext fuente no coincide con source_url en {key}")
+        observed_text_sha256 = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+        if observed_text_sha256 != item["source_text_sha256"] or observed_text_sha256 != item["document_id"]:
+            raise ValueError(f"source_text_sha256/document_id no coincide con el texto fuente en {key}")
+
+        source = conn.execute(
+            "SELECT url FROM document WHERE document_id = ?", (item["document_id"],)
+        ).fetchone()
+        if source is None or source[0] != item["source_url"]:
+            raise ValueError(f"documento/URL fuente no coincide con el warehouse en {key}")
+        case_mention = conn.execute(
+            "SELECT document_id, decision_final_amplio FROM case_mention WHERE case_mention_id = ?",
+            (item["case_mention_id"],),
+        ).fetchone()
+        if case_mention is None or case_mention[0] != item["document_id"]:
+            raise ValueError(f"case_mention no pertenece al documento en {key}")
+        if case_mention[1] != "include":
+            raise ValueError(f"case_mention no está en estado include en {key}")
+
+        citations = item["citations"]
+        if not isinstance(citations, list) or not citations:
+            raise ValueError(f"citas vacías en {key}")
+        citation_evidence_ids: list[str] = []
+        for citation in citations:
+            if set(citation) != {"quote", "quote_sha256", "evidence_ids"}:
+                raise ValueError(f"shape de cita inválido en {key}")
+            quote = citation["quote"]
+            quote_hash = citation["quote_sha256"]
+            if not isinstance(quote, str) or not quote.strip():
+                raise ValueError(f"cita vacía en {key}")
+            if quote_hash != hashlib.sha256(quote.encode("utf-8")).hexdigest():
+                raise ValueError(f"quote_sha256 no coincide en {key}")
+            if quote not in source_text:
+                raise ValueError(f"cita no aparece literalmente en el fulltext fuente en {key}")
+            evidence_ids = citation["evidence_ids"]
+            if not isinstance(evidence_ids, list) or not evidence_ids:
+                raise ValueError(f"cita sin evidence_id en {key}")
+            for evidence_id in evidence_ids:
+                evidence = conn.execute(
+                    "SELECT case_mention_id, verified, quote_text FROM evidence WHERE evidence_id = ?",
+                    (evidence_id,),
+                ).fetchone()
+                if evidence is None or evidence[0] != item["case_mention_id"] or evidence[1] != 1:
+                    raise ValueError(f"evidence_id no verificado o de otra case_mention en {key}: {evidence_id}")
+                if evidence[2] not in quote:
+                    raise ValueError(
+                        f"cita no contiene literalmente evidence.quote_text en {key}: {evidence_id}"
+                    )
+                citation_evidence_ids.append(evidence_id)
+
+        linked = item["linked_evidence_ids"]
+        if not isinstance(linked, list) or len(linked) != len(set(linked)):
+            raise ValueError(f"linked_evidence_ids inválidos/duplicados en {key}")
+        if set(linked) != set(citation_evidence_ids):
+            raise ValueError(f"linked_evidence_ids no coincide con las citas en {key}")
+        prepared.append(dict(item))
+    return prepared
+
+
+def reject_descriptive_project_identity_collisions(
+    enrichment_records: list[dict[str, Any]], descriptive_mentions: list[dict[str, Any]]
+) -> None:
+    """Exige adjudicación antes de convertir un sujeto descriptivo en PROJECT.
+
+    La guarda opera por documento y etiqueta normalizada. No bloquea otros
+    proyectos válidos del artículo ni menciones del mismo sujeto en fuentes
+    distintas; solo impide crear una identidad PROJECT a partir del sujeto cuya
+    identidad continúa explícitamente sin resolver.
+    """
+    subjects_by_document: dict[str, set[str]] = defaultdict(set)
+    references: dict[tuple[str, str], str] = {}
+    for item in descriptive_mentions:
+        normalized_subject = normalize_project_name(item["subject_label"])
+        if normalized_subject:
+            key = (item["document_id"], normalized_subject)
+            subjects_by_document[item["document_id"]].add(normalized_subject)
+            references[key] = item["reference_key"]
+
+    for record in enrichment_records:
+        document_id = record.get("document_id")
+        unresolved_subjects = subjects_by_document.get(document_id, set())
+        if not unresolved_subjects:
+            continue
+        for raw_mention in record.get("proyectos_mencionados") or []:
+            name = raw_mention.get("nombre") if isinstance(raw_mention, dict) else raw_mention
+            normalized_name = normalize_project_name(name if isinstance(name, str) else "")
+            name_tokens = set(normalized_name.split())
+            for normalized_subject in unresolved_subjects:
+                if set(normalized_subject.split()) <= name_tokens:
+                    reference_key = references[(document_id, normalized_subject)]
+                    raise ValueError(
+                        "mención de proyecto coincide con sujeto descriptivo no resuelto; "
+                        f"requiere adjudicación antes de crear PROJECT: {reference_key} / {name!r}"
+                    )
+
+
+def persist_descriptive_project_mentions(conn: sqlite3.Connection, mentions: list[dict[str, Any]]) -> int:
+    """Reemplaza la tabla derivada descriptiva, sin crear identidad PROJECT."""
+    conn.execute("DROP TABLE IF EXISTS descriptive_project_reference_evidence")
+    conn.execute("DROP TABLE IF EXISTS descriptive_project_reference")
+    conn.execute(
+        """
+        CREATE TABLE descriptive_project_reference (
+            reference_key TEXT PRIMARY KEY,
+            document_id TEXT NOT NULL REFERENCES document(document_id),
+            case_mention_id TEXT NOT NULL REFERENCES case_mention(case_mention_id),
+            subject_label TEXT NOT NULL,
+            descriptive_label TEXT NOT NULL,
+            identity_status TEXT NOT NULL CHECK (identity_status = 'descriptive_only_identity_unresolved'),
+            source_url TEXT NOT NULL,
+            source_text_sha256 TEXT NOT NULL,
+            source_file_sha256 TEXT NOT NULL,
+            source TEXT NOT NULL CHECK (source = 'config_descriptive_project_mentions_v1')
+        )
+        """
+    )
+    conn.execute(
+        "CREATE INDEX idx_descriptive_project_reference_document ON descriptive_project_reference(document_id)"
+    )
+    conn.execute(
+        "CREATE INDEX idx_descriptive_project_reference_case_mention ON descriptive_project_reference(case_mention_id)"
+    )
+    conn.execute(
+        """
+        CREATE TABLE descriptive_project_reference_evidence (
+            reference_key TEXT NOT NULL REFERENCES descriptive_project_reference(reference_key) ON DELETE CASCADE,
+            evidence_id TEXT NOT NULL REFERENCES evidence(evidence_id),
+            quote_text TEXT NOT NULL,
+            quote_sha256 TEXT NOT NULL,
+            PRIMARY KEY (reference_key, evidence_id, quote_sha256)
+        )
+        """
+    )
+    conn.execute(
+        "CREATE INDEX idx_descriptive_project_reference_evidence_id ON descriptive_project_reference_evidence(evidence_id)"
+    )
+    conn.executemany(
+        "INSERT INTO descriptive_project_reference (reference_key, document_id, case_mention_id, subject_label, "
+        "descriptive_label, identity_status, source_url, source_text_sha256, source_file_sha256, source) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [
+            (
+                item["reference_key"], item["document_id"], item["case_mention_id"], item["subject_label"],
+                item["descriptive_label"], item["identity_status"], item["source_url"], item["source_text_sha256"],
+                item["source_file_sha256"], "config_descriptive_project_mentions_v1",
+            )
+            for item in mentions
+        ],
+    )
+    evidence_rows = [
+        (item["reference_key"], evidence_id, citation["quote"], citation["quote_sha256"])
+        for item in mentions
+        for citation in item["citations"]
+        for evidence_id in citation["evidence_ids"]
+    ]
+    conn.executemany(
+        "INSERT INTO descriptive_project_reference_evidence (reference_key, evidence_id, quote_text, quote_sha256) "
+        "VALUES (?,?,?,?)",
+        evidence_rows,
+    )
+    return len(mentions)
 
 
 # [AGREGADO 2026-09-18] Homonimos CONFIRMADOS donde el cluster EXACTO por
@@ -417,6 +654,37 @@ def _validate_source_warehouse(path: Path) -> None:
 
 def main() -> int:
     _validate_source_warehouse(SOURCE_WAREHOUSE)
+    source_conn = sqlite3.connect(f"file:{SOURCE_WAREHOUSE.as_posix()}?mode=ro", uri=True)
+    try:
+        descriptive_project_mentions = load_descriptive_project_mentions(
+            source_conn, DESCRIPTIVE_PROJECT_MENTIONS_CONFIG
+        )
+        url_to_document_id = {
+            row[1]: row[0] for row in source_conn.execute("SELECT document_id, url FROM document").fetchall()
+        }
+        sol_corrections: dict[str, dict] = {}
+        has_table = source_conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='document_case_unit'"
+        ).fetchone()
+        if has_table:
+            # La revisión humana vive en la fuente; se lee en read-only antes de
+            # copiarla. Las correcciones solo se aplican a esta reconstrucción.
+            # `correccion_nombre_proyecto` se reporta para trazabilidad, pero no
+            # reemplaza `proyectos_mencionados`: son el caso focal y el conjunto
+            # de proyectos mencionados, respectivamente, y no son intercambiables.
+            for row in source_conn.execute(
+                "SELECT document_id, unidad_caso_tipo, tiene_error, correccion_proyectos_mencionados_json, "
+                "correccion_nombre_proyecto FROM document_case_unit"
+            ).fetchall():
+                document_id, unidad_caso_tipo, tiene_error, corr_menc_json, corr_nombre = row
+                sol_corrections[document_id] = {
+                    "unidad_caso_tipo": unidad_caso_tipo,
+                    "tiene_error": bool(tiene_error),
+                    "proyectos_mencionados_corregido": json.loads(corr_menc_json) if corr_menc_json is not None else None,
+                    "nombre_proyecto_corregido": corr_nombre,
+                }
+    finally:
+        source_conn.close()
     # include_fuera_de_universo=True: el registro de proyectos necesita las
     # 934 filas productivas completas (mismo criterio que build_enrichment_
     # tables.py) -- la exclusion de Fix 1D solo aplica al backing de
@@ -426,14 +694,6 @@ def main() -> int:
     actor_second_pass_records = [
         json.loads(l) for l in ACTOR_SECOND_PASS_PATH.read_text(encoding="utf-8").splitlines() if l.strip()
     ] if ACTOR_SECOND_PASS_PATH.exists() else []
-
-    OUTPUT_WAREHOUSE.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(SOURCE_WAREHOUSE, OUTPUT_WAREHOUSE)
-    conn = sqlite3.connect(OUTPUT_WAREHOUSE)
-
-    url_to_document_id = {
-        row[1]: row[0] for row in conn.execute("SELECT document_id, url FROM document").fetchall()
-    }
 
     # Adjuntar document_id a cada registro de enrichment (via url -> warehouse.document)
     for r in enrichment_records:
@@ -491,7 +751,6 @@ def main() -> int:
         conn_check.close()
 
     verified_index_corrections = load_verified_project_mention_index_corrections()
-
     n_docs_con_correccion_de_menciones = 0
     n_docs_con_correccion_de_nombre_no_aplicada_al_registry = sum(
         1 for c in sol_corrections.values() if c["nombre_proyecto_corregido"] is not None
@@ -511,12 +770,20 @@ def main() -> int:
             ]
             n_docs_con_correccion_de_menciones += 1
 
+    reject_descriptive_project_identity_collisions(enrichment_records, descriptive_project_mentions)
     n_menciones_con_indice_verificado_corregido = apply_verified_project_mention_index_corrections(
         enrichment_records, verified_index_corrections
     )
 
     projects, mention_lookup = build_project_registry(enrichment_records)
     review_candidates = find_review_candidates(projects)
+
+    # Toda validación semántica que puede rechazar la construcción ocurre antes
+    # de copiar sobre la salida previa. En particular, una colisión de identidad
+    # descriptiva no debe destruir ni reemplazar el warehouse existente.
+    OUTPUT_WAREHOUSE.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(SOURCE_WAREHOUSE, OUTPUT_WAREHOUSE)
+    conn = sqlite3.connect(OUTPUT_WAREHOUSE)
 
     conn.executescript("""
         DROP TABLE IF EXISTS project_relation;
@@ -525,6 +792,7 @@ def main() -> int:
         DROP TABLE IF EXISTS project_mention_resolved;
         DROP TABLE IF EXISTS project_review_queue;
         DROP TABLE IF EXISTS actor_event_project_link;
+        DROP TABLE IF EXISTS descriptive_project_reference;
 
         CREATE TABLE project (
             project_id TEXT PRIMARY KEY,
@@ -576,6 +844,7 @@ def main() -> int:
         "INSERT INTO project_review_queue (project_id_a, canonical_name_a, project_id_b, canonical_name_b, reason) VALUES (?,?,?,?,?)",
         [(c["project_id_a"], c["canonical_name_a"], c["project_id_b"], c["canonical_name_b"], c["reason"]) for c in review_candidates],
     )
+    n_descriptive_project_references = persist_descriptive_project_mentions(conn, descriptive_project_mentions)
 
     doc_project_ids: dict[str, set[str]] = {}
     for (doc_id, _raw), pid in mention_lookup.items():
@@ -687,6 +956,7 @@ def main() -> int:
         "n_projects": len(projects),
         "n_project_mentions_resolved": len(mention_lookup),
         "n_review_candidates": len(review_candidates),
+        "n_descriptive_project_references_identity_unresolved": n_descriptive_project_references,
         "n_links_total": len(link_rows),
         "resolution_status_counts": status_counts,
         "vistas_analiticas": {

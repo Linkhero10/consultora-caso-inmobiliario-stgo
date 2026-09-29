@@ -1,0 +1,755 @@
+{
+  "schema_version": "historical_case_reference_preflight_v1",
+  "run_id": "2026-09-29T01:00:05.200436+00:00",
+  "status": "conflict_build_completed",
+  "policy": {
+    "topology_blocking_relations": [
+      "conflictos_distintos",
+      "mismo_conflicto"
+    ],
+    "preserve_without_alias": [
+      "contextual",
+      "focal",
+      "mismo_proyecto"
+    ],
+    "unknown_relation_types": "fail_closed"
+  },
+  "source_hashes": {
+    "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
+    "warehouse_file_sha256": "2432703b6f312cf368a1d621c6c3c70f55c04aaf37b13ce604d7ffbf2488d52a",
+    "preflight_script_sha256": "82bf139ff9119138346e150cd4c2e5b48c98da7179039f05a0c40bda3977b031"
+  },
+  "n_unresolved_ids": 29,
+  "n_topology_blockers": 0,
+  "n_preserved_non_topological_ids": 29,
+  "unsupported_relations": [],
+  "topology_blockers": [],
+  "preserved_references": [
+    {
+      "historical_case_id": "0cd234833ec6a07e68f905c1",
+      "resolved_case_id": "0cd234833ec6a07e68f905c1",
+      "canonical_names": [
+        "Población Oscar Heiremans"
+      ],
+      "occurrences": [
+        {
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "0cd234833ec6a07e68f905c1",
+            "7a0f4d45e4ac84c430b0bc49"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    },
+    {
+      "historical_case_id": "0d5398db0f9609d950f507e7",
+      "resolved_case_id": "0d5398db0f9609d950f507e7",
+      "canonical_names": [
+        "Costanera Center"
+      ],
+      "occurrences": [
+        {
+          "document_id": "4ff897052e01ad8510fda07459b38cdfa5b1bdcd43e453c751ad2b1443b9ff83",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "0d5398db0f9609d950f507e7"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "2e1f63f764e3f9bddcc89bf4",
+      "resolved_case_id": "2e1f63f764e3f9bddcc89bf4",
+      "canonical_names": [
+        "Roberto del Río 1641"
+      ],
+      "occurrences": [
+        {
+          "document_id": "aca5f3a115e4e590d1b004005544952791afb942548aee08273c503399a360ab",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "2e1f63f764e3f9bddcc89bf4"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "34dfed845b909bed9ca77737",
+      "resolved_case_id": "34dfed845b909bed9ca77737",
+      "canonical_names": [
+        "edificio de 14 pisos en Vicuña Mackenna 385"
+      ],
+      "occurrences": [
+        {
+          "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "34dfed845b909bed9ca77737",
+            "f7d6ad8c044247d2be5e72c1"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "37cb2f39ea187d449ba42e50",
+      "resolved_case_id": "37cb2f39ea187d449ba42e50",
+      "canonical_names": [
+        "Proyecto Solar Lampa"
+      ],
+      "occurrences": [
+        {
+          "document_id": "5de9bf8c934fe3ef2939b6e24b026344128196f25b94930eef37c355749edf9e",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "0af3d8225fe80a4d513f1f3b",
+            "37cb2f39ea187d449ba42e50"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "3b16f0ad34bb2713a609fe6f",
+      "resolved_case_id": "3b16f0ad34bb2713a609fe6f",
+      "canonical_names": [
+        "cuatro megaedificios ubicados en calle Toro Mazotte"
+      ],
+      "occurrences": [
+        {
+          "document_id": "b3285315e92b4c7b946eaf2aa6c1a59e51f62414ffd5ef7b5463652b7a6e169b",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "3b16f0ad34bb2713a609fe6f"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "3b90fc14060c12f4a8e25636",
+      "resolved_case_id": "3b90fc14060c12f4a8e25636",
+      "canonical_names": [
+        "Centro Integral de Gestión de Residuos Industriales"
+      ],
+      "occurrences": [
+        {
+          "document_id": "0d95504e340fa551ed899638deb65b6a00626ac983ba4a46fb0766cce094246e",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "3b90fc14060c12f4a8e25636"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "3bbef574de08d7dcb2b3dc93",
+      "resolved_case_id": "3bbef574de08d7dcb2b3dc93",
+      "canonical_names": [
+        "centro de datos de Amazon"
+      ],
+      "occurrences": [
+        {
+          "document_id": "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "3bbef574de08d7dcb2b3dc93"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "3d04b66e52ea67a48a5d7394",
+      "resolved_case_id": "3d04b66e52ea67a48a5d7394",
+      "canonical_names": [
+        "Barrio Las Rejas"
+      ],
+      "occurrences": [
+        {
+          "document_id": "1410ad1368098950b59f745acbe939bbc9493c6ad1006600c452676e6e3cdf32",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "3d04b66e52ea67a48a5d7394"
+          ],
+          "impact_scope": "document_conflict_membership"
+        },
+        {
+          "document_id": "8271ad5019e63a746b9f2eb978404459386ed1206057a30659b38f9b12dbe68a",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "3d04b66e52ea67a48a5d7394"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "3f82a8828b9a9087546ada2e",
+      "resolved_case_id": "3f82a8828b9a9087546ada2e",
+      "canonical_names": [
+        "anteproyecto que consideraba la construcción de siete edificios en el lugar"
+      ],
+      "occurrences": [
+        {
+          "document_id": "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "3f82a8828b9a9087546ada2e",
+            "d8f164a032cd123a395453f1"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "506de01b09f335809ac2221a",
+      "resolved_case_id": "506de01b09f335809ac2221a",
+      "canonical_names": [
+        "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480"
+      ],
+      "occurrences": [
+        {
+          "document_id": "b3285315e92b4c7b946eaf2aa6c1a59e51f62414ffd5ef7b5463652b7a6e169b",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "506de01b09f335809ac2221a"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "5340a1321178040659239c2d",
+      "resolved_case_id": "5340a1321178040659239c2d",
+      "canonical_names": [
+        "Juanita Aguirre"
+      ],
+      "occurrences": [
+        {
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5340a1321178040659239c2d",
+            "b5984a0245ab4bc8418035fb",
+            "d00e8de640419e0204314b6c"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "5e91790271617be16fba1bec",
+      "resolved_case_id": "5e91790271617be16fba1bec",
+      "canonical_names": [
+        "iniciativa en La Reina"
+      ],
+      "occurrences": [
+        {
+          "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5e91790271617be16fba1bec",
+            "b14877c02c904926dcbdcc9b"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "5fd6d26afc0da9705016abeb",
+      "resolved_case_id": "5fd6d26afc0da9705016abeb",
+      "canonical_names": [
+        "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "Vital Apoquindo números 1.400, 1450 y 1.500",
+        "proyecto de 25 edificios en la calle Vital Apoquindo"
+      ],
+      "occurrences": [
+        {
+          "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "5fd6d26afc0da9705016abeb"
+          ],
+          "impact_scope": "document_conflict_membership"
+        },
+        {
+          "document_id": "c7c413b9a43566d9c64d96503977e1b3f32dda2638c3484ee2c3b17a20bb1ca5",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "5fd6d26afc0da9705016abeb"
+          ],
+          "impact_scope": "document_conflict_membership"
+        },
+        {
+          "document_id": "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5fd6d26afc0da9705016abeb",
+            "cc2300e4021749f70a0516c4"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "7a0f4d45e4ac84c430b0bc49",
+      "resolved_case_id": "7a0f4d45e4ac84c430b0bc49",
+      "canonical_names": [
+        "Cooperativa de Viviendas Oscar Heiremans"
+      ],
+      "occurrences": [
+        {
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "0cd234833ec6a07e68f905c1",
+            "7a0f4d45e4ac84c430b0bc49"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    },
+    {
+      "historical_case_id": "8efd4a4bbd70a38291e41ef8",
+      "resolved_case_id": "8efd4a4bbd70a38291e41ef8",
+      "canonical_names": [
+        "proyecto que impulsa la inmobiliaria Nueva El Golf"
+      ],
+      "occurrences": [
+        {
+          "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "8efd4a4bbd70a38291e41ef8"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "a05fdf045aeb8721bd7664b4",
+      "resolved_case_id": "a05fdf045aeb8721bd7664b4",
+      "canonical_names": [
+        "Alto Norte"
+      ],
+      "occurrences": [
+        {
+          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+          "relation": "mismo_proyecto",
+          "project_relation": "alias",
+          "case_ids": [
+            "5f33de46702f3740e762506d",
+            "a05fdf045aeb8721bd7664b4"
+          ],
+          "impact_scope": "project_identity_not_resolved"
+        }
+      ],
+      "impact_scopes": [
+        "project_identity_not_resolved"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "project_identity_not_resolved"
+    },
+    {
+      "historical_case_id": "a12b4664006ea0eb9aa21fbe",
+      "resolved_case_id": "a12b4664006ea0eb9aa21fbe",
+      "canonical_names": [
+        "nuevo Hospital del Salvador"
+      ],
+      "occurrences": [
+        {
+          "document_id": "f130cab02ead055e6189f232e4f885018d218895763a6f0b1c374a4f4e7c478e",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "a12b4664006ea0eb9aa21fbe"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "a276e5326758970075e057b5",
+      "resolved_case_id": "a276e5326758970075e057b5",
+      "canonical_names": [
+        "nuevo edificio institucional de la CCHC"
+      ],
+      "occurrences": [
+        {
+          "document_id": "f995b44acc5fc0ad37e9d865a8f031285dc682cbe4a9439516106d8f6eeabdd8",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "a276e5326758970075e057b5"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "a7b2129265f4580e899395bd",
+      "resolved_case_id": "a7b2129265f4580e899395bd",
+      "canonical_names": [
+        "PE N° 156 de 2015"
+      ],
+      "occurrences": [
+        {
+          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "a7b2129265f4580e899395bd",
+            "e7956ee9f4bb03683f70b454"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    },
+    {
+      "historical_case_id": "b14877c02c904926dcbdcc9b",
+      "resolved_case_id": "b14877c02c904926dcbdcc9b",
+      "canonical_names": [
+        "soluciones habitacionales en La Dehesa"
+      ],
+      "occurrences": [
+        {
+          "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5e91790271617be16fba1bec",
+            "b14877c02c904926dcbdcc9b"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "b195d7c038b7418fa163a104",
+      "resolved_case_id": "b195d7c038b7418fa163a104",
+      "canonical_names": [
+        "centro de datos de 200 millones de dólares en Cerrillos"
+      ],
+      "occurrences": [
+        {
+          "document_id": "e6750f62493466fb2c0c4fffb4b8000a3216746a56caaca0f690b103720faa1b",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "b195d7c038b7418fa163a104"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "b5984a0245ab4bc8418035fb",
+      "resolved_case_id": "b5984a0245ab4bc8418035fb",
+      "canonical_names": [
+        "La Granja"
+      ],
+      "occurrences": [
+        {
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5340a1321178040659239c2d",
+            "b5984a0245ab4bc8418035fb",
+            "d00e8de640419e0204314b6c"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "c73555c14aa1c7d4b560979b",
+      "resolved_case_id": "c73555c14aa1c7d4b560979b",
+      "canonical_names": [
+        "proyecto que levantará donde actualmente están las instalaciones de la Universidad Gabriela Mistral (UGM)"
+      ],
+      "occurrences": [
+        {
+          "document_id": "1633abde743b7b41011734248fe9239ba277a89b08e897a95357cf53f459dcf5",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "c73555c14aa1c7d4b560979b"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "d00e8de640419e0204314b6c",
+      "resolved_case_id": "d00e8de640419e0204314b6c",
+      "canonical_names": [
+        "Punta de Diamantes"
+      ],
+      "occurrences": [
+        {
+          "document_id": "53d841919ece674227e535c0ff691fc93ee2733cc62721f5ad6a3351cfdfccb0",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "5340a1321178040659239c2d",
+            "b5984a0245ab4bc8418035fb",
+            "d00e8de640419e0204314b6c"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "e7956ee9f4bb03683f70b454",
+      "resolved_case_id": "e7956ee9f4bb03683f70b454",
+      "canonical_names": [
+        "PE N° 88 de 2016"
+      ],
+      "occurrences": [
+        {
+          "document_id": "2bcfa41950f649c80b3da25424971450930e94afdc715837867a718f6a575234",
+          "relation": "mismo_conflicto",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "a7b2129265f4580e899395bd",
+            "e7956ee9f4bb03683f70b454"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    },
+    {
+      "historical_case_id": "f209ef28bb3a37881a979990",
+      "resolved_case_id": "f209ef28bb3a37881a979990",
+      "canonical_names": [
+        "proyecto en calle Cerro Colorado"
+      ],
+      "occurrences": [
+        {
+          "document_id": "86d8ed7fd4c70ebe06965c02a7612d7a1e0a62cf17678212eb22c6dc94f89bd3",
+          "relation": "focal",
+          "project_relation": null,
+          "case_ids": [
+            "f209ef28bb3a37881a979990"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "f7d6ad8c044247d2be5e72c1",
+      "resolved_case_id": "f7d6ad8c044247d2be5e72c1",
+      "canonical_names": [
+        "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos"
+      ],
+      "occurrences": [
+        {
+          "document_id": "880723ac15474073756beaa524919e71d2c8e214ef8d39461e1a7f18c1797523",
+          "relation": "contextual",
+          "project_relation": "contextual",
+          "case_ids": [
+            "34dfed845b909bed9ca77737",
+            "f7d6ad8c044247d2be5e72c1"
+          ],
+          "impact_scope": "document_conflict_membership"
+        }
+      ],
+      "impact_scopes": [
+        "document_conflict_membership"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "document_conflict_membership"
+    },
+    {
+      "historical_case_id": "f98c6a44db6a2c8187d959b9",
+      "resolved_case_id": "f98c6a44db6a2c8187d959b9",
+      "canonical_names": [
+        "Villa Francia"
+      ],
+      "occurrences": [
+        {
+          "document_id": "2f8d68a763424a1a260b77244ff266655c36acb93e926b1f6bf2d68b3cfdb2a8",
+          "relation": "conflictos_distintos",
+          "project_relation": "distinct_conflict_objects",
+          "case_ids": [
+            "c9b912b6e9278401f77f49cd",
+            "f98c6a44db6a2c8187d959b9"
+          ],
+          "impact_scope": "confirmed_non_resolvable_historical_reference"
+        }
+      ],
+      "impact_scopes": [
+        "confirmed_non_resolvable_historical_reference"
+      ],
+      "topology_blocking": false,
+      "impact_scope": "confirmed_non_resolvable_historical_reference"
+    }
+  ],
+  "publication_note": "Una preflight que bloquea no modifica tablas ni sustituye el reporte de una build exitosa. Las referencias no topológicas quedan preservadas en una tabla separada en una build futura; no se proyectan como project_id, case_id ni conflict_id.",
+  "n_confirmed_non_resolvable_historical_references": 5,
+  "project_identity_review_gate": {
+    "status": "clear",
+    "policy": "cada par PROJECT sin decisión final bloquea la reconstrucción integral de CONFLICT",
+    "n_unresolved_pairs": 0,
+    "unresolved_pairs": []
+  },
+  "completed_conflict_topology_sha256": "82ab86fc55014c12a15435cedbf44ebccfd9e57caff9aee6bcabb6c3aebeb39d",
+  "completed_warehouse_sha256": "a8355bc3fc4e8905a534c10ebaa43f36d37e0a214b6f57beaae4d18a14bb5870",
+  "completed_audit_report_sha256": "4dec29d55a07c0afa263a865a45767399e4b908b7c03db88fafcb2bafd78d690"
+}

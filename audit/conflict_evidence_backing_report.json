@@ -5,21 +5,23 @@
   "projects_total": 941,
   "projects_with_backing": 572,
   "projects_without_backing": 369,
-  "conflicts_total": 833,
-  "trivial_conflicts_total": 819,
-  "trivial_conflicts_without_backing": 331,
-  "conflicts_with_backing": 502,
-  "conflicts_without_backing": 331,
+  "conflicts_total": 817,
+  "trivial_conflicts_total": 802,
+  "trivial_conflicts_without_backing": 330,
+  "conflicts_with_backing": 487,
+  "conflicts_without_backing": 330,
   "backing_rows": 1717,
   "backing_rows_detected_raw": 1721,
   "backing_rows_persisted": 1717,
   "backing_rows_deduplicated": 4,
   "coverage_backing": {
-    "total": 473,
-    "parcial": 29,
-    "ninguna": 331
+    "total": 460,
+    "parcial": 27,
+    "ninguna": 330
   },
   "conflicts_with_ambiguous_multi_case_backing": 0,
+  "conflicts_with_mixed_duplicate_group_backing": 1,
+  "backing_rows_via_mixed_duplicate_group_decision": 4,
   "calibration_n": 150,
   "calibration_error_grave": {
     "tp": 49,
@@ -50,9 +52,11 @@
   },
   "conflicts_with_backing_by_detector": {
     "exact_substring_v1": 0,
-    "v3_3_verified_index": 502,
+    "v3_3_verified_index": 487,
     "ambos": 0
   },
   "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
-  "warehouse_sha256": "887d0c781371bd9fc5084db9e9c0ae4497421757a1fa1b4caf427aeea8b286ac"
+  "warehouse_sha256": "a8355bc3fc4e8905a534c10ebaa43f36d37e0a214b6f57beaae4d18a14bb5870",
+  "sqlite_journal_mode": "delete",
+  "wal_checkpoint": null
 }
