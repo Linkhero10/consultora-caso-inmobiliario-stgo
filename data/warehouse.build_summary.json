@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-29T00:59:15.883734+00:00",
+  "built_at": "2026-09-29T04:11:01.035065+00:00",
   "output_warehouse": "data\\warehouse.sqlite",
   "n_projects": 941,
   "n_project_mentions_resolved": 1267,
@@ -15,11 +15,11 @@
   },
   "vistas_analiticas": {
     "actor_event_project_link_case_safe": {
-      "n_links": 2119,
+      "n_links": 2090,
       "filtro": "unidad_caso_tipo='caso_unico' AND resolution_status='resolved_explicit'"
     },
     "actor_event_project_link_include_inferred": {
-      "n_links": 7950,
+      "n_links": 7921,
       "filtro": "unidad_caso_tipo='caso_unico' AND resolution_status IN ('resolved_explicit','inferred_single_project')"
     }
   },
@@ -29,8 +29,8 @@
     "n_documentos_con_correccion_de_proyectos_mencionados_aplicada": 9,
     "n_documentos_con_correccion_de_nombre_proyecto_preservada_no_aplicada": 21,
     "unidad_caso_tipo_counts": {
-      "multiples_casos_documentados": 45,
-      "caso_unico": 747,
+      "multiples_casos_documentados": 46,
+      "caso_unico": 746,
       "caso_focal_fuera_del_universo": 9,
       "documento_comparativo_panoramico": 86,
       "contexto_sin_caso_individualizable": 47

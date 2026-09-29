@@ -46,6 +46,18 @@ Dos fusiones heredadas por nombre contradecían las fuentes y bloqueaban el cier
 - Los tres `insufficient_evidence` no están demostrados como distintos ni como iguales; reabrir cada uno requiere el dato indicado en su rationale.
 - No se re-auditó fuente por fuente el resto de las 256 decisiones; solo los 8 pares y las dos reversiones legacy.
 - Las fuentes web externas (Wikipedia, Absal, SMA) se consultaron por búsqueda, sin guardar copia local con hash.
-- Sigue abierta 1 relación de conflicto `pending_human_decision` (Población La Victoria) y 29 referencias históricas preservadas sin alias, 5 de ellas confirmadas como no resolubles. Ninguna bloquea la publicación por diseño.
+- Población La Victoria se cerró después, ver addendum. Siguen 29 referencias históricas preservadas sin alias, 5 de ellas confirmadas como no resolubles. Ninguna bloquea la publicación por diseño.
 - El substring-reconnection (`_manual_decision_via_normalized_substring`) no se rediseñó.
 - Producción: el warehouse, el dashboard y el manifiesto solo cambian en `main` cuando se fusione el PR #1.
+
+## Addendum — Población La Victoria (2026-09-29)
+
+La relación `same_document_distinct_conflicts` de Población La Victoria / Rancagua Express estaba `pending_human_decision` porque el documento (`34c26e5a...`) figuraba como `caso_unico`. Es un artículo académico (Revista Austral de Urbanismo, UACh) que recorre la historia de un solo asentamiento y desarrolla, con fechas y actores propios, la formación (1957), la regularización, las protestas contra el Plan Regulador de Pedro Aguirre Cerda (2005-2006) y contra el proyecto del tren a Rancagua (2012-2014).
+
+**Decisión:** el documento pasa a `multiples_casos_documentados`. Con la definición operativa del pipeline (CONFLICT = grupo de `case_id` unidos por `mismo_conflicto`; `conflictos_distintos` = objetos que no se fusionan), son conflictos distintos unidos por territorio y actor colectivo. No es panorámico (cada episodio se desarrolla) ni caso único. La trayectoria común queda registrada como relación entre conflictos, sin fusionar; la relación pasa a `resolved_keep_separate`.
+
+**Mecanismo:** `config/document_case_unit_decisions_v1.json`, aplicado en `build_enrichment_tables.py` de forma idempotente, con cita literal verificada por test contra el fulltext y sin sobrescribir una corrección distinta a la esperada. El pin `source_warehouse_sha256` del baseline se actualizó al hash reproducible desde el warehouse committeado.
+
+**Efectos medidos:** relaciones pendientes 1 → 0; conflictos siguen en 817; `n_actores_caida_solo_por_gate_documental` 67 → 66 porque los vínculos de actor del documento salen de la vista `case_safe`.
+
+**No se hizo:** los dos `document_conflict` del documento conservan el rol `panoramic_mention` que fijó la relación de Sol, así que siguen fuera de las vistas `safe` y de la red de actores. Incluir a La Victoria en la red exigiría adjudicar como `focal` el conflicto de Población La Victoria; no se hizo.

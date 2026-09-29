@@ -56,7 +56,7 @@
     "ambos": 0
   },
   "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
-  "warehouse_sha256": "a8355bc3fc4e8905a534c10ebaa43f36d37e0a214b6f57beaae4d18a14bb5870",
+  "warehouse_sha256": "be76c03639274c6be922b7618cf55fd6cc3845261260353d9d0d6ada3ae8c569",
   "sqlite_journal_mode": "delete",
   "wal_checkpoint": null
 }

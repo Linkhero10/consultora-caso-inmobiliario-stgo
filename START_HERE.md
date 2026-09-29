@@ -32,8 +32,8 @@ Dehesa exChaguay, las torres junto al Hotel Sheraton, el proyecto Bellavista de 
 separados **sin afirmar que sean objetos distintos**; cada uno documenta la evidencia que lo
 reabriría. Además se revirtieron dos fusiones legacy por nombre contradichas por las fuentes.
 Quedan 29 referencias históricas sin destino preservadas sin alias forzado (5 confirmadas como no
-resolubles), y 1 relación de conflicto `pending_human_decision` (Población La Victoria) que es
-una decisión de la capa de relaciones, no de identidad PROJECT.
+resolubles). La relación de conflicto de Población La Victoria se cerró el 2026-09-29
+(`resolved_keep_separate`; ver [decisión versionada](config/document_case_unit_decisions_v1.json)).
 Consulta el [cierre de identidad](audit/project_identity_closure_2026-09-29.md), el
 [overlay v3](audit/project_identity_adjudication_overrides_2026-09-28_v3.json) y el
 [checkpoint previo](audit/project_identity_resolution_checkpoint_2026-09-28.md). La

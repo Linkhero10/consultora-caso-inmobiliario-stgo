@@ -701,5 +701,18 @@
       "El mecanismo de reconexion por subcadena no se redisenio."
     ],
     "status": "cerrado en rama; no promovido a main hasta fusionar el PR #1"
+  },
+  "poblacion_la_victoria_gate_closed_2026-09-29": {
+    "fecha": "2026-09-29",
+    "documento": "audit/project_identity_closure_2026-09-29.md (addendum)",
+    "decision": "document 34c26e5a... pasa de caso_unico a multiples_casos_documentados; conflict_relation resolved_keep_separate",
+    "config": "config/document_case_unit_decisions_v1.json",
+    "efectos": {
+      "relaciones_pendientes": "1 -> 0",
+      "conflictos": 817,
+      "actores_caida_solo_por_gate_documental": "67 -> 66"
+    },
+    "no_hecho": "roles panoramic_mention de los dos document_conflict no se readjudicaron; La Victoria sigue fuera de las vistas safe y de la red de actores",
+    "tests": "358 passed, 1 skipped (excluido tests/test_blind_review_html.py)"
   }
 }

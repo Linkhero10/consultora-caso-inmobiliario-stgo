@@ -199,3 +199,82 @@ def test_build_database_against_real_v3_3_corpus_end_to_end():
         conn.close()
         assert total > 0
         assert 0 < with_index <= total
+
+
+# --- decisiones versionadas sobre document_case_unit (2026-09-29) ---
+
+import json  # noqa: E402
+import re  # noqa: E402
+
+import pytest  # noqa: E402
+
+
+def _case_unit_conn(previous="caso_unico", nota=None):
+    conn = sqlite3.connect(":memory:")
+    conn.execute(
+        "CREATE TABLE document_case_unit (document_id TEXT PRIMARY KEY, unidad_caso_tipo TEXT, nota_sol TEXT, revisado_por TEXT)"
+    )
+    conn.execute("INSERT INTO document_case_unit VALUES ('d1', ?, ?, 'Sol')", (previous, nota))
+    return conn
+
+
+def _decision(**overrides):
+    item = {
+        "document_id": "d1",
+        "expected_previous_unidad_caso_tipo": "caso_unico",
+        "unidad_caso_tipo": "multiples_casos_documentados",
+        "decided_on": "2026-09-29",
+        "decided_by": "test",
+        "source_url": "https://example.com",
+        "quote": "q",
+        "nota": "n",
+    }
+    item.update(overrides)
+    return item
+
+
+def test_case_unit_decision_applies_once_and_is_idempotent():
+    conn = _case_unit_conn(nota="nota previa")
+    assert et.apply_document_case_unit_decisions(conn, [_decision()]) == 1
+    row = conn.execute("SELECT unidad_caso_tipo, nota_sol, revisado_por FROM document_case_unit").fetchone()
+    assert row[0] == "multiples_casos_documentados"
+    assert row[1].startswith("nota previa | ")
+    assert row[2] == "decision_versionada_2026-09-29"
+    assert et.apply_document_case_unit_decisions(conn, [_decision()]) == 0
+
+
+def test_case_unit_decision_refuses_to_overwrite_a_different_correction():
+    conn = _case_unit_conn(previous="documento_comparativo_panoramico")
+    with pytest.raises(ValueError, match="se esperaba"):
+        et.apply_document_case_unit_decisions(conn, [_decision()])
+    assert conn.execute("SELECT unidad_caso_tipo FROM document_case_unit").fetchone()[0] == "documento_comparativo_panoramico"
+
+
+def test_case_unit_decision_fails_closed_on_missing_document_and_bad_config(tmp_path):
+    with pytest.raises(ValueError, match="no encontrado"):
+        et.apply_document_case_unit_decisions(_case_unit_conn(), [_decision(document_id="nope")])
+    bad = tmp_path / "d.json"
+    bad.write_text(json.dumps({"schema_version": "document_case_unit_decisions_v1", "decisions": [_decision(unidad_caso_tipo="inventado")]}))
+    with pytest.raises(ValueError, match="no permitido"):
+        et.load_document_case_unit_decisions(bad)
+    bad.write_text(json.dumps({"schema_version": "document_case_unit_decisions_v1", "decisions": [_decision(quote="")]}))
+    with pytest.raises(ValueError, match="quote"):
+        et.load_document_case_unit_decisions(bad)
+
+
+def test_real_case_unit_decision_quote_is_literal_in_the_source_fulltext():
+    decisions = et.load_document_case_unit_decisions(et.DOCUMENT_CASE_UNIT_DECISIONS_PATH)
+    assert [d["document_id"] for d in decisions] == [
+        "34c26e5aaf4f48a74d16ad587a7b0384cb459c157714e592725284560dea1ce9"
+    ]
+    content_root = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+    if not content_root.exists():
+        pytest.skip("fulltext local no disponible en este entorno")
+    target = decisions[0]
+    for path in content_root.glob("*.json"):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if record.get("url") == target["source_url"]:
+            squash = lambda s: re.sub(r"\s+", " ", s)
+            assert squash(target["quote"]) in squash(record["text"])
+            return
+    pytest.fail("no se encontro el fulltext de la fuente citada")

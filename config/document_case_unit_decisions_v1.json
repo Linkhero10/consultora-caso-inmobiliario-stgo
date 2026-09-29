@@ -1,0 +1,16 @@
+{
+  "schema_version": "document_case_unit_decisions_v1",
+  "description": "Decisiones explicitas y versionadas sobre document_case_unit.unidad_caso_tipo que se reaplican en cada reconstruccion de las tablas enrichment_*. No sustituyen las correcciones de Sol: solo cierran pendientes que ella dejo expresamente para revision humana.",
+  "decisions": [
+    {
+      "document_id": "34c26e5aaf4f48a74d16ad587a7b0384cb459c157714e592725284560dea1ce9",
+      "expected_previous_unidad_caso_tipo": "caso_unico",
+      "unidad_caso_tipo": "multiples_casos_documentados",
+      "decided_on": "2026-09-29",
+      "decided_by": "Claude (claude-sonnet-5-5), a pedido de Felipe",
+      "source_url": "http://revistas.uach.cl/pdf/aus/n15/art08.pdf",
+      "quote": "se analizan tres momentos: la formación del asentamiento en 1957, mediante una toma de terreno; el proceso de consolidación física y de regularización legal en los años siguientes; las protestas contra el plan regulador de Pedro Aguirre Cerda (2005-2006) y contra el proyecto del tren rápido a Rancagua (2012-2014)",
+      "nota": "Cierra el pendiente humano de apply_conflict_unit_gate_decisions.py (Poblacion La Victoria / Rancagua Express). El articulo es una historia de un solo asentamiento que desarrolla, con fechas y actores propios, episodios distintos: el Plan Regulador de Pedro Aguirre Cerda (2005-2006) y el proyecto ferroviario a Rancagua (2012-2014). Con la definicion operativa vigente del pipeline (CONFLICT = grupo de case_id unidos por mismo_conflicto; conflictos_distintos = objetos que no se fusionan), son conflictos distintos unidos por territorio y actor colectivo: no es un documento panoramico (cada uno se desarrolla) ni un caso unico. La trayectoria comun se conserva como conflict_relation same_document_distinct_conflicts, sin fusionar. Los roles de document_conflict siguen siendo los que fijo la relacion de Sol (panoramic_mention): no se readjudico ninguno como focal."
+    }
+  ]
+}
