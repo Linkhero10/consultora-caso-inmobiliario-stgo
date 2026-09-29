@@ -310,6 +310,8 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("torre C del complejo Puerto de Palos", "Puerto de Palos"): (False, "torre especifica dentro del complejo mayor"),
     ("construcciones Antígona", "Antígona"): (True, "mismo proyecto, forma corta"),
     ("Lote 18", "Lote 18-A1"): (True, "mismo lote, sub-parcela especifica"),
+    ("Lote 18", "Lote 18-A"): (False, "[revision 2026-09-29, tras corregir la normalizacion que colapsaba Lote 18-A con Lote 18] La Tercera (2017) distingue 'todo el Lote 18' de 'la parte del Lote 18-A que controla' el Ejercito y que vendio en 2011 a la Inmobiliaria Lote 18; La Republica de los Libros (2017) llama Lote 18-A a la pequena parte de la villa con cuatro edificios que se pretende declarar monumento. Son granularidades distintas (lote completo vs. parte) y el uso de 'Lote 18' en la segunda fuente se solapa con el 18-A: relacion parte-todo, no identidad. Se mantienen separados; no se afirma que sean objetos independientes."),
+    ("Lote 18-A", "Lote 18-A1"): (False, "[revision 2026-09-29, tras corregir la normalizacion] La Tercera (2017) usa 'Lote 18-A' para la parte del lote que controlaba el Ejercito y vendio en 2011, y 'Lote 18-A1' para el lote que el Consejo de Monumentos Nacionales aprobo declarar Monumento Nacional ('del Lote 18-A1 del complejo'), tras una solicitud que pedia declarar el 'Lote 18'. El texto no dice que 18-A y 18-A1 sean el mismo terreno: A1 parece una sub-parcela especifica. Relacion parte-todo probable; se mantienen separados sin afirmar que sean objetos independientes."),
 
     # Segunda ronda: pares de las bolsas "insuficiente informacion de
     # ubicacion" y "sin traslape de comuna" -- revisados con nombre + dato

@@ -92,6 +92,15 @@
       "sol_justificacion": "El cementerio y el Teleferico Bicentenario son proyectos/objetos distintos, pero el recurso judicial surge precisamente por la interaccion entre ambos: el trazado del teleferico sobre el camposanto.",
       "source_document_id": "096dfcf463da497534abddf2d4142891773942890e95335aa0689d8f15647eb1",
       "additional_source_document_id": "27edd56a7c56e8d0cb6f11a89cbeb92387cd92a4dba40097a867fd3a5768814f"
+    },
+    {
+      "historical_case_id": "23c289bbc0d09a3d0b71a6aa",
+      "canonical_name": "Lote 18-A1",
+      "resolved_case_id": "124a6f29f9096a46e6117ed7",
+      "resolved_via": "[2026-09-29] El project_id 23c289bb... ('Lote 18-A1') cambio de identificador (e08d8d72...) al corregir normalize_project_name para no colapsar el sufijo de letra pegado por guion a un numero. La decision legacy ('Lote 18', 'Lote 18-A1') lo mantiene en el case_id 124a6f29... (Lote 18), que es el grupo que Sol ligo como mismo_conflicto/parent_subproject; solo se repara el destino del alias historico.",
+      "sol_clasificacion": "A",
+      "sol_justificacion": "Lote 18/Lote 18-A1 es una subdivisión/componente físico de Villa San Luis y la disputa por demolición, torres y declaratoria patrimonial forma una misma controversia.",
+      "source_document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b"
     }
   ],
   "non_resolvable": [

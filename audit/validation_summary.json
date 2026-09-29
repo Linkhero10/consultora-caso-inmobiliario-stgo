@@ -754,5 +754,30 @@
       "audit/project_identity_closure_2026-09-29.md (addendum v4)",
       "audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json"
     ]
+  },
+  "lote_18_normalization_fix_2026-09-29": {
+    "fecha": "2026-09-29",
+    "origen": "auditoria de huecos de Luna (audit-open-data-gaps), hallazgo de riesgo alto",
+    "cambio": "normalize_project_name conserva el sufijo de letra pegado por guion a un numero (Lote 18-A -> lote 18a)",
+    "nombres_afectados": [
+      "Lote 18-A",
+      "Lote 18-A1"
+    ],
+    "decisiones": {
+      "Lote 18 / Lote 18-A": "kept_separate (parte-todo)",
+      "Lote 18-A / Lote 18-A1": "kept_separate",
+      "Lote 18 / Lote 18-A1": "merged heredada, no auditada"
+    },
+    "efectos": {
+      "proyectos": "941 -> 942",
+      "case_id": "834 -> 835",
+      "conflictos": "816 -> 817",
+      "cola": "256 -> 258",
+      "merged": 119,
+      "kept_separate": 139
+    },
+    "alias_historico_agregado": "23c289bbc0d09a3d0b71a6aa -> 124a6f29f9096a46e6117ed7",
+    "warehouse_sha256": "33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc",
+    "tests": "361 passed, 1 skipped (excluido tests/test_blind_review_html.py)"
   }
 }

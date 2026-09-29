@@ -1032,7 +1032,9 @@ def test_frozen_68_identity_adjudications_keep_pair_level_counts_and_evidence():
     # candidates(). El numero no es estable por diseno (el docstring de este
     # test ya lo advierte); lo que se verifica abajo (los 5 pares manuales
     # de Sol siguen presentes y decididos 'merged') es la proteccion real.
-    assert len(rows) == 256
+    # [ACTUALIZADO 2026-09-29] 256 -> 258: al no colapsar 'Lote 18-A' con 'Lote 18' la cola gana
+    # los pares (Lote 18, Lote 18-A) y (Lote 18-A, Lote 18-A1).
+    assert len(rows) == 258
 
     # find_review_candidates() ahora ignora en silencio (no lanza) un par de
     # MANUAL_EXTRA_REVIEW_PAIRS si el nombre no existe en el registro actual
@@ -1383,3 +1385,10 @@ def test_override_rejects_merge_without_high_confidence_or_for_insufficient_evid
         load_with(medium_merge)
     with pytest.raises(ValueError, match="must not merge or choose a canonical ID"):
         load_with(canonical_on_no_merge)
+
+
+def test_lote_18_family_is_kept_separate_by_explicit_decisions():
+    """[2026-09-29] Tras separar Lote 18-A de Lote 18, ambos pares nuevos quedan resueltos sin fusion."""
+    assert rpq.classify("Lote 18", "Lote 18-A")[0] is False
+    assert rpq.classify("Lote 18-A", "Lote 18-A1")[0] is False
+    assert rpq.classify("Lote 18", "Lote 18-A1")[0] is True

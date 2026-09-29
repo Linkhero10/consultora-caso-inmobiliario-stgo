@@ -776,3 +776,23 @@ def test_validate_source_warehouse_passes_against_real_current_source():
 
         pytest.skip("Auditoria/integracion_v1/warehouse_v3_2.sqlite no existe en este entorno (gitignorado)")
     bridge._validate_source_warehouse(bridge.SOURCE_WAREHOUSE)  # no debe lanzar
+
+
+def test_normalize_keeps_alphanumeric_lot_suffix_so_lote_18a_does_not_collapse_with_lote_18():
+    """[2026-09-29] La puntuacion separaba 'Lote 18-A' en 'lote 18 a' y 'a' cae como stopword: colapsaba con
+    'Lote 18' aunque las fuentes distinguen el lote completo de una parte. Un sufijo de letra pegado por
+    guion a un numero es parte del rotulo."""
+    n = bridge.normalize_project_name
+    assert n("Lote 18") == "lote 18"
+    assert n("Lote 18-A") == "lote 18a"
+    assert n("Lote 18-A") != n("Lote 18")
+    assert n("Lote 18-A1") == "lote 18a1"
+    assert n("Lote 18-A") != n("Lote 18-A1")
+
+
+def test_normalize_does_not_glue_hyphenated_ranges_or_spaced_letters():
+    n = bridge.normalize_project_name
+    assert n("Torres 15-20") == "torres 15 20"
+    assert n("calle Vital Apoquindo 1.400-1.450-1.500") == "calle vital apoquindo 1 400 1 450 1 500"
+    assert n("Villa Panamericana - Lote B") == "villa panamericana lote b"
+    assert n("Proyecto de Ley 2020 - a partir de hoy") == n("Ley 2020 a partir de hoy")
