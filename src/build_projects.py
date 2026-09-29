@@ -102,6 +102,9 @@ STOPWORDS = {"el", "la", "los", "las", "de", "del", "un", "una", "y", "en", "a",
 
 def normalize_project_name(name: str) -> str:
     n = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode("ascii").lower()
+    # Un sufijo de letra pegado por guion a un numero ("Lote 18-A") es parte del rotulo: sin esto la
+    # puntuacion lo separa y "a" cae como stopword, colapsando "Lote 18-A" con "Lote 18".
+    n = re.sub(r"(?<=\d)-([a-z])(?![a-z])", r"\1", n)
     n = re.sub(r"[^\w\s]", " ", n)
     tokens = [t for t in n.split() if t and t not in STOPWORDS]
     return " ".join(tokens)

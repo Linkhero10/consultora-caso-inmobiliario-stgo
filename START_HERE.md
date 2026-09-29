@@ -3,17 +3,23 @@
 Este archivo orienta la lectura del repositorio y da el estado del snapshot actual. Para el
 propósito, alcance y composición del corpus, sigue con el [README](README.md).
 
-## Estado actual — identidad de proyectos (2026-09-29)
+## Estado actual (2026-09-29)
 
-La cola revisada de identidad PROJECT conserva 256 pares: 119 fusionados, 137 mantenidos sin
-fusión y 0 abiertos. Recreo ↔ proyecto en calle Recreo se fusiona como misma identidad (par de IDs
-exactos, confianza alta, apoyado por SEA/MINVU y fuentes complementarias, overlay v4 de Luna); la
-elegibilidad de cada `case_mention` permanece independiente. Santa Petronila y Alto Las Condes
-siguen como `insufficient_evidence`: no se afirma que sean distintos, y se especifica qué dato
-permitiría reabrirlos. El warehouse, el dashboard y el manifiesto de la rama están reconstruidos
-con el overlay v4 (941 proyectos, 834 `case_id`, 816 conflictos, SHA-256 `53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08`); el
-resumen v3 de abajo queda superado en los conteos. Ver [acta](audit/project_identity_closure_2026-09-29.md) y
-[simulación v4](audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json).
+El warehouse publicado en `main` es la reconstrucción integral cerrada del 2026-09-29: 942
+proyectos, 835 `case_id`, 817 conflictos, SHA-256 `33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc`,
+`integrity_check=ok` y sin violaciones de FK. Cita siempre ese hash al usar los datos.
+
+**Identidad de proyectos.** La cola revisada tiene 258 pares: 119 fusionados, 139 mantenidos sin
+fusión y 0 abiertos. Recreo se fusiona con el proyecto de calle Recreo (overlay v4, confianza alta,
+apoyado por SEA/MINVU). Santa Petronila y Alto Las Condes siguen como `insufficient_evidence`: no se
+afirma que sean distintos y cada uno especifica qué dato permitiría reabrirlo. La normalización de
+nombres ya no colapsa `Lote 18-A` con `Lote 18` (el sufijo de letra pegado por guion a un número
+se conserva); ambos quedan separados como lote completo y parte.
+
+**Pendientes documentados, sin bloquear la publicación:** 29 referencias históricas preservadas sin
+alias (5 confirmadas como no resolubles), 329 conflictos sin respaldo de cita detectado (no significa
+conflicto falso) y 227 menciones sin `case_mention_index`. Ver [acta de cierre](audit/project_identity_closure_2026-09-29.md)
+y [resumen de validación](audit/validation_summary.json).
 
 ## Recorrido recomendado
 
@@ -25,32 +31,6 @@ resumen v3 de abajo queda superado en los conteos. Ver [acta](audit/project_iden
    para redes, institucionalidad y evidencia.
 5. [Resumen de validación](audit/validation_summary.json) y [calidad de datos](audit/data_quality_report.md):
    métricas, decisiones y límites de interpretación.
-
-## Estado — 2026-09-28
-
-El snapshot publicado en `main` sigue siendo `data/warehouse.sqlite`, SHA-256
-`378bf7d7686d676dfb1e08cb5c141a2e5bea29b943ad0de6ef4f58d0900c09db`: 941 proyectos, 850
-`case_id` y 833 conflictos. No representa una reconstrucción posterior a las adjudicaciones de
-identidad recientes.
-
-La rama `codex/historical-case-references` contiene la **reconstrucción integral cerrada** del
-2026-09-29, SHA-256 del warehouse `53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08`:
-941 proyectos, 834 `case_id` y 816 conflictos, con `integrity_check=ok` y sin violaciones de FK. La
-cola de identidad PROJECT (256 pares) quedó sin pares abiertos: 119 fusionados y 137 separados. Los
-8 pares que seguían abiertos se cerraron con evidencia de fuente: 3 fusiones (Chaguay/Reserva La
-Dehesa exChaguay, las torres junto al Hotel Sheraton, el proyecto Bellavista de DIB), 1 separación
-(Reserva La Dehesa del Cerro del Medio), 1 relación parte–todo (Costanera Center/Cenco Costanera) y
-3 casos `insufficient_evidence` (Santa Petronila, Recreo, Alto Las Condes), que se mantienen
-separados **sin afirmar que sean objetos distintos**; cada uno documenta la evidencia que lo
-reabriría. Además se revirtieron dos fusiones legacy por nombre contradichas por las fuentes.
-Quedan 29 referencias históricas sin destino preservadas sin alias forzado (5 confirmadas como no
-resolubles). La relación de conflicto de Población La Victoria se cerró el 2026-09-29
-(`resolved_keep_separate`; ver [decisión versionada](config/document_case_unit_decisions_v1.json)).
-Consulta el [cierre de identidad](audit/project_identity_closure_2026-09-29.md), el
-[overlay v3](audit/project_identity_adjudication_overrides_2026-09-28_v3.json) y el
-[checkpoint previo](audit/project_identity_resolution_checkpoint_2026-09-28.md). La
-[acta histórica del 27-09](audit/historical_case_identity_closure_2026-09-27.json) se conserva sin
-reescritura.
 
 “Sin respaldo detectado” no significa “conflicto falso”. Las métricas y los datos deben citarse
 con el hash del warehouse y sus limitaciones, especialmente durante el desarrollo de los tres

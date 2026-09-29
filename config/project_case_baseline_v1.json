@@ -1,10 +1,10 @@
 {
   "schema_version": "project_case_baseline_v1",
-  "generated_at_utc": "2026-09-28T11:30:03.467817+00:00",
-  "source_warehouse_sha256": "d38fab6990962b6af471b8152aaa7a3c86312c10795d4d8f3947db3e4aafd839",
-  "description": "Snapshot inmediatamente despues de build_projects.py, regenerado para aplicar los 17 merges de identidad (Luna, 68 pares) y los 15 IDs historicos (10 resueltos + 5 preservados). [2026-09-29] source_warehouse_sha256 corresponde al build_projects reproducible desde el warehouse committeado (build_enrichment_tables -> build_projects) tras la decision versionada de document_case_unit (La Victoria); el mapeo project_id->case_id y mapping_sha256 no cambian.",
-  "project_id_set_sha256": "153d2734e848778e865bbe918cd4364fbf59ec43006215b0d458ed34974e4c5c",
-  "mapping_sha256": "b67416a664b5541cb62c13e8fde32a40a0fee4f0ab0c967d4a50f3ef06a0af64",
+  "generated_at_utc": "2026-09-29T15:11:05.089643+00:00",
+  "source_warehouse_sha256": "7afbde8b005342e2f4814aec0b48dc2f95e5f0eae44207a7a5c4b10742e2e9ff",
+  "description": "Snapshot inmediatamente despues de build_projects.py, regenerado el 2026-09-29 tras corregir normalize_project_name (sufijo de letra pegado por guion a un numero, p. ej. Lote 18-A): 942 project_id. Cada project_id parte como su propio case_id. source_warehouse_sha256 es el build_projects reproducible desde el warehouse committeado.",
+  "project_id_set_sha256": "33d40cc0c46098e36bde703b95adeef2c4e332826aa18ac7e4bf19a91de04807",
+  "mapping_sha256": "6318aaf587a733ed4a3ff5fe0ead28b379bb9583bf57dd35cf98e893e7ba963c",
   "projects": [
     {
       "project_id": "002918e11ee16a0e8bcdeb05",
@@ -537,10 +537,6 @@
     {
       "project_id": "23c023265905c8308dce807f",
       "case_id": "23c023265905c8308dce807f"
-    },
-    {
-      "project_id": "23c289bbc0d09a3d0b71a6aa",
-      "case_id": "23c289bbc0d09a3d0b71a6aa"
     },
     {
       "project_id": "23d46d8eb98ed64f8896fb01",
@@ -2323,6 +2319,10 @@
       "case_id": "9ee8ce1998b0c98b9df9cada"
     },
     {
+      "project_id": "9f5f45af2e6cd94f4462deaf",
+      "case_id": "9f5f45af2e6cd94f4462deaf"
+    },
+    {
       "project_id": "9f724840c7e61b84047e96a7",
       "case_id": "9f724840c7e61b84047e96a7"
     },
@@ -3205,6 +3205,10 @@
     {
       "project_id": "e07c910e62bdf26c02a9bd36",
       "case_id": "e07c910e62bdf26c02a9bd36"
+    },
+    {
+      "project_id": "e08d8d722f8715dca74d33d8",
+      "case_id": "e08d8d722f8715dca74d33d8"
     },
     {
       "project_id": "e100d2900ffdc0e5a4c3ea82",

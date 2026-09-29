@@ -121,7 +121,9 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     # [ACTUALIZADO 2026-09-29] 67 -> 66: el documento de Poblacion La Victoria salio del gate
     # caso_unico (decision versionada, multiples_casos_documentados) y sus vinculos de actor dejan la
     # vista case_safe; un actor menos cae solo por el gate documental.
-    assert dec["n_actores_caida_solo_por_gate_documental"] == 66
+    # [ACTUALIZADO 2026-09-29] 66 -> 67: 'Lote 18-A' pasa a ser un proyecto propio (normalizacion
+    # corregida) y un actor mas cae solo por el gate documental.
+    assert dec["n_actores_caida_solo_por_gate_documental"] == 67
 
     # Corte Suprema: siempre esta en el top-15 de mayor caida total, y su
     # caida es integra del gate documental, no de fusionar case_id.

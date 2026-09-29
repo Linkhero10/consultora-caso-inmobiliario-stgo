@@ -7,12 +7,12 @@
 
 | Métrica | Valor |
 |---|---|
-| Proyectos / `case_id` / conflictos | 941 / 834 / 816 |
-| Cola de identidad (256 pares) | 119 `merged`, 137 `kept_separate`, 0 abiertos |
+| Proyectos / `case_id` / conflictos | 942 / 835 / 817 |
+| Cola de identidad (258 pares) | 119 `merged`, 139 `kept_separate`, 0 abiertos |
 | `integrity_check` / FK | `ok` / 0 violaciones |
-| SHA-256 `data/warehouse.sqlite` | `53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08` |
+| SHA-256 `data/warehouse.sqlite` | `33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc` |
 | Overlay v3 (SHA-256 fijado en el resolver) | `82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626` |
-| Tests | 358 aprobados, 1 omitido (excluido `test_blind_review_html.py`, archivo local fuera del repo) |
+| Tests | 361 aprobados, 1 omitido (excluido `test_blind_review_html.py`, archivo local fuera del repo) |
 
 ## Los 8 pares que estaban abiertos
 
@@ -88,4 +88,13 @@ La simulación en SQLite en memoria cambió una sola fila previamente cerrada, R
 
 ## Addendum — v4 aplicado en la reconstrucción (2026-09-29)
 
-El overlay v4 de Luna (Recreo `same_identity`) se verificó (CI verde sobre `67e91ba`) y se aplicó en una reconstrucción integral posterior: cola 119 `merged` / 137 `kept_separate` / 0 abiertos, 941 proyectos, 834 `case_id`, 816 conflictos, warehouse `53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08`, 358 tests aprobados y 1 omitido. La tabla de arriba refleja este estado. Sigue sin verificarse que la mención de CIPER nombre el número 321: el vínculo se sostiene en que SEA y MINVU identifican un único proyecto de Inmobiliaria Recreo 321 SpA en calle Recreo y en que la fuente del oficio CGR es una copia en sitio tercero.
+El overlay v4 de Luna (Recreo `same_identity`) se verificó (CI verde sobre `67e91ba`) y se aplicó en una reconstrucción integral posterior: cola 119 `merged` / 137 `kept_separate` / 0 abiertos, 941 proyectos, 834 `case_id`, 816 conflictos, warehouse `33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc`, 358 tests aprobados y 1 omitido. La tabla de arriba refleja este estado. Sigue sin verificarse que la mención de CIPER nombre el número 321: el vínculo se sostiene en que SEA y MINVU identifican un único proyecto de Inmobiliaria Recreo 321 SpA en calle Recreo y en que la fuente del oficio CGR es una copia en sitio tercero.
+
+## Addendum — normalización de `Lote 18-A` (2026-09-29)
+
+La auditoría de huecos de Luna detectó que `normalize_project_name` borraba la `A` de `Lote 18-A` (la puntuación la separaba y `a` cae como stopword) y lo colapsaba con `Lote 18`, aunque las fuentes distinguen el lote completo de una parte. **Corrección:** un sufijo de letra pegado por guion a un número se conserva (`lote 18a`). Solo cambian 2 de los 988 nombres del corpus (`Lote 18-A`, `Lote 18-A1`); los rangos con guion y los nombres con ` - a ` con espacios no se alteran (test).
+
+**Adjudicación:** `Lote 18` ↔ `Lote 18-A` y `Lote 18-A` ↔ `Lote 18-A1` quedan `kept_separate` (relación parte–todo; La Tercera 2017 distingue «todo el Lote 18» de «la parte del Lote 18-A que controla» y usa `Lote 18-A1` para el lote declarado Monumento Nacional). La decisión heredada `Lote 18` ↔ `Lote 18-A1` (`merged`) no se tocó: no se auditó.
+
+**Efectos:** 941 → 942 proyectos, 834 → 835 `case_id`, 816 → 817 conflictos, cola 256 → 258 pares (119 merged, 139 kept_separate). El identificador de `Lote 18-A1` cambió (`23c289bb…` → `e08d8d72…`), lo que rompía una referencia histórica de Sol; se agregó un alias en `config/historical_case_id_resolutions_v1.json` hacia el caso `124a6f29…` que ella ligó como `mismo_conflicto`/`parent_subproject`. El baseline se regeneró con `src/generate_project_case_baseline.py`. Un actor (`inmobiliaria lote 18`) pasa a caer también por el gate documental (66 → 67), verificado comparando los grados contra el warehouse anterior.
+Warehouse `33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc`; 361 tests aprobados y 1 omitido.

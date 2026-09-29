@@ -185,7 +185,9 @@ def test_load_historical_case_id_resolutions_reads_real_file_with_expected_shape
     """Verifica que el archivo real versionado en config/ tiene la forma
     esperada -- no un valor sintetico, el mismo archivo que usa build_conflicts.py."""
     resolved, non_resolvable = reg.load_historical_case_id_resolutions()
-    assert len(resolved) == 10
+    # [ACTUALIZADO 2026-09-29] 10 -> 11: se agrego el alias de 23c289bb... (Lote 18-A1), cuyo
+    # project_id cambio al corregir la normalizacion de nombres.
+    assert len(resolved) == 11
     assert len(non_resolvable) == 5
     assert "f98c6a44db6a2c8187d959b9" in non_resolvable  # Villa Francia, sin anclaje vivo
 

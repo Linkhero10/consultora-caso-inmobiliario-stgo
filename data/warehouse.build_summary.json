@@ -1,9 +1,9 @@
 {
-  "built_at": "2026-09-29T09:13:15.591740+00:00",
+  "built_at": "2026-09-29T15:11:04.565924+00:00",
   "output_warehouse": "data\\warehouse.sqlite",
-  "n_projects": 941,
+  "n_projects": 942,
   "n_project_mentions_resolved": 1267,
-  "n_review_candidates": 256,
+  "n_review_candidates": 258,
   "n_descriptive_project_references_identity_unresolved": 1,
   "n_links_total": 15245,
   "resolution_status_counts": {
