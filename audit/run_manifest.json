@@ -4,14 +4,14 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "0af8c08c812113ccb1aac3895783438644b28cdd0ea8bd73c077901aadbe7d47",
+    "sha256": "53cde96cc7126a0e7cfad23d80282f17ee5eac9897e1537934e45edc931ddd08",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
       "document": 3884,
       "project": 941,
-      "conflict": 817,
-      "conflict_case": 835,
+      "conflict": 816,
+      "conflict_case": 834,
       "conflict_project": 941,
       "document_conflict": 1167,
       "conflict_relation": 2,
@@ -34,14 +34,14 @@
         "exact_substring_v1",
         "v3_3_verified_index"
       ],
-      "generated_from_warehouse_sha256": "be76c03639274c6be922b7618cf55fd6cc3845261260353d9d0d6ada3ae8c569",
+      "generated_from_warehouse_sha256": "54c4bf54e9ad19c47028cfecb8482d707ddee37f89c09f70355e88c7321d8d84",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
   "conflict_publication_gate": {
     "status": "ready",
     "preflight_status": "conflict_build_completed",
-    "topology_sha256": "119f26a214ee21b61efa2aeb187e13a63d2c38a5efa0e753118a542e9082a33a",
+    "topology_sha256": "26da6f95acb7bdb0d1a4337f51f12369755f635dee15b5efe94b9500c55bed92",
     "preflight_report": "D:\\Felipe\\Consultora\\caso_inmobiliario_stgo\\audit\\historical_case_reference_preflight.json"
   },
   "tests": {
@@ -49,7 +49,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "48877a4ae1e4fe22d149a4403e12a6f45e393968",
-  "release_commit": "48877a4ae1e4fe22d149a4403e12a6f45e393968",
+  "parent_commit_at_generation": "67e91ba09087f40e6e2231d52ff62954c8d01521",
+  "release_commit": null,
   "note": "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse vigente en cada ronda de reconstruccion -- nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation y release_commit en src/generate_run_manifest.py)."
 }
