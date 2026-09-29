@@ -1,14 +1,14 @@
 {
   "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
-  "run_id": "20260929T165856644243Z",
-  "generated_at": "2026-09-29T16:58:58.564807+00:00",
+  "run_id": "20260929T224015667717Z",
+  "generated_at": "2026-09-29T22:40:17.153285+00:00",
   "generator": "src/build_geography.py::build_project_mention_geography",
-  "build_commit": "1c8fa98e1bf5f221f4617feb690113900f28a539",
+  "build_commit": "46b770fa8cb77ad7f26b8a7662746af1755febb5",
   "generator_sha256": "a5e91c600b75ff6f9f7287d44b9586ee08f0a035d163e87a7be4af5ee3210ea5",
   "review_config_path": "config/reviewed_duplicate_group_geography_links.json",
   "review_config_sha256": "bee31515da166083ab4f4f8ad92b21a147de4c62c3c18820a74ec70218937009",
-  "input_warehouse_sha256": "542c53d84c27dd9ca1d3b730c812deeea27c3955f8f6333d4a2e9053f057a133",
-  "output_warehouse_sha256": "869f5908a10c95f1f4f562eac61941f007863cbf1a113bbd432ee7a0439817bf",
+  "input_warehouse_sha256": "82f85c1cc0c2d4bbb1c4aaa2f7bea55604c35b67d9ea4fce63eb1e3c607c1aa6",
+  "output_warehouse_sha256": "dd798ab56b571c841b536ef6bb1d7bde76cbd704e0a8bfa7e75b0e54d1b471ce",
   "descripcion": "Vinculo proyecto->case_mention->comuna; fallbacks desde grupos de duplicados con decision mixta quedan ambiguos salvo una adjudicacion manual explicita y limitada a geografia. Reemplaza la aproximacion documental anterior.",
   "case_mention_geography": {
     "n_candidatos": 980,
@@ -47,6 +47,13 @@
       "duplicate_group_id": "cmdup:b96b1b335487fbe9ac564c67"
     },
     {
+      "document_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93",
+      "project_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:project:2",
+      "nombre_proyecto": "Renovación Flota Material Rodante",
+      "source_case_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0",
+      "duplicate_group_id": "cmdup:b96b1b335487fbe9ac564c67"
+    },
+    {
       "document_id": "e68a325e514f77eb6583c4c3aa1820412a3db6252556bc353375d2b7488d1d9d",
       "project_mention_id": "e68a325e514f77eb6583c4c3aa1820412a3db6252556bc353375d2b7488d1d9d:project:0",
       "nombre_proyecto": "Campamento Esperanza Andina",
@@ -68,11 +75,11 @@
       "duplicate_group_id": "cmdup:9a36cde4e250401785f2abb7"
     }
   ],
-  "direct": 753,
+  "direct": 760,
   "via_duplicate_group": 7,
   "via_reviewed_duplicate_group": 1,
-  "ambiguous_duplicate_group": 5,
-  "no_case_mention_index": 209,
+  "ambiguous_duplicate_group": 6,
+  "no_case_mention_index": 201,
   "case_mention_no_incluido": 257,
   "case_mention_sin_comuna": 40
 }

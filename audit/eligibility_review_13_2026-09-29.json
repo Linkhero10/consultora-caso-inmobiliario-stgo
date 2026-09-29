@@ -1,0 +1,107 @@
+{
+  "schema_version": "eligibility_review_13_v1",
+  "date": "2026-09-29",
+  "reviewer": "Claude (claude-sonnet-5-5), a pedido de Felipe",
+  "population": "13 de las 18 candidatas U de la revision diagnostica de 196 (privada) que seguian sin respaldo en el warehouse 9f328ad4; las otras 5 ya tenian respaldo",
+  "method": "Lectura del contexto de cada mencion y de las case_mention del documento. Se enlaza solo si una case_mention include describe el objeto de la mencion; se adjudica elegibilidad solo si la mencion enlazada es una disputa concreta del area de estudio.",
+  "counts": {
+    "enlace": 7,
+    "elegibilidad": 1,
+    "sin_cambio": 5,
+    "menciones_enlazadas": 8
+  },
+  "note": "Sin extractos del corpus: solo veredictos y referencias. El expediente completo de la revision de 196 es privado.",
+  "rows": [
+    {
+      "conflict_id_suffix": "bd52a7fa",
+      "label": "Sheraton Santiago",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "Anteproyecto nuevo del hotel (dos edificios, 152 viviendas)."
+    },
+    {
+      "conflict_id_suffix": "06a0ef0a",
+      "label": "Parque Las Moscas",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "Permiso de 4.200 viviendas en tres edificios de 15 pisos."
+    },
+    {
+      "conflict_id_suffix": "c70f7ebe",
+      "label": "Avenida Libertador Bernardo O'Higgins N° 3.901",
+      "action": "enlace",
+      "case_mention": "cm2",
+      "reason": "Cuatro edificios de Suksa con direcciones distintas; la evidencia geografica de la cm2 es el 3.901. El detector de duplicados las agrupo por una cita generica comun."
+    },
+    {
+      "conflict_id_suffix": "83e843b4",
+      "label": "barrio Yungay",
+      "action": "elegibilidad",
+      "case_mention": "cm1",
+      "reason": "Permisos de demolicion en zona tipica y gentrificacion; la denuncia es de una dirigente y el documento trata sobre todo la reconstruccion. Confianza media."
+    },
+    {
+      "conflict_id_suffix": "6604e55d",
+      "label": "Casa de la Viña Manquehue",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "Dos menciones enlazadas al condominio de 39 casas y dos edificios cuestionado por la Contraloria, sin fusionar proyectos."
+    },
+    {
+      "conflict_id_suffix": "4c376334",
+      "label": "Manantiales",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "La Modificacion N 9 al PRC y el pueblo de montaña son el mismo conflicto. Las cm2 y cm3 tratan otros terrenos."
+    },
+    {
+      "conflict_id_suffix": "d7a1afad",
+      "label": "Autopista Costanera Sur",
+      "action": "sin cambio",
+      "case_mention": null,
+      "reason": "La disputa recae sobre la titularidad de dos lotes; la autopista es contexto. Enlazarla atribuiria al proyecto un conflicto que es de otro objeto."
+    },
+    {
+      "conflict_id_suffix": "58674987",
+      "label": "calle Pastor Fernández 18.580",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "La cm0 une la actualizacion del PRC con la compra del predio para desarrollo inmobiliario. La cm1 recoge la misma defensa."
+    },
+    {
+      "conflict_id_suffix": "7da00d0a",
+      "label": "Renovación Flota Material Rodante",
+      "action": "enlace",
+      "case_mention": "cm0",
+      "reason": "El fallo R-126-2016 trata el fraccionamiento de Rancagua Express; la cita nombra el proyecto mayor, no el componente. Confianza media."
+    },
+    {
+      "conflict_id_suffix": "bc4d0c38",
+      "label": "La Maestranza I",
+      "action": "sin cambio",
+      "case_mention": null,
+      "reason": "Ninguna case_mention del documento trata Maestranza I: es un proyecto habitacional logrado, contado en una entrevista de primera parte."
+    },
+    {
+      "conflict_id_suffix": "2fbe55f7",
+      "label": "edificio en la avenida Conde del Maule",
+      "action": "sin cambio",
+      "case_mention": null,
+      "reason": "Demanda de una comunidad por fallas de instalaciones: reclamo de calidad, no un conflicto urbano; el edificio solo se ubica por la avenida."
+    },
+    {
+      "conflict_id_suffix": "3b83746a",
+      "label": "Parque Intercomunal Lo Prado",
+      "action": "sin cambio",
+      "case_mention": null,
+      "reason": "El documento trata al menos cinco proyectos distintos dentro del parque, todos include; ninguno es unico."
+    },
+    {
+      "conflict_id_suffix": "f4c374a2",
+      "label": "Block N°14",
+      "action": "sin cambio",
+      "case_mention": null,
+      "reason": "La unica case_mention es el megaproyecto mayor; su evidencia de objeto no menciona el Block 14 ni su declaratoria."
+    }
+  ]
+}

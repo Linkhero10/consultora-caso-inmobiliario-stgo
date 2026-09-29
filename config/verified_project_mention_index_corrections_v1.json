@@ -1,6 +1,6 @@
 {
   "schema_version": "verified_project_mention_index_corrections_v1",
-  "description": "Correcciones puntuales de case_mention_index para menciones de proyecto de v3.3 que quedaron sin vinculo (null) pese a que la evidencia estructurada del warehouse identifica sin ambiguedad a que case_mention pertenecen. Nunca se inventa un indice sin evidencia literal verificada; cada entrada cita evidence_id reales y su texto exacto. Aditivo, nunca sobreescribe el shape v3.3 salvo el campo case_mention_index puntual. [2026-09-29] Se agregaron 17 enlaces (15 del perfil de las 227 + 2 focales) adjudicados a mano desde el perfil de las 227 menciones sin indice (auditoria de huecos); las otras 11 candidatas se revisaron y NO se enlazaron.",
+  "description": "Correcciones puntuales de case_mention_index para menciones de proyecto de v3.3 que quedaron sin vinculo (null) pese a que la evidencia estructurada del warehouse identifica sin ambiguedad a que case_mention pertenecen. Nunca se inventa un indice sin evidencia literal verificada; cada entrada cita evidence_id reales y su texto exacto. Aditivo, nunca sobreescribe el shape v3.3 salvo el campo case_mention_index puntual. [2026-09-29] Se agregaron 17 enlaces adjudicados a mano (15 del perfil de las 227 + 2 focales) y 8 mas tras revisar las 13 candidatas elegibles sin respaldo de la revision de 196; las otras candidatas revisadas NO se enlazaron.",
   "corrections": [
     {
       "reference_key": "linea7_cochera_taller_renca_case_mention_index_fix",
@@ -376,6 +376,198 @@
         },
         {
           "quote": "el cual buscó modificar las normas de edificación y uso de suelo permitidos en los lotes 1, 2 y 3 de propiedad de Las Condes"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_01",
+      "document_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63",
+      "nombre_proyecto": "Sheraton Santiago",
+      "case_mention_index": 0,
+      "case_mention_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0",
+      "reason": "La case_mention 0 (include, Providencia) describe el anteproyecto nuevo del hotel Sheraton (dos edificios, hotel y 152 viviendas, 359 estacionamientos), que es lo que la mencion nombra; la 1 trata un proyecto anterior de caracteristicas similares.",
+      "source_url": "https://www.elmostrador.cl/noticias/pais/2024/08/07/vecinos-de-providencia-en-alerta-ante-nuevo-ante-proyecto-aprobado-en-terrenos-del-hotel-sheraton/",
+      "source_file_path": "Fuentes/fulltext/content/34dab33051f31c812429c33fc0b311588e3e503ee4d1be0d9842d0ec38098096.json",
+      "source_file_sha256": "7828cfaf08b5c03d816ae5464db4e3e05612df0f2403569befcc1ed8e6488043",
+      "linked_evidence_ids": [
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:0",
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:1",
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "un ante proyecto que considera la construcción de dos edificios, uno de veinte pisos y otro de seis pisos, en los terrenos del hotel Sheraton"
+        },
+        {
+          "quote": "el anteproyecto visado considera el hotel y 152 viviendas, además de 359 estacionamientos para automóviles y tres locales comerciales"
+        },
+        {
+          "quote": "un segundo anteproyecto de ampliación del actual inmueble para una zona de cafetería de casi 200 metros cuadrados"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_02",
+      "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+      "nombre_proyecto": "Parque Las Moscas",
+      "case_mention_index": 0,
+      "case_mention_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0",
+      "reason": "La case_mention 0 (include) es el permiso de 4.200 viviendas y 21 locales en tres edificios de 15 pisos del terreno de Parque Las Moscas; las otras tres son exclude y tratan la resolucion 38-99 y Estacion Central.",
+      "source_url": "https://www.elmostrador.cl/noticias/opinion/2017/07/27/el-destino-de-gueto-vertical-del-parque-las-moscas/",
+      "source_file_path": "Fuentes/fulltext/content/6e2154b07f2c611cbaa48c88f821044cd718fd2dc58fdcd4e8824e20f103868c.json",
+      "source_file_sha256": "4072652ceb2382ad730c957fdddf40f902e6b2c4eaf82b248277fe81ee6a5139",
+      "linked_evidence_ids": [
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:0",
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:1",
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "quote": "considera 3 edificios de 15 pisos cada uno"
+        },
+        {
+          "quote": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017, para un edificio de 15 pisos y 1.400 viviendas"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_03",
+      "document_id": "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673",
+      "nombre_proyecto": "Avenida Libertador Bernardo O'Higgins N° 3.901",
+      "case_mention_index": 2,
+      "case_mention_id": "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2",
+      "reason": "El fallo trata cuatro edificios de Inmobiliaria Suksa con direcciones distintas (Toro Mazote 315 y 304, Avenida Libertador Bernardo O'Higgins 3.901, Recreo 321). Las cuatro case_mention comparten la misma cita generica de objeto, pero cada una tiene su propia evidencia geografica: la 2 es la del 3.901. El detector de duplicados las agrupo por esa cita, aunque son proyectos distintos.",
+      "source_url": "https://www.diarioconstitucional.cl/2019/09/06/cs-rechaza-reclamos-de-ilegalidad-por-limites-a-construccion-de-edificios-en-estacion-central/",
+      "source_file_path": "Fuentes/fulltext/content/3402613c127e411b3372c879c20ef10d5d4bfa5adebc31b1dfd237aef17f82e5.json",
+      "source_file_sha256": "33701e5d2135a26caaad1a431aea8995a1f2d66e3cf3a2da8f081348591aadd1",
+      "linked_evidence_ids": [
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:geografica:0",
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:geografica:1",
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "Avenida Libertador Bernardo O'Higgins N° 3.901"
+        },
+        {
+          "quote": "Estación Central"
+        },
+        {
+          "quote": "proyectos de construcciones de edificios"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_04",
+      "document_id": "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad",
+      "nombre_proyecto": "Casa de la Viña Manquehue",
+      "case_mention_index": 0,
+      "case_mention_id": "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad:0",
+      "reason": "La case_mention 0 (include, Vitacura) es el condominio tipo A de 39 casas y dos edificios cuestionado por la Contraloria junto a la Casa de la Vina Manquehue (anteproyecto Parque Rabat); la 1 es exclude y generica. Se enlaza la mencion al condominio sin fusionar proyectos.",
+      "source_url": "https://www.df.cl/empresas/construccion/el-golpe-de-la-seremi-de-vivienda-y-la-contraloria-a-proyecto-inmobiliario",
+      "source_file_path": "Fuentes/fulltext/content/4265a657a4520c17848f5c60baded7f95b647eb777534bd88a98dddecd8b2a5e.json",
+      "source_file_sha256": "e20883ea3684ddb13d0d0e704146cf2b39084119d1be10f3ea1df09320d531d9",
+      "linked_evidence_ids": [
+        "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "un condominio tipo A compuesto por 39 casas y dos edificios (con 20 departamentos)"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_05",
+      "document_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a",
+      "nombre_proyecto": "Casa de la Viña Manquehue",
+      "case_mention_index": 0,
+      "case_mention_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0",
+      "reason": "El documento tiene la case_mention 0 (include, Vitacura): el condominio tipo A de 39 casas y dos edificios aprobado por la DOM de Vitacura y cuestionado por la Contraloria, adyacente a la Casa de la Vina Manquehue.",
+      "source_url": "https://www.t13.cl/noticia/ex-ante/nacional/contraloria-deja-cuesta-arriba-proyecto-condominio-lujo-casa-mas-cara-santiago-10-1-2026",
+      "source_file_path": "Fuentes/fulltext/content/fc5ea66e5f36f7847f57d27d3bd409fdb6c86dcddabd960707d66bcf801e1f7a.json",
+      "source_file_sha256": "5157f3cd7fea1138473450ff6ecf64995629a94f617523b40586e4504f060a55",
+      "linked_evidence_ids": [
+        "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0:objeto:0",
+        "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Según consta en el propio dictamen, en 2025 la Dirección de Obras Municipales de Vitacura aprobó, mediante la resolución N° 155, un anteproyecto de edificación asociado al proyecto denominado Parque Rabat."
+        },
+        {
+          "quote": "La iniciativa consideraba un condominio tipo A, compuesto por 39 casas y dos edificios, sin contemplar la demolición ni refacción de la casona, la que se mantendría como parte de los bienes comunes."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_06",
+      "document_id": "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5",
+      "nombre_proyecto": "Manantiales",
+      "case_mention_index": 0,
+      "case_mention_id": "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0",
+      "reason": "La case_mention 0 (include, Lo Barnechea) une la Modificacion N 9 al PRC, que cambia el uso de suelo, con el 'pueblo de montaña' que se levantaria junto al centro de esqui Manantiales: el cambio regulatorio y el proyecto son el mismo conflicto. Las case_mention 2 y 3 tratan terrenos aledaños de otros propietarios y no se usan.",
+      "source_url": "https://www.ciperchile.cl/2019/01/31/el-mega-negocio-inmobiliario-que-enfrenta-a-los-duenos-de-la-nieve/",
+      "source_file_path": "Fuentes/fulltext/content/d598a1b7ed956573a8eeb8af6dc2fd4b676507fb2990058df37814e0de7c9274.json",
+      "source_file_sha256": "b2e9231f55a0d9e6d160efe1979a753c86be5d4c8ff0f9bf2c5fd46f5e6b6a1f",
+      "linked_evidence_ids": [
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0:objeto:0",
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "publicó la Modificación Nº9 al Plan Regulador Comunal (PRC), que cambia el uso de suelo en la zona, permitiendo construir edificios, casas y condominios donde antes solo se autorizaba equipamiento para deportes de nieve, como andariveles y canchas."
+        },
+        {
+          "quote": "junto al cual se levantaría un “pueblo de montaña” de nivel mundial."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_07",
+      "document_id": "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e",
+      "nombre_proyecto": "calle Pastor Fernández 18.580",
+      "case_mention_index": 0,
+      "case_mention_id": "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0",
+      "reason": "La case_mention 0 (include, Lo Barnechea) une la actualizacion del PRC con la compra del predio 'con el fin de desarrollar un proyecto inmobiliario', que es el reclamo de ilegalidad de Inmobiliaria Las Hojas Dos sobre Pastor Fernandez 18.580. La 1 recoge la misma defensa (permisos de otros proyectos de la inmobiliaria) y no se usa.",
+      "source_url": "https://www.df.cl/empresas/construccion/otra-inmobiliaria-rechaza-nuevo-plan-regulador-de-lo-barnechea-dice-que-es",
+      "source_file_path": "Fuentes/fulltext/content/f2ecdce0ed10542643f4efa1e58e6acac9df597d5dca9f3870d1506cf04c464d.json",
+      "source_file_sha256": "9995c43efa98def01a2e84347cb2d836ee735dc9e9dffe35af99de1bb5d3afc4",
+      "linked_evidence_ids": [
+        "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0:objeto:0",
+        "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Actualización del Plan Regulador Comunal (PRC) de Lo Barnechea"
+        },
+        {
+          "quote": "con el fin de desarrollar un proyecto inmobiliario"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_08",
+      "document_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93",
+      "nombre_proyecto": "Renovación Flota Material Rodante",
+      "case_mention_index": 0,
+      "case_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0",
+      "reason": "El fallo R-126-2016 del Segundo Tribunal Ambiental trata el fraccionamiento de Rancagua Express en componentes, entre ellos la renovacion de la flota de material rodante; la case_mention 0 (include; El Bosque, Pedro Aguirre Cerda, Lo Espejo) es ese proyecto. La cita de objeto nombra el proyecto mayor, no el componente.",
+      "source_url": "https://www.tribunalambiental.cl/wp-content/uploads/2014/07/R-126-2016-31-08-2017-Sentencia.pdf",
+      "source_file_path": "Fuentes/fulltext/content/91b58d52f59539c926ea2f0627cebd939aae81a787e5363914d30d8b693f4c49.json",
+      "source_file_sha256": "921d2b930163a68d8af186afe11513bceba14ce65b9cd134ddee740c57da2b9c",
+      "linked_evidence_ids": [
+        "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0:objeto:0",
+        "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Mejoramiento Integral de la Infraestructura FerroviariaTramo Santiago-Rancagua"
+        },
+        {
+          "quote": "Rancagua Express"
         }
       ]
     }

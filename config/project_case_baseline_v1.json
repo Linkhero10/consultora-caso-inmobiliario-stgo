@@ -1,7 +1,7 @@
 {
   "schema_version": "project_case_baseline_v1",
-  "generated_at_utc": "2026-09-29T16:58:10.783551+00:00",
-  "source_warehouse_sha256": "9acffef975e2c94fb693b6319f0fdedce44ebe773d0b119d9ccf7308876e6e85",
+  "generated_at_utc": "2026-09-29T22:39:49.981054+00:00",
+  "source_warehouse_sha256": "63fa6e05456c1b3ba9e84ae320272c5353a7e27008cc7cf4e8dda60ca5292efe",
   "description": "Snapshot inmediatamente despues de build_projects.py, regenerado el 2026-09-29 (942 project_id) tras materializar los case_mention_index adjudicados en enrichment_project_mention. Cada project_id parte como su propio case_id. source_warehouse_sha256 es el build_projects reproducible desde el warehouse committeado.",
   "project_id_set_sha256": "33d40cc0c46098e36bde703b95adeef2c4e332826aa18ac7e4bf19a91de04807",
   "mapping_sha256": "6318aaf587a733ed4a3ff5fe0ead28b379bb9583bf57dd35cf98e893e7ba963c",
