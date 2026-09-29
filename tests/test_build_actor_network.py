@@ -157,13 +157,18 @@ def test_decompose_reports_excluded_generic_nodes_explicitly():
     de identidad de Codex/Luna (68 pares)] Recalculado en vivo: 706 nodos
     actor cada red (antes 673), 687 comparables (antes 659), 19 nodos
     genericos excluidos de cada lado (antes 14) -- mas fusiones de proyecto
-    consolidan mas menciones de actor bajo el mismo case_id/conflict_id."""
+    consolidan mas menciones de actor bajo el mismo case_id/conflict_id.
+
+    [ACTUALIZADO 2026-09-29, cierre de los 8 pares PROJECT abiertos] Recalculado
+    en vivo: 688 comparables (antes 687); los 19 genericos excluidos no cambian.
+    Las 3 fusiones nuevas (Chaguay/exChaguay, torres Sheraton, Bellavista DIB)
+    consolidan un actor mas bajo el mismo conflict_id."""
     conn = _connect_or_skip()
     bip_case_old, bip_case_matched, bip_conflict = _build_three_universos(conn)
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
-    assert dec["n_actores_comparables_en_los_3_universos"] == 687
+    assert dec["n_actores_comparables_en_los_3_universos"] == 688
     assert dec["n_nodos_genericos_excluidos_case_matched"] == 19
     assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 19
     assert all("::" in n for n in dec["nodos_genericos_excluidos_case_matched"])

@@ -645,5 +645,61 @@
       "tests_nuevos": "6 tests nuevos para el mecanismo de resolucion historica (load_historical_case_id_resolutions, analyze_historical_case_references con non_resolvable, build_case_groups/build_conflict_relations con skip explicito)."
     },
     "status": "cerrado 2026-09-28"
+  },
+  "project_identity_queue_closed_2026-09-29": {
+    "fecha": "2026-09-29",
+    "descripcion": "Cierre de los 8 pares PROJECT que seguian abiertos tras el checkpoint de Luna y reconstruccion integral del pipeline en la rama codex/historical-case-references.",
+    "documento": "audit/project_identity_closure_2026-09-29.md",
+    "overlay": {
+      "path": "audit/project_identity_adjudication_overrides_2026-09-28_v3.json",
+      "sha256": "82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626",
+      "pares_base": 16,
+      "pares_historicos": 2
+    },
+    "cola_identidad": {
+      "total": 256,
+      "merged": 118,
+      "kept_separate": 138,
+      "abiertos": 0
+    },
+    "decisiones": {
+      "same_identity": [
+        "d0fb99d977176b8fd90c",
+        "70097cb05f72215db4b3",
+        "19a17e893f4747e113e9"
+      ],
+      "distinct_entities": [
+        "7dfca97fba3dc5d6abd2"
+      ],
+      "parent_component_phase": [
+        "historical_pair:1a548f6ba2417a0e6aae"
+      ],
+      "insufficient_evidence": [
+        "f46e5517d7ecee26f64d",
+        "6b84e4c69373bcadad41",
+        "historical_pair:8bf36944edfe85c618e0"
+      ]
+    },
+    "decisiones_legacy_revertidas": [
+      "Reserva La Dehesa / Reserva La Dehesa (ex Chaguay)",
+      "proyecto Bellavista / edificio de Desarrollo Inmobiliario Bellavista"
+    ],
+    "warehouse": {
+      "sha256": "ef776d1f9294021751d1b74f602523eaabe6d02e18f7d6b4b68c61bfa6d1436d",
+      "proyectos": 941,
+      "case_id": 835,
+      "conflictos": 817,
+      "integrity_check": "ok",
+      "foreign_key_check_issues": 0
+    },
+    "tests": "354 passed, 1 skipped (excluido tests/test_blind_review_html.py, archivo local fuera del repo)",
+    "alcance_no_verificado": [
+      "Los tres insufficient_evidence no estan demostrados como distintos ni como iguales.",
+      "No se re-audito fuente por fuente el resto de las 256 decisiones.",
+      "Fuentes web externas consultadas por busqueda, sin copia local con hash.",
+      "Relacion de conflicto pending_human_decision (Poblacion La Victoria) sigue abierta; es de la capa de relaciones.",
+      "El mecanismo de reconexion por subcadena no se redisenio."
+    ],
+    "status": "cerrado en rama; no promovido a main hasta fusionar el PR #1"
   }
 }

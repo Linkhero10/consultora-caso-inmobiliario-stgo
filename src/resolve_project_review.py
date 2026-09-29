@@ -74,8 +74,9 @@ _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
 HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
 PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
-PROJECT_IDENTITY_OVERRIDE_SHA256 = "1dc0cedb34e95a24bcb6d756d56a5be25f913742d0e3405ca400b04f9abd00c4"
+PROJECT_IDENTITY_OVERRIDE_SHA256 = "82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626"
 PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
+PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH = "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
 
 
 def _norm(s: str) -> str:
@@ -218,7 +219,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Villa Panamericana de Cerrillos", "Lote B de la Villa Panamericana de Cerrillos"): (False, "[hallazgo 2026-09-28, validate_project_identity_adjudication_topology detecto una reconexion transitiva incorrecta] Lote B es un lote especifico dentro del proyecto mayor (misma logica que 'Villa Panamericana'/'Villa Panamericana-Lote B' ya decidida arriba); la reconexion por substring normalizado encontraba un unico candidato -- la decision generica de 'Villa Panamericana'/'Villa Panamericana de Cerrillos' (comuna agregada) -- e ignoraba que el nombre completo describe un lote, no la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 178854a4dd1ca649a3b4): parent_component_phase, no_new_merge."),
     ("Hotel Sheraton", "Hotel Sheraton Santiago"): (True, "mismo hotel"),
     ("Hotel Sheraton", "proyecto de construcción en perímetro del Hotel Sheraton Santiago"): (False, "proyecto de construccion distinto, adyacente al hotel"),
-    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (True, "mismo sitio, nombre anterior entre parentesis"),
+    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'mismo sitio' REVERTIDA: el project_id 'Reserva La Dehesa' tiene una unica mencion (El Mostrador 2019) que refiere el proyecto de 54 casas del Cerro del Medio impulsado por la inmobiliaria Reserva La Dehesa, mientras 'Reserva La Dehesa (ex Chaguay)'/Chaguay es el proyecto de 158 parcelas de Desarrollos La Dehesa SpA; Kilometro Cero (2022) los enumera como proyectos distintos. La coincidencia de nombre no es identidad. Ver override 7dfca97fba3dc5d6abd2."),
     ("Desnitrificador SCR para Caldera de Ciclo Combinado de Central Nueva Renca", "Nueva Renca"): (True, "obra especifica en la misma central"),
     ("Chaguay", "Habilitación de caminos de acceso e instalaciones complementarias de la subdivisión agrícola Chaguay"): (True, "misma subdivision Chaguay"),
     ("Chaguay", "Reserva La Dehesa (ex Chaguay)"): (True, "Chaguay es el nombre anterior del mismo sitio"),
@@ -358,7 +359,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Centro de Eventos", "Centro de Eventos Espacio Riesco"): (False, "Centro de Eventos es termino generico"),
     ("proyecto Bellavista", "casa de dos pisos de calle Bellavista"): (False, "propiedad pequeña sin relacion evidente con el proyecto de torres"),
     ("proyecto Bellavista", "torres en el barrio Bellavista"): (True, "coincide con las tres torres del complejo Universidad San Sebastian"),
-    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (True, "Desarrollo Inmobiliario Bellavista S.A. es la empresa del mismo proyecto, ya identificada en esta sesion"),
+    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'es la empresa del mismo proyecto' REVERTIDA: mismo desarrollador no es mismo proyecto. La mencion 'edificio de Desarrollo Inmobiliario Bellavista' proviene de Interferencia (guetos verticales) y refiere un edificio en Estacion Central (al frente de la Escuela de Derecho de la Universidad de Chile, en el contexto de calle Toro Mazzote), mientras 'proyecto Bellavista' (La Tercera, 2019) es el proyecto de tres torres de DIB en Recoleta. Coincide con la adjudicacion source-first que separa el edificio DIB del proyecto inmobiliario Bellavista (pair_id de la fila 130)."),
     ("proyecto Bellavista", "proyecto del terreno en Bellavista"): (True, "descripcion generica del mismo proyecto"),
     ("proyecto Bellavista", "una especie de mall del Fondo de Inversión Inmobiliaria Cimenta en el barrio Bellavista"): (False, "desarrollador y tipo de proyecto distintos (Fondo Cimenta, no Desarrollo Inmobiliario Bellavista)"),
     ("ex clínica Sierra Bella", "Sierra Bella"): (True, "mismo sitio"),
@@ -701,7 +702,7 @@ def classify_project_pair_with_adjudications(
         rationale = str(exact_entry.get("rationale") or "")
         if identity_class == "same_identity" and action == "merge_case":
             return True, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
-        if identity_class in {"parent_component_phase", "related_plan_or_instrument", "distinct_entities"} and action == "no_new_merge":
+        if identity_class in {"parent_component_phase", "related_plan_or_instrument", "distinct_entities", "insufficient_evidence"} and action == "no_new_merge":
             return False, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
         if identity_class == "unresolved" and action == "no_new_merge":
             return None, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
@@ -936,7 +937,7 @@ def load_effective_project_identity_adjudications(
     base_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
     bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
     historical_path = root / "audit" / "historical_project_pair_adjudications_v1.json"
-    override_path = override_path or root / "audit" / "project_identity_adjudication_overrides_2026-09-28_v2.json"
+    override_path = override_path or root / PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
 
     base_raw = base_path.read_bytes()
     if hashlib.sha256(base_raw).hexdigest() != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
@@ -947,9 +948,9 @@ def load_effective_project_identity_adjudications(
     if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
         raise ValueError("override SHA-256 mismatch")
     payload = json.loads(payload_raw.decode("utf-8"))
-    if payload.get("schema_version") != "project_identity_adjudication_overrides_v2":
+    if payload.get("schema_version") != "project_identity_adjudication_overrides_v3":
         raise ValueError("unexpected project identity override schema_version")
-    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v2":
+    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-28_v3":
         raise ValueError("unexpected project identity override artifact_id")
     if payload.get("generated_on") != "2026-09-28":
         raise ValueError("unexpected project identity override date")
@@ -997,95 +998,106 @@ def load_effective_project_identity_adjudications(
         str(entry.get("pair_id")) for entry in payload.get("adjudications", [])
     }:
         raise ValueError("override unresolved-base inventory does not match the frozen base decisions")
-    if set(scope.get("historical_unresolved_retained", [])) != unresolved_history:
-        raise ValueError("override historical-unresolved inventory does not match the historical artifact")
 
     overrides = payload.get("adjudications")
-    if not isinstance(overrides, list) or len(overrides) != 13 or scope.get("pair_count") != 13:
-        raise ValueError("project identity override must contain exactly 13 exact-ID pairs")
-    topology_unresolved_ids = {str(item["pair_id"]) for item in topology_unresolved}
-    if topology_unresolved_ids != {"d0fb99d977176b8fd90c", "7dfca97fba3dc5d6abd2"}:
-        raise ValueError("topology blocker inventory differs from the adjudicated exact pairs")
-    seen_pairs: set[tuple[str, str]] = set()
-    seen_pair_ids: set[str] = set()
-    override_by_pair: dict[tuple[str, str], dict[str, Any]] = {}
-    for override in overrides:
-        pair_id = str(override.get("pair_id") or "")
-        ids = override.get("project_ids")
-        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
-            raise ValueError("project identity override has missing/duplicate pair_id or project_ids")
-        pair = tuple(sorted(str(value) for value in ids))
-        if pair[0] == pair[1] or pair in seen_pairs or pair in historical_pairs:
-            raise ValueError(f"duplicate, self, or historical override pair {pair!r}")
-        base = base_by_pair.get(pair)
-        if base is None or base.get("pair_id") != pair_id or base.get("identity_class") != "unresolved":
-            raise ValueError(f"override {pair_id!r} is not an exact unresolved pair in the frozen base")
-        names = override.get("project_names")
-        if names != base.get("project_names") or set(names or {}) != set(pair):
-            raise ValueError(f"override {pair_id!r} project names differ from the frozen base")
-        identity_class = override.get("identity_class")
-        action = override.get("resolver_action")
-        canonical = override.get("canonical_project_id")
-        if identity_class == "same_identity":
-            if action != "merge_case" or canonical not in pair:
-                raise ValueError(f"same_identity override {pair_id!r} needs merge_case and an exact canonical ID")
-            if not override.get("canonical_selection_note"):
-                raise ValueError(f"same_identity override {pair_id!r} needs a canonical-selection rationale")
-            if override.get("confidence") != "high":
-                raise ValueError(f"same_identity override {pair_id!r} needs high confidence before merging")
-        elif identity_class == "distinct_entities":
-            if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
-                raise ValueError(f"distinct_entities override {pair_id!r} must not merge or choose a canonical ID")
-        elif identity_class == "unresolved":
-            if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
-                raise ValueError(f"unresolved override {pair_id!r} must remain unmerged without a canonical ID")
-        else:
-            raise ValueError(f"unsupported project identity override class {identity_class!r}")
-        if override.get("decision_source") != PROJECT_IDENTITY_OVERRIDE_SOURCE:
-            raise ValueError(f"override {pair_id!r} has unexpected decision_source")
-        if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
-            raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
-        if override.get("confidence") not in {"high", "medium"} or not override.get("rationale"):
-            raise ValueError(f"override {pair_id!r} has incomplete decision rationale/confidence")
-        if pair_id in topology_unresolved_ids and identity_class != "unresolved":
-            raise ValueError(f"topology-blocking pair {pair_id!r} must remain unresolved")
+    historical_overrides = payload.get("historical_adjudications")
+    if not isinstance(overrides, list) or len(overrides) != 16 or scope.get("pair_count") != 16:
+        raise ValueError("project identity override must contain exactly 16 exact-ID base pairs")
+    if (
+        not isinstance(historical_overrides, list)
+        or len(historical_overrides) != 2
+        or scope.get("historical_pair_count") != 2
+    ):
+        raise ValueError("project identity override must contain exactly 2 exact-ID historical pairs")
+    if {str(item["pair_id"]) for item in topology_unresolved} != set():
+        raise ValueError("no topology-blocking pair may remain unresolved in the closed overlay")
+    override_no_merge_classes = {"distinct_entities", "parent_component_phase", "insufficient_evidence", "unresolved"}
 
-        base_refs = {
-            ref.get("evidence_ref_id"): ref
-            for ref in base.get("source_evidence", [])
-            if ref.get("evidence_ref_id")
-        }
-        evidence_ref_ids = override.get("source_evidence_ref_ids")
-        if not isinstance(evidence_ref_ids, list) or not evidence_ref_ids or len(set(evidence_ref_ids)) != len(evidence_ref_ids):
-            raise ValueError(f"override {pair_id!r} has missing or duplicate source evidence references")
-        cited_refs = [base_refs.get(ref_id) for ref_id in evidence_ref_ids]
-        if any(ref is None for ref in cited_refs) or {ref.get("side") for ref in cited_refs if ref} != {"a", "b"}:
-            raise ValueError(f"override {pair_id!r} must cite frozen source evidence for both exact project IDs")
-        if any(ref.get("project_id") not in pair for ref in cited_refs if ref):
-            raise ValueError(f"override {pair_id!r} source evidence references another project ID")
-        supporting_sources = override.get("supporting_sources")
-        if not isinstance(supporting_sources, list) or not supporting_sources:
-            raise ValueError(f"override {pair_id!r} has no supporting source links")
-        for source in supporting_sources:
-            if not isinstance(source, dict) or not str(source.get("url", "")).startswith("https://"):
-                raise ValueError(f"override {pair_id!r} has an invalid supporting source URL")
-            if not source.get("publisher") or not source.get("supports"):
-                raise ValueError(f"override {pair_id!r} has an incomplete supporting source record")
+    def validate_overrides(
+        entries: list[dict[str, Any]],
+        original_by_pair: dict[tuple[str, str], dict[str, Any]],
+        forbidden_pairs: set[tuple[str, str]],
+        label: str,
+    ) -> dict[tuple[str, str], dict[str, Any]]:
+        seen_pairs: set[tuple[str, str]] = set()
+        seen_pair_ids: set[str] = set()
+        result: dict[tuple[str, str], dict[str, Any]] = {}
+        for override in entries:
+            pair_id = str(override.get("pair_id") or "")
+            ids = override.get("project_ids")
+            if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
+                raise ValueError("project identity override has missing/duplicate pair_id or project_ids")
+            pair = tuple(sorted(str(value) for value in ids))
+            if pair[0] == pair[1] or pair in seen_pairs or pair in forbidden_pairs:
+                raise ValueError(f"duplicate, self, or cross-artifact override pair {pair!r}")
+            original = original_by_pair.get(pair)
+            if original is None or original.get("pair_id") != pair_id or original.get("identity_class") != "unresolved":
+                raise ValueError(f"override {pair_id!r} is not an exact unresolved {label} pair")
+            names = override.get("project_names")
+            if names != original.get("project_names") or set(names or {}) != set(pair):
+                raise ValueError(f"override {pair_id!r} project names differ from the frozen {label} entry")
+            identity_class = override.get("identity_class")
+            action = override.get("resolver_action")
+            canonical = override.get("canonical_project_id")
+            if identity_class == "same_identity":
+                if action != "merge_case" or canonical not in pair:
+                    raise ValueError(f"same_identity override {pair_id!r} needs merge_case and an exact canonical ID")
+                if not override.get("canonical_selection_note"):
+                    raise ValueError(f"same_identity override {pair_id!r} needs a canonical-selection rationale")
+                if override.get("confidence") != "high":
+                    raise ValueError(f"same_identity override {pair_id!r} needs high confidence before merging")
+            elif identity_class in override_no_merge_classes:
+                if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
+                    raise ValueError(f"{identity_class} override {pair_id!r} must not merge or choose a canonical ID")
+            else:
+                raise ValueError(f"unsupported project identity override class {identity_class!r}")
+            if override.get("decision_source") != PROJECT_IDENTITY_OVERRIDE_SOURCE:
+                raise ValueError(f"override {pair_id!r} has unexpected decision_source")
+            if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
+                raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
+            if override.get("confidence") not in {"high", "medium"} or not override.get("rationale"):
+                raise ValueError(f"override {pair_id!r} has incomplete decision rationale/confidence")
 
-        seen_pairs.add(pair)
-        seen_pair_ids.add(pair_id)
-        override_by_pair[pair] = override
+            original_refs = {
+                ref.get("evidence_ref_id"): ref
+                for ref in original.get("source_evidence", [])
+                if ref.get("evidence_ref_id")
+            }
+            evidence_ref_ids = override.get("source_evidence_ref_ids")
+            if not isinstance(evidence_ref_ids, list) or not evidence_ref_ids or len(set(evidence_ref_ids)) != len(evidence_ref_ids):
+                raise ValueError(f"override {pair_id!r} has missing or duplicate source evidence references")
+            cited_refs = [original_refs.get(ref_id) for ref_id in evidence_ref_ids]
+            if any(ref is None for ref in cited_refs) or {ref.get("side") for ref in cited_refs if ref} != {"a", "b"}:
+                raise ValueError(f"override {pair_id!r} must cite frozen source evidence for both exact project IDs")
+            if any(ref.get("project_id") not in pair for ref in cited_refs if ref):
+                raise ValueError(f"override {pair_id!r} source evidence references another project ID")
+            supporting_sources = override.get("supporting_sources")
+            if not isinstance(supporting_sources, list) or not supporting_sources:
+                raise ValueError(f"override {pair_id!r} has no supporting source links")
+            for source in supporting_sources:
+                if not isinstance(source, dict) or not str(source.get("url", "")).startswith("https://"):
+                    raise ValueError(f"override {pair_id!r} has an invalid supporting source URL")
+                if not source.get("publisher") or not source.get("supports"):
+                    raise ValueError(f"override {pair_id!r} has an incomplete supporting source record")
+            seen_pairs.add(pair)
+            seen_pair_ids.add(pair_id)
+            result[pair] = override
+        return result
 
-    if set(seen_pair_ids) != set(unresolved_base) - set(scope.get("base_unresolved_retained", [])):
+    historical_by_pair = {
+        tuple(sorted(str(value) for value in entry["project_ids"])): entry
+        for entry in historical_entries
+    }
+    override_by_pair = validate_overrides(overrides, base_by_pair, historical_pairs, "base")
+    historical_override_by_pair = validate_overrides(
+        historical_overrides, historical_by_pair, set(base_by_pair), "historical"
+    )
+    if {str(o["pair_id"]) for o in overrides} != set(unresolved_base) - set(scope.get("base_unresolved_retained", [])):
         raise ValueError("override pair set does not exactly cover the declared subset of base unresolved pairs")
+    if {str(o["pair_id"]) for o in historical_overrides} | set(scope.get("historical_unresolved_retained", [])) != unresolved_history:
+        raise ValueError("historical override set does not exactly cover the historical unresolved pairs")
 
-    effective_base: list[dict[str, Any]] = []
-    for original in base_entries:
-        pair = tuple(sorted(str(value) for value in original["project_ids"]))
-        override = override_by_pair.get(pair)
-        if override is None:
-            effective_base.append(copy.deepcopy(original))
-            continue
+    def apply_override(original: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
         effective = copy.deepcopy(original)
         effective["prior_adjudication"] = {
             "identity_class": original.get("identity_class"),
@@ -1099,16 +1111,29 @@ def load_effective_project_identity_adjudications(
             "confidence", "rationale", "decision_source", "production_promoted", "typed_relation_persisted",
         ):
             effective[field] = override.get(field)
-        effective["override_artifact"] = "audit/project_identity_adjudication_overrides_2026-09-28_v2.json"
+        effective["override_artifact"] = PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
         effective["override_artifact_sha256"] = override_sha
         effective["override_source_evidence_ref_ids"] = list(override["source_evidence_ref_ids"])
         effective["override_supporting_sources"] = copy.deepcopy(override["supporting_sources"])
-        effective_base.append(effective)
+        return effective
 
-    effective_pairs = [tuple(sorted(str(value) for value in entry["project_ids"])) for entry in effective_base + historical_entries]
+    effective_base = []
+    for original in base_entries:
+        pair = tuple(sorted(str(value) for value in original["project_ids"]))
+        override = override_by_pair.get(pair)
+        effective_base.append(apply_override(original, override) if override else copy.deepcopy(original))
+    effective_historical = []
+    for original in historical_entries:
+        pair = tuple(sorted(str(value) for value in original["project_ids"]))
+        override = historical_override_by_pair.get(pair)
+        effective_historical.append(apply_override(original, override) if override else copy.deepcopy(original))
+    effective_pairs = [
+        tuple(sorted(str(value) for value in entry["project_ids"]))
+        for entry in effective_base + effective_historical
+    ]
     if len(effective_pairs) != len(set(effective_pairs)):
         raise ValueError("effective project identity artifacts contain a duplicate exact-ID pair")
-    return effective_base + copy.deepcopy(historical_entries)
+    return effective_base + effective_historical
 
 
 def validate_project_identity_adjudication_scope(
@@ -1317,7 +1342,7 @@ def decision_provenance_ref(
         artifact = {
             "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
             "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
-            PROJECT_IDENTITY_OVERRIDE_SOURCE: "audit/project_identity_adjudication_overrides_2026-09-28_v2.json",
+            PROJECT_IDENTITY_OVERRIDE_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
         }[source]
         artifact_path = Path(__file__).resolve().parents[1] / artifact
         return json.dumps(

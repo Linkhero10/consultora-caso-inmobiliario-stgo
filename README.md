@@ -46,6 +46,7 @@ siempre debe ser el último que toca `data/warehouse.sqlite`):
 python src/build_enrichment_tables.py   # enrichment_document/enrichment_project_mention desde v3.3
 python src/build_projects.py            # identidad de proyecto/caso
 python src/resolve_project_review.py    # fusiona pares revisados de la cola
+python src/detect_case_mention_duplicates.py  # grupos de case_mention duplicadas (requerido por CONFLICT)
 python src/build_conflicts.py           # capa CONFLICT
 python src/build_actor_registry.py      # identidad de actor institucional
 python src/build_actor_network.py
@@ -88,15 +89,14 @@ Plan paso a paso de cada arco analítico (2-4):
 
 ## Estado
 
-El warehouse publicado en `main` sigue siendo un snapshot existente (941 proyectos, 850 `case_id`,
-833 conflictos), no una reconstrucción integral recién cerrada. La rama
-`codex/historical-case-references` mantiene una simulación aislada sobre otro snapshot versionado
-(941 proyectos, 837 `case_id`, 819 filas de conflicto preexistentes): el resolver se probó en una
-copia en memoria, pero no se reconstruyeron CONFLICT, dashboard ni manifiesto. La publicación
-integral continúa bloqueada por 10 pares de identidad PROJECT pendientes; 29 referencias
-históricas se conservan sin forzar aliases. Los hashes, conteos y límites vigentes están en
-[START HERE](START_HERE.md), el [checkpoint de identidad](audit/project_identity_resolution_checkpoint_2026-09-28.md),
+El warehouse publicado en `main` es aún el snapshot anterior (941 proyectos, 850 `case_id`,
+833 conflictos). La rama `codex/historical-case-references` (PR #1) contiene la reconstrucción
+integral cerrada del 2026-09-29: 941 proyectos, 835 `case_id`, 817 conflictos, cola de identidad
+PROJECT sin pares abiertos (118 fusionados, 138 separados), `integrity_check=ok`, publicación
+`ready`. Tres pares se mantienen separados como `insufficient_evidence` (sin afirmar que sean
+objetos distintos) y 29 referencias históricas se conservan sin forzar aliases. Los hashes,
+conteos y límites vigentes están en [START HERE](START_HERE.md), el
+[cierre de identidad](audit/project_identity_closure_2026-09-29.md),
 [`audit/validation_summary.json`](audit/validation_summary.json) y
-[`audit/data_quality_report.md`](audit/data_quality_report.md). Los arcos pueden desarrollar
-métodos sobre el snapshot publicado, pero deben conservar sus límites y no presentar la simulación
-de rama como una capa CONFLICT validada.
+[`audit/data_quality_report.md`](audit/data_quality_report.md). Mientras el PR no se fusione, los
+arcos deben citar el hash del warehouse que usen y sus límites.

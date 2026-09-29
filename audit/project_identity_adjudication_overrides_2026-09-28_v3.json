@@ -1,0 +1,716 @@
+{
+  "schema_version": "project_identity_adjudication_overrides_v3",
+  "artifact_id": "project_identity_adjudication_overrides_2026-09-28_v3",
+  "generated_on": "2026-09-28",
+  "supersedes": "project_identity_adjudication_overrides_2026-09-28_v2",
+  "source_base_adjudication_sha256": "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f",
+  "source_base_bundle_sha256": "b1a793348667f34891dabfe5d305628e22bd3040e72a006e7f4eeedb28124dc5",
+  "source_historical_adjudication_sha256": "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1",
+  "scope": {
+    "target": "every exact project_id pair marked unresolved in the frozen 68-pair review and the 27-pair historical supplement",
+    "pair_count": 16,
+    "historical_pair_count": 2,
+    "production_promoted": false,
+    "typed_relation_persisted": false,
+    "rules": [
+      "exact unordered project_id pair only; never transfer by name or substring",
+      "each same_identity decision retains both source project IDs and evidence references",
+      "distinct_entities, parent_component_phase and insufficient_evidence all mean no new merge; none rewrites historical project IDs",
+      "insufficient_evidence keeps the pair separate WITHOUT asserting the objects are different; it records that positive identity evidence is absent",
+      "conflicting source attributes remain preserved and are not normalized by identity adjudication",
+      "aggregate references are not expanded into or merged with member projects"
+    ],
+    "base_unresolved_retained": [],
+    "topology_unresolved_reviewed": [],
+    "historical_unresolved_retained": []
+  },
+  "adjudications": [
+    {
+      "pair_id": "7d3556ba528bb38bd627",
+      "project_ids": [
+        "91f2112803222891bec22245",
+        "2501823afe7521d105456260"
+      ],
+      "project_names": {
+        "91f2112803222891bec22245": "Carlos Valdovinos",
+        "2501823afe7521d105456260": "proyecto de SuKasa en avenida Carlos Valdovinos"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "91f2112803222891bec22245",
+      "canonical_selection_note": "retain the existing exact-ID entry for the municipal project named Carlos Valdovinos; both project IDs remain intact",
+      "confidence": "high",
+      "rationale": "La Municipalidad de Santiago identifica el megaproyecto Carlos Valdovinos en Parque Las Moscas con tres torres y 4.200 viviendas. La fuente de El Desconcierto vincula a Inmobiliaria Carlos Valdovinos/Armando Ide con Su Ksa, y la otra mención sitúa el plan de SuKasa en avenida Carlos Valdovinos sobre terreno vendido por Cema Chile. La coincidencia de predio, titularidad y configuración sustenta identidad. Se conservan las diferencias de redacción y cualquier cifra divergente como atributos de fuente, no se reescriben.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "7d3556ba528bb38bd627:a:0",
+        "7d3556ba528bb38bd627:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.munistgo.cl/municipio-detiene-construccion-de-megaproyecto-inmobiliario/",
+          "publisher": "Municipalidad de Santiago",
+          "supports": "Nombre del megaproyecto, Parque Las Moscas, tres torres y 4.200 viviendas."
+        },
+        {
+          "url": "https://eldesconcierto.cl/2017/07/16/un-gueto-vertical-en-area-verde-que-era-de-dona-lucia",
+          "publisher": "El Desconcierto",
+          "supports": "Vincula Inmobiliaria Carlos Valdovinos/Armando Ide con Su Ksa y describe los permisos del mismo terreno."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "d0fb99d977176b8fd90c",
+      "project_ids": [
+        "803b8601f7f58a2b25f694cd",
+        "a07066976e35eb7bd807ed77"
+      ],
+      "project_names": {
+        "803b8601f7f58a2b25f694cd": "Chaguay",
+        "a07066976e35eb7bd807ed77": "Reserva La Dehesa, exChaguay"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "803b8601f7f58a2b25f694cd",
+      "canonical_selection_note": "Se conserva el ID Chaguay (14 documentos, nombre original del proyecto); ambos project_id y sus atributos quedan intactos.",
+      "confidence": "high",
+      "rationale": "La columna de Cooperativa (2025) nombra el proyecto “Reserva La Dehesa, exChaguay” y precisa que es de la empresa Desarrollos La Dehesa SpA. Dos fuentes del propio ID Chaguay identifican a Desarrollos La Dehesa SpA como titular del proyecto Chaguay (Interferencia: “La empresa titular del proyecto inmobiliario Chaguay ... es Desarrollos La Dehesa SpA”; Terram: “el Chaguay, impulsado por Desarrollos La Dehesa SpA”). Mismo titular más la designación explícita “ex Chaguay” sustentan que es el mismo proyecto con nuevo nombre. La identidad se afirma únicamente entre estos dos IDs exactos: el ID genérico Reserva La Dehesa (01d6668a...) NO se une, porque su única mención es otro proyecto (ver 7dfca97fba3dc5d6abd2). Cierra el bloqueo topológico previo, que provenía de una decisión legacy por nombre ya revertida en MANUAL_DECISIONS.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "d0fb99d977176b8fd90c:a:5",
+        "d0fb99d977176b8fd90c:a:12",
+        "d0fb99d977176b8fd90c:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://interferencia.cl/articulos/la-trenza-politico-inmobiliaria-que-amenaza-el-bosque-esclerofilo-entre-chicureo-y-la",
+          "publisher": "Interferencia",
+          "supports": "Identifica a Desarrollos La Dehesa SpA como empresa titular del proyecto inmobiliario Chaguay."
+        },
+        {
+          "url": "https://www.terram.cl/sma-se-lanza-contra-proyectos-inmobiliarios-de-la-elite-por-construir-en-zonas-de-preservacion-ecologica/",
+          "publisher": "Terram",
+          "supports": "Describe el Chaguay como proyecto impulsado por Desarrollos La Dehesa SpA."
+        },
+        {
+          "url": "https://opinion.cooperativa.cl/opinion/urbanismo/la-contraloria-exige-el-respeto-por-los-derechos-adquiridos/2025-07-10/214143.html",
+          "publisher": "Cooperativa",
+          "supports": "Nombra el proyecto Reserva La Dehesa, exChaguay, de Desarrollos La Dehesa SpA."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "d05ad73929fbcd8a82b6",
+      "project_ids": [
+        "52431d07bb532a107713c2bd",
+        "bcf9a9d46577aec285a3b590"
+      ],
+      "project_names": {
+        "52431d07bb532a107713c2bd": "Humedal San Luis",
+        "bcf9a9d46577aec285a3b590": "Humedal San Luis Norte"
+      },
+      "identity_class": "distinct_entities",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "high",
+      "rationale": "Humedal San Luis y Humedal San Luis Norte son unidades húmedas nominadas por separado dentro del sistema de humedales de Quilicura. Que formen parte de un sistema territorial mayor no las convierte en una misma unidad analítica; se preservan como entidades distintas y potencialmente relacionadas.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "d05ad73929fbcd8a82b6:a:0",
+        "d05ad73929fbcd8a82b6:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://eae.mma.gob.cl/storage/documents/04_Anteproyecto-Memoria_Actualizaci%C3%B3n_PRC_Quilicura.pdf.pdf",
+          "publisher": "Ministerio del Medio Ambiente",
+          "supports": "Instrumento oficial que distingue Humedal San Luis y Humedal San Luis Norte como unidades nominadas separadas."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "871166e38c932b2ee95c",
+      "project_ids": [
+        "5997fefd9709a67727316bc2",
+        "fe0f38566717aa34de32376a"
+      ],
+      "project_names": {
+        "5997fefd9709a67727316bc2": "Mega proyecto inmobiliario de 25 edificios en altura, calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "fe0f38566717aa34de32376a": "Vital Apoquindo"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "fe0f38566717aa34de32376a",
+      "canonical_selection_note": "use the exact-ID project record named Vital Apoquindo; preserve the address-specific mention and all source-reported counts",
+      "confidence": "high",
+      "rationale": "Coinciden la inmobiliaria Mirador Oriente, la calle y el tramo 1.400–1.500 de Vital Apoquindo, además del permiso y la controversia ante Contraloría/DOM. Las diferencias publicadas entre 25 y 27 edificios se preservan como discrepancia de atributos; no justifican por sí solas separar el desarrollo.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "871166e38c932b2ee95c:a:0",
+        "871166e38c932b2ee95c:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "publisher": "Emol",
+          "supports": "Identifica a Mirador Oriente como desarrolladora del proyecto Vital Apoquindo y sitúa la iniciativa en 1400–1500."
+        },
+        {
+          "url": "https://www.defendamoslaciudad.cl/noticias/item/8293-corrupcion-en-la-municipalidad-de-las-condes",
+          "publisher": "Defendamos la Ciudad",
+          "supports": "Vincula permiso, direcciones 1400/1450/1500 y Dictamen E58945."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "6af7e1570bff9ddbb3be",
+      "project_ids": [
+        "e37655355ac179806569a998",
+        "fe0f38566717aa34de32376a"
+      ],
+      "project_names": {
+        "e37655355ac179806569a998": "Mega proyecto inmobiliario de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500",
+        "fe0f38566717aa34de32376a": "Vital Apoquindo"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "fe0f38566717aa34de32376a",
+      "canonical_selection_note": "use the exact-ID project record named Vital Apoquindo; preserve the address-specific mention and all source-reported counts",
+      "confidence": "high",
+      "rationale": "La fuente de 2020 y la de 2023 describen el desarrollo de Vital Apoquindo en el mismo tramo 1.400–1.500, con Mirador Oriente como titular/desarrolladora y la misma controversia de permisos. Se conserva sin resolver la discrepancia 25/27 edificios.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "6af7e1570bff9ddbb3be:a:0",
+        "6af7e1570bff9ddbb3be:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+          "publisher": "El Clarín",
+          "supports": "Describe el proyecto y el terreno de Vital Apoquindo 1400/1450/1500."
+        },
+        {
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "publisher": "Emol",
+          "supports": "Identifica titular, tramo y controversia del proyecto Vital Apoquindo."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "f46e5517d7ecee26f64d",
+      "project_ids": [
+        "0a9d6730e059f72c2cdec2d8",
+        "ad2b70567df6b8d44f952100"
+      ],
+      "project_names": {
+        "0a9d6730e059f72c2cdec2d8": "Recreo",
+        "ad2b70567df6b8d44f952100": "proyecto ubicado en calle Recreo"
+      },
+      "identity_class": "insufficient_evidence",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "medium",
+      "rationale": "Ambas menciones apuntan a un edificio del grupo Su Ksa en calle Recreo (Estación Central): Interferencia (2021) habla de la evaluación ambiental de “los edificios General Amengual y Recreo” y CIPER (2025) de dos proyectos de Su Ksa ubicados en calles Recreo y Placilla. Ninguna fuente entrega número, rol predial, permiso o RCA que fije que sea la misma obra, y el ID Recreo ya agrupa las variantes con número (Recreo 321). La identidad exige evidencia positiva a nivel de edificio; mismo titular y misma calle no bastan. No se fusiona ni se afirma que sean distintos: queda separado por evidencia insuficiente. Reapertura: número/rol predial o permiso/RCA que ligue ambas menciones.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "f46e5517d7ecee26f64d:a:0",
+        "f46e5517d7ecee26f64d:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://interferencia.cl/articulos/el-intenso-lobby-del-cunado-de-torrealba-por-su-ksa-una-de-las-inmobiliarias-del-proyecto",
+          "publisher": "Interferencia",
+          "supports": "Menciona la evaluación ambiental de los edificios General Amengual y Recreo de Su Ksa."
+        },
+        {
+          "url": "https://www.ciperchile.cl/2025/06/21/aunque-mega-edificios-han-colapsado-servicios-publicos-y-alcantarillado-estacion-central-enfrenta-lobby-para-aprobar-nuevos-guetos-verticales/",
+          "publisher": "CIPER",
+          "supports": "Menciona dos proyectos de Grupo Su Ksa ubicados en calles Recreo y Placilla."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "7dfca97fba3dc5d6abd2",
+      "project_ids": [
+        "a07066976e35eb7bd807ed77",
+        "01d6668a9dc5aba908f81090"
+      ],
+      "project_names": {
+        "a07066976e35eb7bd807ed77": "Reserva La Dehesa, exChaguay",
+        "01d6668a9dc5aba908f81090": "Reserva La Dehesa"
+      },
+      "identity_class": "distinct_entities",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "high",
+      "rationale": "El único documento del ID Reserva La Dehesa (El Mostrador, 2019) trata el proyecto de 54 casas en el Cerro del Medio, impulsado por la inmobiliaria Reserva La Dehesa. Kilómetro Cero (2022) enumera como proyectos distintos “uno de 54 casas en el Cerro del Medio” y “otro de parcelas en Chaguay”. Terram describe Chaguay como 158 parcelas y Cooperativa (2025) ata “Reserva La Dehesa, exChaguay” a Desarrollos La Dehesa SpA. El nombre “Reserva La Dehesa” es una homónimo entre la inmobiliaria/condominio del Cerro del Medio y el nuevo nombre de Chaguay: coincidencia de nombre, no identidad. Se conserva la separación exacta; no se crea relación de identidad. La decisión legacy por nombre que los conectaba queda revertida en MANUAL_DECISIONS.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "7dfca97fba3dc5d6abd2:a:0",
+        "7dfca97fba3dc5d6abd2:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.elmostrador.cl/noticias/pais/2019/07/10/lo-barnechea-en-conflicto-proyecto-inmobiliario-autorizado-por-alcalde-felipe-guevara-amenaza-bosque-nativo/",
+          "publisher": "El Mostrador",
+          "supports": "Proyecto de 54 casas en el Cerro del Medio impulsado por la inmobiliaria Reserva La Dehesa."
+        },
+        {
+          "url": "https://kilometrocero.cl/la-depredacion-inmobiliaria-amenaza-las-areas-verdes-precordilleranas-de-lo-barnechea/",
+          "publisher": "Kilómetro Cero",
+          "supports": "Enumera como proyectos distintos las 54 casas del Cerro del Medio y las parcelas de Chaguay."
+        },
+        {
+          "url": "https://www.terram.cl/justicia-reabre-puerta-para-construir-viviendas-en-areas-naturales-de-colina-lo-barnechea-y-otras-comunas-de-la-rm/",
+          "publisher": "Terram",
+          "supports": "Describe el proyecto Chaguay como 158 parcelas en Lo Barnechea."
+        },
+        {
+          "url": "https://opinion.cooperativa.cl/opinion/urbanismo/la-contraloria-exige-el-respeto-por-los-derechos-adquiridos/2025-07-10/214143.html",
+          "publisher": "Cooperativa",
+          "supports": "Usa Reserva La Dehesa, exChaguay para el proyecto de Desarrollos La Dehesa SpA."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "e4c1fbe6d25cd8141677",
+      "project_ids": [
+        "922533b858c751fc8f5a8e3b",
+        "fe0f38566717aa34de32376a"
+      ],
+      "project_names": {
+        "922533b858c751fc8f5a8e3b": "Vital Apoquindo 1.400-1.450-1.500",
+        "fe0f38566717aa34de32376a": "Vital Apoquindo"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "fe0f38566717aa34de32376a",
+      "canonical_selection_note": "use the exact-ID project record named Vital Apoquindo; preserve the address-specific mention and all source-reported counts",
+      "confidence": "high",
+      "rationale": "Ambas fuentes identifican Vital Apoquindo 1.400–1.450–1.500 en Las Condes, el mismo predio de 131.422 m², 443 viviendas y 12 locales comerciales, y la controversia sobre el permiso. La unidad del proyecto es consistente; no se altera ninguna cifra o cita original.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "e4c1fbe6d25cd8141677:a:0",
+        "e4c1fbe6d25cd8141677:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://elquintopoder.cl/ciudadania/los-dictamenes-atrasados-de-la-contraloria-no-sirven-de-nada/",
+          "publisher": "El Quinto Poder",
+          "supports": "Detalla dirección, superficie y atributos del proyecto de Vital Apoquindo."
+        },
+        {
+          "url": "https://www.emol.com/noticias/Nacional/2023/02/21/1087362/vital-apoquindo-demanda-las-condes.html",
+          "publisher": "Emol",
+          "supports": "Identifica desarrolladora, ubicación y controversia del mismo proyecto."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "8171815b9845b0a3eb2c",
+      "project_ids": [
+        "cb1087cc68bd26d203011f18",
+        "8e88d3996773e1c8ecf04a7c"
+      ],
+      "project_names": {
+        "cb1087cc68bd26d203011f18": "cuatro megaproyectos seguidos emplazados en calle Toro Mazzote",
+        "8e88d3996773e1c8ecf04a7c": "cuatro megaproyectos seguidos emplazados en calle Toro Mazzote, de la Inmobiliaria SuKsa"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "cb1087cc68bd26d203011f18",
+      "canonical_selection_note": "retain the canonical case-page exact-ID record rather than the archive/category duplicate",
+      "confidence": "high",
+      "rationale": "Ambas páginas de Interferencia reproducen literalmente la misma oración sobre el agregado de cuatro megaproyectos contiguos de calle Toro Mazzote vinculados a SuKsa. La resolución se limita a esa referencia agregada duplicada; no declara que los cuatro proyectos miembros sean una sola obra ni los fusiona entre sí.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "8171815b9845b0a3eb2c:a:0",
+        "8171815b9845b0a3eb2c:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://interferencia.cl/casos/guetos-verticales",
+          "publisher": "Interferencia",
+          "supports": "Página canónica del caso con la frase del agregado de cuatro proyectos."
+        },
+        {
+          "url": "https://interferencia.cl/secciones/empresas?_url=/secciones/empresas&page=40",
+          "publisher": "Interferencia",
+          "supports": "Archivo de sección que reproduce la misma frase del mismo caso."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "be23ed3f93026a81292d",
+      "project_ids": [
+        "e986c115668629af6342f449",
+        "e37655355ac179806569a998"
+      ],
+      "project_names": {
+        "e986c115668629af6342f449": "proyecto de 25 edificios en la calle Vital Apoquindo",
+        "e37655355ac179806569a998": "Mega proyecto inmobiliario de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "e37655355ac179806569a998",
+      "canonical_selection_note": "retain the exact-ID record whose source names the shared Vital Apoquindo site; preserve the separate source claim linking the CChC building case",
+      "confidence": "high",
+      "rationale": "La nota de BioBioChile identifica expresamente el proyecto de 25 edificios en Vital Apoquindo como antecedente urbanístico/permiso de la controversia del edificio institucional de la CChC; la otra fuente describe ese mismo desarrollo y tramo 1.400–1.500. Se unen solo estos project_id exactos; la mención CChC permanece vinculada a su propio case_mention.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "be23ed3f93026a81292d:a:0",
+        "be23ed3f93026a81292d:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.biobiochile.cl/noticias/blogs/el-blog-de-patricio-herman/2021/05/10/graves-ilegalidades-contenidas-en-el-permiso-del-edificio-institucional-de-la-cchc-en-las-condes.shtml",
+          "publisher": "BioBioChile",
+          "supports": "Vincula la referencia de 25 edificios con Vital Apoquindo y la controversia del edificio institucional CChC."
+        },
+        {
+          "url": "https://www.elclarin.cl/2020/12/15/que-sucedera-con-los-25-edificios-ilegales-en-las-condes/",
+          "publisher": "El Clarín",
+          "supports": "Describe el proyecto y el terreno de Vital Apoquindo 1400/1450/1500."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "3695e490944a9c19c06d",
+      "project_ids": [
+        "06cac2c4b094ac1ed38ac40b",
+        "d8612c60e4f66ef4627d31c5"
+      ],
+      "project_names": {
+        "06cac2c4b094ac1ed38ac40b": "proyecto de Rotonda Atenas",
+        "d8612c60e4f66ef4627d31c5": "vivienda sociales en la Rotonda Atenas"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "06cac2c4b094ac1ed38ac40b",
+      "canonical_selection_note": "retain the established exact-ID record for the Rotonda Atenas initiative; preserve its source-specific naming variants",
+      "confidence": "high",
+      "rationale": "Las fuentes describen el mismo proyecto de vivienda social en Rotonda Atenas, Las Condes, anunciado en 2018, con oposición vecinal por integración y efectos percibidos. La Municipalidad de Las Condes documenta el proyecto ejecutado de 85 viviendas. No se confunde con otros desarrollos cercanos a una rotonda o con la controversia por compraventa de terrenos mencionada en otro artículo.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "3695e490944a9c19c06d:a:0",
+        "3695e490944a9c19c06d:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.lascondes.cl/beneficios/vivienda-2/rotonda-atenas/",
+          "publisher": "Municipalidad de Las Condes",
+          "supports": "Proyecto de viviendas sociales en Rotonda Atenas y 85 unidades entregadas."
+        },
+        {
+          "url": "https://www.elmostrador.cl/noticias/opinion/columnas/2018/07/15/rotonda-atenas-entre-la-integracion-social-y-el-clasismo/",
+          "publisher": "El Mostrador",
+          "supports": "Describe la iniciativa de vivienda social y la controversia vecinal de 2018."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "facad8bf50f968e5f69a",
+      "project_ids": [
+        "89ddfb0616d12dccc7393b63",
+        "cf65c362a0dd71489735dc57"
+      ],
+      "project_names": {
+        "89ddfb0616d12dccc7393b63": "iniciativa de más de 1.700 departamentos en Plaza Egaña",
+        "cf65c362a0dd71489735dc57": "Plaza Egaña"
+      },
+      "identity_class": "distinct_entities",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "high",
+      "rationale": "Los IDs corresponden a objetos distintos. La fuente TOCTOC describe una iniciativa residencial específica de más de 1.700 departamentos en Plaza Egaña. El acta COSOC de Ñuñoa usa “Plaza Egaña” como comparación del resultado urbano de eliminar suelo absorbente y árboles en Parque Bustamante; no identifica la iniciativa residencial ni un alias suyo. La sentencia R-231-2020 confirma que Egaña-Comunidad Sustentable es un proyecto específico en Irarrázaval con Américo Vespucio, separado de esa referencia comparativa. Se conserva la separación exacta y no se crea relación de identidad.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "facad8bf50f968e5f69a:a:0",
+        "facad8bf50f968e5f69a:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://blog.toctoc.com/las-2-razones-que-tienen-mal-a-vecinos-de-grandes-edificios/",
+          "publisher": "TOCTOC Blog Inmobiliario",
+          "supports": "Describe la iniciativa residencial de más de 1.700 departamentos en Plaza Egaña."
+        },
+        {
+          "url": "https://www.nunoa.cl/app/uploads/2025/02/Acta_sesion_ordinaria_N_5_COSOC_26_05_2021.pdf",
+          "publisher": "Municipalidad de Ñuñoa, acta COSOC",
+          "supports": "Usa Plaza Egaña como comparación de una condición de espacio público en la discusión sobre Parque Bustamante; no identifica el proyecto de 1.700 departamentos."
+        },
+        {
+          "url": "https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/",
+          "publisher": "Segundo Tribunal Ambiental",
+          "supports": "Identifica Egaña-Comunidad Sustentable como proyecto inmobiliario específico en Irarrázaval y Américo Vespucio, con cuatro torres."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "4b4059b24dd41fe0f032",
+      "project_ids": [
+        "bb5755a35f19ada504ca13a4",
+        "de08d293dbbdbbb72d27e6ae"
+      ],
+      "project_names": {
+        "bb5755a35f19ada504ca13a4": "proyecto inmobiliario de Fundamenta",
+        "de08d293dbbdbbb72d27e6ae": "proyecto inmobiliario de Fundamenta en Ñuñoa (4 torres de 32 pisos)"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "bb5755a35f19ada504ca13a4",
+      "canonical_selection_note": "Retener el ID histórico asociado a la fuente Emol de 2022, la primera referencia cronológica del par; se preservan ambos project_id y sus procedencias. La selección no se basa en que el nombre sea más completo.",
+      "confidence": "high",
+      "rationale": "La fuente Emol de 2022 describe el proyecto de Fundamenta en Ñuñoa, la controversia de sombras y tres torres residenciales de 32 pisos junto a una torre de oficinas. La sentencia primaria R-231-2020 identifica Egaña-Comunidad Sustentable, Plaza Egaña SpA, en Irarrázaval con Américo Vespucio, con cuatro torres: tres residenciales de 32 pisos y una torre de oficinas de 26 pisos; el litigio trata precisamente la evaluación de sombras y refractación. La fuente de 2024 también refiere el proyecto de Fundamenta en Ñuñoa y la misma controversia, aunque simplifica erróneamente la altura de la torre de oficinas. Ubicación, configuración, titular/entidad del proyecto y controversia convergen en una misma obra; la discrepancia es un atributo de fuente, no evidencia de un segundo proyecto. Se fusionan solo estos dos project_id exactos y ambos permanecen preservados.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "4b4059b24dd41fe0f032:a:0",
+        "4b4059b24dd41fe0f032:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://tribunalambiental.cl/sentencia-r-231-2020-nunoa-egana-comunidad-sustentabe-sea/",
+          "publisher": "Segundo Tribunal Ambiental",
+          "supports": "Fuente primaria de R-231-2020: identifica el proyecto Egaña-Comunidad Sustentable, el emplazamiento, las cuatro torres y la controversia de sombras/refracción."
+        },
+        {
+          "url": "https://tribunalambiental.cl/wp-content/uploads/2023/06/Sentencia_R_231-2020-25.11.2021.pdf",
+          "publisher": "Segundo Tribunal Ambiental, sentencia R-231-2020",
+          "supports": "Confirma el detalle de tres torres residenciales de 32 pisos, torre de oficinas de 26 pisos y 1.752 departamentos."
+        },
+        {
+          "url": "https://segreader.emol.cl/2022/04/21/A/GN449AUI/light?gt=173001",
+          "publisher": "Emol",
+          "supports": "Fuente del registro de 2022: proyecto de Fundamenta en Ñuñoa con controversia por sombras y tres torres residenciales de 32 pisos más oficina."
+        },
+        {
+          "url": "https://www.elclarin.cl/2024/07/30/elefantes-blancos-y-abogados-chismosos/",
+          "publisher": "El Clarín de Chile",
+          "supports": "Fuente del registro específico de 2024; describe cuatro torres de Fundamenta en Ñuñoa y la controversia del estudio de sombras, aunque su altura atribuida a oficinas difiere del expediente oficial."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "6b84e4c69373bcadad41",
+      "project_ids": [
+        "2cfcdb67a6274db8af9377f6",
+        "2a40c16d17565173915c550d"
+      ],
+      "project_names": {
+        "2cfcdb67a6274db8af9377f6": "Alto Las Condes",
+        "2a40c16d17565173915c550d": "Cenco Alto Las Condes"
+      },
+      "identity_class": "insufficient_evidence",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "medium",
+      "rationale": "El ID Alto Las Condes mezcla dos objetos: dos menciones (La Tercera y Cooperativa, 2014) usan el mall existente como referencia, y tres (DF 2020, 2023 y 2025) tratan el proyecto de ampliación Alto Las Condes 2 en el terreno frente al mall. Cenco Alto Las Condes (Infobae, 2025) es la marca del mall existente. Fusionar los IDs arrastraría el proyecto de ampliación al activo operativo, y viceversa. No se fusiona ni se afirma diferencia: la identidad del ID mixto queda no establecida. Reapertura: separar las menciones del ID por objeto (mall existente vs ampliación).",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "6b84e4c69373bcadad41:a:0",
+        "6b84e4c69373bcadad41:a:1",
+        "6b84e4c69373bcadad41:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.df.cl/empresas/construccion/alto-las-condes-2-van-casi-dos-anos-y-vitacura-aun-no-define-si-permiso",
+          "publisher": "Diario Financiero",
+          "supports": "Alto Las Condes 2 es un proyecto en un terreno frente al mall homónimo."
+        },
+        {
+          "url": "https://www.infobae.com/peru/2025/12/04/cencosud-cancela-la-construccion-de-uno-de-sus-centros-comerciales-mas-ambiciosos/",
+          "publisher": "Infobae",
+          "supports": "Lista Cenco Alto Las Condes entre los centros comerciales operativos de Cenco Malls."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "70097cb05f72215db4b3",
+      "project_ids": [
+        "ffa5c9b29b95f230d34616d9",
+        "4648a378b2f533657c23de7a"
+      ],
+      "project_names": {
+        "ffa5c9b29b95f230d34616d9": "proyecto de dos torres de 30 y una de 32 pisos",
+        "4648a378b2f533657c23de7a": "dos torres de 30 y 32 pisos, con 295 departamentos en total y casi 35 mil metros cuadrados construidos"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "4648a378b2f533657c23de7a",
+      "canonical_selection_note": "Se conserva el ID de la fuente más antigua y con la descripción primaria del proyecto (Emol, 2022); ambos project_id quedan intactos.",
+      "confidence": "high",
+      "rationale": "Ambas menciones son el proyecto de Inmobiliaria Mirador del Cerro SpA junto al Hotel Sheraton Santiago, en Providencia. Emol (2022): “dos torres de 30 y 32 pisos, con 295 departamentos” en la parte posterior del Hotel Sheraton, con permiso rechazado por la Municipalidad de Providencia y reclamo de la inmobiliaria. Diario Concepción (2023): la Corte de Apelaciones de Santiago invalidó el permiso concedido a Inmobiliaria Mirador del Cerro SpA para el “proyecto de dos torres de 30 y una de 32 pisos en las cercanías del Hotel Sheraton Santiago”. Mismo titular, mismo sitio y misma controversia de permiso. La diferencia en la cantidad de torres es una divergencia de redacción entre fuentes y se conserva como atributo de fuente, no se normaliza.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "70097cb05f72215db4b3:a:0",
+        "70097cb05f72215db4b3:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://segreader.emol.cl/2022/03/03/A/EF43J8VT/light?gt=142501",
+          "publisher": "Emol",
+          "supports": "Proyecto de Inmobiliaria Mirador del Cerro de dos torres de 30 y 32 pisos y 295 departamentos tras el Hotel Sheraton."
+        },
+        {
+          "url": "https://www.diarioconcepcion.cl/ciudad/2023/07/17/vecinos-denuncian-que-proyecto-de-casi-500-viviendas-fue-dividido-para-cumplir-con-normativa-vigente.html",
+          "publisher": "Diario Concepción",
+          "supports": "Permiso invalidado por la Corte de Apelaciones de Santiago a Inmobiliaria Mirador del Cerro SpA cerca del Hotel Sheraton Santiago."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "19a17e893f4747e113e9",
+      "project_ids": [
+        "1c1f2a962eca459282a98baa",
+        "7a4072da49c6decfd6df3f01"
+      ],
+      "project_names": {
+        "1c1f2a962eca459282a98baa": "proyecto inmobiliario Bellavista",
+        "7a4072da49c6decfd6df3f01": "proyecto Bellavista"
+      },
+      "identity_class": "same_identity",
+      "resolver_action": "merge_case",
+      "canonical_project_id": "7a4072da49c6decfd6df3f01",
+      "canonical_selection_note": "Se conserva el ID de la mención más antigua (La Tercera, 2019); ambos project_id quedan intactos.",
+      "confidence": "high",
+      "rationale": "Ambas menciones son el proyecto de Desarrollo Inmobiliario Bellavista S.A. (DIB) en Recoleta, disputado por el alcalde Daniel Jadue. El Dínamo (2021): la Corte Suprema ordena demoler una torre del proyecto de DIB en calle Dardignac N°44 y menciona la demanda para anular los permisos del “proyecto inmobiliario Bellavista”. La Tercera (2019): el gerente general de DIB y Jadue se enfrentan por la construcción del “proyecto Bellavista, que de tres torres solo una está operativa”. Mismo titular, misma comuna y misma controversia sustentan que ambos IDs son ese proyecto. No se unen aquí referencias al campus de la Universidad San Sebastián ni a otras unidades del cluster Bellavista, que conservan sus propias adjudicaciones.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "19a17e893f4747e113e9:a:0",
+        "19a17e893f4747e113e9:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.eldinamo.cl/pais/2021/02/24/corte-suprema-demoler-torre-bellavista-recoleta/",
+          "publisher": "El Dínamo",
+          "supports": "Torre del proyecto de Desarrollo Inmobiliario Bellavista S.A. en Dardignac 44; permisos del proyecto inmobiliario Bellavista."
+        },
+        {
+          "url": "https://www.latercera.com/pulso/noticia/alcalde-recoleta-daniel-jadue-walker-ha-iniciado-una-campana-danarme-personalmente/824852/",
+          "publisher": "La Tercera",
+          "supports": "Conflicto entre DIB y el alcalde de Recoleta por el proyecto Bellavista de tres torres."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    }
+  ],
+  "historical_adjudications": [
+    {
+      "pair_id": "historical_pair:8bf36944edfe85c618e0",
+      "project_ids": [
+        "14537e43f763c717791c5b90",
+        "00a49b2fac5c7887f0c4f628"
+      ],
+      "project_names": {
+        "00a49b2fac5c7887f0c4f628": "edificio de la estrecha calle Santa Petronila",
+        "14537e43f763c717791c5b90": "Edificio Santa Petronila"
+      },
+      "identity_class": "insufficient_evidence",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "medium",
+      "rationale": "Una fuente identifica un edificio Santa Petronila de PAZ Corp. en venta (El Ciudadano, 2017); la otra describe la megatorre de 30 pisos y 1.053 departamentos de la estrecha calle Santa Petronila junto al cruce General Velázquez con Alameda (Hogar de Cristo, 2025). La calle concentra varios desarrollos (p. ej. Santa Petronila Plaza de Absal, el edificio de PAZ Corp. y otras torres de Su Ksa en el mismo polígono), y ninguna fuente entrega número, rol predial, permiso o titular que ligue las dos descripciones. La reconexión histórica previa se hizo por coincidencia de subcadena de nombre y no es evidencia de identidad. No se fusiona ni se afirma diferencia. Reapertura: dirección exacta, rol o permiso DOM que ligue ambas menciones.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "historical_pair:8bf36944edfe85c618e0:a:0",
+        "historical_pair:8bf36944edfe85c618e0:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://www.elciudadano.com/reportaje-investigacion/las-nuevas-callampas-boom-inmobiliario-en-estacion-central/04/07/",
+          "publisher": "El Ciudadano",
+          "supports": "Ubica el edificio Santa Petronila de PAZ Corp. junto a otras torres de Su Ksa y un paño de Absal en la misma calle."
+        },
+        {
+          "url": "https://www.hogardecristo.cl/entrevistas/alejandro-verdugo-demolamos-al-menos-una-megatorre/",
+          "publisher": "Hogar de Cristo",
+          "supports": "Describe la megatorre de 30 pisos y 1.053 departamentos de la estrecha calle Santa Petronila."
+        },
+        {
+          "url": "https://absal.cl/santa-petronila/",
+          "publisher": "Absal",
+          "supports": "Proyecto Santa Petronila Plaza: otro desarrollo en la misma calle."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    },
+    {
+      "pair_id": "historical_pair:1a548f6ba2417a0e6aae",
+      "project_ids": [
+        "e8fd7b147a07358cd8e129e9",
+        "d18b439c5be31864ad8f1e21"
+      ],
+      "project_names": {
+        "d18b439c5be31864ad8f1e21": "Cenco Costanera (antes Mall Costanera Center)",
+        "e8fd7b147a07358cd8e129e9": "Costanera Center"
+      },
+      "identity_class": "parent_component_phase",
+      "resolver_action": "no_new_merge",
+      "canonical_project_id": null,
+      "canonical_selection_note": null,
+      "confidence": "medium",
+      "rationale": "Costanera Center designa el complejo inmobiliario de Cencosud (cuatro torres incluida la Gran Torre Santiago, hoteles, oficinas y el mall); Cenco Costanera es el nombre actual del centro comercial, antes Mall Costanera Center, que es un componente de ese complejo. La fuente de 2025 (Infobae) lo nombra así como marca del mall, y el ID Costanera Center agrupa menciones al complejo y a iniciativas de Cencosud en él. Es una relación parte–todo, no identidad; la reconexión histórica previa (“mismo mall”) se hizo por subcadena de nombre. Se mantienen separados y no se persiste relación tipada.",
+      "decision_source": "project_identity_adjudication_override_2026-09-28",
+      "source_evidence_ref_ids": [
+        "historical_pair:1a548f6ba2417a0e6aae:a:0",
+        "historical_pair:1a548f6ba2417a0e6aae:b:0"
+      ],
+      "supporting_sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Costanera_Center",
+          "publisher": "Wikipedia",
+          "supports": "Describe Costanera Center como complejo de cuatro rascacielos, hoteles, oficinas y un mall."
+        },
+        {
+          "url": "https://es.wikipedia.org/wiki/Cenco_Costanera",
+          "publisher": "Wikipedia",
+          "supports": "Cenco Costanera es el centro comercial, antes Mall Costanera Center, dentro del complejo Costanera Center."
+        },
+        {
+          "url": "https://www.infobae.com/peru/2025/12/04/cencosud-cancela-la-construccion-de-uno-de-sus-centros-comerciales-mas-ambiciosos/",
+          "publisher": "Infobae",
+          "supports": "Lista Cenco Costanera (antes Mall Costanera Center) entre los centros comerciales de Cenco Malls."
+        }
+      ],
+      "typed_relation_persisted": false,
+      "production_promoted": false
+    }
+  ]
+}

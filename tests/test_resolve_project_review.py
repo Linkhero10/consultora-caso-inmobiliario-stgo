@@ -1174,12 +1174,12 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
 
     expected = {
         ("91f2112803222891bec22245", "2501823afe7521d105456260"): "same_identity",
-        ("803b8601f7f58a2b25f694cd", "a07066976e35eb7bd807ed77"): "unresolved",
+        ("803b8601f7f58a2b25f694cd", "a07066976e35eb7bd807ed77"): "same_identity",
         ("52431d07bb532a107713c2bd", "bcf9a9d46577aec285a3b590"): "distinct_entities",
         ("5997fefd9709a67727316bc2", "fe0f38566717aa34de32376a"): "same_identity",
         ("e37655355ac179806569a998", "fe0f38566717aa34de32376a"): "same_identity",
-        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "unresolved",
-        ("a07066976e35eb7bd807ed77", "01d6668a9dc5aba908f81090"): "unresolved",
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"): "insufficient_evidence",
+        ("a07066976e35eb7bd807ed77", "01d6668a9dc5aba908f81090"): "distinct_entities",
         ("922533b858c751fc8f5a8e3b", "fe0f38566717aa34de32376a"): "same_identity",
         ("cb1087cc68bd26d203011f18", "8e88d3996773e1c8ecf04a7c"): "same_identity",
         ("bb5755a35f19ada504ca13a4", "de08d293dbbdbbb72d27e6ae"): "same_identity",
@@ -1188,6 +1188,11 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
         ("06cac2c4b094ac1ed38ac40b", "d8612c60e4f66ef4627d31c5"): "same_identity",
         ("06cac2c4b094ac1ed38ac40b", "623ed9e19dc274ad6b3ae8dd"): "same_identity",
         ("06cac2c4b094ac1ed38ac40b", "7e66e9745e63138bdbdf2c76"): "same_identity",
+        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"): "insufficient_evidence",
+        ("ffa5c9b29b95f230d34616d9", "4648a378b2f533657c23de7a"): "same_identity",
+        ("1c1f2a962eca459282a98baa", "7a4072da49c6decfd6df3f01"): "same_identity",
+        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"): "insufficient_evidence",
+        ("e8fd7b147a07358cd8e129e9", "d18b439c5be31864ad8f1e21"): "parent_component_phase",
     }
     for pair, identity_class in expected.items():
         assert by_pair[tuple(sorted(pair))]["identity_class"] == identity_class
@@ -1203,21 +1208,18 @@ def test_effective_identity_adjudications_apply_only_exact_pinned_overrides():
             )[0]
         )
     assert {value: outcomes.count(value) for value in (True, False, None)} == {
-        True: 35,
-        False: 52,
-        None: 8,
+        True: 38,
+        False: 57,
+        None: 0,
     }
     unresolved_reviewed = {
         entry["pair_id"]
         for entry in adjudications
         if entry["identity_class"] == "unresolved" and entry.get("override_artifact")
     }
-    assert unresolved_reviewed == {
-        "d0fb99d977176b8fd90c",
-        "f46e5517d7ecee26f64d",
-        "7dfca97fba3dc5d6abd2",
-    }
-    assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 8
+    assert unresolved_reviewed == set()
+    assert sum(entry["identity_class"] == "unresolved" for entry in adjudications) == 0
+    assert sum(entry["identity_class"] == "insufficient_evidence" for entry in adjudications) == 3
     assert all(
         entry["confidence"] == "high"
         for entry in adjudications
@@ -1250,8 +1252,8 @@ def test_topology_pair_dispositions_are_pinned_to_the_exact_reviewed_ids():
     assert fundamenta["resolver_action"] == "merge_case"
     assert fundamenta["canonical_project_id"] == "bb5755a35f19ada504ca13a4"
     assert fundamenta["production_promoted"] is False
-    assert plaza["override_artifact"].endswith("_v2.json")
-    assert fundamenta["override_artifact"].endswith("_v2.json")
+    assert plaza["override_artifact"].endswith("_v3.json")
+    assert fundamenta["override_artifact"].endswith("_v3.json")
 
 
 def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_scoped():
@@ -1274,7 +1276,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
             identity_adjudications=adjudications,
         )
     )
-    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v2.json"
+    assert provenance["artifact"] == "audit/project_identity_adjudication_overrides_2026-09-28_v3.json"
     assert provenance["artifact_sha256"] == rpq.PROJECT_IDENTITY_OVERRIDE_SHA256
 
     same_names_other_ids = rpq.classify_project_pair_with_adjudications(
@@ -1285,7 +1287,7 @@ def test_effective_identity_adjudication_overlay_keeps_the_decision_exact_id_sco
 
 
 def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeypatch):
-    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v2.json"
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
     original_read_bytes = Path.read_bytes
 
     def tampered_read_bytes(path):
@@ -1295,3 +1297,65 @@ def test_effective_identity_adjudication_loader_rejects_tampered_overlay(monkeyp
     monkeypatch.setattr(Path, "read_bytes", tampered_read_bytes)
     with pytest.raises(ValueError, match="override SHA-256 mismatch"):
         rpq.load_effective_project_identity_adjudications()
+
+
+def test_closed_overlay_leaves_no_unresolved_pair_and_keeps_uncertainty_explicit():
+    """[2026-09-29] Cierre de los 8 pares PROJECT abiertos: ninguna entrada efectiva queda
+    `unresolved`; los 3 casos sin evidencia positiva se mantienen separados como
+    `insufficient_evidence` (no se afirma que sean objetos distintos) y los historicos
+    Santa Petronila/Costanera Center se adjudican por ID exacto."""
+    adjudications = rpq.load_effective_project_identity_adjudications()
+    assert not [a for a in adjudications if a["identity_class"] == "unresolved"]
+    by_pair = {tuple(sorted(a["project_ids"])): a for a in adjudications}
+    for ids in (
+        ("14537e43f763c717791c5b90", "00a49b2fac5c7887f0c4f628"),
+        ("0a9d6730e059f72c2cdec2d8", "ad2b70567df6b8d44f952100"),
+        ("2cfcdb67a6274db8af9377f6", "2a40c16d17565173915c550d"),
+    ):
+        entry = by_pair[tuple(sorted(ids))]
+        assert entry["identity_class"] == "insufficient_evidence"
+        assert entry["resolver_action"] == "no_new_merge"
+        assert entry["canonical_project_id"] is None
+        a, b = ids
+        result = rpq.classify_project_pair_with_adjudications(
+            a, entry["project_names"][a], b, entry["project_names"][b], adjudications
+        )
+        assert result[0] is False
+
+
+def test_legacy_name_level_merges_contradicted_by_sources_are_reverted():
+    """La coincidencia de nombre o de desarrollador no es identidad: 'Reserva La Dehesa'
+    (54 casas, Cerro del Medio) != Reserva La Dehesa (ex Chaguay), y el edificio de
+    Desarrollo Inmobiliario Bellavista (Estacion Central) != proyecto Bellavista (Recoleta)."""
+    assert rpq.classify("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)")[0] is False
+    assert rpq.classify("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista")[0] is False
+    assert rpq.classify("Chaguay", "Reserva La Dehesa (ex Chaguay)")[0] is True
+
+
+def test_override_rejects_merge_without_high_confidence_or_for_insufficient_evidence(monkeypatch, tmp_path):
+    """Ruta negativa: el loader falla cerrado si un override intenta fusionar con confianza media
+    o si una clase sin merge declara un canonical_project_id."""
+    artifact = PROJECT_ROOT / "audit" / "project_identity_adjudication_overrides_2026-09-28_v3.json"
+    payload = json.loads(artifact.read_text(encoding="utf-8"))
+
+    def load_with(mutator):
+        mutated = json.loads(json.dumps(payload))
+        mutator(mutated)
+        raw = json.dumps(mutated, ensure_ascii=False, indent=2).encode("utf-8")
+        path = tmp_path / "overlay.json"
+        path.write_bytes(raw)
+        monkeypatch.setattr(rpq, "PROJECT_IDENTITY_OVERRIDE_SHA256", hashlib.sha256(raw).hexdigest())
+        return rpq.load_effective_project_identity_adjudications(path)
+
+    def medium_merge(p):
+        next(e for e in p["adjudications"] if e["identity_class"] == "same_identity")["confidence"] = "medium"
+
+    def canonical_on_no_merge(p):
+        next(e for e in p["adjudications"] if e["identity_class"] == "insufficient_evidence")[
+            "canonical_project_id"
+        ] = p["adjudications"][0]["project_ids"][0]
+
+    with pytest.raises(ValueError, match="needs high confidence"):
+        load_with(medium_merge)
+    with pytest.raises(ValueError, match="must not merge or choose a canonical ID"):
+        load_with(canonical_on_no_merge)

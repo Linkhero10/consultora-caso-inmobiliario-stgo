@@ -55,3 +55,13 @@
 - Regla anti-bucle vigente: este ledger más el dossier v2 son la única continuidad operativa de este bloque. Al retomar, comprobar HEAD, hashes del overlay/warehouse y CI; si no cambiaron, ir al paso siguiente escrito. No recalcular los 52 casos, no volver a buscar genéricamente nombres ya investigados, no repetir pruebas con el mismo fingerprint. Una nueva búsqueda solo se abre para satisfacer un predicado de reentrada de una fila concreta.
 - Siguiente paso único: revisar el diff final, commit/push de este checkpoint y observar una vez el CI nuevo. No reconstruir warehouse, promover decisiones ni fusionar el PR. Tras CI verde, registrar el SHA/run en FARO y terminar: no hacer un commit adicional solo para anotar el resultado de CI. Reabrir únicamente si cambia el fingerprint/CI o llega evidencia que cumpla un criterio de reentrada de los ocho casos.
 
+
+## 2026-09-29 — cierre de los 8 pares y reconstrucción integral (Claude, a pedido de Felipe)
+
+- Continuación desde HEAD `bca445da11e18c9b35fd56c330de5af24a4aaecb`. Felipe pidió cerrar los 8 pares abiertos y dejar todo listo. Trabajo hecho en el checkout principal sobre la rama local `close-identity-8`, publicada en `codex/historical-case-references`.
+- Los 8 pares se decidieron con evidencia de fuente; detalle y criterio de cada uno en `audit/project_identity_closure_2026-09-29.md`. Overlay v3 pinneado, SHA-256 `82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626`. Reemplaza al v2 (que se conserva).
+- El cierre exigió revertir dos fusiones legacy por nombre que las fuentes contradicen (Reserva La Dehesa / ex Chaguay; proyecto Bellavista / edificio DIB).
+- Se corrigió un defecto de portabilidad: con `core.autocrlf=true` el checkout de Windows alteraba los bytes de los artefactos con hash fijado; `.gitattributes` ahora fuerza LF.
+- Reconstrucción integral completa (build_projects → resolve → detect_case_mention_duplicates → build_conflicts → actor registry/network → geography → dashboard → manifest). Cola: 118 merged, 138 kept_separate, 0 abiertos. Warehouse `ef776d1f9294021751d1b74f602523eaabe6d02e18f7d6b4b68c61bfa6d1436d`, integrity ok, 0 FK.
+- Este cierre supera el reporte de simulación v2 y el dossier de diez bloqueos; no se borran.
+- Regla anti-bucle: no reabrir estos 8 sin evidencia nueva del tipo indicado en el rationale de cada uno.
