@@ -101,6 +101,15 @@
       "sol_clasificacion": "A",
       "sol_justificacion": "Lote 18/Lote 18-A1 es una subdivisión/componente físico de Villa San Luis y la disputa por demolición, torres y declaratoria patrimonial forma una misma controversia.",
       "source_document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b"
+    },
+    {
+      "historical_case_id": "a05fdf045aeb8721bd7664b4",
+      "canonical_name": "Alto Norte",
+      "resolved_case_id": "008d2f365c67d75ec7b3e30a",
+      "resolved_via": "[2026-09-29] 'Alto Norte' no tiene project_id vivo: es el nombre con que Cencosud Shopping designa el permiso de edificacion (permiso 121, 20-12-2000) del proyecto Alto Las Condes 2 en el propio articulo de Diario Financiero (2023): 'el fallo de segunda instancia que declaraba caducado el permiso de edificacion de Alto Norte', dentro de la nota sobre el desistimiento del recurso de casacion por Alto Las Condes 2. Sol ya adjudico la relacion (mismo_proyecto/alias) con 5f33de46..., hoy fusionado en el case_id 008d2f36... (proyecto 'Alto Las Condes 2', 9 documentos); solo se repara el destino del alias historico. Las memorias anuales 2020-2021 de Cencosud y el registro de Ley Lobby (Luna, auditoria de huecos) apoyan el mismo vinculo; no se leyo el expediente de la DOM.",
+      "sol_clasificacion": "B",
+      "sol_justificacion": "El artículo denomina el desarrollo Alto Las Condes 2 mientras el litigio y el permiso son referidos como Alto Norte; la evidencia los trata como el mismo proyecto de Cencosud bajo nombres distintos.",
+      "source_document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd"
     }
   ],
   "non_resolvable": [

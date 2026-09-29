@@ -796,3 +796,46 @@ def test_normalize_does_not_glue_hyphenated_ranges_or_spaced_letters():
     assert n("calle Vital Apoquindo 1.400-1.450-1.500") == "calle vital apoquindo 1 400 1 450 1 500"
     assert n("Villa Panamericana - Lote B") == "villa panamericana lote b"
     assert n("Proyecto de Ley 2020 - a partir de hoy") == n("Ley 2020 a partir de hoy")
+
+
+def test_adjudicated_index_corrections_are_consistent_with_the_warehouse_and_the_fulltext():
+    """[2026-09-29] Cada enlace adjudicado apunta a una case_mention include de su propio documento, cita evidencia
+    de objeto verificada que existe tal cual en el warehouse, y la cita aparece en el fulltext."""
+    import json as _json
+    import re as _re
+
+    path = bridge.VERIFIED_INDEX_CORRECTIONS_PATH
+    corrections = _json.loads(path.read_text(encoding="utf-8"))["corrections"]
+    assert len(corrections) == 18
+    warehouse = PROJECT_ROOT / "data" / "warehouse.sqlite"
+    if not warehouse.exists():
+        pytest.skip("warehouse.sqlite no existe en este entorno")
+    conn = sqlite3.connect(warehouse)
+    keys = set()
+    for c in corrections:
+        key = (c["document_id"], c["nombre_proyecto"])
+        assert key not in keys
+        keys.add(key)
+        assert c["case_mention_id"] == f"{c['document_id']}:{c['case_mention_index']}"
+        decision = conn.execute(
+            "SELECT decision_final_amplio FROM case_mention WHERE case_mention_id = ?", (c["case_mention_id"],)
+        ).fetchone()
+        assert decision is not None and decision[0] == "include", c["reference_key"]
+        for ev_id in c["linked_evidence_ids"]:
+            row = conn.execute(
+                "SELECT case_mention_id, verified FROM evidence WHERE evidence_id = ?", (ev_id,)
+            ).fetchone()
+            assert row == (c["case_mention_id"], 1), (c["reference_key"], ev_id)
+        assert conn.execute(
+            "SELECT 1 FROM enrichment_project_mention WHERE document_id = ? AND nombre_proyecto = ?",
+            (c["document_id"], c["nombre_proyecto"]),
+        ).fetchone(), c["reference_key"]
+    conn.close()
+    content_root = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+    if not content_root.exists():
+        pytest.skip("fulltext local no disponible en este entorno")
+    squash = lambda s: _re.sub(r"\s+", " ", s)
+    for c in corrections:
+        text = _json.loads((PROJECT_ROOT / c["source_file_path"]).read_text(encoding="utf-8"))["text"]
+        for citation in c["citations"]:
+            assert squash(citation["quote"]) in squash(text), (c["reference_key"], citation["quote"][:60])

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-29T15:11:04.565924+00:00",
+  "built_at": "2026-09-29T16:58:03.607513+00:00",
   "output_warehouse": "data\\warehouse.sqlite",
   "n_projects": 942,
   "n_project_mentions_resolved": 1267,
@@ -39,8 +39,9 @@
   },
   "verified_project_mention_index_corrections": {
     "disponible": true,
-    "n_entradas_configuradas": 1,
-    "n_menciones_corregidas": 1,
+    "n_entradas_configuradas": 18,
+    "n_menciones_corregidas": 17,
+    "n_indices_materializados_en_enrichment_project_mention": 18,
     "fuente": "config/verified_project_mention_index_corrections_v1.json",
     "nota": "Corrige case_mention_index=null puntual para menciones donde la evidencia estructurada del warehouse ya identifica sin ambiguedad el case_mention -- nunca inventa un indice, cada entrada cita evidence_id reales. No reemplaza la lista de proyectos_mencionados como sol_corrections; solo ajusta el indice de una mencion que v3.3 ya extrajo."
   }

@@ -421,6 +421,27 @@ def apply_verified_project_mention_index_corrections(
     return n_aplicadas
 
 
+def apply_index_corrections_to_warehouse(conn: sqlite3.Connection, corrections: dict[tuple[str, str], int]) -> int:
+    """Materializa los enlaces adjudicados en enrichment_project_mention (la tabla que consumen CONFLICT y geografia).
+
+    [CORREGIDO 2026-09-29] Hasta esta fecha las correcciones solo se aplicaban a los registros en memoria del
+    registro de proyectos, que no usa case_mention_index: ninguna llegaba a la tabla, asi que el enlace de Linea 7
+    nunca tuvo efecto. Falla cerrado: cada correccion configurada debe encontrar exactamente una mencion sin indice."""
+    applied = 0
+    for (document_id, nombre_proyecto), index in sorted(corrections.items()):
+        cursor = conn.execute(
+            "UPDATE enrichment_project_mention SET case_mention_index = ?, case_mention_id = ? "
+            "WHERE document_id = ? AND nombre_proyecto = ? AND case_mention_index IS NULL",
+            (index, f"{document_id}:{index}", document_id, nombre_proyecto),
+        )
+        if cursor.rowcount != 1:
+            raise ValueError(
+                f"correccion de case_mention_index sin exactamente una mencion sin indice: {document_id!r} / {nombre_proyecto!r} ({cursor.rowcount})"
+            )
+        applied += 1
+    return applied
+
+
 def build_project_registry(enrichment_records: list[dict[str, Any]]) -> tuple[dict[str, dict], dict[tuple[str, str], str]]:
     """Devuelve (project_id -> info del proyecto, (document_id, raw_name) -> project_id).
 
@@ -787,6 +808,8 @@ def main() -> int:
     OUTPUT_WAREHOUSE.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(SOURCE_WAREHOUSE, OUTPUT_WAREHOUSE)
     conn = sqlite3.connect(OUTPUT_WAREHOUSE)
+    n_indices_materializados_en_warehouse = apply_index_corrections_to_warehouse(conn, verified_index_corrections)
+    conn.commit()
 
     conn.executescript("""
         DROP TABLE IF EXISTS project_relation;
@@ -1000,6 +1023,7 @@ def main() -> int:
             "disponible": bool(verified_index_corrections),
             "n_entradas_configuradas": len(verified_index_corrections),
             "n_menciones_corregidas": n_menciones_con_indice_verificado_corregido,
+            "n_indices_materializados_en_enrichment_project_mention": n_indices_materializados_en_warehouse,
             "fuente": "config/verified_project_mention_index_corrections_v1.json",
             "nota": (
                 "Corrige case_mention_index=null puntual para menciones donde la evidencia "
