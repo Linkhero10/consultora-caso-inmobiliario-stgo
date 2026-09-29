@@ -223,6 +223,11 @@ MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP = "v3_3_verified_index_via_duplicate_group
 # quede auditable por separado sin tener que re-verificar todo el corpus.
 MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION = "v3_3_verified_index_via_duplicate_group_mixed_decision"
 BACKING_SCOPE_V3_3 = "mention_level_verified_index"
+# [2026-09-29] Adjudicacion humana de elegibilidad: una case_mention que etapa 1 dejo uncertain/exclude pero cuyo
+# documento la trata como el objeto de una disputa concreta puede respaldar el conflicto. Solo afecta este
+# respaldo, nunca case_mention.decision_final_amplio, y queda visible en match_method.
+CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH = PROJECT_ROOT / "config" / "case_mention_eligibility_adjudications_v1.json"
+MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY = "v3_3_verified_index_adjudicated_eligibility"
 
 # Metricas de calibracion (N=150, Sol) -- ver docstring del modulo. Fijas
 # porque dependen de veredictos humanos externos, no se recalculan corriendo
@@ -272,6 +277,38 @@ def load_v3_3_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], 
     return links
 
 
+def load_case_mention_eligibility_adjudications(conn: sqlite3.Connection, path: Path) -> dict[str, dict]:
+    """Lee y valida las adjudicaciones de elegibilidad contra el warehouse; falla cerrado."""
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "case_mention_eligibility_adjudications_v1":
+        raise ValueError("schema_version de case_mention_eligibility_adjudications no reconocido")
+    result: dict[str, dict] = {}
+    for entry in payload.get("adjudications", []):
+        cm_id = entry.get("case_mention_id")
+        if not cm_id or cm_id in result:
+            raise ValueError(f"adjudicacion de elegibilidad sin case_mention_id o duplicada: {cm_id!r}")
+        if entry.get("adjudicated_decision") != "include" or not entry.get("rationale") or not entry.get("evidence"):
+            raise ValueError(f"adjudicacion de elegibilidad incompleta: {cm_id!r}")
+        row = conn.execute("SELECT decision_final_amplio FROM case_mention WHERE case_mention_id = ?", (cm_id,)).fetchone()
+        if row is None:
+            raise ValueError(f"adjudicacion de elegibilidad apunta a case_mention inexistente: {cm_id!r}")
+        if row[0] != entry.get("original_decision_final_amplio"):
+            raise ValueError(
+                f"adjudicacion de elegibilidad de {cm_id!r} esperaba {entry.get('original_decision_final_amplio')!r} y el warehouse tiene {row[0]!r}"
+            )
+        for ev in entry["evidence"]:
+            ev_row = conn.execute(
+                "SELECT quote_text FROM evidence WHERE evidence_id = ? AND case_mention_id = ? AND quote_role = 'objeto' AND verified = 1",
+                (ev["evidence_id"], cm_id),
+            ).fetchone()
+            if ev_row is None or ev_row[0] != ev["quote"]:
+                raise ValueError(f"evidencia de la adjudicacion {cm_id!r} no coincide con el warehouse: {ev['evidence_id']!r}")
+        result[cm_id] = entry
+    return result
+
+
 def _project_backing_evidence(
     project_id: str,
     mentions_by_project: dict[str, list[dict]],
@@ -280,6 +317,7 @@ def _project_backing_evidence(
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
     duplicate_group_members: dict[str, list[str]] | None = None,
     decision_mixed_by_cm: dict[str, bool] | None = None,
+    adjudicated_cms: frozenset[str] | None = None,
 ) -> list[dict]:
     """Todas las filas de respaldo encontradas para este proyecto -- nunca
     solo un booleano. Cada fila es provenance completo: exactamente que
@@ -301,6 +339,7 @@ def _project_backing_evidence(
     substring era justamente el problema que v3.3 vino a eliminar."""
     duplicate_group_members = duplicate_group_members or {}
     decision_mixed_by_cm = decision_mixed_by_cm or {}
+    adjudicated_cms = adjudicated_cms or frozenset()
     rows = []
     for mention in mentions_by_project.get(project_id, []):
         document_id = mention["document_id"]
@@ -331,7 +370,7 @@ def _project_backing_evidence(
                         "ambiguous_multi_case_document": 0,
                         "duplicate_group_mixed_decision": 0,
                         "detector_version": DETECTOR_VERSION_V3_3,
-                        "match_method": MATCH_METHOD_V3_3,
+                        "match_method": MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY if case_mention_id in adjudicated_cms else MATCH_METHOD_V3_3,
                     }
                 )
         else:
@@ -1130,6 +1169,7 @@ def _build_conflict_backing(
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
     duplicate_group_members: dict[str, list[str]] | None = None,
     decision_mixed_by_cm: dict[str, bool] | None = None,
+    adjudicated_cms: frozenset[str] | None = None,
 ) -> tuple[str | None, str, list[dict]]:
     """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
     (sin excepcion por n_case_ids) y decide label + respaldo_evidencia.
@@ -1139,7 +1179,7 @@ def _build_conflict_backing(
     backed_projects: list[tuple[str, str]] = []
     backing_rows: list[dict] = []
     for pid, canonical_name in projects:
-        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm)
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms)
         if rows:
             backed_projects.append((pid, canonical_name))
             case_id_of_pid = case_id_by_project[pid]
@@ -1231,6 +1271,12 @@ def _build_conflicts(conn: sqlite3.Connection):
     included_by_doc: dict[str, list[str]] = defaultdict(list)
     for doc_id, cm_id in conn.execute("SELECT document_id, case_mention_id FROM case_mention WHERE decision_final_amplio = 'include'"):
         included_by_doc[doc_id].append(cm_id)
+    eligibility_adjudications = load_case_mention_eligibility_adjudications(conn, CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH)
+    for cm_id in eligibility_adjudications:
+        doc_id = cm_id.rsplit(":", 1)[0]
+        if cm_id not in included_by_doc[doc_id]:
+            included_by_doc[doc_id].append(cm_id)
+    adjudicated_cms = frozenset(eligibility_adjudications)
     objeto_by_cm: dict[str, list[dict]] = defaultdict(list)
     for cm_id, ev_id, quote_text in conn.execute(
         "SELECT case_mention_id, evidence_id, quote_text FROM evidence WHERE quote_role = 'objeto' AND verified = 1"
@@ -1357,7 +1403,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
         # resultaron error_grave en la validacion N=150).
         label, respaldo_evidencia, backing_rows = _build_conflict_backing(
-            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm
+            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms
         )
         conflict_evidence_backing_rows.extend(backing_rows)
         backing_summary = _backing_summary(projects, backing_rows)
@@ -1744,7 +1790,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     n_projects_total = len(case_id_by_project)
     n_projects_with_backing = sum(
         1 for pid in case_id_by_project
-        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm)
+        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms)
     )
     backing_rows_by_detector: dict[str, int] = defaultdict(int)
     conflicts_with_backing_by_detector: dict[str, set] = defaultdict(set)
@@ -1754,6 +1800,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     conflicts_backed_by_both = conflicts_with_backing_by_detector[DETECTOR_VERSION] & conflicts_with_backing_by_detector[DETECTOR_VERSION_V3_3]
     summary = {
         "n_conflicts_total": len(conflict_rows),
+        "n_case_mention_eligibility_adjudications": len(eligibility_adjudications),
         "n_conflicts_multi_case": n_multi,
         "n_conflicts_trivial": n_trivial,
         "n_conflicts_evidence_backed": n_conflicts_backed,

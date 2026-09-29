@@ -185,9 +185,9 @@ def test_load_historical_case_id_resolutions_reads_real_file_with_expected_shape
     """Verifica que el archivo real versionado en config/ tiene la forma
     esperada -- no un valor sintetico, el mismo archivo que usa build_conflicts.py."""
     resolved, non_resolvable = reg.load_historical_case_id_resolutions()
-    # [ACTUALIZADO 2026-09-29] 10 -> 11: se agrego el alias de 23c289bb... (Lote 18-A1), cuyo
-    # project_id cambio al corregir la normalizacion de nombres.
-    assert len(resolved) == 11
+    # [ACTUALIZADO 2026-09-29] 10 -> 12: alias de 23c289bb... (Lote 18-A1), cuyo project_id cambio al corregir la
+    # normalizacion de nombres, y alias de a05fdf04... (Alto Norte -> Alto Las Condes 2).
+    assert len(resolved) == 12
     assert len(non_resolvable) == 5
     assert "f98c6a44db6a2c8187d959b9" in non_resolvable  # Villa Francia, sin anclaje vivo
 
@@ -468,6 +468,7 @@ def test_build_conflicts_blocks_topology_and_writes_only_dedicated_preflight_rep
     monkeypatch.setattr(reg, "AUDIT_REPORT_PATH", report)
     monkeypatch.setattr(reg, "HISTORICAL_CASE_PREFLIGHT_REPORT_PATH", preflight_report)
     monkeypatch.setattr(reg, "HISTORICAL_CASE_ID_RESOLUTIONS_PATH", tmp_path / "no_existe_resolutions.json")
+    monkeypatch.setattr(reg, "CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH", tmp_path / "no_existe_elegibilidad.json")
     before_schema = db.execute(
         "SELECT type, name, sql FROM sqlite_master ORDER BY type, name"
     ).fetchall()
@@ -1439,3 +1440,71 @@ def test_document_conflict_case_safe_view_only_includes_caso_unico():
     conn.close()
     assert bad == 0
     assert 0 < n_safe <= n_total
+
+
+# --- adjudicacion humana de elegibilidad (2026-09-29) ---
+
+
+def _eligibility_db(decision="uncertain", quote="cita de objeto"):
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE case_mention (case_mention_id TEXT PRIMARY KEY, document_id TEXT, decision_final_amplio TEXT)")
+    conn.execute(
+        "CREATE TABLE evidence (evidence_id TEXT PRIMARY KEY, case_mention_id TEXT, quote_role TEXT, quote_text TEXT, verified INTEGER)"
+    )
+    conn.execute("INSERT INTO case_mention VALUES ('d1:0', 'd1', ?)", (decision,))
+    conn.execute("INSERT INTO evidence VALUES ('d1:0:objeto:0', 'd1:0', 'objeto', ?, 1)", (quote,))
+    return conn
+
+
+def _write_eligibility(tmp_path, **overrides):
+    entry = {
+        "case_mention_id": "d1:0",
+        "original_decision_final_amplio": "uncertain",
+        "adjudicated_decision": "include",
+        "rationale": "porque si",
+        "evidence": [{"evidence_id": "d1:0:objeto:0", "quote": "cita de objeto"}],
+    }
+    entry.update(overrides)
+    path = tmp_path / "elig.json"
+    path.write_text(json.dumps({"schema_version": "case_mention_eligibility_adjudications_v1", "adjudications": [entry]}), encoding="utf-8")
+    return path
+
+
+def test_eligibility_adjudication_loads_when_it_matches_the_warehouse(tmp_path):
+    result = reg.load_case_mention_eligibility_adjudications(_eligibility_db(), _write_eligibility(tmp_path))
+    assert list(result) == ["d1:0"]
+
+
+def test_eligibility_adjudication_fails_closed_on_stale_decision_or_quote(tmp_path):
+    with pytest.raises(ValueError, match="esperaba"):
+        reg.load_case_mention_eligibility_adjudications(_eligibility_db(decision="exclude"), _write_eligibility(tmp_path))
+    with pytest.raises(ValueError, match="no coincide"):
+        reg.load_case_mention_eligibility_adjudications(_eligibility_db(quote="otra cita"), _write_eligibility(tmp_path))
+    with pytest.raises(ValueError, match="inexistente"):
+        reg.load_case_mention_eligibility_adjudications(_eligibility_db(), _write_eligibility(tmp_path, case_mention_id="d9:0"))
+    with pytest.raises(ValueError, match="incompleta"):
+        reg.load_case_mention_eligibility_adjudications(_eligibility_db(), _write_eligibility(tmp_path, rationale=""))
+
+
+def test_adjudicated_case_mention_backs_a_project_only_with_a_distinct_match_method():
+    mentions = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Edificio X"}]}
+    objeto = {"d1:0": [{"evidence_id": "d1:0:objeto:0", "quote_text": "cita"}]}
+    links = {("d1", reg._norm("Edificio X")): 0}
+    sin = reg._project_backing_evidence("p1", mentions, {"d1": []}, objeto, links)
+    assert sin == []
+    con = reg._project_backing_evidence("p1", mentions, {"d1": ["d1:0"]}, objeto, links, adjudicated_cms=frozenset({"d1:0"}))
+    assert [r["match_method"] for r in con] == [reg.MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY]
+    normal = reg._project_backing_evidence("p1", mentions, {"d1": ["d1:0"]}, objeto, links)
+    assert [r["match_method"] for r in normal] == [reg.MATCH_METHOD_V3_3]
+
+
+def test_real_eligibility_adjudications_match_the_warehouse_and_are_the_only_adjudicated_backing():
+    conn = _connect_or_skip()
+    result = reg.load_case_mention_eligibility_adjudications(conn, reg.CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH)
+    assert len(result) == 2
+    rows = conn.execute(
+        "SELECT DISTINCT case_mention_id FROM conflict_evidence_backing WHERE match_method = ?",
+        (reg.MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY,),
+    ).fetchall()
+    conn.close()
+    assert {r[0] for r in rows} == set(result)

@@ -10,9 +10,9 @@
 | Proyectos / `case_id` / conflictos | 942 / 835 / 817 |
 | Cola de identidad (258 pares) | 119 `merged`, 139 `kept_separate`, 0 abiertos |
 | `integrity_check` / FK | `ok` / 0 violaciones |
-| SHA-256 `data/warehouse.sqlite` | `33343379f8b2f267e66af08926b1938e7019a6b0c618e710c76e79f5b87a9ecc` |
+| SHA-256 `data/warehouse.sqlite` | `9f328ad4884b26f1b49e98ab2b7c889e6438384e208b41eefd024d2598828926` |
 | Overlay v3 (SHA-256 fijado en el resolver) | `82f8b1d409562033a244fe266be0f75bd42b2c153cd3251d08cd5507d5fc3626` |
-| Tests | 361 aprobados, 1 omitido (excluido `test_blind_review_html.py`, archivo local fuera del repo) |
+| Tests | 366 aprobados, 1 omitido (excluido `test_blind_review_html.py`, archivo local fuera del repo) |
 
 ## Los 8 pares que estaban abiertos
 

@@ -1,6 +1,6 @@
 {
   "schema_version": "historical_case_reference_preflight_v1",
-  "run_id": "2026-09-29T15:12:14.288036+00:00",
+  "run_id": "2026-09-29T16:58:35.531526+00:00",
   "status": "conflict_build_completed",
   "policy": {
     "topology_blocking_relations": [
@@ -16,12 +16,12 @@
   },
   "source_hashes": {
     "classified_63_sha256": "2ec66d42edf67d3fefe11811c7757db30fea44668567631775547f55d6ee7e40",
-    "warehouse_file_sha256": "9b892876f46836d2389db98579c9f93b462f2966c955a3eb6504c38eea19dec0",
-    "preflight_script_sha256": "82bf139ff9119138346e150cd4c2e5b48c98da7179039f05a0c40bda3977b031"
+    "warehouse_file_sha256": "352d771861a60213c1e98674d19a221c1ffad5e856f598d042354763d0f63dc6",
+    "preflight_script_sha256": "231ae9d49db9828d4ed53a923cdb9e4be0b8b4638ff6dc032e2858923486d93d"
   },
-  "n_unresolved_ids": 29,
+  "n_unresolved_ids": 28,
   "n_topology_blockers": 0,
-  "n_preserved_non_topological_ids": 29,
+  "n_preserved_non_topological_ids": 28,
   "unsupported_relations": [],
   "topology_blockers": [],
   "preserved_references": [
@@ -432,30 +432,6 @@
       "impact_scope": "document_conflict_membership"
     },
     {
-      "historical_case_id": "a05fdf045aeb8721bd7664b4",
-      "resolved_case_id": "a05fdf045aeb8721bd7664b4",
-      "canonical_names": [
-        "Alto Norte"
-      ],
-      "occurrences": [
-        {
-          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
-          "relation": "mismo_proyecto",
-          "project_relation": "alias",
-          "case_ids": [
-            "5f33de46702f3740e762506d",
-            "a05fdf045aeb8721bd7664b4"
-          ],
-          "impact_scope": "project_identity_not_resolved"
-        }
-      ],
-      "impact_scopes": [
-        "project_identity_not_resolved"
-      ],
-      "topology_blocking": false,
-      "impact_scope": "project_identity_not_resolved"
-    },
-    {
       "historical_case_id": "a12b4664006ea0eb9aa21fbe",
       "resolved_case_id": "a12b4664006ea0eb9aa21fbe",
       "canonical_names": [
@@ -749,7 +725,7 @@
     "n_unresolved_pairs": 0,
     "unresolved_pairs": []
   },
-  "completed_conflict_topology_sha256": "086c0c86eea13e05f93a80b3524eab46fe2f0d3bb3e9d90f6754a4878bcfe464",
-  "completed_warehouse_sha256": "2601b8303aeb34bbb1f590b6becc9c393f4edb22f377763650d88b38e8395352",
-  "completed_audit_report_sha256": "a6830e86c38c60e01735fde6a8ed250583c92b94693303249b288fe4014fdacf"
+  "completed_conflict_topology_sha256": "ccff3d0cad7b449ebe6975fde58915bc5e2211c27ac7044a56bee6f46703f810",
+  "completed_warehouse_sha256": "d2728da622034359c824ff9618feb43d6470144473003e3d1f5ae1acf862bf36",
+  "completed_audit_report_sha256": "d68d91699a1e4216a81425b081b398c746e5b5537643598f184cdbb13c84994e"
 }

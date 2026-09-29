@@ -92,7 +92,7 @@ Plan paso a paso de cada arco analítico (2-4):
 El warehouse publicado en `main` es la reconstrucción integral cerrada del 2026-09-29: 942
 proyectos, 835 `case_id`, 817 conflictos, cola de identidad PROJECT sin pares abiertos (119
 fusionados, 139 separados), `integrity_check=ok` y publicación `ready`. Dos pares se mantienen
-separados como `insufficient_evidence` (sin afirmar que sean objetos distintos) y 29 referencias
+separados como `insufficient_evidence` (sin afirmar que sean objetos distintos) y 28 referencias
 históricas se conservan sin forzar aliases. Los hashes, conteos y límites vigentes están en
 [START HERE](START_HERE.md), el [cierre de identidad](audit/project_identity_closure_2026-09-29.md),
 [`audit/validation_summary.json`](audit/validation_summary.json) y
