@@ -61,8 +61,8 @@ def test_candidate_is_marked_unverified_without_calibration_ids(tmp_path):
     )
     assert manifest["status"] == "candidate_independence_unverified"
     assert manifest["calibration_exclusion"]["independence_verified"] is False
-    main = json.loads((output / "holdout_main_n100.json").read_text(encoding="utf-8"))
-    stress = json.loads((output / "stress_sample_n50.json").read_text(encoding="utf-8"))
+    main = json.loads((output / "sample_main.json").read_text(encoding="utf-8"))
+    stress = json.loads((output / "sample_stress.json").read_text(encoding="utf-8"))
     assert len(main) == 10 and len(stress) == 5
     assert {r["conflict_id"] for r in main}.isdisjoint({r["conflict_id"] for r in stress})
     assert not DETECTOR_FIELDS.intersection(json.dumps(main, ensure_ascii=False))
@@ -77,6 +77,6 @@ def test_calibration_ids_excluded_when_complete(tmp_path):
     output.mkdir()
     ids_path.write_text("\n".join(ids) + "\n", encoding="utf-8")
     manifest = build_package(warehouse=db, output_dir=output, calibration_ids_path=ids_path, main_n=5, stress_n=5)
-    assert manifest["status"] == "ready_for_external_review"
-    selected = json.loads((output / "holdout_main_n100.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "ready_for_blind_review"
+    selected = json.loads((output / "sample_main.json").read_text(encoding="utf-8"))
     assert not {r["conflict_id"] for r in selected}.intersection(ids)

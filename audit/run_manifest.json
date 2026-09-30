@@ -5,7 +5,7 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "a319833de55f1f7af1dcae9b9b9039417ca8586389709e1166a5573b44f044e7",
+    "sha256": "c91d5804179bbc115f051f7fb752b0d2bf99cc664feb78b78316e722495baccd",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
@@ -49,7 +49,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "0d1dff09dddc6106f4c511f1863913895294f2b7",
+  "parent_commit_at_generation": "e637b8b03fe1f3dfa5e39fa9d4447e8a64ad3f15",
   "release_commit": null,
   "note": "Manifiesto generado por src/generate_run_manifest.py contra el warehouse vigente; nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 registrado coincide con data/warehouse.sqlite."
 }

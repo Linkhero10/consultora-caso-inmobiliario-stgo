@@ -244,15 +244,16 @@ Para un proyecto nuevo o una ampliación, en este orden:
 8. Validación humana de una muestra aleatoria con veredictos en tabla; **decidir** si escalar con base en el error medido.
 9. Escalar con tope de gasto y ensayo previo ([E14](#e14-presupuesto-y-gasto)).
 10. Toda heurística que filtre el producto: medir precisión y recall en muestra ciega antes de publicarla ([E4](#e4-una-heurística-no-es-una-puerta-hasta-medir-su-precisión)).
-11. Antes de cerrar: **validación de cierre** de extremo a extremo con una muestra ciega nueva (ver «Límites»).
+11. Antes de cerrar: **validación de cierre** de extremo a extremo con una muestra ciega nueva ([playbook](playbook.md), paso 16).
 12. Publicar con manifiesto, huellas y estadísticas generadas; archivar el proceso fuera del repositorio.
 
 ## Límites conocidos de esta release
 
-- **No hay validación de extremo a extremo del estado final.** Las muestras humanas (50, 150, holdout de 100 más
-  50 dirigidos) miden estados anteriores del sistema; el vínculo proyecto → mención tiene su propia validación
-  ciega (0 fabricaciones en 809 evaluaciones). Falta una muestra ciega nueva sobre el producto final. Se puede
-  armar con `src/build_conflict_holdout.py`.
+- **Validación ciega de extremo a extremo (ver `audit/blind_validation_report.json`):** sobre 56 conflictos verificables de una
+  muestra aleatoria, 66 % de error grave; 44 % entre los que tienen respaldo de evidencia y 100 % entre los que no. El
+  respaldo discrimina, pero el universo con respaldo aún contiene error grave, sobre todo disputas inexistentes y fuera de
+  alcance temático (filtro de alcance de la clasificación). Un solo revisor (modelo), criterio estricto, muestra pequeña:
+  falta replicarla con un revisor humano externo.
 - Parte de los 311 conflictos sin respaldo se revisó una sola vez (con verificación de citas y hashes, sin una
   segunda lectura independiente completa). «Sin respaldo» no significa «falso».
 - Quedan menciones de proyecto sin vínculo a una `case_mention` (ver las cifras en [START HERE](../START_HERE.md))

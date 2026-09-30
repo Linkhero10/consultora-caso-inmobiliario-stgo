@@ -52,10 +52,29 @@ menciones en 3.885 documentos; 102 grupos con duplicados y 257 menciones en ello
 El agrupador determinista solo señala: pertenecer a un grupo no transfiere evidencia ni comuna, y puede juntar
 proyectos distintos que comparten una cita genérica.
 
-## 6. Límites vigentes
+## 6. Validación ciega de extremo a extremo del producto final
 
-- No hay validación ciega de extremo a extremo del estado final; las muestras humanas miden estados anteriores y el
-  vínculo proyecto → mención tiene su propia validación (0 fabricaciones en 809 evaluaciones).
+Una muestra aleatoria de 60 conflictos más 20 dirigidos a los sin respaldo, sin campos del detector, fue revisada por un
+revisor independiente con los textos completos (ver `audit/blind_validation_report.json`). Sobre la muestra aleatoria,
+con 56 verificables: 10 correctos, 9 con error menor y 37 con error grave (66 %, IC 95 % 53–77 %). Según el sistema marque
+respaldo o no:
+
+| Universo | Verificables | Correcto | Error menor | Error grave |
+|---|---:|---:|---:|---:|
+| Con respaldo de evidencia | 34 | 10 | 9 | 15 (44 %) |
+| Sin respaldo de evidencia | 22 | 0 | 0 | 22 (100 %) |
+
+El respaldo de evidencia separa bien lo publicable de lo no publicable (ningún conflicto sin respaldo resultó correcto),
+pero el universo con respaldo conserva un 44 % de error grave bajo un criterio estricto. Las causas dominantes son disputa
+inexistente (menciones de pasada, decretos, listados) y fuera de alcance temático (consumo, patentes de alcohol,
+infraestructura energética): un problema del filtro de alcance de la clasificación, no de identidad de proyecto. 7 de los
+80 conflictos no tienen ningún documento asociado. Límites: un solo revisor de la misma familia de modelos que el pipeline,
+criterio estricto y muestra pequeña; replicar con un revisor humano externo.
+
+## 7. Límites vigentes
+
+- Las muestras anteriores miden estados previos del sistema; el vínculo proyecto → mención tiene su propia validación
+  (0 fabricaciones en 809 evaluaciones).
 - Conflictos sin respaldo: parte se revisó una sola vez, con verificación de citas y hashes y sin segunda lectura
   independiente completa.
 - Menciones de proyecto sin vínculo a una `case_mention` y grupos de duplicados sin adjudicar uno por uno (ver cifras

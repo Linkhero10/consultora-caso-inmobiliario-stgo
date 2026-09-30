@@ -1,14 +1,14 @@
 {
   "fix": "fix_1f_geografia_case_mention_level_2026-09-26",
-  "run_id": "20260930T224752075950Z",
-  "generated_at": "2026-09-30T22:47:53.452647+00:00",
+  "run_id": "20260930T230359348025Z",
+  "generated_at": "2026-09-30T23:04:00.769190+00:00",
   "generator": "src/build_geography.py::build_project_mention_geography",
-  "build_commit": "0d1dff09dddc6106f4c511f1863913895294f2b7",
+  "build_commit": "e637b8b03fe1f3dfa5e39fa9d4447e8a64ad3f15",
   "generator_sha256": "87a6ed90e47edd7bacf6f4f0a15afa44f52a33f33381151b57bf25b1403f6378",
   "review_config_path": "config/reviewed_duplicate_group_geography_links.json",
-  "review_config_sha256": "bee31515da166083ab4f4f8ad92b21a147de4c62c3c18820a74ec70218937009",
-  "input_warehouse_sha256": "d0632846e206fe5fdda120d796709b1ad332b6726ab9e8bbbab101f361342228",
-  "output_warehouse_sha256": "6cb4afadff1e03126119304ef955888d1e1b40e0bece3f2142fdbee487274ae9",
+  "review_config_sha256": "6bb698af0f95d3587c73aa001eb53f998dcb04b7598c5a14096af6530a926e6c",
+  "input_warehouse_sha256": "e52a8a1a0a760abc9f3755d4f06d5b85237f2a7496cd746d22a14ac7c07a6cbd",
+  "output_warehouse_sha256": "954dab7684b76a00db176b43a1ff261c1bfcf9fc1838f009bb1ddd80bd7cdcec",
   "descripcion": "Vinculo proyecto->case_mention->comuna. Compartir grupo de duplicados no autoriza transferir comuna: las menciones sin enlace geografico directo o adjudicacion manual explicita quedan ambiguas. La adjudicacion manual solo resuelve geografia y no transfiere decision, focalidad, conflicto o evidencia. Reemplaza la aproximacion documental anterior.",
   "case_mention_geography": {
     "n_candidatos": 980,
@@ -28,8 +28,8 @@
     }
   },
   "n_menciones_total": 1272,
-  "reviewed_duplicate_group_links_configured": 1,
-  "reviewed_duplicate_group_links_applied": 1,
+  "reviewed_duplicate_group_links_configured": 2,
+  "reviewed_duplicate_group_links_applied": 2,
   "reviewed_duplicate_group_links_unmatched": 0,
   "ambiguous_duplicate_group_rows": [
     {
@@ -177,15 +177,6 @@
       "reason": "duplicate_group_membership_not_sufficient_for_geography_transfer"
     },
     {
-      "document_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837",
-      "project_mention_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837:project:0",
-      "nombre_proyecto": "edificio Eco Egaña Sustentable",
-      "source_case_mention_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837:0",
-      "duplicate_group_id": "cmdup:d6f60456f2d5d394d4925287",
-      "decision_mixed_in_group": false,
-      "reason": "duplicate_group_membership_not_sufficient_for_geography_transfer"
-    },
-    {
       "document_id": "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade",
       "project_mention_id": "71649f0f4476700a2ade2501e086549daeaf20e5c8ad13d818b6070a150f0ade:project:4",
       "nombre_proyecto": "las construcciones Antígona, Festival y Toledo",
@@ -197,8 +188,8 @@
   ],
   "direct": 760,
   "via_duplicate_group": 0,
-  "via_reviewed_duplicate_group": 1,
-  "ambiguous_duplicate_group": 18,
+  "via_reviewed_duplicate_group": 2,
+  "ambiguous_duplicate_group": 17,
   "no_case_mention_index": 201,
   "case_mention_no_incluido": 252,
   "case_mention_sin_comuna": 40

@@ -2,11 +2,64 @@
   "descripcion": "Validaciones realizadas sobre el sistema, con su método, tamaño, resultado y límites. No contiene cifras del producto vigente (están en audit/run_manifest.json y en el bloque generado de START_HERE.md). Cada validación mide un estado del sistema; ninguna sustituye una muestra ciega nueva sobre el producto final.",
   "validaciones": [
     {
+      "id": "validacion_ciega_extremo_a_extremo",
+      "que_mide": "Calidad de los conflictos publicados, de extremo a extremo, sobre el producto final",
+      "metodo": "Muestra aleatoria de 60 conflictos (semilla validation-1.0) más 20 dirigidos a los sin respaldo, sin ningún campo del detector; un revisor independiente (modelo, sin acceso al warehouse ni a otros agentes) leyó los textos completos y emitió veredicto con cita literal. El estado de respaldo del sistema se cruzó después.",
+      "n": 80,
+      "resultado_muestra_aleatoria": {
+        "todos": {
+          "n_verificables": 56,
+          "correcto": 10,
+          "error_menor": 9,
+          "error_grave": 37,
+          "error_grave_pct": 0.661,
+          "error_grave_ic95": [
+            0.53,
+            0.771
+          ]
+        },
+        "con_respaldo_del_sistema": {
+          "n_verificables": 34,
+          "correcto": 10,
+          "error_menor": 9,
+          "error_grave": 15,
+          "error_grave_pct": 0.441,
+          "error_grave_ic95": [
+            0.289,
+            0.605
+          ]
+        },
+        "sin_respaldo_del_sistema": {
+          "n_verificables": 22,
+          "correcto": 0,
+          "error_menor": 0,
+          "error_grave": 22,
+          "error_grave_pct": 1.0,
+          "error_grave_ic95": [
+            0.851,
+            1.0
+          ]
+        }
+      },
+      "hallazgos": [
+        "El respaldo de evidencia discrimina: ningún conflicto sin respaldo resultó correcto (0 de 22 verificables); pero el universo con respaldo sigue teniendo un 44 % de error grave según este revisor.",
+        "Causas dominantes del error grave: disputa inexistente (mención de pasada, decretos, listados), fuera de alcance temático (consumo, patentes de alcohol, infraestructura energética) y proyectos ajenos. Es un problema de filtro de alcance de la clasificación, no de identidad.",
+        "7 de los 80 conflictos no tienen ningún documento asociado y no son verificables."
+      ],
+      "consecuencia": "El producto debe usarse con el universo con respaldo y con la advertencia de que ~4 de cada 10 de esos conflictos son error grave bajo un criterio estricto. Mejorar el filtro de alcance de la clasificación es el siguiente paso de calidad.",
+      "limites": "Un solo revisor, de la misma familia de modelos que construyó el pipeline (no es validación humana externa); criterio estricto (ante la duda, el veredicto menos favorable); muestra de 60 (intervalos amplios).",
+      "reporte": "audit/blind_validation_report.json"
+    },
+    {
       "id": "muestra_inicial_n50",
       "que_mide": "Calidad de los registros con extracción estructurada, unidad documento frente a unidad conflicto",
       "metodo": "Muestra aleatoria estratificada (escala de conflicto x posible truncamiento), semilla fija, revisada caso por caso",
       "n": 50,
-      "resultado": {"ok": 21, "error_menor": 17, "error_grave": 12},
+      "resultado": {
+        "ok": 21,
+        "error_menor": 17,
+        "error_grave": 12
+      },
       "error_grave_pct": 0.24,
       "consecuencia": "Motivó separar documento, proyecto, caso y conflicto, y el gate documental por rol.",
       "limites": "Muestra sesgada hacia documentos ya señalados para revisión; no estima prevalencia."
@@ -16,7 +69,11 @@
       "que_mide": "Error grave sobre el universo completo de conflictos en el diseño previo al vínculo proyecto-mención",
       "metodo": "Muestra ampliada revisada caso por caso por un revisor externo",
       "n": 150,
-      "resultado": {"ok": 70, "error_menor": 17, "error_grave": 63},
+      "resultado": {
+        "ok": 70,
+        "error_menor": 17,
+        "error_grave": 63
+      },
       "error_grave_pct": 0.42,
       "limites": "Es calibración de un diseño anterior, no validación del producto vigente."
     },
@@ -25,8 +82,15 @@
       "que_mide": "Precisión y recall de un detector textual de respaldo, ya retirado",
       "metodo": "Holdout ciego de 100 conflictos sin solapamiento con la calibración (verificado por intersección de conjuntos) más 50 dirigidos",
       "n": 150,
-      "resultado_holdout": {"precision_contra_error_grave": 0.554, "recall_contra_error_grave": 0.973, "precision_contra_categorias_objetivo": 0.446, "recall_contra_categorias_objetivo": 0.967},
-      "resultado_dirigido": {"nota": "muestra dirigida, no poblacional; no estima prevalencia"},
+      "resultado_holdout": {
+        "precision_contra_error_grave": 0.554,
+        "recall_contra_error_grave": 0.973,
+        "precision_contra_categorias_objetivo": 0.446,
+        "recall_contra_categorias_objetivo": 0.967
+      },
+      "resultado_dirigido": {
+        "nota": "muestra dirigida, no poblacional; no estima prevalencia"
+      },
       "consecuencia": "Precisión moderada: el detector se reemplazó por el índice que el modelo declara en la extracción.",
       "limites": "El detector ya no forma parte del pipeline; estas cifras no describen el respaldo vigente."
     },
@@ -36,7 +100,9 @@
       "metodo": "Dos rondas de revisión ciega independiente sobre documentos con ambigüedad real (más de una mención y al menos un proyecto)",
       "n": 809,
       "unidad": "evaluaciones de proyecto (203 en la primera ronda, 606 en la segunda)",
-      "resultado": {"fabricaciones": 0},
+      "resultado": {
+        "fabricaciones": 0
+      },
       "limites": "Cubre el universo con ambigüedad; no mide la calidad de la clasificación de origen ni la delimitación del conflicto."
     },
     {
@@ -44,7 +110,12 @@
       "que_mide": "Proyectos cuyas menciones incluidas caen en más de una comuna",
       "metodo": "Auditoría asistida por IA, caso a caso a nivel de mención (no es validación humana externa)",
       "n": 131,
-      "resultado": {"error_geografico": 81, "no_concluyente": 46, "legitimo_multi_comuna": 4, "homonimo_real": 0},
+      "resultado": {
+        "error_geografico": 81,
+        "no_concluyente": 46,
+        "legitimo_multi_comuna": 4,
+        "homonimo_real": 0
+      },
       "consecuencia": "Hallazgo estructural: la atribución era por documento, no por mención. Se resolvió la geografía a nivel de case_mention.",
       "limites": "Asistida por IA; 46 casos no concluyentes por evidencia de vínculo insuficiente."
     },
@@ -52,26 +123,42 @@
       "id": "deteccion_menciones_duplicadas",
       "que_mide": "Menciones duplicadas dentro de un documento",
       "metodo": "Detector determinista (objeto normalizado idéntico o subcadena bidireccional de la primera cita de objeto, mínimo 8 caracteres)",
-      "resultado": {"case_mentions": 5731, "grupos_con_duplicados": 102, "case_mentions_en_grupos_duplicados": 257, "documentos_afectados": 97, "grupos_con_decision_mixta": 17},
+      "resultado": {
+        "case_mentions": 5731,
+        "grupos_con_duplicados": 102,
+        "case_mentions_en_grupos_duplicados": 257,
+        "documentos_afectados": 97,
+        "grupos_con_decision_mixta": 17
+      },
       "limites": "Puede agrupar proyectos distintos que comparten una cita genérica; por eso pertenecer a un grupo no transfiere evidencia ni comuna."
     },
     {
       "id": "decisiones_de_identidad",
       "que_mide": "Decisiones de identidad entre parejas de proyectos",
       "metodo": "Adjudicación manual contra el texto fuente por pareja exacta de project_id, con registro, hashes y cita literal verificados al cargar",
-      "resultado": {"parejas": 95, "same_identity": 39, "parent_component_phase": 25, "distinct_entities": 15, "related_plan_or_instrument": 14, "insufficient_evidence": 2},
+      "resultado": {
+        "parejas": 95,
+        "same_identity": 39,
+        "parent_component_phase": 25,
+        "distinct_entities": 15,
+        "related_plan_or_instrument": 14,
+        "insufficient_evidence": 2
+      },
       "limites": "Las fuentes web de apoyo no tienen copia local con hash. Dos parejas quedan como evidencia insuficiente: ni iguales ni distintas demostradas."
     },
     {
       "id": "revision_conflictos_sin_respaldo",
       "que_mide": "Conflictos sin respaldo automático",
       "metodo": "Lectura de contexto por conflicto más una revisión diagnóstica por lotes con verificación de citas (321 de 321 literales) y de hashes",
-      "resultado": {"elegibilidad_adjudicada_a_mano": 3, "enlaces_de_indice_adjudicados": 25},
+      "resultado": {
+        "elegibilidad_adjudicada_a_mano": 3,
+        "enlaces_de_indice_adjudicados": 25
+      },
       "limites": "No hubo segunda lectura independiente completa de los veredictos diagnósticos."
     }
   ],
   "no_validado": [
-    "Validación ciega de extremo a extremo del producto final (se puede armar con src/build_conflict_holdout.py).",
+    "Replicar la validación con un revisor humano externo y con una muestra mayor.",
     "Recall del descubrimiento contra un denominador externo.",
     "Segunda lectura independiente de la revisión diagnóstica de conflictos sin respaldo."
   ],

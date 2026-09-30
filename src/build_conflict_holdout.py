@@ -75,7 +75,23 @@ def _display_path(path: Path) -> str:
         return str(path)
 
 
+def _content_file_index() -> dict[str, str]:
+    """url -> ruta relativa del texto completo local (para que el revisor lea la fuente). Vacio si no hay corpus."""
+    content_dir = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+    index: dict[str, str] = {}
+    if content_dir.exists():
+        for path in content_dir.glob("*.json"):
+            try:
+                url = json.loads(path.read_text(encoding="utf-8")).get("url")
+            except (OSError, json.JSONDecodeError):
+                continue
+            if url:
+                index[url] = path.relative_to(PROJECT_ROOT).as_posix()
+    return index
+
+
 def _rows_for_ids(conn: sqlite3.Connection, conflict_ids: Iterable[str]) -> list[dict[str, Any]]:
+    content_files = _content_file_index()
     rows: list[dict[str, Any]] = []
     for conflict_id in conflict_ids:
         conflict = conn.execute(
@@ -103,6 +119,7 @@ def _rows_for_ids(conn: sqlite3.Connection, conflict_ids: Iterable[str]) -> list
             (conflict_id,),
         ):
             doc = dict(doc_row)
+            doc["content_file"] = content_files.get(doc["url"])
             doc["case_mentions"] = [dict(r) for r in conn.execute(
                 "SELECT case_mention_id, mention_index, comuna, codigo_comuna_ine, tipo_objeto_norm "
                 "FROM case_mention WHERE document_id = ? ORDER BY mention_index",
@@ -150,6 +167,7 @@ def build_package(
     seed: str = DEFAULT_SEED,
     main_n: int = MAIN_N,
     stress_n: int = STRESS_N,
+    require_exclusion: bool = True,
 ) -> dict[str, Any]:
     if not warehouse.exists():
         raise FileNotFoundError(warehouse)
@@ -181,16 +199,17 @@ def build_package(
     con.close()
     _assert_blind(main_records + stress_records)
     output_dir.mkdir(parents=True, exist_ok=True)
-    main_path = output_dir / "holdout_main_n100.json"
+    main_path = output_dir / "sample_main.json"
     # Neutral filename: the reviewer must not learn which detector side was
     # used to choose the directed stress sample.
-    stress_path = output_dir / "stress_sample_n50.json"
+    stress_path = output_dir / "sample_stress.json"
     main_path.write_text(json.dumps(main_records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     stress_path.write_text(json.dumps(stress_records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    independence_verified = calibration_count == 150
+    # Sin lista de calibracion (muestra nueva sobre un diseno nuevo) no hay solapamiento que excluir.
+    independence_verified = calibration_count == 150 or not require_exclusion
     manifest = {
         "artifact_version": "validation-sample",
-        "status": "ready_for_external_review" if independence_verified else "candidate_independence_unverified",
+        "status": "ready_for_blind_review" if independence_verified else "candidate_independence_unverified",
         "blind": True,
         "model_labels_used": False,
         "detector_fields_excluded": sorted(DETECTOR_FIELDS),
@@ -227,8 +246,14 @@ def build_package(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--calibration-ids", type=Path, default=DEFAULT_CALIBRATION_IDS)
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--seed", default=DEFAULT_SEED)
+    parser.add_argument("--main-n", type=int, default=MAIN_N)
+    parser.add_argument("--stress-n", type=int, default=STRESS_N)
+    parser.add_argument("--no-exclusion", action="store_true", help="muestra nueva sobre un diseno nuevo: no hay lista de calibracion que excluir")
     args = parser.parse_args()
-    print(json.dumps(build_package(calibration_ids_path=args.calibration_ids), ensure_ascii=False, indent=2))
+    print(json.dumps(build_package(calibration_ids_path=args.calibration_ids, output_dir=args.output_dir, seed=args.seed,
+                                   main_n=args.main_n, stress_n=args.stress_n, require_exclusion=not args.no_exclusion), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

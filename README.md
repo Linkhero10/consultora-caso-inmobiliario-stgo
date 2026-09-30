@@ -21,7 +21,7 @@ LLM, validación humana muestral, auditorías dirigidas y controles de calidad r
 | Dato | Valor |
 |---|---|
 | Versión de la release | 1.0.0 |
-| SHA-256 de `data/warehouse.sqlite` | `a319833de55f1f7af1dcae9b9b9039417ca8586389709e1166a5573b44f044e7` |
+| SHA-256 de `data/warehouse.sqlite` | `c91d5804179bbc115f051f7fb752b0d2bf99cc664feb78b78316e722495baccd` |
 | Integridad | `integrity_check=ok`, 0 violaciones de FK |
 | Documentos del corpus | 3.884 (934 con extracción estructurada) |
 | Proyectos · casos · conflictos | 942 · 835 · 817 |
@@ -94,7 +94,7 @@ Al publicar una reconstrucción, completar el manifiesto en un commit de seguimi
 warehouse como verificación fuerte.
 
 Ver [`docs/architecture.md`](docs/architecture.md), [`docs/methodology.md`](docs/methodology.md) y los
-[estándares de construcción](docs/standards.md) (qué hacer desde el primer día en un proyecto nuevo o al
+[estándares de construcción](docs/standards.md) y el [paso a paso de principio a fin](docs/playbook.md) (qué hacer desde el primer día en un proyecto nuevo o al
 ampliar este).
 
 ## Base de datos

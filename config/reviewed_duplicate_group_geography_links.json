@@ -15,6 +15,21 @@
         "url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/"
       },
       "rationale": "La fuente identifica Villa Ministro Carlos Cortés como el nombre inicial del complejo y explica que luego fue renombrado Villa San Luis; ubica el mismo complejo en Las Condes. La case_mention index 1 corresponde al desalojo histórico de 1976 (exclude), mientras index 0 cubre la controversia posterior del Lote 18 y su protección/desarrollo (include). Se resuelve solo la identidad geográfica del proyecto; no se transfiere la decisión de inclusión, focalidad, conflicto ni evidencia."
+    },
+    {
+      "project_mention_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837:project:0",
+      "document_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837",
+      "source_case_mention_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837:0",
+      "duplicate_group_id": "cmdup:d6f60456f2d5d394d4925287",
+      "resolved_case_mention_id": "25873e5578822bc90cfe906859ea2bfd2726d78f3520559aa4d01edde4791837:1",
+      "status": "reviewed_geography_only",
+      "reviewed_at": "2026-09-30",
+      "source": {
+        "title": "La otra causa en que Vivanco y Simpértigue fallaron a favor de clientes de Lagos y Vargas para destrabar millonario proyecto inmobiliario",
+        "publisher": "CIPER",
+        "url": "https://www.ciperchile.cl/2025/11/18/la-otra-causa-en-que-vivanco-y-simpertigue-fallaron-a-favor-de-clientes-de-lagos-y-vargas-para-destrabar-millonario-proyecto-inmobiliario/"
+      },
+      "rationale": "El texto ubica el sitio del edificio Eco Egaña Sustentable en Ñuñoa ('reclamos de vecinos del sitio donde se emplazaba el proyecto, en Ñuñoa'). Las tres menciones del grupo tratan del mismo edificio y tienen comuna Ñuñoa; la mención 1 está incluida y nombra el edificio. Se resuelve solo la identidad geográfica del proyecto; no se transfiere inclusión, focalidad, conflicto ni evidencia."
     }
   ]
 }
