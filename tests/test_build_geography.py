@@ -191,6 +191,15 @@ def test_project_mention_geography_direct_match(tmp_path):
     _build_fixture_db(db_path)
     con = sqlite3.connect(str(db_path))
     con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',0)"
+    )
     con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',0,'cm4')")
     con.commit()
 
@@ -201,6 +210,7 @@ def test_project_mention_geography_direct_match(tmp_path):
     assert row["case_mention_id"] == "cm4"
     assert row["codigo_comuna_ine"] == "13101"
     assert report["direct"] == 1
+    assert report["ambiguous_duplicate_group"] == 0
 
 
 def test_project_mention_geography_no_case_mention_index(tmp_path):
@@ -259,10 +269,9 @@ def test_project_mention_geography_case_mention_sin_comuna(tmp_path):
     assert row["codigo_comuna_ine"] is None
 
 
-def test_project_mention_geography_via_duplicate_group_sibling(tmp_path):
-    """Fix 1E: el case_mention que v3.3 indico no esta incluido, pero un
-    hermano de su grupo de duplicados si y tiene comuna resuelta -- se usa
-    el hermano, marcado explicito como via_duplicate_group."""
+def test_project_mention_geography_does_not_transfer_from_duplicate_group_sibling(tmp_path):
+    """Un hermano incluido no presta su comuna a una mention excluida sin
+    una adjudicacion geográfica explícita."""
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
     con = sqlite3.connect(str(db_path))
@@ -280,12 +289,18 @@ def test_project_mention_geography_via_duplicate_group_sibling(tmp_path):
     con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',1,'cm4b')")
     con.commit()
 
-    target.build_project_mention_geography(con)
+    report = target.build_project_mention_geography(con)
 
     row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
-    assert row["match_method"] == "via_duplicate_group"
-    assert row["case_mention_id"] == "cm4"
-    assert row["codigo_comuna_ine"] == "13101"
+    assert row["match_method"] == "ambiguous_duplicate_group"
+    assert row["case_mention_id"] == "cm4b"
+    assert row["codigo_comuna_ine"] is None
+    assert report["ambiguous_duplicate_group"] == 1
+    with pytest.raises(sqlite3.IntegrityError, match="CHECK constraint failed"):
+        con.execute(
+            "UPDATE project_mention_geography SET match_method='via_duplicate_group' "
+            "WHERE project_mention_id='doc4:project:0'"
+        )
 
 
 def test_project_mention_geography_mixed_duplicate_group_requires_review(tmp_path):
@@ -321,6 +336,8 @@ def test_project_mention_geography_mixed_duplicate_group_requires_review(tmp_pat
             "nombre_proyecto": "Villa X",
             "source_case_mention_id": "cm4b",
             "duplicate_group_id": "g1",
+            "decision_mixed_in_group": True,
+            "reason": "duplicate_group_membership_not_sufficient_for_geography_transfer",
         }
     ]
 
@@ -392,13 +409,13 @@ def test_project_mention_geography_rejects_unreviewed_override_for_mixed_group(t
         target.build_project_mention_geography(con, reviewed_duplicate_links=unreviewed_links)
 
 
-def test_project_mention_geography_clean_duplicate_group_keeps_existing_fallback(tmp_path):
+def test_project_mention_geography_clean_duplicate_group_requires_review(tmp_path):
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
     con = sqlite3.connect(str(db_path))
     con.row_factory = sqlite3.Row
     con.execute(
-        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'','','edificio_residencial','exclude','exclude')"
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'Colina','','edificio_residencial','exclude','exclude')"
     )
     con.execute(
         "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',0)"
@@ -409,10 +426,47 @@ def test_project_mention_geography_clean_duplicate_group_keeps_existing_fallback
     con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
     con.commit()
 
-    target.build_project_mention_geography(con, reviewed_duplicate_links={})
+    report = target.build_project_mention_geography(con, reviewed_duplicate_links={})
 
     row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
-    assert row["match_method"] == "via_duplicate_group"
+    assert row["match_method"] == "ambiguous_duplicate_group"
+    assert row["case_mention_id"] == "cm4b"
+    assert row["codigo_comuna_ine"] is None
+    assert report["ambiguous_duplicate_group"] == 1
+
+
+def test_project_mention_geography_clean_duplicate_group_allows_explicit_review(tmp_path):
+    db_path = tmp_path / "warehouse.sqlite"
+    _build_fixture_db(db_path)
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    con.execute(
+        "INSERT INTO case_mention VALUES ('cm4b','doc4',1,'Colina','','edificio_residencial','exclude','exclude')"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute(
+        "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',0)"
+    )
+    con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Villa X',1,'cm4b')")
+    con.commit()
+    reviewed_links = {
+        "doc4:project:0": {
+            "document_id": "doc4",
+            "source_case_mention_id": "cm4b",
+            "duplicate_group_id": "g1",
+            "resolved_case_mention_id": "cm4",
+            "status": "reviewed_geography_only",
+            "rationale": "revisión explícita",
+            "source": {"title": "fuente revisada", "url": "https://example.test/source"},
+        }
+    }
+
+    target.build_project_mention_geography(con, reviewed_duplicate_links=reviewed_links)
+
+    row = con.execute("SELECT * FROM project_mention_geography WHERE project_mention_id='doc4:project:0'").fetchone()
+    assert row["match_method"] == "via_reviewed_duplicate_group"
     assert row["case_mention_id"] == "cm4"
     assert row["codigo_comuna_ine"] == "13101"
 

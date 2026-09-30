@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS project_mention_geography (
     comuna TEXT,
     codigo_comuna_ine TEXT,
     match_method TEXT NOT NULL CHECK (match_method IN (
-        'direct', 'via_duplicate_group', 'via_reviewed_duplicate_group',
+        'direct', 'via_reviewed_duplicate_group',
         'ambiguous_duplicate_group', 'no_case_mention_index',
         'case_mention_no_incluido', 'case_mention_sin_comuna'
     )),
@@ -196,11 +196,11 @@ def _resolved_comuna_code_by_case_mention(con: sqlite3.Connection) -> dict[str, 
 
 
 def _duplicate_group_details(con: sqlite3.Connection) -> dict[str, dict[str, Any]]:
-    """Devuelve membresía y bandera de decisión mixta para cada duplicado.
+    """Devuelve membresía y bandera de decisión mixta para cada grupo.
 
-    La bandera debe propagarse hasta este consumidor: un grupo que contiene
-    decisiones include/exclude no puede alimentar fallback geográfico
-    automático.
+    La pertenencia a un grupo no demuestra identidad de proyecto ni autoriza
+    transferir comuna. Solo los enlaces geográficos revisados explícitamente
+    pueden resolver una mención desde un miembro hermano.
     """
     by_case_mention: dict[str, dict[str, Any]] = {}
     if not _table_exists(con, "case_mention_duplicate_link"):
@@ -303,7 +303,7 @@ def build_project_mention_geography(
         "case_mention_sin_comuna": 0,
     }
     rows_to_insert: list[tuple] = []
-    ambiguous_duplicate_group_rows: list[dict[str, str]] = []
+    ambiguous_duplicate_group_rows: list[dict[str, Any]] = []
     for pm_id, document_id, nombre, case_mention_id in con.execute(
         "SELECT project_mention_id, document_id, nombre_proyecto, case_mention_id FROM enrichment_project_mention"
     ):
@@ -320,24 +320,28 @@ def build_project_mention_geography(
         # Los grupos con decisiones mixtas requieren adjudicación explícita.
         # La excepción aprobada solo transmite identidad geográfica; nunca
         # cambia el estado include/exclude ni atribuye conflicto/evidencia.
-        if group and group["decision_mixed_in_group"]:
-            reviewed = reviewed_duplicate_links.get(pm_id)
-            if reviewed is None:
-                counts["ambiguous_duplicate_group"] += 1
-                ambiguous_duplicate_group_rows.append(
-                    {
-                        "document_id": document_id,
-                        "project_mention_id": pm_id,
-                        "nombre_proyecto": nombre,
-                        "source_case_mention_id": case_mention_id,
-                        "duplicate_group_id": group["duplicate_group_id"],
-                    }
-                )
-                rows_to_insert.append(
-                    (document_id, pm_id, nombre, case_mention_id, None, None, "ambiguous_duplicate_group")
-                )
-                continue
+        reviewed = reviewed_duplicate_links.get(pm_id)
+        if group and reviewed is None:
+            counts["ambiguous_duplicate_group"] += 1
+            ambiguous_duplicate_group_rows.append(
+                {
+                    "document_id": document_id,
+                    "project_mention_id": pm_id,
+                    "nombre_proyecto": nombre,
+                    "source_case_mention_id": case_mention_id,
+                    "duplicate_group_id": group["duplicate_group_id"],
+                    "decision_mixed_in_group": group["decision_mixed_in_group"],
+                    "reason": "duplicate_group_membership_not_sufficient_for_geography_transfer",
+                }
+            )
+            rows_to_insert.append(
+                (document_id, pm_id, nombre, case_mention_id, None, None, "ambiguous_duplicate_group")
+            )
+            continue
 
+        if reviewed is not None:
+            if group is None:
+                raise ValueError(f"Adjudicacion geográfica apunta a una mención sin grupo de duplicados: {pm_id}")
             if reviewed.get("status") != "reviewed_geography_only":
                 raise ValueError(f"Adjudicacion sin estado reviewed_geography_only: {pm_id}")
             if (
@@ -361,19 +365,6 @@ def build_project_mention_geography(
             )
             continue
 
-        # Para grupos no mixtos se conserva el fallback previo.
-        resolved_via_sibling = False
-        for sibling_id in (group["members"] if group else []):
-            if sibling_id == case_mention_id or sibling_id not in included_cms:
-                continue
-            if sibling_id in comuna_code_by_cm:
-                code = comuna_code_by_cm[sibling_id]
-                counts["via_duplicate_group"] += 1
-                rows_to_insert.append((document_id, pm_id, nombre, sibling_id, _COMUNA_NAME_BY_CODE.get(code, ""), code, "via_duplicate_group"))
-                resolved_via_sibling = True
-                break
-        if resolved_via_sibling:
-            continue
         if case_mention_id not in included_cms:
             counts["case_mention_no_incluido"] += 1
             rows_to_insert.append((document_id, pm_id, nombre, case_mention_id, None, None, "case_mention_no_incluido"))
@@ -543,9 +534,11 @@ def main(warehouse_path: Path = WAREHOUSE_PATH) -> int:
                 "input_warehouse_sha256": input_warehouse_sha256,
                 "output_warehouse_sha256": _sha256_file(warehouse_path),
                 "descripcion": (
-                    "Vinculo proyecto->case_mention->comuna; fallbacks desde grupos de duplicados "
-                    "con decision mixta quedan ambiguos salvo una adjudicacion manual explicita "
-                    "y limitada a geografia. Reemplaza la aproximacion documental anterior."
+                    "Vinculo proyecto->case_mention->comuna. Compartir grupo de duplicados no "
+                    "autoriza transferir comuna: las menciones sin enlace geografico directo "
+                    "o adjudicacion manual explicita quedan ambiguas. La adjudicacion manual "
+                    "solo resuelve geografia y no transfiere decision, focalidad, conflicto o "
+                    "evidencia. Reemplaza la aproximacion documental anterior."
                 ),
                 "case_mention_geography": comuna_report,
                 "geocoded_location": geocode_report,
