@@ -44,11 +44,21 @@
       "hallazgos": [
         "El respaldo de evidencia discrimina: ningún conflicto sin respaldo resultó correcto (0 de 22 verificables); pero el universo con respaldo sigue teniendo un 44 % de error grave según este revisor.",
         "Causas dominantes del error grave: disputa inexistente (mención de pasada, decretos, listados), fuera de alcance temático (consumo, patentes de alcohol, infraestructura energética) y proyectos ajenos. Es un problema de filtro de alcance de la clasificación, no de identidad.",
-        "7 de los 80 conflictos no tienen ningún documento asociado y no son verificables."
+        "7 de los 80 conflictos no tenían ningún documento asociado; era un defecto de construcción (43 de 817), ya corregido: ahora todo conflicto conserva al menos un vínculo documental."
       ],
       "consecuencia": "El producto debe usarse con el universo con respaldo y con la advertencia de que ~4 de cada 10 de esos conflictos son error grave bajo un criterio estricto. Mejorar el filtro de alcance de la clasificación es el siguiente paso de calidad.",
       "limites": "Un solo revisor, de la misma familia de modelos que construyó el pipeline (no es validación humana externa); criterio estricto (ante la duda, el veredicto menos favorable); muestra de 60 (intervalos amplios).",
-      "reporte": "audit/blind_validation_report.json"
+      "reporte": "audit/blind_validation_report.json",
+      "revision_cruzada_de_los_veredictos_graves": {
+        "metodo": "Segunda lectura propia (no ciega) de los 15 veredictos de error grave con respaldo y de una muestra de 18 sin respaldo, contra el texto fuente y las citas",
+        "con_respaldo": "12 de 15 confirmados (mención de pasada, consumo, patentes de alcohol, infraestructura energética, proyecto ajeno); 3 discutibles por alcance (Toma Dignidad, Poblaciones Obreras de la Plaza Chacabuco, Parque Forestal): tomas, patrimonio y espacio público podrían caber en el alcance urbano",
+        "sin_respaldo": "Las afirmaciones comprobadas contra el texto coinciden: nombres de calles o listados de proyectos (Paseo Quilín = avenida Quilín Norte; Florida Center y Cenco Costanera en listas de centros comerciales). Un caso (Sencorp) es más bien error menor",
+        "rango_error_grave_con_respaldo": [
+          0.35,
+          0.44
+        ],
+        "hallazgo_adicional": "7 de los 80 conflictos no tenían ningún documento asociado. Causa: los documentos de la revisión manual de unidades se omitían de la derivación mecánica, y un conflicto que esa revisión no tocaba quedaba sin vínculo (43 conflictos de 817, 16 de ellos con respaldo). Corregido: conservan el vínculo como mentioned_unreviewed, nunca como focal."
+      }
     },
     {
       "id": "muestra_inicial_n50",

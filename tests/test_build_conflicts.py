@@ -978,19 +978,35 @@ def test_every_case_id_belongs_to_exactly_one_conflict():
 
 
 def test_document_conflict_from_review_evidence_never_overlaps_trivial_source_for_same_document():
-    """Los 63 documentos evidenciados no deben tener tambien filas
-    'trivial_from_project_mention' -- serian una fuente mecanica mas
-    debil pisando (o duplicando) la revision humana."""
+    """Un mismo (documento, conflicto) no puede venir a la vez de la revision humana y de la derivacion mecanica (la
+    mecanica seria una fuente mas debil pisando a la humana). Un conflicto que la revision no toca conserva el vinculo con
+    el documento, pero solo como mentioned_unreviewed: la revision decide la focalidad de sus documentos."""
     conn = _connect_or_skip()
-    rows = conn.execute(
+    overlap = conn.execute(
         """
-        SELECT document_id FROM document_conflict WHERE source = 'trivial_from_project_mention'
+        SELECT document_id, conflict_id FROM document_conflict WHERE source = 'trivial_from_project_mention'
         INTERSECT
-        SELECT document_id FROM document_conflict WHERE source = 'conflict_unit_review'
+        SELECT document_id, conflict_id FROM document_conflict WHERE source = 'conflict_unit_review'
         """
     ).fetchall()
+    reviewed_docs = {r[0] for r in conn.execute("SELECT document_id FROM document_conflict WHERE source = 'conflict_unit_review'")}
+    bad_roles = [
+        r for r in conn.execute(
+            "SELECT document_id, role FROM document_conflict WHERE source = 'trivial_from_project_mention'"
+        ) if r[0] in reviewed_docs and r[1] != "mentioned_unreviewed"
+    ]
     conn.close()
-    assert rows == []
+    assert overlap == []
+    assert bad_roles == []
+
+
+def test_every_conflict_keeps_at_least_one_document_link():
+    conn = _connect_or_skip()
+    orphans = conn.execute(
+        "SELECT COUNT(*) FROM conflict WHERE conflict_id NOT IN (SELECT conflict_id FROM document_conflict)"
+    ).fetchone()[0]
+    conn.close()
+    assert orphans == 0
 
 
 def test_trivial_conflicts_have_low_confidence_label_and_multi_case_have_high():

@@ -5,7 +5,7 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "c91d5804179bbc115f051f7fb752b0d2bf99cc664feb78b78316e722495baccd",
+    "sha256": "89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
@@ -14,7 +14,7 @@
       "conflict": 817,
       "conflict_case": 835,
       "conflict_project": 942,
-      "document_conflict": 1167,
+      "document_conflict": 1245,
       "conflict_relation": 2,
       "conflict_evidence_backing": 1769,
       "actor_registry": 6,
@@ -34,14 +34,14 @@
       "all_detector_versions": [
         "verified_index"
       ],
-      "generated_from_warehouse_sha256": "e34ed04e8de16748990f5e549f2f4ec2ae04b2374462aa5c7c5ff32b69ddda29",
+      "generated_from_warehouse_sha256": "28047a663cac67619209265c9a2bc3ad74f9cd3cadf61ec8853c419f70c424f0",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
   "conflict_publication_gate": {
     "status": "ready",
     "preflight_status": "conflict_build_completed",
-    "topology_sha256": "f7fd6ed506737674db326812f312ea04faba15bdc3d7d3339af58495d79d52e4",
+    "topology_sha256": "6298d1be3081e0a8fd0e5a8a1c751327c625e8c19dd695bf37e52353de86d408",
     "preflight_report": "audit/historical_case_reference_preflight.json"
   },
   "tests": {
@@ -49,7 +49,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "e637b8b03fe1f3dfa5e39fa9d4447e8a64ad3f15",
+  "parent_commit_at_generation": "7c9ce9725ce90a5d4b982e5589c2ba7dc382bf21",
   "release_commit": null,
   "note": "Manifiesto generado por src/generate_run_manifest.py contra el warehouse vigente; nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 registrado coincide con data/warehouse.sqlite."
 }

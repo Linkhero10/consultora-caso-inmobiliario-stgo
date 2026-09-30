@@ -1321,13 +1321,19 @@ def _build_conflicts(conn: sqlite3.Connection):
         LEFT JOIN document_case_unit g ON g.document_id = pmr.document_id
         """
     ).fetchall()
+    reviewed_pairs = {(r["document_id"], r["conflict_id"]) for r in document_conflict_rows}
     for document_id, raw_nombre, project_id, case_id, nombre_proyecto_focal, unidad_caso_tipo in rows:
-        if document_id in documentos_63_ids:
-            continue  # ya cubierto por evidencia humana, no duplicar con derivacion mecanica
         cflt = case_id_to_conflict.get(case_id)
         if cflt is None:
             continue
-        role = "focal" if raw_nombre == nombre_proyecto_focal else "mentioned_unreviewed"
+        if document_id in documentos_63_ids:
+            # La revision humana decide los roles de este documento. Un conflicto que la revision no toca igual
+            # tiene al documento como fuente de sus menciones: se conserva el vinculo, nunca como focal.
+            if (document_id, cflt) in reviewed_pairs:
+                continue
+            role = "mentioned_unreviewed"
+        else:
+            role = "focal" if raw_nombre == nombre_proyecto_focal else "mentioned_unreviewed"
         document_conflict_rows.append(
             {
                 "document_id": document_id,

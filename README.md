@@ -21,7 +21,7 @@ LLM, validación humana muestral, auditorías dirigidas y controles de calidad r
 | Dato | Valor |
 |---|---|
 | Versión de la release | 1.0.0 |
-| SHA-256 de `data/warehouse.sqlite` | `c91d5804179bbc115f051f7fb752b0d2bf99cc664feb78b78316e722495baccd` |
+| SHA-256 de `data/warehouse.sqlite` | `89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4` |
 | Integridad | `integrity_check=ok`, 0 violaciones de FK |
 | Documentos del corpus | 3.884 (934 con extracción estructurada) |
 | Proyectos · casos · conflictos | 942 · 835 · 817 |

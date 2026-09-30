@@ -68,7 +68,7 @@ El respaldo de evidencia separa bien lo publicable de lo no publicable (ningún 
 pero el universo con respaldo conserva un 44 % de error grave bajo un criterio estricto. Las causas dominantes son disputa
 inexistente (menciones de pasada, decretos, listados) y fuera de alcance temático (consumo, patentes de alcohol,
 infraestructura energética): un problema del filtro de alcance de la clasificación, no de identidad de proyecto. 7 de los
-80 conflictos no tienen ningún documento asociado. Límites: un solo revisor de la misma familia de modelos que el pipeline,
+80 conflictos no tenían ningún documento asociado (defecto de construcción, 43 de 817, ya corregido). Una segunda lectura de los veredictos graves con respaldo confirmó 12 de 15; 3 son discutibles por alcance (tomas de terreno, patrimonio, espacio público), de modo que el error grave con respaldo estaría entre 35 % y 44 %. Límites: un solo revisor de la misma familia de modelos que el pipeline,
 criterio estricto y muestra pequeña; replicar con un revisor humano externo.
 
 ## 7. Límites vigentes
