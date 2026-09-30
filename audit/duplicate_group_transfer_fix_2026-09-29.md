@@ -46,4 +46,4 @@ El aumento de 6 a 18 filas geográficas ambiguas se compone exactamente de 7 ant
 
 No se alteraron clasificaciones upstream ni se adjudicaron grupos nuevos. Este arreglo cierra la ruta automática de transferencia; las 18 filas ambiguas siguen necesitando evidencia/adjudicación individual si se quiere recuperar geografía. Los casos de pertenencia a grupos no fueron re-auditados semánticamente uno por uno.
 
-El trabajo está aislado en la rama `fix/case-mention-fallback`. `main` y su warehouse publicado no se modificaron. Esta rama aún requiere push/PR y revisión antes de cualquier merge o publicación.
+El trabajo está aislado en la rama `fix/case-mention-fallback` (HEAD `d13fd1b121fe13d06c611f905743934900ad399f`), ya publicada en `origin`. `main` y su warehouse publicado no se modificaron. La creación del PR fue rechazada por la integración de GitHub con HTTP 403 (`Resource not accessible by integration`); por ello, el PR no existe todavía. La rama está disponible para revisión y no debe fusionarse/publicarse hasta completar esa revisión.
