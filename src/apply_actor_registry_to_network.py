@@ -14,7 +14,7 @@ si, que ya quedo cerrado):
 1. Cuando distintos alias de una misma entidad aparecen en el MISMO
    conflicto, la arista entity_id<->conflict_id debe existir UNA sola
    vez, no una por variante textual. Se logra automaticamente reusando
-   build_bipartite_actor_case() de build_actor_network_comparison_v1.py:
+   build_bipartite_actor_case() de build_actor_network.py:
    esa funcion ya agrupa aristas por (actor_scoped, case_id) con un set
    de document_id -- si TODAS las filas de una entidad resuelta comparten
    el mismo actor_scoped=entity_id, las aristas se colapsan solas, con
@@ -25,7 +25,7 @@ si, que ya quedo cerrado):
    importar como se clasifico esa fila individual en su tabla de origen.
 3. Provenance: que alias contribuyeron a cada entidad resuelta ya vive
    completo en actor_alias/actor_registry (incluye 'razon' por alias).
-   [PRECISION 2026-09-18, la revisión] Lo que build_variant_breakdown() agrega
+   Lo que build_variant_breakdown() agrega
    aqui es el GRADO EN LA RED RAW de cada alias por separado (cuantos
    conflictos tenia esa variante ANTES de resolver) -- util para ver de
    donde viene la ganancia del nodo consolidado, pero no un conteo de
@@ -45,8 +45,9 @@ import network_common as net
 import build_actor_registry as reg
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import INTEGRATION_DIR  # noqa: E402
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "impacto_actor_registry_en_red_conflict.json"
+OUTPUT = INTEGRATION_DIR / "actor_registry_network_impact.json"
 
 VIEW = acn.VIEWS_CONFLICT["conflict_safe"]
 
@@ -89,7 +90,7 @@ def compare_raw_vs_resolved(bip_raw: "net.nx.Graph", bip_resolved: "net.nx.Graph
     ranks_raw = [bip_raw.degree(a) for a in actors_unresolved_common]
     ranks_resolved = [bip_resolved.degree(a) for a in actors_unresolved_common]
 
-    # [PRECISION 2026-09-18, la revisión] rho=1.0 aqui es una propiedad ESPERADA
+    # rho=1.0 aqui es una propiedad ESPERADA
     # de la transformacion, no un hallazgo empirico: en una bipartita
     # ACTOR<->CONFLICT, fusionar OTROS nodos actor nunca cambia el grado
     # de un actor no tocado (su grado cuenta en cuantos conflictos

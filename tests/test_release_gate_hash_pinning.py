@@ -1,5 +1,5 @@
 """Hash-pinning del gate de liberacion (2026-09-16, hallazgo de auditoria
-cruzada Codex/Luna): classification_release_allowed() antes solo verificaba
+cruzada la revisión externa): classification_release_allowed() antes solo verificaba
 3 booleanos sin confirmar que el artefacto aprobado corresponda al
 prompt/schema/script/muestra ACTUALES -- un artefacto viejo podia autorizar
 silenciosamente un contrato nuevo sin revisar. No llama a la API."""
@@ -93,7 +93,7 @@ def test_stale_schema_path_blocks_release(tmp_path, monkeypatch):
     sample_path.write_text('{"ok": true}', encoding="utf-8")
     monkeypatch.setattr(sys, "argv", [str(entry_script)])
     fingerprint = _valid_fingerprint(entry_script, sample_path)
-    fingerprint["schema_path"] = "Trabajo/config/classification_schema_v_que_no_existe.json"
+    fingerprint["schema_path"] = "config/classification_schema_que_no_existe.json"
     artifact = _base_artifact(fingerprint)
     assert v51.classification_release_allowed(artifact) is False
     reasons = v51.classification_release_reasons(artifact)

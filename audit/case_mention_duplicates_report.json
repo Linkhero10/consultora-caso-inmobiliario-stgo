@@ -1,6 +1,6 @@
 {
-  "detector_version": "exact_object_or_quote_substring_v1",
-  "fuente": "Auditoria\\clasificacion\\classifications.jsonl",
+  "detector_version": "exact_object_or_quote_substring",
+  "fuente": "classifications.jsonl",
   "classifications_sha256": "fc96bf57a34e13a10016087efe856a30ce83b37e6a7af87631af57469d597af7",
   "n_case_mentions_total": 5731,
   "n_grupos_total": 5576,
@@ -12,5 +12,5 @@
   "n_filas_omitidas_case_mention_no_en_warehouse": 0,
   "integrity_check": "ok",
   "foreign_key_check_issues": 0,
-  "warehouse_sha256": "b2441c7c664df9cd86db4284c352791a7cce3e3753aba6404940e6be1abff66b"
+  "warehouse_sha256": "65279461c4b4cc55604812fe25fc582c9331fe333229220994dcefece003af67"
 }

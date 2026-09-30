@@ -1,4 +1,4 @@
-"""El contrato persistido v3.2 debe poder regenerarse byte a byte."""
+"""El contrato persistido la extraccion previa debe poder regenerarse byte a byte."""
 
 import json
 import sys

@@ -1,4 +1,4 @@
-"""Pruebas de la red ACTOR<->CONFLICT (siguiente paso pedido por Sol tras
+"""Pruebas de la red ACTOR<->CONFLICT (siguiente paso pedido por la revisión tras
 cerrar CONFLICT v1). Reutiliza la logica de network_common.py
 via la clave generica 'case_id', poblada aqui con conflict_id."""
 
@@ -52,7 +52,7 @@ def _build_three_universos(conn):
 
 
 def test_case_matched_has_same_actor_universe_as_conflict_safe():
-    """Hallazgo metodologico real de Sol: CASE_MATCHED debe compartir
+    """Hallazgo metodologico real de la revisión: CASE_MATCHED debe compartir
     EXACTAMENTE el mismo universo de documentos/menciones que
     conflict_safe (misma vista, solo cambia la clave de agrupacion) --
     si difiere, la descomposicion gate/collapse deja de ser valida.
@@ -77,7 +77,7 @@ def test_case_matched_has_same_actor_universe_as_conflict_safe():
 
 
 def test_conflict_collapse_never_positive_mathematical_invariant():
-    """Propiedad estructural garantizada, pedida explicitamente por Sol:
+    """Propiedad estructural garantizada, pedida explicitamente por la revisión:
     conflict_id es una funcion many-to-one de case_id DENTRO del mismo
     universo (CASE_MATCHED vs CONFLICT_SAFE), asi que para cualquier
     actor comparable, n_conflicts <= n_case_matched siempre. Un valor
@@ -95,7 +95,7 @@ def test_conflict_collapse_never_positive_mathematical_invariant():
 
 
 def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
-    """Prueba sustantiva concreta verificada por Sol contra el mismo
+    """Prueba sustantiva concreta verificada por la revisión contra el mismo
     SQLite: de 49 actores con caida aparente en la comparacion anterior
     (CASE_OLD vs CONFLICT_SAFE, universo distinto), solo 1 -- Seremi de
     Bienes Nacionales -- cae por la fusion CASE->CONFLICT en si misma
@@ -104,10 +104,10 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     en realidad tiene delta_conflict_collapse=0 (su caida es integra del
     gate documental, no de fusionar casos).
 
-    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] n_actores_caida_
+    n_actores_caida_
     solo_por_gate_documental bajo de 48 a 67 -- recalculado en vivo contra
     el warehouse real. Sube (no baja) porque, con menos proyectos_
-    mencionados extraidos por v3.3, mas actores quedan con caida SOLO por
+    mencionados extraidos por la extraccion vigente, mas actores quedan con caida SOLO por
     el gate documental (delta_conflict_collapse=0) en vez de por ambos
     efectos -- el punto sustantivo del test (Seremi de Bienes Nacionales es
     el UNICO caso real de fusion case->conflict, delta=1, nunca 0) se
@@ -118,10 +118,10 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
     assert dec["n_actores_caida_solo_por_fusion_case_conflict"] == 1
-    # [ACTUALIZADO 2026-09-29] 67 -> 66: el documento de Poblacion La Victoria salio del gate
+    # 67 -> 66: el documento de Poblacion La Victoria salio del gate
     # caso_unico (decision versionada, multiples_casos_documentados) y sus vinculos de actor dejan la
     # vista case_safe; un actor menos cae solo por el gate documental.
-    # [ACTUALIZADO 2026-09-29] 66 -> 67: 'Lote 18-A' pasa a ser un proyecto propio (normalizacion
+    # 66 -> 67: 'Lote 18-A' pasa a ser un proyecto propio (normalizacion
     # corregida) y un actor mas cae solo por el gate documental.
     assert dec["n_actores_caida_solo_por_gate_documental"] == 67
 
@@ -132,9 +132,9 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     assert corte_suprema["delta_conflict_collapse"] == 0
     assert corte_suprema["delta_gate"] < 0
 
-    # [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] "Seremi de
+    # "Seremi de
     # Bienes Nacionales" ya no existe en ninguno de los 3 grafos (su
-    # mencion de proyecto desaparecio de la extraccion v3.3 para el
+    # mencion de proyecto desaparecio de la extraccion la extraccion vigente para el
     # documento fuente, mismo patron verificado en toda la migracion). El
     # nuevo (y sigue siendo unico) caso real de fusion case->conflict,
     # verificado recalculando en vivo: "Concejo Municipal".
@@ -144,7 +144,7 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
 
 
 def test_decompose_reports_excluded_generic_nodes_explicitly():
-    """Hallazgo/precision de Sol: CASE_MATCHED y CONFLICT_SAFE tienen el
+    """Hallazgo/precision de la revisión: CASE_MATCHED y CONFLICT_SAFE tienen el
     mismo numero de nodos actor (1001) pero solo 971 son identidades
     persistentes comparables -- los 30 restantes de cada lado son
     terminos genericos anclados a su propia unidad de agrupacion
@@ -152,19 +152,19 @@ def test_decompose_reports_excluded_generic_nodes_explicitly():
     vuelve un nodo distinto en cada red por diseno. Deben reportarse
     explicitamente, no quedar implicitos en la interseccion.
 
-    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa + reconexion de
+    [ACTUALIZADO 2026-09-26, migracion + reconexion de
     MANUAL_DECISIONS via substring normalizado en resolve_project_review.py]
     Recalculado en vivo tras ambos cambios: 673 nodos actor cada red (antes
     1001), 659 comparables (antes 971), 14 nodos genericos excluidos de
     cada lado (antes 30) -- misma proporcion relativa (~2.1% genericos).
 
     [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17 merges
-    de identidad de Codex/Luna (68 pares)] Recalculado en vivo: 706 nodos
+    de identidad de la revisión externa (68 pares)] Recalculado en vivo: 706 nodos
     actor cada red (antes 673), 687 comparables (antes 659), 19 nodos
     genericos excluidos de cada lado (antes 14) -- mas fusiones de proyecto
     consolidan mas menciones de actor bajo el mismo case_id/conflict_id.
 
-    [ACTUALIZADO 2026-09-29, cierre de los 8 pares PROJECT abiertos] Recalculado
+    Recalculado
     en vivo: 688 comparables (antes 687); los 19 genericos excluidos no cambian.
     Las 3 fusiones nuevas (Chaguay/exChaguay, torres Sheraton, Bellavista DIB)
     consolidan un actor mas bajo el mismo conflict_id."""

@@ -111,7 +111,7 @@ def test_generate_manifest_refuses_when_historical_case_gate_is_blocked(tmp_path
     )
     manifest_path = tmp_path / "run_manifest.json"
     monkeypatch.setattr(manifest_generator, "HISTORICAL_CASE_PREFLIGHT_PATH", report)
-    monkeypatch.setattr(manifest_generator, "CLASSIFIED_63_PATH", classified)
+    monkeypatch.setattr(manifest_generator, "CONFLICT_UNIT_REVIEW_PATH", classified)
     monkeypatch.setattr(manifest_generator, "CONFLICT_BUILDER_PATH", builder)
 
     with pytest.raises(RuntimeError, match="build CONFLICT completo"):

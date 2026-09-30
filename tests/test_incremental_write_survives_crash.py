@@ -7,7 +7,7 @@ pagados. Esta prueba simula un fallo a mitad de la corrida (postprocess_result
 lanza una excepcion en el segundo documento) y confirma dos cosas: (a) el
 primer resultado, ya clasificado y pagado, sobrevive en disco, y (b) el
 fallo del segundo se registra en errors.jsonl en vez de abortar la corrida
-sin dejar rastro (fix del punto 4 de una ronda posterior de Codex/Luna)."""
+sin dejar rastro (fix del punto 4 de una ronda posterior de la revisión externa)."""
 
 import argparse
 import json
@@ -57,7 +57,7 @@ def test_first_record_persists_and_second_failure_is_logged_not_swallowed(tmp_pa
 
     # urls_file acotado (bajo MAX_TEST_URLS_WITHOUT_GATE) para que is_test=True
     # de forma explicita -- --output-file solo ya no activa el modo prueba
-    # (fix 2026-09-16, hallazgo de Codex/Luna: --output-file no acota alcance).
+    # (fix 2026-09-16, hallazgo de la revisión externa: --output-file no acota alcance).
     urls_file = tmp_path / "urls.txt"
     urls_file.write_text("\n".join(d["url"] for d in _fake_docs()), encoding="utf-8")
     args = argparse.Namespace(limit=0, dry_run=False, urls_file=str(urls_file), output_file=str(output_path), workers=1)

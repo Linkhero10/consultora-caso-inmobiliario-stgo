@@ -53,7 +53,7 @@ def test_candidate_is_marked_unverified_without_calibration_ids(tmp_path):
     _fixture_db(db)
     output = tmp_path / "audit"
     # Ruta explicita que NO existe -- nunca depender del archivo real del
-    # proyecto (audit/holdout_1a/calibration_conflict_ids.txt), que puede
+    # proyecto (la lista de IDs de calibración), que puede
     # estar poblado con los 150 IDs reales y romper este test en silencio.
     missing_calibration_ids = tmp_path / "no_calibration_ids.txt"
     manifest = build_package(

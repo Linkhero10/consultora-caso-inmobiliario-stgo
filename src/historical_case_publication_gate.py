@@ -26,8 +26,21 @@ TOPOLOGY_TABLES = (
 )
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
 def _sha256_file(path: Path) -> str:
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    """SHA-256 del archivo con saltos de linea normalizados a LF: la huella no depende de la configuracion de git."""
+    return hashlib.sha256(Path(path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def _display_path(path: Path) -> str:
+    """Ruta portable para los artefactos: relativa a la raiz del repo si esta dentro, o solo el nombre si no."""
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        return resolved.name
 
 
 def conflict_topology_fingerprint(conn: sqlite3.Connection) -> str:
@@ -101,7 +114,7 @@ def require_conflict_publication_ready(
 
     for path, label in (
         (conflict_audit_report_path, "reporte de build CONFLICT"),
-        (classified_path, "CLASSIFIED_63"),
+        (classified_path, "CONFLICT_UNIT_REVIEW"),
         (conflict_builder_path, "script build_conflicts.py"),
         (warehouse_path, "warehouse"),
     ):
@@ -110,7 +123,7 @@ def require_conflict_publication_ready(
 
     source_hashes = report.get("source_hashes") or {}
     if source_hashes.get("classified_63_sha256") != _sha256_file(Path(classified_path)):
-        raise RuntimeError("gate de publicación bloqueado: cambió el hash de CLASSIFIED_63")
+        raise RuntimeError("gate de publicación bloqueado: cambió el hash de CONFLICT_UNIT_REVIEW")
     if source_hashes.get("preflight_script_sha256") != _sha256_file(Path(conflict_builder_path)):
         raise RuntimeError("gate de publicación bloqueado: cambió el hash de build_conflicts.py")
     expected_audit_sha256 = report.get("completed_audit_report_sha256")
@@ -141,5 +154,5 @@ def require_conflict_publication_ready(
         "status": "ready",
         "preflight_status": report["status"],
         "topology_sha256": current_topology_sha256,
-        "preflight_report": str(preflight_report_path),
+        "preflight_report": _display_path(preflight_report_path),
     }

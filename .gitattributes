@@ -1,9 +1,4 @@
+* text=auto eol=lf
 *.sqlite filter=lfs diff=lfs merge=lfs -text
-src/build_conflicts.py text eol=lf
-src/build_geography.py text eol=lf
-src/dashboard_data.py text eol=lf
-audit/identity_followup_2026-09-26/** text eol=lf
-audit/identity_followup_2026-09-27/** text eol=lf
-audit/historical_project_pair_adjudications_v1.json text eol=lf
-audit/project_identity_adjudication_overrides_*.json text eol=lf
-audit/project_identity_resolution_simulation_2026-09-29_v4_candidate.json text eol=lf
+*.geojson -text
+*.pdf binary

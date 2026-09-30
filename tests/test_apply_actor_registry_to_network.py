@@ -1,5 +1,5 @@
 """Pruebas del impacto de Actor Identity Resolution v1 sobre la red
-ACTOR<->CONFLICT (experimento pedido explicitamente por Sol tras cerrar
+ACTOR<->CONFLICT (experimento pedido explicitamente por la revisión tras cerrar
 el registry, 2026-09-18)."""
 
 import sys
@@ -13,7 +13,7 @@ import network_common as net  # noqa: E402
 
 
 def test_resolve_identity_forces_institutional_true_for_registry_entities():
-    """Requisito explicito de Sol: el registry es autoridad superior de
+    """Requisito explicito de la revisión: el registry es autoridad superior de
     tipo institucional para sus 6 entidades, sin importar como se
     clasifico la fila individual en su tabla de origen."""
     rows = [
@@ -52,7 +52,7 @@ def test_resolve_identity_leaves_unmatched_rows_unchanged():
 
 
 def test_edges_deduplicate_when_aliases_share_a_conflict():
-    """Requisito explicito de Sol: 2 alias de la misma entidad en el
+    """Requisito explicito de la revisión: 2 alias de la misma entidad en el
     MISMO conflicto deben producir UNA sola arista entity<->conflict, no
     2. Verificado a nivel de la bipartita, reutilizando
     build_bipartite_actor_case() sin logica de dedup nueva."""
@@ -95,11 +95,11 @@ def test_contraloria_ties_with_corte_suprema_after_resolution():
     separadas, ninguna cerca de Corte Suprema (17). Despues de resolver,
     la entidad consolidada llega a 17, empatando con Corte Suprema.
 
-    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] Recalculado en
+    Recalculado en
     vivo contra el warehouse real (post-migracion): Contraloria consolidada
     queda en grado 12, Corte Suprema en 11 -- ya no empatan exacto (mismo
-    motivo verificado en toda la migracion: v3.3 extrajo 9.5% menos
-    proyectos_mencionados en promedio que v3.2, lo que reduce filas de
+    motivo verificado en toda la migracion: la extraccion vigente extrajo 9.5% menos
+    proyectos_mencionados en promedio que la extraccion previa, lo que reduce filas de
     conflict/document_conflict encadenadas). El resultado SUSTANTIVO que
     este test protege -- que consolidar identidad de actor acerca mucho a
     Contraloria de Corte Suprema, en vez de dejarla fragmentada y lejos --
@@ -138,7 +138,7 @@ def test_untouched_actors_have_perfect_rank_correlation():
     conn.close()
 
     comp = impact.compare_raw_vs_resolved(bip_raw, bip_resolved, entity_ids)
-    # [PRECISION 2026-09-18, Sol] la metrica principal es el conteo
+    # [revisión] la metrica principal es el conteo
     # directo, no spearman -- es una propiedad esperada de la
     # transformacion, no un hallazgo empirico independiente.
     assert comp["n_actores_no_tocados_con_grado_identico"] == comp["n_actores_no_tocados_por_registry_comunes"]

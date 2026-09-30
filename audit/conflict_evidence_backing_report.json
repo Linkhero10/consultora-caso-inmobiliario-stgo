@@ -1,7 +1,6 @@
 {
-  "detector_version": "v3_3_verified_index",
+  "detector_version": "verified_index",
   "backing_scope": "mention_level_verified_index",
-  "backing_scope_note": "[ACTUALIZADO 2026-09-26] v3_3_verified_index es el UNICO detector activo desde la migracion completa v3.2->v3.3: enrichment_project_mention.case_mention_index vincula cada mencion de proyecto a su case_mention real, ya no hay adivinanza documental.",
   "projects_total": 942,
   "projects_with_backing": 595,
   "projects_without_backing": 347,
@@ -22,41 +21,17 @@
   "conflicts_with_ambiguous_multi_case_backing": 0,
   "conflicts_with_mixed_duplicate_group_backing": 0,
   "backing_rows_via_mixed_duplicate_group_decision": 0,
-  "calibration_n": 150,
-  "calibration_error_grave": {
-    "tp": 49,
-    "fp": 27,
-    "fn": 14,
-    "tn": 60,
-    "precision": 0.645,
-    "recall": 0.778
-  },
-  "calibration_target_categories": {
-    "target": [
-      "falso_positivo_inclusion",
-      "etiqueta_no_coincide_con_evidencia"
-    ],
-    "tp": 44,
-    "fp": 32,
-    "fn": 4,
-    "tn": 70,
-    "precision": 0.579,
-    "recall": 0.917
-  },
   "detector_versions": [
-    "exact_substring_v1",
-    "v3_3_verified_index"
+    "verified_index"
   ],
   "backing_rows_by_detector": {
-    "v3_3_verified_index": 1769
+    "verified_index": 1769
   },
   "conflicts_with_backing_by_detector": {
-    "exact_substring_v1": 0,
-    "v3_3_verified_index": 506,
-    "ambos": 0
+    "verified_index": 506
   },
-  "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
-  "warehouse_sha256": "0bb78ffbf17970b8504032f0fc5b2b4cab4b624badf4b4f932f5e32bb40fb55e",
+  "backing_method_note": "El respaldo usa el case_mention_index que el modelo eligio y el pipeline verifico; la asociacion se valido con dos rondas de revision ciega independiente (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). Un proyecto mencionado sin indice no tiene respaldo: no se adivina por texto.",
+  "warehouse_sha256": "e34ed04e8de16748990f5e549f2f4ec2ae04b2374462aa5c7c5ff32b69ddda29",
   "sqlite_journal_mode": "delete",
   "wal_checkpoint": null
 }

@@ -1,5 +1,5 @@
 """Pruebas de la comparacion de red de actores conservadora vs inclusiva
-(v2, reescrita tras revision adversarial de Sol, 2026-09-18).
+(v2, reescrita tras revision adversarial de la revisión, 2026-09-18).
 
 No llaman a ninguna API; verifican con datos sinteticos la logica de
 construccion de las 3 redes (bipartita actor-caso, coocurrencia
@@ -39,7 +39,7 @@ def _row(document_id, nombre, case_id, source_table="enrichment_actor", es_insti
 
 
 def test_generic_actor_never_bridges_two_unrelated_cases():
-    """Hallazgo real de Sol: 'la inmobiliaria' de 2 casos sin relacion se
+    """Hallazgo real de la revisión: 'la inmobiliaria' de 2 casos sin relacion se
     fusionaba en un solo nodo global y actuaba como puente espurio. Tras
     el anclaje por caso, ya no deberia existir camino entre los casos."""
     rows = net._annotate([
@@ -55,7 +55,7 @@ def test_generic_actor_never_bridges_two_unrelated_cases():
 
 
 def test_document_cooccurrence_only_links_actors_sharing_a_real_document():
-    """Hallazgo real de Sol: la v1 usaba `docs_a | docs_b` (union) y le
+    """Hallazgo real de la revisión: la v1 usaba `docs_a | docs_b` (union) y le
     daba peso a pares que NUNCA compartieron un documento. Esta red se
     construye agrupando directamente por document_id, asi que un par sin
     documento en comun no puede tener arista."""
@@ -122,7 +122,7 @@ def test_load_rows_against_real_warehouse_never_returns_event_descriptions():
 
 
 def test_network_excluding_confirmed_institutions_keeps_unclassified_nodes():
-    """Hallazgo real de Sol: la exclusion solo saca es_institucional=True;
+    """Hallazgo real de la revisión: la exclusion solo saca es_institucional=True;
     False y None (sin clasificar) se mantienen -- por eso el nombre de la
     funcion/campo no dice 'sin instituciones'."""
     rows = net._annotate([

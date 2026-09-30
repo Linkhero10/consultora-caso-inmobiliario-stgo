@@ -181,7 +181,7 @@ def test_geocode_evidence_locations_discards_out_of_area_homonyms(tmp_path):
     assert report["n_descartadas_fuera_del_area_de_estudio"] == 1
 
 
-# --- Fix 1F (2026-09-26): geografia real de proyectos por case_mention ---
+# --- geografia real de proyectos por case_mention ---
 
 
 def test_project_mention_geography_direct_match(tmp_path):
@@ -214,7 +214,7 @@ def test_project_mention_geography_direct_match(tmp_path):
 
 
 def test_project_mention_geography_no_case_mention_index(tmp_path):
-    """case_mention_index nulo (v3.3 no vinculo la mencion a ningun
+    """case_mention_index nulo (la extraccion vigente no vinculo la mencion a ningun
     case_mention) -- nunca se adivina, queda explicito sin comuna."""
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
@@ -285,7 +285,7 @@ def test_project_mention_geography_does_not_transfer_from_duplicate_group_siblin
     con.execute(
         "INSERT INTO case_mention_duplicate_link VALUES ('cm4b','doc4','g1','cm4',2,'quote_substring',0)"
     )
-    # v3.3 apunto a cm4b (excluido); su hermano cm4 SI esta incluido y tiene comuna.
+    # la extraccion vigente apunto a cm4b (excluido); su hermano cm4 SI esta incluido y tiene comuna.
     con.execute("INSERT INTO enrichment_project_mention VALUES ('doc4:project:0','doc4',0,'Torre Santiago',1,'cm4b')")
     con.commit()
 

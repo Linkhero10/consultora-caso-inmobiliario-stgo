@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the blinded Fix 1A conflict holdout package.
+"""Build the blinded conflict validation sample package.
 
 The package deliberately omits every field produced by the backing detector.
 The calibration IDs are an explicit input: when they are unavailable the
@@ -19,9 +19,14 @@ from typing import Any, Iterable
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT_DIR = PROJECT_ROOT / "audit" / "holdout_1a"
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from paths import REVIEW_SAMPLES_DIR  # noqa: E402
+
+OUTPUT_DIR = REVIEW_SAMPLES_DIR / "validation_sample"
 DEFAULT_CALIBRATION_IDS = OUTPUT_DIR / "calibration_conflict_ids.txt"
-DEFAULT_SEED = "fix1a-holdout-20260922"
+DEFAULT_SEED = "validation-sample-seed"
 MAIN_N = 100
 STRESS_N = 50
 
@@ -184,7 +189,7 @@ def build_package(
     stress_path.write_text(json.dumps(stress_records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     independence_verified = calibration_count == 150
     manifest = {
-        "artifact_version": "fix1a-holdout-v1",
+        "artifact_version": "validation-sample",
         "status": "ready_for_external_review" if independence_verified else "candidate_independence_unverified",
         "blind": True,
         "model_labels_used": False,
@@ -213,7 +218,7 @@ def build_package(
         },
         "generated_without_api": True,
     }
-    (output_dir / "holdout_1a_manifest.json").write_text(
+    (output_dir / "validation_sample_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     return manifest

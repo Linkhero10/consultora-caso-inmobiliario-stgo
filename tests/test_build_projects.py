@@ -1,7 +1,7 @@
 """Pruebas del puente documento -> caso/proyecto -> actor/evento.
 
 No llaman a ninguna API ni tocan el warehouse real -- verifican la logica
-de resolucion con datos sinteticos, siguiendo el hallazgo real de Luna
+de resolucion con datos sinteticos, siguiendo el hallazgo real de la revisión
 (2026-09-17): ningun actor tenia identidad de proyecto estable entre
 documentos, y 280/934 documentos reales mencionan 2+ proyectos (ambiguedad
 real, no un caso raro).
@@ -164,7 +164,7 @@ def test_descriptive_ukamau_reference_keeps_evidence_but_never_creates_project_i
     ).encode("utf-8")
     source_path.write_bytes(source_bytes)
     payload = {
-        "schema_version": "descriptive_project_mentions_v1",
+        "schema_version": "descriptive_project_mentions",
         "mentions": [
             {
                 "reference_key": "ukamau_housing_initiative_2016",
@@ -276,7 +276,7 @@ def test_descriptive_project_reference_rejects_quote_not_equal_to_verified_evide
     ).encode("utf-8")
     source_path.write_bytes(source_bytes)
     payload = {
-        "schema_version": "descriptive_project_mentions_v1",
+        "schema_version": "descriptive_project_mentions",
         "mentions": [
             {
                 "reference_key": "tampered-quote",
@@ -359,13 +359,13 @@ def test_descriptive_project_reference_rejects_stale_source_hashes(tmp_path, mon
     config_path = tmp_path / "descriptive_project_mentions.json"
     conn = sqlite3.connect(":memory:")
 
-    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions_v1", "mentions": [mention]}), encoding="utf-8")
+    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions", "mentions": [mention]}), encoding="utf-8")
     with pytest.raises(ValueError, match="source_file_sha256 no coincide"):
         bridge.load_descriptive_project_mentions(conn, config_path)
 
     mention["source_file_sha256"] = hashlib.sha256(source_bytes).hexdigest()
     mention["source_text_sha256"] = "1" * 64
-    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions_v1", "mentions": [mention]}), encoding="utf-8")
+    config_path.write_text(json.dumps({"schema_version": "descriptive_project_mentions", "mentions": [mention]}), encoding="utf-8")
     with pytest.raises(ValueError, match="source_text_sha256/document_id no coincide"):
         bridge.load_descriptive_project_mentions(conn, config_path)
     conn.close()
@@ -383,7 +383,7 @@ def test_descriptive_project_reference_rejects_non_included_case_mention(tmp_pat
     ).encode("utf-8")
     source_path.write_bytes(source_bytes)
     payload = {
-        "schema_version": "descriptive_project_mentions_v1",
+        "schema_version": "descriptive_project_mentions",
         "mentions": [
             {
                 "reference_key": "not-eligible",
@@ -486,7 +486,7 @@ def test_project_build_rejects_identity_collision_before_overwriting_output(tmp_
     )
     monkeypatch.setattr(
         bridge,
-        "load_v3_3_records",
+        "load_enrichment_records",
         lambda **_kwargs: {
             "record-1": {
                 "url": "https://example.invalid/article",
@@ -541,7 +541,7 @@ def test_resolve_association_single_project_no_explicit_association():
 
 def test_resolve_association_ambiguous_never_guesses():
     """Hallazgo real: 280/934 documentos mencionan 2+ proyectos. Sin
-    proyecto_asociado explicito, NUNCA se debe adivinar cual es -- Sol lo
+    proyecto_asociado explicito, NUNCA se debe adivinar cual es -- la revisión lo
     exigio explicitamente ('las asociaciones no resolubles quedan
     explicitamente sin adjudicar')."""
     mention_lookup = {("d1", "Torre A"): "pid_a", ("d1", "Torre B"): "pid_b"}
@@ -557,7 +557,7 @@ def test_resolve_association_no_project_mentioned():
 
 
 def test_actor_second_pass_v2_links_never_duplicate_first_pass():
-    """Hallazgo BLOQUEANTE de Sol (segunda auditoria, 2026-09-18): actores_final
+    """Hallazgo BLOQUEANTE de la revisión (segunda auditoria, 2026-09-18): actores_final
     de actor_second_pass_v2 es la union A∪B (source_pass in first/both/second);
     cargar TODAS esas filas en actor_event_project_link duplicaba cualquier
     actor que ya estuviera en enrichment_actor (source_pass=first). Este
@@ -579,8 +579,8 @@ def test_actor_second_pass_v2_links_never_duplicate_first_pass():
 
 
 def test_known_homonym_split_separates_confirmed_homonyms():
-    """Hallazgo real de Claude al verificar el punto 8 de la segunda
-    auditoria de Sol (riesgo de homonimos en el cluster exacto): 'San
+    """Hallazgo real de la revisión al verificar el punto 8 de la segunda
+    auditoria de la revisión (riesgo de homonimos en el cluster exacto): 'San
     Isidro' bare fusionaba, via coincidencia EXACTA de nombre normalizado,
     una planta de tratamiento de aguas en Quilicura con una mencion sin
     relacion en Toro Mazotte/Estacion Central. KNOWN_HOMONYM_SPLITS fuerza
@@ -599,7 +599,7 @@ def test_known_homonym_split_separates_confirmed_homonyms():
 
 def test_known_homonym_splits_costanera_center_and_plaza_egana():
     """Hallazgo de la auditoria de los 150 clusters exactos multi-documento
-    (pedida por Sol tras San Isidro, 2026-09-18): 'Costanera Center' fusionaba
+    (pedida por la revisión tras San Isidro, 2026-09-18): 'Costanera Center' fusionaba
     con un documento sobre el proyecto de Cencosud EN ARGENTINA, y 'Plaza
     Egaña' fusionaba la interseccion real (Ñuñoa/La Reina) con 2 documentos
     que ubican consistentemente un 'Plaza Egaña' distinto en Vitacura."""
@@ -640,7 +640,7 @@ def test_resolve_association_inconsistent_explicit_association_not_silently_drop
 
 
 def test_analytical_views_exist_and_are_conservative_subsets():
-    """Hallazgo de Sol (2026-09-18): sin una vista materializada, cualquier
+    """Hallazgo de la revisión (2026-09-18): sin una vista materializada, cualquier
     consumidor que consulte actor_event_project_link directo obtiene en
     silencio links de documentos panoramicos/contextuales/fuera de universo.
     Se agregaron 2 vistas SQL con las reglas del gate ya aplicadas."""
@@ -691,7 +691,7 @@ def test_find_review_candidates_skips_manual_pair_missing_from_registry():
 
 
 def test_find_review_candidates_raises_on_ambiguous_canonical_name():
-    """Hallazgo/fragilidad senalada por Sol (2026-09-18): si 2 project_id
+    """Hallazgo/fragilidad senalada por la revisión (2026-09-18): si 2 project_id
     distintos compartieran el mismo canonical_name de un par manual, el
     setdefault() original elegia el primero en silencio. Ahora debe
     fallar de forma explicita en vez de adivinar."""
@@ -714,7 +714,7 @@ def test_find_review_candidates_raises_on_ambiguous_canonical_name():
         bridge_module.MANUAL_EXTRA_REVIEW_PAIRS = original_pairs
 
 
-# --- Fix 1E: guard de schema de SOURCE_WAREHOUSE (hallazgo real, 2026-09-24) ---
+# --- la revision de respaldo: guard de schema de SOURCE_WAREHOUSE (hallazgo real, 2026-09-24) ---
 
 
 def _make_sqlite(path, tables, n_documents=934):
@@ -737,11 +737,11 @@ def test_validate_source_warehouse_passes_with_expected_schema(tmp_path):
 
 
 def test_validate_source_warehouse_rejects_wrong_schema_with_suffix(tmp_path):
-    """Reproduce exactamente el hallazgo real: tablas con sufijo _v3_2 en
+    """Reproduce exactamente el hallazgo real: tablas con sufijo _old en
     vez de los nombres esperados -- debe abortar ANTES de copiar sobre
     data/warehouse.sqlite, nunca sobreescribir en silencio."""
     path = tmp_path / "mutated.sqlite"
-    _make_sqlite(path, ["enrichment_actor_v3_2", "enrichment_institucion_v3_2"])
+    _make_sqlite(path, ["enrichment_actor_old", "enrichment_institucion_old"])
     try:
         bridge._validate_source_warehouse(path)
         assert False, "deberia haber abortado por schema incompatible"
@@ -774,7 +774,7 @@ def test_validate_source_warehouse_passes_against_real_current_source():
     if not bridge.SOURCE_WAREHOUSE.exists():
         import pytest
 
-        pytest.skip("Auditoria/integracion_v1/warehouse_v3_2.sqlite no existe en este entorno (gitignorado)")
+        pytest.skip("el warehouse de enrichment no existe en este entorno (archivo intermedio no versionado)")
     bridge._validate_source_warehouse(bridge.SOURCE_WAREHOUSE)  # no debe lanzar
 
 

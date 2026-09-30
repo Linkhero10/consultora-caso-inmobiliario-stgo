@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Resuelve la cola de revision de proyectos (project_review_queue) --
-revision humana pedida por el diseno del puente, ejecutada por Claude a
+revision humana pedida por el diseno del puente, ejecutada por la revisión a
 peticion explicita del usuario ("revisa los 253 candidatos... corrige y
 arregla todo"), con criterio auditable y explicito, NUNCA fusion silenciosa.
 
@@ -58,7 +58,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from build_project_relations import rebuild_project_relations
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from build_project_relations import rebuild_project_relations  # noqa: E402
+from warehouse_digest import project_source_content_sha256  # noqa: E402
 
 
 def _stable_phase_id(*parts: str) -> str:
@@ -66,19 +70,13 @@ def _stable_phase_id(*parts: str) -> str:
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
+CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline.json"
 
 GENERIC_BLOCKLIST = {"data center", "vespucio", "ciudad empresarial", "lo aguirre", "las americas", "supermercado lider"}
 
 _NUMERAL_RE = re.compile(r"\b(i{1,3}|iv|v|vi{0,3}|\d+)\b", re.IGNORECASE)
 _ETAPA_RE = re.compile(r"\b(etapa|fase)\s+([ivx\d]+)\b", re.IGNORECASE)
-HISTORICAL_PAIR_ADJUDICATION_SHA256 = "ee6d0736cff9a69f8d4fab56826caeaa7d46075878164e6a1f7060f2c5f517f1"
-PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256 = "78d67ffed64e4b45d913a69d38c7ed664a8031007253e88a3a35a1d3748d358f"
-PROJECT_IDENTITY_OVERRIDE_SHA256 = "58ab0191c454a7eab7fa2651ef507ebf39b5c8190c0684e40a4d3d9895d530c3"
-PROJECT_IDENTITY_OVERRIDE_SOURCE = "project_identity_adjudication_override_2026-09-28"
-PROJECT_IDENTITY_OVERRIDE_V4_SOURCE = "project_identity_adjudication_override_2026-09-29_v4"
-PROJECT_IDENTITY_OVERRIDE_V4_SOURCE_PAIR_IDS = frozenset({"f46e5517d7ecee26f64d"})
-PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH = "audit/project_identity_adjudication_overrides_2026-09-29_v4.json"
+
 
 
 def _norm(s: str) -> str:
@@ -112,7 +110,7 @@ def has_bare_trailing_numeral_conflict(name_a: str, name_b: str) -> bool:
     """True si un nombre termina en un numero/numeral romano SUELTO (sin la
     palabra etapa/fase) que el otro no tiene, o ambos tienen uno distinto.
     [Hallazgo real de la revisión, segunda auditoria 2026-09-18, y confirmado por
-    Claude contra evidencia real: un numeral suelto casi siempre es una
+    la revisión contra evidencia real: un numeral suelto casi siempre es una
     DIRECCION (ej. "General Amengual 480", "Pajaritos 4600", "Vital
     Apoquindo 1400-1500"), no una fase de construccion -- la version anterior
     de esta regla trataba ambos casos igual y bloqueaba fusiones correctas.
@@ -160,13 +158,13 @@ def has_conflicting_numeral(name_a: str, name_b: str) -> bool:
 #     ningun alias real (ej. "Urbanya Etapa I", que nadie mas nombra igual).
 #
 # Los 26 pares de la revisión externa (2026-09-18) se dividen asi:
-#   - 5 fase_real -> PHASE_OF_PAIRS_BY_SOL (orden: matriz, fase)
+#   - 5 fase_real -> PHASE_OF_PAIRS_BY_REVIEW (orden: matriz, fase)
 #   - 2 de los "otra_razon_no_es_fase" (Mall Vivo Santiago Etapa II vs
 #     Centro Comercial Mall Vivo Santiago Etapa II; Fase IV vs Enea Fase IV)
 #     -> SAME_PHASE_ALIAS_PAIRS_BY_SOL
 #   - 18 mismo_referente_numero_no_es_fase + 1 otra_razon (Lote 18/18-A1,
 #     subdivision de lote, no relacion de fase) -> ninguna relacion de fase.
-PHASE_OF_PAIRS_BY_SOL: list[tuple[str, str]] = [
+PHASE_OF_PAIRS_BY_REVIEW: list[tuple[str, str]] = [
     ("Urbanya", "Urbanya Etapa I"),
     ("Mall Vivo", "Mall Vivo Santiago Etapa II"),
     ("Mall Vivo Santiago", "Mall Vivo Santiago Etapa II"),
@@ -187,9 +185,7 @@ def is_generic_bare_name(name: str, other_name: str) -> bool:
 
 # Decisiones explicitas por par (name_a, name_b) tal como aparecen en
 # project_review_queue -- revisadas a mano contra comuna + urls reales de
-# cada documento (ver Auditoria/integracion_v1/project_review_queue.json
-# y el analisis registrado en la bitacora FARO, turn correspondiente a
-# 2026-09-17 noche, resolucion de la cola de revision).
+# cada documento.
 MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Parque Padre Hurtado", "laguna artificial en el Parque Padre Hurtado"): (True, "misma laguna dentro del mismo parque, mismas fechas 2018-10"),
     ("Conjunto Armónico Portezuelo", "Portezuelo"): (True, "mismo proyecto, Vitacura"),
@@ -201,9 +197,9 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Conjunto Armónico Bellavista", "proyecto Bellavista"): (True, "mismo complejo Universidad San Sebastian"),
     ("Conjunto Armónico Bellavista", "Proyecto Armónico Bellavista"): (True, "variante de escritura del mismo nombre"),
     ("Conjunto Armónico Bellavista", "Conjunto Armónico Bellavista (CAB)"): (True, "sigla del mismo nombre"),
-    ("Conjunto Armónico Bellavista (CAB)", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, validate_project_identity_adjudication_topology detecto una reconexion transitiva incorrecta] 'segunda torre habitacional...' describe una torre/fase especifica dentro del complejo, no el complejo completo; la reconexion por substring normalizado encontraba un unico candidato -- la decision de sigla 'Conjunto Armónico Bellavista'/'Conjunto Armónico Bellavista (CAB)' -- e ignoraba que el nombre completo describe un componente, no la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
-    ("Proyecto Armónico Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, misma logica que la entrada anterior] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
-    ("proyecto Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[hallazgo 2026-09-28, misma logica] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id f123b7c3132c33fe6135): parent_component_phase, no_new_merge."),
+    ("Conjunto Armónico Bellavista (CAB)", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[revisión manual, detectado por el validador de topología] 'segunda torre habitacional...' describe una torre/fase especifica dentro del complejo, no el complejo completo; la reconexion por substring normalizado encontraba un unico candidato -- la decision de sigla 'Conjunto Armónico Bellavista'/'Conjunto Armónico Bellavista (CAB)' -- e ignoraba que el nombre completo describe un componente, no la matriz. Coincide con la adjudicacion source-first de la revisión externa (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
+    ("Proyecto Armónico Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[revisión manual, misma lógica que la entrada anterior] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de la revisión externa (2026-09-27, pair_id 675fac8049249f80d63d): parent_component_phase, no_new_merge."),
+    ("proyecto Bellavista", "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"): (False, "[revisión manual, misma lógica que la entrada anterior] Componente/fase especifica, no identidad con la matriz. Coincide con la adjudicacion source-first de la revisión externa (2026-09-27, pair_id f123b7c3132c33fe6135): parent_component_phase, no_new_merge."),
     ("subdivisión del resto del Lote C", "resto del Lote C"): (True, "mismo lote"),
     ("Ciudad del Niño", "megaproyecto de 23 torres en Ciudad del Niño"): (True, "descripcion del mismo desarrollo"),
     ("Ciudad del Niño", "ex Ciudad del Niño"): (True, "mismo sitio, nombre historico"),
@@ -218,17 +214,17 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Centro Cívico del Portal Bicentenario", "Portal Bicentenario"): (False, "componente especifico dentro del proyecto mayor"),
     ("Villa Panamericana", "Villa Panamericana de Cerrillos"): (True, "mismo proyecto, comuna agregada"),
     ("Villa Panamericana", "Villa Panamericana-Lote B"): (False, "lote especifico dentro del proyecto mayor, probable permiso distinto"),
-    ("Villa Panamericana de Cerrillos", "Lote B de la Villa Panamericana de Cerrillos"): (False, "[hallazgo 2026-09-28, validate_project_identity_adjudication_topology detecto una reconexion transitiva incorrecta] Lote B es un lote especifico dentro del proyecto mayor (misma logica que 'Villa Panamericana'/'Villa Panamericana-Lote B' ya decidida arriba); la reconexion por substring normalizado encontraba un unico candidato -- la decision generica de 'Villa Panamericana'/'Villa Panamericana de Cerrillos' (comuna agregada) -- e ignoraba que el nombre completo describe un lote, no la matriz. Coincide con la adjudicacion source-first de Codex/Luna (2026-09-27, pair_id 178854a4dd1ca649a3b4): parent_component_phase, no_new_merge."),
+    ("Villa Panamericana de Cerrillos", "Lote B de la Villa Panamericana de Cerrillos"): (False, "[revisión manual, detectado por el validador de topología] Lote B es un lote especifico dentro del proyecto mayor (misma logica que 'Villa Panamericana'/'Villa Panamericana-Lote B' ya decidida arriba); la reconexion por substring normalizado encontraba un unico candidato -- la decision generica de 'Villa Panamericana'/'Villa Panamericana de Cerrillos' (comuna agregada) -- e ignoraba que el nombre completo describe un lote, no la matriz. Coincide con la adjudicacion source-first de la revisión externa (2026-09-27, pair_id 178854a4dd1ca649a3b4): parent_component_phase, no_new_merge."),
     ("Hotel Sheraton", "Hotel Sheraton Santiago"): (True, "mismo hotel"),
     ("Hotel Sheraton", "proyecto de construcción en perímetro del Hotel Sheraton Santiago"): (False, "proyecto de construccion distinto, adyacente al hotel"),
-    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'mismo sitio' REVERTIDA: el project_id 'Reserva La Dehesa' tiene una unica mencion (El Mostrador 2019) que refiere el proyecto de 54 casas del Cerro del Medio impulsado por la inmobiliaria Reserva La Dehesa, mientras 'Reserva La Dehesa (ex Chaguay)'/Chaguay es el proyecto de 158 parcelas de Desarrollos La Dehesa SpA; Kilometro Cero (2022) los enumera como proyectos distintos. La coincidencia de nombre no es identidad. Ver override 7dfca97fba3dc5d6abd2."),
+    ("Reserva La Dehesa", "Reserva La Dehesa (ex Chaguay)"): (False, "[revisión manual, cierre de identidad de proyectos] Decision legacy 'mismo sitio' REVERTIDA: el project_id 'Reserva La Dehesa' tiene una unica mencion (El Mostrador 2019) que refiere el proyecto de 54 casas del Cerro del Medio impulsado por la inmobiliaria Reserva La Dehesa, mientras 'Reserva La Dehesa (ex Chaguay)'/Chaguay es el proyecto de 158 parcelas de Desarrollos La Dehesa SpA; Kilometro Cero (2022) los enumera como proyectos distintos. La coincidencia de nombre no es identidad. Ver override 7dfca97fba3dc5d6abd2."),
     ("Desnitrificador SCR para Caldera de Ciclo Combinado de Central Nueva Renca", "Nueva Renca"): (True, "obra especifica en la misma central"),
     ("Chaguay", "Habilitación de caminos de acceso e instalaciones complementarias de la subdivisión agrícola Chaguay"): (True, "misma subdivision Chaguay"),
     ("Chaguay", "Reserva La Dehesa (ex Chaguay)"): (True, "Chaguay es el nombre anterior del mismo sitio"),
     ("Eco Egaña Sustentable", "Eco Egaña"): (True, "mismo proyecto"),
     ("Eco Egaña Sustentable", "Egaña Sustentable"): (True, "mismo proyecto"),
-    ("Eco Egaña", "Egaña Sustentable / Eco Egaña"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Fuentes de Fundamenta usan Eco Egaña y Egaña Sustentable/Eco Egaña para la misma obra, titular y emplazamiento."),
-    ("Egaña Sustentable", "Egaña Sustentable / Eco Egaña"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] La fuente de Corte Suprema identifica Egaña Sustentable de Fundamenta; La Tercera usa conjuntamente Egaña Sustentable/Eco Egaña para la misma obra."),
+    ("Eco Egaña", "Egaña Sustentable / Eco Egaña"): (True, "[revisión manual, adjudicación contra la fuente] Fuentes de Fundamenta usan Eco Egaña y Egaña Sustentable/Eco Egaña para la misma obra, titular y emplazamiento."),
+    ("Egaña Sustentable", "Egaña Sustentable / Eco Egaña"): (True, "[revisión manual, adjudicación contra la fuente] La fuente de Corte Suprema identifica Egaña Sustentable de Fundamenta; La Tercera usa conjuntamente Egaña Sustentable/Eco Egaña para la misma obra."),
     ("Lo Aguirre", "Izarra de Lo Aguirre"): (False, "Lo Aguirre es un sector con multiples desarrollos distintos, no un solo proyecto"),
     ("Lo Aguirre", "PDUC Ciudad Lo Aguirre"): (False, "sector con multiples desarrollos distintos"),
     ("Lo Aguirre", "Centro de Distribución Lo Aguirre"): (False, "desarrollo especifico dentro del sector"),
@@ -244,7 +240,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Recreo", "Recreo 321"): (True, "mismo desarrollo, direccion especifica"),
     ("PDUC Urbanya", "Urbanya"): (True, "PDUC es el instrumento de planificacion del mismo proyecto Urbanya"),
     ("Data Center de Google", "Data Center"): (False, "Data Center es termino generico, multiples proyectos distintos en el corpus"),
-    ("Data Center de Google", "data center de Google Chile en Cerrillos"): (True, "[revision 2026-09-26, reconciliacion v3.2->v3.3 tras hallazgo de Codex/Luna, aprobado por el usuario -- ver audit/project_identity_reconciliation_v3_2_v3_3_2026-09-26.json] la separacion generica heredada de ('Data Center de Google', 'Data Center') no aplica a este par especifico: ex-ante.cl confirma que 'Data Center de Google' es el proyecto entre Cerrillos y San Bernardo (no el de Quilicura), y La Tercera confirma que 'data center de Google Chile en Cerrillos' es ese mismo proyecto propuesto en Cerrillos -- distinto del centro operativo de Quilicura (2015) citado por Google. Mismo proyecto."),
+    ("Data Center de Google", "data center de Google Chile en Cerrillos"): (True, "[revisión manual] la separacion generica heredada de ('Data Center de Google', 'Data Center') no aplica a este par especifico: ex-ante.cl confirma que 'Data Center de Google' es el proyecto entre Cerrillos y San Bernardo (no el de Quilicura), y La Tercera confirma que 'data center de Google Chile en Cerrillos' es ese mismo proyecto propuesto en Cerrillos -- distinto del centro operativo de Quilicura (2015) citado por Google. Mismo proyecto."),
     ("Mall Vivo Santiago Etapa II", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "misma etapa II, nombre completo"),
     ("supermercado Lider", "supermercado Líder San Francisco"): (False, "Lider es cadena generica con multiples locales distintos en el corpus"),
     ("estacionamientos de Alonso de Córdova", "Concesionaria de Estacionamientos Alonso de Córdova (Zoccalo)"): (True, "misma concesion de estacionamientos"),
@@ -310,8 +306,8 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("torre C del complejo Puerto de Palos", "Puerto de Palos"): (False, "torre especifica dentro del complejo mayor"),
     ("construcciones Antígona", "Antígona"): (True, "mismo proyecto, forma corta"),
     ("Lote 18", "Lote 18-A1"): (True, "mismo lote, sub-parcela especifica"),
-    ("Lote 18", "Lote 18-A"): (False, "[revision 2026-09-29, tras corregir la normalizacion que colapsaba Lote 18-A con Lote 18] La Tercera (2017) distingue 'todo el Lote 18' de 'la parte del Lote 18-A que controla' el Ejercito y que vendio en 2011 a la Inmobiliaria Lote 18; La Republica de los Libros (2017) llama Lote 18-A a la pequena parte de la villa con cuatro edificios que se pretende declarar monumento. Son granularidades distintas (lote completo vs. parte) y el uso de 'Lote 18' en la segunda fuente se solapa con el 18-A: relacion parte-todo, no identidad. Se mantienen separados; no se afirma que sean objetos independientes."),
-    ("Lote 18-A", "Lote 18-A1"): (False, "[revision 2026-09-29, tras corregir la normalizacion] La Tercera (2017) usa 'Lote 18-A' para la parte del lote que controlaba el Ejercito y vendio en 2011, y 'Lote 18-A1' para el lote que el Consejo de Monumentos Nacionales aprobo declarar Monumento Nacional ('del Lote 18-A1 del complejo'), tras una solicitud que pedia declarar el 'Lote 18'. El texto no dice que 18-A y 18-A1 sean el mismo terreno: A1 parece una sub-parcela especifica. Relacion parte-todo probable; se mantienen separados sin afirmar que sean objetos independientes."),
+    ("Lote 18", "Lote 18-A"): (False, "[revisión manual, tras corregir la normalización] La Tercera (2017) distingue 'todo el Lote 18' de 'la parte del Lote 18-A que controla' el Ejercito y que vendio en 2011 a la Inmobiliaria Lote 18; La Republica de los Libros (2017) llama Lote 18-A a la pequena parte de la villa con cuatro edificios que se pretende declarar monumento. Son granularidades distintas (lote completo vs. parte) y el uso de 'Lote 18' en la segunda fuente se solapa con el 18-A: relacion parte-todo, no identidad. Se mantienen separados; no se afirma que sean objetos independientes."),
+    ("Lote 18-A", "Lote 18-A1"): (False, "[revisión manual, tras corregir la normalización] La Tercera (2017) usa 'Lote 18-A' para la parte del lote que controlaba el Ejercito y vendio en 2011, y 'Lote 18-A1' para el lote que el Consejo de Monumentos Nacionales aprobo declarar Monumento Nacional ('del Lote 18-A1 del complejo'), tras una solicitud que pedia declarar el 'Lote 18'. El texto no dice que 18-A y 18-A1 sean el mismo terreno: A1 parece una sub-parcela especifica. Relacion parte-todo probable; se mantienen separados sin afirmar que sean objetos independientes."),
 
     # Segunda ronda: pares de las bolsas "insuficiente informacion de
     # ubicacion" y "sin traslape de comuna" -- revisados con nombre + dato
@@ -326,8 +322,8 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("edificio de 13 pisos", "edificio de 13 pisos junto al pasaje El Almendral"): (False, "sin evidencia de ser el mismo edificio de La Florida"),
     ("Rotonda Atenas", "edificio con 85 viviendas sociales en plena rotonda Atenas"): (True, "mismo proyecto Rotonda Atenas"),
     ("Rotonda Atenas", "departamentos de Rotonda Atenas"): (True, "mismo proyecto Rotonda Atenas"),
-    ("proyecto de Rotonda Atenas", "85 departamentos de viviendas sociales en el sector de Rotonda Atenas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Le Monde Diplomatique identifica el proyecto de Rotonda Atenas; Hogar de Cristo describe 85 viviendas sociales en el mismo sector y finalidad -- el mismo desarrollo historico de Rotonda Atenas (no el proyecto distinto de 2023 en Cerro Colorado 4661)."),
-    ("proyecto de Rotonda Atenas", "condominio Rotonda Atenas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Le Monde Diplomatique describe el proyecto de Rotonda Atenas; La Tercera identifica el condominio Rotonda Atenas y sus 85 unidades -- la misma torre/proyecto historico."),
+    ("proyecto de Rotonda Atenas", "85 departamentos de viviendas sociales en el sector de Rotonda Atenas"): (True, "[revisión manual, adjudicación contra la fuente] Le Monde Diplomatique identifica el proyecto de Rotonda Atenas; Hogar de Cristo describe 85 viviendas sociales en el mismo sector y finalidad -- el mismo desarrollo historico de Rotonda Atenas (no el proyecto distinto de 2023 en Cerro Colorado 4661)."),
+    ("proyecto de Rotonda Atenas", "condominio Rotonda Atenas"): (True, "[revisión manual, adjudicación contra la fuente] Le Monde Diplomatique describe el proyecto de Rotonda Atenas; La Tercera identifica el condominio Rotonda Atenas y sus 85 unidades -- la misma torre/proyecto historico."),
     ("Centro Comunitario Padre Hurtado", "Edificación Centro Comunitario Padre Hurtado"): (True, "mismo centro"),
     ("Teleférico Bicentenario", "Proyecto Bicentenario"): (False, "Bicentenario es marca generica usada en multiples proyectos distintos del corpus"),
     ("El Rincón", "Central Hidroeléctrica de Pasada El Rincón"): (False, "tipo de proyecto distinto, sin evidencia de ser el mismo sitio"),
@@ -349,7 +345,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Intercontinental", "Hotel Intercontinental Santiago"): (True, "mismo hotel"),
     ("Crowne Plaza", "Galería de los Músicos del Crowne Plaza"): (False, "instalacion especifica dentro del hotel"),
     ("Alameda-Providencia", "Nueva Alameda Providencia"): (True, "mismo proyecto de corredor"),
-    ("Nueva Alameda Providencia", "Nueva Alameda Providencia (NAP)"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] NAP es el acronimo explicito de Nueva Alameda Providencia; ambas fuentes describen la estrategia del mismo eje Alameda-Providencia."),
+    ("Nueva Alameda Providencia", "Nueva Alameda Providencia (NAP)"): (True, "[revisión manual, adjudicación contra la fuente] NAP es el acronimo explicito de Nueva Alameda Providencia; ambas fuentes describen la estrategia del mismo eje Alameda-Providencia."),
     ("Alameda-Providencia", "Eje Alameda-Providencia"): (True, "mismo corredor"),
     ("La Farfana", "Planta de Tratamiento de Aguas Servidas en La Farfana"): (True, "misma planta"),
     ("ex Escuela Rebeca Catalán Vargas", "ex Escuela Rebeca Catalán"): (True, "misma escuela, nombre truncado"),
@@ -363,7 +359,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Centro de Eventos", "Centro de Eventos Espacio Riesco"): (False, "Centro de Eventos es termino generico"),
     ("proyecto Bellavista", "casa de dos pisos de calle Bellavista"): (False, "propiedad pequeña sin relacion evidente con el proyecto de torres"),
     ("proyecto Bellavista", "torres en el barrio Bellavista"): (True, "coincide con las tres torres del complejo Universidad San Sebastian"),
-    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (False, "[revision 2026-09-28, cierre de identidad PROJECT] Decision legacy 'es la empresa del mismo proyecto' REVERTIDA: mismo desarrollador no es mismo proyecto. La mencion 'edificio de Desarrollo Inmobiliario Bellavista' proviene de Interferencia (guetos verticales) y refiere un edificio en Estacion Central (al frente de la Escuela de Derecho de la Universidad de Chile, en el contexto de calle Toro Mazzote), mientras 'proyecto Bellavista' (La Tercera, 2019) es el proyecto de tres torres de DIB en Recoleta. Coincide con la adjudicacion source-first que separa el edificio DIB del proyecto inmobiliario Bellavista (pair_id de la fila 130)."),
+    ("proyecto Bellavista", "edificio de Desarrollo Inmobiliario Bellavista"): (False, "[revisión manual, cierre de identidad de proyectos] Decision legacy 'es la empresa del mismo proyecto' REVERTIDA: mismo desarrollador no es mismo proyecto. La mencion 'edificio de Desarrollo Inmobiliario Bellavista' proviene de Interferencia (guetos verticales) y refiere un edificio en Estacion Central (al frente de la Escuela de Derecho de la Universidad de Chile, en el contexto de calle Toro Mazzote), mientras 'proyecto Bellavista' (La Tercera, 2019) es el proyecto de tres torres de DIB en Recoleta. Coincide con la adjudicacion source-first que separa el edificio DIB del proyecto inmobiliario Bellavista (pair_id de la fila 130)."),
     ("proyecto Bellavista", "proyecto del terreno en Bellavista"): (True, "descripcion generica del mismo proyecto"),
     ("proyecto Bellavista", "una especie de mall del Fondo de Inversión Inmobiliaria Cimenta en el barrio Bellavista"): (False, "desarrollador y tipo de proyecto distintos (Fondo Cimenta, no Desarrollo Inmobiliario Bellavista)"),
     ("ex clínica Sierra Bella", "Sierra Bella"): (True, "mismo sitio"),
@@ -376,7 +372,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Unidad Vecinal Providencia", "Proyecto Vecinal"): (False, "Proyecto Vecinal es termino generico"),
     ("Proyecto de las 54 Casas", "Loteo 54 casas"): (True, "mismo proyecto de 54 casas"),
     ("Proyecto de las 54 Casas", "54 casas del Cerro del Medio"): (True, "mismo proyecto de 54 casas"),
-    ("Loteo de las 54 Casas", "Proyecto de las 54 Casas"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] El Tribunal Ambiental usa 'Loteo de las 54 Casas' y 'Proyecto de las 54 Casas' para el mismo titular Miradores de La Dehesa SpA y la causa R-373-2022."),
+    ("Loteo de las 54 Casas", "Proyecto de las 54 Casas"): (True, "[revisión manual, adjudicación contra la fuente] El Tribunal Ambiental usa 'Loteo de las 54 Casas' y 'Proyecto de las 54 Casas' para el mismo titular Miradores de La Dehesa SpA y la causa R-373-2022."),
     ("El Castillo", "Castillo Hidalgo"): (False, "nombres distintos, sin evidencia de ser el mismo sitio"),
     ("Granja Educativa Terra Viva", "La Granja"): (False, "La Granja es la comuna, generico"),
     ("el pique que se hará en el Parque Forestal", "Parque Forestal"): (False, "Parque Forestal es un lugar con multiples intervenciones especificas distintas"),
@@ -413,9 +409,9 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Vital Apoquindo números 1.400, 1450 y 1.500", "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500"): (True, "mismas direcciones exactas, mismo proyecto de 25 edificios"),
 
     # [CORRECCION 2026-09-18] Los 31 pares siguientes fueron auditados de forma
-    # independiente por la revisión (GPT-5.6) sobre el paquete completo de 253 pares con
+    # independiente por la revisión sobre el paquete completo de 253 pares con
     # evidencia real (project_review_queue_para_revision_sol.json), y CADA UNO fue
-    # reverificado por Claude contra la evidencia real (comuna/direccion/URL) antes
+    # reverificado por la revisión contra la evidencia real (comuna/direccion/URL) antes
     # de aplicar la correccion -- no se acepto el veredicto de la revisión a ciegas. Las 31
     # entradas de abajo SOBRESCRIBEN una decision anterior (ya sea de una regla
     # automatica o de una entrada manual anterior en este mismo diccionario) --
@@ -427,37 +423,37 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     # correctas; y el principio "nombre de empresa/institucion != proyecto" (ya
     # aplicado bien a Fundamenta en general) no se aplico consistentemente a Nueva
     # El Golf ni a Universidad San Sebastian.
-    ("General Amengual", "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480"): (True, "[Sol+Claude 2026-09-18, idx original 4] Debería ser 'merged'. La evidencia apunta al mismo edificio: en proyecto A aparece 'Edificio General Amengual' y la ubicación exacta calle General Amengual 480; proyecto B describe el edificio de 38 pisos en esa misma dirección. El 480 es una dirección, no una etapa o fase."),
-    ("Rotonda Atenas", "proyecto social de 2023 de la rotonda Atenas"): (False, "[Sol+Claude 2026-09-18, idx original 6] Debería ser 'kept_separate'. La evidencia distingue dos proyectos de vivienda social en Las Condes: el caso histórico Rotonda Atenas/Manquehue-Nueva Delhi y otro proyecto de 2023 en Cerro Colorado 4661, cerca de Parque Arauco. No deben fusionarse por compartir la referencia genérica a Rotonda Atenas."),
-    ("Edificio Pajaritos", "Pajaritos 4600"): (True, "[Sol+Claude 2026-09-18, idx original 13] Debería ser 'merged'. Edificio Pajaritos y Pajaritos 4600 son el mismo proyecto: varias fuentes de A lo ubican explícitamente en Avenida Pajaritos 4600, junto a Metro Monte Tabor, que coincide con B. El numeral es la dirección."),
-    ("Mall Vivo Santiago Etapa II", "Mall Vivo"): (True, "[Sol+Claude 2026-09-18, idx original 28] Debería ser 'merged'. La evidencia del nombre genérico 'Mall Vivo' en el corpus lo sitúa en Ñuñoa, Vicuña Mackenna/Carlos Dittborn, y la contraparte corresponde al mismo proyecto Mall Vivo Santiago/Etapa II. En este corpus la mención genérica está contextualizada al mismo caso."),
-    ("Mall Vivo Santiago Etapa II", "Mall Vivo Santiago"): (True, "[Sol+Claude 2026-09-18, idx original 30] Debería ser 'merged'. Mall Vivo Santiago y Mall Vivo Santiago Etapa II remiten al mismo proyecto en Ñuñoa, en los ex terrenos de Copesa/Vicuña Mackenna-Carlos Dittborn, y al mismo conflicto ambiental. 'Etapa II' funciona aquí como denominación formal/fase del mismo caso, no como proyecto independiente."),
-    ("Urbanya Etapa I", "Urbanya"): (True, "[Sol+Claude 2026-09-18, idx original 36] Debería ser 'merged'. Urbanya Etapa I y Urbanya corresponden al mismo desarrollo en El Noviciado, Pudahuel, y al mismo conflicto. La etiqueta de etapa no justifica separar el caso de su proyecto matriz en esta capa de resolución de casos."),
-    ("Mall Vivo", "Mall Vivo Ñuñoa"): (True, "[Sol+Claude 2026-09-18, idx original 37] Debería ser 'merged'. El 'Mall Vivo' genérico de la evidencia está contextualizado en Ñuñoa y coincide con el mismo Mall Vivo Santiago. Separarlo solo por el uso abreviado del nombre fragmenta un mismo caso."),
-    ("Mall Vivo", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "[Sol+Claude 2026-09-18, idx original 38] Debería ser 'merged'. La fase 'Etapa de Demolición, Excavación y Socalzados' pertenece al mismo Mall Vivo Santiago en Ñuñoa; es una fase constructiva del mismo proyecto/caso, no un proyecto autónomo."),
-    ("Mall Vivo", "Mall Vivo Santiago: Etapa de Demolición, Excavación y Socalzados"): (True, "[Sol+Claude 2026-09-18, idx original 39] Debería ser 'merged'. El 'Mall Vivo' genérico está contextualizado en el mismo emplazamiento de Ñuñoa; la denominación formal de Etapa II no constituye evidencia suficiente de un proyecto distinto."),
-    ("Mall Vivo", "Mall Vivo Santiago"): (True, "[Sol+Claude 2026-09-18, idx original 41] Debería ser 'merged'. Mall Vivo y Mall Vivo Santiago, dentro de la evidencia disponible, apuntan al mismo proyecto de Ñuñoa en Vicuña Mackenna/Carlos Dittborn. La separación por nombre genérico produciría duplicación del mismo caso."),
-    ("Edificio Capital", "Condominio Eco Capital"): (True, "[Sol+Claude 2026-09-18, idx original 55] Debería ser 'merged'. Edificio Capital y Condominio Eco Capital aparecen en el mismo artículo y en la misma dirección, Conde de Maule N°4106. La evidencia favorece fuertemente que sean variantes del mismo proyecto."),
-    ("Eco Egaña", "Eco Egaña Poniente"): (True, "[Sol+Claude 2026-09-18, idx original 60] Debería ser 'merged'. Eco Egaña y Eco Egaña Poniente aparecen como variantes del mismo conflicto/proyecto de Fundamenta en el entorno de Plaza Egaña. La evidencia no documenta dos proyectos independientes."),
-    ("Centro de Salud Familiar (Cesfam)", "tercer Centro de Salud Familiar (Cesfam) de Las Condes"): (True, "[Sol+Claude 2026-09-18, idx original 61] Debería ser 'merged'. El CESFAM genérico está ubicado en calle Nueva Delhi y el 'tercer CESFAM de Las Condes' en Manquehue con Nueva Delhi, dentro del mismo conflicto por el inmueble/paño. La coincidencia espacial y contextual apoya la fusión."),
-    ("calle Vital Apoquindo 1.400-1.450-1.500", "Vital Apoquindo"): (True, "[Sol+Claude 2026-09-18, idx original 68] Debería ser 'merged'. Vital Apoquindo y la variante con numeración corresponden al mismo desarrollo: la evidencia ubica el proyecto en el tramo 1400-1500 de Vital Apoquindo. Los números son direcciones, no fases."),
-    ("Las Américas", "Colegio Las Américas"): (True, "[Sol+Claude 2026-09-18, idx original 69] Debería ser 'merged'. Las Américas y Colegio Las Américas refieren al mismo inmueble/proyecto en el sector Larraín-María Monvel/Aldea del Encuentro. La forma corta queda suficientemente contextualizada por ubicación."),
-    ("proyecto de Inmobiliaria Nueva El Golf", "proyecto que impulsa la inmobiliaria Nueva El Golf"): (False, "[Sol+Claude 2026-09-18, idx original 85] Debería ser 'kept_separate'. La relación común es la inmobiliaria Nueva El Golf, no necesariamente el mismo proyecto. La evidencia contiene proyectos en ubicaciones distintas; fusionarlos convertiría identidad del desarrollador en identidad del proyecto."),
-    ("proyecto de Inmobiliaria Nueva El Golf", "Nueva El Golf"): (False, "[Sol+Claude 2026-09-18, idx original 86] Debería ser 'kept_separate'. 'Nueva El Golf' funciona como nombre de la inmobiliaria/desarrollador y no como un proyecto único. La evidencia abarca desarrollos distintos, por lo que no debe usarse como alias de un caso específico."),
-    ("planta de tratamiento de aguas servidas de la Empresa San Isidro", "San Isidro"): (False, "[Sol+Claude 2026-09-18, idx original 101] Debería ser 'kept_separate'. 'San Isidro' es ambiguo. Un lado refiere a una planta de tratamiento de aguas servidas/Empresa San Isidro y el otro contiene menciones que no prueban que se trate de esa misma planta. No hay evidencia suficiente para fusionar."),
-    ("calle Toro Mazotte", "cuatro megaedificios ubicados en calle Toro Mazotte"): (False, "[Sol+Claude 2026-09-18, idx original 104] Debería ser 'kept_separate'. 'Toro Mazotte' es una calle/sector y no identifica por sí solo un proyecto. Compartir la calle con cuatro megaedificios no prueba que las menciones sean el mismo caso."),
-    ("Carlos Valdovinos", "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos"): (False, "[Sol+Claude 2026-09-18, idx original 121] Debería ser 'kept_separate'. Hay una contradicción geográfica fuerte: la evidencia de B sitúa las torres en Presidente Errázuriz/El Golf, Las Condes, mientras A corresponde al proyecto Carlos Valdovinos en otro contexto. Deben mantenerse separados."),
-    ("proyecto inmobiliario de Fundamenta en Ñuñoa", "proyecto inmobiliario de Fundamenta"): (False, "[Sol+Claude 2026-09-18, idx original 124] Debería ser 'kept_separate'. La coincidencia es principalmente el desarrollador Fundamenta. La evidencia de B identifica un proyecto en Simón Bolívar/Suecia/José Artigas/Sucre, y el corpus contiene otros proyectos de Fundamenta; no basta para fusionar con un proyecto genérico de Ñuñoa."),
-    ("Universidad San Sebastián", "Proyecto de la Universidad San Sebastián en la manzana delimitada por las calles Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono"): (False, "[Sol+Claude 2026-09-18, idx original 139] Debería ser 'kept_separate'. 'Universidad San Sebastián' es una institución/actor; el otro nombre es un proyecto físico específico de la USS en Bellavista. No conviene fusionar la entidad institucional con el proyecto."),
-    ("Nueva El Golf", "proyecto que impulsa la inmobiliaria Nueva El Golf"): (False, "[Sol+Claude 2026-09-18, idx original 140] Debería ser 'kept_separate'. 'Nueva El Golf' es la inmobiliaria/desarrollador, mientras el otro nombre refiere a un proyecto impulsado por esa empresa. Actor y proyecto deben mantenerse separados."),
-    ("Barrio Maestranza 1", "barrio Maestranza"): (False, "[Sol+Claude 2026-09-18, idx original 145] Debería ser 'kept_separate'. 'Barrio Maestranza' es demasiado genérico y la evidencia apunta a sectores distintos (Santiago Watt/Exposición versus San Eugenio y eje Santiago-Pedro Aguirre Cerda). No hay identidad de proyecto demostrada."),
-    ("Barrio Parque", "Barrio Parque de Quinta Normal"): (False, "[Sol+Claude 2026-09-18, idx original 192] Debería ser 'kept_separate'. Las ubicaciones corresponden a barrios/proyectos distintos: uno en el entorno Alameda-San Alberto Hurtado/Las Rejas y otro en Quinta Normal (Carrascal/Poeta Pedro Prado). El nombre genérico 'Barrio Parque' no basta para fusionarlos."),
-    ("Parque Bicentenario Cerrillos", "Parque Bicentenario"): (False, "[Sol+Claude 2026-09-18, idx original 194] Debería ser 'kept_separate'. Parque Bicentenario Cerrillos y el Parque Bicentenario de Vitacura son espacios distintos. La evidencia de B lo ubica en la ribera sur del Mapocho/Tabancura, incompatible con el ex aeropuerto de Cerrillos."),
-    ("Hospital del Salvador", "nuevo Hospital del Salvador"): (False, "[Sol+Claude 2026-09-18, idx original 212] Debería ser 'kept_separate'. La evidencia disponible no sostiene que el 'nuevo Hospital del Salvador' de B sea el mismo proyecto de A; B lo ubica en Grecia/Los Jardines en un contexto distinto. La fusión es demasiado agresiva."),
-    ("Mall Vivo Santiago", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "[Sol+Claude 2026-09-18, idx original 248] Debería ser 'merged'. Mall Vivo Santiago y Centro Comercial Mall Vivo Santiago Etapa II comparten emplazamiento y conflicto en Ñuñoa. La denominación de Etapa II no justifica un case_id separado en esta capa."),
-    ("Vital Apoquindo", "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500"): (True, "[Sol+Claude 2026-09-18, idx original 250] Debería ser 'merged'. Vital Apoquindo y la variante 1400 corresponden al mismo desarrollo en el tramo 1400-1500. El numeral es dirección."),
-    ("Vital Apoquindo", "Vital Apoquindo números 1.400, 1450 y 1.500"): (True, "[Sol+Claude 2026-09-18, idx original 251] Debería ser 'merged'. Vital Apoquindo y la variante 1450/1500 corresponden al mismo desarrollo; la evidencia espacial las integra en el mismo proyecto/caso."),
-    ("Vital Apoquindo", "proyecto de 25 edificios en la calle Vital Apoquindo"): (True, "[Sol+Claude 2026-09-18, idx original 252] Debería ser 'merged'. La descripción 'proyecto de 25 edificios en la calle Vital Apoquindo' pertenece al mismo conjunto de aliases Vital Apoquindo ya enlazado por direcciones 1400-1500. Mantenerlo separado rompería la coherencia transitiva del cluster."),
+    ("General Amengual", "edificio de 38 pisos y más de 300 departamentos ubicado en calle General Amengual 480"): (True, "[revisión manual] Debería ser 'merged'. La evidencia apunta al mismo edificio: en proyecto A aparece 'Edificio General Amengual' y la ubicación exacta calle General Amengual 480; proyecto B describe el edificio de 38 pisos en esa misma dirección. El 480 es una dirección, no una etapa o fase."),
+    ("Rotonda Atenas", "proyecto social de 2023 de la rotonda Atenas"): (False, "[revisión manual] Debería ser 'kept_separate'. La evidencia distingue dos proyectos de vivienda social en Las Condes: el caso histórico Rotonda Atenas/Manquehue-Nueva Delhi y otro proyecto de 2023 en Cerro Colorado 4661, cerca de Parque Arauco. No deben fusionarse por compartir la referencia genérica a Rotonda Atenas."),
+    ("Edificio Pajaritos", "Pajaritos 4600"): (True, "[revisión manual] Debería ser 'merged'. Edificio Pajaritos y Pajaritos 4600 son el mismo proyecto: varias fuentes de A lo ubican explícitamente en Avenida Pajaritos 4600, junto a Metro Monte Tabor, que coincide con B. El numeral es la dirección."),
+    ("Mall Vivo Santiago Etapa II", "Mall Vivo"): (True, "[revisión manual] Debería ser 'merged'. La evidencia del nombre genérico 'Mall Vivo' en el corpus lo sitúa en Ñuñoa, Vicuña Mackenna/Carlos Dittborn, y la contraparte corresponde al mismo proyecto Mall Vivo Santiago/Etapa II. En este corpus la mención genérica está contextualizada al mismo caso."),
+    ("Mall Vivo Santiago Etapa II", "Mall Vivo Santiago"): (True, "[revisión manual] Debería ser 'merged'. Mall Vivo Santiago y Mall Vivo Santiago Etapa II remiten al mismo proyecto en Ñuñoa, en los ex terrenos de Copesa/Vicuña Mackenna-Carlos Dittborn, y al mismo conflicto ambiental. 'Etapa II' funciona aquí como denominación formal/fase del mismo caso, no como proyecto independiente."),
+    ("Urbanya Etapa I", "Urbanya"): (True, "[revisión manual] Debería ser 'merged'. Urbanya Etapa I y Urbanya corresponden al mismo desarrollo en El Noviciado, Pudahuel, y al mismo conflicto. La etiqueta de etapa no justifica separar el caso de su proyecto matriz en esta capa de resolución de casos."),
+    ("Mall Vivo", "Mall Vivo Ñuñoa"): (True, "[revisión manual] Debería ser 'merged'. El 'Mall Vivo' genérico de la evidencia está contextualizado en Ñuñoa y coincide con el mismo Mall Vivo Santiago. Separarlo solo por el uso abreviado del nombre fragmenta un mismo caso."),
+    ("Mall Vivo", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "[revisión manual] Debería ser 'merged'. La fase 'Etapa de Demolición, Excavación y Socalzados' pertenece al mismo Mall Vivo Santiago en Ñuñoa; es una fase constructiva del mismo proyecto/caso, no un proyecto autónomo."),
+    ("Mall Vivo", "Mall Vivo Santiago: Etapa de Demolición, Excavación y Socalzados"): (True, "[revisión manual] Debería ser 'merged'. El 'Mall Vivo' genérico está contextualizado en el mismo emplazamiento de Ñuñoa; la denominación formal de Etapa II no constituye evidencia suficiente de un proyecto distinto."),
+    ("Mall Vivo", "Mall Vivo Santiago"): (True, "[revisión manual] Debería ser 'merged'. Mall Vivo y Mall Vivo Santiago, dentro de la evidencia disponible, apuntan al mismo proyecto de Ñuñoa en Vicuña Mackenna/Carlos Dittborn. La separación por nombre genérico produciría duplicación del mismo caso."),
+    ("Edificio Capital", "Condominio Eco Capital"): (True, "[revisión manual] Debería ser 'merged'. Edificio Capital y Condominio Eco Capital aparecen en el mismo artículo y en la misma dirección, Conde de Maule N°4106. La evidencia favorece fuertemente que sean variantes del mismo proyecto."),
+    ("Eco Egaña", "Eco Egaña Poniente"): (True, "[revisión manual] Debería ser 'merged'. Eco Egaña y Eco Egaña Poniente aparecen como variantes del mismo conflicto/proyecto de Fundamenta en el entorno de Plaza Egaña. La evidencia no documenta dos proyectos independientes."),
+    ("Centro de Salud Familiar (Cesfam)", "tercer Centro de Salud Familiar (Cesfam) de Las Condes"): (True, "[revisión manual] Debería ser 'merged'. El CESFAM genérico está ubicado en calle Nueva Delhi y el 'tercer CESFAM de Las Condes' en Manquehue con Nueva Delhi, dentro del mismo conflicto por el inmueble/paño. La coincidencia espacial y contextual apoya la fusión."),
+    ("calle Vital Apoquindo 1.400-1.450-1.500", "Vital Apoquindo"): (True, "[revisión manual] Debería ser 'merged'. Vital Apoquindo y la variante con numeración corresponden al mismo desarrollo: la evidencia ubica el proyecto en el tramo 1400-1500 de Vital Apoquindo. Los números son direcciones, no fases."),
+    ("Las Américas", "Colegio Las Américas"): (True, "[revisión manual] Debería ser 'merged'. Las Américas y Colegio Las Américas refieren al mismo inmueble/proyecto en el sector Larraín-María Monvel/Aldea del Encuentro. La forma corta queda suficientemente contextualizada por ubicación."),
+    ("proyecto de Inmobiliaria Nueva El Golf", "proyecto que impulsa la inmobiliaria Nueva El Golf"): (False, "[revisión manual] Debería ser 'kept_separate'. La relación común es la inmobiliaria Nueva El Golf, no necesariamente el mismo proyecto. La evidencia contiene proyectos en ubicaciones distintas; fusionarlos convertiría identidad del desarrollador en identidad del proyecto."),
+    ("proyecto de Inmobiliaria Nueva El Golf", "Nueva El Golf"): (False, "[revisión manual] Debería ser 'kept_separate'. 'Nueva El Golf' funciona como nombre de la inmobiliaria/desarrollador y no como un proyecto único. La evidencia abarca desarrollos distintos, por lo que no debe usarse como alias de un caso específico."),
+    ("planta de tratamiento de aguas servidas de la Empresa San Isidro", "San Isidro"): (False, "[revisión manual] Debería ser 'kept_separate'. 'San Isidro' es ambiguo. Un lado refiere a una planta de tratamiento de aguas servidas/Empresa San Isidro y el otro contiene menciones que no prueban que se trate de esa misma planta. No hay evidencia suficiente para fusionar."),
+    ("calle Toro Mazotte", "cuatro megaedificios ubicados en calle Toro Mazotte"): (False, "[revisión manual] Debería ser 'kept_separate'. 'Toro Mazotte' es una calle/sector y no identifica por sí solo un proyecto. Compartir la calle con cuatro megaedificios no prueba que las menciones sean el mismo caso."),
+    ("Carlos Valdovinos", "tres torres de 15 pisos y dos subterráneos, cada uno en un sector de avenida Carlos Valdovinos"): (False, "[revisión manual] Debería ser 'kept_separate'. Hay una contradicción geográfica fuerte: la evidencia de B sitúa las torres en Presidente Errázuriz/El Golf, Las Condes, mientras A corresponde al proyecto Carlos Valdovinos en otro contexto. Deben mantenerse separados."),
+    ("proyecto inmobiliario de Fundamenta en Ñuñoa", "proyecto inmobiliario de Fundamenta"): (False, "[revisión manual] Debería ser 'kept_separate'. La coincidencia es principalmente el desarrollador Fundamenta. La evidencia de B identifica un proyecto en Simón Bolívar/Suecia/José Artigas/Sucre, y el corpus contiene otros proyectos de Fundamenta; no basta para fusionar con un proyecto genérico de Ñuñoa."),
+    ("Universidad San Sebastián", "Proyecto de la Universidad San Sebastián en la manzana delimitada por las calles Bellavista, Ernesto Pinto Lagarrigue, Dardignac y Pío Nono"): (False, "[revisión manual] Debería ser 'kept_separate'. 'Universidad San Sebastián' es una institución/actor; el otro nombre es un proyecto físico específico de la USS en Bellavista. No conviene fusionar la entidad institucional con el proyecto."),
+    ("Nueva El Golf", "proyecto que impulsa la inmobiliaria Nueva El Golf"): (False, "[revisión manual] Debería ser 'kept_separate'. 'Nueva El Golf' es la inmobiliaria/desarrollador, mientras el otro nombre refiere a un proyecto impulsado por esa empresa. Actor y proyecto deben mantenerse separados."),
+    ("Barrio Maestranza 1", "barrio Maestranza"): (False, "[revisión manual] Debería ser 'kept_separate'. 'Barrio Maestranza' es demasiado genérico y la evidencia apunta a sectores distintos (Santiago Watt/Exposición versus San Eugenio y eje Santiago-Pedro Aguirre Cerda). No hay identidad de proyecto demostrada."),
+    ("Barrio Parque", "Barrio Parque de Quinta Normal"): (False, "[revisión manual] Debería ser 'kept_separate'. Las ubicaciones corresponden a barrios/proyectos distintos: uno en el entorno Alameda-San Alberto Hurtado/Las Rejas y otro en Quinta Normal (Carrascal/Poeta Pedro Prado). El nombre genérico 'Barrio Parque' no basta para fusionarlos."),
+    ("Parque Bicentenario Cerrillos", "Parque Bicentenario"): (False, "[revisión manual] Debería ser 'kept_separate'. Parque Bicentenario Cerrillos y el Parque Bicentenario de Vitacura son espacios distintos. La evidencia de B lo ubica en la ribera sur del Mapocho/Tabancura, incompatible con el ex aeropuerto de Cerrillos."),
+    ("Hospital del Salvador", "nuevo Hospital del Salvador"): (False, "[revisión manual] Debería ser 'kept_separate'. La evidencia disponible no sostiene que el 'nuevo Hospital del Salvador' de B sea el mismo proyecto de A; B lo ubica en Grecia/Los Jardines en un contexto distinto. La fusión es demasiado agresiva."),
+    ("Mall Vivo Santiago", "Centro Comercial Mall Vivo Santiago Etapa II"): (True, "[revisión manual] Debería ser 'merged'. Mall Vivo Santiago y Centro Comercial Mall Vivo Santiago Etapa II comparten emplazamiento y conflicto en Ñuñoa. La denominación de Etapa II no justifica un case_id separado en esta capa."),
+    ("Vital Apoquindo", "Proyecto de 25 edificios en calle Vital Apoquindo números 1.400, 1450 y 1.500"): (True, "[revisión manual] Debería ser 'merged'. Vital Apoquindo y la variante 1400 corresponden al mismo desarrollo en el tramo 1400-1500. El numeral es dirección."),
+    ("Vital Apoquindo", "Vital Apoquindo números 1.400, 1450 y 1.500"): (True, "[revisión manual] Debería ser 'merged'. Vital Apoquindo y la variante 1450/1500 corresponden al mismo desarrollo; la evidencia espacial las integra en el mismo proyecto/caso."),
+    ("Vital Apoquindo", "proyecto de 25 edificios en la calle Vital Apoquindo"): (True, "[revisión manual] Debería ser 'merged'. La descripción 'proyecto de 25 edificios en la calle Vital Apoquindo' pertenece al mismo conjunto de aliases Vital Apoquindo ya enlazado por direcciones 1400-1500. Mantenerlo separado rompería la coherencia transitiva del cluster."),
 
     # [CORRECCION 2026-09-18, segunda ronda] la revisión senalo (punto 6 de su segunda
     # revision) que has_conflicting_numeral() seguia decidiendo automaticamente
@@ -469,20 +465,20 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     # estos 9 pares se revisaron uno por uno contra comuna/direccion real
     # antes de decidir -- 8 confirman kept_separate (evidencia geografica
     # incompatible o insuficiente), 1 se corrige a merged (hallazgo real
-    # adicional de Claude durante esta verificacion, no reportado por la revisión: la
+    # adicional de la revisión durante esta verificacion, no reportado por la revisión: la
     # regla habia bloqueado por error la fusion de "Fase IV" con su propia
     # descripcion completa).
-    ("edificio de 13 pisos", "torre de 13 pisos en la calle Monjitas 565"): (False, "[Claude 2026-09-18] kept_separate confirmado: A esta en avenida Lo Ovalle, B en un batiburrillo de ubicaciones (Las Condes/Monjitas 565/Barrio Yungay/V Region) que no coincide con Lo Ovalle. Coincidencia de '13 pisos' es casual, no de ubicacion."),
-    ("Alto Las Condes", "Mall Alto Las Condes 2"): (False, "[Claude 2026-09-18] kept_separate confirmado: decision original deliberada (numero '2' indica fase/expansion distinta del mall existente, documentado ya en el patron 'Alto Las Condes vs Alto Las Condes 2' de la primera ronda de revision), B sin evidencia de ubicacion propia que la contradiga."),
-    ("mall Alto Las Condes", "Mall Alto Las Condes 2"): (False, "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que 'Alto Las Condes' vs 'Mall Alto Las Condes 2'."),
-    ("Carlos Valdovinos", "Carlos Valdovinos 3017"): (False, "[Claude 2026-09-18] kept_separate confirmado: la evidencia de A (Parque Las Moscas; Alonso de Cordoba, Vitacura/Estacion Central) nunca confirma que A este realmente en la calle Carlos Valdovinos -- coherente con el hallazgo ya verificado en el par 'Carlos Valdovinos' vs 'tres torres...' (contradiccion geografica fuerte, El Golf/Las Condes). B (3017/3015/3005, sector Especial E2 del PRC de Santiago) es un desarrollo real y especifico distinto."),
-    ("Carlos Valdovinos", "Carlos Valdovinos 3015"): (False, "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017."),
-    ("Carlos Valdovinos", "Carlos Valdovinos 3005"): (False, "[Claude 2026-09-18] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017."),
-    ("Cerro Colorado 4661", "El Colorado"): (False, "[Claude 2026-09-18] kept_separate confirmado: 'El Colorado' es el centro de ski (ya establecido en 2 decisiones manuales previas de esta misma lista), 'Cerro Colorado 4661' es una direccion real en Las Condes (el proyecto social 2023 de la rotonda Atenas, ya identificado en el par 'Rotonda Atenas' vs 'proyecto social de 2023')."),
-    ("Edificio de viviendas de siete pisos en Toledo Nº 1950, 1960 y 1966", 'Toledo\u200b￼?'): (False, "[Claude 2026-09-18] kept_separate confirmado: el nombre B esta corrupto (texto basura con caracteres invisibles/de reemplazo, mismo patron de degeneracion de texto ya diagnosticado en otras partes del pipeline) y su evidencia real (Balmaceda/Santiago/Hualpen/Concepcion/Vina del Mar/Macul/Maipu) no tiene relacion con Toledo/Providencia de A."),
-    ("Fase IV", "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2"): (True, "[Claude 2026-09-18] merged -- hallazgo real adicional (no reportado por Sol, encontrado por Claude al reverificar los pares gobernados por la regla de numeral suelto): A esta en 'Sector de ENEA (Pudahuel)', B es literalmente 'Enea Fase IV' -- mismo sector, misma fase. La regla anterior los separaba por error porque el numeral romano 'iv' de A no coincidia token a token con el resto de numeros de B (14080, 3E-2)."),
+    ("edificio de 13 pisos", "torre de 13 pisos en la calle Monjitas 565"): (False, "[revisión manual] kept_separate confirmado: A esta en avenida Lo Ovalle, B en un batiburrillo de ubicaciones (Las Condes/Monjitas 565/Barrio Yungay/V Region) que no coincide con Lo Ovalle. Coincidencia de '13 pisos' es casual, no de ubicacion."),
+    ("Alto Las Condes", "Mall Alto Las Condes 2"): (False, "[revisión manual] kept_separate confirmado: decision original deliberada (numero '2' indica fase/expansion distinta del mall existente, documentado ya en el patron 'Alto Las Condes vs Alto Las Condes 2' de la primera ronda de revision), B sin evidencia de ubicacion propia que la contradiga."),
+    ("mall Alto Las Condes", "Mall Alto Las Condes 2"): (False, "[revisión manual] kept_separate confirmado, mismo razonamiento que 'Alto Las Condes' vs 'Mall Alto Las Condes 2'."),
+    ("Carlos Valdovinos", "Carlos Valdovinos 3017"): (False, "[revisión manual] kept_separate confirmado: la evidencia de A (Parque Las Moscas; Alonso de Cordoba, Vitacura/Estacion Central) nunca confirma que A este realmente en la calle Carlos Valdovinos -- coherente con el hallazgo ya verificado en el par 'Carlos Valdovinos' vs 'tres torres...' (contradiccion geografica fuerte, El Golf/Las Condes). B (3017/3015/3005, sector Especial E2 del PRC de Santiago) es un desarrollo real y especifico distinto."),
+    ("Carlos Valdovinos", "Carlos Valdovinos 3015"): (False, "[revisión manual] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017."),
+    ("Carlos Valdovinos", "Carlos Valdovinos 3005"): (False, "[revisión manual] kept_separate confirmado, mismo razonamiento que Carlos Valdovinos 3017."),
+    ("Cerro Colorado 4661", "El Colorado"): (False, "[revisión manual] kept_separate confirmado: 'El Colorado' es el centro de ski (ya establecido en 2 decisiones manuales previas de esta misma lista), 'Cerro Colorado 4661' es una direccion real en Las Condes (el proyecto social 2023 de la rotonda Atenas, ya identificado en el par 'Rotonda Atenas' vs 'proyecto social de 2023')."),
+    ("Edificio de viviendas de siete pisos en Toledo Nº 1950, 1960 y 1966", 'Toledo\u200b￼?'): (False, "[revisión manual] kept_separate confirmado: el nombre B esta corrupto (texto basura con caracteres invisibles/de reemplazo, mismo patron de degeneracion de texto ya diagnosticado en otras partes del pipeline) y su evidencia real (Balmaceda/Santiago/Hualpen/Concepcion/Vina del Mar/Macul/Maipu) no tiene relacion con Toledo/Providencia de A."),
+    ("Fase IV", "Radial Aeropuerto Nº 14080, Enea Fase IV, Lote 3E-2"): (True, "[revisión manual] merged -- hallazgo real adicional (no reportado por la revisión, encontrado por la revisión al reverificar los pares gobernados por la regla de numeral suelto): A esta en 'Sector de ENEA (Pudahuel)', B es literalmente 'Enea Fase IV' -- mismo sector, misma fase. La regla anterior los separaba por error porque el numeral romano 'iv' de A no coincidia token a token con el resto de numeros de B (14080, 3E-2)."),
 
-    # [AGREGADO 2026-09-18] KNOWN_HOMONYM_SPLITS en build_case_project_bridge.py
+    # KNOWN_HOMONYM_SPLITS en build_case_project_bridge.py
     # separo el project_id "San Isidro" (que antes mezclaba 2 ubicaciones
     # reales distintas, hallazgo del punto 8 de la revisión) en dos: "San Isidro"
     # (Toro Mazotte/Estacion Central) y "proyecto San Isidro" (Quilicura,
@@ -490,7 +486,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     # 254) que no existia antes con esta granularidad: "planta de
     # tratamiento..." vs "proyecto San Isidro" (Quilicura). Se decide con la
     # misma evidencia ya verificada para el par original.
-    ("planta de tratamiento de aguas servidas de la Empresa San Isidro", "proyecto San Isidro"): (True, "[Claude 2026-09-18, tras split del homonimo San Isidro] merged: 'proyecto San Isidro' quedo, tras separar el homonimo de Toro Mazotte, unicamente con el documento de Quilicura/Estero Las Cruces -- mismo emplazamiento que la planta de tratamiento de aguas servidas de la Empresa San Isidro."),
+    ("planta de tratamiento de aguas servidas de la Empresa San Isidro", "proyecto San Isidro"): (True, "[revisión manual, tras el split del homónimo San Isidro] merged: 'proyecto San Isidro' quedo, tras separar el homonimo de Toro Mazotte, unicamente con el documento de Quilicura/Estero Las Cruces -- mismo emplazamiento que la planta de tratamiento de aguas servidas de la Empresa San Isidro."),
 
     # [AGREGADO 2026-09-18, tras aplicar la correccion completa de la revisión sobre
     # los 934 documentos] la revisión corrigio proyectos_mencionados del documento
@@ -502,22 +498,22 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     # Quilicura/Estero Las Cruces, ya separados como homonimos). Un TERCER
     # "San Isidro" real: el barrio de Buenos Aires, Argentina -- nada que
     # ver con ninguno de los 2 anteriores. Mantener separado de ambos.
-    ("Proyecto de Cencosud en San Isidro", "San Isidro"): (False, "[Claude 2026-09-18] kept_separate: 'San Isidro' aqui es un barrio de Buenos Aires, Argentina (proyecto de Cencosud) -- geograficamente incompatible con 'San Isidro' de Toro Mazotte/Estacion Central, Chile."),
-    ("Proyecto de Cencosud en San Isidro", "proyecto San Isidro"): (False, "[Claude 2026-09-18] kept_separate: mismo razonamiento -- San Isidro, Buenos Aires, Argentina no tiene relacion con 'proyecto San Isidro' (planta de tratamiento de aguas servidas, Quilicura, Chile)."),
+    ("Proyecto de Cencosud en San Isidro", "San Isidro"): (False, "[revisión manual] kept_separate: 'San Isidro' aqui es un barrio de Buenos Aires, Argentina (proyecto de Cencosud) -- geograficamente incompatible con 'San Isidro' de Toro Mazotte/Estacion Central, Chile."),
+    ("Proyecto de Cencosud en San Isidro", "proyecto San Isidro"): (False, "[revisión manual] kept_separate: mismo razonamiento -- San Isidro, Buenos Aires, Argentina no tiene relacion con 'proyecto San Isidro' (planta de tratamiento de aguas servidas, Quilicura, Chile)."),
 
-    # [AGREGADO 2026-09-18] Los 5 pares alias encontrados por la revisión al
+    # Los 5 pares alias encontrados por la revisión al
     # clasificar los 63 documentos 'caso_unico' con >1 case_id (ver
     # MANUAL_EXTRA_REVIEW_PAIRS en build_case_project_bridge.py y
-    # Auditoria/integracion_v1/candidatos_project_review_queue_desde_conflict_unit_63.json
+    # config/conflict_unit_review.json
     # para el provenance/evidencia completos con citas). Decisiones
-    # tomadas por Claude releyendo directamente las citas verificadas de
+    # tomadas por la revisión releyendo directamente las citas verificadas de
     # cada par (no solo la justificacion resumida de la revisión) antes de
     # marcar merged.
-    ("Villa San Luis", "Villa Carlos Cortés"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: 2 documentos independientes (The Clinic, El Mostrador) describen a 'Villa Carlos Cortes'/'Villa Ministro Carlos Cortes' como el nombre historico original del mismo conjunto habitacional que hoy se conoce como Villa San Luis -- mismos actores (Miguel Lawner, CORMU, Ejercito, Inmobiliaria Parque San Luis), misma ubicacion Las Condes, misma trayectoria de demolicion/proteccion patrimonial. Ademas ya existian en el project_review_queue original 5 pares 'merged' que fusionan variantes con 'Ministro'/'Compañero Ministro' Carlos Cortes -- esta bare 'Villa Carlos Cortes' es la misma familia de alias que esas, solo que find_review_candidates() no la detecto por no compartir substring con 'Villa San Luis'."),
-    ("Club de Golf Hacienda Santa Martina Nature - Lo Barnechea", "Hacienda Santa Martina, Nature Club & Golf"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: ambos nombres refieren al mismo proyecto sujeto a la misma denuncia ambiental ante la Superintendencia del Medio Ambiente -- mismo actor (Inmobiliaria Santa Martina S.A.), misma Municipalidad de Lo Barnechea. Es la misma resolucion exenta citando el proyecto con 2 formas de titulo distintas."),
-    ("Egaña Eco Sustentable", "Eco Egaña"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: mismo actor (Inmobiliaria Fundamenta, Pablo Medina), misma causa judicial de recusacion contra el ministro Sergio Muñoz por intervencion de su hija -- 'Eco Egaña' es la forma abreviada de 'Egaña Eco Sustentable' dentro del mismo articulo/caso."),
-    ("LA PLANTA DE CACA", "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: 'LA PLANTA DE CACA' es el apodo coloquial que la comunidad (Accion Vecinal, Resistencia Socioambiental Quilicura) usa para la misma planta de tratamiento de aguas servidas cuyo nombre formal en el SEA es 'Solucion transitoria para la provision de los servicios de tratamiento y disposicion de Aguas Servidas' -- mismo emplazamiento, mismos actores comunitarios opositores, mismo tramite ante el SEA."),
-    ("Alto Las Condes 2", "Alto Norte"): (True, "[Claude 2026-09-18, conflict_unit_63] merged: la nota de Diario Financiero es explicita en que el desarrollo se denomina 'Alto Las Condes 2' en la prensa/negocio pero el litigio y el permiso municipal lo refieren como 'Alto Norte' -- mismo actor (Cencosud Shopping), mismo permiso impugnado ante la Municipalidad de Vitacura y la Corte Suprema."),
+    ("Villa San Luis", "Villa Carlos Cortés"): (True, "[revisión manual] merged: 2 documentos independientes (The Clinic, El Mostrador) describen a 'Villa Carlos Cortes'/'Villa Ministro Carlos Cortes' como el nombre historico original del mismo conjunto habitacional que hoy se conoce como Villa San Luis -- mismos actores (Miguel Lawner, CORMU, Ejercito, Inmobiliaria Parque San Luis), misma ubicacion Las Condes, misma trayectoria de demolicion/proteccion patrimonial. Ademas ya existian en el project_review_queue original 5 pares 'merged' que fusionan variantes con 'Ministro'/'Compañero Ministro' Carlos Cortes -- esta bare 'Villa Carlos Cortes' es la misma familia de alias que esas, solo que find_review_candidates() no la detecto por no compartir substring con 'Villa San Luis'."),
+    ("Club de Golf Hacienda Santa Martina Nature - Lo Barnechea", "Hacienda Santa Martina, Nature Club & Golf"): (True, "[revisión manual] merged: ambos nombres refieren al mismo proyecto sujeto a la misma denuncia ambiental ante la Superintendencia del Medio Ambiente -- mismo actor (Inmobiliaria Santa Martina S.A.), misma Municipalidad de Lo Barnechea. Es la misma resolucion exenta citando el proyecto con 2 formas de titulo distintas."),
+    ("Egaña Eco Sustentable", "Eco Egaña"): (True, "[revisión manual] merged: mismo actor (Inmobiliaria Fundamenta, Pablo Medina), misma causa judicial de recusacion contra el ministro Sergio Muñoz por intervencion de su hija -- 'Eco Egaña' es la forma abreviada de 'Egaña Eco Sustentable' dentro del mismo articulo/caso."),
+    ("LA PLANTA DE CACA", "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas"): (True, "[revisión manual] merged: 'LA PLANTA DE CACA' es el apodo coloquial que la comunidad (Accion Vecinal, Resistencia Socioambiental Quilicura) usa para la misma planta de tratamiento de aguas servidas cuyo nombre formal en el SEA es 'Solucion transitoria para la provision de los servicios de tratamiento y disposicion de Aguas Servidas' -- mismo emplazamiento, mismos actores comunitarios opositores, mismo tramite ante el SEA."),
+    ("Alto Las Condes 2", "Alto Norte"): (True, "[revisión manual] merged: la nota de Diario Financiero es explicita en que el desarrollo se denomina 'Alto Las Condes 2' en la prensa/negocio pero el litigio y el permiso municipal lo refieren como 'Alto Norte' -- mismo actor (Cencosud Shopping), mismo permiso impugnado ante la Municipalidad de Vitacura y la Corte Suprema."),
 
     # Las adjudicaciones de este bloque se apoyan en fulltexts locales hash-pinned,
     # no en similitud del nombre ni en transferencias desde casos vecinos.
@@ -533,7 +529,7 @@ MANUAL_DECISIONS: dict[tuple[str, str], tuple[bool, str]] = {
     ("Torres Alameda", "tres torres Alameda"): (True, "Mismo desarrollo de Su Ksa junto a Alameda Plaza: dos artículos de La Tercera repiten la descripción literal 'tres torres Alameda de la inmobiliaria Su Ksa'."),
     ("block 14 de la Villa San Luis", "block 14"): (True, "Mismo bloque físico de Villa San Luis: Radio JGM lo nombra como 'block 14 de la Villa San Luis'; La Tercera indica que el block 14 es el único edificio del conjunto que permanece en pie."),
     ("edificio de la UNCTAD III (hoy GAM)", "edificio UNCTAD III"): (True, "Mismo edificio histórico UNCTAD III; el primer nombre añade su denominación y uso actual como GAM, no otro inmueble."),
-    ("proyecto de tres torres de 19 pisos cada una", "tres torres de 19 pisos"): (True, "[revision 2026-09-27, adjudicacion source-first de Codex/Luna] Pauta y La Tercera describen el desarrollo de DIB en Recoleta como tres torres de 19 pisos y la misma disputa en Dardignac."),
+    ("proyecto de tres torres de 19 pisos cada una", "tres torres de 19 pisos"): (True, "[revisión manual, adjudicación contra la fuente] Pauta y La Tercera describen el desarrollo de DIB en Recoleta como tres torres de 19 pisos y la misma disputa en Dardignac."),
 }
 
 
@@ -640,7 +636,7 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
         decision, reason = MANUAL_DECISIONS[(name_b, name_a)]
         meta = MANUAL_DECISION_EVIDENCE.get((name_b, name_a))
         return decision, reason, (meta or {}).get("source", "legacy_manual_adjudication"), None
-    # [ORDEN 2026-09-26] el blocklist de nombres genericos (GENERIC_BLOCKLIST:
+    # el blocklist de nombres genericos (GENERIC_BLOCKLIST:
     # "vespucio", "supermercado lider", etc.) va ANTES del fallback de
     # substring normalizado -- un nombre generico bare puede aparecer como
     # substring de CUALQUIER decision manual que lo mencione, produciendo
@@ -657,7 +653,7 @@ def classify_with_provenance(name_a: str, name_b: str) -> tuple[bool | None, str
     if has_bare_trailing_numeral_conflict(name_a, name_b):
         return None, (
             "numeral suelto al final de uno de los nombres, sin decision manual explicita -- "
-            "[hallazgo de Sol 2026-09-18] un numeral suelto suele ser una direccion, no una fase; "
+            "[revisión manual] un numeral suelto suele ser una direccion, no una fase; "
             "requiere revision humana, no se asume kept_separate automaticamente"
         ), "unresolved", None
     return None, "sin regla aplicable ni decision manual -- requiere revision humana adicional", "unresolved", None
@@ -705,11 +701,11 @@ def classify_project_pair_with_adjudications(
         action = exact_entry.get("resolver_action")
         rationale = str(exact_entry.get("rationale") or "")
         if identity_class == "same_identity" and action == "merge_case":
-            return True, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+            return True, rationale, PROJECT_IDENTITY_DECISION_SOURCE, None
         if identity_class in {"parent_component_phase", "related_plan_or_instrument", "distinct_entities", "insufficient_evidence"} and action == "no_new_merge":
-            return False, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+            return False, rationale, PROJECT_IDENTITY_DECISION_SOURCE, None
         if identity_class == "unresolved" and action == "no_new_merge":
-            return None, rationale, str(exact_entry.get("decision_source") or "identity_followup_2026-09-27"), None
+            return None, rationale, PROJECT_IDENTITY_DECISION_SOURCE, None
         raise ValueError(
             f"unsupported resolver_action {action!r} for identity class {identity_class!r}"
         )
@@ -718,431 +714,82 @@ def classify_project_pair_with_adjudications(
         return (
             None,
             "par de nombres revisado para otros project_id; no se hereda una decision por nombre",
-            "identity_followup_name_scope_guard",
+            "reviewed_name_scope_guard",
             None,
         )
     return classify_with_provenance(name_a, name_b)
 
 
-def load_project_identity_adjudications(
-    artifact_path: Path | None = None,
-    source_bundle_path: Path | None = None,
-) -> list[dict[str, Any]]:
-    """Load and pin the exact-ID identity-review decisions consumed by the resolver."""
-    root = Path(__file__).resolve().parents[1]
-    artifact_path = artifact_path or root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
-    source_bundle_path = source_bundle_path or root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
-    payload = json.loads(Path(artifact_path).read_text(encoding="utf-8"))
-    if payload.get("artifact_id") != "project_identity_adjudications_2026-09-27_v1":
-        raise ValueError("unexpected project identity adjudication artifact_id")
-    expected_bundle_sha = payload.get("source_bundle_sha256")
-    bundle_raw = Path(source_bundle_path).read_bytes()
-    actual_bundle_sha = hashlib.sha256(bundle_raw).hexdigest()
-    if expected_bundle_sha != actual_bundle_sha:
-        raise ValueError("identity review bundle SHA-256 mismatch")
-    source_bundle = json.loads(bundle_raw.decode("utf-8"))
-    bundle_pairs = {item["pair_id"]: item for item in source_bundle.get("unresolved_pairs", [])}
-    entries = payload.get("adjudications")
-    if not isinstance(entries, list) or len(entries) != 68:
-        raise ValueError("identity adjudication artifact must contain exactly 68 reviewed pairs")
-    allowed_classes = {
-        "same_identity",
-        "parent_component_phase",
-        "related_plan_or_instrument",
-        "distinct_entities",
-        "unresolved",
-    }
-    # Reuse the pure classifier as a structural validation pass: this rejects
-    # duplicate ID pairs, stale names and unsupported actions before mutation.
+PROJECT_IDENTITY_DECISIONS_RELATIVE_PATH = "config/project_identity_decisions.json"
+PROJECT_IDENTITY_DECISION_SOURCE = "reviewed_pair_adjudication"
+_IDENTITY_CLASSES = {
+    "same_identity", "parent_component_phase", "related_plan_or_instrument", "distinct_entities",
+    "insufficient_evidence", "unresolved",
+}
+_NO_MERGE_CLASSES = _IDENTITY_CLASSES - {"same_identity"}
+
+
+def load_project_identity_decisions(path: Path | None = None) -> list[dict[str, Any]]:
+    """Carga y valida las decisiones de identidad entre pares de proyectos.
+
+    Cada decision esta llaveada por la pareja EXACTA de project_id; una decision nunca se transfiere a otra
+    pareja por parecido de nombres. Solo `same_identity` fusiona (`merge_case`, con un `canonical_project_id`
+    que sea uno de los dos); toda otra clase mantiene los proyectos separados. La evidencia de cada decision
+    (registro del texto completo, hashes, cita literal) se verifica aparte, contra el corpus, en
+    `validate_project_identity_adjudication_evidence`."""
+    path = Path(path) if path is not None else Path(__file__).resolve().parents[1] / PROJECT_IDENTITY_DECISIONS_RELATIVE_PATH
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "project_identity_decisions":
+        raise ValueError("unexpected project identity decisions schema_version")
+    entries = payload.get("decisions")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("project identity decisions file has no decisions")
+    counts = payload.get("counts") or {}
+    if counts.get("pairs") != len(entries):
+        raise ValueError("project identity decisions: declared pair count differs from the entries present")
     seen_pair_ids: set[str] = set()
     seen_id_pairs: set[tuple[str, str]] = set()
+    by_class: dict[str, int] = {}
     for entry in entries:
         pair_id = str(entry.get("pair_id") or "")
         ids = entry.get("project_ids")
         if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
-            raise ValueError("identity adjudication pair_id/project_ids are missing or duplicated")
+            raise ValueError("identity decision pair_id/project_ids are missing or duplicated")
         id_pair = tuple(sorted(str(value) for value in ids))
-        if id_pair in seen_id_pairs:
-            raise ValueError(f"duplicate identity adjudication project_id pair {id_pair!r}")
+        if id_pair[0] == id_pair[1] or id_pair in seen_id_pairs:
+            raise ValueError(f"duplicate or self-referencing identity decision project_id pair {id_pair!r}")
         seen_pair_ids.add(pair_id)
         seen_id_pairs.add(id_pair)
         identity_class = entry.get("identity_class")
-        canonical_project_id = entry.get("canonical_project_id")
-        if identity_class not in allowed_classes:
-            raise ValueError(f"identity adjudication {pair_id!r} has unsupported identity_class")
+        if identity_class not in _IDENTITY_CLASSES:
+            raise ValueError(f"identity decision {pair_id!r} has unsupported identity_class")
+        by_class[identity_class] = by_class.get(identity_class, 0) + 1
+        canonical = entry.get("canonical_project_id")
         if identity_class == "same_identity":
-            if entry.get("resolver_action") != "merge_case":
-                raise ValueError(f"same_identity pair {pair_id!r} must be merge_case")
-            if canonical_project_id not in id_pair:
-                raise ValueError(f"same_identity pair {pair_id!r} requires an exact canonical_project_id")
-        elif entry.get("resolver_action") != "no_new_merge":
-            raise ValueError(f"non-identical or unresolved pair {pair_id!r} must not merge")
-        elif canonical_project_id is not None:
-            raise ValueError(f"no_new_merge pair {pair_id!r} cannot declare a canonical_project_id")
-        names = entry.get("project_names")
-        if not isinstance(names, dict) or set(names) != set(id_pair):
-            raise ValueError(f"identity adjudication {pair_id!r} has invalid project_names")
-        source_pair = bundle_pairs.get(pair_id)
-        if source_pair is None:
-            raise ValueError(f"identity adjudication pair_id {pair_id!r} is absent from source bundle")
-        source_ids = {
-            source_pair["project_a"]["project_id"],
-            source_pair["project_b"]["project_id"],
-        }
-        source_names = {
-            source_pair["project_a"]["project_id"]: source_pair["project_a"]["canonical_name"],
-            source_pair["project_b"]["project_id"]: source_pair["project_b"]["canonical_name"],
-        }
-        if set(id_pair) != source_ids or names != source_names:
-            raise ValueError(f"identity adjudication {pair_id!r} project IDs/names differ from source bundle")
-        source_evidence = entry.get("source_evidence")
-        if not isinstance(source_evidence, list) or not source_evidence:
-            raise ValueError(f"identity adjudication {pair_id!r} has no source_evidence")
-        seen_sides: set[str] = set()
-        literal_evidence_sides: set[str] = set()
-        for ref in source_evidence:
-            side = ref.get("side")
-            side_key = "project_a" if side == "a" else "project_b" if side == "b" else None
-            if side_key is None:
-                raise ValueError(f"identity adjudication {pair_id!r} has invalid evidence side")
-            source_project = source_pair[side_key]
-            project_id = source_project["project_id"]
-            if ref.get("project_id") != project_id or ref.get("project_name") != source_project["canonical_name"]:
-                raise ValueError(f"identity adjudication {pair_id!r} evidence has stale project identity")
-            expected_sources = {
-                (example.get("document_id"), example.get("url"), example.get("raw_project_mention"))
-                for example in source_project.get("source_examples", [])
-            }
-            if (
-                ref.get("document_id"), ref.get("url"), ref.get("raw_project_mention")
-            ) not in expected_sources:
-                raise ValueError(f"identity adjudication {pair_id!r} cites a source outside its bundle side")
-            if not ref.get("content_record_sha256") or not ref.get("source_text_sha256"):
-                raise ValueError(f"identity adjudication {pair_id!r} has incomplete source hashes")
-            if ref.get("evidence_status") == "literal_anchor_verified":
-                if not ref.get("quote") or not ref.get("matched_fragment"):
-                    raise ValueError(f"identity adjudication {pair_id!r} has incomplete literal evidence")
-                literal_evidence_sides.add(side)
-            elif ref.get("evidence_status") != "no_discriminative_literal_anchor":
-                raise ValueError(f"identity adjudication {pair_id!r} has unsupported evidence_status")
-            seen_sides.add(side)
-        if seen_sides != {"a", "b"}:
-            raise ValueError(f"identity adjudication {pair_id!r} must retain source references for both projects")
-        if literal_evidence_sides != {"a", "b"} and identity_class != "unresolved":
-            raise ValueError(f"identity adjudication {pair_id!r} needs a literal anchor for both projects")
-    if seen_pair_ids != set(bundle_pairs):
-        raise ValueError("identity adjudication pair_id set differs from the frozen source bundle")
-    return entries
-
-
-def load_historical_project_identity_adjudications(
-    artifact_path: Path | None = None,
-) -> list[dict[str, Any]]:
-    """Load the hash-pinned exact-ID supplement for recovered legacy pairs.
-
-    This artifact is deliberately additive: it cannot overlap the reviewed
-    68-pair bundle, promote a decision by itself, or transfer a decision by
-    name. Unresolved entries remain unresolved.
-    """
-    root = Path(__file__).resolve().parents[1]
-    artifact_path = artifact_path or root / "audit" / "historical_project_pair_adjudications_v1.json"
-    raw = Path(artifact_path).read_bytes()
-    actual_sha = hashlib.sha256(raw).hexdigest()
-    if actual_sha != HISTORICAL_PAIR_ADJUDICATION_SHA256:
-        raise ValueError("historical project-pair adjudication SHA-256 mismatch")
-    payload = json.loads(raw.decode("utf-8"))
-    if payload.get("schema_version") != "historical_project_pair_adjudications_v1":
-        raise ValueError("unexpected historical project-pair adjudication schema_version")
-    if payload.get("artifact_id") != "historical_project_pair_adjudications_2026-09-28_v1":
-        raise ValueError("unexpected historical project-pair adjudication artifact_id")
-    if payload.get("generated_on") != "2026-09-28":
-        raise ValueError("unexpected historical project-pair adjudication date")
-    if payload.get("scope", {}).get("production_promoted") is not False:
-        raise ValueError("historical pair artifact must remain a non-promoted candidate")
-    entries = payload.get("adjudications")
-    if not isinstance(entries, list) or len(entries) != 27:
-        raise ValueError("historical project-pair artifact must contain exactly 27 pairs")
-    allowed_classes = {
-        "same_identity", "parent_component_phase", "related_plan_or_instrument",
-        "distinct_entities", "unresolved",
-    }
-    seen_pair_ids: set[str] = set()
-    seen_pairs: set[tuple[str, str]] = set()
-    snapshot = []
-    for entry in entries:
-        pair_id = str(entry.get("pair_id") or "")
-        ids = entry.get("project_ids")
-        if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
-            raise ValueError("historical pair_id/project_ids are missing or duplicated")
-        id_pair = tuple(sorted(str(value) for value in ids))
-        if len(set(id_pair)) != 2 or id_pair in seen_pairs:
-            raise ValueError(f"duplicate or invalid historical project-ID pair {id_pair!r}")
-        expected_pair_id = "historical_pair:" + hashlib.sha256("\0".join(id_pair).encode()).hexdigest()[:20]
-        if pair_id != expected_pair_id:
-            raise ValueError(f"historical pair_id does not match exact project IDs: {pair_id!r}")
-        if entry.get("identity_class") not in allowed_classes:
-            raise ValueError(f"historical pair {pair_id!r} has unsupported identity_class")
-        same = entry["identity_class"] == "same_identity"
-        if same:
-            if entry.get("resolver_action") != "merge_case" or entry.get("canonical_project_id") not in id_pair:
-                raise ValueError(f"historical same_identity pair {pair_id!r} has invalid merge/canonical ID")
-        elif entry.get("resolver_action") != "no_new_merge" or entry.get("canonical_project_id") is not None:
-            raise ValueError(f"historical non-identity pair {pair_id!r} must not merge or name a canonical ID")
-        if entry.get("decision_source") != "historical_pair_adjudication_2026-09-28":
-            raise ValueError(f"historical pair {pair_id!r} has unexpected decision_source")
-        if entry.get("typed_relation_persisted") is not False or entry.get("production_promoted") is not False:
-            raise ValueError(f"historical pair {pair_id!r} must remain an unpromoted candidate")
+            if entry.get("resolver_action") != "merge_case" or canonical not in id_pair:
+                raise ValueError(f"same_identity pair {pair_id!r} needs merge_case and an exact canonical_project_id")
+        elif entry.get("resolver_action") != "no_new_merge" or canonical is not None:
+            raise ValueError(f"non-identical or unresolved pair {pair_id!r} must not merge or name a canonical ID")
         names = entry.get("project_names")
         if not isinstance(names, dict) or set(names) != set(id_pair) or any(not names[pid] for pid in id_pair):
-            raise ValueError(f"historical pair {pair_id!r} has invalid project_names")
+            raise ValueError(f"identity decision {pair_id!r} has invalid project_names")
+        if not entry.get("rationale") or not entry.get("confidence"):
+            raise ValueError(f"identity decision {pair_id!r} lacks rationale or confidence")
         refs = entry.get("source_evidence")
-        if not isinstance(refs, list) or len(refs) != 2 or {ref.get("side") for ref in refs} != {"a", "b"}:
-            raise ValueError(f"historical pair {pair_id!r} must cite one source per side")
-        for ref in refs:
-            if ref.get("project_id") not in id_pair or names.get(ref.get("project_id")) != ref.get("project_name"):
-                raise ValueError(f"historical pair {pair_id!r} has evidence for a different project ID")
-            if ref.get("evidence_status") != "literal_anchor_verified" or not ref.get("quote"):
-                raise ValueError(f"historical pair {pair_id!r} lacks a literal source anchor")
-            if not ref.get("source_text_sha256") or not ref.get("content_record_sha256"):
-                raise ValueError(f"historical pair {pair_id!r} lacks source hashes")
-        seen_pair_ids.add(pair_id)
-        seen_pairs.add(id_pair)
-        snapshot.append({
-            "project_ids": ids,
-            "project_names": names,
-            "source_queue_rowid": entry.get("source_queue_rowid"),
-        })
-    snapshot_sha = hashlib.sha256(
-        json.dumps(snapshot, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
-    ).hexdigest()
-    if payload.get("source_pair_snapshot_sha256") != snapshot_sha:
-        raise ValueError("historical project-pair snapshot SHA-256 mismatch")
-    base_pairs = {
-        tuple(sorted(str(value) for value in entry["project_ids"]))
-        for entry in load_project_identity_adjudications()
-    }
-    overlap = seen_pairs & base_pairs
-    if overlap:
-        raise ValueError(f"historical supplement overlaps the frozen 68-pair artifact: {sorted(overlap)!r}")
+        if not isinstance(refs, list) or not refs:
+            raise ValueError(f"identity decision {pair_id!r} has no source_evidence")
+        if {ref.get("side") for ref in refs} != {"a", "b"}:
+            raise ValueError(f"identity decision {pair_id!r} must cite a source for each side")
+        ref_ids = {ref.get("evidence_ref_id") for ref in refs if ref.get("evidence_ref_id")}
+        cited = entry.get("cited_evidence_ref_ids")
+        if cited is not None and (not isinstance(cited, list) or not set(cited) <= ref_ids):
+            raise ValueError(f"identity decision {pair_id!r} cites evidence references it does not hold")
+        for source in entry.get("supporting_sources") or []:
+            if not str(source.get("url", "")).startswith("https://") or not source.get("publisher") or not source.get("supports"):
+                raise ValueError(f"identity decision {pair_id!r} has an incomplete supporting source record")
+    if counts.get("by_identity_class") != dict(sorted(by_class.items())):
+        raise ValueError("project identity decisions: declared class counts differ from the entries present")
     return entries
-
-
-def load_effective_project_identity_adjudications(
-    override_path: Path | None = None,
-) -> list[dict[str, Any]]:
-    """Combine the frozen 68-pair review, exact-ID overrides, and 27 legacy pairs.
-
-    Overrides can only replace an ``unresolved`` entry in the exact frozen base
-    artifact. They cannot transfer by name, alter the historical supplement,
-    or mark themselves as production-promoted. The returned objects are copies;
-    the source adjudication artifacts remain immutable.
-    """
-    root = Path(__file__).resolve().parents[1]
-    base_path = root / "audit" / "identity_followup_2026-09-27" / "identity_adjudications_v1.json"
-    bundle_path = root / "audit" / "identity_followup_2026-09-26" / "identity_review_bundle.json"
-    historical_path = root / "audit" / "historical_project_pair_adjudications_v1.json"
-    override_path = override_path or root / PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
-
-    base_raw = base_path.read_bytes()
-    if hashlib.sha256(base_raw).hexdigest() != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
-        raise ValueError("base project identity adjudication SHA-256 mismatch")
-    bundle_raw = bundle_path.read_bytes()
-    payload_raw = Path(override_path).read_bytes()
-    override_sha = hashlib.sha256(payload_raw).hexdigest()
-    if override_sha != PROJECT_IDENTITY_OVERRIDE_SHA256:
-        raise ValueError("override SHA-256 mismatch")
-    payload = json.loads(payload_raw.decode("utf-8"))
-    if payload.get("schema_version") != "project_identity_adjudication_overrides_v4":
-        raise ValueError("unexpected project identity override schema_version")
-    if payload.get("artifact_id") != "project_identity_adjudication_overrides_2026-09-29_v4":
-        raise ValueError("unexpected project identity override artifact_id")
-    if payload.get("generated_on") != "2026-09-29":
-        raise ValueError("unexpected project identity override date")
-    if payload.get("source_base_adjudication_sha256") != PROJECT_IDENTITY_BASE_ADJUDICATION_SHA256:
-        raise ValueError("project identity override does not pin the frozen base adjudication")
-    if payload.get("source_base_bundle_sha256") != hashlib.sha256(bundle_raw).hexdigest():
-        raise ValueError("project identity override source bundle SHA-256 mismatch")
-    if payload.get("source_historical_adjudication_sha256") != HISTORICAL_PAIR_ADJUDICATION_SHA256:
-        raise ValueError("project identity override does not pin the historical supplement")
-    scope = payload.get("scope")
-    if not isinstance(scope, dict) or scope.get("production_promoted") is not False:
-        raise ValueError("project identity override must remain unpromoted")
-    if scope.get("typed_relation_persisted") is not False:
-        raise ValueError("project identity override cannot claim a typed relation was persisted")
-    topology_unresolved = scope.get("topology_unresolved_reviewed")
-    if not isinstance(topology_unresolved, list) or any(
-        not isinstance(item, dict) or not item.get("pair_id") or not item.get("reason")
-        for item in topology_unresolved
-    ):
-        raise ValueError("project identity override needs explicit topology-unresolved reasons")
-
-    base_entries = load_project_identity_adjudications()
-    historical_entries = load_historical_project_identity_adjudications(historical_path)
-    if len(base_entries) != 68 or len(historical_entries) != 27:
-        raise ValueError("effective identity input counts differ from the pinned contract")
-    base_by_pair = {
-        tuple(sorted(str(value) for value in entry["project_ids"])): entry
-        for entry in base_entries
-    }
-    historical_pairs = {
-        tuple(sorted(str(value) for value in entry["project_ids"]))
-        for entry in historical_entries
-    }
-    unresolved_base = {
-        entry["pair_id"]: tuple(sorted(str(value) for value in entry["project_ids"]))
-        for entry in base_entries
-        if entry.get("identity_class") == "unresolved"
-    }
-    unresolved_history = {
-        entry["pair_id"]
-        for entry in historical_entries
-        if entry.get("identity_class") == "unresolved"
-    }
-    if set(scope.get("base_unresolved_retained", [])) != set(unresolved_base) - {
-        str(entry.get("pair_id")) for entry in payload.get("adjudications", [])
-    }:
-        raise ValueError("override unresolved-base inventory does not match the frozen base decisions")
-
-    overrides = payload.get("adjudications")
-    historical_overrides = payload.get("historical_adjudications")
-    if not isinstance(overrides, list) or len(overrides) != 16 or scope.get("pair_count") != 16:
-        raise ValueError("project identity override must contain exactly 16 exact-ID base pairs")
-    if (
-        not isinstance(historical_overrides, list)
-        or len(historical_overrides) != 2
-        or scope.get("historical_pair_count") != 2
-    ):
-        raise ValueError("project identity override must contain exactly 2 exact-ID historical pairs")
-    if {str(item["pair_id"]) for item in topology_unresolved} != set():
-        raise ValueError("no topology-blocking pair may remain unresolved in the closed overlay")
-    override_no_merge_classes = {"distinct_entities", "parent_component_phase", "insufficient_evidence", "unresolved"}
-
-    def validate_overrides(
-        entries: list[dict[str, Any]],
-        original_by_pair: dict[tuple[str, str], dict[str, Any]],
-        forbidden_pairs: set[tuple[str, str]],
-        label: str,
-    ) -> dict[tuple[str, str], dict[str, Any]]:
-        seen_pairs: set[tuple[str, str]] = set()
-        seen_pair_ids: set[str] = set()
-        result: dict[tuple[str, str], dict[str, Any]] = {}
-        for override in entries:
-            pair_id = str(override.get("pair_id") or "")
-            ids = override.get("project_ids")
-            if not pair_id or pair_id in seen_pair_ids or not isinstance(ids, list) or len(ids) != 2:
-                raise ValueError("project identity override has missing/duplicate pair_id or project_ids")
-            pair = tuple(sorted(str(value) for value in ids))
-            if pair[0] == pair[1] or pair in seen_pairs or pair in forbidden_pairs:
-                raise ValueError(f"duplicate, self, or cross-artifact override pair {pair!r}")
-            original = original_by_pair.get(pair)
-            if original is None or original.get("pair_id") != pair_id or original.get("identity_class") != "unresolved":
-                raise ValueError(f"override {pair_id!r} is not an exact unresolved {label} pair")
-            names = override.get("project_names")
-            if names != original.get("project_names") or set(names or {}) != set(pair):
-                raise ValueError(f"override {pair_id!r} project names differ from the frozen {label} entry")
-            identity_class = override.get("identity_class")
-            action = override.get("resolver_action")
-            canonical = override.get("canonical_project_id")
-            if identity_class == "same_identity":
-                if action != "merge_case" or canonical not in pair:
-                    raise ValueError(f"same_identity override {pair_id!r} needs merge_case and an exact canonical ID")
-                if not override.get("canonical_selection_note"):
-                    raise ValueError(f"same_identity override {pair_id!r} needs a canonical-selection rationale")
-                if override.get("confidence") != "high":
-                    raise ValueError(f"same_identity override {pair_id!r} needs high confidence before merging")
-            elif identity_class in override_no_merge_classes:
-                if action != "no_new_merge" or canonical is not None or override.get("canonical_selection_note") is not None:
-                    raise ValueError(f"{identity_class} override {pair_id!r} must not merge or choose a canonical ID")
-            else:
-                raise ValueError(f"unsupported project identity override class {identity_class!r}")
-            expected_decision_source = (
-                PROJECT_IDENTITY_OVERRIDE_V4_SOURCE
-                if pair_id in PROJECT_IDENTITY_OVERRIDE_V4_SOURCE_PAIR_IDS
-                else PROJECT_IDENTITY_OVERRIDE_SOURCE
-            )
-            if override.get("decision_source") != expected_decision_source:
-                raise ValueError(f"override {pair_id!r} has unexpected decision_source")
-            if override.get("production_promoted") is not False or override.get("typed_relation_persisted") is not False:
-                raise ValueError(f"override {pair_id!r} must remain an unpromoted candidate")
-            if override.get("confidence") not in {"high", "medium"} or not override.get("rationale"):
-                raise ValueError(f"override {pair_id!r} has incomplete decision rationale/confidence")
-
-            original_refs = {
-                ref.get("evidence_ref_id"): ref
-                for ref in original.get("source_evidence", [])
-                if ref.get("evidence_ref_id")
-            }
-            evidence_ref_ids = override.get("source_evidence_ref_ids")
-            if not isinstance(evidence_ref_ids, list) or not evidence_ref_ids or len(set(evidence_ref_ids)) != len(evidence_ref_ids):
-                raise ValueError(f"override {pair_id!r} has missing or duplicate source evidence references")
-            cited_refs = [original_refs.get(ref_id) for ref_id in evidence_ref_ids]
-            if any(ref is None for ref in cited_refs) or {ref.get("side") for ref in cited_refs if ref} != {"a", "b"}:
-                raise ValueError(f"override {pair_id!r} must cite frozen source evidence for both exact project IDs")
-            if any(ref.get("project_id") not in pair for ref in cited_refs if ref):
-                raise ValueError(f"override {pair_id!r} source evidence references another project ID")
-            supporting_sources = override.get("supporting_sources")
-            if not isinstance(supporting_sources, list) or not supporting_sources:
-                raise ValueError(f"override {pair_id!r} has no supporting source links")
-            for source in supporting_sources:
-                if not isinstance(source, dict) or not str(source.get("url", "")).startswith("https://"):
-                    raise ValueError(f"override {pair_id!r} has an invalid supporting source URL")
-                if not source.get("publisher") or not source.get("supports"):
-                    raise ValueError(f"override {pair_id!r} has an incomplete supporting source record")
-            seen_pairs.add(pair)
-            seen_pair_ids.add(pair_id)
-            result[pair] = override
-        return result
-
-    historical_by_pair = {
-        tuple(sorted(str(value) for value in entry["project_ids"])): entry
-        for entry in historical_entries
-    }
-    override_by_pair = validate_overrides(overrides, base_by_pair, historical_pairs, "base")
-    historical_override_by_pair = validate_overrides(
-        historical_overrides, historical_by_pair, set(base_by_pair), "historical"
-    )
-    if {str(o["pair_id"]) for o in overrides} != set(unresolved_base) - set(scope.get("base_unresolved_retained", [])):
-        raise ValueError("override pair set does not exactly cover the declared subset of base unresolved pairs")
-    if {str(o["pair_id"]) for o in historical_overrides} | set(scope.get("historical_unresolved_retained", [])) != unresolved_history:
-        raise ValueError("historical override set does not exactly cover the historical unresolved pairs")
-
-    def apply_override(original: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
-        effective = copy.deepcopy(original)
-        effective["prior_adjudication"] = {
-            "identity_class": original.get("identity_class"),
-            "resolver_action": original.get("resolver_action"),
-            "canonical_project_id": original.get("canonical_project_id"),
-            "rationale": original.get("rationale"),
-            "decision_source": original.get("decision_source"),
-        }
-        for field in (
-            "identity_class", "resolver_action", "canonical_project_id", "canonical_selection_note",
-            "confidence", "rationale", "decision_source", "production_promoted", "typed_relation_persisted",
-        ):
-            effective[field] = override.get(field)
-        effective["override_artifact"] = PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH
-        effective["override_artifact_sha256"] = override_sha
-        effective["override_source_evidence_ref_ids"] = list(override["source_evidence_ref_ids"])
-        effective["override_supporting_sources"] = copy.deepcopy(override["supporting_sources"])
-        return effective
-
-    effective_base = []
-    for original in base_entries:
-        pair = tuple(sorted(str(value) for value in original["project_ids"]))
-        override = override_by_pair.get(pair)
-        effective_base.append(apply_override(original, override) if override else copy.deepcopy(original))
-    effective_historical = []
-    for original in historical_entries:
-        pair = tuple(sorted(str(value) for value in original["project_ids"]))
-        override = historical_override_by_pair.get(pair)
-        effective_historical.append(apply_override(original, override) if override else copy.deepcopy(original))
-    effective_pairs = [
-        tuple(sorted(str(value) for value in entry["project_ids"]))
-        for entry in effective_base + effective_historical
-    ]
-    if len(effective_pairs) != len(set(effective_pairs)):
-        raise ValueError("effective project identity artifacts contain a duplicate exact-ID pair")
-    return effective_base + effective_historical
 
 
 def validate_project_identity_adjudication_scope(
@@ -1319,11 +966,11 @@ def decision_provenance_ref(
     identity_adjudications: list[dict[str, Any]] | None = None,
 ) -> str:
     """Devuelve una referencia estable sin analizar la razón narrativa."""
-    if source == "identity_followup_name_scope_guard":
+    if source == "reviewed_name_scope_guard":
         return json.dumps(
             {
                 "source": source,
-                "artifact": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
+                "artifact": PROJECT_IDENTITY_DECISIONS_RELATIVE_PATH,
                 "project_ids": sorted(str(value) for value in (project_ids or ())),
                 "note": "decision not transferred because reviewed names belong to different project IDs",
             },
@@ -1331,12 +978,7 @@ def decision_provenance_ref(
             sort_keys=True,
             separators=(",", ":"),
         )
-    if source in {
-        "identity_followup_2026-09-27",
-        "historical_pair_adjudication_2026-09-28",
-        PROJECT_IDENTITY_OVERRIDE_SOURCE,
-        PROJECT_IDENTITY_OVERRIDE_V4_SOURCE,
-    }:
+    if source == PROJECT_IDENTITY_DECISION_SOURCE:
         if project_ids is None or identity_adjudications is None:
             raise ValueError("identity review provenance requires exact project IDs and adjudications")
         ids = tuple(sorted(str(value) for value in project_ids))
@@ -1346,26 +988,17 @@ def decision_provenance_ref(
         )
         if entry is None:
             raise ValueError(f"missing identity review provenance for project pair {ids!r}")
-        entry_source = str(entry.get("decision_source") or "identity_followup_2026-09-27")
-        if entry_source != source:
-            raise ValueError(f"identity review provenance source mismatch for project pair {ids!r}")
-        artifact = {
-            "identity_followup_2026-09-27": "audit/identity_followup_2026-09-27/identity_adjudications_v1.json",
-            "historical_pair_adjudication_2026-09-28": "audit/historical_project_pair_adjudications_v1.json",
-            PROJECT_IDENTITY_OVERRIDE_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
-            PROJECT_IDENTITY_OVERRIDE_V4_SOURCE: PROJECT_IDENTITY_OVERRIDE_RELATIVE_PATH,
-        }[source]
-        artifact_path = Path(__file__).resolve().parents[1] / artifact
+        artifact_path = Path(__file__).resolve().parents[1] / PROJECT_IDENTITY_DECISIONS_RELATIVE_PATH
         return json.dumps(
             {
                 "source": source,
-                "artifact": artifact,
-                "artifact_sha256": hashlib.sha256(artifact_path.read_bytes()).hexdigest(),
+                "artifact": PROJECT_IDENTITY_DECISIONS_RELATIVE_PATH,
+                "artifact_sha256": hashlib.sha256(artifact_path.read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
                 "pair_id": entry["pair_id"],
                 "identity_class": entry["identity_class"],
-                "source_evidence_ref_ids": entry.get("override_source_evidence_ref_ids"),
+                "source_evidence_ref_ids": entry.get("cited_evidence_ref_ids"),
                 "supporting_source_urls": sorted(
-                    source_ref["url"] for source_ref in entry.get("override_supporting_sources", [])
+                    source_ref["url"] for source_ref in entry.get("supporting_sources", [])
                 ),
                 "source_evidence_sha256": sorted(
                     ref["content_record_sha256"] for ref in entry.get("source_evidence", [])
@@ -1714,11 +1347,11 @@ def load_case_baseline(projects: dict[str, str], path: Path = CASE_BASELINE) -> 
     if not path.exists():
         raise FileNotFoundError(f"case_id baseline no existe: {path}")
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "project_case_baseline_v1":
+    if payload.get("schema_version") != "project_case_baseline":
         raise ValueError("schema_version de project_case_baseline no reconocido")
-    source_hash = payload.get("source_warehouse_sha256")
+    source_hash = payload.get("source_content_sha256")
     if not isinstance(source_hash, str) or re.fullmatch(r"[0-9a-f]{64}", source_hash) is None:
-        raise ValueError("source_warehouse_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
+        raise ValueError("source_content_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
     project_ids = set(projects)
     if payload.get("project_id_set_sha256") != _project_id_set_sha256(project_ids):
         raise ValueError("el conjunto actual de project_id no coincide con el baseline versionado")
@@ -1738,16 +1371,12 @@ def load_case_baseline(projects: dict[str, str], path: Path = CASE_BASELINE) -> 
     return baseline, mapping_sha256
 
 
-def validate_initial_baseline_warehouse_hash(
-    conn: sqlite3.Connection,
-    baseline_path: Path = CASE_BASELINE,
-    warehouse_path: Path = WAREHOUSE,
-) -> bool:
-    """En la primera aplicación, ata el baseline al warehouse fuente exacto.
+def validate_initial_baseline_source(conn: sqlite3.Connection, baseline_path: Path = CASE_BASELINE) -> bool:
+    """En la primera aplicación, ata el baseline al CONTENIDO exacto del warehouse fuente (proyectos y menciones).
 
-    Una vez que existe case_id_alias, el warehouse ya es posterior a la
-    migración y su hash necesariamente cambió; entonces se valida el mapeo,
-    no el hash histórico de origen.
+    Es una huella de contenido, no de bytes de archivo: no cambia con VACUUM, con la version de SQLite ni con el
+    orden fisico de las paginas. Una vez que existe case_id_alias, el warehouse ya es posterior a la migración y su
+    contenido necesariamente cambió; entonces se valida el mapeo, no la huella histórica de origen.
     """
     alias_exists = conn.execute(
         "SELECT 1 FROM sqlite_master WHERE type='table' AND name='case_id_alias'"
@@ -1755,22 +1384,15 @@ def validate_initial_baseline_warehouse_hash(
     if alias_exists:
         return False
     payload = json.loads(Path(baseline_path).read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "project_case_baseline_v1":
+    if payload.get("schema_version") != "project_case_baseline":
         raise ValueError("schema_version de project_case_baseline no reconocido")
-    expected = payload.get("source_warehouse_sha256")
+    expected = payload.get("source_content_sha256")
     if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{64}", expected) is None:
-        raise ValueError("source_warehouse_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
-    warehouse_path = Path(warehouse_path)
-    wal_path = Path(f"{warehouse_path}-wal")
-    if wal_path.exists() and wal_path.stat().st_size > 0:
-        raise ValueError(
-            "baseline inicial no puede verificarse solo contra el archivo SQLite mientras existe un WAL no vacío; "
-            "preservar el WAL y crear/verificar un snapshot SQLite consistente primero"
-        )
-    actual = hashlib.sha256(warehouse_path.read_bytes()).hexdigest()
+        raise ValueError("source_content_sha256 debe ser SHA-256 hexadecimal de 64 caracteres")
+    actual = project_source_content_sha256(conn)
     if actual != expected:
         raise ValueError(
-            "source_warehouse_sha256 no coincide con el warehouse previo a la primera resolución: "
+            "source_content_sha256 no coincide con el contenido del warehouse previo a la primera resolución: "
             f"baseline={expected}, actual={actual}"
         )
     return True
@@ -1810,7 +1432,7 @@ def _add_column_if_missing(conn: sqlite3.Connection, table: str, column: str, co
 
 
 def _drop_column_if_exists(conn: sqlite3.Connection, table: str, column: str) -> None:
-    """[AGREGADO 2026-09-18] limpia phase_family_id (columna de la version
+    """[agregado] limpia phase_family_id (columna de la version
     anterior del modelo de fase, conceptualmente invertida -- hallazgo de
     la revisión) sin dejar basura si el script corre de nuevo. Requiere SQLite
     3.35+ (DROP COLUMN); si la version bundleada no lo soporta, no falla el
@@ -1841,7 +1463,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
         "FROM project_review_queue ORDER BY rowid"
     ).fetchall()
     projects = dict(conn.execute("SELECT project_id, canonical_name FROM project ORDER BY project_id"))
-    identity_adjudications = load_effective_project_identity_adjudications()
+    identity_adjudications = load_project_identity_decisions()
     validate_project_identity_adjudication_scope(projects, rows, identity_adjudications)
     partitions = dict(
         conn.execute("SELECT project_id, homonym_partition FROM project WHERE homonym_partition IS NOT NULL")
@@ -1902,10 +1524,10 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
     def find(pid: str) -> str:
         return plan.project_to_case[pid]
 
-    # [REDISENADO 2026-09-18, hallazgo conceptual de la revisión] nivel PROJECT_PHASE
+    # nivel PROJECT_PHASE
     # del modelo de 3 niveles, con 3 relaciones explicitas (has_phase /
     # same_phase_alias / represents_phase) en vez de un unico union-find
-    # simetrico -- ver el comentario largo junto a PHASE_OF_PAIRS_BY_SOL
+    # simetrico -- ver el comentario largo junto a PHASE_OF_PAIRS_BY_REVIEW
     # mas arriba para el
     # razonamiento completo. Se elimina la columna project.phase_family_id de
     # la version anterior (estaba conceptualmente invertida, no se congela)
@@ -1932,20 +1554,20 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
         if ra != rb:
             phase_alias_uf[ra] = rb
 
-    # [AGREGADO 2026-09-18, hallazgo de la revisión] dup_names se calculaba pero
+    # dup_names se calculaba pero
     # nunca se usaba -- si un nombre canonico duplicado (Costanera Center,
     # Plaza Egana, por los homonimos ya separados) llegara a usarse en
-    # PHASE_OF_PAIRS_BY_SOL o SAME_PHASE_ALIAS_PAIRS_BY_SOL, name_to_pid
+    # PHASE_OF_PAIRS_BY_REVIEW o SAME_PHASE_ALIAS_PAIRS_BY_SOL, name_to_pid
     # elegiria en silencio uno de los 2 project_id -- fail-closed en vez de
     # eso. Hoy no dispara (ninguno de los 5+2 pares usa un nombre duplicado)
     # pero protege contra una futura adicion silenciosamente incorrecta.
-    all_phase_names_used = {n for pair in PHASE_OF_PAIRS_BY_SOL for n in pair} | {
+    all_phase_names_used = {n for pair in PHASE_OF_PAIRS_BY_REVIEW for n in pair} | {
         n for pair in SAME_PHASE_ALIAS_PAIRS_BY_SOL for n in pair
     }
     dup_names_in_use = all_phase_names_used & dup_names
     if dup_names_in_use:
         raise RuntimeError(
-            f"PHASE_OF_PAIRS_BY_SOL/SAME_PHASE_ALIAS_PAIRS_BY_SOL usan canonical_name duplicado(s) "
+            f"PHASE_OF_PAIRS_BY_REVIEW/SAME_PHASE_ALIAS_PAIRS_BY_SOL usan canonical_name duplicado(s) "
             f"{dup_names_in_use} -- name_to_pid no puede resolverlos sin ambiguedad, corregir con "
             f"project_id explicito antes de continuar."
         )
@@ -1961,7 +1583,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
             phase_alias_union(pid_a, pid_b)
 
     phase_side_pids: set[str] = set()
-    for _matrix_name, phase_name in PHASE_OF_PAIRS_BY_SOL:
+    for _matrix_name, phase_name in PHASE_OF_PAIRS_BY_REVIEW:
         pid = name_to_pid.get(phase_name)
         if pid:
             phase_side_pids.add(pid)
@@ -1976,8 +1598,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
     def phase_id_for(pid: str) -> str:
         return _stable_phase_id(phase_alias_find(pid))
 
-    # [ACTUALIZADO 2026-09-18, segunda ronda de precisiones de la revisión]
-    # (1) relation_type ya no marca "same_phase_alias" para TODO
+    # # (1) relation_type ya no marca "same_phase_alias" para TODO
     # project_id del lado fase, incluidos los que no tienen ningun alias
     # real (ej. "Urbanya Etapa I" sola) -- ahora se distingue
     # "represents_phase" (unico representante, sin alias) de
@@ -2036,7 +1657,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
         root = phase_alias_find(pid)
         members_by_root.setdefault(root, []).append(pid)
 
-    # [CORREGIDO 2026-09-18, hallazgo de la revisión] phase_side_pids es un set --
+    # phase_side_pids es un set --
     # iterarlo directamente para decidir que alias queda como phase_label
     # dependia del orden (no determinista) de iteracion del set: el mismo
     # export podia mostrar un alias distinto entre corridas identicas (el
@@ -2068,13 +1689,13 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
             name = pid_to_name[pid]
             phase_link_rows.append((pid, this_phase_id, relation, f"nombre propio: {name!r}"))
 
-    # dedupe por (matrix_pid, phase_id): 2+ pares de PHASE_OF_PAIRS_BY_SOL
+    # dedupe por (matrix_pid, phase_id): 2+ pares de PHASE_OF_PAIRS_BY_REVIEW
     # pueden resolver al MISMO phase_id (ej. "Mall Vivo" es matriz tanto de
     # "Mall Vivo Santiago Etapa II" como de su alias "Centro Comercial Mall
     # Vivo Santiago Etapa II", que via same_phase_alias terminan siendo un
     # solo phase_id) -- sin dedupe, se violaria la PRIMARY KEY compuesta.
     has_phase_by_key: dict[tuple[str, str], list[str]] = {}
-    for matrix_name, phase_name in PHASE_OF_PAIRS_BY_SOL:
+    for matrix_name, phase_name in PHASE_OF_PAIRS_BY_REVIEW:
         matrix_pid = name_to_pid.get(matrix_name)
         phase_pid = name_to_pid.get(phase_name)
         if not matrix_pid or not phase_pid:
@@ -2085,7 +1706,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
         )
     for (matrix_pid, this_phase_id), evidences in has_phase_by_key.items():
         phase_link_rows.append(
-            (matrix_pid, this_phase_id, "has_phase", "[Sol 2026-09-18] " + "; ".join(evidences))
+            (matrix_pid, this_phase_id, "has_phase", "[revisión manual] " + "; ".join(evidences))
         )
 
     conn.executemany(
@@ -2103,7 +1724,7 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
     n_same_phase_alias_links = sum(1 for r in phase_link_rows if r[2] == "same_phase_alias")
     n_represents_phase_links = sum(1 for r in phase_link_rows if r[2] == "represents_phase")
 
-    # [AGREGADO 2026-09-18, salvaguarda general pedida por la revisión] verifica, para
+    # verifica, para
     # cada homonimo conocido (agrupado por su norm base, ej. "costanera
     # center"), que el numero de case_id resultantes entre sus particiones
     # sea >= al numero de particiones esperadas -- si un homonimo se
@@ -2150,8 +1771,8 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
             "n_represents_phase_links": n_represents_phase_links,
             "missing_phase_names": missing_phase_names,
             "cobertura": (
-                "PARCIAL Y AUDITADA, no exhaustiva -- [precision pedida por Sol, ronda 12] esta capa "
-                "solo cubre los 26 pares que Sol reviso a mano (5 has_phase + 2 same_phase_alias). La "
+                "PARCIAL Y AUDITADA, no exhaustiva -- [revisión] esta capa "
+                "solo cubre los 26 pares que la revisión reviso a mano (5 has_phase + 2 same_phase_alias). La "
                 "ausencia de un project_id en project_phase_link significa 'no adjudicado como fase "
                 "todavia', NUNCA 'este proyecto no tiene fases'. La cola de 255 pares tiene otros "
                 "candidatos evidentes (Alto Las Condes vs Alto Las Condes 2, Distrito Cordillera I/II, "
@@ -2160,13 +1781,13 @@ def _resolve_database(conn: sqlite3.Connection, *, evidence_content_root: Path |
                 "resolucion ontologica separado, no otra heuristica agregada al bridge."
             ),
             "nota": (
-                "[REDISENADO 2026-09-18, hallazgo conceptual de Sol] PROJECT=project_id (fino). "
+                "[rediseñado] PROJECT=project_id (fino). "
                 "PROJECT_PHASE=tablas project_phase/project_phase_link, con 3 relaciones EXPLICITAS: "
                 "has_phase (project_id de la MATRIZ -> phase_id de una fase especifica dentro de ella, "
-                "asimetrica; renombrada de 'phase_of' -- Sol senalo que 'PROJECT has_phase PHASE' se lee "
+                "asimetrica; renombrada de 'phase_of' -- la revisión senalo que 'PROJECT has_phase PHASE' se lee "
                 "mejor que 'PROJECT phase_of PHASE'), same_phase_alias (2+ project_id que son la MISMA "
                 "fase con redaccion distinta) y represents_phase (un unico project_id que representa una "
-                "fase sin tener ningun alias -- distincion agregada tras precision de Sol: antes TODO "
+                "fase sin tener ningun alias -- distincion agregada tras precision de la revisión: antes TODO "
                 "project_id del lado fase se marcaba same_phase_alias aunque no tuviera alias real). "
                 "CASE=case_id (el mas amplio, incluye fusiones por cualquier razon). Ya NO existe "
                 "project.phase_family_id (version anterior, invertida: fusionaba matriz y fase "
@@ -2196,10 +1817,8 @@ def main() -> int:
                 f"{evidence_check['literal_raw_mentions']} raw_mention literales, "
                 f"{len(evidence_check['nonliteral_raw_mentions'])} derivadas/no literales"
             )
-            baseline_hash_checked = validate_initial_baseline_warehouse_hash(
-                connection, CASE_BASELINE, WAREHOUSE
-            )
-            print(f"[preflight baseline] source_warehouse_sha256 verificado={baseline_hash_checked}")
+            baseline_hash_checked = validate_initial_baseline_source(connection, CASE_BASELINE)
+            print(f"[preflight baseline] source_content_sha256 verificado={baseline_hash_checked}")
             return _resolve_database(connection)
 
         return run_atomically(conn, operation)

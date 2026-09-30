@@ -136,7 +136,7 @@ def test_gate_rejects_stale_case_topology_and_source_hashes(tmp_path):
 
     _write_report(report, audit, classified, builder, warehouse)
     classified.write_text("{\"changed\": true}", encoding="utf-8")
-    with pytest.raises(RuntimeError, match="hash de CLASSIFIED_63"):
+    with pytest.raises(RuntimeError, match="hash de CONFLICT_UNIT_REVIEW"):
         gate.require_conflict_publication_ready(warehouse, report, audit, classified, builder)
 
 

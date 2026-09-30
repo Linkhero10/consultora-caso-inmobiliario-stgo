@@ -1,4 +1,4 @@
-"""Hallazgos de Codex/Luna sobre seguridad operacional de la corrida de
+"""Hallazgos de la revisión externa sobre seguridad operacional de la corrida de
 produccion (2026-09-16, antes de la primera corrida real a escala de 3835
 documentos). No llaman a la API real."""
 
@@ -126,7 +126,7 @@ def test_small_urls_file_still_bypasses_gate_for_legitimate_testing(tmp_path, mo
 
 
 def test_output_file_alone_does_not_bypass_the_human_review_gate(tmp_path, monkeypatch):
-    """Segundo hallazgo del punto 1 (ronda siguiente de Codex/Luna):
+    """Segundo hallazgo del punto 1 (ronda siguiente de la revisión externa):
     --output-file por si solo NO acota el alcance de la corrida (podria
     seguir procesando los 3835 documentos pendientes enteros, solo que
     escribiendo a otro archivo) -- no debe activar el modo prueba."""
@@ -162,7 +162,7 @@ def test_run_manifest_is_written_with_counts_and_cost(tmp_path, monkeypatch):
     args = argparse.Namespace(limit=0, dry_run=False, urls_file=str(urls_file), output_file=str(output_path), workers=1)
     target._run(args)
 
-    # Fix 2026-09-16 (hallazgo de Codex/Luna, ronda siguiente): el
+    # Fix 2026-09-16 (hallazgo de la revisión externa, ronda siguiente): el
     # manifiesto ahora lleva el run_id en el nombre (un archivo por
     # intento, no se sobreescribe si la corrida se interrumpe y se
     # reanuda) -- se ubica por patron en vez de por nombre fijo.

@@ -53,7 +53,7 @@ def test_four_tabs_present_and_no_pilot(html):
     # se elimina es el dashboard de piloto de Estación Central en sí.
     assert "piloto_integracion" not in html.lower()
     assert "piloto de integración" not in html.lower() and "piloto de integracion" not in html.lower()
-    assert "warehouse_v1" not in html.lower()
+    assert "base_warehouse" not in html.lower()
 
 
 def test_no_internal_version_text_visible(html):

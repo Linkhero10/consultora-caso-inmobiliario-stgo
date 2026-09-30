@@ -19,6 +19,7 @@ from urllib.request import Request, urlopen
 
 import yaml
 
+from paths import EXTERNAL_SOURCES_DIR  # noqa: E402
 
 DEFAULT_USER_AGENT = "FARO-ExternalSourcePilot/1.0 (research; contact local project owner)"
 TRANSIENT_HTTP = {429, 500, 502, 503, 504}
@@ -135,7 +136,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registry", type=Path, default=Path("Fuentes/fuentes_externas/source_registry.yaml"))
     parser.add_argument("--raw-root", type=Path, default=Path("Fuentes/fuentes_externas/raw"))
-    parser.add_argument("--manifest", type=Path, default=Path("Auditoria/fuentes_externas/external_manifest_v1.jsonl"))
+    parser.add_argument("--manifest", type=Path, default=EXTERNAL_SOURCES_DIR / "external_manifest.jsonl")
     parser.add_argument("--source-ids", required=True, help="IDs separados por coma; no se permite corrida implícita de todas las fuentes")
     parser.add_argument("--timeout", type=float, default=30)
     parser.add_argument("--min-delay", type=float, default=1.5)

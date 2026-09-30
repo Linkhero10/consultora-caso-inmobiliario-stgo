@@ -1,4 +1,4 @@
-"""Tests de Fix 1E: deteccion retroactiva y aditiva de case_mentions
+"""Tests de la revision de respaldo: deteccion retroactiva y aditiva de case_mentions
 duplicadas dentro del mismo documento (nunca fuzzy, nunca renumera ni
 borra nada existente -- ver docstring de src/detect_case_mention_duplicates.py)."""
 
@@ -96,8 +96,8 @@ def test_empty_case_mentions_returns_empty():
 
 
 def test_known_limitation_v1_generic_short_quote_near_threshold_can_group_different_real_objects():
-    """[Fix 1E hardening, hallazgo de revision externa (Luna), 2026-09-24]
-    Caracterizacion de un LIMITE REAL conocido de exact_object_or_quote_substring_v1,
+    """[revisión]
+    Caracterizacion de un LIMITE REAL conocido de exact_object_or_quote_substring,
     documentado explicitamente en vez de ocultado (mismo patron que las
     'LIMITACIONES CONOCIDAS de v1' de project_case_mention.py, ver
     audit/validation_summary.json). Una cita generica de exactamente
@@ -127,7 +127,7 @@ def test_real_quilicura_five_mentions_group_together():
     if not dup.CLASSIFICATIONS_PATH.exists():
         import pytest
 
-        pytest.skip("Auditoria/clasificacion/classifications.jsonl no existe en este entorno (gitignorado)")
+        pytest.skip("classifications.jsonl no existe en este entorno (archivo intermedio no versionado)")
     import json
 
     target_url = "https://resumen.cl/articulos/negocio-inmobiliario-una-de-las-amenazas-que-afectan-al-humedal-quilicura-el-mas-grande-de-la-region-metropolitana"

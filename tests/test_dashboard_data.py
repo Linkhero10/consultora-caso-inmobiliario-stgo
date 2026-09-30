@@ -26,7 +26,7 @@ def _build_fixture_db(path: Path) -> None:
         CREATE TABLE conflict(conflict_id TEXT, label TEXT, n_case_ids INTEGER, origen TEXT, confidence TEXT, respaldo_evidencia TEXT);
         CREATE TABLE conflict_project(conflict_id TEXT, project_id TEXT, case_id TEXT);
         CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
-        CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_sol TEXT, revisado_por TEXT);
+        CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_revision TEXT, revisado_por TEXT);
         CREATE TABLE enrichment_actor(actor_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo TEXT, rol TEXT, stance TEXT, nivel_involucramiento TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
         CREATE TABLE enrichment_institution(institucion_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo_norm TEXT, rol_en_texto TEXT, accion_institucional TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
         CREATE TABLE enrichment_event(event_id TEXT, document_id TEXT, idx INTEGER, fecha TEXT, date_precision TEXT, descripcion TEXT, tipo_hito TEXT, proyecto_asociado TEXT, fecha_year_grounded INTEGER, evidencia_hito TEXT, evidencia_hito_original_modelo TEXT, evidencia_hito_verificada INTEGER, evidence_id TEXT, nombre_proyecto_documento TEXT, revision_nivel_documento TEXT);
@@ -146,7 +146,7 @@ def test_ambiguous_comuna_document_contributes_to_no_territory(tmp_path):
 
 
 def test_n_projects_verified_absent_table_defaults_to_zero_never_crashes(tmp_path):
-    """[Fix 1F, 2026-09-26] Si project_mention_geography no existe (warehouse
+    """Si project_mention_geography no existe (warehouse
     de fixture que no corrio build_geography.py), n_projects_verified debe
     ser 0 para todas las comunas -- nunca un crash, nunca caer de vuelta al
     metodo viejo (comuna del documento) en silencio."""
@@ -161,7 +161,7 @@ def test_n_projects_verified_absent_table_defaults_to_zero_never_crashes(tmp_pat
 
 
 def test_n_projects_verified_uses_case_mention_comuna_not_document_comuna(tmp_path):
-    """[Fix 1F, 2026-09-26] n_projects_verified cuenta project_id distintos
+    """n_projects_verified cuenta project_id distintos
     via project_mention_geography con match_method directo, fallback limpio,
     o fallback mixto adjudicado explícitamente -- nunca la comuna del documento como proxy. doc1
     tiene comuna Santiago (13101), pero si su mencion de proyecto resuelve
@@ -262,7 +262,7 @@ def test_evidence_only_counts_verified_quotes(tmp_path):
 
 
 def test_backing_quotes_non_focal_fallback_when_no_focal_evidence(tmp_path):
-    """Fix 1A seguimiento: el detector de respaldo busca evidencia en
+    """la revision de respaldo seguimiento: el detector de respaldo busca evidencia en
     cualquier documento que mencione el proyecto, no solo en los focales de
     ESTE conflicto -- por eso un conflicto puede quedar 'con respaldo
     detectado' sin ningun documento focal. El dashboard debe mostrar esa
@@ -283,7 +283,7 @@ def test_backing_quotes_non_focal_fallback_when_no_focal_evidence(tmp_path):
         CREATE TABLE conflict_project(conflict_id TEXT, project_id TEXT, case_id TEXT);
         CREATE TABLE conflict_evidence_backing(conflict_id TEXT, case_id TEXT, project_id TEXT, document_id TEXT, case_mention_id TEXT, evidence_id TEXT, raw_nombre_proyecto TEXT, quote_text TEXT, quote_role TEXT, detector_version TEXT, match_method TEXT);
         CREATE TABLE document_conflict(document_id TEXT, conflict_id TEXT, role TEXT, evidence_json TEXT, source TEXT, unidad_caso_tipo TEXT);
-        CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_sol TEXT, revisado_por TEXT);
+        CREATE TABLE document_case_unit(document_id TEXT, unidad_caso_tipo TEXT, tiene_error INTEGER, correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, correccion_ubicacion_especifica TEXT, nota_revision TEXT, revisado_por TEXT);
         CREATE TABLE enrichment_actor(actor_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo TEXT, rol TEXT, stance TEXT, nivel_involucramiento TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
         CREATE TABLE enrichment_institution(institucion_id TEXT, document_id TEXT, idx INTEGER, nombre TEXT, tipo_norm TEXT, rol_en_texto TEXT, accion_institucional TEXT, proyecto_asociado TEXT, cita TEXT, cita_original_modelo TEXT, cita_verificada INTEGER, evidence_id TEXT);
         CREATE TABLE enrichment_event(event_id TEXT, document_id TEXT, idx INTEGER, fecha TEXT, date_precision TEXT, descripcion TEXT, tipo_hito TEXT, proyecto_asociado TEXT, fecha_year_grounded INTEGER, evidencia_hito TEXT, evidencia_hito_original_modelo TEXT, evidencia_hito_verificada INTEGER, evidence_id TEXT, nombre_proyecto_documento TEXT, revision_nivel_documento TEXT);
@@ -307,7 +307,7 @@ def test_backing_quotes_non_focal_fallback_when_no_focal_evidence(tmp_path):
     con.execute("INSERT INTO conflict VALUES ('conflict:1','Proyecto Fantasma',1,'trivial_single_case','baja_derivado_mecanicamente','respaldo_exact_quote_detectado')")
     con.execute("INSERT INTO document_conflict VALUES ('doc1','conflict:1','mentioned_unreviewed','{}','test','caso_unico')")
     con.execute(
-        "INSERT INTO conflict_evidence_backing VALUES ('conflict:1','case1','proj1','doc1','doc1:0','doc1:0:objeto:0','Proyecto Fantasma','el nuevo Proyecto Fantasma','objeto','exact_substring_v1','normalized_bidirectional_substring')"
+        "INSERT INTO conflict_evidence_backing VALUES ('conflict:1','case1','proj1','doc1','doc1:0','doc1:0:objeto:0','Proyecto Fantasma','el nuevo Proyecto Fantasma','objeto','el detector textual retirado','normalized_bidirectional_substring')"
     )
     con.commit()
     con.close()
@@ -339,7 +339,7 @@ def test_all_enum_values_have_labels_in_real_warehouse():
     assert not missing, f"Valores sin etiqueta humana: {missing}"
 
 
-def test_no_sol_mentions_in_labels():
+def test_no_reviewer_mentions_in_labels():
     labels = json.loads(LABELS_PATH.read_text(encoding="utf-8"))
     flat = json.dumps(labels, ensure_ascii=False).lower()
     assert not re.search(r"\bsol\b", flat)
