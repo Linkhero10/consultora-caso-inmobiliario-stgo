@@ -201,7 +201,7 @@ def test_n_projects_verified_uses_case_mention_comuna_not_document_comuna(tmp_pa
 
 
 def test_n_projects_verified_ignores_unresolved_match_methods(tmp_path):
-    """Indices no resueltos y grupos mixtos sin revisión no deben contar,
+    """Indices no resueltos y fallbacks heurísticos de grupo no cuentan,
     aunque por error traigan una comuna no nula."""
     db_path = tmp_path / "warehouse.sqlite"
     _build_fixture_db(db_path)
@@ -225,6 +225,12 @@ def test_n_projects_verified_ignores_unresolved_match_methods(tmp_path):
     con.execute(
         "INSERT INTO project_mention_geography VALUES "
         "('doc1','doc1:project:1','Proyecto B','doc1:1','PROVIDENCIA','13102','ambiguous_duplicate_group')"
+    )
+    con.execute("INSERT INTO project VALUES ('proj3','Proyecto C','proyecto c','[]',1,1,NULL,'case3')")
+    con.execute("INSERT INTO project_mention_resolved VALUES ('doc1','Proyecto C','proj3')")
+    con.execute(
+        "INSERT INTO project_mention_geography VALUES "
+        "('doc1','doc1:project:2','Proyecto C','doc1:2','PROVIDENCIA','13102','via_duplicate_group')"
     )
     con.commit()
 

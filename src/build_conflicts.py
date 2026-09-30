@@ -211,17 +211,6 @@ BACKING_SCOPE = "document_level_case_mention_without_project_link"
 # _project_backing_evidence() y load_v3_3_verified_links() mas abajo.
 DETECTOR_VERSION_V3_3 = "v3_3_verified_index"
 MATCH_METHOD_V3_3 = "model_verified_case_mention_index"
-MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP = "v3_3_verified_index_via_duplicate_group"
-# [Fix 1E hardening, 2026-09-24 -- hallazgo de revision externa (Luna)] Un
-# grupo con decision_mixed_in_group=1 significa que classify.py dio
-# decision distinta (include/exclude) a menciones que el detector considero
-# el mismo objeto real -- eso puede ser una inconsistencia genuina del
-# clasificador sobre el MISMO objeto (verificado a mano en el caso Villa
-# San Luis: citas literalmente identicas entre la include y la exclude), o
-# en principio un match espurio entre objetos distintos que comparten poco
-# texto. Se marca aparte, nunca se mezcla con el caso no-mixto, para que
-# quede auditable por separado sin tener que re-verificar todo el corpus.
-MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION = "v3_3_verified_index_via_duplicate_group_mixed_decision"
 BACKING_SCOPE_V3_3 = "mention_level_verified_index"
 # [2026-09-29] Adjudicacion humana de elegibilidad: una case_mention que etapa 1 dejo uncertain/exclude pero cuyo
 # documento la trata como el objeto de una disputa concreta puede respaldar el conflicto. Solo afecta este
@@ -315,8 +304,6 @@ def _project_backing_evidence(
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
-    duplicate_group_members: dict[str, list[str]] | None = None,
-    decision_mixed_by_cm: dict[str, bool] | None = None,
     adjudicated_cms: frozenset[str] | None = None,
 ) -> list[dict]:
     """Todas las filas de respaldo encontradas para este proyecto -- nunca
@@ -337,8 +324,6 @@ def _project_backing_evidence(
     respaldo (nunca None por None): es la decision correcta -- v3.3 ya
     decidio explicitamente cuando no hay vinculo claro, adivinar por
     substring era justamente el problema que v3.3 vino a eliminar."""
-    duplicate_group_members = duplicate_group_members or {}
-    decision_mixed_by_cm = decision_mixed_by_cm or {}
     adjudicated_cms = adjudicated_cms or frozenset()
     rows = []
     for mention in mentions_by_project.get(project_id, []):
@@ -373,42 +358,10 @@ def _project_backing_evidence(
                         "match_method": MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY if case_mention_id in adjudicated_cms else MATCH_METHOD_V3_3,
                     }
                 )
-        else:
-            # Fix 1E: el case_mention_id que v3.3 indico no tiene por si
-            # solo evidencia objeto incluida -- classify.py a veces
-            # fragmenta el MISMO objeto real en varias case_mentions (ver
-            # detect_case_mention_duplicates.py). Si algun otro miembro de
-            # su grupo de duplicados SI tiene evidencia incluida, se usa
-            # igual -- describe el mismo objeto real que v3.3 ya identifico,
-            # solo que la evidencia verificada quedo en la copia hermana.
-            # Nunca silencioso: queda explicito en match_method.
-            is_mixed_group = decision_mixed_by_cm.get(case_mention_id, False)
-            fallback_match_method = (
-                MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION
-                if is_mixed_group
-                else MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
-            )
-            for sibling_id in duplicate_group_members.get(case_mention_id, []):
-                if sibling_id == case_mention_id or sibling_id not in doc_included:
-                    continue
-                for ev in objeto_by_cm.get(sibling_id, []):
-                    rows.append(
-                        {
-                            "project_id": project_id,
-                            "document_id": document_id,
-                            "case_mention_id": sibling_id,
-                            "evidence_id": ev["evidence_id"],
-                            "raw_nombre_proyecto": raw_nombre_proyecto,
-                            "quote_text": ev["quote_text"],
-                            "backing_scope": BACKING_SCOPE_V3_3,
-                            "document_case_mention_count": len(doc_included),
-                            "document_object_case_mention_count": 1,
-                            "ambiguous_multi_case_document": 0,
-                            "duplicate_group_mixed_decision": int(is_mixed_group),
-                            "detector_version": DETECTOR_VERSION_V3_3,
-                            "match_method": fallback_match_method,
-                        }
-                    )
+        # No se hereda evidencia de otra case_mention por compartir grupo de
+        # duplicados. El grupo es una señal para revision, no una relacion
+        # project -> case_mention. Solo la asignacion v3.3 exacta, junto con
+        # su propia elegibilidad y evidencia de objeto verificada, respalda.
     return rows
 
 # Relaciones que SI unen case_id en un mismo conflicto -- cualquier
@@ -1167,8 +1120,6 @@ def _build_conflict_backing(
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
     v3_3_links_by_docid: dict[tuple[str, str], int | None],
-    duplicate_group_members: dict[str, list[str]] | None = None,
-    decision_mixed_by_cm: dict[str, bool] | None = None,
     adjudicated_cms: frozenset[str] | None = None,
 ) -> tuple[str | None, str, list[dict]]:
     """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
@@ -1179,7 +1130,7 @@ def _build_conflict_backing(
     backed_projects: list[tuple[str, str]] = []
     backing_rows: list[dict] = []
     for pid, canonical_name in projects:
-        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms)
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, adjudicated_cms)
         if rows:
             backed_projects.append((pid, canonical_name))
             case_id_of_pid = case_id_by_project[pid]
@@ -1291,26 +1242,6 @@ def _build_conflicts(conn: sqlite3.Connection):
     # enrichment_project_mention -- se consulta directo, sin releer JSONL.
     v3_3_links_by_docid = load_v3_3_verified_links(conn)
 
-    # Fix 1E: case_mentions duplicadas del mismo objeto real dentro de un
-    # documento (classify.py no las deduplica). Tabla aditiva y opcional --
-    # si no existe todavia (no se corrio detect_case_mention_duplicates.py),
-    # el fallback simplemente no tiene efecto, no rompe nada.
-    duplicate_group_members: dict[str, list[str]] = defaultdict(list)
-    decision_mixed_by_cm: dict[str, bool] = {}
-    if conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='case_mention_duplicate_link'").fetchone():
-        groups_raw: dict[str, list[str]] = defaultdict(list)
-        mixed_by_group: dict[str, bool] = {}
-        for cm_id, group_id, mixed in conn.execute("SELECT case_mention_id, duplicate_group_id, decision_mixed_in_group FROM case_mention_duplicate_link"):
-            groups_raw[group_id].append(cm_id)
-            mixed_by_group[group_id] = bool(mixed)
-        for group_id, members in groups_raw.items():
-            if len(members) > 1:
-                for cm_id in members:
-                    duplicate_group_members[cm_id] = members
-                    decision_mixed_by_cm[cm_id] = mixed_by_group[group_id]
-    else:
-        print("[aviso] case_mention_duplicate_link no existe -- correr src/detect_case_mention_duplicates.py antes para activar el fallback de Fix 1E.", file=sys.stderr)
-
     alias_table_exists = conn.execute(
         "SELECT 1 FROM sqlite_master WHERE type='table' AND name='case_id_alias'"
     ).fetchone() is not None
@@ -1403,7 +1334,8 @@ def _build_conflicts(conn: sqlite3.Connection):
         # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
         # resultaron error_grave en la validacion N=150).
         label, respaldo_evidencia, backing_rows = _build_conflict_backing(
-            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms
+            conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm,
+            v3_3_links_by_docid, adjudicated_cms
         )
         conflict_evidence_backing_rows.extend(backing_rows)
         backing_summary = _backing_summary(projects, backing_rows)
@@ -1790,7 +1722,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     n_projects_total = len(case_id_by_project)
     n_projects_with_backing = sum(
         1 for pid in case_id_by_project
-        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, duplicate_group_members, decision_mixed_by_cm, adjudicated_cms)
+        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, adjudicated_cms)
     )
     backing_rows_by_detector: dict[str, int] = defaultdict(int)
     conflicts_with_backing_by_detector: dict[str, set] = defaultdict(set)

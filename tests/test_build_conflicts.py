@@ -779,72 +779,48 @@ def test_project_backing_evidence_no_backing_when_mention_not_covered_by_v3_3():
     assert rows_without_v3_3_dict == rows_with_unrelated_v3_3_dict == []
 
 
-def test_project_backing_evidence_v3_3_index_excluded_falls_back_to_duplicate_group_sibling():
-    """Fix 1E: classify.py a veces fragmenta el MISMO objeto real en 2+
-    case_mentions (ej. Bellavista: idx1 include, idx2 casi-duplicado
-    exclude). Si v3.3 apunto al miembro que NO paso el filtro
-    (decision/evidencia), pero un hermano de su grupo de duplicados SI lo
-    pasa, se usa ese hermano -- nunca se pierde el backing solo porque
-    classify.py duplico el objeto."""
-    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    # d1:1 es el indice que v3.3 eligio, pero NO esta incluido (exclude).
-    # d1:0 SI esta incluido y tiene evidencia -- es su hermano de duplicado.
-    included_by_doc = {"d1": ["d1:0"]}
-    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    v3_3_links = {("d1", "torre central"): 1}
-    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
-    rows = reg._project_backing_evidence("p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members)
-    assert len(rows) == 1
-    assert rows[0]["case_mention_id"] == "d1:0"
-    assert rows[0]["detector_version"] == reg.DETECTOR_VERSION_V3_3
-    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
-
-
-def test_project_backing_evidence_v3_3_duplicate_group_fallback_tags_mixed_decision_explicitly():
-    """[Fix 1E hardening, hallazgo de revision externa] El fallback via grupo
-    duplicado no distinguia si el grupo tenia decision mixta (include +
-    exclude/uncertain entre sus miembros) -- una senal real de que el match
-    pudo ser mas arriesgado (el propio clasificador no fue consistente sobre
-    el objeto). Ahora debe quedar marcado con un match_method distinto,
-    nunca mezclado silenciosamente con el caso no-mixto, para que sea
-    auditable por separado."""
-    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
-    included_by_doc = {"d1": ["d1:0"]}
-    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
-    v3_3_links = {("d1", "torre central"): 1}
-    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
-    decision_mixed_by_cm = {"d1:0": True, "d1:1": True}
+def test_project_backing_evidence_does_not_transfer_generic_quote_from_duplicate_group_sibling():
+    """A duplicate group is a review signal, not proof that a generic quote
+    about condominiums backs every project mentioned in the same document."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "La Cumbre"}]}
+    included_by_doc = {"d1": ["d1:3"]}
+    objeto_by_cm = {
+        "d1:3": [{"evidence_id": "e1", "quote_text": "construcción de condominios", "quote_norm": "construccion de condominios"}]
+    }
+    v3_3_links = {("d1", "la cumbre"): 0}
     rows = reg._project_backing_evidence(
-        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members, decision_mixed_by_cm
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links
     )
-    assert len(rows) == 1
-    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP_MIXED_DECISION
-    assert rows[0]["match_method"] != reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
-    assert rows[0]["duplicate_group_mixed_decision"] == 1
-    assert rows[0]["ambiguous_multi_case_document"] == 0
+    assert rows == []
 
 
-def test_project_backing_evidence_v3_3_duplicate_group_fallback_non_mixed_uses_plain_match_method():
-    """Contraparte del test anterior: un grupo sin decision mixta debe seguir
-    usando el match_method original, no el marcado como mixto."""
+def test_project_backing_evidence_duplicate_group_cannot_override_mixed_eligibility():
+    """A mixed decision is not repaired by borrowing evidence from a sibling."""
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc = {"d1": ["d1:0"]}
     objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
     v3_3_links = {("d1", "torre central"): 1}
-    duplicate_group_members = {"d1:0": ["d1:0", "d1:1"], "d1:1": ["d1:0", "d1:1"]}
-    decision_mixed_by_cm = {"d1:0": False, "d1:1": False}
     rows = reg._project_backing_evidence(
-        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links, duplicate_group_members, decision_mixed_by_cm
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links
     )
-    assert len(rows) == 1
-    assert rows[0]["match_method"] == reg.MATCH_METHOD_V3_3_VIA_DUPLICATE_GROUP
-    assert rows[0]["duplicate_group_mixed_decision"] == 0
+    assert rows == []
 
 
-def test_project_backing_evidence_v3_3_no_duplicate_group_sibling_still_empty():
-    """Sin duplicate_group_members (o sin hermano valido), el comportamiento
-    debe seguir siendo el mismo de antes de Fix 1E: sin backing, sin caer al
-    substring."""
+def test_project_backing_evidence_duplicate_group_cannot_transfer_even_when_decisions_match():
+    """A non-mixed heuristic group still does not prove project attribution."""
+    mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
+    included_by_doc = {"d1": ["d1:0"]}
+    objeto_by_cm = {"d1:0": [{"evidence_id": "e1", "quote_text": "la Torre Central", "quote_norm": "la torre central"}]}
+    v3_3_links = {("d1", "torre central"): 1}
+    rows = reg._project_backing_evidence(
+        "p1", mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links
+    )
+    assert rows == []
+
+
+def test_project_backing_evidence_without_own_object_evidence_stays_empty():
+    """Un índice propio sin elegibilidad/evidencia de objeto no se repara
+    buscando otra mención ni cae al substring."""
     mentions_by_project = {"p1": [{"document_id": "d1", "raw_nombre_proyecto": "Torre Central"}]}
     included_by_doc: dict = {}
     objeto_by_cm: dict = {}
