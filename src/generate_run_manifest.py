@@ -39,6 +39,7 @@ CONFLICT_BUILDER_PATH = PROJECT_ROOT / "src" / "build_conflicts.py"
 # esquema fijo, porque distintas fases agregan tablas nuevas (Fase C agrego
 # manzana_censal, por ejemplo).
 TRACKED_TABLES = [
+    "conflict_scope",
     "document", "project", "conflict", "conflict_case", "conflict_project",
     "document_conflict", "conflict_relation", "conflict_evidence_backing",
     "actor_registry", "actor_alias", "actor_event_project_link",

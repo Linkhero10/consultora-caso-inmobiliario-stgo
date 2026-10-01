@@ -21,12 +21,13 @@ LLM, validación humana muestral, auditorías dirigidas y controles de calidad r
 | Dato | Valor |
 |---|---|
 | Versión de la release | 1.0.0 |
-| SHA-256 de `data/warehouse.sqlite` | `89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4` |
+| SHA-256 de `data/warehouse.sqlite` | `9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7` |
 | Integridad | `integrity_check=ok`, 0 violaciones de FK |
 | Documentos del corpus | 3.884 (934 con extracción estructurada) |
 | Proyectos · casos · conflictos | 942 · 835 · 817 |
 | Cola de identidad de proyectos | 258 pares: 119 fusionados, 139 separados, 0 abiertos |
 | Conflictos con respaldo de evidencia | 506 de 817 (311 sin respaldo detectado) |
+| Conflictos con respaldo Y alcance aprobado (universo conservador) | 327 |
 | Menciones de proyecto sin vínculo a una `case_mention` | 201 |
 | Referencias históricas preservadas | 31 (5 confirmadas como no resolubles) |
 <!-- stats:end -->
@@ -69,6 +70,7 @@ python src/build_projects.py
 python src/resolve_project_review.py
 python src/detect_case_mention_duplicates.py
 python src/build_conflicts.py
+python src/scope_gate.py
 python src/build_actor_registry.py
 python src/build_actor_network.py
 python src/apply_actor_registry_to_network.py

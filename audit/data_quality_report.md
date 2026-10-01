@@ -80,7 +80,22 @@ segunda, complementa al respaldo: exigir ambos eleva la proporción de conflicto
 (84 % en la muestra de calibración) a costa de perder ~19 % de los buenos. Detalle y límites en
 `audit/scope_filter_report.json`. Es una medición: el filtro todavía no forma parte del pipeline.
 
-## 8. Límites vigentes
+## 8. Filtro de alcance integrado y tercera validación
+
+El filtro de alcance (`src/scope_jev.py` y `src/scope_gate.py`) ya forma parte de la construcción: cada conflicto queda
+`aprobado`, `rechazado` o `sin_evaluar` en `conflict_scope`, y la vista `conflict_conservative` reúne los que tienen respaldo de
+evidencia Y alcance aprobado. Nada se borra de `conflict`. Una tercera validación ciega (50 al azar de ese universo y 20 de los
+conflictos con respaldo que el filtro descarta; sin solapamiento con las anteriores) midió:
+
+| Universo | Verificables | Correcto | Error menor | Error grave |
+|---|---:|---:|---:|---:|
+| Conservador (respaldo y alcance aprobado) | 50 | 18 | 19 | 13 (26 %, IC 95 % 16–40 %) |
+| Con respaldo pero alcance rechazado | 20 | 1 | 3 | 16 (80 %) |
+
+El error grave del universo recomendado baja de ~43 % (solo respaldo) a 26 %, y lo que el filtro descarta es en su gran mayoría
+malo. Límites: un revisor (modelo), muestras de 50 y 20, y una regla fija; falta replicar con un revisor humano externo.
+
+## 9. Límites vigentes
 
 - Las muestras anteriores miden estados previos del sistema; el vínculo proyecto → mención tiene su propia validación
   (0 fabricaciones en 809 evaluaciones).

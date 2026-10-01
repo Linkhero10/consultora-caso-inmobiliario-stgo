@@ -88,8 +88,11 @@ sigue siendo del LLM.
 3. Lee `intermediate/scope/blind_eval_report.json`: de lo que pasa el filtro, cuánto es correcto; cuánto error grave se
    filtra; cuántos buenos se pierden. Los umbrales de `RULE` son hipótesis: calibrarlos con datos etiquetados antes de usar el
    filtro en el pipeline.
-4. Solo si supera al criterio actual en una muestra ciega **distinta** de la usada para calibrar, integrarlo como puerta
-   antes de crear el conflicto (E4: una heurística no es una puerta hasta medir su precisión).
+4. Solo si supera al criterio actual en una muestra ciega **distinta** de la usada para calibrar, integrarlo (E4). Ya está integrado:
+   `python src/scope_jev.py --classify-conflicts --confirm-paid-run --max-cost-usd 0.15 --workers 50` escribe las decisiones por
+   conflicto en `config/conflict_scope_decisions.json` (usa la API y el corpus; ~US$0,05 para 817 conflictos) y la etapa
+   `scope_gate.py` de `rebuild.py` las aplica sin llamar a la API, creando `conflict_scope` y la vista `conflict_conservative`.
+   Un conflicto nuevo o con otra agrupación queda `sin_evaluar` hasta volver a clasificar.
 
 ## Ampliar con documentos nuevos
 

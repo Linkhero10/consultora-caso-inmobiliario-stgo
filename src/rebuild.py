@@ -45,6 +45,7 @@ STEPS: tuple[Step, ...] = (
     Step("identity_resolution", "resolve_project_review.py", "fusiona los pares de proyecto revisados y fija case_id"),
     Step("case_mention_duplicates", "detect_case_mention_duplicates.py", "grupos de case_mention duplicadas (requerido por geografia y conflicto)"),
     Step("conflicts", "build_conflicts.py", "capa CONFLICT: unidad sociologica de disputa y su respaldo de evidencia"),
+    Step("scope_gate", "scope_gate.py", "filtro de alcance por conflicto (decisiones versionadas; no llama a la API) y vista conservadora"),
     Step("actor_registry", "build_actor_registry.py", "identidad de actor institucional"),
     Step("actor_network", "build_actor_network.py", "red actor <-> conflicto"),
     Step("actor_registry_impact", "apply_actor_registry_to_network.py", "efecto del registro de actores sobre la red"),

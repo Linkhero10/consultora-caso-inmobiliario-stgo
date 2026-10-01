@@ -25,9 +25,11 @@ API); `--max-cost-usd` es obligatorio en una corrida pagada; cada respuesta se g
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import re
+import sqlite3
 import sys
 import time
 from pathlib import Path
@@ -38,7 +40,7 @@ from typing import Any
 import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from enrichment_core import ENV_PATH, load_env  # noqa: E402
+from enrichment_core import ENV_PATH, find_content_path, load_env  # noqa: E402
 from paths import INTERMEDIATE_DIR, PROJECT_ROOT, REVIEW_SAMPLES_DIR  # noqa: E402
 
 logger = logging.getLogger("scope_jev")
@@ -53,6 +55,7 @@ SNIPPET_RADIUS = 900  # caracteres a cada lado de cada mencion del proyecto
 MAX_SNIPPETS_PER_DOC = 4
 MAX_DOCS_PER_UNIT = 3
 SCOPE_DIR = INTERMEDIATE_DIR / "scope"
+DECISIONS_PATH = PROJECT_ROOT / "config" / "conflict_scope_decisions.json"
 
 TOPICS = {
     "inmobiliario_urbano": "Proyectos de vivienda o inmobiliarios, densidad o altura, permisos de edificacion, planes reguladores, patrimonio urbano, suelo urbano, DS19/vivienda social, tomas o campamentos como problema de suelo y vivienda.",
@@ -212,17 +215,116 @@ def evaluate(results: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def unit_signature(label: str, documents: list[tuple[str, str]]) -> str:
+    """Huella de la unidad evaluada, calculable desde el warehouse SIN el corpus: etiqueta + (documento, rol) ordenados.
+    Si cambia (otra agrupacion de casos, otro documento, otro rol), la decision guardada deja de aplicar."""
+    return hashlib.sha256(json.dumps([label, sorted(documents)], ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def conflict_units(conn: sqlite3.Connection) -> list[dict[str, Any]]:
+    """Una unidad por conflicto: su etiqueta y sus documentos (con texto si hay corpus local). Es la unidad que se valido."""
+    units = []
+    for conflict_id, label in conn.execute("SELECT conflict_id, label FROM conflict ORDER BY conflict_id").fetchall():
+        rows = conn.execute(
+            "SELECT dc.document_id, dc.role, d.url, d.title FROM document_conflict dc JOIN document d USING(document_id) "
+            "WHERE dc.conflict_id = ? ORDER BY dc.document_id", (conflict_id,)
+        ).fetchall()
+        docs = []
+        for document_id, role, url, title in rows:
+            path = find_content_path(url)
+            text = json.loads(path.read_text(encoding="utf-8")).get("text", "") if path else ""
+            docs.append({"document_id": document_id, "role": role, "title": title or "", "text": text})
+        units.append({"unit_id": conflict_id, "project": label, "documents": docs,
+                      "signature": unit_signature(label, [(d["document_id"], d["role"]) for d in docs])})
+    return units
+
+
+def classify_conflicts(units: list[dict[str, Any]], previous: dict[str, dict], api_key: str, workers: int, max_cost_usd: float) -> tuple[dict[str, dict], float, list]:
+    """Llama a Jev para las unidades sin decision vigente (misma firma). Devuelve (decisiones, costo, errores)."""
+    decisions = {k: v for k, v in previous.items()}
+    pending = [u for u in units if u["documents"] and previous.get(u["unit_id"], {}).get("signature") != u["signature"]
+               and any(d["text"] for d in u["documents"])]
+    lock, spent, errors = Lock(), {"cost": 0.0}, []
+
+    def work(unit):
+        with lock:
+            if spent["cost"] >= max_cost_usd:
+                return None
+        response = call_jev(build_state(unit["project"], unit["documents"]), api_key)
+        with lock:
+            spent["cost"] += response.get("cost", 0.0)
+        if "error" in response:
+            errors.append((unit["unit_id"], response["error"]))
+            return None
+        a = response["answers"]
+        return unit["unit_id"], {
+            "signature": unit["signature"], "disputa": a["disputa_concreta"]["noul"],
+            "tema": a["tema"]["choice"], "tema_confianza": a["tema"].get("confidence"),
+            "foco": a["foco"]["choice"], "foco_confianza": a["foco"].get("confidence"),
+        }
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for result in pool.map(work, pending):
+            if result:
+                decisions[result[0]] = result[1]
+    return decisions, spent["cost"], errors
+
+
+def answers_from_decision(entry: dict[str, Any]) -> dict[str, Any]:
+    """Reconstruye el formato de respuestas que espera `decide` desde una decision guardada."""
+    return {"disputa_concreta": {"noul": entry["disputa"]}, "tema": {"choice": entry["tema"]}, "foco": {"choice": entry["foco"]}}
+
+
+def main_classify_conflicts(args) -> int:
+    conn = sqlite3.connect(f"file:{(PROJECT_ROOT / 'data' / 'warehouse.sqlite').as_posix()}?mode=ro", uri=True)
+    units = conflict_units(conn)
+    conn.close()
+    previous = {}
+    if DECISIONS_PATH.exists():
+        previous = {e["conflict_id"]: e for e in json.loads(DECISIONS_PATH.read_text(encoding="utf-8"))["decisions"]}
+    pending = [u for u in units if u["documents"] and previous.get(u["unit_id"], {}).get("signature") != u["signature"]
+               and any(d["text"] for d in u["documents"])]
+    estimate = sum(estimate_cost_usd(build_state(u["project"], u["documents"])) for u in pending)
+    logger.info("Conflictos: %d | con decision vigente: %d | pendientes: %d | costo estimado: US$%.4f",
+                len(units), len(previous), len(pending), estimate)
+    if not args.confirm_paid_run:
+        logger.info("ENSAYO: no se llamo a ninguna API. Para ejecutar: --confirm-paid-run --max-cost-usd <tope>.")
+        return 0
+    if args.max_cost_usd is None:
+        logger.error("--max-cost-usd es obligatorio en una corrida pagada")
+        return 1
+    api_key = load_env(ENV_PATH).get(ENV_KEY, "")
+    if not api_key:
+        logger.error("%s vacia", ENV_KEY)
+        return 1
+    decisions, cost, errors = classify_conflicts(units, {k: {**v, "signature": v["signature"]} for k, v in previous.items()}, api_key, args.workers, args.max_cost_usd)
+    for unit_id, error in errors:
+        logger.warning("Fallo %s: %s", unit_id[-8:], error)
+    payload = {
+        "schema_version": "conflict_scope_decisions",
+        "description": "Respuestas del modelo de decision (disputa concreta, tema, foco) por conflicto. La regla que las convierte en 'aprobado'/'rechazado' vive en el codigo (RULE) y se aplica al construir, asi que cambiarla no exige volver a llamar a la API. Cada entrada lleva la firma de su unidad: si cambia la agrupacion o los documentos, deja de aplicar.",
+        "model": MODEL,
+        "decisions": [{"conflict_id": k, **v} for k, v in sorted(decisions.items())],
+    }
+    DECISIONS_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    logger.info("Decisiones: %d | costo de esta corrida: US$%.5f | errores: %d", len(decisions), cost, len(errors))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--eval-blind", action="store_true", help="evalua contra los veredictos de una validacion ciega")
+    parser.add_argument("--classify-conflicts", action="store_true", help="decide el alcance de todos los conflictos del warehouse y escribe config/conflict_scope_decisions.json")
     parser.add_argument("--sample-dir", type=Path, default=None, help="carpeta de la muestra (por defecto, blind_validation)")
     parser.add_argument("--confirm-paid-run", action="store_true", help="autoriza llamadas reales (pagadas) a la API")
     parser.add_argument("--max-cost-usd", type=float, default=None)
     parser.add_argument("--workers", type=int, default=50)
     args = parser.parse_args(argv)
-    if not args.eval_blind:
-        parser.error("por ahora solo esta implementado --eval-blind (piloto de calibracion)")
+    if not (args.eval_blind or args.classify_conflicts):
+        parser.error("indica --eval-blind o --classify-conflicts")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+    if args.classify_conflicts:
+        return main_classify_conflicts(args)
 
     sample_dir = args.sample_dir or REVIEW_SAMPLES_DIR / "blind_validation"
     units = _load_blind_units(sample_dir)

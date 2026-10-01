@@ -1359,6 +1359,8 @@ def _build_conflicts(conn: sqlite3.Connection):
         """
         DROP VIEW IF EXISTS actor_event_project_link_conflict_safe;
         DROP VIEW IF EXISTS actor_event_project_link_conflict_extended;
+        DROP VIEW IF EXISTS conflict_conservative;
+        DROP TABLE IF EXISTS conflict_scope;
         DROP VIEW IF EXISTS document_conflict_case_safe;
         DROP VIEW IF EXISTS document_conflict_case_extended;
         DROP TABLE IF EXISTS conflict_relation;

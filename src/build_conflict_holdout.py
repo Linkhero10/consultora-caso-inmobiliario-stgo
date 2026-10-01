@@ -168,6 +168,9 @@ def build_package(
     main_n: int = MAIN_N,
     stress_n: int = STRESS_N,
     require_exclusion: bool = True,
+    main_pool_sql: str | None = None,
+    stress_pool_sql: str | None = None,
+    exclude_sample_dirs: tuple[Path, ...] = (),
 ) -> dict[str, Any]:
     if not warehouse.exists():
         raise FileNotFoundError(warehouse)
@@ -182,7 +185,15 @@ def build_package(
         raise ValueError(f"IDs de calibración ausentes del warehouse: {unknown_calibration[:5]}")
     if calibration_count and calibration_count != 150:
         raise ValueError(f"La lista de calibración debe tener 150 IDs; tiene {calibration_count}")
-    eligible_ids = [cid for cid in all_ids if cid not in calibration_ids]
+    already_sampled: set[str] = set()
+    for sample_dir in exclude_sample_dirs:
+        for name in ("sample_main.json", "sample_stress.json"):
+            if (sample_dir / name).exists():
+                already_sampled |= {c["conflict_id"] for c in json.loads((sample_dir / name).read_text(encoding="utf-8"))}
+    # Universos de muestreo configurables (SQL que devuelve conflict_id): p. ej. el universo conservador del producto y,
+    # como contraste, lo que el producto descarta. Por defecto, todos los conflictos.
+    main_pool = {r[0] for r in con.execute(main_pool_sql)} if main_pool_sql else set(all_ids)
+    eligible_ids = [cid for cid in all_ids if cid not in calibration_ids and cid not in already_sampled and cid in main_pool]
     ordered = sorted(eligible_ids, key=lambda cid: _stable_key(seed, cid))
     main_ids = ordered[:main_n]
     no_backing = {
@@ -190,7 +201,11 @@ def build_package(
             "SELECT conflict_id FROM conflict WHERE respaldo_evidencia = 'sin_respaldo_exact_quote_detectado'"
         )
     }
-    stress_pool = [cid for cid in ordered if cid not in set(main_ids) and cid in no_backing]
+    if stress_pool_sql:
+        stress_universe = {r[0] for r in con.execute(stress_pool_sql)} - already_sampled - calibration_ids
+        stress_pool = sorted((cid for cid in stress_universe if cid not in set(main_ids)), key=lambda cid: _stable_key(seed, cid))
+    else:
+        stress_pool = [cid for cid in ordered if cid not in set(main_ids) and cid in no_backing]
     stress_ids = stress_pool[:stress_n]
     if len(main_ids) != main_n or len(stress_ids) != stress_n:
         raise ValueError(f"No se pudo seleccionar {main_n}+{stress_n}: {len(main_ids)}+{len(stress_ids)}")
@@ -250,10 +265,15 @@ def main() -> None:
     parser.add_argument("--seed", default=DEFAULT_SEED)
     parser.add_argument("--main-n", type=int, default=MAIN_N)
     parser.add_argument("--stress-n", type=int, default=STRESS_N)
+    parser.add_argument("--main-pool-sql", default=None, help="SQL que devuelve los conflict_id de donde muestrear la muestra principal")
+    parser.add_argument("--stress-pool-sql", default=None, help="SQL que devuelve los conflict_id de la muestra de contraste")
+    parser.add_argument("--exclude-sample-dir", type=Path, action="append", default=[], help="carpeta de una muestra previa cuyos conflictos se excluyen")
     parser.add_argument("--no-exclusion", action="store_true", help="muestra nueva sobre un diseno nuevo: no hay lista de calibracion que excluir")
     args = parser.parse_args()
     print(json.dumps(build_package(calibration_ids_path=args.calibration_ids, output_dir=args.output_dir, seed=args.seed,
-                                   main_n=args.main_n, stress_n=args.stress_n, require_exclusion=not args.no_exclusion), ensure_ascii=False, indent=2))
+                                   main_n=args.main_n, stress_n=args.stress_n, require_exclusion=not args.no_exclusion,
+                                   main_pool_sql=args.main_pool_sql, stress_pool_sql=args.stress_pool_sql,
+                                   exclude_sample_dirs=tuple(args.exclude_sample_dir)), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

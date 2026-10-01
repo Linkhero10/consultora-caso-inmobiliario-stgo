@@ -95,6 +95,8 @@ como conservador, y luego se reemplazó por el vínculo declarado por el modelo.
 agrupa proyectos distintos cuando comparten una cita genérica (cuatro edificios de un mismo fallo): sirve para
 señalar, no para transferir evidencia.
 
+**Ejemplo de puerta bien medida.** El filtro de alcance (`scope_gate.py`) se calibró en una muestra ciega, se evaluó sin cambios en una segunda y, ya integrado, se midió en una tercera: el error grave del universo recomendado bajó de ~43 % a 26 %.
+
 **Cómo se hace cumplir.** La pertenencia a un grupo de duplicados **no transfiere** evidencia ni comuna entre
 menciones (`ambiguous_duplicate_group`); solo una adjudicación explícita produce `via_reviewed_duplicate_group`.
 

@@ -9,12 +9,13 @@ composición del corpus, sigue con el [README](README.md).
 | Dato | Valor |
 |---|---|
 | Versión de la release | 1.0.0 |
-| SHA-256 de `data/warehouse.sqlite` | `89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4` |
+| SHA-256 de `data/warehouse.sqlite` | `9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7` |
 | Integridad | `integrity_check=ok`, 0 violaciones de FK |
 | Documentos del corpus | 3.884 (934 con extracción estructurada) |
 | Proyectos · casos · conflictos | 942 · 835 · 817 |
 | Cola de identidad de proyectos | 258 pares: 119 fusionados, 139 separados, 0 abiertos |
 | Conflictos con respaldo de evidencia | 506 de 817 (311 sin respaldo detectado) |
+| Conflictos con respaldo Y alcance aprobado (universo conservador) | 327 |
 | Menciones de proyecto sin vínculo a una `case_mention` | 201 |
 | Referencias históricas preservadas | 31 (5 confirmadas como no resolubles) |
 <!-- stats:end -->
@@ -32,7 +33,7 @@ Cita siempre el hash del warehouse al usar los datos. Las cifras de arriba se ge
 
 **Calidad medida (validación ciega de extremo a extremo).** En una muestra aleatoria de 56 conflictos verificables, el 44 % de los
 que tienen respaldo de evidencia y el 100 % de los que no lo tienen fueron error grave para un revisor independiente y estricto.
-Una segunda muestra independiente lo confirmó (43 %). Exigir además la aprobación de un filtro de alcance (Jev) sube la proporción de correctos o con error menor de 57 % a 77 % (`audit/scope_filter_report.json`), aunque aún no está integrado al pipeline. Usa el universo con respaldo y trátalo como candidato a revisión, no como verdad. Detalle y límites en
+Una segunda muestra independiente lo confirmó (43 %). Por eso la construcción incluye un filtro de alcance (Jev): la vista `conflict_conservative` reúne los conflictos con respaldo Y alcance aprobado, y una tercera validación ciega midió 26 % de error grave en ese universo (IC 95 % 16–40 %). Usa `conflict_conservative` y trátalo como candidato a revisión, no como verdad (`audit/blind_validation_report_third.json`, `audit/scope_filter_report.json`). Detalle y límites en
 [`audit/blind_validation_report.json`](audit/blind_validation_report.json) y en el
 [informe de calidad de datos](audit/data_quality_report.md).
 

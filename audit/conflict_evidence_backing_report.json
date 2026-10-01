@@ -31,7 +31,7 @@
     "verified_index": 506
   },
   "backing_method_note": "El respaldo usa el case_mention_index que el modelo eligio y el pipeline verifico; la asociacion se valido con dos rondas de revision ciega independiente (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). Un proyecto mencionado sin indice no tiene respaldo: no se adivina por texto.",
-  "warehouse_sha256": "28047a663cac67619209265c9a2bc3ad74f9cd3cadf61ec8853c419f70c424f0",
+  "warehouse_sha256": "81ec43ddec5ba6c611c88c9703557aed68d84f46d00c7b605cf8c324860e4569",
   "sqlite_journal_mode": "delete",
   "wal_checkpoint": null
 }

@@ -22,6 +22,7 @@ def _synthetic_warehouse(path):
         CREATE TABLE enrichment_document (document_id TEXT);
         CREATE TABLE project (project_id TEXT, case_id TEXT);
         CREATE TABLE conflict (conflict_id TEXT, respaldo_evidencia TEXT);
+        CREATE VIEW conflict_conservative AS SELECT * FROM conflict WHERE conflict_id = 'x1';
         CREATE TABLE project_review_queue (resolved INTEGER, decision TEXT);
         CREATE TABLE enrichment_project_mention (case_mention_index INTEGER);
         CREATE TABLE historical_case_reference (impact_scope TEXT);

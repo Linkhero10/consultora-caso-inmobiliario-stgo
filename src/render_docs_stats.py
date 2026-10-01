@@ -41,6 +41,7 @@ def collect(conn: sqlite3.Connection) -> dict:
         "projects": one("SELECT COUNT(*) FROM project"),
         "cases": one("SELECT COUNT(DISTINCT case_id) FROM project"),
         "conflicts": one("SELECT COUNT(*) FROM conflict"),
+        "conflicts_conservative": one("SELECT COUNT(*) FROM conflict_conservative"),
         "conflicts_backed": one("SELECT COUNT(*) FROM conflict WHERE respaldo_evidencia = 'respaldo_exact_quote_detectado'"),
         "queue_total": one("SELECT COUNT(*) FROM project_review_queue"),
         "queue_merged": queue.get("merged", 0),
@@ -69,6 +70,7 @@ def render(stats: dict, manifest: dict) -> str:
         f"{fmt(stats['queue_separate'])} separados, {fmt(stats['queue_open'])} abiertos |",
         f"| Conflictos con respaldo de evidencia | {fmt(stats['conflicts_backed'])} de {fmt(stats['conflicts'])} "
         f"({fmt(stats['conflicts'] - stats['conflicts_backed'])} sin respaldo detectado) |",
+        f"| Conflictos con respaldo Y alcance aprobado (universo conservador) | {fmt(stats['conflicts_conservative'])} |",
         f"| Menciones de proyecto sin vínculo a una `case_mention` | {fmt(stats['mentions_without_link'])} |",
         f"| Referencias históricas preservadas | {fmt(stats['historical_refs'])} "
         f"({fmt(stats['historical_refs_non_resolvable'])} confirmadas como no resolubles) |",

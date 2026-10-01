@@ -30,6 +30,8 @@ def test_the_manifest_is_the_last_step_that_touches_the_warehouse_and_docs_only_
     ("projects", "identity_resolution"),
     ("identity_resolution", "case_mention_duplicates"),
     ("case_mention_duplicates", "conflicts"),
+    ("conflicts", "scope_gate"),
+    ("scope_gate", "dashboard"),
     ("conflicts", "actor_registry"),
     ("case_mention_duplicates", "geography"),
     ("conflicts", "geography"),
@@ -40,7 +42,7 @@ def test_dependency_order(before, after):
 
 
 def test_selection_by_range_and_unknown_step():
-    assert [s.name for s in rebuild.select("conflicts", "actor_registry")] == ["conflicts", "actor_registry"]
+    assert [s.name for s in rebuild.select("conflicts", "actor_registry")] == ["conflicts", "scope_gate", "actor_registry"]
     assert rebuild.select(None, None) == list(rebuild.STEPS)
     assert rebuild.select("manifest", None)[0].name == "manifest"
     with pytest.raises(SystemExit):

@@ -108,6 +108,47 @@
       "reporte": "audit/blind_validation_report_second.json y audit/scope_filter_report.json"
     },
     {
+      "id": "tercera_validacion_ciega_universo_conservador",
+      "que_mide": "Calidad del universo conservador del producto (respaldo de evidencia Y alcance aprobado), con el filtro de alcance ya integrado a la construcción",
+      "metodo": "Muestra de 50 conflictos al azar del universo conservador y 20 al azar de los conflictos con respaldo que el filtro rechaza, sin solapamiento con las muestras 1 y 2; revisor ciego independiente (modelo)",
+      "n": 70,
+      "resultado_universo_conservador": {
+        "n_verificables": 50,
+        "correcto": 18,
+        "error_menor": 19,
+        "error_grave": 13,
+        "error_grave_pct": 0.26,
+        "error_grave_ic95": [
+          0.159,
+          0.396
+        ],
+        "correcto_o_menor_pct": 0.74,
+        "correcto_o_menor_ic95": [
+          0.604,
+          0.841
+        ]
+      },
+      "resultado_contraste_respaldo_pero_alcance_rechazado": {
+        "n_verificables": 20,
+        "correcto": 1,
+        "error_menor": 3,
+        "error_grave": 16,
+        "error_grave_pct": 0.8,
+        "error_grave_ic95": [
+          0.584,
+          0.919
+        ],
+        "correcto_o_menor_pct": 0.2,
+        "correcto_o_menor_ic95": [
+          0.081,
+          0.416
+        ]
+      },
+      "hallazgo": "El error grave baja de ~43 % (solo respaldo) a 26 % (IC 95 % 16–40 %) en el universo conservador; entre lo que el filtro descarta aunque tenga respaldo, el 80 % es error grave. El filtro quita casi solo lo malo.",
+      "limites": "Un solo revisor (modelo, criterio estricto); muestra de 50 y 20; el filtro usa un modelo de decisión con regla fija; falta replicar con un revisor humano externo.",
+      "reporte": "audit/blind_validation_report_third.json"
+    },
+    {
       "id": "muestra_inicial_n50",
       "que_mide": "Calidad de los registros con extracción estructurada, unidad documento frente a unidad conflicto",
       "metodo": "Muestra aleatoria estratificada (escala de conflicto x posible truncamiento), semilla fija, revisada caso por caso",

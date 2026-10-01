@@ -1,14 +1,15 @@
 {
   "schema_version": "2.0",
   "release_version": "1.0.0",
-  "generated_at": "2026-09-30",
+  "generated_at": "2026-10-01",
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4",
+    "sha256": "9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
+      "conflict_scope": 817,
       "document": 3884,
       "project": 942,
       "conflict": 817,
@@ -34,7 +35,7 @@
       "all_detector_versions": [
         "verified_index"
       ],
-      "generated_from_warehouse_sha256": "28047a663cac67619209265c9a2bc3ad74f9cd3cadf61ec8853c419f70c424f0",
+      "generated_from_warehouse_sha256": "81ec43ddec5ba6c611c88c9703557aed68d84f46d00c7b605cf8c324860e4569",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
@@ -49,7 +50,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "7c9ce9725ce90a5d4b982e5589c2ba7dc382bf21",
+  "parent_commit_at_generation": "a590d4110fea4784f510a72d134f7a97ed68383a",
   "release_commit": null,
   "note": "Manifiesto generado por src/generate_run_manifest.py contra el warehouse vigente; nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 registrado coincide con data/warehouse.sqlite."
 }
