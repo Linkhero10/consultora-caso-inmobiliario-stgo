@@ -3,11 +3,7 @@
 """
 Descubrimiento de noticias via Bright Data SERP API — Caso piloto inmobiliario Santiago.
 
-Patron adaptado de:
-- D:\\Analisis conflictos\\02_externo\\encargo_profesor\\Trabajo\\SAM-Cordillera\\scripts\\serpapi_discovery.py
-  (estructura de contrato, presupuesto, guardado incremental)
-- D:\\Analisis conflictos\\01_proyecto_universidad\\02_filtrado_llm\\02_pipeline_v2_prefiltro_base_nueva_20k_a_7k\\02_enrichment\\url_resolver.py
-  (RateLimiter anti-bloqueo, resolucion de links de Google)
+Estructura de contrato, presupuesto y guardado incremental; RateLimiter anti-bloqueo y resolucion de links de Google.
 
 Verificado empiricamente 2026-09-11 antes de escribir este script:
 - Bright Data zona 'emprendimiento1' (SERP API, data_format=parsed_light) funciona.
@@ -146,7 +142,7 @@ PERIODOS = [
 # clasificando avisos. Hallazgo del subagente auditor 2026-09-12.
 EXCLUDE_DOMAINS = (
     "-site:minvu.gob.cl -site:serviu.cl -site:portalinmobiliario.com -site:pabellon.cl "
-    # Agregado 2026-09-13 (Claude) con evidencia real del log de fulltext_v3:
+    # Agregado 2026-09-13 (la revisión) con evidencia real del log de fulltext_v3:
     # 742/743 de los http_error_400 y 381/469 de los "insuficiente" en las
     # primeras ~2500 extracciones eran facebook.com/instagram.com -- 45%
     # del esfuerzo de extraccion desperdiciado en dominios que bloquean el
@@ -422,8 +418,7 @@ def legacy_any_row_combos(manifest_path: Path) -> set[tuple[str, str, str, str]]
 
     Existe UNICAMENTE para la transicion de la corrida activa iniciada con
     el codigo viejo (0 eventos query_completed en su manifest a la fecha
-    de este fix -- confirmado por la auditoría cruzada,
-    Auditoria/codex_fleet/OPEN_FINDINGS_20260912.md). Sin esto, reanudar esa
+    de este fix -- confirmado por una auditoría cruzada). Sin esto, reanudar esa
     corrida con already_queried_combos() (que exige query_completed) vería
     0 combos completos y re-consultaria las 2336 queries del plan desde
     cero, gastando creditos de Bright Data de forma real y evitable.
@@ -536,8 +531,7 @@ def main() -> int:
                 return 2
             logger.warning(
                 "--trust-legacy-rows-once activo: tratando cualquier fila existente como "
-                "combo completo (comportamiento pre-fix). Riesgo residual aceptado y "
-                "documentado en Auditoria/codex_fleet/OPEN_FINDINGS_20260912.md -- no usar "
+                "combo completo (comportamiento pre-fix). Riesgo residual aceptado -- no usar "
                 "esta bandera para corridas nuevas."
             )
             done_combos = legacy_any_row_combos(manifest_path)

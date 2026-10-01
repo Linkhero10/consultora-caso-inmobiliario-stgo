@@ -7,7 +7,7 @@ packages = []
 
 [project]
 name = "consultora-caso-inmobiliario-stgo"
-version = "0.1.0"
+version = "1.0.0"
 description = "Pipeline de conflictividad inmobiliaria/urbana en Santiago (32 comunas, 2014-2026)"
 requires-python = ">=3.11"
 dependencies = [

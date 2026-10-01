@@ -1,5 +1,5 @@
 """Pruebas de Actor Identity Resolution v1 (actor_registry/actor_alias).
-Encargo explicito de Sol: conservador y auditable, no fuzzy matching
+Encargo explicito de la revisión: conservador y auditable, no fuzzy matching
 global; proteccion explicita contra GENERIC_ACTOR_TERMS. Ronda 2
 (2026-09-18): entity_id debe ser estable (no derivar del conjunto de
 alias) y la cobertura debe medir las 3 fuentes reales de la red."""
@@ -24,7 +24,7 @@ def test_no_alias_collides_with_generic_actor_terms():
 
 
 def test_entity_id_is_stable_when_aliases_change():
-    """Hallazgo BLOQUEANTE de Sol: antes entity_id derivaba del conjunto
+    """Hallazgo BLOQUEANTE de la revisión: antes entity_id derivaba del conjunto
     de alias, asi que agregar un alias nuevo (el uso normal de un
     registry) cambiaba el entity_id de una entidad ya publicada. Ahora
     debe depender SOLO de entity_key."""
@@ -107,7 +107,7 @@ def test_all_entity_keys_are_unique_and_immutable_style():
 
 
 def test_corte_de_apelaciones_and_tribunal_ambiental_bare_are_not_merged():
-    """Hallazgo explicito de Sol: 'Corte de Apelaciones' y 'Tribunal
+    """Hallazgo explicito de la revisión: 'Corte de Apelaciones' y 'Tribunal
     Ambiental' sin calificador de sede son ambiguos a nivel nacional
     (17 Cortes de Apelaciones, 3 Tribunales Ambientales en Chile) --
     deliberadamente fuera del alcance de v1."""
@@ -166,7 +166,7 @@ def test_sea_alias_all_resolve_to_same_entity_in_warehouse():
 
 
 def test_coverage_counts_all_three_source_tables_and_matches_real_totals():
-    """Hallazgo real de Sol: la cobertura anterior solo media
+    """Hallazgo real de la revisión: la cobertura anterior solo media
     enrichment_institution, subestimando severamente el alcance real
     (la red usa 3 fuentes). Verifica contra el warehouse real que la SMA
     (con la nueva variante 'Superintendencia de Medio Ambiente (SMA)',
@@ -198,21 +198,21 @@ def test_coverage_counts_all_three_source_tables_and_matches_real_totals():
 
 
 def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_document():
-    """Hallazgo BUG REAL de Sol (2026-09-18, segunda revision): la primera
+    """Hallazgo BUG REAL de la revisión (2026-09-18, segunda revision): la primera
     correccion de cobertura calculaba conflictos_unicos_safe agregando
     TODOS los conflictos del documento (via document_id), no solo el
     conflicto al que esa fila de actor especifica estaba enlazada --
-    sobreconteo real. Verificado por Sol contra el SQLite con valores
+    sobreconteo real. Verificado por la revisión contra el SQLite con valores
     EXACTOS: Contraloria 25 (reportado, con bug) vs 17 (correcto);
     MINVU 22 vs 14; SEA coincidia en 12 por casualidad (sus documentos no
     tenian el patron problematico). Este test fija los 6 valores exactos
     calculando directamente desde actor_event_project_link_conflict_safe,
     que preserva el vinculo actor->project_id->conflict_id fila a fila.
 
-    [ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] Los 6 valores
+    Los 6 valores
     bajaron (verificado recalculando en vivo contra el warehouse real, no
-    asumido): v3.3 es una corrida LLM separada que extrajo, en conjunto,
-    9.5% menos proyectos_mencionados que v3.2 para el corpus completo (146
+    asumido): la extraccion vigente es una corrida LLM separada que extrajo, en conjunto,
+    9.5% menos proyectos_mencionados que la extraccion previa para el corpus completo (146
     documentos con menos menciones vs 68 con mas) -- menos menciones de
     proyecto encadena a menos filas de conflict/document_conflict, y por lo
     tanto menos conflictos distintos por entidad. No es el bug que este test
@@ -241,12 +241,12 @@ def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_docu
     conn.close()
 
     # [ACTUALIZADO 2026-09-28, resolucion de los 15 IDs historicos + 17 merges
-    # de identidad de Codex/Luna (68 pares)] Recalculado en vivo contra el
+    # de identidad de la revisión externa (68 pares)] Recalculado en vivo contra el
     # warehouse real tras la reconstruccion completa.
     esperado = {
         "Servicio de Evaluación Ambiental (SEA)": 11,
         "Consejo de Monumentos Nacionales (CMN)": 5,
-        "Consejo de Defensa del Estado (CDE)": 2,
+        "Consejo de Defensa del Estado (CDE)": 3,  # 2 -> 3 tras fusionar conflictos duplicados
         "Superintendencia del Medio Ambiente (SMA)": 5,
         "Ministerio de Vivienda y Urbanismo (MINVU)": 8,
         "Contraloría General de la República": 12,

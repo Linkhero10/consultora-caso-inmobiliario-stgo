@@ -5,7 +5,7 @@ ACTOR <-> CONFLICT ... y mediria cuanto de la centralidad anterior era
 artefacto de fragmentar un mismo conflicto en varios proyectos".
 
 Reutiliza toda la logica de construccion de red de
-build_actor_network_comparison_v1.py (normalizacion de nombre, anclaje de
+build_actor_network.py (normalizacion de nombre, anclaje de
 terminos genericos, clasificacion institucional, bipartita actor<->unidad,
 correlacion de rango) sin duplicarla: esas funciones son genericas sobre
 una clave de agrupacion llamada 'case_id' en los dicts de fila -- aqui se
@@ -19,7 +19,7 @@ Comparaciones que arma este script:
    pero la variable que cambia ahora es el gate documental de CONFLICT
    (document_conflict_case_safe/extended), no resolution_status (que se
    mantiene fijo en 'resolved_explicit' para ambas).
-2. [CORREGIDO 2026-09-18, hallazgo metodologico real de la revisión] La primera
+2. La primera
    version de este script comparaba directamente CONFLICT_SAFE contra la
    red vieja CASE_OLD (actor_event_project_link_case_safe) y atribuia
    CUALQUIER caida de multiafiliacion a "fragmentacion de un mismo
@@ -60,8 +60,9 @@ from pathlib import Path
 import network_common as net
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import INTEGRATION_DIR  # noqa: E402
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "comparacion_red_actores_conflict_vs_case.json"
+OUTPUT = INTEGRATION_DIR / "actor_network_comparison.json"
 
 VIEWS_CONFLICT = {
     "conflict_safe": "actor_event_project_link_conflict_safe",
@@ -113,7 +114,7 @@ def decompose_gate_vs_conflict_collapse(
     common = sorted(actors_old & actors_matched & actors_conflict)
 
     # [AGREGADO 2026-09-18, precision pedida por la revisión; conteo
-    # actualizado 2026-09-26 tras la migracion v3.2->v3.3] CASE_MATCHED y
+    # actualizado 2026-09-26 tras la migracion] CASE_MATCHED y
     # CONFLICT_SAFE tienen el mismo NUMERO de nodos actor (673 cada uno),
     # pero no coinciden nodo por nodo: los terminos de GENERIC_ACTOR_TERMS
     # se anclan via scope_actor_id() a la clave de agrupacion misma
@@ -122,7 +123,7 @@ def decompose_gate_vs_conflict_collapse(
     # "municipio", "estado", "la inmobiliaria"...) se vuelve un nodo
     # distinto en cada red -- por diseno correcto (esos terminos NUNCA
     # deben fusionarse globalmente entre unidades distintas, ver
-    # docstring de build_actor_network_comparison_v1.py), no por error.
+    # docstring de build_actor_network.py), no por error.
     # La descomposicion gate/collapse solo tiene sentido para identidades
     # PERSISTENTES (no anclas contextuales), asi que se reportan aparte
     # los nodos genericos excluidos de cada lado en vez de dejarlos
@@ -177,9 +178,9 @@ def decompose_gate_vs_conflict_collapse(
             "seria un bug, no un hallazgo."
         ),
         "nota_genericos": (
-            "[ACTUALIZADO 2026-09-26, migracion v3.2->v3.3 completa] CASE_MATCHED "
+            "CASE_MATCHED "
             "y CONFLICT_SAFE tienen el MISMO numero de nodos actor "
-            "(673 cada uno, antes 1001 con v3.2 -- v3.3 extrajo menos "
+            "(673 cada uno, antes 1001 con la extraccion previa -- la extraccion vigente extrajo menos "
             "proyectos_mencionados en promedio, ver audit/validation_summary.json) "
             "pero solo 659 son identidades persistentes comparables entre ambos. "
             "Los 14 restantes de cada lado son terminos de GENERIC_ACTOR_TERMS "

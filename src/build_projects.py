@@ -2,20 +2,12 @@
 # -*- coding: utf-8 -*-
 """Puente documento -> caso/proyecto -> actor/evento/evidencia.
 
-Hallazgo real (la auditoría, 2026-09-17): ningun actor/institucion/evento del
-warehouse tiene una identidad de PROYECTO estable entre documentos --
-`proyecto_asociado` es una cadena cruda que solo tiene sentido DENTRO del
-mismo documento (comparada contra `proyectos_mencionados` de ESE
-documento). Dos articulos que mencionan "el mismo" proyecto con redaccion
-distinta ("Torre Bellavista" vs "torre Bellavista") no tienen ningun vinculo
-hoy. Ademas ya existen 3 capas de "actor" desconectadas en el warehouse
-(entity/entity_role de Fase B-clasificacion, enrichment_actor de la
-primera pasada v3.2, y actor_second_pass_v2 que ni siquiera esta en el
-warehouse) mas una tabla `event` vestigial de un piloto de 11 documentos
-(build_event_table_v1.py) -- este script NO intenta reconciliar esas 3
-capas (son de granularidad y epoca distintas, un proyecto de reconciliacion
-aparte); construye el puente sobre la capa v3.2 + actor_second_pass_v2,
-que es la que va a alimentar el analisis de redes de Dario.
+Ningun actor, institucion o evento tiene por si mismo una identidad de PROYECTO estable entre documentos:
+`proyecto_asociado` es una cadena cruda que solo tiene sentido DENTRO del mismo documento (comparada contra
+`proyectos_mencionados` de ESE documento). Dos articulos que mencionan "el mismo" proyecto con redaccion distinta
+("Torre Bellavista" vs "torre Bellavista") no tienen ningun vinculo. Este script construye ese puente sobre las
+tablas `enrichment_*`; no intenta reconciliar las otras capas de actor del warehouse (entity / entity_role de la
+clasificacion), que tienen otra granularidad.
 
 Verificado antes de disenar (no supuesto): 1405 menciones de proyecto en
 934 documentos, 997 grupos unicos tras normalizar, 47 grupos donde la
@@ -43,9 +35,7 @@ otra sorpresa"):
    - `resolved_explicit`: proyecto_asociado no vacio y coincide con una
      mencion de proyecto de ESE documento (ya validado rio arriba por
      sanitize_project_associations()).
-   - `inferred_single_project` [RENOMBRADO 2026-09-18, hallazgo de la revisión,
-     antes "resolved_single_project" -- ver resolve_association() para el
-     caso real que motivo el cambio de nombre]: proyecto_asociado vacio,
+   - `inferred_single_project`: proyecto_asociado vacio,
      pero el documento menciona exactamente 1 proyecto -- sin ambiguedad
      de CUANTOS proyectos hay, pero SIN garantia de que el actor/evento
      realmente pertenezca a ese proyecto (puede ser una mencion
@@ -58,20 +48,13 @@ otra sorpresa"):
    - `unresolved_no_project`: el documento no menciona ningun proyecto con
      nombre propio.
 
-No llama a la API. Copia warehouse_enrichment.sqlite (construido por
-build_enrichment_tables.py desde v3.3, ver src/v3_3_enrichment_source.py) a
-data/warehouse.sqlite y agrega las tablas del puente ahi.
+No llama a la API. Copia warehouse_enrichment.sqlite (construido por build_enrichment_tables.py desde la
+extraccion, ver src/enrichment_source.py) a data/warehouse.sqlite y agrega las tablas del puente ahi.
 
-[ACTUALIZADO 2026-09-26, migracion v3.2->v3.3] warehouse_enrichment.sqlite
-(el nombre viejo, warehouse_v3_2.sqlite, se retiro por confuso -- ya no
-esta atado a una version de contrato especifica) ya NO es estrictamente
-"nunca se modifica en el lugar" -- build_enrichment_tables.py le copia la
-tabla document_case_unit desde el warehouse productivo (correcciones
-manuales de Sol, gate documento->unidad_de_caso). La garantia real, mas
-precisa, es: las tablas de ENRICHMENT ORIGINALES (enrichment_document y las
-demas) permanecen inmutables siempre; se permiten tablas NUEVAS de
-auditoria/gobernanza (append-only a nivel de esquema, nunca se borra ni
-edita una columna existente de una tabla de enrichment).
+Garantia: las tablas de ENRICHMENT (enrichment_document y las demas) permanecen inmutables; se agregan tablas
+NUEVAS de gobernanza (append-only a nivel de esquema, nunca se borra ni edita una columna de una tabla de
+enrichment). `document_case_unit` (la revision de unidad de caso de cada documento, gate documento -> unidad de
+caso) la carga build_enrichment_tables.py desde `config/document_case_unit_review.json`.
 """
 
 from __future__ import annotations
@@ -89,13 +72,15 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from v3_3_enrichment_source import load_v3_3_records  # noqa: E402
+from enrichment_source import load_enrichment_records  # noqa: E402
+from release_info import write_release_metadata  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SOURCE_WAREHOUSE = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_enrichment.sqlite"
+from paths import ENRICHMENT_DIR, ENRICHMENT_WAREHOUSE_PATH  # noqa: E402
+SOURCE_WAREHOUSE = ENRICHMENT_WAREHOUSE_PATH
 OUTPUT_WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-ACTOR_SECOND_PASS_PATH = PROJECT_ROOT / "Auditoria" / "enriquecimiento_v3_2_934" / "actor_second_pass_v2" / "actor_second_pass_v2.jsonl"
-DESCRIPTIVE_PROJECT_MENTIONS_CONFIG = PROJECT_ROOT / "config" / "descriptive_project_mentions_v1.json"
+ACTOR_SECOND_PASS_PATH = ENRICHMENT_DIR / "actor_second_pass" / "actor_second_pass.jsonl"
+DESCRIPTIVE_PROJECT_MENTIONS_CONFIG = PROJECT_ROOT / "config" / "descriptive_project_mentions.json"
 
 STOPWORDS = {"el", "la", "los", "las", "de", "del", "un", "una", "y", "en", "a", "proyecto", "edificio"}
 
@@ -126,7 +111,7 @@ def load_descriptive_project_mentions(
     """
     config_path = Path(config_path)
     payload = json.loads(config_path.read_text(encoding="utf-8"))
-    if set(payload) != {"schema_version", "mentions"} or payload.get("schema_version") != "descriptive_project_mentions_v1":
+    if set(payload) != {"schema_version", "mentions"} or payload.get("schema_version") != "descriptive_project_mentions":
         raise ValueError("config de menciones descriptivas: schema_version/keys inválidos")
     if not isinstance(payload["mentions"], list):
         raise ValueError("config de menciones descriptivas: mentions debe ser una lista")
@@ -299,7 +284,7 @@ def persist_descriptive_project_mentions(conn: sqlite3.Connection, mentions: lis
             source_url TEXT NOT NULL,
             source_text_sha256 TEXT NOT NULL,
             source_file_sha256 TEXT NOT NULL,
-            source TEXT NOT NULL CHECK (source = 'config_descriptive_project_mentions_v1')
+            source TEXT NOT NULL CHECK (source = 'config_descriptive_project_mentions')
         )
         """
     )
@@ -331,7 +316,7 @@ def persist_descriptive_project_mentions(conn: sqlite3.Connection, mentions: lis
             (
                 item["reference_key"], item["document_id"], item["case_mention_id"], item["subject_label"],
                 item["descriptive_label"], item["identity_status"], item["source_url"], item["source_text_sha256"],
-                item["source_file_sha256"], "config_descriptive_project_mentions_v1",
+                item["source_file_sha256"], "config_descriptive_project_mentions",
             )
             for item in mentions
         ],
@@ -350,11 +335,11 @@ def persist_descriptive_project_mentions(conn: sqlite3.Connection, mentions: lis
     return len(mentions)
 
 
-# [AGREGADO 2026-09-18] Homonimos CONFIRMADOS donde el cluster EXACTO por
+# Homonimos CONFIRMADOS donde el cluster EXACTO por
 # nombre normalizado fusiono, sin pasar por project_review_queue (esa cola
 # solo se activa entre project_id DISTINTOS con relacion de substring -- un
 # match EXACTO nunca llega ahi), dos referencias reales distintas. Hallazgo
-# de Claude al verificar el punto 8 de la segunda auditoría (riesgo
+# de la revisión al verificar el punto 8 de la segunda auditoría (riesgo
 # de homonimos en el auto-merge exacto): "San Isidro" (bare) tenia 2
 # menciones en 2 documentos -- una en "Las Rejas norte y calle Toro
 # Mazotte, Estacion Central" (nada que ver con una planta de tratamiento) y
@@ -381,7 +366,7 @@ KNOWN_HOMONYM_SPLITS: dict[tuple[str, str], str] = {
 }
 
 
-VERIFIED_INDEX_CORRECTIONS_PATH = PROJECT_ROOT / "config" / "verified_project_mention_index_corrections_v1.json"
+VERIFIED_INDEX_CORRECTIONS_PATH = PROJECT_ROOT / "config" / "project_mention_index_corrections.json"
 
 
 def load_verified_project_mention_index_corrections(path: Path = VERIFIED_INDEX_CORRECTIONS_PATH) -> dict[tuple[str, str], int]:
@@ -407,7 +392,7 @@ def apply_verified_project_mention_index_corrections(
 ) -> int:
     """Asigna case_mention_index solo donde hoy es null y hay una correccion citada.
 
-    Nunca sobreescribe un case_mention_index que v3.3 ya establecio -- esta
+    Nunca sobreescribe un case_mention_index que la extraccion vigente ya establecio -- esta
     correccion es aditiva sobre menciones sin vinculo, no una reinterpretacion."""
     n_aplicadas = 0
     if not corrections:
@@ -424,7 +409,7 @@ def apply_verified_project_mention_index_corrections(
 def apply_index_corrections_to_warehouse(conn: sqlite3.Connection, corrections: dict[tuple[str, str], int]) -> int:
     """Materializa los enlaces adjudicados en enrichment_project_mention (la tabla que consumen CONFLICT y geografia).
 
-    [CORREGIDO 2026-09-29] Hasta esta fecha las correcciones solo se aplicaban a los registros en memoria del
+    Hasta esta fecha las correcciones solo se aplicaban a los registros en memoria del
     registro de proyectos, que no usa case_mention_index: ninguna llegaba a la tabla, asi que el enlace de Linea 7
     nunca tuvo efecto. Falla cerrado: cada correccion configurada debe encontrar exactamente una mencion sin indice."""
     applied = 0
@@ -456,8 +441,8 @@ def build_project_registry(enrichment_records: list[dict[str, Any]]) -> tuple[di
     for record in enrichment_records:
         document_id = record["document_id"]
         for item in record.get("proyectos_mencionados") or []:
-            # v3.3: cada item es {nombre, case_mention_index, ...} -- antes
-            # (v3.2) era un string suelto. Este registro es mention-based por
+            # la extraccion vigente: cada item es {nombre, case_mention_index, ...} -- antes
+            # (la extraccion previa) era un string suelto. Este registro es mention-based por
             # nombre, no usa case_mention_index (ese vinculo vive en
             # enrichment_project_mention, consumido directamente por
             # build_conflicts.py/build_geography.py).
@@ -509,32 +494,32 @@ def build_project_registry(enrichment_records: list[dict[str, Any]]) -> tuple[di
     return projects, resolved_mention_to_project
 
 
-# [AGREGADO 2026-09-18] Pares de nombre de proyecto que la auditoria de
+# Pares de nombre de proyecto que la auditoria de
 # los 63 documentos 'caso_unico' con >1 case_id (conflict_unit) probo con
 # citas verificadas que son el mismo proyecto escrito de forma tan
 # distinta que NO comparten substring alguno -- find_review_candidates()
 # nunca los habria generado (verificado: ninguno de estos 5 pares existia
 # antes en la cola de 255). La revisión los marcó project_relation='alias' dentro
-# de relaciones_case_groups_sol al clasificar los 63 documentos; ver
-# Auditoria/integracion_v1/candidatos_project_review_queue_desde_conflict_unit_63.json
-# para la evidencia y provenance completos. Se agregan aqui como
+# de relaciones_case_groups al clasificar los 63 documentos; ver
+# la evidencia y provenance completos viven en la revision de unidades de conflicto
+# (config/conflict_unit_review.json). Se agregan aqui como
 # candidatos EXTRA (no se fusionan solos -- la decision merged/kept_separate
 # vive en resolve_project_review_queue.py::MANUAL_DECISIONS, igual que el
 # resto de la cola).
 MANUAL_EXTRA_REVIEW_PAIRS: list[tuple[str, str, str]] = [
-    ("Villa San Luis", "Villa Carlos Cortés", "conflict_unit_63_sol_alias"),
+    ("Villa San Luis", "Villa Carlos Cortés", "conflict_unit_review_alias"),
     (
         "Club de Golf Hacienda Santa Martina Nature - Lo Barnechea",
         "Hacienda Santa Martina, Nature Club & Golf",
-        "conflict_unit_63_sol_alias",
+        "conflict_unit_review_alias",
     ),
-    ("Egaña Eco Sustentable", "Eco Egaña", "conflict_unit_63_sol_alias"),
+    ("Egaña Eco Sustentable", "Eco Egaña", "conflict_unit_review_alias"),
     (
         "LA PLANTA DE CACA",
         "Solución transitoria para la provisión de los servicios de tratamiento y disposición de Aguas Servidas",
-        "conflict_unit_63_sol_alias",
+        "conflict_unit_review_alias",
     ),
-    ("Alto Las Condes 2", "Alto Norte", "conflict_unit_63_sol_alias"),
+    ("Alto Las Condes 2", "Alto Norte", "conflict_unit_review_alias"),
 ]
 
 
@@ -619,7 +604,7 @@ def resolve_association(document_id: str, proyecto_asociado_raw: str, doc_projec
         # resolved_explicit. No lo es: solo significa que el documento
         # menciona un unico proyecto con nombre propio, NO que ese
         # actor/institucion/evento pertenezca realmente a el. Caso real
-        # encontrado por la revisión y verificado por Claude: un articulo sobre
+        # encontrado por la revisión y verificado por la revisión: un articulo sobre
         # megaedificios de Estacion Central termina asociando la "Direccion
         # de Obras de Estacion Central" al proyecto "Costanera Center"
         # (Providencia) solo porque esa fue la unica mencion de proyecto
@@ -643,15 +628,9 @@ SOURCE_WAREHOUSE_MIN_DOCUMENTS = 934
 
 
 def _validate_source_warehouse(path: Path) -> None:
-    """[Fix 1E, 2026-09-24] Guardrail agregado tras un hallazgo real: el
-    2026-09-24, Auditoria/integracion_v1/warehouse_v3_2.sqlite quedo mutado
-    por trabajo de investigacion de geografia (2026-09-23) con un schema
-    incompatible (tablas renombradas con sufijo _v3_2, sin document_case_unit).
-    Correr este script sin darse cuenta sobreescribe data/warehouse.sqlite y
-    BORRA document_case_unit de forma permanente si no se restaura a tiempo
-    desde git -- ocurrio 2 veces en una sola sesion antes de agregar esto.
-    Aborta ANTES de copiar sobre el warehouse productivo, en vez de fallar a
-    mitad de camino con el dano ya hecho."""
+    """Guardrail: el warehouse de enrichment es un archivo intermedio que otro trabajo puede dejar con un schema
+    incompatible. Correr este script sobre uno asi sobreescribiria data/warehouse.sqlite con un schema roto. Aborta
+    ANTES de copiar, en vez de fallar a mitad de camino con el dano ya hecho."""
     if not path.exists():
         raise SystemExit(f"No existe {path} -- no se puede reconstruir el registro de proyectos.")
     conn = sqlite3.connect(path)
@@ -661,7 +640,7 @@ def _validate_source_warehouse(path: Path) -> None:
         if missing:
             raise SystemExit(
                 f"{path} no tiene el schema esperado (faltan tablas: {missing}). "
-                "Esto ya paso una vez: el archivo quedo mutado por otro trabajo (ver docstring de "
+                "El archivo puede haber quedado mutado por otro trabajo (ver docstring de "
                 "_validate_source_warehouse). Corre `python src/build_enrichment_tables.py` para "
                 "regenerarlo correctamente (determinista, sin costo de LLM) antes de reintentar -- "
                 "NO se sobreescribe data/warehouse.sqlite con un schema incompatible."
@@ -686,7 +665,7 @@ def main() -> int:
         url_to_document_id = {
             row[1]: row[0] for row in source_conn.execute("SELECT document_id, url FROM document").fetchall()
         }
-        sol_corrections: dict[str, dict] = {}
+        case_unit_corrections: dict[str, dict] = {}
         has_table = source_conn.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='document_case_unit'"
         ).fetchone()
@@ -701,7 +680,7 @@ def main() -> int:
                 "correccion_nombre_proyecto FROM document_case_unit"
             ).fetchall():
                 document_id, unidad_caso_tipo, tiene_error, corr_menc_json, corr_nombre = row
-                sol_corrections[document_id] = {
+                case_unit_corrections[document_id] = {
                     "unidad_caso_tipo": unidad_caso_tipo,
                     "tiene_error": bool(tiene_error),
                     "proyectos_mencionados_corregido": json.loads(corr_menc_json) if corr_menc_json is not None else None,
@@ -709,12 +688,12 @@ def main() -> int:
                 }
     finally:
         source_conn.close()
-    # include_fuera_de_universo=True: el registro de proyectos necesita las
+    # include_excluded=True: el registro de proyectos necesita las
     # 934 filas productivas completas (mismo criterio que build_enrichment_
-    # tables.py) -- la exclusion de Fix 1D solo aplica al backing de
-    # CONFLICT verificado externamente por Sol, no a la identidad de
+    # tables.py) -- la exclusion de la revision de respaldo solo aplica al backing de
+    # CONFLICT verificado externamente por la revisión, no a la identidad de
     # proyecto en si.
-    enrichment_records = list(load_v3_3_records(include_fuera_de_universo=True).values())
+    enrichment_records = list(load_enrichment_records(include_excluded=True).values())
     actor_second_pass_records = [
         json.loads(l) for l in ACTOR_SECOND_PASS_PATH.read_text(encoding="utf-8").splitlines() if l.strip()
     ] if ACTOR_SECOND_PASS_PATH.exists() else []
@@ -724,7 +703,7 @@ def main() -> int:
         r["document_id"] = url_to_document_id.get(r["url"])
     enrichment_records = [r for r in enrichment_records if r["document_id"]]
 
-    # [AGREGADO 2026-09-18] gate documento->unidad_de_caso: la revisión reviso los
+    # gate documento->unidad_de_caso: la revisión reviso los
     # 934/934 documentos y encontro 9 con proyectos_mencionados mal
     # extraidos (comunidades/actores confundidos con proyecto, casos
     # comparativos capturados como focal). Se sobrescribe SOLO
@@ -738,14 +717,14 @@ def main() -> int:
     # aqui, para que el consumidor final decida si excluye documentos
     # documento_comparativo_panoramico/contexto_sin_caso_individualizable/
     # caso_focal_fuera_del_universo de su analisis).
-    sol_corrections: dict[str, dict] = {}
+    case_unit_corrections: dict[str, dict] = {}
     if SOURCE_WAREHOUSE.exists():
         conn_check = sqlite3.connect(SOURCE_WAREHOUSE)
         has_table = conn_check.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='document_case_unit'"
         ).fetchone()
         if has_table:
-            # [ACTUALIZADO 2026-09-18, hallazgo de la revisión] la consulta anterior
+            # la consulta anterior
             # NUNCA leia correccion_nombre_proyecto -- este script decia
             # "usa las correcciones de la revisión" sin precisar que solo aplicaba
             # las de proyectos_mencionados. Se agrega aqui para que quede
@@ -766,7 +745,7 @@ def main() -> int:
                 "FROM document_case_unit"
             ).fetchall():
                 document_id, unidad_caso_tipo, tiene_error, corr_menc_json, corr_nombre = row
-                sol_corrections[document_id] = {
+                case_unit_corrections[document_id] = {
                     "unidad_caso_tipo": unidad_caso_tipo,
                     "tiene_error": bool(tiene_error),
                     "proyectos_mencionados_corregido": json.loads(corr_menc_json) if corr_menc_json is not None else None,
@@ -777,15 +756,15 @@ def main() -> int:
     verified_index_corrections = load_verified_project_mention_index_corrections()
     n_docs_con_correccion_de_menciones = 0
     n_docs_con_correccion_de_nombre_no_aplicada_al_registry = sum(
-        1 for c in sol_corrections.values() if c["nombre_proyecto_corregido"] is not None
+        1 for c in case_unit_corrections.values() if c["nombre_proyecto_corregido"] is not None
     )
     for r in enrichment_records:
-        corr = sol_corrections.get(r["document_id"])
+        corr = case_unit_corrections.get(r["document_id"])
         if corr and corr["proyectos_mencionados_corregido"] is not None:
             # correccion_proyectos_mencionados_json se guardo en 2026-09-18
-            # (pre-v3.3) como lista de strings sueltos -- se envuelve al
-            # shape v3.3 {nombre, case_mention_index} con indice null (la
-            # correccion de Sol nunca tuvo un case_mention_index verificado,
+            # (previa) como lista de strings sueltos -- se envuelve al
+            # shape la extraccion vigente {nombre, case_mention_index} con indice null (la
+            # correccion de la revisión nunca tuvo un case_mention_index verificado,
             # asi que esa mencion simplemente queda sin vinculo verificado,
             # nunca se inventa uno).
             r["proyectos_mencionados"] = [
@@ -809,6 +788,7 @@ def main() -> int:
     shutil.copy2(SOURCE_WAREHOUSE, OUTPUT_WAREHOUSE)
     conn = sqlite3.connect(OUTPUT_WAREHOUSE)
     n_indices_materializados_en_warehouse = apply_index_corrections_to_warehouse(conn, verified_index_corrections)
+    write_release_metadata(conn)
     conn.commit()
 
     conn.executescript("""
@@ -905,7 +885,7 @@ def main() -> int:
     # ya existiera en la primera pasada (source_pass "first" o "both"): dos
     # filas para la MISMA relacion actor-documento sustantiva, con dos
     # source_id distintos. Sin filtrar esto, cualquier calculo de grado/peso
-    # de aristas para la red de Dario quedaria inflado -- verificado: 3192 de
+    # de aristas para la red de actores quedaria inflado -- verificado: 3192 de
     # 5491 filas (58%) de actor_second_pass_v2 tenian source_pass in
     # ("first","both") antes de este fix. Correccion elegida (mas simple que
     # una tabla de deduplicacion explicita, sugerida como alternativa por
@@ -928,8 +908,8 @@ def main() -> int:
     )
     conn.commit()
 
-    # [AGREGADO 2026-09-18, pedido por la revisión] Sin esta vista, cualquier
-    # consumidor (ej. Dario construyendo la red) que haga SELECT * FROM
+    # Sin esta vista, cualquier
+    # consumidor (ej. quien construya la red) que haga SELECT * FROM
     # actor_event_project_link sin JOIN a document_case_unit obtiene
     # en silencio links de documentos panoramicos/contextuales/fuera de
     # universo -- el gate esta disponible pero nadie lo aplica salvo que se
@@ -949,7 +929,7 @@ def main() -> int:
     # Si un documento no tiene fila en document_case_unit (no debería
     # ocurrir para los 934, pero por robustez), la vista lo excluye por
     # defecto -- conservador ante datos faltantes, nunca incluye por omision.
-    if sol_corrections:
+    if case_unit_corrections:
         conn.executescript(
             """
             DROP VIEW IF EXISTS actor_event_project_link_case_safe;
@@ -996,12 +976,12 @@ def main() -> int:
             },
         },
         "gate_documento_unidad_caso_sol": {
-            "disponible": bool(sol_corrections),
-            "n_documentos_con_gate": len(sol_corrections),
+            "disponible": bool(case_unit_corrections),
+            "n_documentos_con_gate": len(case_unit_corrections),
             "n_documentos_con_correccion_de_proyectos_mencionados_aplicada": n_docs_con_correccion_de_menciones,
             "n_documentos_con_correccion_de_nombre_proyecto_preservada_no_aplicada": n_docs_con_correccion_de_nombre_no_aplicada_al_registry,
             "unidad_caso_tipo_counts": (
-                dict(Counter(c["unidad_caso_tipo"] for c in sol_corrections.values())) if sol_corrections else {}
+                dict(Counter(c["unidad_caso_tipo"] for c in case_unit_corrections.values())) if case_unit_corrections else {}
             ),
             "nota": (
                 "document_case_unit (copiada de warehouse_enrichment.sqlite a esta base) trae la "
@@ -1024,13 +1004,13 @@ def main() -> int:
             "n_entradas_configuradas": len(verified_index_corrections),
             "n_menciones_corregidas": n_menciones_con_indice_verificado_corregido,
             "n_indices_materializados_en_enrichment_project_mention": n_indices_materializados_en_warehouse,
-            "fuente": "config/verified_project_mention_index_corrections_v1.json",
+            "fuente": "config/project_mention_index_corrections.json",
             "nota": (
                 "Corrige case_mention_index=null puntual para menciones donde la evidencia "
                 "estructurada del warehouse ya identifica sin ambiguedad el case_mention -- nunca "
                 "inventa un indice, cada entrada cita evidence_id reales. No reemplaza la lista de "
-                "proyectos_mencionados como sol_corrections; solo ajusta el indice de una mencion "
-                "que v3.3 ya extrajo."
+                "proyectos_mencionados como case_unit_corrections; solo ajusta el indice de una mencion "
+                "que la extraccion vigente ya extrajo."
             ),
         },
     }

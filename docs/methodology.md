@@ -44,21 +44,20 @@ exigen `role IN ('focal', 'co_focal')`. Las vistas `_extended` agregan `contextu
 análisis de sensibilidad. Nunca se usa `mentioned_unreviewed` ni `panoramic_mention` como evidencia
 de que un conflicto es real.
 
-## Respaldo documental de proyecto (Fix 1A)
+## Respaldo de evidencia de un conflicto
 
-La vista conservadora exige una cita `objeto` verificada cuyo texto contenga el nombre
-normalizado del proyecto (`exact_substring_v1`) y que provenga de un documento con al menos una
-mención incluida. La tabla `conflict_evidence_backing` conserva la cadena completa hasta la cita.
+Durante la extracción, el modelo recibe la lista numerada de las `case_mention` que la clasificación ya decidió
+para el documento y declara, para cada proyecto mencionado, a cuál pertenece (`case_mention_index`) o `null` si
+ninguna lo tiene como objeto. El pipeline valida el rango y conserva el valor crudo si lo limpia. Un conflicto
+cuenta como respaldado si alguna mención de sus proyectos apunta a una `case_mention` incluida con al menos una
+cita de `objeto` verificada (subcadena literal del texto). La tabla `conflict_evidence_backing` conserva la cadena
+completa hasta la cita. La cobertura por conflicto se informa como `total`, `parcial` o `ninguna`; la ausencia de
+respaldo no equivale a falsedad. Una `case_mention` dejada `uncertain`/`exclude` por la clasificación puede
+respaldar solo por adjudicación explícita (`config/case_mention_eligibility_adjudications.json`), visible en
+`match_method`. La asociación proyecto → mención se validó con dos rondas de revisión ciega independiente
+(0 fabricaciones en 809 evaluaciones).
 
-El esquema actual no vincula afirmativamente cada proyecto con un `case_mention` específico dentro
-de documentos que contienen varios casos. Por eso el respaldo se etiqueta con
-`backing_scope=document_level_case_mention_without_project_link` y se marca
-`ambiguous_multi_case_document=1` cuando hay más de una mención incluida con evidencia de objeto.
-Esto es una señal de calidad y no una adjudicación directa ni una prueba de que los demás proyectos
-del documento sean parte del mismo conflicto. La cobertura por conflicto se informa como `total`,
-`parcial` o `ninguna`; la ausencia de respaldo no equivale a falsedad.
-
-## Geografía de menciones de proyecto (Fix 1F)
+## Geografía de menciones de proyecto
 
 `project_mention_geography` resuelve territorio en la unidad de la mención:
 `project_mention → case_mention → comuna`. Se acepta el vínculo `direct` cuando
@@ -88,7 +87,7 @@ determinado del conflicto), y tratarlas como ubicación exacta habría violado e
 ("ausencia de resolución > relación inventada") que ya rige el resto del pipeline. Los conflictos
 siguen contándose y coloreándose únicamente a nivel de comuna.
 
-## Por qué existe el gate: lo que encontró la validación
+## Por qué existe el gate
 
 Una muestra aleatoria de 50 documentos enriquecidos, revisada caso por caso, encontró **24% de
 error grave** — documentos que mezclaban más de un conflicto real bajo una sola unidad de análisis.
@@ -111,15 +110,20 @@ vez de aceptar cualquier mención. El detalle completo está en `audit/data_qual
 
 ## Cómo se audita el uso de LLMs
 
-Cada extracción pasa por un contrato de esquema versionado con hash-pinning de prompt/schema (para
-detectar cambios silenciosos entre corridas), preflight antes de gastar presupuesto, y ejecución
-incremental con recuperación segura ante caídas. Las citas se verifican como substring literal de
-la fuente antes de aceptarse como evidencia confirmada.
+Cada extracción pasa por un contrato de esquema con hash de prompt y esquema registrado en cada registro, un
+ensayo previo sin gasto, ejecución por olas con tope de costo y recuperación segura ante caídas. Las citas se
+verifican como subcadena literal de la fuente antes de aceptarse; una respuesta pagada que no cumple su contrato
+se cuarentena, nunca se pierde. Ver [estándares](standards.md) (E2, E3, E7, E14).
+
+## Decisiones humanas
+
+Toda decisión (fusionar o separar proyectos, elegir una mención, corregir una unidad de caso) es un dato
+versionado en `config/`, llaveado por identificadores estables y con su evidencia; se valida al cargar y nunca se
+transfiere por parecido de nombres (E5).
 
 ## Validación y estado
 
-Ver `audit/validation_summary.json` para los números exactos (muestra de validación, identidad
-resuelta, integridad de la base) y `audit/data_quality_report.md` para la síntesis narrativa de qué
-se encontró y qué cambió como consecuencia. Las conclusiones analíticas de fondo (más allá de esta
-infraestructura de identidad, que sí está verificada y cerrada) siguen pendientes de los arcos
-sustantivos de análisis — ver `docs/arcos/plan_arcos_analiticos.md`.
+`audit/validation_summary.json` reúne las validaciones con su método, tamaño y límites, y
+`audit/data_quality_report.md` la síntesis de hallazgos. Las cifras vigentes del producto están en el bloque
+generado de [START HERE](../START_HERE.md). Las conclusiones analíticas de fondo siguen pendientes de los arcos
+(ver `docs/arcos/plan_arcos_analiticos.md`).

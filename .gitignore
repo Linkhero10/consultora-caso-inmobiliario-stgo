@@ -44,3 +44,6 @@ tests/test_blind_review_html.py
 
 # Planes de implementacion internos, no forman parte del producto
 docs/superpowers/
+
+.pipeline_state/
+intermediate/

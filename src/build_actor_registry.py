@@ -12,7 +12,7 @@ organizaciones locales ambiguas y terminos genericos para rondas
 posteriores. GENERIC_ACTOR_TERMS (los vecinos, municipio, la
 inmobiliaria...) NUNCA se tocan aqui -- siguen ancladas a su unidad de
 agrupacion (conflict_id/case_id), exactamente como ya funciona en
-build_actor_network_comparison_v1.py, porque esos terminos no son la
+build_actor_network.py, porque esos terminos no son la
 misma entidad entre casos distintos.
 
 ## Esquema
@@ -68,17 +68,18 @@ from pathlib import Path
 import network_common as net
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import INTEGRATION_DIR  # noqa: E402
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "actor_registry_v1_export.json"
+OUTPUT = INTEGRATION_DIR / "actor_registry_export.json"
 
-# [ESTRUCTURA CORREGIDA 2026-09-18, hallazgo bloqueante de la revisión] Cada
+# Cada
 # entidad tiene un 'entity_key' INMUTABLE elegido a mano (nunca deriva de
 # la lista de alias). entity_id = hash('actor', entity_key) -- agregar,
 # quitar o corregir un alias NUNCA cambia el entity_id de una entidad ya
 # publicada, que es precisamente el comportamiento esperado de un
 # registry (los alias crecen con el tiempo, la identidad no).
 # Los alias se normalizan igual que
-# build_actor_network_comparison_v1.normalize_actor_name (lower +
+# build_actor_network.normalize_actor_name (lower +
 # espacios colapsados) antes de compararse.
 ACTOR_ENTITIES: list[dict] = [
     {
@@ -93,7 +94,7 @@ ACTOR_ENTITIES: list[dict] = [
         ],
         "razon": (
             "Expansion literal de sigla -- '(SEA)' es la explicacion parentetica del mismo "
-            "nombre, sin lectura alternativa posible. [Ronda 2, hallazgo de Sol] agregadas 2 "
+            "nombre, sin lectura alternativa posible. [revisión] agregadas 2 "
             "variantes de puntuacion verificadas contra el corpus real (2 ocurrencias cada una): "
             "'Servicio de Evaluacion Ambiental, SEA' y '... SEA' (sin coma) -- mismo patron de "
             "nombre completo seguido de sigla, sin ambiguedad."
@@ -111,7 +112,7 @@ ACTOR_ENTITIES: list[dict] = [
         ],
         "razon": (
             "Expansion literal de sigla, organismo nacional unico (no existe otro CMN regional). "
-            "[Ronda 2, hallazgo de Sol] agregadas 'Consejo de Monumentos' (forma corta, verificada "
+            "[revisión] agregadas 'Consejo de Monumentos' (forma corta, verificada "
             "contra cita real: 'El Consejo de Monumentos, en distintos periodos de gobierno siempre "
             "se nego a proteger...') y 'Consejo Nacional de Monumentos (CMN)' (variante de orden de "
             "palabras con la misma sigla explicita)."
@@ -133,7 +134,7 @@ ACTOR_ENTITIES: list[dict] = [
             "superintendencia de medio ambiente (sma)",
         ],
         "razon": (
-            "Expansion literal de sigla, organismo nacional unico. [Ronda 2, hallazgo de Sol] "
+            "Expansion literal de sigla, organismo nacional unico. [revisión] "
             "agregada 'Superintendencia de Medio Ambiente (SMA)' (sin 'del', con 'de') -- variante "
             "de preposicion con 23 ocurrencias en el corpus real, verificada contra citas ('lo que "
             "fue denunciado ante la Superintendencia de Medio Ambiente (SMA)') que confirman que es "
@@ -155,7 +156,7 @@ ACTOR_ENTITIES: list[dict] = [
             "Expansion literal de sigla + verificado contra citas reales del corpus: 'Ministerio de "
             "Vivienda' sin calificador aparece siempre referido al MINVU nacional (ej. 'la mediacion "
             "del Ministerio de Vivienda', 'Division de Desarrollo Urbano (DDU) del Ministerio de "
-            "Vivienda'), sin lectura alternativa en el corpus. [Ronda 2, hallazgo de Sol] agregadas "
+            "Vivienda'), sin lectura alternativa en el corpus. [revisión] agregadas "
             "'Ministerio de Vivienda (MINVU)' y 'el MINVU' -- mismo patron verificado, sin lectura "
             "alternativa (ej. 'el Minvu esta impulsando una consulta ciudadana...')."
         ),
@@ -174,7 +175,7 @@ ACTOR_ENTITIES: list[dict] = [
         "razon": (
             "Verificado contra citas reales del corpus: 'Contraloria' sin calificador se usa "
             "siempre para el organismo nacional (dictamenes, investigaciones sobre permisos), sin "
-            "otro organismo llamado 'Contraloria' en el corpus. [Ronda 2, hallazgo de Sol] agregadas "
+            "otro organismo llamado 'Contraloria' en el corpus. [revisión] agregadas "
             "'Contraloria General de la Republica (CGR)' (sigla alternativa explicita), 'Contraloria "
             "General' y 'la Contraloria' (formas cortas, verificadas contra citas: 'esta Contraloria "
             "General manifesto...', 'se debera concurrir a la contraloria') y "
@@ -196,7 +197,7 @@ def _normalize(raw: str) -> str:
 
 
 def _stable_entity_id(entity_key: str) -> str:
-    """[CORREGIDO 2026-09-18, hallazgo bloqueante de la revisión] Antes derivaba
+    """Antes derivaba
     del conjunto de alias -- agregar/quitar un alias (el uso normal de un
     registry con el tiempo) cambiaba el entity_id de una entidad ya
     publicada. Ahora deriva SOLO de entity_key, una clave inmutable
@@ -221,7 +222,7 @@ def build_registry() -> tuple[list[dict], list[dict]]:
             raise ValueError(
                 f"'{entity['canonical_label']}': alias {colision} colisiona con GENERIC_ACTOR_TERMS -- "
                 "esos terminos nunca deben fusionarse globalmente, solo quedar anclados a su "
-                "unidad de agrupacion (ver build_actor_network_comparison_v1.py)."
+                "unidad de agrupacion (ver build_actor_network.py)."
             )
         entity_id = _stable_entity_id(entity_key)
         registry_rows.append(
@@ -241,7 +242,7 @@ def build_registry() -> tuple[list[dict], list[dict]]:
                 {
                     "nombre_norm": alias_norm,
                     "entity_id": entity_id,
-                    "fuente": "manual_v1",
+                    "fuente": "manual",
                     "razon": entity["razon"],
                 }
             )
@@ -285,7 +286,7 @@ def main():
     )
     conn.commit()
 
-    # [CORREGIDO 2026-09-18, hallazgo real de la revisión] La cobertura anterior
+    # La cobertura anterior
     # solo contaba enrichment_institution, pero la red ACTOR<->CONFLICT
     # consume 3 fuentes (enrichment_actor, enrichment_institution,
     # actor_second_pass_v2, todas unificadas en actor_event_project_link).
@@ -295,7 +296,7 @@ def main():
     #   cobertura_network_safe: "a que conflictos queda vinculado este
     #     alias en la red conservadora" -> actor_event_project_link_conflict_safe,
     #     que preserva el vinculo EXACTO actor->project_id->conflict_id por fila.
-    # [CORREGIDO 2026-09-18, bug real de la revisión] la primera version de esta
+    # la primera version de esta
     # correccion calculaba conflictos_unicos_safe agregando TODOS los
     # conflictos del documento (via doc_to_conflicts_safe), no solo el
     # conflicto al que esa fila de actor especifica estaba enlazada --
@@ -309,8 +310,8 @@ def main():
     alias_a_entity = {a["nombre_norm"]: a["entity_id"] for a in alias_rows}
     stats_por_entidad: dict[str, dict] = {
         row["entity_id"]: {
-            "n_rows_actor_v3_2": 0,
-            "n_rows_institucion_v3_2": 0,
+            "n_rows_actor_first_pass": 0,
+            "n_rows_institucion_first_pass": 0,
             "n_rows_second_pass": 0,
             "documentos_unicos_corpus": set(),
             "documentos_unicos_safe": set(),
@@ -327,9 +328,9 @@ def main():
             continue
         s = stats_por_entidad[entity_id]
         if source_table == "enrichment_actor":
-            s["n_rows_actor_v3_2"] += 1
+            s["n_rows_actor_first_pass"] += 1
         elif source_table == "enrichment_institution":
-            s["n_rows_institucion_v3_2"] += 1
+            s["n_rows_institucion_first_pass"] += 1
         elif source_table == "actor_second_pass_v2":
             s["n_rows_second_pass"] += 1
         s["documentos_unicos_corpus"].add(document_id)
@@ -355,8 +356,8 @@ def main():
                 "entity_key": row["entity_key"],
                 "alias": alias_de_esta_entidad,
                 "cobertura_corpus": {
-                    "n_rows_actor_v3_2": s["n_rows_actor_v3_2"],
-                    "n_rows_institucion_v3_2": s["n_rows_institucion_v3_2"],
+                    "n_rows_actor_first_pass": s["n_rows_actor_first_pass"],
+                    "n_rows_institucion_first_pass": s["n_rows_institucion_first_pass"],
                     "n_rows_second_pass": s["n_rows_second_pass"],
                     "n_documentos_unicos": len(s["documentos_unicos_corpus"]),
                 },
@@ -382,7 +383,7 @@ def main():
                 "contexto": (
                     "actor_registry/actor_alias v1 -- resolucion conservadora de identidad de "
                     "actor para instituciones nacionales con identidad verificable. Ver docstring "
-                    "de build_actor_registry_v1.py para el criterio de fusion y lo que "
+                    "de build_actor_registry.py para el criterio de fusion y lo que "
                     "deliberadamente queda sin resolver (Corte de Apelaciones/Tribunal Ambiental "
                     "sin sede, DOM/SEREMI sin comuna/region, personas, terminos genericos)."
                 ),

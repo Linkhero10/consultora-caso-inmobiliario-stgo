@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Materializa enrichment v3.3 en un warehouse intermedio (2026-09-26).
+"""Materializa la extraccion por LLM (enrichment) en un warehouse intermedio.
 
-El ETL es determinista y no llama a ninguna API. Copia ``warehouse_v1`` a un
-archivo nuevo y agrega tablas de enrichment sin modificar el warehouse
-historico. Fuente: los 3 archivos de enrichment v3.3 (piloto/calibracion/
-escalamiento, ver src/v3_3_enrichment_source.py) que juntos cubren el 100%
-(934/934) del corpus productivo desde 2026-09-26 -- v3.2
-(``Auditoria/enriquecimiento_v3_2_934/enrichment.jsonl``) queda retirado
-como fuente productiva (se conserva en disco como dato historico, nunca se
-borra, pero ya no es el default de este script).
+El ETL es determinista y no llama a ninguna API. Copia el warehouse base a un archivo nuevo y agrega las
+tablas `enrichment_*` sin modificar el original. Fuente: las corridas de extraccion
+(`intermediate/enrichment/*/enrichment.jsonl`, ver `src/enrichment_source.py`).
 
-v3.3 difiere de v3.2 en un solo campo de shape: ``proyectos_mencionados`` es
-una lista de objetos ``{nombre, case_mention_index, ...}`` en vez de una
-lista de strings -- el resto de los campos del registro (actores,
-instituciones, linea_tiempo, objeto_disputa, etc.) son identicos entre
-versiones. Este ETL persiste ``case_mention_index``/``case_mention_id`` en
-``enrichment_project_mention`` -- antes esa informacion solo existia
-releyendo los JSONL crudos en cada corrida de build_conflicts.py (Fix 1D).
+`proyectos_mencionados` es una lista de objetos `{nombre, case_mention_index, ...}`: el modelo ancla cada
+proyecto a la `case_mention` que lo tiene como objeto. Este ETL persiste `case_mention_index` y
+`case_mention_id` en la MISMA fila de `enrichment_project_mention`, asi que el vinculo mencion -> case_mention
+nace en la extraccion y viaja hasta el conflicto sin ser reconstruido por similitud de texto.
+
+`document_case_unit` (la revision de la unidad de caso de cada documento) es una decision humana, no derivable
+de la extraccion: vive en `config/document_case_unit_review.json` y se carga desde ahi en cada reconstruccion,
+de modo que ninguna corrida depende de una construccion previa.
 """
 
 from __future__ import annotations
@@ -31,20 +27,13 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from v3_3_enrichment_source import load_v3_3_records  # noqa: E402
+from enrichment_source import load_enrichment_records  # noqa: E402
+from paths import BASE_WAREHOUSE_PATH, ENRICHMENT_WAREHOUSE_PATH  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE_DB = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_v1.sqlite"
-DEFAULT_OUTPUT_DB = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "warehouse_enrichment.sqlite"
-# document_case_unit son correcciones MANUALES de Sol (revision humana de
-# unidad de caso), no derivables del enrichment JSONL -- no existen en
-# warehouse_v1.sqlite. Historicamente se agregaban a warehouse_v3_2.sqlite
-# con un script de un solo uso en Trabajo/scripts DESPUES de correr este
-# ETL, un paso tribal no documentado en el pipeline reproducible. Se copian
-# aqui desde el warehouse productivo (fuente actual de esas correcciones)
-# para que este script sea reproducible sin ese paso manual oculto.
-PRODUCTIVE_WAREHOUSE_FOR_CASE_UNIT = PROJECT_ROOT / "data" / "warehouse.sqlite"
-DOCUMENT_CASE_UNIT_DECISIONS_PATH = PROJECT_ROOT / "config" / "document_case_unit_decisions_v1.json"
+DEFAULT_SOURCE_DB = BASE_WAREHOUSE_PATH
+DEFAULT_OUTPUT_DB = ENRICHMENT_WAREHOUSE_PATH
+DOCUMENT_CASE_UNIT_REVIEW_PATH = PROJECT_ROOT / "config" / "document_case_unit_review.json"
 ALLOWED_UNIDAD_CASO_TIPO = frozenset(
     {
         "caso_unico",
@@ -54,84 +43,54 @@ ALLOWED_UNIDAD_CASO_TIPO = frozenset(
         "contexto_sin_caso_individualizable",
     }
 )
+DOCUMENT_CASE_UNIT_COLUMNS = (
+    "document_id", "unidad_caso_tipo", "tiene_error", "correccion_nombre_proyecto",
+    "correccion_proyectos_mencionados_json", "correccion_ubicacion_especifica", "nota_revision", "revisado_por",
+)
 
 
-def load_document_case_unit_decisions(path: Path) -> list[dict]:
-    """Lee las decisiones versionadas sobre unidad_caso_tipo; falla cerrado ante datos incompletos."""
-    if not path.exists():
-        return []
+def load_document_case_unit_review(path: Path) -> list[dict]:
+    """Lee la revision de unidad de caso; falla cerrado ante datos incompletos o inconsistentes."""
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "document_case_unit_decisions_v1":
-        raise ValueError("schema_version de document_case_unit_decisions no reconocido")
-    decisions = payload.get("decisions")
-    if not isinstance(decisions, list):
-        raise ValueError("document_case_unit_decisions.decisions debe ser una lista")
+    if payload.get("schema_version") != "document_case_unit_review":
+        raise ValueError("schema_version de document_case_unit_review no reconocido")
+    rows = payload.get("rows")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("document_case_unit_review.rows debe ser una lista no vacia")
     seen: set[str] = set()
-    for item in decisions:
-        for field in ("document_id", "expected_previous_unidad_caso_tipo", "unidad_caso_tipo", "source_url", "quote", "nota"):
-            if not item.get(field):
-                raise ValueError(f"decision de document_case_unit sin {field!r}: {item.get('document_id')!r}")
-        if item["document_id"] in seen:
-            raise ValueError(f"decision duplicada para {item['document_id']!r}")
-        seen.add(item["document_id"])
-        for field in ("expected_previous_unidad_caso_tipo", "unidad_caso_tipo"):
-            if item[field] not in ALLOWED_UNIDAD_CASO_TIPO:
-                raise ValueError(f"unidad_caso_tipo no permitido: {item[field]!r}")
-    return decisions
+    for item in rows:
+        document_id = item.get("document_id")
+        if not document_id or document_id in seen:
+            raise ValueError(f"document_case_unit_review con document_id vacio o duplicado: {document_id!r}")
+        seen.add(document_id)
+        if item.get("unidad_caso_tipo") not in ALLOWED_UNIDAD_CASO_TIPO:
+            raise ValueError(f"unidad_caso_tipo no permitido: {item.get('unidad_caso_tipo')!r}")
+        if item.get("tiene_error") not in (0, 1):
+            raise ValueError(f"tiene_error debe ser 0 o 1: {document_id!r}")
+        if not item.get("revisado_por"):
+            raise ValueError(f"document_case_unit_review sin revisado_por: {document_id!r}")
+        evidence = item.get("evidence")
+        if evidence is not None and not (evidence.get("source_url") and evidence.get("quote")):
+            raise ValueError(f"evidencia incompleta en document_case_unit_review: {document_id!r}")
+    return rows
 
 
-def apply_document_case_unit_decisions(conn: sqlite3.Connection, decisions: list[dict]) -> int:
-    """Aplica las decisiones de forma idempotente y sin sobrescribir una correccion distinta a la esperada."""
-    applied = 0
-    for item in decisions:
-        row = conn.execute(
-            "SELECT unidad_caso_tipo, nota_sol FROM document_case_unit WHERE document_id = ?",
-            (item["document_id"],),
-        ).fetchone()
-        if row is None:
-            raise ValueError(f"document_id no encontrado en document_case_unit: {item['document_id']!r}")
-        current = row[0]
-        if current == item["unidad_caso_tipo"]:
-            continue
-        if current != item["expected_previous_unidad_caso_tipo"]:
-            raise ValueError(
-                f"document_case_unit {item['document_id']!r} tiene {current!r}; se esperaba "
-                f"{item['expected_previous_unidad_caso_tipo']!r} antes de la decision versionada"
-            )
-        nota = (row[1] + " | " if row[1] else "") + f"[{item['decided_on']}, {item['decided_by']}] {item['nota']}"
-        conn.execute(
-            "UPDATE document_case_unit SET unidad_caso_tipo = ?, nota_sol = ?, revisado_por = ? WHERE document_id = ?",
-            (item["unidad_caso_tipo"], nota, f"decision_versionada_{item['decided_on']}", item["document_id"]),
-        )
-        applied += 1
-    return applied
-
-
-def _copy_document_case_unit(conn: sqlite3.Connection, source_path: Path, decisions: list[dict] | None = None) -> int:
-    """Copia document_case_unit (correcciones de Sol) desde el warehouse
-    productivo, si existe. Devuelve el numero de filas copiadas (0 si la
-    fuente no existe o no tiene la tabla -- nunca aborta, esta tabla es
-    opcional para build_database() en si, pero build_projects.py la exige)."""
-    if not source_path.exists():
-        return 0
-    src_conn = sqlite3.connect(source_path)
-    try:
-        tables = {row[0] for row in src_conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-        if "document_case_unit" not in tables:
-            return 0
-        cols_info = src_conn.execute("PRAGMA table_info(document_case_unit)").fetchall()
-        columns = [c[1] for c in cols_info]
-        rows = src_conn.execute(f"SELECT {','.join(columns)} FROM document_case_unit").fetchall()
-    finally:
-        src_conn.close()
-    if not rows:
-        return 0
-    conn.execute(f"DROP TABLE IF EXISTS document_case_unit")
-    col_defs = ", ".join(f"{c[1]} {c[2]}" + (" PRIMARY KEY" if c[5] else "") for c in cols_info)
-    conn.execute(f"CREATE TABLE document_case_unit ({col_defs})")
-    placeholders = ",".join("?" for _ in columns)
-    conn.executemany(f"INSERT INTO document_case_unit ({','.join(columns)}) VALUES ({placeholders})", rows)
-    apply_document_case_unit_decisions(conn, decisions or [])
+def _load_document_case_unit(conn: sqlite3.Connection, rows: list[dict]) -> int:
+    """Crea `document_case_unit` desde la revision versionada. Devuelve el numero de filas."""
+    known = {row[0] for row in conn.execute("SELECT document_id FROM document")}
+    unknown = [row["document_id"] for row in rows if row["document_id"] not in known]
+    if unknown:
+        raise ValueError(f"document_case_unit_review referencia documentos inexistentes: {unknown[:5]!r}")
+    conn.execute("DROP TABLE IF EXISTS document_case_unit")
+    conn.execute(
+        "CREATE TABLE document_case_unit (document_id TEXT PRIMARY KEY, unidad_caso_tipo TEXT, tiene_error INTEGER, "
+        "correccion_nombre_proyecto TEXT, correccion_proyectos_mencionados_json TEXT, "
+        "correccion_ubicacion_especifica TEXT, nota_revision TEXT, revisado_por TEXT)"
+    )
+    conn.executemany(
+        f"INSERT INTO document_case_unit ({','.join(DOCUMENT_CASE_UNIT_COLUMNS)}) VALUES ({','.join('?' for _ in DOCUMENT_CASE_UNIT_COLUMNS)})",
+        [tuple(row.get(column) for column in DOCUMENT_CASE_UNIT_COLUMNS) for row in rows],
+    )
     return len(rows)
 
 
@@ -291,29 +250,32 @@ def _create_tables(conn: sqlite3.Connection) -> None:
     )
 
 
-def build_database(source_db: Path, output_db: Path, records: dict[str, dict[str, Any]] | None = None) -> dict[str, int]:
-    """Construye el warehouse de enrichment (fuente v3.3) y devuelve conteos auditables.
+def build_database(
+    source_db: Path,
+    output_db: Path,
+    records: dict[str, dict[str, Any]] | None = None,
+    case_unit_rows: list[dict] | None = None,
+) -> dict[str, int]:
+    """Construye el warehouse de enrichment y devuelve conteos auditables.
 
-    ``records`` es dict[url] -> record ya cargado (ver
-    v3_3_enrichment_source.load_v3_3_records()); si se omite, se carga con
-    include_fuera_de_universo=True porque este ETL necesita las 934 filas
-    productivas completas, no solo el subconjunto auditado externamente por
-    Sol (esa distincion solo importa para el backing de CONFLICT en
-    build_conflicts.py, no para materializar el registro de enrichment en si
-    -- el unico documento excluido por defecto en otros consumidores paso
-    las mismas verificaciones automaticas de schema/citas que los otros 933).
+    ``records`` es dict[url] -> registro ya cargado (ver `enrichment_source.load_enrichment_records`); si se omite
+    se carga con include_excluded=True porque este ETL necesita todas las filas, no solo el universo auditado de
+    forma independiente (esa distincion solo importa para el respaldo de CONFLICT en build_conflicts.py: el
+    documento excluido paso las mismas verificaciones automaticas de schema y citas que el resto).
+    ``case_unit_rows`` son las filas de la revision de unidad de caso; si se omite se leen de
+    `config/document_case_unit_review.json`.
     """
     source_db = Path(source_db)
     output_db = Path(output_db)
     if source_db.resolve() == output_db.resolve():
-        raise ValueError("output_db debe ser distinto de source_db; no se sobreescribe warehouse_v1")
+        raise ValueError("output_db debe ser distinto de source_db; no se sobreescribe el warehouse base")
     if not source_db.exists():
         raise FileNotFoundError(source_db)
 
     if records is None:
-        records = load_v3_3_records(include_fuera_de_universo=True)
+        records = load_enrichment_records(include_excluded=True)
     if not records:
-        raise ValueError("No hay registros de enrichment v3.3 para procesar (records vacio).")
+        raise ValueError("No hay registros de enrichment para procesar (records vacio).")
 
     output_db.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(source_db, output_db)
@@ -452,11 +414,9 @@ def build_database(source_db: Path, output_db: Path, records: dict[str, dict[str
         quote = record.get("evidencia_objeto_disputa", "") or ""
         add_evidence("objeto_disputa", 0, quote, record.get("evidencia_objeto_disputa_original_modelo", "") or "", bool(record.get("evidencia_objeto_disputa_verificada")))
 
-    counts["document_case_unit_rows"] = _copy_document_case_unit(
-        conn,
-        PRODUCTIVE_WAREHOUSE_FOR_CASE_UNIT,
-        load_document_case_unit_decisions(DOCUMENT_CASE_UNIT_DECISIONS_PATH),
-    )
+    if case_unit_rows is None:
+        case_unit_rows = load_document_case_unit_review(DOCUMENT_CASE_UNIT_REVIEW_PATH)
+    counts["document_case_unit_rows"] = _load_document_case_unit(conn, case_unit_rows)
 
     conn.commit()
     conn.close()
@@ -471,7 +431,7 @@ def main() -> int:
     try:
         counts = build_database(args.source_db, args.output_db)
     except (OSError, ValueError, json.JSONDecodeError, sqlite3.Error) as exc:
-        print(f"ERROR ETL enrichment v3.3: {exc}", file=sys.stderr)
+        print(f"ERROR ETL enrichment: {exc}", file=sys.stderr)
         return 1
     print(json.dumps({"output_db": str(args.output_db), **counts}, ensure_ascii=False, indent=2))
     return 0

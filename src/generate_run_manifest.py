@@ -1,40 +1,15 @@
 #!/usr/bin/env python3
 """Genera `audit/run_manifest.json` a partir del `data/warehouse.sqlite` REAL.
 
-## Por qué existe este script
+Un manifiesto escrito a mano se desactualiza sin que nada lo note (CI sigue en verde mientras describe el warehouse
+de un commit anterior). Este script lo genera SIEMPRE desde el warehouse vigente y debe ser el ULTIMO paso de toda
+reconstruccion que toque `data/warehouse.sqlite` (`src/rebuild.py` lo garantiza).
+`tests/test_run_manifest.py` falla si el SHA-256 registrado no coincide con el archivo versionado: esa es la garantia
+fuerte de que el manifiesto describe el warehouse que se esta viendo.
 
-Hasta 2026-09-23, `audit/run_manifest.json` se editaba a mano en cada ronda
-de Fix 1A/1B, y quedó desactualizado dos veces seguidas: describía el
-warehouse de un commit anterior mientras `main` ya llevaba varios commits
-de avance (encontrado por revisión externa). El problema no era que el
-warehouse estuviera corrupto -- CI seguía en verde -- sino que un tercero
-que clona el repo no podía verificar que el manifiesto describe el
-`data/warehouse.sqlite` que está viendo. Esto choca directamente con el
-principio de trazabilidad que rige el resto del proyecto.
-
-Este script debe ser el ÚLTIMO paso de cualquier secuencia de reconstrucción
-que toque `data/warehouse.sqlite` (build_projects.py, resolve_project_review.py,
-build_conflicts.py, build_geography.py, build_geography_manzana.py, ...) --
-nunca antes. `tests/test_run_manifest.py::test_manifest_matches_current_warehouse`
-falla en CI si el manifiesto committeado no coincide con el warehouse
-committeado, para que esta desincronización no pueda volver a colarse sin
-que la suite lo note.
-
-## `parent_commit_at_generation` vs. `release_commit` (corregido 2026-09-23)
-
-Una primera versión de este script solo escribía un campo `build_commit` con
-`git rev-parse HEAD` al momento de generar el manifiesto -- pero ese HEAD es
-el commit PADRE (el estado del repo antes de que este warehouse regenerado
-se commitee), cuyo propio `data/warehouse.sqlite` en Git LFS puede tener un
-SHA-256 distinto al que este manifiesto registra. Un revisor externo señaló
-correctamente que eso deja ambiguo a qué commit describe realmente el
-manifiesto. Ahora se registran dos campos separados:
-`parent_commit_at_generation` (informativo, el HEAD real al generar) y
-`release_commit` (el commit que publicó por primera vez este warehouse y el
-manifiesto generado para él; se completa en un commit de seguimiento cuando
-el commit de publicación ya existe, evitando una referencia autorreferencial).
-Ninguno de los dos es lo que CI verifica
--- la garantía fuerte es el SHA-256 del warehouse, no el commit.
+`parent_commit_at_generation` (HEAD al generar) y `release_commit` (el commit que publico estos artefactos; se completa
+en un commit de seguimiento para evitar una referencia autorreferencial) son informativos: ninguno lo verifica CI.
+La version de la release (`release_version`) sale de `pyproject.toml`.
 """
 
 from __future__ import annotations
@@ -49,6 +24,7 @@ from pathlib import Path
 from typing import Any
 
 from historical_case_publication_gate import require_conflict_publication_ready
+from release_info import release_version
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
@@ -56,13 +32,14 @@ MANIFEST_PATH = PROJECT_ROOT / "audit" / "run_manifest.json"
 BACKING_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
 HISTORICAL_CASE_PREFLIGHT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
 CONFLICT_AUDIT_REPORT_PATH = BACKING_REPORT_PATH
-CLASSIFIED_63_PATH = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+CONFLICT_UNIT_REVIEW_PATH = PROJECT_ROOT / "config" / "conflict_unit_review.json"
 CONFLICT_BUILDER_PATH = PROJECT_ROOT / "src" / "build_conflicts.py"
 
 # Tablas cuyo conteo se registra si existen -- el manifiesto no asume un
 # esquema fijo, porque distintas fases agregan tablas nuevas (Fase C agrego
 # manzana_censal, por ejemplo).
 TRACKED_TABLES = [
+    "conflict_scope",
     "document", "project", "conflict", "conflict_case", "conflict_project",
     "document_conflict", "conflict_relation", "conflict_evidence_backing",
     "actor_registry", "actor_alias", "actor_event_project_link",
@@ -122,7 +99,7 @@ def generate(
             warehouse_path,
             HISTORICAL_CASE_PREFLIGHT_PATH,
             CONFLICT_AUDIT_REPORT_PATH,
-            CLASSIFIED_63_PATH,
+            CONFLICT_UNIT_REVIEW_PATH,
             CONFLICT_BUILDER_PATH,
         )
 
@@ -142,10 +119,6 @@ def generate(
     if BACKING_REPORT_PATH.exists():
         backing_report = json.loads(BACKING_REPORT_PATH.read_text(encoding="utf-8"))
         detector_versions["conflict_evidence_backing"] = {
-            # Fix 1D (2026-09-24): mas de un detector coexiste en la misma
-            # tabla (ver backing_rows_by_detector en el reporte) -- el campo
-            # singular "detector_version" queda como el mas antiguo/original
-            # por compatibilidad, pero "all" es la lista real vigente.
             "detector_version": backing_report.get("detector_version"),
             "all_detector_versions": backing_report.get("detector_versions", [backing_report.get("detector_version")]),
             "generated_from_warehouse_sha256": backing_report.get("warehouse_sha256"),
@@ -154,6 +127,7 @@ def generate(
 
     manifest = {
         "schema_version": "2.0",
+        "release_version": release_version(),
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "generator": "src/generate_run_manifest.py",
         "warehouse": {
@@ -170,28 +144,12 @@ def generate(
             "ci_workflow": ".github/workflows/tests.yml",
             "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui.",
         },
-        # Dos campos de commit distintos y deliberadamente separados
-        # (hallazgo real de revision externa, 2026-09-23): "parent_commit_at_generation"
-        # es el HEAD real en el momento en que este script corrio (el commit
-        # SOBRE el que se reconstruyo el warehouse, ya en el repo) -- puede
-        # tener un objeto LFS de warehouse.sqlite DISTINTO al sha256 de
-        # arriba, precisamente porque este manifiesto describe un warehouse
-        # regenerado que todavia no esta committeado en ese momento. No usar
-        # este campo para verificar que sha256 corresponde a un commit dado.
-        # "release_commit" identifica el commit que primero publico los
-        # artefactos descritos. Se completa en un commit de seguimiento,
-        # evitando una referencia autorreferencial. El SHA-256 del warehouse
-        # es la unica garantia
-        # fuerte; ambos campos de commit son informativos, no verificados por CI.
+        # Informativos (ver docstring del modulo); la garantia fuerte es el SHA-256 del warehouse.
         "parent_commit_at_generation": _git_head(),
         "release_commit": release_commit,
         "note": (
-            "Este manifiesto se regenera con src/generate_run_manifest.py contra el warehouse "
-            "vigente en cada ronda de reconstruccion -- nunca se edita a mano. "
-            "tests/test_run_manifest.py verifica en CI que el SHA-256 aqui registrado coincide "
-            "exactamente con data/warehouse.sqlite tal como esta committeado -- esa es la "
-            "garantia fuerte, no los campos de commit (ver comentario junto a parent_commit_at_generation "
-            "y release_commit en src/generate_run_manifest.py)."
+            "Manifiesto generado por src/generate_run_manifest.py contra el warehouse vigente; nunca se edita a mano. "
+            "tests/test_run_manifest.py verifica en CI que el SHA-256 registrado coincide con data/warehouse.sqlite."
         ),
     }
     manifest_path.parent.mkdir(parents=True, exist_ok=True)

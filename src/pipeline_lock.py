@@ -13,7 +13,7 @@ huerfano indefinidamente sin que nadie se entere (igual se loguea si
 alguna vez un lock queda mas viejo que LOCK_STALE_HOURS -- no se rompe
 automatico, requiere revision manual antes de borrarlo).
 
-Fix 2026-09-12 (auditoria adversarial de Codex, xhigh, tercera ronda de
+Fix 2026-09-12 (auditoria adversarial de la revisión, xhigh, tercera ronda de
 QA -- 2 bugs reales encontrados en este mismo archivo):
 1. El archivo .lock se creaba y LUEGO se llamaba _update_run_state("running")
    FUERA de cualquier try/finally -- si esa llamada fallaba (disco lleno,
@@ -48,9 +48,10 @@ from pathlib import Path
 logger = logging.getLogger("pipeline_lock")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-LOCKS_DIR = PROJECT_ROOT / "_FARO" / "memory-bank" / "locks"
-RUN_STATE_PATH = PROJECT_ROOT / "_FARO" / "memory-bank" / "run_state.json"
-RUN_STATE_MUTEX_PATH = PROJECT_ROOT / "_FARO" / "memory-bank" / "run_state.mutex"
+from paths import RUN_STATE_DIR  # noqa: E402
+LOCKS_DIR = RUN_STATE_DIR / "locks"
+RUN_STATE_PATH = RUN_STATE_DIR / "run_state.json"
+RUN_STATE_MUTEX_PATH = RUN_STATE_DIR / "run_state.mutex"
 LOCK_STALE_HOURS = 4
 RUN_STATE_MUTEX_MAX_WAIT_S = 5.0
 
@@ -215,7 +216,7 @@ def read_jsonl_tolerant(path: Path, *, fail_on_invalid: bool = False) -> list[di
     """Lee un JSONL saltando lineas que no parsean (ej. una ultima linea
     truncada por un crash a mitad de un write() sin fsync/reemplazo
     atomico) en vez de que json.loads() reviente toda la lectura. Fix
-    2026-09-12 (Codex, hallazgo #9): los manifests/eventos del pipeline se
+    2026-09-12 (la revisión, hallazgo #9): los manifests/eventos del pipeline se
     escriben con flush() pero sin fsync() ni archivo-temporal+replace, y
     los lectores (already_classified_urls, already_processed_urls, el
     replay de eventos de dedupe, etc.) hacian json.loads() de cada linea
@@ -260,7 +261,7 @@ def read_run_state(etapa: str | None = None) -> dict:
 
 def upstream_stage_is_running(etapa: str) -> bool:
     """Chequeo blando de coordinacion productor/consumidor (fix 2026-09-12,
-    hallazgo de Codex: los locks por etapa no impiden que una etapa lea
+    hallazgo de la revisión: los locks por etapa no impiden que una etapa lea
     mientras la etapa anterior todavia esta escribiendo -- ej. classify_luna
     corriendo mientras dedupe_fulltext todavia esta reescribiendo su vista
     materializada). No es un lock distribuido real, es una senal para que
@@ -306,7 +307,7 @@ def acquire_lock(etapa: str, detail: dict | None = None):
     except FileExistsError as exc:
         raise LockBusyError(f"Etapa '{etapa}' ya tiene un lock activo (carrera detectada al crear) -- sale.") from exc
 
-    # Fix 2026-09-12 (Codex, hallazgo #6): TODO el ciclo de vida vive ahora
+    # Fix 2026-09-12 (la revisión, hallazgo #6): TODO el ciclo de vida vive ahora
     # dentro de un unico try/finally -- antes, si _update_run_state("running")
     # fallaba aca fuera, el lock quedaba huerfano porque el finally de mas
     # abajo nunca se ejecutaba.

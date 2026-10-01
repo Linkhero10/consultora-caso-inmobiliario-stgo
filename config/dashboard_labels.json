@@ -177,11 +177,11 @@
   },
   "conflict_origen": {
     "trivial_single_case": "Caso único",
-    "conflict_unit_63_evidence": "Agrupado por evidencia revisada"
+    "conflict_unit_review_evidence": "Agrupado por evidencia revisada"
   },
   "conflict_confidence": {
     "baja_derivado_mecanicamente": "Baja (derivado mecánicamente)",
-    "alta_revisado_por_sol": "Alta (revisión manual)"
+    "alta_revisado_manualmente": "Alta (revisión manual)"
   },
   "sentiment": {
     "positivo": "Positivo",

@@ -1,0 +1,1891 @@
+{
+  "schema_version": "conflict_merge_decisions",
+  "description": "Pares de proyectos cuyos conflictos son la MISMA disputa del mundo real (mismo sitio, permiso, fallo o litigio con nombres distintos, o componentes de una misma controversia). Cada decision cita evidencia literal. Solo UNE conflictos; no cambia la identidad de los proyectos. Se adjudicaron 144 parejas candidatas (senales: respaldo compartido, documentos compartidos, etiquetas parecidas); las no incluidas aqui se resolvieron como 'distintos' o 'no decidible'.",
+  "decisions": [
+    {
+      "decision_id": "merge:f0636c7ee9b05d3b",
+      "project_ids": [
+        "7db9ae7a5b073147df95ebdd",
+        "927308fe4981d49355adfae0"
+      ],
+      "project_names": {
+        "927308fe4981d49355adfae0": "Carlos Valdovinos 3015",
+        "7db9ae7a5b073147df95ebdd": "Carlos Valdovinos 3017"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16069 para el sitio de 9.020 m2 con dirección Carlos Valdovinos 3015"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:aed89a18f7c43ecf",
+      "project_ids": [
+        "927308fe4981d49355adfae0",
+        "b2376dec52d5432767c0f3a5"
+      ],
+      "project_names": {
+        "927308fe4981d49355adfae0": "Carlos Valdovinos 3015",
+        "b2376dec52d5432767c0f3a5": "Carlos Valdovinos 3005"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16069 para el sitio de 9.020 m2 con dirección Carlos Valdovinos 3015"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "el permiso Nº 16074 para el sitio de 9.107 m2 con dirección en Carlos Valdovinos 3005"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:ef108117b5734948",
+      "project_ids": [
+        "7db9ae7a5b073147df95ebdd",
+        "b2376dec52d5432767c0f3a5"
+      ],
+      "project_names": {
+        "7db9ae7a5b073147df95ebdd": "Carlos Valdovinos 3017",
+        "b2376dec52d5432767c0f3a5": "Carlos Valdovinos 3005"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "el permiso Nº 16074 para el sitio de 9.107 m2 con dirección en Carlos Valdovinos 3005"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:5707cfb377b5ca54",
+      "project_ids": [
+        "927308fe4981d49355adfae0",
+        "b7ba8a7f3a40b7e7ac8f5a4d"
+      ],
+      "project_names": {
+        "927308fe4981d49355adfae0": "Carlos Valdovinos 3015",
+        "b7ba8a7f3a40b7e7ac8f5a4d": "Parque Las Moscas"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16069 para el sitio de 9.020 m2 con dirección Carlos Valdovinos 3015"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El destino de gueto vertical del parque Las Moscas"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:0f8ea29160c52c1b",
+      "project_ids": [
+        "7db9ae7a5b073147df95ebdd",
+        "b7ba8a7f3a40b7e7ac8f5a4d"
+      ],
+      "project_names": {
+        "7db9ae7a5b073147df95ebdd": "Carlos Valdovinos 3017",
+        "b7ba8a7f3a40b7e7ac8f5a4d": "Parque Las Moscas"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El destino de gueto vertical del parque Las Moscas"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8a50fb0ed6881b47",
+      "project_ids": [
+        "b2376dec52d5432767c0f3a5",
+        "b7ba8a7f3a40b7e7ac8f5a4d"
+      ],
+      "project_names": {
+        "b2376dec52d5432767c0f3a5": "Carlos Valdovinos 3005",
+        "b7ba8a7f3a40b7e7ac8f5a4d": "Parque Las Moscas"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los tres permisos (3017, 3015, 3005) son de un mismo sitio subdividido, el Parque Las Moscas, y los documentos los tratan como una sola controversia (invalidacion de permisos por 4.200 viviendas).",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "obtuvo 3 permisos de edificación"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El terreno tiene 27.500 m2 y como dirección la calle Carlos Valdovinos 3017-3101"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "el permiso Nº 16074 para el sitio de 9.107 m2 con dirección en Carlos Valdovinos 3005"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El destino de gueto vertical del parque Las Moscas"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:f18c1dac9689a992",
+      "project_ids": [
+        "b9f01557c70c83216d597e46",
+        "dd5eab3f6f39e9b0f9e53f65"
+      ],
+      "project_names": {
+        "dd5eab3f6f39e9b0f9e53f65": "Gran Estación",
+        "b9f01557c70c83216d597e46": "Jardín Centro"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Gran Estacion y Jardin Centro, de la misma inmobiliaria, son tratados en la nota como objeto de un unico recurso de proteccion rechazado por la Corte.",
+      "evidence": [
+        {
+          "document_id": "1106ddb3e1e50aa2f515c93ffc12ce4d747b572f81a39287be57a19c3801a8be",
+          "cita": "Se trata de Gran Estación y Jardín Centro, nuevos proyectos a cargo de la Inmobiliaria e Inversiones Su Ksa"
+        },
+        {
+          "document_id": "1106ddb3e1e50aa2f515c93ffc12ce4d747b572f81a39287be57a19c3801a8be",
+          "cita": "cuyo objetivo era paralizar las construcciones de más guetos verticales en dicha comuna"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:26cc6100433dec5a",
+      "project_ids": [
+        "0a9d6730e059f72c2cdec2d8",
+        "38869edfac45c59cf53fc504"
+      ],
+      "project_names": {
+        "0a9d6730e059f72c2cdec2d8": "Recreo",
+        "38869edfac45c59cf53fc504": "Alto Los Nogales"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia del Grupo BIBA contra el DOM de Estacion Central por bloquear permisos y recepcion final de los 'edificios fantasmas' (Alto Los Nogales, torre Federico Scotto, Recreo 321), tratada por los documentos como un solo reclamo ante la Seremi/Contraloria.",
+      "evidence": [
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "acusan a la municipalidad de negarse a aprobar modificaciones de permisos de edificación y la recepción final de tres proyectos ya terminados en la comuna"
+        },
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "cita": "Alto Los Nogales, dos proyectos en calle Federico Scotto, y Recreo 321"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "El tercer proyecto, Recreo 321, bajó de 36 a 31 pisos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:af55dfedac5ed849",
+      "project_ids": [
+        "0a9d6730e059f72c2cdec2d8",
+        "29a897897bbaa26923fa7261"
+      ],
+      "project_names": {
+        "0a9d6730e059f72c2cdec2d8": "Recreo",
+        "29a897897bbaa26923fa7261": "dos proyectos en calle Federico Scotto"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia del Grupo BIBA contra el DOM de Estacion Central por bloquear permisos y recepcion final de los 'edificios fantasmas' (Alto Los Nogales, torre Federico Scotto, Recreo 321), tratada por los documentos como un solo reclamo ante la Seremi/Contraloria.",
+      "evidence": [
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "acusan a la municipalidad de negarse a aprobar modificaciones de permisos de edificación y la recepción final de tres proyectos ya terminados en la comuna"
+        },
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "cita": "Alto Los Nogales, dos proyectos en calle Federico Scotto, y Recreo 321"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "La otra torre, en la calle Federico Scotto, disminuyó su altura de 42 a 36 pisos."
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "El tercer proyecto, Recreo 321, bajó de 36 a 31 pisos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:6dcf83b90dade298",
+      "project_ids": [
+        "29a897897bbaa26923fa7261",
+        "38869edfac45c59cf53fc504"
+      ],
+      "project_names": {
+        "38869edfac45c59cf53fc504": "Alto Los Nogales",
+        "29a897897bbaa26923fa7261": "dos proyectos en calle Federico Scotto"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia del Grupo BIBA contra el DOM de Estacion Central por bloquear permisos y recepcion final de los 'edificios fantasmas' (Alto Los Nogales, torre Federico Scotto, Recreo 321), tratada por los documentos como un solo reclamo ante la Seremi/Contraloria.",
+      "evidence": [
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "acusan a la municipalidad de negarse a aprobar modificaciones de permisos de edificación y la recepción final de tres proyectos ya terminados en la comuna"
+        },
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "cita": "Alto Los Nogales, dos proyectos en calle Federico Scotto, y Recreo 321"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "La otra torre, en la calle Federico Scotto, disminuyó su altura de 42 a 36 pisos."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8d03a41d93d7b846",
+      "project_ids": [
+        "0a9d6730e059f72c2cdec2d8",
+        "edbc98741092bc75ede6f2f1"
+      ],
+      "project_names": {
+        "0a9d6730e059f72c2cdec2d8": "Recreo",
+        "edbc98741092bc75ede6f2f1": "torre en la calle Federico Scotto"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia del Grupo BIBA contra el DOM de Estacion Central por bloquear permisos y recepcion final de los 'edificios fantasmas' (Alto Los Nogales, torre Federico Scotto, Recreo 321), tratada por los documentos como un solo reclamo ante la Seremi/Contraloria.",
+      "evidence": [
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "acusan a la municipalidad de negarse a aprobar modificaciones de permisos de edificación y la recepción final de tres proyectos ya terminados en la comuna"
+        },
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "cita": "Alto Los Nogales, dos proyectos en calle Federico Scotto, y Recreo 321"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "La otra torre, en la calle Federico Scotto, disminuyó su altura de 42 a 36 pisos."
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "El tercer proyecto, Recreo 321, bajó de 36 a 31 pisos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:e82c7275520fd733",
+      "project_ids": [
+        "38869edfac45c59cf53fc504",
+        "edbc98741092bc75ede6f2f1"
+      ],
+      "project_names": {
+        "38869edfac45c59cf53fc504": "Alto Los Nogales",
+        "edbc98741092bc75ede6f2f1": "torre en la calle Federico Scotto"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia del Grupo BIBA contra el DOM de Estacion Central por bloquear permisos y recepcion final de los 'edificios fantasmas' (Alto Los Nogales, torre Federico Scotto, Recreo 321), tratada por los documentos como un solo reclamo ante la Seremi/Contraloria.",
+      "evidence": [
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "acusan a la municipalidad de negarse a aprobar modificaciones de permisos de edificación y la recepción final de tres proyectos ya terminados en la comuna"
+        },
+        {
+          "document_id": "1835204121556a268e3da34174a394ae2581105c14428a504807639603b1aab2",
+          "cita": "Alto Los Nogales, dos proyectos en calle Federico Scotto, y Recreo 321"
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "Dos de las torres esperan la aprobación de modificaciones de permisos de edificación."
+        },
+        {
+          "document_id": "92d8ba8594bbba178986d3fab0bd678c6afe7f64b64fc825d41d4a19780856cc",
+          "cita": "La otra torre, en la calle Federico Scotto, disminuyó su altura de 42 a 36 pisos."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:697d40653fdebd2a",
+      "project_ids": [
+        "434b6afb8a8943234c6588ce",
+        "79c81956983e6859e4215ffd"
+      ],
+      "project_names": {
+        "79c81956983e6859e4215ffd": "calle Constantino N°59",
+        "434b6afb8a8943234c6588ce": "calle Constantino N°105"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Un solo reclamo de ilegalidad (rol 81.065-2021) contra dos resoluciones que invalidaron los permisos de los edificios de Constantino 59 y 105.",
+      "evidence": [
+        {
+          "document_id": "55cb55c15b0c5cb00174ca9e41922ad304ba6bd2fb1c915af56fc99594e862a4",
+          "cita": "N°59 y Constantino N°105, ambos en la señalada comuna."
+        },
+        {
+          "document_id": "55cb55c15b0c5cb00174ca9e41922ad304ba6bd2fb1c915af56fc99594e862a4",
+          "cita": "2017, los que a su vez habían autorizado la construcción"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:f29abdd61787bc74",
+      "project_ids": [
+        "1aaf590906e791fa2c471fda",
+        "77f2881285afeab182ebea1e"
+      ],
+      "project_names": {
+        "1aaf590906e791fa2c471fda": "Lote 1-3 de Vicuña Mackenna Poniente 7210",
+        "77f2881285afeab182ebea1e": "Lote 1-1 Vicuña Mackenna Poniente N°7210"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Lote 1-3 y lote 1-1 comparten la misma direccion, Vicuna Mackenna Poniente 7210 (antigua sede municipal), vendida a la inmobiliaria Pilares; el articulo habla de un solo inmueble emblematico. Confianza moderada: ventas en anos distintos.",
+      "evidence": [
+        {
+          "document_id": "a4bafc93e62d6371db5b294711a6b7f6846db829d78124c6ee0130d06db7384c",
+          "cita": "el Lote 1-3 de Vicuña Mackenna Poniente 7210"
+        },
+        {
+          "document_id": "a4bafc93e62d6371db5b294711a6b7f6846db829d78124c6ee0130d06db7384c",
+          "cita": "el Lote 1-1 Vicuña Mackenna Poniente N°7210"
+        },
+        {
+          "document_id": "a4bafc93e62d6371db5b294711a6b7f6846db829d78124c6ee0130d06db7384c",
+          "cita": "el decreto N°1559 que autoriza la venta del terreno de Vicuña Mackenna Poniente 7210 a la inmobiliaria Pilares"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:650d98d210f810b8",
+      "project_ids": [
+        "958942bc92a109937f44df63",
+        "cfd6d9630e4e9aca4b3f9a2b"
+      ],
+      "project_names": {
+        "958942bc92a109937f44df63": "edificio protegido en la esquina de Morandé con Rosas",
+        "cfd6d9630e4e9aca4b3f9a2b": "2 torres de 35 pisos en calle Morandé, entre Rosas y Santo Domingo"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El edificio protegido de Morandé con Rosas es uno de los predios fusionados del permiso de las dos torres de 35 pisos; la columna trata ambos como una sola controversia por el permiso N° 13.972 y la demolicion.",
+      "evidence": [
+        {
+          "document_id": "70f7618164c8798e4159d09004dd2f59e7d2a0b54e702e7903577daff9ea976c",
+          "cita": "localizado en la esquina sur-poniente de las calles Morandé con Rosas"
+        },
+        {
+          "document_id": "70f7618164c8798e4159d09004dd2f59e7d2a0b54e702e7903577daff9ea976c",
+          "cita": "para construir 2 torres de 35 pisos cada una en toda la extensión de la calle Morandé, entre las calles Rosas y Santo Domingo"
+        },
+        {
+          "document_id": "70f7618164c8798e4159d09004dd2f59e7d2a0b54e702e7903577daff9ea976c",
+          "cita": "Uno de los terrenos era aquel en donde se sitúa hasta el día de hoy el edificio de la discordia."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:5053d36e75bd11d3",
+      "project_ids": [
+        "23d46d8eb98ed64f8896fb01",
+        "c9ca35ed12c59d2bfe87e03a"
+      ],
+      "project_names": {
+        "23d46d8eb98ed64f8896fb01": "calle Rosal 377",
+        "c9ca35ed12c59d2bfe87e03a": "calle Rosal 358-360"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Un unico recurso de proteccion contra la declaratoria de conservacion historica de ambos inmuebles (Rosal 358-360 y 377).",
+      "evidence": [
+        {
+          "document_id": "90ee6ab4fef7e76dd8ae9aa1a7f98f0c2154e377fd3b2bccf405510548c158e9",
+          "cita": "ubicados en calle Rosal 358-360 y 377"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:b700d09377c57ffe",
+      "project_ids": [
+        "29f501a90711537ce8851efe",
+        "2a928d93ec97331e7b4bb239"
+      ],
+      "project_names": {
+        "29f501a90711537ce8851efe": "Sheraton Santiago",
+        "2a928d93ec97331e7b4bb239": "Anteproyecto en terrenos del hotel Sheraton (Emeterio Larraín Bunster 0390 y Av El Cerro 1745)"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El anteproyecto aprobado en los terrenos del hotel Sheraton es el proyecto del grupo Alcazar sobre el Sheraton Santiago; mismo sitio y misma denuncia vecinal.",
+      "evidence": [
+        {
+          "document_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63",
+          "cita": "en los terrenos del hotel Sheraton"
+        },
+        {
+          "document_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63",
+          "cita": "desde que compramos Sheraton Santiago, nuestro plan ha sido volver a poner al hotel al nivel de excelencia que siempre tuvo"
+        },
+        {
+          "document_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63",
+          "cita": "Parte de esto incluye el uso de un porcentaje de la constructibilidad del terreno con proyectos que potencien el hotel y el barrio"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:081f7e668ced7cb4",
+      "project_ids": [
+        "a812c5dd74897808e543d008",
+        "c66077be8671b85a19db4865"
+      ],
+      "project_names": {
+        "c66077be8671b85a19db4865": "Torre Lote 4",
+        "a812c5dd74897808e543d008": "Conjunto Armónico Bellavista"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Las torres Lote 3 y Lote 4 son partes del Conjunto Armonico Bellavista y el fallo confirma un unico decreto de demolicion de Recoleta sobre ambas.",
+      "evidence": [
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "dispuso la demolición de dos torres del"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "la Torre Lote 3, ubicada en calle Dardignac 44, y de la Torre Lote 4, ubicada en Bellavista 47"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "Ambas corresponden a un proyecto inmobiliario desarrollado y construido por la Universidad San Sebastián."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:ab69faa0fe60f41a",
+      "project_ids": [
+        "09438c84f8a77a93dd3ee648",
+        "c66077be8671b85a19db4865"
+      ],
+      "project_names": {
+        "c66077be8671b85a19db4865": "Torre Lote 4",
+        "09438c84f8a77a93dd3ee648": "Torre Lote 3"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Las torres Lote 3 y Lote 4 son partes del Conjunto Armonico Bellavista y el fallo confirma un unico decreto de demolicion de Recoleta sobre ambas.",
+      "evidence": [
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "dispuso la demolición de dos torres del"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "la Torre Lote 3, ubicada en calle Dardignac 44, y de la Torre Lote 4, ubicada en Bellavista 47"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "Ambas corresponden a un proyecto inmobiliario desarrollado y construido por la Universidad San Sebastián."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:0d97a731613e61c7",
+      "project_ids": [
+        "09438c84f8a77a93dd3ee648",
+        "a812c5dd74897808e543d008"
+      ],
+      "project_names": {
+        "a812c5dd74897808e543d008": "Conjunto Armónico Bellavista",
+        "09438c84f8a77a93dd3ee648": "Torre Lote 3"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Las torres Lote 3 y Lote 4 son partes del Conjunto Armonico Bellavista y el fallo confirma un unico decreto de demolicion de Recoleta sobre ambas.",
+      "evidence": [
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "dispuso la demolición de dos torres del"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "la Torre Lote 3, ubicada en calle Dardignac 44, y de la Torre Lote 4, ubicada en Bellavista 47"
+        },
+        {
+          "document_id": "f85e30ab29e0206f55f897e0154bfaf6678bbbdd8b75c59e2b2c41d0155c2f86",
+          "cita": "Ambas corresponden a un proyecto inmobiliario desarrollado y construido por la Universidad San Sebastián."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8890f75dc24fd0ba",
+      "project_ids": [
+        "7de57b31a4d37b73f9da9ad4",
+        "880791276d60dd10178f4b86"
+      ],
+      "project_names": {
+        "7de57b31a4d37b73f9da9ad4": "Venda Sexy",
+        "880791276d60dd10178f4b86": "Memorial contra la Violencia Política Sexual"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El ex centro de detencion Venda Sexy y el Memorial contra la Violencia Politica Sexual son el mismo sitio de memoria y su puesta en valor, tratados como un unico caso.",
+      "evidence": [
+        {
+          "document_id": "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d",
+          "cita": "Un segundo caso es el ex centro de detención la"
+        },
+        {
+          "document_id": "26dcb10f3b8e5cb97a2655646c9ad265e4bea3c9da6a628ed90e8f3cdc18fc8d",
+          "cita": "a través de la creación de un Memorial contra la Violencia Política Sexual"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:2ff829fdf59c0370",
+      "project_ids": [
+        "008d2f365c67d75ec7b3e30a",
+        "2cfcdb67a6274db8af9377f6"
+      ],
+      "project_names": {
+        "2cfcdb67a6274db8af9377f6": "Alto Las Condes",
+        "008d2f365c67d75ec7b3e30a": "Alto Las Condes 2"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El proyecto 'Alto Las Condes' de C45 es en realidad Alto Las Condes 2 (terreno de Cencosud en Kennedy 8950, frente al mall); mismo permiso y mismo litigio con Vitacura.",
+      "evidence": [
+        {
+          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+          "cita": "Alto Las Condes 2, que se ubicaría en un terreno adquirido por el conglomerado justo frente al mall del mismo nombre"
+        },
+        {
+          "document_id": "b8301c5eaab3f8accdb2be481d80414cfca035d10580300fc6493e53619f2a7b",
+          "cita": "uno de Cencosud del año 2000 para un mall en Presidente Kennedy 8950, enfrente del mall Alto Las Condes"
+        },
+        {
+          "document_id": "4c0cccf40e5138d2148aaff53c413924b9b42be75fd82b9ef57842dbcf629533",
+          "cita": "ubicado en la avenida Kennedy 8950"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8e3528dd09304711",
+      "project_ids": [
+        "124a6f29f9096a46e6117ed7",
+        "9340e0affcfabb6aaaf677af"
+      ],
+      "project_names": {
+        "9340e0affcfabb6aaaf677af": "Museo Memorial Villa San Luis",
+        "124a6f29f9096a46e6117ed7": "Lote 18"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Villa San Luis (Villa Ministro Carlos Cortés), el Lote 18/18-A/18-A1 y los blocks 14-15 son partes del mismo conflicto: demolicion y declaratoria de monumento sobre los ultimos bloques de la villa, frente a la inmobiliaria duena del lote.",
+      "evidence": [
+        {
+          "document_id": "0eb9dd292cda1b1ca2d1c40c7d64d66c34ab9c48028f779a4a18611e08bf81e0",
+          "cita": "declaró como monumento histórico el mencionado conjunto habitacional"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "cita": "decidiendo aprobar la solicitud de declaratoria como Monumento Nacional del Lote 18-A1 del complejo"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "cita": "las 1.038 viviendas sociales que contemplaba la en ese entonces Villa Ministro Carlos Cortés"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:77dc0a9da2f0a749",
+      "project_ids": [
+        "9340e0affcfabb6aaaf677af",
+        "9f5f45af2e6cd94f4462deaf"
+      ],
+      "project_names": {
+        "9340e0affcfabb6aaaf677af": "Museo Memorial Villa San Luis",
+        "9f5f45af2e6cd94f4462deaf": "Lote 18-A"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Villa San Luis (Villa Ministro Carlos Cortés), el Lote 18/18-A/18-A1 y los blocks 14-15 son partes del mismo conflicto: demolicion y declaratoria de monumento sobre los ultimos bloques de la villa, frente a la inmobiliaria duena del lote.",
+      "evidence": [
+        {
+          "document_id": "0eb9dd292cda1b1ca2d1c40c7d64d66c34ab9c48028f779a4a18611e08bf81e0",
+          "cita": "declaró como monumento histórico el mencionado conjunto habitacional"
+        },
+        {
+          "document_id": "671ee83be0a903e9e02e2c6caaf7aae1bbd522404cd0231368509947d979e6c0",
+          "cita": "solicito la declaratoria de Monumento Histórico Nacional, del Lote 18, de Villa San Luis de las Condes, que comprende cuatro edificios deshabitados"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "cita": "decidiendo aprobar la solicitud de declaratoria como Monumento Nacional del Lote 18-A1 del complejo"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:01fe080c4cf8ad20",
+      "project_ids": [
+        "124a6f29f9096a46e6117ed7",
+        "9f5f45af2e6cd94f4462deaf"
+      ],
+      "project_names": {
+        "124a6f29f9096a46e6117ed7": "Lote 18",
+        "9f5f45af2e6cd94f4462deaf": "Lote 18-A"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Villa San Luis (Villa Ministro Carlos Cortés), el Lote 18/18-A/18-A1 y los blocks 14-15 son partes del mismo conflicto: demolicion y declaratoria de monumento sobre los ultimos bloques de la villa, frente a la inmobiliaria duena del lote.",
+      "evidence": [
+        {
+          "document_id": "671ee83be0a903e9e02e2c6caaf7aae1bbd522404cd0231368509947d979e6c0",
+          "cita": "Se trata del Lote 18-A, ubicado en Av. Presidente Riesco, frente al Parque Araucano"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "cita": "aprobó un anteproyecto de edificación que busca construir 6 torres de 19 pisos en el Lote 18"
+        },
+        {
+          "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+          "cita": "decidiendo aprobar la solicitud de declaratoria como Monumento Nacional del Lote 18-A1 del complejo"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:5054791339ee8a41",
+      "project_ids": [
+        "9340e0affcfabb6aaaf677af",
+        "cfe0f5b947bd40596cf5efc9"
+      ],
+      "project_names": {
+        "9340e0affcfabb6aaaf677af": "Museo Memorial Villa San Luis",
+        "cfe0f5b947bd40596cf5efc9": "block 15"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Villa San Luis (Villa Ministro Carlos Cortés), el Lote 18/18-A/18-A1 y los blocks 14-15 son partes del mismo conflicto: demolicion y declaratoria de monumento sobre los ultimos bloques de la villa, frente a la inmobiliaria duena del lote.",
+      "evidence": [
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "ahora uno de esos terrenos, el 18-A1, busca sobrevivir como el último recuerdo de las familias que por años habitaron este complejo."
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "En ese paño está el block 14, el único que queda en pie de los 27 edificios originales."
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "A él lo acompaña el block 15"
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "El argumento es la defensa de un recinto que fue declarado Patrimonio Histórico en 2017."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:d2aac57b5a43a9b5",
+      "project_ids": [
+        "124a6f29f9096a46e6117ed7",
+        "cfe0f5b947bd40596cf5efc9"
+      ],
+      "project_names": {
+        "124a6f29f9096a46e6117ed7": "Lote 18",
+        "cfe0f5b947bd40596cf5efc9": "block 15"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Villa San Luis (Villa Ministro Carlos Cortés), el Lote 18/18-A/18-A1 y los blocks 14-15 son partes del mismo conflicto: demolicion y declaratoria de monumento sobre los ultimos bloques de la villa, frente a la inmobiliaria duena del lote.",
+      "evidence": [
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "ahora uno de esos terrenos, el 18-A1, busca sobrevivir como el último recuerdo de las familias que por años habitaron este complejo."
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "En ese paño está el block 14, el único que queda en pie de los 27 edificios originales."
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "A él lo acompaña el block 15"
+        },
+        {
+          "document_id": "f8e60492003dda4a566ca0f20127ce0ca9169e6398285b0100a640a403d8f05a",
+          "cita": "El argumento es la defensa de un recinto que fue declarado Patrimonio Histórico en 2017."
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:2ea44580bfcc1987",
+      "project_ids": [
+        "427150a1b40ea1d2cf14121a",
+        "575554364a2f583022665618"
+      ],
+      "project_names": {
+        "427150a1b40ea1d2cf14121a": "Casa de la Viña Manquehue",
+        "575554364a2f583022665618": "Parque Rabat"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Casa de la Viña Manquehue y Parque Rabat son el mismo predio y el mismo dictamen de Contraloria sobre el condominio proyectado en el inmueble de conservacion historica.",
+      "evidence": [
+        {
+          "document_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a",
+          "cita": "asociado al proyecto denominado Parque Rabat"
+        },
+        {
+          "document_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a",
+          "cita": "un condominio de lujo en el terreno donde se emplaza la llamada Casa de la Viña Manquehue"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:af8e3e02d132618a",
+      "project_ids": [
+        "3ce6d0d030381374a3c026f7",
+        "96d6e7e07e71dcf3d5c5ce48"
+      ],
+      "project_names": {
+        "3ce6d0d030381374a3c026f7": "Ciudad Parque Bicentenario",
+        "96d6e7e07e71dcf3d5c5ce48": "Ciudad Portal Bicentenario"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Ciudad Parque Bicentenario, Ciudad Portal Bicentenario y Ciudad del Viento son el mismo megaproyecto de Cerrillos (plan maestro de 2001, rediseñado y rebautizado).",
+      "evidence": [
+        {
+          "document_id": "e0b6c752c9d0070e77b69e77d5a84f0b8a0694c7eda40fe2eb47fcca20b85851",
+          "cita": "que llevaría por nombre Ciudad Parque Bicentenario"
+        },
+        {
+          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+          "cita": "El parque ocupa 50 de las 250 hectáreas cedidas para el desarrollo de la Ciudad Portal Bicentenario"
+        },
+        {
+          "document_id": "e0b6c752c9d0070e77b69e77d5a84f0b8a0694c7eda40fe2eb47fcca20b85851",
+          "cita": "en noviembre del 2018 el ministro Monckeberg revive el proyecto del 2001"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:7f5131b77116c83c",
+      "project_ids": [
+        "1141cf3855f6be18f47352aa",
+        "3ce6d0d030381374a3c026f7"
+      ],
+      "project_names": {
+        "3ce6d0d030381374a3c026f7": "Ciudad Parque Bicentenario",
+        "1141cf3855f6be18f47352aa": "Ciudad del Viento"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Ciudad Parque Bicentenario, Ciudad Portal Bicentenario y Ciudad del Viento son el mismo megaproyecto de Cerrillos (plan maestro de 2001, rediseñado y rebautizado).",
+      "evidence": [
+        {
+          "document_id": "4d8b75d5425a487ad7f7ae6464cd5c03c3b151bb4913f0567a2343d9b027fc33",
+          "cita": "El Plan Maestro de Ciudad Parque Bicentenario nació en 2001"
+        },
+        {
+          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+          "cita": "posteriormente rediseñada como Ciudad Portal Bicentenario"
+        },
+        {
+          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+          "cita": "El parque ocupa 50 de las 250 hectáreas cedidas para el desarrollo de la Ciudad Portal Bicentenario"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:b494dee8751a899c",
+      "project_ids": [
+        "1141cf3855f6be18f47352aa",
+        "96d6e7e07e71dcf3d5c5ce48"
+      ],
+      "project_names": {
+        "96d6e7e07e71dcf3d5c5ce48": "Ciudad Portal Bicentenario",
+        "1141cf3855f6be18f47352aa": "Ciudad del Viento"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Ciudad Parque Bicentenario, Ciudad Portal Bicentenario y Ciudad del Viento son el mismo megaproyecto de Cerrillos (plan maestro de 2001, rediseñado y rebautizado).",
+      "evidence": [
+        {
+          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+          "cita": "posteriormente rediseñada como Ciudad Portal Bicentenario"
+        },
+        {
+          "document_id": "f1428060a0cd9a8749e6ccb86993e4f4f2fa4814769e5ac51d4140758294badd",
+          "cita": "después de cinco años de controversia tras el anuncio de la construcción del proyecto Ciudad Portal Bicentenario"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:62cc7ef37704c107",
+      "project_ids": [
+        "59583a0b20dc0908dbe45197",
+        "f83a9f08c224ee4ab309c2b5"
+      ],
+      "project_names": {
+        "59583a0b20dc0908dbe45197": "Club de Tenis Tobalaba",
+        "f83a9f08c224ee4ab309c2b5": "Club Ossandón"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "La Inmobiliaria Club de Tenis Tobalaba S.A. es la sociedad duena del Club Ossandon y las obras de ampliacion y su permiso de modificacion son un solo conflicto vecinal.",
+      "evidence": [
+        {
+          "document_id": "082033eafd9c3f7f48bd04caa0bfeeb5cb4f132a54a08e8f41fedf6861a9f535",
+          "cita": "Las obras las lleva adelante Inmobiliaria Club de Tenis Tobalaba S.A.y uno de los principales accionistas"
+        },
+        {
+          "document_id": "082033eafd9c3f7f48bd04caa0bfeeb5cb4f132a54a08e8f41fedf6861a9f535",
+          "cita": "permiso que otorgó el municipio a la sociedad controladora del Club Ossandón"
+        },
+        {
+          "document_id": "35d910e4e566642d4caf161215c417f34d61f8cde66c1ffa090da3bc964d1149",
+          "cita": "le otorgó un permiso de modificación del proyecto al Club de Tenis Tobalaba"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:882c8e10a67fc246",
+      "project_ids": [
+        "3dae1d7eed25cb991e618cea",
+        "4773661296a3e0f3a3900093"
+      ],
+      "project_names": {
+        "3dae1d7eed25cb991e618cea": "Galería Imperio",
+        "4773661296a3e0f3a3900093": "Vivo"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "La Galeria Imperio (Huerfanos 830) y el mall Vivo son el mismo sitio y proyecto: la demolicion de la galeria para levantar Vivo y sus permisos.",
+      "evidence": [
+        {
+          "document_id": "4dab54185fce679caa8aed9971825fae2bb820bf122de1d5e9faff36530042a5",
+          "cita": "demolerla y levantar allí un mall denominado Vivo con 12 pisos de altura"
+        },
+        {
+          "document_id": "4dab54185fce679caa8aed9971825fae2bb820bf122de1d5e9faff36530042a5",
+          "cita": "Saieh obtuvo el 25 de julio de 2013 dos permisos de edificación, números 15.386 y 15.387"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:c5388c0656781afa",
+      "project_ids": [
+        "2cd8e10191c28fca24bf65f6",
+        "a5e4f23a2c3cf81036e1c663"
+      ],
+      "project_names": {
+        "2cd8e10191c28fca24bf65f6": "Condominio El Camino Antupirén Alto",
+        "a5e4f23a2c3cf81036e1c663": "Condominio El Pórtico Las Pircas Norte"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Una unica denuncia y una unica sancion de la SMA por supuesto fraccionamiento de los condominios de los lotes 4R, 4H1 y 4H2 en Penalolen, reclamada en un solo juicio ante el Tribunal Ambiental.",
+      "evidence": [
+        {
+          "document_id": "351685c4a1a59d920c02ef3df75b75cfb6382e46faba62873bcff30dd8714bd0",
+          "cita": "generándose un supuesto fraccionamiento de un solo proyecto inmobiliario"
+        },
+        {
+          "document_id": "351685c4a1a59d920c02ef3df75b75cfb6382e46faba62873bcff30dd8714bd0",
+          "cita": "por fraccionar en tres partes el proyecto ubicado en los lotes 4H2, 4R y 4H1"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8b1e01497d37bb83",
+      "project_ids": [
+        "673b9377522a40c8d769dc34",
+        "ea5d8ac70a737f8dbcdcb939"
+      ],
+      "project_names": {
+        "673b9377522a40c8d769dc34": "ampliación del Centro de Distribución Lo Aguirre",
+        "ea5d8ac70a737f8dbcdcb939": "Centro de Distribución Lo Aguirre"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "La ampliacion del Centro de Distribucion Lo Aguirre es el objeto del litigio de Walmart sobre el mismo centro de distribucion (reclamo de ilegalidad por la subzona C.4.2), por lo que es etapa de la misma controversia.",
+      "evidence": [
+        {
+          "document_id": "7a8cb892d9050b3f145ee59005cc3b7e9e5ec66366dbb237530ea067bf060059",
+          "cita": "la empresa Walmart no pudo aprobar su proyecto de ampliación del centro de distribución Lo Aguirre"
+        },
+        {
+          "document_id": "f3c06a7485b8d3eeb2e2cbe3e276a05bc903740283417a24b33f7d67893d4085",
+          "cita": "busca ampliar su Centro de Distribución Lo Aguirre"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:2b5a28a5310e2958",
+      "project_ids": [
+        "91f2112803222891bec22245",
+        "927308fe4981d49355adfae0"
+      ],
+      "project_names": {
+        "927308fe4981d49355adfae0": "Carlos Valdovinos 3015",
+        "91f2112803222891bec22245": "Carlos Valdovinos"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los permisos 3015/3017/3005 de Carlos Valdovinos son tres edificios del mismo megaproyecto de 4.200 viviendas en Parque Las Moscas, invalidado como un solo conjunto.",
+      "evidence": [
+        {
+          "document_id": "0b4fb575563b7cba27730d354f8325a56824307407e75d52264021de24ac919b",
+          "cita": "El Nº 16069 del 17/06/16 para el sitio de 9.020 m2 con dirección Carlos Valdovinos 3015"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "bcccc2d994195d86aef273847e38b68d7cce8b55dac9f628c8e31d2bcf20140e",
+          "cita": "las tres torres del proyecto Carlos Valdovinos, en el Parque Las Moscas"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:596bb8d8984f7787",
+      "project_ids": [
+        "99981a28a47c0a06ef007b3f",
+        "de3f1c92de27d2bdbafd6749"
+      ],
+      "project_names": {
+        "99981a28a47c0a06ef007b3f": "Mega Proyecto Plaza Egaña",
+        "de3f1c92de27d2bdbafd6749": "Torres Plaza Egaña"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo megaproyecto de cuatro torres de Fundamenta en Irarrázaval con Américo Vespucio, descrito con cifras casi iguales por ambos lados.",
+      "evidence": [
+        {
+          "document_id": "9a8fcb1a4315521d4c0a2bffcae6cdd5b61c0def6079c2f76b92d9251680742c",
+          "cita": "las cuatro torres de 32 pisos, 1.752 departamentos, 198 oficinas y 2.141 estacionamientos"
+        },
+        {
+          "document_id": "00d8981fcd301088b51a51348cca1d242146ba6b6c59474994528da48bfa7fbe",
+          "cita": "megaproyecto de Torres Plaza Egaña que la Inmobiliaria Fundamenta pretende construir en Ñuñoa"
+        },
+        {
+          "document_id": "00d8981fcd301088b51a51348cca1d242146ba6b6c59474994528da48bfa7fbe",
+          "cita": "Estos inmuebles se construirían en la esquina de Irarrázaval con Américo Vespucio."
+        },
+        {
+          "document_id": "9a8fcb1a4315521d4c0a2bffcae6cdd5b61c0def6079c2f76b92d9251680742c",
+          "cita": "en la vereda surponiento de Américo Vespucio con Irarrázaval"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:29d72c133b691634",
+      "project_ids": [
+        "0913ce433cf7906fb082e70c",
+        "82e47af4deaa8615cff8ef60"
+      ],
+      "project_names": {
+        "0913ce433cf7906fb082e70c": "Supermercado Líder San Francisco",
+        "82e47af4deaa8615cff8ef60": "supermercado Lider"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Ambos tratan del supermercado Líder de Teniente Cruz con San Francisco construido pese al dictamen 59.364/2012; el lado b además arrastra un documento ajeno (Líder de Macul).",
+      "evidence": [
+        {
+          "document_id": "f82135e32d545685995d1b166aa69c0b5022849afad2c16f77394c770a96b5ec",
+          "cita": "se inauguró ahí el supermercado Líder San Francisco de Walmart Chile"
+        },
+        {
+          "document_id": "f82135e32d545685995d1b166aa69c0b5022849afad2c16f77394c770a96b5ec",
+          "cita": "dictamen Nº 59.364/2012"
+        },
+        {
+          "document_id": "0aa617d5e301c5f76b19c62b373f29860ada858f6c051892973db367e353e530",
+          "cita": "a pesar de un dictamen de la Contraloría (Nº 059364 de 2012), logró edificar un supermercado en la intersección de Teniente Cruz con San Francisco"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:4f8eed713bf854b6",
+      "project_ids": [
+        "34495dfd047595225dbad42b",
+        "d836b79f2a3c8c188c918018"
+      ],
+      "project_names": {
+        "34495dfd047595225dbad42b": "Centro Comercial Malls en Vitacura y acceso terreno Holy Cross",
+        "d836b79f2a3c8c188c918018": "Centro Comercial Cenco Malls en Vitacura y acceso terreno Holy Cross"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo proyecto y misma resolución: invalidación del IMIV del centro comercial de Cenco Malls en Vitacura y acceso terreno Holy Cross; solo cambia una palabra en el nombre.",
+      "evidence": [
+        {
+          "document_id": "063725c041cdcd00841071d699a03d5d3744e92c1dba4b0536fb60bacd339c76",
+          "cita": "la resolución que invalida el Informe de Mitigación de Impacto Vial (IMIV) del proyecto “Centro Comercial Malls en Vitacura y acceso terreno Holy Cross”"
+        },
+        {
+          "document_id": "697c6c830ccd231f467c40580ecb9646100262280141b4ec3b4a609407f1899b",
+          "cita": "la resolución que invalida el IMIV del proyecto “Centro Comercial Cenco Malls en Vitacura y acceso terreno Holy Cross”"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:76dd0c005fb29758",
+      "project_ids": [
+        "34495dfd047595225dbad42b",
+        "b61a2f3041abb3fec30165fc"
+      ],
+      "project_names": {
+        "34495dfd047595225dbad42b": "Centro Comercial Malls en Vitacura y acceso terreno Holy Cross",
+        "b61a2f3041abb3fec30165fc": "nuevo centro comercial en Vitacura"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El nuevo mall de Cencosud en Vitacura con DIA en el SEA e IMIV pendiente es el mismo proyecto cuyo IMIV fue luego invalidado y cancelado por Cenco Malls.",
+      "evidence": [
+        {
+          "document_id": "063725c041cdcd00841071d699a03d5d3744e92c1dba4b0536fb60bacd339c76",
+          "cita": "la resolución que invalida el Informe de Mitigación de Impacto Vial (IMIV) del proyecto “Centro Comercial Malls en Vitacura y acceso terreno Holy Cross”"
+        },
+        {
+          "document_id": "8af7f687c89db04b890a9e01edc241eb71fa259ee5410cfc0dfcb27d6d7bef19",
+          "cita": "suspender la tramitación de la Declaración de Impacto Ambiental (DIA) del proyecto de su nuevo centro comercial en Vitacura"
+        },
+        {
+          "document_id": "8af7f687c89db04b890a9e01edc241eb71fa259ee5410cfc0dfcb27d6d7bef19",
+          "cita": "luego de obtener la aprobación del Informe de Mitigación de Impacto Vial (IMIV) que se está tramitando ahora"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:859d350cb93002d7",
+      "project_ids": [
+        "7db9ae7a5b073147df95ebdd",
+        "91f2112803222891bec22245"
+      ],
+      "project_names": {
+        "7db9ae7a5b073147df95ebdd": "Carlos Valdovinos 3017",
+        "91f2112803222891bec22245": "Carlos Valdovinos"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El permiso 3017 es uno de los tres edificios de 15 pisos del mismo megaproyecto de 4.200 viviendas invalidado como conjunto.",
+      "evidence": [
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "document_id": "bcccc2d994195d86aef273847e38b68d7cce8b55dac9f628c8e31d2bcf20140e",
+          "cita": "un megaproyeto de 4.200 departamentos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:d977874379485d2d",
+      "project_ids": [
+        "e8d379573b288301c5b446f0",
+        "f9ac91789d6c7d1476ac32a4"
+      ],
+      "project_names": {
+        "f9ac91789d6c7d1476ac32a4": "Avenida Vicuña Mackenna N°6171, ex 6161",
+        "e8d379573b288301c5b446f0": "Vicuña Mackenna 6161"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Misma dirección Vicuña Mackenna 6161 (hoy 6171) en La Florida: la torre de 272 departamentos y la demolición con asbesto en el mismo predio, recogidas en el mismo artículo.",
+      "evidence": [
+        {
+          "document_id": "da451faff591bd3cbe897fc099fb5e6110f57a05cdff7581a08b0bf05659bbdc",
+          "cita": "N°6171, ex 6161"
+        },
+        {
+          "document_id": "da451faff591bd3cbe897fc099fb5e6110f57a05cdff7581a08b0bf05659bbdc",
+          "cita": "Que dicho material a demoler, acopiar y retirar contiene ASBESTO"
+        },
+        {
+          "document_id": "e33c3fce0817b8fc9f920305e224d680fc7f6b3cbced78de182612183510412c",
+          "cita": "Vicuña Mackenna Poniente 6161, junto a las residencias del pasaje El Almendral"
+        },
+        {
+          "document_id": "e33c3fce0817b8fc9f920305e224d680fc7f6b3cbced78de182612183510412c",
+          "cita": "Con la demolición incontrolada estos asbestos fueron liberados al aire"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:23e44db0b7a8c1e5",
+      "project_ids": [
+        "4596755c20f8748af47457ab",
+        "fdf3fc5067e1f4702d4d1926"
+      ],
+      "project_names": {
+        "4596755c20f8748af47457ab": "Villa Panamericana-Lote B",
+        "fdf3fc5067e1f4702d4d1926": "Lote B de la Villa Panamericana de Cerrillos"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo condominio y misma demanda de los propietarios del Lote B de Villa Panamericana por defectos de construcción.",
+      "evidence": [
+        {
+          "document_id": "0efd8210b0d88752b9dd98be03b6a55fe9cb0f6ced1c57260305dc0a71447622",
+          "cita": "primeros propietarios de departamentos del condominio denominado “Villa Panamericana-Lote B”"
+        },
+        {
+          "document_id": "e3616aa6d60d198baa4b24891a82c587ecf7ab67119423683031c59d18c6b797",
+          "cita": "La demanda civil presentada por casi 300 propietarios de departamentos del Lote B de la Villa Panamericana de Cerrillos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:f99630dc752cdd25",
+      "project_ids": [
+        "2473c991d5013797aeaff0d4",
+        "75b4cfebad7e31ba40d2331b"
+      ],
+      "project_names": {
+        "75b4cfebad7e31ba40d2331b": "torre de 13 pisos en calle Monjitas 565",
+        "2473c991d5013797aeaff0d4": "Torre comercial de 13 pisos, calle Monjitas 565"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo permiso de la Inmobiliaria Monjitas S.A. para una torre de 13 pisos en Monjitas 565 anulado por Contraloría.",
+      "evidence": [
+        {
+          "document_id": "c2b0b2a3746eb7799595b42e60b775b8a39f07b68f4e2b21498ec9befc26ae0b",
+          "cita": "un permiso de edificación a la Inmobiliaria Monjitas S.A. para que construyera una torre de 13 pisos en la calle Monjitas 565"
+        },
+        {
+          "document_id": "05d94a1f09390daaffbff673a27e52b7d00fbb968492cfcb5413ae91d4ccb96a",
+          "cita": "el permiso de edificación otorgado livianamente a la Inmobiliaria Monjitas S.A. para que construyera su torre en la calle Monjitas 565"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:b3caaf30950a7a9b",
+      "project_ids": [
+        "0ecfc02e7f34d476ee63e06c",
+        "6c80accab1cdea5ac54c41c4"
+      ],
+      "project_names": {
+        "6c80accab1cdea5ac54c41c4": "supermercado Express de Líder en Ciudad de Los Valles",
+        "0ecfc02e7f34d476ee63e06c": "Supermercado Líder de Ciudad de Los Valles"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El supermercado Express de Líder en Ciudad de Los Valles y el nuevo supermercado Líder de Ciudad de Los Valles se presentan como el mismo tercer proyecto irregular de Walmart en Pudahuel.",
+      "evidence": [
+        {
+          "document_id": "f82135e32d545685995d1b166aa69c0b5022849afad2c16f77394c770a96b5ec",
+          "cita": "Walmart Chile tramitó y luego aprobó la construcción del supermercado Express de Líder en Ciudad de Los Valles"
+        },
+        {
+          "document_id": "86403e92169aadc3b6d8fac3a53a19321d7c7292d5a9b15f4c5c519713d328c4",
+          "cita": "el nuevo supermercado Líder de Ciudad de Los Valles"
+        },
+        {
+          "document_id": "86403e92169aadc3b6d8fac3a53a19321d7c7292d5a9b15f4c5c519713d328c4",
+          "cita": "tercera edificación irregular de Walmart Chile en la comuna"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:f9282014d62eff81",
+      "project_ids": [
+        "eb3643e037326f2ddbd80f9f",
+        "fdf3fc5067e1f4702d4d1926"
+      ],
+      "project_names": {
+        "eb3643e037326f2ddbd80f9f": "Villa Panamericana",
+        "fdf3fc5067e1f4702d4d1926": "Lote B de la Villa Panamericana de Cerrillos"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los defectos constructivos de la Villa Panamericana se concentran en el Lote B, el mismo objeto de la demanda; el lado a es la misma controversia contada de forma más general.",
+      "evidence": [
+        {
+          "document_id": "d35d380aa40638fe0fe4ef8caf179f2c4a2cd8c3c83716df7257651600f8e773",
+          "cita": "comprobando en ellas (específicamente, el lote B) unas filtraciones de agua"
+        },
+        {
+          "document_id": "e3616aa6d60d198baa4b24891a82c587ecf7ab67119423683031c59d18c6b797",
+          "cita": "reclama más de US$18 millones por defectos constructivos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:eb4c2bee03c965ef",
+      "project_ids": [
+        "b61a2f3041abb3fec30165fc",
+        "d836b79f2a3c8c188c918018"
+      ],
+      "project_names": {
+        "d836b79f2a3c8c188c918018": "Centro Comercial Cenco Malls en Vitacura y acceso terreno Holy Cross",
+        "b61a2f3041abb3fec30165fc": "nuevo centro comercial en Vitacura"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El proyecto de Cenco Malls en Vitacura con su IMIV invalidado es el mismo nuevo mall de Cencosud cuya DIA se suspendió, con IMIV en trámite.",
+      "evidence": [
+        {
+          "document_id": "697c6c830ccd231f467c40580ecb9646100262280141b4ec3b4a609407f1899b",
+          "cita": "Cenco Malls, filial inmobiliaria de Cencosud, anunció este martes que no continuará con su proyecto de centro comercial en Vitacura."
+        },
+        {
+          "document_id": "697c6c830ccd231f467c40580ecb9646100262280141b4ec3b4a609407f1899b",
+          "cita": "la invalidación del IMIV “afecta grave y decisivamente la evaluación ambiental en curso"
+        },
+        {
+          "document_id": "8af7f687c89db04b890a9e01edc241eb71fa259ee5410cfc0dfcb27d6d7bef19",
+          "cita": "suspender la tramitación de la Declaración de Impacto Ambiental (DIA) del proyecto de su nuevo centro comercial en Vitacura"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:d9a503dc487526f1",
+      "project_ids": [
+        "2cfcdb67a6274db8af9377f6",
+        "55fe871bbd805f236d267066"
+      ],
+      "project_names": {
+        "55fe871bbd805f236d267066": "centro comercial complementario al mall Alto Las Condes",
+        "2cfcdb67a6274db8af9377f6": "Alto Las Condes"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El centro comercial complementario que Paulmann planeaba en Kennedy con Padre Hurtado, en un paño comprado a Carlos Celle, es Alto Las Condes 2.",
+      "evidence": [
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "Paulmann planea edificar un centro comercial complementario al mall Alto Las Condes"
+        },
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "El propietario original del paño era Carlos Celle"
+        },
+        {
+          "document_id": "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c",
+          "cita": "justo frente al Alto Las Condes en US$ 56 millones al empresario Carlos Celle Cafferata"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:7f07b52f3e0b3b2e",
+      "project_ids": [
+        "008d2f365c67d75ec7b3e30a",
+        "55fe871bbd805f236d267066"
+      ],
+      "project_names": {
+        "55fe871bbd805f236d267066": "centro comercial complementario al mall Alto Las Condes",
+        "008d2f365c67d75ec7b3e30a": "Alto Las Condes 2"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El centro comercial complementario del terreno Kennedy con Padre Hurtado, comprado a Carlos Celle, es el proyecto Alto Las Condes 2.",
+      "evidence": [
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "Paulmann planea edificar un centro comercial complementario al mall Alto Las Condes"
+        },
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "El propietario original del paño era Carlos Celle"
+        },
+        {
+          "document_id": "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c",
+          "cita": "justo frente al Alto Las Condes en US$ 56 millones al empresario Carlos Celle Cafferata"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:7ebd02e63546e9eb",
+      "project_ids": [
+        "55fe871bbd805f236d267066",
+        "7d5048d0367a8d31a6884eb1"
+      ],
+      "project_names": {
+        "55fe871bbd805f236d267066": "centro comercial complementario al mall Alto Las Condes",
+        "7d5048d0367a8d31a6884eb1": "Alto Las Condes II"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El centro comercial complementario en la esquina de Kennedy con Padre Hurtado frente al mall es el proyecto Alto Las Condes II.",
+      "evidence": [
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "Paulmann planea edificar un centro comercial complementario al mall Alto Las Condes"
+        },
+        {
+          "document_id": "f5906b8c14e8d3c3534b3691660e15a3e3e70bb1a1cba38b637334b1e00d74a4",
+          "cita": "la esquina nororiente de avenida Kennedy con Padre Hurtado"
+        },
+        {
+          "document_id": "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+          "cita": "en la esquina de Kennedy con Padre Hurtado y justo frente al Alto Las Condes"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:1a301f576e1ec913",
+      "project_ids": [
+        "586b228350d01ac9784b93e1",
+        "e6264ad5bf7e6ac9df22216b"
+      ],
+      "project_names": {
+        "e6264ad5bf7e6ac9df22216b": "Actualización del Plan Regulador Comunal de Renca",
+        "586b228350d01ac9784b93e1": "actualización del Plan Regulador de Renca"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Misma actualización del Plan Regulador de Renca (Decreto 214 de 9 de febrero de 2022) y su impugnación.",
+      "evidence": [
+        {
+          "document_id": "815649d74b5f7e7419f38a5df80824827f7a4b69ccd77fb754486d849661518d",
+          "cita": "mediante el Decreto N° 214 del 9 de febrero de 2022"
+        },
+        {
+          "document_id": "584517012074570825ee202f7d9b2281039f479fe3171a5dd3a976b0e97810f8",
+          "cita": "contenida en el Decreto Alcaldicio Nº 214 de 9 de febrero de 2022"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8677d4aeac49a2ca",
+      "project_ids": [
+        "2cfcdb67a6274db8af9377f6",
+        "7d5048d0367a8d31a6884eb1"
+      ],
+      "project_names": {
+        "2cfcdb67a6274db8af9377f6": "Alto Las Condes",
+        "7d5048d0367a8d31a6884eb1": "Alto Las Condes II"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Alto Las Condes (el proyecto frente al mall, en Vitacura) es el mismo Alto Las Condes II de Cencosud y Paulmann.",
+      "evidence": [
+        {
+          "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+          "cita": "Alto Las Condes 2, que se ubicaría en un terreno adquirido por el conglomerado justo frente al mall del mismo nombre"
+        },
+        {
+          "document_id": "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+          "cita": "el proyecto de Horst Paulmann -que incluiría un mall, torres de oficinas, departamentos, un hotel y una rascacielo de 55 pisos-"
+        },
+        {
+          "document_id": "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+          "cita": "en la esquina de Kennedy con Padre Hurtado y justo frente al Alto Las Condes"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:36f0d5e7854129ed",
+      "project_ids": [
+        "099b8381c05667526259843b",
+        "4a9211bfe09688b423f03613"
+      ],
+      "project_names": {
+        "099b8381c05667526259843b": "mall en Presidente Kennedy 8950",
+        "4a9211bfe09688b423f03613": "Proyecto de Cencosud ubicado en Av. Presidente Kennedy N° 8950"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo proyecto de Cencosud en Presidente Kennedy 8950 frente al Alto Las Condes, con permiso caducado del año 2000.",
+      "evidence": [
+        {
+          "document_id": "b8301c5eaab3f8accdb2be481d80414cfca035d10580300fc6493e53619f2a7b",
+          "cita": "un mall en Presidente Kennedy 8950, enfrente del mall Alto Las Condes"
+        },
+        {
+          "document_id": "1e19dec9eeebe6d946bcb4002d6d5cc0b3278fd50ce101ccfc944ab82d5b596e",
+          "cita": "el proyecto de Cencosud ubicado en Av. Presidente Kennedy N° 8950, de la comuna de Vitacura, frente al Alto Las Condes"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:b0078715ed2ba64f",
+      "project_ids": [
+        "93603cea8a12ec5ef4edbcb2",
+        "c0aec03825e1cfe75d8db6c1"
+      ],
+      "project_names": {
+        "c0aec03825e1cfe75d8db6c1": "talleres de la Línea 7 del Metro",
+        "93603cea8a12ec5ef4edbcb2": "Línea 7 Metro de Santiago"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El conflicto Línea 7 contiene como documento focal la disputa de Renca por la cochera y el taller, que es el objeto del lado a.",
+      "evidence": [
+        {
+          "document_id": "02d91bc9508222bfe5bc8d35203ba17916e692b4ce179a902aa2d0c612a67ffa",
+          "cita": "La construcción de los talleres de la Línea 7 del Metro genera polémica debido a que la municipalidad de Renca pretende que se emplacen de forma subterránea"
+        },
+        {
+          "document_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8",
+          "cita": "Vecinos de Renca y el municipio presentaron reclamos por la construcción de una cochera y un taller para la Línea 7 del Metro en la comuna"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:941b0d1ca7ec11a1",
+      "project_ids": [
+        "89ddfb0616d12dccc7393b63",
+        "de3f1c92de27d2bdbafd6749"
+      ],
+      "project_names": {
+        "de3f1c92de27d2bdbafd6749": "Torres Plaza Egaña",
+        "89ddfb0616d12dccc7393b63": "iniciativa de más de 1.700 departamentos en Plaza Egaña"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "La iniciativa de más de 1.700 departamentos en Plaza Egaña contra la que protestan vecinos de La Reina y Ñuñoa es el megaproyecto Torres Plaza Egaña.",
+      "evidence": [
+        {
+          "document_id": "00d8981fcd301088b51a51348cca1d242146ba6b6c59474994528da48bfa7fbe",
+          "cita": "cuatro torres de 30 pisos con 1.700 departamentos"
+        },
+        {
+          "document_id": "c135fcce33a49a8cb97ae5a5dab19924cebcb98ae96b3ab53fceee806e5f0a1c",
+          "cita": "habitantes de La Reina y Ñuñoa protestan periódicamente contra una iniciativa de más de 1.700 departamentos"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8d97de9def9103f0",
+      "project_ids": [
+        "56e38026f850dc7badd03854",
+        "f7d8dd8863f08d9365fa846a"
+      ],
+      "project_names": {
+        "f7d8dd8863f08d9365fa846a": "Ciudad del Niño — megaproyecto de Inmobiliaria Maestra S.A.",
+        "56e38026f850dc7badd03854": "Ciudad del Niño"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El megaproyecto de Inmobiliaria Maestra de más de 23 torres en Ciudad del Niño es el mismo de los vecinos de San Miguel.",
+      "evidence": [
+        {
+          "document_id": "9b8f11ad38c4a01c608165d08d363871c4663710a9808942aeba4146ebac82f2",
+          "cita": "un megaproyecto inmobiliario privado de Inmobiliaria Maestra S.A. que pretendía la construcción de 23 torres"
+        },
+        {
+          "document_id": "145b5730928b8be7017ce4363cd83f9c7bf567de691fbf528b1cee90dc055f6b",
+          "cita": "la inmobiliaria Maestra"
+        },
+        {
+          "document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
+          "cita": "el megaproyecto Ciudad del Niño, el cual contempla la construcción de 23 torres"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:ba062509a2c09d11",
+      "project_ids": [
+        "3ce6d0d030381374a3c026f7",
+        "7805069a696198e3d8e2b964"
+      ],
+      "project_names": {
+        "3ce6d0d030381374a3c026f7": "Ciudad Parque Bicentenario",
+        "7805069a696198e3d8e2b964": "Plan Maestro de Ciudad Parque Bicentenario"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El Plan Maestro de Ciudad Parque Bicentenario es el mismo megaproyecto que el conflicto Ciudad Parque Bicentenario.",
+      "evidence": [
+        {
+          "document_id": "4d8b75d5425a487ad7f7ae6464cd5c03c3b151bb4913f0567a2343d9b027fc33",
+          "cita": "El Plan Maestro de Ciudad Parque Bicentenario nació en 2001"
+        },
+        {
+          "document_id": "4d8b75d5425a487ad7f7ae6464cd5c03c3b151bb4913f0567a2343d9b027fc33",
+          "cita": "el megaproyecto pareció reimpulsarse en 2015"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:5f9bf6129e7763e7",
+      "project_ids": [
+        "803496aefc68167d7a9c2f7b",
+        "cf65ca873f68634f640f1bd0"
+      ],
+      "project_names": {
+        "803496aefc68167d7a9c2f7b": "Hotel Sheraton",
+        "cf65ca873f68634f640f1bd0": "dos torres habitacionales de 30 y 32 pisos junto al Hotel Sheraton Santiago"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo permiso de edificación N° 35-2019 de Inmobiliaria Mirador del Cerro para dos torres junto al Hotel Sheraton, invalidado por la Corte de Apelaciones.",
+      "evidence": [
+        {
+          "document_id": "7f0596176fffe8dce0655ae6353dbc6c1d08b247c8262d79a022f3b029adc6fb",
+          "cita": "invalidar el permiso de edificación N° 35 del 09/10/2019 mal otorgado a la Inmobiliaria Mirador del Cerro SpA"
+        },
+        {
+          "document_id": "b3eb274f4dc6148420ee9117ac830de27a40d1e8164f21881b24cb17e29fb4f9",
+          "cita": "invalida el Permiso de Edificación N° 35-2019"
+        },
+        {
+          "document_id": "b3eb274f4dc6148420ee9117ac830de27a40d1e8164f21881b24cb17e29fb4f9",
+          "cita": "la empresa Inmobiliaria Mirador del Cerro SpA no pudo ejecutar el proyecto de construcción en el perímetro que, actualmente, corresponde al Hotel Sheraton Santiago"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:fcc0f281a2dbb228",
+      "project_ids": [
+        "56e38026f850dc7badd03854",
+        "731db7d39d5d7b083e5ce54a"
+      ],
+      "project_names": {
+        "56e38026f850dc7badd03854": "Ciudad del Niño",
+        "731db7d39d5d7b083e5ce54a": "Plan Urbano Habitacional (PUH) Ciudad del Niño"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El plan urbano habitacional de Minvu/Serviu es el desenlace de la lucha vecinal contra el megaproyecto de Maestra en el mismo terreno de Ciudad del Niño.",
+      "evidence": [
+        {
+          "document_id": "9b8f11ad38c4a01c608165d08d363871c4663710a9808942aeba4146ebac82f2",
+          "cita": "En el año 2020, el terreno se vio amenazado por un megaproyecto inmobiliario privado de Inmobiliaria Maestra S.A. que pretendía la construcción de 23 torres"
+        },
+        {
+          "document_id": "9b8f11ad38c4a01c608165d08d363871c4663710a9808942aeba4146ebac82f2",
+          "cita": "Serviu) comprara el terreno de la fundación el año 2023"
+        },
+        {
+          "document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
+          "cita": "el megaproyecto Ciudad del Niño, el cual contempla la construcción de 23 torres"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:fffb0d7fc086a017",
+      "project_ids": [
+        "56e38026f850dc7badd03854",
+        "8e7532434c76aa28d66f2f72"
+      ],
+      "project_names": {
+        "56e38026f850dc7badd03854": "Ciudad del Niño",
+        "8e7532434c76aa28d66f2f72": "23 torres de 23 pisos y 5.400 viviendas en las 12 hectáreas de la Ciudad del Niño"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Los cuatro permisos para 23 torres de 23 pisos son el megaproyecto de Ciudad del Niño en San Miguel.",
+      "evidence": [
+        {
+          "document_id": "7a11cf07dc0db1e77a413c19544b39f2623bb5d20c8c488eda8f4793a4d948d8",
+          "cita": "el megaproyecto Ciudad del Niño, el cual contempla la construcción de 23 torres"
+        },
+        {
+          "document_id": "a77ded2af3bba8fdb9bbf6b1a1bdb9de62891b95a2509ca41c9f479b3d4b2b75",
+          "cita": "invalidar 4 permisos para construir 23 torres de 23 pisos y 5.400 viviendas en las 12 hectáreas de la Ciudad del Niño"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:6dbae49dd82aa8ff",
+      "project_ids": [
+        "008d2f365c67d75ec7b3e30a",
+        "7d5048d0367a8d31a6884eb1"
+      ],
+      "project_names": {
+        "008d2f365c67d75ec7b3e30a": "Alto Las Condes 2",
+        "7d5048d0367a8d31a6884eb1": "Alto Las Condes II"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Alto Las Condes 2 y Alto Las Condes II son el mismo megaproyecto de Cencosud y Paulmann en Vitacura.",
+      "evidence": [
+        {
+          "document_id": "694adeaea5ef9c52e7b6007f9005f06befe5e98890801a9a70803833bef3dbaa",
+          "cita": "Alto Las Condes 2 es un proyecto histórico para Cencosud que incluiría un mall, torres de oficinas, departamentos, un hotel y un rascacielos de 55 pisos"
+        },
+        {
+          "document_id": "2f54a09240441c68fbc0f815943868fae684d3a2b635cab7daca8faf29967b7d",
+          "cita": "el proyecto de Horst Paulmann -que incluiría un mall, torres de oficinas, departamentos, un hotel y una rascacielo de 55 pisos-"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:2044c6007ed6d8dc",
+      "project_ids": [
+        "4acc6611fad8c55f8f538bcf",
+        "62aa08bffe5a73d8a72b0d0b"
+      ],
+      "project_names": {
+        "4acc6611fad8c55f8f538bcf": "nuevo edificio de la Cámara Chilena de la Construcción",
+        "62aa08bffe5a73d8a72b0d0b": "edificio institucional de la Cámara Chilena de la Construcción (CChC) en Las Condes"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo edificio institucional de la CChC en Las Condes, permiso de edificación N° 68 de 2013.",
+      "evidence": [
+        {
+          "document_id": "05f27810b020e61b8a139572e5b32eb5260ac91718fb04f72811932109293d77",
+          "cita": "permiso de edificación N° 68 del año 2013, con el cual la asociación gremial empresarial, la Cámara Chilena de la Construcción (CChC), construyó su espléndida y esbelta torre corporativa"
+        },
+        {
+          "document_id": "be39dcc82c07c6047f5770749c863da9b9d6e8406364d5ccf20824d2a9cbd5c5",
+          "cita": "irregularidades cometidas en el permiso de edificación N° 68 del año 2013, con el cual se levantó esa estructura"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:d12d7bb565c14b7b",
+      "project_ids": [
+        "34f7c51bc29d4adbc31de53e",
+        "e1c30745abde8086367a9640"
+      ],
+      "project_names": {
+        "e1c30745abde8086367a9640": "Ciudad de Los Valles",
+        "34f7c51bc29d4adbc31de53e": "loteo industrial de Ciudad de Los Valles"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El loteo industrial es parte de Ciudad de Los Valles y las ilegalidades de sus permisos son parte de la misma auditoría de Contraloría.",
+      "evidence": [
+        {
+          "document_id": "7a8cb892d9050b3f145ee59005cc3b7e9e5ec66366dbb237530ea067bf060059",
+          "cita": "se confirmó la ilegalidad de las autorizaciones de la Dirección de Obras Municipales (DOM) en todo el sector industrial de Ciudad de Los Valles"
+        },
+        {
+          "document_id": "7a8cb892d9050b3f145ee59005cc3b7e9e5ec66366dbb237530ea067bf060059",
+          "cita": "que también se instalaron en el loteo industrial de Ciudad de Los Valles"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:ffe5e98600f6f54a",
+      "project_ids": [
+        "a7582eea55bbe9571084de75",
+        "a812c5dd74897808e543d008"
+      ],
+      "project_names": {
+        "a812c5dd74897808e543d008": "Conjunto Armónico Bellavista",
+        "a7582eea55bbe9571084de75": "torre del Conjunto Armónico Bellavista"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Misma torre de 19 pisos del Conjunto Armónico Bellavista en Recoleta y su larga disputa judicial con el municipio.",
+      "evidence": [
+        {
+          "document_id": "2b8abd6526bb988ccdfbfd363d7496ef3f3abce4ca2343dbe90d1386c438f476",
+          "cita": "anuló el decreto firmado por el alcalde Daniel Jadue (PC) el 1 de febrero de 2019 que ordenaba la demolición de un edificio de 19 pisos"
+        },
+        {
+          "document_id": "7b92ddd66f08f49ad68e8c7cd965edc804064f5bdd136d122569b5da751a5184",
+          "cita": "una larga disputa judicial con la Municipalidad de Recoleta por la legalidad de una torre del Conjunto Armónico Bellavista"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:30ec68e8bda243ae",
+      "project_ids": [
+        "6787fa6cc302091a8ea27645",
+        "a812c5dd74897808e543d008"
+      ],
+      "project_names": {
+        "a812c5dd74897808e543d008": "Conjunto Armónico Bellavista",
+        "6787fa6cc302091a8ea27645": "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "La segunda torre habitacional del Conjunto Armónico Bellavista es la torre en litigio entre la inmobiliaria y Recoleta.",
+      "evidence": [
+        {
+          "document_id": "7bebe40d8f6e53e560dae50e5d6f4b8c64aa1801d4f06c07aad125ca52058271",
+          "cita": "demoler la segunda torre del Conjunto Armónico Bellavista"
+        },
+        {
+          "document_id": "6cd3486f60f58854776ee05893fd08cb43a117a6cd200c1c2594acbc658e81dd",
+          "cita": "correspondiente a la segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:3352fd0e2c5ac87f",
+      "project_ids": [
+        "5402e3ed69c8819cf762b7ad",
+        "b726df124fb9bc06965e4326"
+      ],
+      "project_names": {
+        "b726df124fb9bc06965e4326": "proyecto de vivienda social para más de 400 familias en la Maestranza San Eugenio",
+        "5402e3ed69c8819cf762b7ad": "Maestranza San Eugenio"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo proyecto de vivienda social de Ukamau en la Maestranza San Eugenio.",
+      "evidence": [
+        {
+          "document_id": "d02820096888bb9c3efa3626d41ffa4a99fdea16510cb3ef40a856d0f8039c9a",
+          "cita": "proyecto de vivienda social para más de 400 familias en la Maestranza San Eugenio"
+        },
+        {
+          "document_id": "b1d277dad13ec707489df38cf66d972a6f0828360eb706e2bc276e1e3c0e0fed",
+          "cita": "movimiento que logró expropiar los terrenos de la Maestranza San Eugenio"
+        },
+        {
+          "document_id": "b1d277dad13ec707489df38cf66d972a6f0828360eb706e2bc276e1e3c0e0fed",
+          "cita": "erigirán 424 casas con características especiales"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:f523261ac8523a4c",
+      "project_ids": [
+        "20559eb9ca09be77598a685e",
+        "44598b79177f378212cf10e4"
+      ],
+      "project_names": {
+        "20559eb9ca09be77598a685e": "proyecto de subdivisión para urbanizar el Bosque Panul",
+        "44598b79177f378212cf10e4": "Bosque Panul"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo proyecto de subdivisión de Gesterra para urbanizar el Fundo y Bosque Panul en La Florida.",
+      "evidence": [
+        {
+          "document_id": "c141978e8ce2dfd6140f0eb2bfa7be67ddf5facce254afd2561590933f5fe266",
+          "cita": "la inmobiliaria Gesterra presentó ante la Dirección de Obras de La Florida (DOM) un proyecto que pretendía urbanizar el Bosque Panul"
+        },
+        {
+          "document_id": "59aeb5dffad66b8843f6736a3dbb4f47fa8c37226a05039cf240130651db56f2",
+          "cita": "la inmobiliaria Gesterra presentó en enero del presente año un proyecto que busca subdividir el Fundo Panul"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:68adaf94d3221506",
+      "project_ids": [
+        "91f2112803222891bec22245",
+        "b2376dec52d5432767c0f3a5"
+      ],
+      "project_names": {
+        "91f2112803222891bec22245": "Carlos Valdovinos",
+        "b2376dec52d5432767c0f3a5": "Carlos Valdovinos 3005"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "El permiso 3005 es uno de los tres edificios del mismo megaproyecto de 4.200 viviendas de Carlos Valdovinos.",
+      "evidence": [
+        {
+          "document_id": "bcccc2d994195d86aef273847e38b68d7cce8b55dac9f628c8e31d2bcf20140e",
+          "cita": "las tres torres del proyecto Carlos Valdovinos, en el Parque Las Moscas"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "el permiso Nº 16074 para el sitio de 9.107 m2 con dirección en Carlos Valdovinos 3005"
+        },
+        {
+          "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+          "cita": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:8a75450a17d2c677",
+      "project_ids": [
+        "6787fa6cc302091a8ea27645",
+        "a7582eea55bbe9571084de75"
+      ],
+      "project_names": {
+        "a7582eea55bbe9571084de75": "torre del Conjunto Armónico Bellavista",
+        "6787fa6cc302091a8ea27645": "segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Es la misma torre del Conjunto Armónico Bellavista en la disputa entre la inmobiliaria y la Municipalidad de Recoleta.",
+      "evidence": [
+        {
+          "document_id": "7b92ddd66f08f49ad68e8c7cd965edc804064f5bdd136d122569b5da751a5184",
+          "cita": "una larga disputa judicial con la Municipalidad de Recoleta por la legalidad de una torre del Conjunto Armónico Bellavista"
+        },
+        {
+          "document_id": "6cd3486f60f58854776ee05893fd08cb43a117a6cd200c1c2594acbc658e81dd",
+          "cita": "la segunda torre habitacional del proyecto Conjunto Armónico Bellavista (CAB)"
+        },
+        {
+          "document_id": "6cd3486f60f58854776ee05893fd08cb43a117a6cd200c1c2594acbc658e81dd",
+          "cita": "Municipalidad de Recoleta"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:fdbfa12a2bb4c42d",
+      "project_ids": [
+        "485aaa31c35c3f2b1e14efc8",
+        "55eb38437615036668dbae8d"
+      ],
+      "project_names": {
+        "55eb38437615036668dbae8d": "Proyecto inmobiliario en terrenos del Estadio Santa Laura",
+        "485aaa31c35c3f2b1e14efc8": "Estadio Santa Laura"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo proyecto de dos torres en el terreno del Estadio Santa Laura, con permiso de 2016 invalidado por Independencia.",
+      "evidence": [
+        {
+          "document_id": "194e841bf2188dcc63f1397b39e2223f0cbb2b70004d37aaf4953ce62005a3c6",
+          "cita": "no seguirá adelante con el proyecto de construír dos torres en el terreno del Estadio Santa Laura"
+        },
+        {
+          "document_id": "52d09478110ca3833dfca024f33d313cf9b5806ee914dd6c3695e79f7a8b3612",
+          "cita": "para la construcción de 2 torres de 23 y 15 pisos en el terreno área verde"
+        }
+      ]
+    },
+    {
+      "decision_id": "merge:000ec14a76487259",
+      "project_ids": [
+        "21ef01a5f5ea1b84eb392920",
+        "292f9bb1df57d22136828aac"
+      ],
+      "project_names": {
+        "21ef01a5f5ea1b84eb392920": "proyecto en el Block 73 de Villa Olímpica",
+        "292f9bb1df57d22136828aac": "block número 73 de la calle Los Jazmines #1506 de la Villa Olímpica de Ñuñoa"
+      },
+      "decision": "mismo_conflicto",
+      "rationale": "Mismo block 73 de Villa Olímpica y mismo comité de vivienda (Beatriz Cifuentes) en gestiones con Serviu por el edificio inhabitable desde 2010.",
+      "evidence": [
+        {
+          "document_id": "2df46157fb12b6e884595e61a04f87658b5c27665ba58f73125bed8c3e13a0e6",
+          "cita": "Beatriz Cifuentes, dirigenta social de la Coordinadora de Pobladores Newen"
+        },
+        {
+          "document_id": "2df46157fb12b6e884595e61a04f87658b5c27665ba58f73125bed8c3e13a0e6",
+          "cita": "un proyecto en el Block 73 de Villa Olímpica, proyecto de integración construido por el Estado en 1953 que quedó inhabitable después del terremoto de 2010"
+        },
+        {
+          "document_id": "1f120a939cb5b7d109238c9e7fe98212957bbe7fd36020f072d0da9b49ea9cb3",
+          "cita": "Beatriz Cifuentes, una de las voceras del Comité de Vivienda de la Villa Olímpica"
+        }
+      ]
+    }
+  ]
+}

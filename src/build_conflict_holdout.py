@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the blinded Fix 1A conflict holdout package.
+"""Build the blinded conflict validation sample package.
 
 The package deliberately omits every field produced by the backing detector.
 The calibration IDs are an explicit input: when they are unavailable the
@@ -19,9 +19,14 @@ from typing import Any, Iterable
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT_DIR = PROJECT_ROOT / "audit" / "holdout_1a"
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from paths import REVIEW_SAMPLES_DIR  # noqa: E402
+
+OUTPUT_DIR = REVIEW_SAMPLES_DIR / "validation_sample"
 DEFAULT_CALIBRATION_IDS = OUTPUT_DIR / "calibration_conflict_ids.txt"
-DEFAULT_SEED = "fix1a-holdout-20260922"
+DEFAULT_SEED = "validation-sample-seed"
 MAIN_N = 100
 STRESS_N = 50
 
@@ -70,7 +75,23 @@ def _display_path(path: Path) -> str:
         return str(path)
 
 
+def _content_file_index() -> dict[str, str]:
+    """url -> ruta relativa del texto completo local (para que el revisor lea la fuente). Vacio si no hay corpus."""
+    content_dir = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
+    index: dict[str, str] = {}
+    if content_dir.exists():
+        for path in content_dir.glob("*.json"):
+            try:
+                url = json.loads(path.read_text(encoding="utf-8")).get("url")
+            except (OSError, json.JSONDecodeError):
+                continue
+            if url:
+                index[url] = path.relative_to(PROJECT_ROOT).as_posix()
+    return index
+
+
 def _rows_for_ids(conn: sqlite3.Connection, conflict_ids: Iterable[str]) -> list[dict[str, Any]]:
+    content_files = _content_file_index()
     rows: list[dict[str, Any]] = []
     for conflict_id in conflict_ids:
         conflict = conn.execute(
@@ -98,6 +119,7 @@ def _rows_for_ids(conn: sqlite3.Connection, conflict_ids: Iterable[str]) -> list
             (conflict_id,),
         ):
             doc = dict(doc_row)
+            doc["content_file"] = content_files.get(doc["url"])
             doc["case_mentions"] = [dict(r) for r in conn.execute(
                 "SELECT case_mention_id, mention_index, comuna, codigo_comuna_ine, tipo_objeto_norm "
                 "FROM case_mention WHERE document_id = ? ORDER BY mention_index",
@@ -145,6 +167,10 @@ def build_package(
     seed: str = DEFAULT_SEED,
     main_n: int = MAIN_N,
     stress_n: int = STRESS_N,
+    require_exclusion: bool = True,
+    main_pool_sql: str | None = None,
+    stress_pool_sql: str | None = None,
+    exclude_sample_dirs: tuple[Path, ...] = (),
 ) -> dict[str, Any]:
     if not warehouse.exists():
         raise FileNotFoundError(warehouse)
@@ -159,7 +185,15 @@ def build_package(
         raise ValueError(f"IDs de calibración ausentes del warehouse: {unknown_calibration[:5]}")
     if calibration_count and calibration_count != 150:
         raise ValueError(f"La lista de calibración debe tener 150 IDs; tiene {calibration_count}")
-    eligible_ids = [cid for cid in all_ids if cid not in calibration_ids]
+    already_sampled: set[str] = set()
+    for sample_dir in exclude_sample_dirs:
+        for name in ("sample_main.json", "sample_stress.json"):
+            if (sample_dir / name).exists():
+                already_sampled |= {c["conflict_id"] for c in json.loads((sample_dir / name).read_text(encoding="utf-8"))}
+    # Universos de muestreo configurables (SQL que devuelve conflict_id): p. ej. el universo conservador del producto y,
+    # como contraste, lo que el producto descarta. Por defecto, todos los conflictos.
+    main_pool = {r[0] for r in con.execute(main_pool_sql)} if main_pool_sql else set(all_ids)
+    eligible_ids = [cid for cid in all_ids if cid not in calibration_ids and cid not in already_sampled and cid in main_pool]
     ordered = sorted(eligible_ids, key=lambda cid: _stable_key(seed, cid))
     main_ids = ordered[:main_n]
     no_backing = {
@@ -167,7 +201,11 @@ def build_package(
             "SELECT conflict_id FROM conflict WHERE respaldo_evidencia = 'sin_respaldo_exact_quote_detectado'"
         )
     }
-    stress_pool = [cid for cid in ordered if cid not in set(main_ids) and cid in no_backing]
+    if stress_pool_sql:
+        stress_universe = {r[0] for r in con.execute(stress_pool_sql)} - already_sampled - calibration_ids
+        stress_pool = sorted((cid for cid in stress_universe if cid not in set(main_ids)), key=lambda cid: _stable_key(seed, cid))
+    else:
+        stress_pool = [cid for cid in ordered if cid not in set(main_ids) and cid in no_backing]
     stress_ids = stress_pool[:stress_n]
     if len(main_ids) != main_n or len(stress_ids) != stress_n:
         raise ValueError(f"No se pudo seleccionar {main_n}+{stress_n}: {len(main_ids)}+{len(stress_ids)}")
@@ -176,16 +214,17 @@ def build_package(
     con.close()
     _assert_blind(main_records + stress_records)
     output_dir.mkdir(parents=True, exist_ok=True)
-    main_path = output_dir / "holdout_main_n100.json"
+    main_path = output_dir / "sample_main.json"
     # Neutral filename: the reviewer must not learn which detector side was
     # used to choose the directed stress sample.
-    stress_path = output_dir / "stress_sample_n50.json"
+    stress_path = output_dir / "sample_stress.json"
     main_path.write_text(json.dumps(main_records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     stress_path.write_text(json.dumps(stress_records, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    independence_verified = calibration_count == 150
+    # Sin lista de calibracion (muestra nueva sobre un diseno nuevo) no hay solapamiento que excluir.
+    independence_verified = calibration_count == 150 or not require_exclusion
     manifest = {
-        "artifact_version": "fix1a-holdout-v1",
-        "status": "ready_for_external_review" if independence_verified else "candidate_independence_unverified",
+        "artifact_version": "validation-sample",
+        "status": "ready_for_blind_review" if independence_verified else "candidate_independence_unverified",
         "blind": True,
         "model_labels_used": False,
         "detector_fields_excluded": sorted(DETECTOR_FIELDS),
@@ -213,7 +252,7 @@ def build_package(
         },
         "generated_without_api": True,
     }
-    (output_dir / "holdout_1a_manifest.json").write_text(
+    (output_dir / "validation_sample_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     return manifest
@@ -222,8 +261,19 @@ def build_package(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--calibration-ids", type=Path, default=DEFAULT_CALIBRATION_IDS)
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--seed", default=DEFAULT_SEED)
+    parser.add_argument("--main-n", type=int, default=MAIN_N)
+    parser.add_argument("--stress-n", type=int, default=STRESS_N)
+    parser.add_argument("--main-pool-sql", default=None, help="SQL que devuelve los conflict_id de donde muestrear la muestra principal")
+    parser.add_argument("--stress-pool-sql", default=None, help="SQL que devuelve los conflict_id de la muestra de contraste")
+    parser.add_argument("--exclude-sample-dir", type=Path, action="append", default=[], help="carpeta de una muestra previa cuyos conflictos se excluyen")
+    parser.add_argument("--no-exclusion", action="store_true", help="muestra nueva sobre un diseno nuevo: no hay lista de calibracion que excluir")
     args = parser.parse_args()
-    print(json.dumps(build_package(calibration_ids_path=args.calibration_ids), ensure_ascii=False, indent=2))
+    print(json.dumps(build_package(calibration_ids_path=args.calibration_ids, output_dir=args.output_dir, seed=args.seed,
+                                   main_n=args.main_n, stress_n=args.stress_n, require_exclusion=not args.no_exclusion,
+                                   main_pool_sql=args.main_pool_sql, stress_pool_sql=args.stress_pool_sql,
+                                   exclude_sample_dirs=tuple(args.exclude_sample_dir)), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

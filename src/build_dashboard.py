@@ -21,7 +21,7 @@ LABELS_PATH = PROJECT_ROOT / "config" / "dashboard_labels.json"
 OUTPUT_PATH = PROJECT_ROOT / "docs" / "index.html"
 HISTORICAL_CASE_PREFLIGHT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
 CONFLICT_AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
-CLASSIFIED_63_PATH = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+CONFLICT_UNIT_REVIEW_PATH = PROJECT_ROOT / "config" / "conflict_unit_review.json"
 CONFLICT_BUILDER_PATH = PROJECT_ROOT / "src" / "build_conflicts.py"
 WAREHOUSE_PATH = PROJECT_ROOT / "data" / "warehouse.sqlite"
 
@@ -157,8 +157,8 @@ select{{padding:6px 8px;border:1px solid var(--line);border-radius:5px}}
     <p class="note">El respaldo se detecta con 2 métodos: para 330 documentos con ambigüedad real
     (más de una mención de caso), un vínculo proyecto→mención verificado por el modelo de
     enriquecimiento y confirmado por 2 rondas de revisión externa ciega (0 fabricaciones en 809
-    evaluaciones, <code>v3_3_verified_index</code>); para el resto del corpus, el detector original
-    (<code>exact_substring_v1</code>) busca una cita literal de "objeto" que contenga el nombre
+    evaluaciones, <code>verified_index</code>); para el resto del corpus, el detector original
+    (<code>el detector textual retirado</code>) busca una cita literal de "objeto" que contenga el nombre
     normalizado del proyecto dentro de un documento con al menos una mención incluida. No encontrar
     respaldo no demuestra que el conflicto sea falso -- en la muestra de calibración del detector
     original (N=150 casos revisados manualmente), tuvo 64.5% de precisión y 77.8% de recall contra
@@ -365,7 +365,7 @@ def main() -> int:
         WAREHOUSE_PATH,
         HISTORICAL_CASE_PREFLIGHT_PATH,
         CONFLICT_AUDIT_REPORT_PATH,
-        CLASSIFIED_63_PATH,
+        CONFLICT_UNIT_REVIEW_PATH,
         CONFLICT_BUILDER_PATH,
     )
     dataset = build_dashboard_dataset()

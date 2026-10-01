@@ -1,0 +1,575 @@
+{
+  "schema_version": "verified_project_mention_index_corrections_v1",
+  "description": "Correcciones puntuales de case_mention_index para menciones de proyecto de la extraccion vigente que quedaron sin vinculo (null) pese a que la evidencia estructurada del warehouse identifica sin ambiguedad a que case_mention pertenecen. Nunca se inventa un indice sin evidencia literal verificada; cada entrada cita evidence_id reales y su texto exacto. Aditivo, nunca sobreescribe el shape la extraccion vigente salvo el campo case_mention_index puntual. Se agregaron 17 enlaces adjudicados a mano (15 del perfil de las 227 + 2 focales) y 8 mas tras revisar las 13 candidatas elegibles sin respaldo de la revision de 196; las otras candidatas revisadas NO se enlazaron.",
+  "corrections": [
+    {
+      "reference_key": "linea7_cochera_taller_renca_case_mention_index_fix",
+      "document_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8",
+      "nombre_proyecto": "Línea 7 del Metro",
+      "case_mention_index": 0,
+      "case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0",
+      "reason": "la extraccion vigente comprimio 3 intervenciones de Linea 7 descritas en el mismo articulo (cochera/taller en Renca, pique en Parque Forestal, estacion en Parque Araucano y una clasificación independiente 'componente_etapa') en una sola mencion paraguas 'Linea 7 del Metro', sin vincularla a ningun case_mention (case_mention_index=null). De las 3 case_mention del documento, solo la 0 (Renca) tiene decision_final_amplio='include'; las otras 2 (Santiago, Las Condes) son 'uncertain' y quedan fuera del universo incluido -- no se les fuerza vinculo. La evidencia estructurada de case_mention 0 (accion:0, objeto:0, geografica:0) coincide literalmente con el texto de la mencion de proyecto, sin ambiguedad.",
+      "source_url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2021/12/06/aparecen-nuevas-quejas-contra-linea-7-de-metro-por-cochera-en-renca-y-obras-en-parque-araucano.shtml",
+      "source_file_path": "Fuentes/fulltext/content/2ac8ba31690408cb822d8ce95453f7761161451b24f496dc395be4ba5e3e917f.json",
+      "source_file_sha256": "3774d3641c0f04e4ef3501d48641643336dc5a3dd12bee34e158eda264172db9",
+      "linked_evidence_ids": [
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:accion:0",
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:objeto:0",
+        "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:0:geografica:0"
+      ],
+      "citations": [
+        {
+          "quote": "la construcción de una cochera para los vagones y un taller para reparar los trenes",
+          "quote_sha256": "34a517b64c5159f00c7384cf27b9732e05f96f3d96ff0455d3efdcac9f200e2d"
+        },
+        {
+          "quote": "tanto vecinos de Renca como el municipio presentaron reclamos ante el Servicio de Evaluación Ambiental, como también al Tribunal Ambiental"
+        },
+        {
+          "quote": "Vecinos de Renca"
+        }
+      ],
+      "non_promoted_case_mentions": [
+        {
+          "case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:1",
+          "comuna": "Santiago",
+          "decision_final_amplio": "uncertain",
+          "note": "pique en Parque Forestal; queda sin vinculo mientras la decision siga 'uncertain'"
+        },
+        {
+          "case_mention_id": "7ede9b8944ed9ac225b1160290a7c0ac95026096808db706b5e6e0142abe53c8:2",
+          "comuna": "Las Condes",
+          "decision_final_amplio": "uncertain",
+          "note": "estacion en Parque Araucano; queda sin vinculo mientras la decision siga 'uncertain'"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_01",
+      "document_id": "024ebc47007474b7d3c440ef51ec0cc62da757d6dc32fc05e8dec3550f888d4c",
+      "nombre_proyecto": "Espacio del Buen Vivir",
+      "case_mention_index": 0,
+      "case_mention_id": "024ebc47007474b7d3c440ef51ec0cc62da757d6dc32fc05e8dec3550f888d4c:0",
+      "reason": "El documento tiene una sola case_mention (include, Pudahuel) y su cita de objeto nombra el proyecto 'Espacio del Buen Vivir'.",
+      "source_url": "https://portalmetropolitano.cl/pudahuel-busca-ocupar-como-servicio-municipal-las-instalaciones-de-la-excarcel-de-menores-en-la-comuna/",
+      "source_file_path": "Fuentes/fulltext/content/84cfd5369b9ca0ee02da560481e01b63449bca15d4a2a81b1638b9744f9c7346.json",
+      "source_file_sha256": "24a8ee7b5172210f847ffd8b80518fe73d8b8232cbd09d57f49a234f1233ff7e",
+      "linked_evidence_ids": [
+        "024ebc47007474b7d3c440ef51ec0cc62da757d6dc32fc05e8dec3550f888d4c:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "el inicio de la implementación del proyecto “Espacio del Buen Vivir”"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_02",
+      "document_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74",
+      "nombre_proyecto": "Loteo Lo Cruzat",
+      "case_mention_index": 0,
+      "case_mention_id": "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74:0",
+      "reason": "La case_mention 0 (include, Quilicura) tiene como cita de objeto el propio 'proyecto Loteo Lo Cruzat' (2.599 viviendas); las otras dos include del documento tratan la planta de aguas servidas y el humedal.",
+      "source_url": "https://www.revistadefrente.cl/la-comunidad-organizada-de-quilicura-lucha-contra-una-nueva-planta-de-aguas-servidas-y-en-defensa-de-humedal/",
+      "source_file_path": "Fuentes/fulltext/content/8ed77d0c35d1fe0d97be9595734d4e14bc09c619190e8ec52c1613926dbdcbc8.json",
+      "source_file_sha256": "6e78522150e105605872238b5424ef6866b713d8099667b3964cc8e680694fcb",
+      "linked_evidence_ids": [
+        "046f59be624a98cec6b4d3d0823f5bd665ec2345cc84e5693c85690f7fb7bd74:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "El proyecto Loteo Lo Cruzat cuenta con una inversión de 250 millones de dólares para la construcción y urbanización de 2.599 viviendas"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_04",
+      "document_id": "207a0a64ba66e74c33cda43dd8ae807bb9d0c24e6f40b5e549112355ef6e8bae",
+      "nombre_proyecto": "Nueva Renca",
+      "case_mention_index": 0,
+      "case_mention_id": "207a0a64ba66e74c33cda43dd8ae807bb9d0c24e6f40b5e549112355ef6e8bae:0",
+      "reason": "El documento tiene una sola case_mention (include, Renca): el Desnitrificador SCR de la Central Nueva Renca, que decisiones previas de identidad ya asocian a 'Nueva Renca'. La mencion 'Renca' (nombre de comuna) NO se enlaza.",
+      "source_url": "https://tribunalambiental.cl/tribunal-ambiental-confirma-infracciones-ambientales-detectadas-por-sma-en-complejo-renca/",
+      "source_file_path": "Fuentes/fulltext/content/14542e3f519826bc52dd4e3ad82f999d87bf21d9ffe162ab20532a41e807d69d.json",
+      "source_file_sha256": "2ffb154e190723dfef6ead6b4f78391157c2069882ab5d50582a8ae4e5072f23",
+      "linked_evidence_ids": [
+        "207a0a64ba66e74c33cda43dd8ae807bb9d0c24e6f40b5e549112355ef6e8bae:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "proyecto “Desnitrificador SCR para Caldera de Ciclo Combinado de Central Nueva Renca” de la empresa superó los niveles de ruido establecidos en la norma"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_05",
+      "document_id": "2238bdc5f781d35e3e465ebdd29f1b2880dca4d05c4960770bae927856c8ba8e",
+      "nombre_proyecto": "Cerrillos Data Center",
+      "case_mention_index": 0,
+      "case_mention_id": "2238bdc5f781d35e3e465ebdd29f1b2880dca4d05c4960770bae927856c8ba8e:0",
+      "reason": "Las case_mention 0 y 1 son un grupo duplicado (cmdup:fce0329a, match ambos, canonica 0) con la misma cita 'la aprobacion del proyecto Cerrillos Data Center'; se enlaza a la canonica, como en el respaldo por grupo duplicado.",
+      "source_url": "https://tribunalambiental.cl/sentencia-r27-270-2020-cerrillos-data-center/",
+      "source_file_path": "Fuentes/fulltext/content/81de7eb7742c1a2cd07ab91395630e99bb3e915c95d6d3834c5613285d7bcf1c.json",
+      "source_file_sha256": "9ebfc8c4688e3af101186a9e6e30fc8fc95bd7d3908b7031301b2950ec897115",
+      "linked_evidence_ids": [
+        "2238bdc5f781d35e3e465ebdd29f1b2880dca4d05c4960770bae927856c8ba8e:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "la aprobación del proyecto “Cerrillos Data Center”"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_06",
+      "document_id": "3b1a9deddd4c9f595644dbb8ba76e7543264c25e8d787f9c3549159920a1f61d",
+      "nombre_proyecto": "avenida Américo Vespucio, en la esquina de Renato Sánchez",
+      "case_mention_index": 0,
+      "case_mention_id": "3b1a9deddd4c9f595644dbb8ba76e7543264c25e8d787f9c3549159920a1f61d:0",
+      "reason": "Las case_mention 0 y 1 son un grupo duplicado (cmdup:f0f05021, match ambos, canonica 0) con la misma cita del proyecto de departamentos en Americo Vespucio esquina Renato Sanchez; se enlaza a la canonica.",
+      "source_url": "https://www.biobiochile.cl/noticias/nacional/region-metropolitana/2024/08/27/municipio-de-las-condes-debe-pagar-10-mil-millones-a-inmobiliaria-tras-error-en-apelacion-judicial.shtml",
+      "source_file_path": "Fuentes/fulltext/content/6b51192b1bac57a56f09a1d7e6cb933ef40e9a6652af591e9fc8212370a00086.json",
+      "source_file_sha256": "673b3cb5ec56f9a3140a41ef6ce10c01dd2481a375238baf746a5319952f784f",
+      "linked_evidence_ids": [
+        "3b1a9deddd4c9f595644dbb8ba76e7543264c25e8d787f9c3549159920a1f61d:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "proyecto de departamentos ubicado en avenida Américo Vespucio, en la esquina de Renato Sánchez"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_09",
+      "document_id": "5c74f923570a8bca831ea827b4135a16fcb159aeefd48c150cd4ae7dec8ecc1d",
+      "nombre_proyecto": "Paseo Cívico Metropolitano",
+      "case_mention_index": 5,
+      "case_mention_id": "5c74f923570a8bca831ea827b4135a16fcb159aeefd48c150cd4ae7dec8ecc1d:5",
+      "reason": "La case_mention 5 (unica include del documento, equipamiento urbano) tiene como cita de objeto el nombre 'Paseo Civico Metropolitano'; las otras siete son exclude.",
+      "source_url": "https://interferencia.cl/articulos/arquitecto-poduje-adelanta-hitos-del-plan-gubernamental-de-reconstruccion-post-18-de",
+      "source_file_path": "Fuentes/fulltext/content/219b7d9d5a722070f8a2a2a819d61f70e12c6039a5360d1d55156441feb2e4ad.json",
+      "source_file_sha256": "7f5ae0f047b8f17fb0ce67deac14d1159469b1466b45f3aba0c9cd0b06b9ff17",
+      "linked_evidence_ids": [
+        "5c74f923570a8bca831ea827b4135a16fcb159aeefd48c150cd4ae7dec8ecc1d:5:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Paseo Cívico Metropolitano"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_11",
+      "document_id": "6dd1b122a89c1a8df68d3a7ba4b34a1301ed171c734d0b1f1b61ca78ccd1e503",
+      "nombre_proyecto": "Camino Ruta G-30, Sector Cerrillos-Lonquén",
+      "case_mention_index": 0,
+      "case_mention_id": "6dd1b122a89c1a8df68d3a7ba4b34a1301ed171c734d0b1f1b61ca78ccd1e503:0",
+      "reason": "La case_mention 0 (include, Cerrillos) cita textualmente la obra vial 'Camino Ruta G-30, Sector Cerrillos-Lonquen'; las demas son uncertain/exclude de otros casos del articulo.",
+      "source_url": "https://www.aguilaycia.cl/post/responsabilidad-extracontractual-del-estado-qui%C3%A9n-repara-las-p%C3%A9rdidas-del-comercio-por-calles-cort",
+      "source_file_path": "Fuentes/fulltext/content/a4cf73b5c3992a79e96cd15d1a77db54fc44e57768de801971fa5a09aca5c7d7.json",
+      "source_file_sha256": "e0832c841f4f43c00f569b060e481eea97c548878f54abdadf0595250e217717",
+      "linked_evidence_ids": [
+        "6dd1b122a89c1a8df68d3a7ba4b34a1301ed171c734d0b1f1b61ca78ccd1e503:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "El MOP construyó la obra vial “Camino Ruta G-30, Sector Cerrillos-Lonquén”, generando un terraplén de aproximadamente 2 metros que obstruyó accesos a la propiedad e imposibilitó el proyecto de loteo industrial de la empresa."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_12",
+      "document_id": "7f0596176fffe8dce0655ae6353dbc6c1d08b247c8262d79a022f3b029adc6fb",
+      "nombre_proyecto": "Hotel Sheraton",
+      "case_mention_index": 0,
+      "case_mention_id": "7f0596176fffe8dce0655ae6353dbc6c1d08b247c8262d79a022f3b029adc6fb:0",
+      "reason": "El documento tiene una sola case_mention (include, Providencia): el permiso de edificacion N 35/2019 de dos torres de 32 pisos en el terreno del hotel Sheraton.",
+      "source_url": "https://radio.uchile.cl/2023/02/27/negocio-inmobiliario-del-hotel-sheraton-la-justicia-ordeno-la-casa/",
+      "source_file_path": "Fuentes/fulltext/content/575a4d4aab78823e79915957a126585e07f1df560e91d0bea17c1ce1e97146d9.json",
+      "source_file_sha256": "b60450c34d8d807e81d1e90e09111e862e69457a83f781ebc1dbc1ea80ff3e3b",
+      "linked_evidence_ids": [
+        "7f0596176fffe8dce0655ae6353dbc6c1d08b247c8262d79a022f3b029adc6fb:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "permiso de edificación ilegal N° 35/2019 a favor de los propietarios del hotel Sheraton, consistente en 2 torres habitacionales de 32 pisos cada una, previstas en el mismo terreno en donde se localiza el propio hotel y otra estructura en altura"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_13",
+      "document_id": "8876dd55ebf1a96d4870153f0e502dce7b15bd0da3dd99dbbf0fb81474f1649d",
+      "nombre_proyecto": "Construcción Eje Movilidad Independencia",
+      "case_mention_index": 0,
+      "case_mention_id": "8876dd55ebf1a96d4870153f0e502dce7b15bd0da3dd99dbbf0fb81474f1649d:0",
+      "reason": "El documento tiene una sola case_mention (include, Conchali) cuya cita de objeto es el propio proyecto 'Construccion Eje Movilidad Independencia'.",
+      "source_url": "https://www.doe.cl/alerta/25102023/202310253005",
+      "source_file_path": "Fuentes/fulltext/content/7fb33b9ec7206436cd1187d4e355b2e0f14a0785e4b87e932439fa49b09ba8b5.json",
+      "source_file_sha256": "c1ebdc89357775c0bb5a6392a0ce6efbf27107e06c46e0968852072513808c9c",
+      "linked_evidence_ids": [
+        "8876dd55ebf1a96d4870153f0e502dce7b15bd0da3dd99dbbf0fb81474f1649d:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "Construcción Eje Movilidad Independencia"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_14",
+      "document_id": "894c62ee791c8af113381e6e77c84ac82f79acfb508bf3273172222ae992d7dc",
+      "nombre_proyecto": "ex colegio Nuestra Señora del Pilar",
+      "case_mention_index": 2,
+      "case_mention_id": "894c62ee791c8af113381e6e77c84ac82f79acfb508bf3273172222ae992d7dc:2",
+      "reason": "La case_mention 2 (unica include, Las Condes, centro comercial) cita 'el terreno del ex colegio Nuestra Senora del Pilar'; las otras tres son exclude.",
+      "source_url": "https://www.df.cl/empresas/retail/la-pelea-que-debera-dar-cencosud-para-levantar-millonario-proyecto-en",
+      "source_file_path": "Fuentes/fulltext/content/4c710898424f4de6548137866bf15dfe7c10c30ffd6172ad16223725bc00252d.json",
+      "source_file_sha256": "73f05b5186e5bdfc1cd4a7109732cffb7748b9b077a22f6129a0bdfca275fb3c",
+      "linked_evidence_ids": [
+        "894c62ee791c8af113381e6e77c84ac82f79acfb508bf3273172222ae992d7dc:2:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "el terreno del ex colegio Nuestra Señora del Pilar"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_15",
+      "document_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93",
+      "nombre_proyecto": "Rancagua Express",
+      "case_mention_index": 0,
+      "case_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0",
+      "reason": "La case_mention 0 (include; El Bosque, Pedro Aguirre Cerda, Lo Espejo) tiene como cita de objeto 'Rancagua Express'; la 1 es exclude.",
+      "source_url": "https://www.tribunalambiental.cl/wp-content/uploads/2014/07/R-126-2016-31-08-2017-Sentencia.pdf",
+      "source_file_path": "Fuentes/fulltext/content/91b58d52f59539c926ea2f0627cebd939aae81a787e5363914d30d8b693f4c49.json",
+      "source_file_sha256": "921d2b930163a68d8af186afe11513bceba14ce65b9cd134ddee740c57da2b9c",
+      "linked_evidence_ids": [
+        "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Rancagua Express"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_17",
+      "document_id": "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c",
+      "nombre_proyecto": "Alto Las Condes",
+      "case_mention_index": 0,
+      "case_mention_id": "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c:0",
+      "reason": "El documento tiene una sola case_mention (include, Vitacura): 'Se conoce como Alto Las Condes 2, en Vitacura'. Es el proyecto de ampliacion, no el mall existente; el ID Alto Las Condes sigue siendo mixto (ver adjudicacion 6b84e4c69373bcadad41).",
+      "source_url": "https://www.df.cl/empresas/construccion/alto-las-condes-2-van-casi-dos-anos-y-vitacura-aun-no-define-si-permiso",
+      "source_file_path": "Fuentes/fulltext/content/d981f081b86e43ccb9748ff1f66ab8af356c9376b54158b0568c2020864a20c3.json",
+      "source_file_sha256": "fe168f76c976f3e0c6e024c27eb871e04455683cc5fc89e84cdcbfb6393dcae3",
+      "linked_evidence_ids": [
+        "a1d5ed4790e785907a4f9c60f1947ad79683b580dcb27e3cd2ced17a6f479a0c:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "Se conoce como Alto Las Condes 2, en Vitacura."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_23",
+      "document_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b",
+      "nombre_proyecto": "Lote 18-A1",
+      "case_mention_index": 0,
+      "case_mention_id": "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b:0",
+      "reason": "La case_mention 0 (include, Las Condes) cita la 'declaratoria como Monumento Nacional del Lote 18-A1 del complejo', que es exactamente esta mencion.",
+      "source_url": "https://www.latercera.com/noticia/villa-san-luis-mas-que-viviendas-sociales-un-monumento-nacional/",
+      "source_file_path": "Fuentes/fulltext/content/eaa3be5ce2d8cf861590486dad607bbc936e42984e1afe4260b16b436ada9261.json",
+      "source_file_sha256": "2ea8dae274cfc7765fc0b145edfb9f374b280f572de60ec5c1e2def7327dbe95",
+      "linked_evidence_ids": [
+        "dad38cea17cd90d6b915dccf58effcddcb7e26a82715330f5923ae3b744aa63b:0:objeto:3"
+      ],
+      "citations": [
+        {
+          "quote": "declaratoria como Monumento Nacional del Lote 18-A1 del complejo"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_25",
+      "document_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd",
+      "nombre_proyecto": "Alto Las Condes",
+      "case_mention_index": 0,
+      "case_mention_id": "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd:0",
+      "reason": "El documento tiene una sola case_mention (include, Vitacura): el permiso de edificacion de Alto Las Condes 2; el articulo llama 'Alto Norte' al mismo permiso.",
+      "source_url": "https://www.df.cl/empresas/construccion/cencosud-tira-la-esponja-y-decide-reformular-proyecto-alto-las-condes-2",
+      "source_file_path": "Fuentes/fulltext/content/7ac2d0aac24c56d63815e45f0d78a8004a07c69c3b65d9434fba1bf62831dd94.json",
+      "source_file_sha256": "a7ed1208f7949ceba29efc392b081bed55a2e3cc6cd8951918785a7f223ab332",
+      "linked_evidence_ids": [
+        "f80a0253c8db811174c3edd403e7c5eec685592ed90a2b98b3dab5f55d610bfd:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "permiso de edificación de uno de sus proyectos estrella: Alto Las Condes 2"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_26",
+      "document_id": "fe6a573d50b977e5dd0122f1857f0165e1d6de6dc3d307b28ad33638965bfa14",
+      "nombre_proyecto": "PDUC Urbanya",
+      "case_mention_index": 0,
+      "case_mention_id": "fe6a573d50b977e5dd0122f1857f0165e1d6de6dc3d307b28ad33638965bfa14:0",
+      "reason": "La case_mention 0 (include, Pudahuel) cita el 'proyecto de bodegas en la Etapa 0 del PDUC Urbanya'; la 1 es exclude y trata el instrumento urbano.",
+      "source_url": "https://defendamoslaciudad.cl/noticias/item/download/1615_39c3ab1de50fc66788e92131d0b9e101",
+      "source_file_path": "Fuentes/fulltext/content/0d1f8ebb693c5c8ecdf8f0fa4c5d68defac85a13afc77754346b78fd5a8c7a0f.json",
+      "source_file_sha256": "a620ee71d192c57c4ba0ab233432a7980570f757be71f7265bf48fc0de10ca7d",
+      "linked_evidence_ids": [
+        "fe6a573d50b977e5dd0122f1857f0165e1d6de6dc3d307b28ad33638965bfa14:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "proyecto de bodegas en la “Etapa 0” del PDUC Urbanya"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_27",
+      "document_id": "794698dd95e072b5bd32216627f35f9066e366ef822490c4efc4ed94983ee35f",
+      "nombre_proyecto": "Hotel Sheraton",
+      "case_mention_index": 0,
+      "case_mention_id": "794698dd95e072b5bd32216627f35f9066e366ef822490c4efc4ed94983ee35f:0",
+      "reason": "El documento tiene una sola case_mention (include, Providencia): el permiso de edificacion N 35 de octubre de 2019 y las dos torres de 32 pisos (295 departamentos) en el terreno del hotel Sheraton. No estaba entre las 26 candidatas del perfil porque la mencion no aparece literalmente en la cita; se enlaza por ser la unica case_mention del documento.",
+      "source_url": "https://radio.uchile.cl/2021/04/05/corrupcion-inmobiliaria-en-la-comuna-de-providencia/",
+      "source_file_path": "Fuentes/fulltext/content/51fb039e24ee9f415407b4a57ce9bc99481b4cfdc74984f738e7e4146d9e9b4d.json",
+      "source_file_sha256": "7d10130d875c8b399cf082bb989c2488c15d687aa1b52245b0fbe5c6f59f7fe3",
+      "linked_evidence_ids": [
+        "794698dd95e072b5bd32216627f35f9066e366ef822490c4efc4ed94983ee35f:0:objeto:0",
+        "794698dd95e072b5bd32216627f35f9066e366ef822490c4efc4ed94983ee35f:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "permiso de edificación N° 35 cursado en octubre de 2019"
+        },
+        {
+          "quote": "2 moles habitacionales y de equipamiento, de 32 pisos cada una, contemplándose 295 departamentos y 402 estacionamientos"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_huecos_2026-09-29_28",
+      "document_id": "1be549b04c4051cf48e741c5ec8723d9e60cf15c2accff9051b9ed4bae558a81",
+      "nombre_proyecto": "Parque Mapocho",
+      "case_mention_index": 0,
+      "case_mention_id": "1be549b04c4051cf48e741c5ec8723d9e60cf15c2accff9051b9ed4bae558a81:0",
+      "reason": "El documento tiene una sola case_mention (include, Vitacura): la disputa entre Las Condes y Vitacura por el cambio de uso de suelo en la Costanera Sur que extendia el area del futuro Parque Mapocho del PRMS. No estaba entre las 26 candidatas del perfil; se enlaza por ser la unica case_mention del documento.",
+      "source_url": "https://valuaciones.cl/las-condes-le-gana-a-vitacura-juicio-por-terrenos-en-una-de-las-zonas-mas-caras-de-santiago/",
+      "source_file_path": "Fuentes/fulltext/content/53da898bdd90aa2073f1beee64c68d0ed044a0178b69a6de11738d3417ea6b83.json",
+      "source_file_sha256": "c654af1c0ff339453fe3f0f2508cbf78f32399ef8b9069640e9f155829916713",
+      "linked_evidence_ids": [
+        "1be549b04c4051cf48e741c5ec8723d9e60cf15c2accff9051b9ed4bae558a81:0:objeto:0",
+        "1be549b04c4051cf48e741c5ec8723d9e60cf15c2accff9051b9ed4bae558a81:0:objeto:1",
+        "1be549b04c4051cf48e741c5ec8723d9e60cf15c2accff9051b9ed4bae558a81:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "La disputa se originó en 2017, cuando el consejo municipal de Vitacura aprobó modificar el plan regulador comunal en la zona de la Costanera Sur."
+        },
+        {
+          "quote": "pasando de habitacional a área verde"
+        },
+        {
+          "quote": "el cual buscó modificar las normas de edificación y uso de suelo permitidos en los lotes 1, 2 y 3 de propiedad de Las Condes"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_01",
+      "document_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63",
+      "nombre_proyecto": "Sheraton Santiago",
+      "case_mention_index": 0,
+      "case_mention_id": "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0",
+      "reason": "La case_mention 0 (include, Providencia) describe el anteproyecto nuevo del hotel Sheraton (dos edificios, hotel y 152 viviendas, 359 estacionamientos), que es lo que la mencion nombra; la 1 trata un proyecto anterior de caracteristicas similares.",
+      "source_url": "https://www.elmostrador.cl/noticias/pais/2024/08/07/vecinos-de-providencia-en-alerta-ante-nuevo-ante-proyecto-aprobado-en-terrenos-del-hotel-sheraton/",
+      "source_file_path": "Fuentes/fulltext/content/34dab33051f31c812429c33fc0b311588e3e503ee4d1be0d9842d0ec38098096.json",
+      "source_file_sha256": "7828cfaf08b5c03d816ae5464db4e3e05612df0f2403569befcc1ed8e6488043",
+      "linked_evidence_ids": [
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:0",
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:1",
+        "ab364354f30566c3ea5298c1ce22bede2d41a4f1d560d22d47bf1689ee473f63:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "un ante proyecto que considera la construcción de dos edificios, uno de veinte pisos y otro de seis pisos, en los terrenos del hotel Sheraton"
+        },
+        {
+          "quote": "el anteproyecto visado considera el hotel y 152 viviendas, además de 359 estacionamientos para automóviles y tres locales comerciales"
+        },
+        {
+          "quote": "un segundo anteproyecto de ampliación del actual inmueble para una zona de cafetería de casi 200 metros cuadrados"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_02",
+      "document_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992",
+      "nombre_proyecto": "Parque Las Moscas",
+      "case_mention_index": 0,
+      "case_mention_id": "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0",
+      "reason": "La case_mention 0 (include) es el permiso de 4.200 viviendas y 21 locales en tres edificios de 15 pisos del terreno de Parque Las Moscas; las otras tres son exclude y tratan la resolucion 38-99 y Estacion Central.",
+      "source_url": "https://www.elmostrador.cl/noticias/opinion/2017/07/27/el-destino-de-gueto-vertical-del-parque-las-moscas/",
+      "source_file_path": "Fuentes/fulltext/content/6e2154b07f2c611cbaa48c88f821044cd718fd2dc58fdcd4e8824e20f103868c.json",
+      "source_file_sha256": "4072652ceb2382ad730c957fdddf40f902e6b2c4eaf82b248277fe81ee6a5139",
+      "linked_evidence_ids": [
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:0",
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:1",
+        "9df4d2209ca636e88d75e4e93b4f5f572534db1424fb26209d4139715de18992:0:objeto:2"
+      ],
+      "citations": [
+        {
+          "quote": "El permiso estaba cursado para 4.200 viviendas y 21 locales comerciales"
+        },
+        {
+          "quote": "considera 3 edificios de 15 pisos cada uno"
+        },
+        {
+          "quote": "El permiso Nº 16059 de junio de 2016 para el sitio de 9.339 m2 con dirección Carlos Valdovinos 3017, para un edificio de 15 pisos y 1.400 viviendas"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_03",
+      "document_id": "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673",
+      "nombre_proyecto": "Avenida Libertador Bernardo O'Higgins N° 3.901",
+      "case_mention_index": 2,
+      "case_mention_id": "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2",
+      "reason": "El fallo trata cuatro edificios de Inmobiliaria Suksa con direcciones distintas (Toro Mazote 315 y 304, Avenida Libertador Bernardo O'Higgins 3.901, Recreo 321). Las cuatro case_mention comparten la misma cita generica de objeto, pero cada una tiene su propia evidencia geografica: la 2 es la del 3.901. El detector de duplicados las agrupo por esa cita, aunque son proyectos distintos.",
+      "source_url": "https://www.diarioconstitucional.cl/2019/09/06/cs-rechaza-reclamos-de-ilegalidad-por-limites-a-construccion-de-edificios-en-estacion-central/",
+      "source_file_path": "Fuentes/fulltext/content/3402613c127e411b3372c879c20ef10d5d4bfa5adebc31b1dfd237aef17f82e5.json",
+      "source_file_sha256": "33701e5d2135a26caaad1a431aea8995a1f2d66e3cf3a2da8f081348591aadd1",
+      "linked_evidence_ids": [
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:geografica:0",
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:geografica:1",
+        "f5cb2a3ee6302ea675e3a43c7c8e89c19a531f8d1d086211f193522c35d2d673:2:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "Avenida Libertador Bernardo O'Higgins N° 3.901"
+        },
+        {
+          "quote": "Estación Central"
+        },
+        {
+          "quote": "proyectos de construcciones de edificios"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_04",
+      "document_id": "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad",
+      "nombre_proyecto": "Casa de la Viña Manquehue",
+      "case_mention_index": 0,
+      "case_mention_id": "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad:0",
+      "reason": "La case_mention 0 (include, Vitacura) es el condominio tipo A de 39 casas y dos edificios cuestionado por la Contraloria junto a la Casa de la Vina Manquehue (anteproyecto Parque Rabat); la 1 es exclude y generica. Se enlaza la mencion al condominio sin fusionar proyectos.",
+      "source_url": "https://www.df.cl/empresas/construccion/el-golpe-de-la-seremi-de-vivienda-y-la-contraloria-a-proyecto-inmobiliario",
+      "source_file_path": "Fuentes/fulltext/content/4265a657a4520c17848f5c60baded7f95b647eb777534bd88a98dddecd8b2a5e.json",
+      "source_file_sha256": "e20883ea3684ddb13d0d0e704146cf2b39084119d1be10f3ea1df09320d531d9",
+      "linked_evidence_ids": [
+        "f6ed71c350f7781f3538548953159225e40a370f6276ee416520e53d3d2545ad:0:objeto:0"
+      ],
+      "citations": [
+        {
+          "quote": "un condominio tipo A compuesto por 39 casas y dos edificios (con 20 departamentos)"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_05",
+      "document_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a",
+      "nombre_proyecto": "Casa de la Viña Manquehue",
+      "case_mention_index": 0,
+      "case_mention_id": "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0",
+      "reason": "El documento tiene la case_mention 0 (include, Vitacura): el condominio tipo A de 39 casas y dos edificios aprobado por la DOM de Vitacura y cuestionado por la Contraloria, adyacente a la Casa de la Vina Manquehue.",
+      "source_url": "https://www.t13.cl/noticia/ex-ante/nacional/contraloria-deja-cuesta-arriba-proyecto-condominio-lujo-casa-mas-cara-santiago-10-1-2026",
+      "source_file_path": "Fuentes/fulltext/content/fc5ea66e5f36f7847f57d27d3bd409fdb6c86dcddabd960707d66bcf801e1f7a.json",
+      "source_file_sha256": "5157f3cd7fea1138473450ff6ecf64995629a94f617523b40586e4504f060a55",
+      "linked_evidence_ids": [
+        "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0:objeto:0",
+        "42487c2fd4ace5acb6293905017f01fd1db2eeadbf656299f34bb2e734f80e6a:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Según consta en el propio dictamen, en 2025 la Dirección de Obras Municipales de Vitacura aprobó, mediante la resolución N° 155, un anteproyecto de edificación asociado al proyecto denominado Parque Rabat."
+        },
+        {
+          "quote": "La iniciativa consideraba un condominio tipo A, compuesto por 39 casas y dos edificios, sin contemplar la demolición ni refacción de la casona, la que se mantendría como parte de los bienes comunes."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_06",
+      "document_id": "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5",
+      "nombre_proyecto": "Manantiales",
+      "case_mention_index": 0,
+      "case_mention_id": "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0",
+      "reason": "La case_mention 0 (include, Lo Barnechea) une la Modificacion N 9 al PRC, que cambia el uso de suelo, con el 'pueblo de montaña' que se levantaria junto al centro de esqui Manantiales: el cambio regulatorio y el proyecto son el mismo conflicto. Las case_mention 2 y 3 tratan terrenos aledaños de otros propietarios y no se usan.",
+      "source_url": "https://www.ciperchile.cl/2019/01/31/el-mega-negocio-inmobiliario-que-enfrenta-a-los-duenos-de-la-nieve/",
+      "source_file_path": "Fuentes/fulltext/content/d598a1b7ed956573a8eeb8af6dc2fd4b676507fb2990058df37814e0de7c9274.json",
+      "source_file_sha256": "b2e9231f55a0d9e6d160efe1979a753c86be5d4c8ff0f9bf2c5fd46f5e6b6a1f",
+      "linked_evidence_ids": [
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0:objeto:0",
+        "bf04e61caaaa336eb871bd82f566ddf4d8c40ad092b88c40dfdbc81a595828a5:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "publicó la Modificación Nº9 al Plan Regulador Comunal (PRC), que cambia el uso de suelo en la zona, permitiendo construir edificios, casas y condominios donde antes solo se autorizaba equipamiento para deportes de nieve, como andariveles y canchas."
+        },
+        {
+          "quote": "junto al cual se levantaría un “pueblo de montaña” de nivel mundial."
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_07",
+      "document_id": "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e",
+      "nombre_proyecto": "calle Pastor Fernández 18.580",
+      "case_mention_index": 0,
+      "case_mention_id": "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0",
+      "reason": "La case_mention 0 (include, Lo Barnechea) une la actualizacion del PRC con la compra del predio 'con el fin de desarrollar un proyecto inmobiliario', que es el reclamo de ilegalidad de Inmobiliaria Las Hojas Dos sobre Pastor Fernandez 18.580. La 1 recoge la misma defensa (permisos de otros proyectos de la inmobiliaria) y no se usa.",
+      "source_url": "https://www.df.cl/empresas/construccion/otra-inmobiliaria-rechaza-nuevo-plan-regulador-de-lo-barnechea-dice-que-es",
+      "source_file_path": "Fuentes/fulltext/content/f2ecdce0ed10542643f4efa1e58e6acac9df597d5dca9f3870d1506cf04c464d.json",
+      "source_file_sha256": "9995c43efa98def01a2e84347cb2d836ee735dc9e9dffe35af99de1bb5d3afc4",
+      "linked_evidence_ids": [
+        "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0:objeto:0",
+        "984ed6da0208be69af79d85d5df2ff7b41baf1f9ebce7791d030dcdcf6a6c85e:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Actualización del Plan Regulador Comunal (PRC) de Lo Barnechea"
+        },
+        {
+          "quote": "con el fin de desarrollar un proyecto inmobiliario"
+        }
+      ]
+    },
+    {
+      "reference_key": "adjudicacion_13_2026-09-29_08",
+      "document_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93",
+      "nombre_proyecto": "Renovación Flota Material Rodante",
+      "case_mention_index": 0,
+      "case_mention_id": "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0",
+      "reason": "El fallo R-126-2016 del Segundo Tribunal Ambiental trata el fraccionamiento de Rancagua Express en componentes, entre ellos la renovacion de la flota de material rodante; la case_mention 0 (include; El Bosque, Pedro Aguirre Cerda, Lo Espejo) es ese proyecto. La cita de objeto nombra el proyecto mayor, no el componente.",
+      "source_url": "https://www.tribunalambiental.cl/wp-content/uploads/2014/07/R-126-2016-31-08-2017-Sentencia.pdf",
+      "source_file_path": "Fuentes/fulltext/content/91b58d52f59539c926ea2f0627cebd939aae81a787e5363914d30d8b693f4c49.json",
+      "source_file_sha256": "921d2b930163a68d8af186afe11513bceba14ce65b9cd134ddee740c57da2b9c",
+      "linked_evidence_ids": [
+        "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0:objeto:0",
+        "89d2d4d8614389da5cce9e79423c4dd044c7e9f8532c75b53399787575c0ac93:0:objeto:1"
+      ],
+      "citations": [
+        {
+          "quote": "Mejoramiento Integral de la Infraestructura FerroviariaTramo Santiago-Rancagua"
+        },
+        {
+          "quote": "Rancagua Express"
+        }
+      ]
+    }
+  ]
+}

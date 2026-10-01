@@ -272,10 +272,9 @@ def build_project_mention_geography(
     con: sqlite3.Connection,
     reviewed_duplicate_links: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Fix 1F (2026-09-26): geografia real de proyectos por case_mention,
-    mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT -- ahora que
-    enrichment_project_mention.case_mention_index esta materializado
-    (migracion v3.2->v3.3), resolver que comuna corresponde a cada mencion
+    """geografia real de proyectos por case_mention,
+    mismo mecanismo que la revision de respaldo uso para el respaldo de CONFLICT -- ahora que
+    enrichment_project_mention.case_mention_index esta materializado, resolver que comuna corresponde a cada mencion
     de proyecto es un JOIN directo contra case_mention/case_mention_geography,
     no una heuristica documental. Reemplaza la aproximacion vieja de
     dashboard_data.py (cualquier mencion del documento -> comuna del

@@ -10,9 +10,34 @@
       "type": "array",
       "maxItems": 6,
       "items": {
-        "type": "string"
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "description": "Nombre/direccion del proyecto o edificio."
+          },
+          "case_mention_index": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Indice (0-based, segun el orden en que se listan los CASE_MENTIONS EXISTENTES en el mensaje del usuario) de la case_mention cuyo objeto de disputa ES este proyecto. Usa null cuando el proyecto aparece en el documento pero ninguna case_mention listada lo tiene como su objeto central (mencion de pasada, ejemplo comparativo, contexto general) -- no fuerces un indice solo por cercania tematica o geografica. Si el mismo proyecto es el objeto de MAS de una case_mention (ej. dos parrafos separados que documentan el mismo caso), usa el indice de la mas completa/especifica, nunca inventes multiples entradas para el mismo nombre."
+          },
+          "case_mention_index_verificada": {
+            "type": "boolean"
+          },
+          "case_mention_index_original_modelo": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "nombre",
+          "case_mention_index",
+          "case_mention_index_verificada"
+        ]
       },
-      "description": "v3.2 NUEVO (hallazgo real de Luna: nombre_proyecto es un solo campo por documento, pero un articulo puede mezclar varios edificios/proyectos distintos -- eso se perdia). Lista de TODOS los nombres de proyecto/edificio distintos que el texto menciona con nombre propio (no el fenomeno agregado). Si solo hay uno, coincide con nombre_proyecto. Lista vacia si el articulo no nombra ningun proyecto especifico."
+      "description": "Lista de TODOS los nombres de proyecto/edificio distintos que el texto menciona con nombre propio (no el fenomeno agregado); nombre_proyecto es un solo campo por documento y un articulo puede mezclar varios. Si solo hay uno, coincide con nombre_proyecto. Lista vacia si el articulo no nombra ningun proyecto especifico. Cada elemento es un objeto {nombre, case_mention_index} -- ver descripcion de case_mention_index."
     },
     "objeto_disputa_norm": {
       "type": "string",
@@ -31,7 +56,7 @@
         "otro",
         "no_determinable"
       ],
-      "description": "v3 NUEVO (hallazgo de Sol): que se disputa exactamente, distinto de tipo_objeto_norm (que YA clasifica el TIPO de edificio/objeto en la Etapa 1, ej. 'edificio_residencial'). Aqui se pide el EJE del conflicto sobre ese objeto: ej. un edificio_residencial puede disputarse por altura_densidad, por impacto_ambiental, o por patrimonio, segun el articulo. No repitas tipo_objeto_norm aqui."
+      "description": "Que se disputa exactamente, distinto de tipo_objeto_norm (que YA clasifica el TIPO de edificio/objeto en la Etapa 1, ej. 'edificio_residencial'). Aqui se pide el EJE del conflicto sobre ese objeto: ej. un edificio_residencial puede disputarse por altura_densidad, por impacto_ambiental, o por patrimonio, segun el articulo. No repitas tipo_objeto_norm aqui."
     },
     "objeto_disputa_raw": {
       "type": "string",
@@ -116,7 +141,7 @@
               "mixto",
               "no_determinable"
             ],
-            "description": "v3 NUEVO (hallazgo de Sol, reemplaza tono_emocional libre): postura de ESTE actor especifico frente al proyecto/conflicto, segun lo que el texto documenta -- no una impresion general del articulo. Operacionalizable para redes (Dario), a diferencia de un texto libre de tono."
+            "description": "Postura de ESTE actor especifico frente al proyecto/conflicto, segun lo que el texto documenta -- no una impresion general del articulo. Operacionalizable para redes de actores, a diferencia de un texto libre de tono."
           },
           "nivel_involucramiento": {
             "type": "string",
@@ -124,7 +149,7 @@
               "central",
               "secundario"
             ],
-            "description": "v3.1 NUEVO (hallazgo real de Sol, verificado: 16/30 documentos de prueba saturaron el maximo de 12 actores; un caso real incluyo una fundacion deportiva, un colegio, un Cesfam, una empresa de combustibles y 'grupos de narcotraficantes' como actores solo por aparecer mencionados de pasada en un articulo sobre recuperacion de barrios -- ruido real para una red de actores del conflicto). central: ejecuta una accion, la recibe, toma una decision, o participa organizadamente en la controversia. secundario: aparece mencionado pero sin ese rol estructural -- util para filtrar sin perder informacion, no se descarta el actor, se etiqueta."
+            "description": "Un articulo puede nombrar actores solo de pasada (una fundacion deportiva, un colegio, una empresa de combustibles en un articulo sobre recuperacion de barrios): eso es ruido para una red de actores del conflicto. central: ejecuta una accion, la recibe, toma una decision, o participa organizadamente en la controversia. secundario: aparece mencionado pero sin ese rol estructural -- util para filtrar sin perder informacion, no se descarta el actor, se etiqueta."
           },
           "cita": {
             "type": "string",
@@ -132,7 +157,7 @@
           },
           "proyecto_asociado": {
             "type": "string",
-            "description": "v3.2 NUEVO (hallazgo real de Luna): a cual de los nombres en proyectos_mencionados[] se refiere la participacion de ESTE actor (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si no se puede determinar a cual proyecto especifico corresponde este actor."
+            "description": "A cual de los nombres en proyectos_mencionados[] se refiere la participacion de ESTE actor (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si no se puede determinar a cual proyecto especifico corresponde este actor."
           },
           "cita_verificada": {
             "type": "boolean"
@@ -163,7 +188,7 @@
     "instituciones_mencionadas": {
       "type": "array",
       "maxItems": 10,
-      "description": "v3 NUEVO (hallazgo de Sol y Luna, reemplaza institucion_decisora unico): todas las instituciones que el texto menciona como intervinientes, sin afirmar cual tiene la competencia juridica real -- eso requiere expediente oficial, no una nota de prensa. Puede haber varias en secuencia (DOM, Contraloria, tribunal) en un mismo conflicto.",
+      "description": "Todas las instituciones que el texto menciona como intervinientes, sin afirmar cual tiene la competencia juridica real -- eso requiere expediente oficial, no una nota de prensa. Puede haber varias en secuencia (DOM, Contraloria, tribunal) en un mismo conflicto.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -202,7 +227,7 @@
           },
           "proyecto_asociado": {
             "type": "string",
-            "description": "v3.2 NUEVO (hallazgo real de Luna): a cual de los nombres en proyectos_mencionados[] se refiere la actuacion de ESTA institucion (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si la actuacion es general/no especifica a un proyecto (ej. un dictamen sobre la comuna completa)."
+            "description": "A cual de los nombres en proyectos_mencionados[] se refiere la actuacion de ESTA institucion (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si la actuacion es general/no especifica a un proyecto (ej. un dictamen sobre la comuna completa)."
           },
           "cita_verificada": {
             "type": "boolean"
@@ -243,7 +268,7 @@
         "no_aplica",
         "no_afirmado_por_la_fuente"
       ],
-      "description": "v3.0.1 CORREGIDO (hallazgo real de Sol: contradiccion entre 'afirma o implica' y 'si no lo dice explicitamente' en la version anterior). Solo se rellena con una institucion cuando LA FUENTE PERIODISTICA atribuye EXPLICITAMENTE a esa institucion la decision correspondiente -- no una impresion o inferencia del modelo sobre quien 'deberia' decidir. Esto NO es una determinacion juridica de competencia real -- eso viene de expediente oficial, nunca de una nota de prensa. Usar no_afirmado_por_la_fuente en cualquier otro caso, incluida la ambiguedad."
+      "description": "Solo se rellena con una institucion cuando LA FUENTE PERIODISTICA atribuye EXPLICITAMENTE a esa institucion la decision correspondiente -- no una impresion o inferencia del modelo sobre quien 'deberia' decidir. Esto NO es una determinacion juridica de competencia real -- eso viene de expediente oficial, nunca de una nota de prensa. Usar no_afirmado_por_la_fuente en cualquier otro caso, incluida la ambiguedad."
     },
     "instrumento_norm": {
       "type": "string",
@@ -264,7 +289,7 @@
         "otro",
         "no_aplica"
       ],
-      "description": "v3.1 AMPLIADO (hallazgo real de Sol, expandido con patrones reales, no imaginados: de 10 casos 'otro' en la prueba de 30, 5 eran variantes de Resolucion Exenta/RCA, 2 eran recursos judiciales presentados -sin fallo aun, distinto de sentencia_judicial-, 1 era un oficio Seremi -mismo patron ya visto en el piloto Estacion Central-). Tipo de instrumento/acto administrativo o normativo central del caso, si el texto lo identifica con numero o nombre propio (ej. 'Dictamen N.27918', 'Decreto Alcaldicio N.324', 'Resolucion Exenta N.1090/22')."
+      "description": "Tipo de instrumento/acto administrativo o normativo central del caso, si el texto lo identifica con numero o nombre propio (ej. 'Dictamen N.27918', 'Decreto Alcaldicio N.324', 'Resolucion Exenta N.1090/22'). Incluye variantes de Resolucion Exenta/RCA, recursos judiciales presentados (sin fallo aun, distinto de sentencia_judicial) y oficios de Seremi."
     },
     "instrumento_raw": {
       "type": "string",
@@ -283,7 +308,7 @@
     },
     "resultado_actuacion": {
       "type": "string",
-      "description": "v3 NUEVO (hallazgo de Sol): que resultado concreto tuvo la accion/instrumento principal segun el texto (ej. 'invalido 49 permisos', 'rechazo el recurso', 'quedo pendiente'). Cadena vacia si el texto no lo resuelve."
+      "description": "Que resultado concreto tuvo la accion/instrumento principal segun el texto (ej. 'invalido 49 permisos', 'rechazo el recurso', 'quedo pendiente'). Cadena vacia si el texto no lo resuelve."
     },
     "tipo_evidencia_fuente": {
       "type": "string",
@@ -293,11 +318,11 @@
         "mixta",
         "no_aplica"
       ],
-      "description": "v3.1 RENOMBRADO (hallazgo real de Sol: el nombre viejo 'evidencia_desempeno' sonaba a que EL PIPELINE verifico el desempeno, cuando en realidad solo significa que LA PRENSA reporta un dato chequeable -- riesgo real de que capas posteriores lo malinterpreten como verificacion primaria). declarativa: afirmacion/promesa sin dato concreto. documental_cuantitativa_reportada: la fuente reporta un dato documental o cuantitativo concreto y verificable (numero de resolucion, fallo, dictamen, cifra oficial) -- esto NO significa que el pipeline haya verificado el documento primario, solo que la prensa cita algo especifico y chequeable, no una vaguedad. La verificacion primaria real (descargar y cotejar el documento oficial) es una capa posterior, separada, que hara Christian/Nicolas -- no este campo. mixta: ambas. no_aplica: no corresponde."
+      "description": "declarativa: afirmacion/promesa sin dato concreto. documental_cuantitativa_reportada: la fuente reporta un dato documental o cuantitativo concreto y verificable (numero de resolucion, fallo, dictamen, cifra oficial) -- esto NO significa que el pipeline haya verificado el documento primario, solo que la prensa cita algo especifico y chequeable, no una vaguedad. La verificacion primaria real (descargar y cotejar el documento oficial) es una capa posterior y separada, no este campo. mixta: ambas. no_aplica: no corresponde."
     },
     "triage_consistency_check": {
       "type": "boolean",
-      "description": "v3.1 NUEVO (hallazgo de Sol): true si, durante este enriquecimiento mas profundo, encuentras algo que contradice una premisa central de la clasificacion de Etapa 1 (ej. Etapa 1 dijo 'accion contenciosa confirmada' pero al leer el articulo completo no identificas ninguna accion contenciosa real). NO cambia la decision de Etapa 1 por si solo -- solo marca el documento como candidato a auditoria retrospectiva del clasificador."
+      "description": "true si, durante este enriquecimiento mas profundo, encuentras algo que contradice una premisa central de la clasificacion de Etapa 1 (ej. Etapa 1 dijo 'accion contenciosa confirmada' pero al leer el articulo completo no identificas ninguna accion contenciosa real). NO cambia la decision de Etapa 1 por si solo -- solo marca el documento como candidato a auditoria retrospectiva del clasificador."
     },
     "triage_consistency_note": {
       "type": "string",
@@ -306,7 +331,7 @@
     "linea_tiempo": {
       "type": "array",
       "maxItems": 5,
-      "description": "v3.1 ACOTADO (hallazgo real de Sol: 14/30 documentos de prueba saturaron el maximo de 5 hitos, y algunos incluian contexto historico general -ej. 'a fines de los 60 se construyeron las primeras villas del sector', division administrativa de la comuna en 1985- que NO es parte de la trayectoria del conflicto inmobiliario/urbano documentado, solo ambientacion del barrio). Hasta 5 hitos que pertenecen DIRECTAMENTE a la trayectoria del conflicto actual (origen del proyecto -> permiso -> oposicion/denuncia -> actuacion institucional -> resolucion/desenlace) -- NO incluyas historia general del barrio, la comuna, la empresa o la normativa salvo que ese hecho sea causal o procesalmente parte del conflicto documentado. Lista vacia si el texto no permite determinar ninguna fecha de un hecho del conflicto (no confundir con la fecha de publicacion del articulo ni con contexto historico).",
+      "description": "Hasta 5 hitos que pertenecen DIRECTAMENTE a la trayectoria del conflicto actual (origen del proyecto -> permiso -> oposicion/denuncia -> actuacion institucional -> resolucion/desenlace) -- NO incluyas historia general del barrio, la comuna, la empresa o la normativa (ej. 'a fines de los 60 se construyeron las primeras villas del sector') salvo que ese hecho sea causal o procesalmente parte del conflicto documentado. Lista vacia si el texto no permite determinar ninguna fecha de un hecho del conflicto (no confundir con la fecha de publicacion del articulo ni con contexto historico).",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -324,7 +349,7 @@
               "aproximada",
               "desconocida"
             ],
-            "description": "v3 NUEVO (hallazgo de Sol): que tan precisa es realmente la fecha -- evita que 'fecha: 2018' aparente la misma precision que 'fecha: 2018-04-26'."
+            "description": "Que tan precisa es realmente la fecha -- evita que 'fecha: 2018' aparente la misma precision que 'fecha: 2018-04-26'."
           },
           "descripcion": {
             "type": "string",
@@ -347,11 +372,11 @@
           },
           "evidencia_hito": {
             "type": "string",
-            "description": "v3.0.1 NUEVO (hallazgo real de Sol: fecha_year_grounded solo probaba que el año aparece EN ALGUNA PARTE del articulo, no que ese hito especifico ocurrio ese año -- un articulo con hitos en 2018/2021/2024 podia mezclar la fecha equivocada con la descripcion equivocada y aun asi pasar la verificacion vieja). Fragmento literal del texto que sustenta ESTE hito especifico (la fecha Y el hecho juntos, no una cita generica del articulo). Cadena vacia si no hay una cita literal razonable -- no inventes una."
+            "description": "Fragmento literal del texto que sustenta ESTE hito especifico (la fecha Y el hecho juntos, no una cita generica del articulo). Cadena vacia si no hay una cita literal razonable -- no inventes una."
           },
           "proyecto_asociado": {
             "type": "string",
-            "description": "v3.2 NUEVO (hallazgo real de Luna: nombre_proyecto es un solo campo por documento; un articulo que mezcla varios edificios/proyectos perdia la asociacion evento->proyecto especifico). A cual de los nombres en proyectos_mencionados[] pertenece ESTE hito especifico (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si el hito es del fenomeno agregado, no de un proyecto puntual."
+            "description": "A cual de los nombres en proyectos_mencionados[] pertenece ESTE hito especifico (copia literal de uno de esos nombres). Cadena vacia si solo hay un proyecto en el articulo (usar nombre_proyecto) o si el hito es del fenomeno agregado, no de un proyecto puntual."
           },
           "fecha_year_grounded": {
             "type": "boolean"
@@ -397,7 +422,7 @@
     "revision": {
       "type": "object",
       "additionalProperties": false,
-      "description": "v3.1 REESTRUCTURADO (hallazgo real de Sol: el booleano requiere_revision_manual dio 28/30=93.3% en la prueba de 30 -- inutil como filtro porque mezclaba severidades totalmente distintas: un actor secundario con postura incierta producia el mismo flag que dos versiones contradictorias del caso). Reemplaza requiere_revision_manual + motivo_revision_manual con una cola priorizada real.",
+      "description": "Cola de revision priorizada por severidad (un booleano unico mezclaba severidades totalmente distintas y resultaba inutil como filtro): el nivel indica cuanta atencion humana requiere el registro.",
       "properties": {
         "nivel": {
           "type": "string",
@@ -434,6 +459,12 @@
     "evidencia_objeto_disputa_original_modelo": {
       "type": "string"
     },
+    "decision_documento_etapa1": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "actores_posiblemente_truncados": {
       "type": "boolean"
     },
@@ -446,8 +477,8 @@
     "url": {
       "type": "string"
     },
-    "decision_documento_etapa1": {
-      "type": "string"
+    "n_case_mentions_etapa1": {
+      "type": "integer"
     },
     "contract_version_etapa1": {
       "type": [
@@ -483,12 +514,6 @@
       "type": "string"
     },
     "schema_sha256": {
-      "type": "string"
-    },
-    "record_schema_sha256": {
-      "type": "string"
-    },
-    "script_sha256": {
       "type": "string"
     },
     "run_id": {
@@ -528,13 +553,16 @@
         "null"
       ]
     },
+    "record_schema_sha256": {
+      "type": "string"
+    },
+    "script_sha256": {
+      "type": "string"
+    },
     "runner_script_sha256": {
       "type": "string"
     },
     "core_enrichment_script_sha256": {
-      "type": "string"
-    },
-    "record_schema_sha256_at_generation": {
       "type": "string"
     }
   },
@@ -566,6 +594,7 @@
     "instituciones_posiblemente_truncadas",
     "hitos_posiblemente_truncados",
     "url",
+    "n_case_mentions_etapa1",
     "decision_documento_etapa1",
     "contract_version_etapa1",
     "lineage",
@@ -578,8 +607,6 @@
     "enrichment_schema_version",
     "prompt_sha256",
     "schema_sha256",
-    "record_schema_sha256",
-    "script_sha256",
     "run_id",
     "usage",
     "retry_cost_usd",
@@ -590,6 +617,6 @@
     "reasoning_details",
     "raw_finish_reason"
   ],
-  "title": "enrichment_record_v3_2",
-  "description": "Contrato del REGISTRO PERSISTIDO en enrichment.jsonl -- distinto del contrato de respuesta del LLM (enrichment_schema_v3_2.json). Incluye los campos que agrega el postprocesamiento (verificacion de citas, metadata del run). Generado por build_enrichment_record_schema_v3_2.py a partir de enrichment_schema_v3_2.json -- no editar a mano, regenerar."
+  "title": "enrichment_record",
+  "description": "Contrato del REGISTRO PERSISTIDO en enrichment.jsonl, distinto del contrato de respuesta del LLM (enrichment_schema.json). Incluye los campos que agrega el postprocesamiento (verificacion de citas, metadata de la corrida). Generado por build_enrichment_record_schema.py a partir de enrichment_schema.json -- no editar a mano, regenerar."
 }

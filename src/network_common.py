@@ -27,7 +27,7 @@ cosmeticos, verificados contra el codigo real antes de corregir):
    la v1 (no una heuristica automatica), documentada como parcial.
 
 La revisión también señaló, correctamente, que el objeto primario para el arco de
-Dario deberia ser la red bipartita ACTOR <-> CASO (evita la explosion de
+La red a usar deberia ser la red bipartita ACTOR <-> CASO (evita la explosion de
 clique N(N-1)/2 y responde preguntas directamente interpretables: en
 cuantos casos aparece un actor, que actores conectan casos distintos).
 Se agrega build_bipartite_actor_case() como resultado principal; las 2
@@ -60,8 +60,9 @@ import networkx as nx
 from scipy.stats import spearmanr
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import INTEGRATION_DIR  # noqa: E402
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-OUTPUT = PROJECT_ROOT / "Auditoria" / "integracion_v1" / "comparacion_red_actores_conservadora_vs_inclusiva.json"
+OUTPUT = INTEGRATION_DIR / "actor_network_conservative_vs_inclusive.json"
 
 VIEWS = {
     "conservadora": "actor_event_project_link_case_safe",

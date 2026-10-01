@@ -12,8 +12,28 @@ los datos derivados.
 Análisis de conflictividad inmobiliaria y urbana en las 32 comunas de la Provincia de Santiago,
 2014-2026. Cubre DS19 (Programa de Integración Social y Territorial, MINVU) y también
 densidad/altura, patrimonio, especulación y legalidad administrativa. El corpus se construyó por
-scraping de prensa, actas municipales y fuentes DS19, con clasificación y enriquecimiento asistidos
-por LLM, validación humana muestral, auditorías dirigidas y gates de calidad reproducibles.
+scraping de prensa, actas municipales y fuentes DS19, con clasificación y extracción asistidas por
+LLM, validación humana muestral, auditorías dirigidas y controles de calidad reproducibles.
+
+## Estado de la release
+
+<!-- stats:begin -->
+| Dato | Valor |
+|---|---|
+| Versión de la release | 1.0.0 |
+| SHA-256 de `data/warehouse.sqlite` | `92b8766d7b0fab4fcb59b6082758c408930d2a05df05270bb41b7b3ce0e08a70` |
+| Integridad | `integrity_check=ok`, 0 violaciones de FK |
+| Documentos del corpus | 3.884 (934 con extracción estructurada) |
+| Proyectos · casos · conflictos | 942 · 835 · 762 |
+| Cola de identidad de proyectos | 258 pares: 119 fusionados, 139 separados, 0 abiertos |
+| Conflictos con respaldo de evidencia | 453 de 762 (309 sin respaldo detectado) |
+| Conflictos con respaldo Y alcance aprobado (universo conservador) | 286 |
+| Menciones de proyecto sin vínculo a una `case_mention` | 201 |
+| Referencias históricas preservadas | 31 (5 confirmadas como no resolubles) |
+<!-- stats:end -->
+
+“Sin respaldo detectado” no significa “conflicto falso”. Cita siempre el hash del warehouse y los límites
+descritos en [Estándares](docs/standards.md#límites-conocidos-de-esta-release).
 
 ## Cómo correrlo
 
@@ -25,60 +45,69 @@ pip install -e .[dev]
 pytest
 ```
 
-Este repositorio usa [Git LFS](https://git-lfs.com/) para `data/warehouse.sqlite` — instalarlo
-antes de clonar (`git lfs install`) para no recibir solo el puntero del archivo.
+Este repositorio usa [Git LFS](https://git-lfs.com/) para `data/warehouse.sqlite`: instalarlo antes de
+clonar (`git lfs install`) para no recibir solo el puntero del archivo.
 
 ## Estructura
 
 ```text
-src/            pipeline: discovery -> classify -> enrich -> projects -> conflicts -> actors -> network
-config/         schemas y prompts vigentes
-tests/          tests automatizados, CI en cada push (ver .github/workflows/tests.yml)
-data/           warehouse.sqlite (base de datos de referencia, via Git LFS)
-docs/           dashboard único publicado en GitHub Pages (docs/index.html) + arquitectura/metodología en Markdown
-audit/          resumen de validación y calidad de datos
+src/            pipeline: discovery -> classify -> enrich -> projects -> conflicts -> actors -> geography
+config/         contratos de extracción y decisiones humanas versionadas (llaveadas por ID, con evidencia)
+tests/          pruebas automatizadas, CI en cada push (.github/workflows/tests.yml)
+data/           warehouse.sqlite (base de datos de referencia, vía Git LFS)
+docs/           tablero publicado (docs/index.html), arquitectura, metodología y estándares
+audit/          resultados: manifiesto, reportes generados, resumen de validación y calidad de datos
 ```
 
-Orden completo de reconstrucción (cada paso lee lo que dejó el anterior; `generate_run_manifest.py`
-siempre debe ser el último que toca `data/warehouse.sqlite`):
+## Reconstruir
+
+El orden de reconstrucción tiene una sola definición, `src/rebuild.py` (`python src/rebuild.py --list`).
+Cada paso lee lo que dejó el anterior; el manifiesto es el último que toca `data/warehouse.sqlite`:
 
 ```bash
-python src/build_enrichment_tables.py   # enrichment_document/enrichment_project_mention desde v3.3
-python src/build_projects.py            # identidad de proyecto/caso
-python src/resolve_project_review.py    # fusiona pares revisados de la cola
-python src/detect_case_mention_duplicates.py  # grupos de case_mention duplicadas (requerido por CONFLICT)
-python src/build_conflicts.py           # capa CONFLICT
-python src/build_actor_registry.py      # identidad de actor institucional
+python src/build_enrichment_tables.py
+python src/build_projects.py
+python src/resolve_project_review.py
+python src/detect_case_mention_duplicates.py
+python src/build_conflicts.py
+python src/scope_gate.py
+python src/build_actor_registry.py
 python src/build_actor_network.py
 python src/apply_actor_registry_to_network.py
-python src/build_geography.py           # comuna resuelta + project_mention_geography (Fix 1F)
-python src/build_geography_manzana.py   # contexto censal (manzana)
-python src/build_dashboard.py           # docs/index.html
-python src/generate_run_manifest.py     # regenerar manifiesto tras el warehouse
+python src/build_geography.py
+python src/build_geography_manzana.py
+python src/build_dashboard.py
+python src/generate_run_manifest.py
+python src/render_docs_stats.py
 pytest -q
 ```
 
-Al publicar una reconstrucción, después del commit que primero incluye el
-warehouse y el reporte generado, completar el manifiesto en un commit de
-seguimiento: `python src/generate_run_manifest.py --release-commit <SHA-del-commit-de-publicacion>`.
-El SHA completo debe existir en el repositorio; el manifiesto conserva además
-el hash del warehouse como verificación fuerte.
+En la práctica: `python src/rebuild.py`. Las etapas de clasificación y extracción por LLM
+(`src/classify.py`, `src/enrich.py`) y el corpus de terceros no se versionan y no forman parte de la
+reconstrucción. Sin ellos, las salidas que producen se recuperan del warehouse publicado:
 
-`src/classify.py` y `src/enrich.py` (o su sucesor `src/_enrich_pipeline_v3_3_*.py`) son pasos
-aparte, de costo LLM real — no se re-corren en cada reconstrucción del warehouse. Ver
-[`docs/architecture.md`](docs/architecture.md) para el diagrama completo y
-[`docs/methodology.md`](docs/methodology.md) para los criterios de cada capa, el gate documental y
-qué queda deliberadamente sin resolver.
+```bash
+python src/extract_stage_warehouse.py --stage enrichment
+python src/rebuild.py
+```
+
+Al publicar una reconstrucción, completar el manifiesto en un commit de seguimiento con
+`python src/generate_run_manifest.py --release-commit <SHA>`; el manifiesto conserva además el hash del
+warehouse como verificación fuerte.
+
+Ver [`docs/architecture.md`](docs/architecture.md), [`docs/methodology.md`](docs/methodology.md) y los
+[estándares de construcción](docs/standards.md) y el [paso a paso de principio a fin](docs/playbook.md) (qué hacer desde el primer día en un proyecto nuevo o al
+ampliar este).
 
 ## Base de datos
 
-`data/warehouse.sqlite` (SQLite, vía Git LFS) contiene identidad resuelta de proyecto, caso y
-conflicto, la red actor↔conflicto, y el registro de identidad de actores institucionales. Vista
-principal para construir la red: `actor_event_project_link_conflict_safe`.
+`data/warehouse.sqlite` (SQLite, vía Git LFS) contiene identidad resuelta de proyecto, caso y conflicto, la
+red actor↔conflicto y el registro de identidad de actores institucionales. Vista principal para construir la
+red: `actor_event_project_link_conflict_safe`.
 
 ## Arcos de trabajo
 
-1. **Arco 0 (Felipe)** — scraping, clasificación y enriquecimiento del corpus base.
+1. **Arco 0 (Felipe)** — scraping, clasificación y extracción del corpus base.
 2. **Arco Darío** — red de actores, SNA/ERGM.
 3. **Arco Nicolás** — institucionalidad y regulación (DS19, normativa, actas).
 4. **Arco Christian** — auditoría de evidencia (marco ESG adaptado).
@@ -86,14 +115,3 @@ principal para construir la red: `actor_event_project_link_conflict_safe`.
 
 Plan paso a paso de cada arco analítico (2-4):
 [`docs/arcos/plan_arcos_analiticos.md`](docs/arcos/plan_arcos_analiticos.md).
-
-## Estado
-
-El warehouse publicado en `main` es la reconstrucción integral cerrada del 2026-09-29: 942
-proyectos, 835 `case_id`, 817 conflictos, cola de identidad PROJECT sin pares abiertos (119
-fusionados, 139 separados), `integrity_check=ok` y publicación `ready`. Dos pares se mantienen
-separados como `insufficient_evidence` (sin afirmar que sean objetos distintos) y 28 referencias
-históricas se conservan sin forzar aliases. Los hashes, conteos y límites vigentes están en
-[START HERE](START_HERE.md), el [cierre de identidad](audit/project_identity_closure_2026-09-29.md),
-[`audit/validation_summary.json`](audit/validation_summary.json) y
-[`audit/data_quality_report.md`](audit/data_quality_report.md).

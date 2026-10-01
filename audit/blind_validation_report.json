@@ -1,0 +1,744 @@
+{
+  "revisor": "claude-sonnet-5-5",
+  "warehouse_sha256_de_la_muestra": "c91d5804179bbc115f051f7fb752b0d2bf99cc664feb78b78316e722495baccd",
+  "semilla": "validation-1.0",
+  "ciega": true,
+  "limites": [
+    "Un solo revisor, de la misma familia de modelos que construyo el pipeline: no es una validacion humana externa.",
+    "Criterio estricto: ante la duda se elige el veredicto menos favorable.",
+    "Los conflictos sin documentos asociados no se pueden verificar."
+  ],
+  "muestra_aleatoria": {
+    "todos": {
+      "n": 60,
+      "correcto": 10,
+      "error_menor": 9,
+      "error_grave": 37,
+      "no_verificable": 4,
+      "n_verificables": 56,
+      "error_grave_pct": 0.661,
+      "error_grave_ic95": [
+        0.53,
+        0.771
+      ],
+      "correcto_o_menor_pct": 0.339,
+      "correcto_o_menor_ic95": [
+        0.229,
+        0.47
+      ]
+    },
+    "con_respaldo_del_sistema": {
+      "n": 35,
+      "correcto": 10,
+      "error_menor": 9,
+      "error_grave": 15,
+      "no_verificable": 1,
+      "n_verificables": 34,
+      "error_grave_pct": 0.441,
+      "error_grave_ic95": [
+        0.289,
+        0.605
+      ],
+      "correcto_o_menor_pct": 0.559,
+      "correcto_o_menor_ic95": [
+        0.395,
+        0.711
+      ]
+    },
+    "sin_respaldo_del_sistema": {
+      "n": 25,
+      "correcto": 0,
+      "error_menor": 0,
+      "error_grave": 22,
+      "no_verificable": 3,
+      "n_verificables": 22,
+      "error_grave_pct": 1.0,
+      "error_grave_ic95": [
+        0.851,
+        1.0
+      ],
+      "correcto_o_menor_pct": 0.0,
+      "correcto_o_menor_ic95": [
+        0.0,
+        0.149
+      ]
+    }
+  },
+  "muestra_dirigida_sin_respaldo": {
+    "n": 20,
+    "correcto": 0,
+    "error_menor": 1,
+    "error_grave": 16,
+    "no_verificable": 3,
+    "n_verificables": 17,
+    "error_grave_pct": 0.941,
+    "error_grave_ic95": [
+      0.73,
+      0.99
+    ],
+    "correcto_o_menor_pct": 0.059,
+    "correcto_o_menor_ic95": [
+      0.01,
+      0.27
+    ],
+    "nota": "dirigida; no estima prevalencia"
+  },
+  "acuerdo_respaldo": {
+    "sistema_con_respaldo|no": 16,
+    "sistema_con_respaldo|no_evaluable": 1,
+    "sistema_con_respaldo|si": 18,
+    "sistema_sin_respaldo|no": 39,
+    "sistema_sin_respaldo|no_evaluable": 6
+  },
+  "conflictos_sin_documentos": 7,
+  "categorias_de_error": {
+    "sin_disputa_real": 25,
+    "fuera_de_alcance": 18,
+    "label_no_coincide": 4,
+    "otro": 7,
+    "proyecto_ajeno": 8,
+    "comuna_incorrecta": 1
+  },
+  "veredictos": [
+    {
+      "conflict_id": "conflict:61ab337b7af1bf6e7ed24665",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Único documento es mención no revisada de pasada (lista de proyectos observados); sin disputa descrita ni doc focal."
+    },
+    {
+      "conflict_id": "conflict:56569af579234c775bc66ddc",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "El artículo es un reportaje sobre hacinamiento; la dirección aparece solo como lugar de residencia de una entrevistada, sin disputa concreta sobre ese edificio."
+    },
+    {
+      "conflict_id": "conflict:874ac384a48c2cc283b8ffd9",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Disputa real (decreto municipal de inhabitabilidad de toma en zona de riesgo, La Florida) pero es ocupación informal de terreno, no conflicto inmobiliario/urbano de proyecto; dudo de alcance y elijo menos favorable."
+    },
+    {
+      "conflict_id": "conflict:0ae9c4106e7137670d0e1b04",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Saqueo durante aniversario del 18-O; no es conflicto inmobiliario ni urbano, solo mención de pasada."
+    },
+    {
+      "conflict_id": "conflict:4bad4cede2ba3c33ce3396a4",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Línea de transmisión eléctrica listada en un catastro SEA de proyectos judicializados; no es conflicto inmobiliario y solo hay mención panorámica."
+    },
+    {
+      "conflict_id": "conflict:bf08d06020e9a3b4e5d322ba",
+      "muestra": "main",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene ningún documento asociado; no hay fuentes que leer."
+    },
+    {
+      "conflict_id": "conflict:7d706ca3e7115ec6a4593f2c",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Litigio de consumo (Ley 19.496) de compradores vs inmobiliaria en Ñuñoa, descrito en una publicación recopilatoria mencionada, sin doc focal; no es conflicto urbano del alcance."
+    },
+    {
+      "conflict_id": "conflict:fbdc9524badd412a701af1bd",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa patrimonial real (Galería Imperio, Santiago) descrita en el texto, pero el documento figura solo como mención, no focal, y el label \"Vivo\" es poco informativo."
+    },
+    {
+      "conflict_id": "conflict:51bcec1642e0f316e0d4fe78",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Página informativa sobre tramitación de una enmienda al PRC; no describe disputa alguna y el doc es mención no revisada."
+    },
+    {
+      "conflict_id": "conflict:6aaa7a0a1d2b12e880826a70",
+      "muestra": "main",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no se puede leer fuente."
+    },
+    {
+      "conflict_id": "conflict:1194d37040254704397272e1",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Reportaje focal sobre el enfrentamiento Municipalidad de Recoleta vs Desarrollo Inmobiliario Bellavista por la torre de Dardignac 44; label y proyecto coinciden."
+    },
+    {
+      "conflict_id": "conflict:64365d926502d2605e648de3",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Oleoducto (infraestructura energética) mencionado de pasada en nota sobre contratos municipales con FIMA; fuera de alcance y sin disputa propia."
+    },
+    {
+      "conflict_id": "conflict:882546605c6423eba005fc91",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Denuncia ambiental por ruido de helipuerto archivada por la SMA; no es conflicto inmobiliario/urbano del alcance."
+    },
+    {
+      "conflict_id": "conflict:88e9ef8b7642d910cfdff812",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Columna focal sobre irregularidades del permiso y uso de Conjunto Armónico del edificio CChC en Las Condes; label y proyecto coinciden."
+    },
+    {
+      "conflict_id": "conflict:0b53552057e343ad6d8e77f8",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Acta COSOC con mención; la disputa descrita es del proyecto en Parque Bustamante y Plaza Egaña solo aparece como comparación (\"terminando como Plaza Egaña\"); sin doc focal."
+    },
+    {
+      "conflict_id": "conflict:68663d7cdc2456edae8cd346",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "si",
+      "motivo": "Disputa real y focal, pero es la misma manzana/disputa Bellavista-Dardignac que el registro \"Dardignac 44\" (duplicado potencial de conflicto)."
+    },
+    {
+      "conflict_id": "conflict:2075deba782e1e4aafc81d30",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Dictamen sobre permiso de torre de 13 pisos en zona patrimonial de Santiago; el documento es miscelánea de columnas pero el párrafo describe la disputa."
+    },
+    {
+      "conflict_id": "conflict:ce620e3108e17ba0be55e37e",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa patrimonial real (demolición edificio Protección Mutua, torres Morandé) y el documento trata solo de eso, pero está clasificado como mención no revisada, no focal."
+    },
+    {
+      "conflict_id": "conflict:318919e786feb12b5ce75fc8",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Decreto de declaratoria patrimonial sin disputa descrita; es una norma, no un conflicto."
+    },
+    {
+      "conflict_id": "conflict:6f9b995f5a5254b4fbd9e75b",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Es la Villa Santa Lucía de Chaitén (aluvión), en un listado de tesis; fuera de alcance territorial y sin disputa inmobiliaria."
+    },
+    {
+      "conflict_id": "conflict:90e7f61ad2dc4ad04f7ec62a",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "si",
+      "motivo": "Reclamación real ante la Seremi Minvu contra rechazo de la DOM de Quilicura (legalidad administrativa), pero el label es el título de un trámite, no un nombre de conflicto, y es un asunto predial menor."
+    },
+    {
+      "conflict_id": "conflict:dc4cc80fd66db45475efa267",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Villa Portales aparece solo como ejemplo o en listados (audiencias lobby, notas sobre otras villas); no hay doc focal ni disputa concreta."
+    },
+    {
+      "conflict_id": "conflict:d10fc695910f162bc681fa06",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Nota de opinión sobre guetos verticales en general y propuesta de Lawner; no describe una disputa concreta del edificio y el doc no es focal (dudo, elijo menos favorable)."
+    },
+    {
+      "conflict_id": "conflict:4b9329c86e250532898994d6",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Población Abate Molina está en Talca y se menciona en un perfil biográfico; fuera de alcance y sin disputa."
+    },
+    {
+      "conflict_id": "conflict:7ed7aa5afca307d1b0a519b5",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "\"Torres Petronas\" es un edificio de Malasia citado como antecedente de un arquitecto en un artículo sobre Costanera Center; proyecto ajeno y mención de pasada."
+    },
+    {
+      "conflict_id": "conflict:e7b2d982031400b92cdff0b7",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Disputa por patentes de alcohol de un bar; no es conflicto inmobiliario/urbano del alcance."
+    },
+    {
+      "conflict_id": "conflict:415dd3687f478546c61d2495",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Disputa concreta municipio de Vitacura vs Inmobiliaria Emarco por expropiación e indemnización; focal y coincide con el label."
+    },
+    {
+      "conflict_id": "conflict:f8afd74112ce9bc220dd37de",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Columna focal sobre permiso de 18 torres que excede el Plan Seccional en Vitacura; disputa de legalidad/altura dentro del alcance."
+    },
+    {
+      "conflict_id": "conflict:4c2e5cdb5623f4f6a0936a40",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "si",
+      "motivo": "Conflicto real por Villa San Luis (monumento vs inmobiliaria), pero dos documentos marcados focales (266511eaab sobre guetos verticales y fcb326cec6 perfil de Lawner) no tratan esta disputa y hay muchas variantes de nombre de proyecto."
+    },
+    {
+      "conflict_id": "conflict:72f3c33222a15b586a170455",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Denuncia de legalidad administrativa por bodegas sin permiso ni recepción en Pudahuel; focal y coincide con el label."
+    },
+    {
+      "conflict_id": "conflict:9163cf02d2aa80632fbe55f7",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Una sola frase de pasada en reportaje sobre guetos verticales; no hay doc focal ni identificación clara del edificio."
+    },
+    {
+      "conflict_id": "conflict:63d772d8891b7fcefb46d834",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Reportaje focal sobre demanda de propietarios por defectos constructivos en vivienda DS19 en Cerrillos; label y proyecto coinciden."
+    },
+    {
+      "conflict_id": "conflict:d52839e92e3b2a613bfee4cc",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (Recoleta vs USS por demolición) y el documento breve trata solo de eso, pero está como no focal y es la misma disputa que el registro Dardignac 44 (duplicado)."
+    },
+    {
+      "conflict_id": "conflict:f28e319292eec11a965811d9",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (inmobiliaria vs DOM Estación Central por recepción final) pero solo como ejemplo en un artículo panorámico no focal; label \"Placilla\" ambiguo."
+    },
+    {
+      "conflict_id": "conflict:192a576d72beecc56e0aa923",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Conflicto vecinal real contra la ZOIT en Lastarria (gentrificación/patrimonio) y el documento trata de él, pero figura solo como mención no focal y mezcla otros asuntos (Fórmula E, etc.)."
+    },
+    {
+      "conflict_id": "conflict:00e501b451961d4e2bb03de8",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Nota sobre precios de departamentos de lujo; el edificio se menciona como ejemplo, sin disputa."
+    },
+    {
+      "conflict_id": "conflict:9ea7eca1b00e9564c922c788",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Lo Aguirre es un centro logístico de BSF nombrado en una columna sobre incumplimiento ambiental (SEIA/SMA); no es conflicto inmobiliario y es mención."
+    },
+    {
+      "conflict_id": "conflict:ea33b2a34598e254b8599959",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "El Liceo Alemán es solo el antecedente del predio; la disputa del documento es el proyecto USS en Bellavista, no el liceo; mención no focal."
+    },
+    {
+      "conflict_id": "conflict:e78d9beefa166da8dd02bd55",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "La disputa del artículo es parque vs viviendas sociales en un paño de 2,8 ha entre Vitacura y Las Condes; el anteproyecto de Sencorp es una mención tangencial."
+    },
+    {
+      "conflict_id": "conflict:d3ae8c12c7bb158d819a3f09",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Incendio durante protestas del 18-O; no es conflicto inmobiliario ni urbano del alcance."
+    },
+    {
+      "conflict_id": "conflict:8d481a2254b3561a4acaf552",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Una venta municipal listada entre varias en una nota; sin disputa propia sobre ese inmueble y doc no focal."
+    },
+    {
+      "conflict_id": "conflict:6355d61f378f537b107621c3",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Disputa focal sobre permiso ilegal de 2 torres de 32 pisos en terreno del hotel Sheraton, Providencia; coincide."
+    },
+    {
+      "conflict_id": "conflict:5b79f37e9ff03cf44f65ce9b",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Resolución administrativa de selección de proyectos DS19; no describe ninguna disputa."
+    },
+    {
+      "conflict_id": "conflict:2706670f84a9f6c869df2a22",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Dos documentos focales tratan la controversia de Costanera Center (plan seccional, permisos, EISTU); los demás documentos son solo menciones y no alteran lo esencial."
+    },
+    {
+      "conflict_id": "conflict:ad6c7e6c957ab4393260a0b9",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Protesta vecinal real contra un proyecto inmobiliario, pero descrita en un blog resumen no focal con una sola frase; label es una descripción larga."
+    },
+    {
+      "conflict_id": "conflict:1a07580358a185f6b98bad29",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "El documento trata del mall Cencosud Shopping Vitacura, no de Costanera Center/Cenco Costanera; proyecto ajeno y doc no focal."
+    },
+    {
+      "conflict_id": "conflict:9287e1d50623e0737474f24e",
+      "muestra": "main",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no hay fuente que leer."
+    },
+    {
+      "conflict_id": "conflict:bee8cd4f40d26f55dc8b8c2a",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "La plaza aparece solo como prueba de la necesidad de parques; la disputa del artículo es otro terreno (2,8 ha); mención no focal."
+    },
+    {
+      "conflict_id": "conflict:9011c6c42cf59c2ec9ed1a27",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Disputa real pero es demolición municipal de una narco-casa (seguridad/asentamiento irregular), fuera del alcance inmobiliario-urbano del estudio."
+    },
+    {
+      "conflict_id": "conflict:c48d7bf55b43a35643b62f41",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Dos documentos focales sobre la disputa de vecinos vs Gesterra por la urbanización del bosque El Panul en La Florida; label y proyecto coinciden."
+    },
+    {
+      "conflict_id": "conflict:0ca3cfb16e345a58363673f6",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Polémica sobre cerrar un parque por seguridad; es debate de espacio público, no conflicto inmobiliario/urbano del alcance (vivienda, densidad, patrimonio, especulación)."
+    },
+    {
+      "conflict_id": "conflict:c4a32ed11f8b115e07d9c9a8",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "Es un programa de iluminación/actividades citado de pasada en el artículo de rejas del Parque Forestal; sin disputa propia, no focal."
+    },
+    {
+      "conflict_id": "conflict:2e7ed0eb02ec7b078e55c7f5",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Noticia sobre trámites para extender una Zona Típica; no describe disputa alguna y es mención no focal."
+    },
+    {
+      "conflict_id": "conflict:2124505abf9e53da99bd6d90",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Alto Parque es nombrado de pasada en un ensayo sobre el CNAC y Cerrillos; sin disputa concreta ni doc focal."
+    },
+    {
+      "conflict_id": "conflict:6f9cde6c161b042cbecfa984",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Entrevista sobre el plan de reconstrucción post 18-O; la iglesia se nombra de pasada, sin disputa."
+    },
+    {
+      "conflict_id": "conflict:161f21ed3cc76de9027b9a70",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Datacenter citado en una sola frase dentro de un artículo sobre humedales de Quilicura; tema hídrico/ambiental, no focal."
+    },
+    {
+      "conflict_id": "conflict:924f7888ea8ed7a6716a453d",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Querella por fraude en contrato de redes sanitarias; no es conflicto inmobiliario/urbano."
+    },
+    {
+      "conflict_id": "conflict:d460390c2f6067a2038e1b1b",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Proyecto ferroviario citado como ejemplo en una columna sobre medio ambiente urbano; fuera de alcance y sin doc focal."
+    },
+    {
+      "conflict_id": "conflict:2b74ffd19a2dc6e675a9adcd",
+      "muestra": "main",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no hay fuente que leer."
+    },
+    {
+      "conflict_id": "conflict:8a9c91ccb19e7b74bfddf4df",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "El documento trata del proyecto Barrio Hacienda Norte (Peñalolén), no de Paseo Quilín, que no aparece en él; proyecto ajeno."
+    },
+    {
+      "conflict_id": "conflict:ffb411fc48d08ca19614b2d6",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "El documento trata del mall Cencosud Shopping Vitacura, no de \"Cenco Florida\"; proyecto ajeno y doc no focal."
+    },
+    {
+      "conflict_id": "conflict:96736e84941916cf99a415be",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Entrevista sobre transporte; las líneas de Metro se nombran como infraestructura futura, sin disputa concreta y fuera de alcance."
+    },
+    {
+      "conflict_id": "conflict:3e21cd08cc7b02fba5cee3ae",
+      "muestra": "stress",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no hay fuente que leer."
+    },
+    {
+      "conflict_id": "conflict:9d99de4d91e43934afb97fdf",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Ataque a una comisaría durante el 18-O; no es conflicto inmobiliario ni urbano."
+    },
+    {
+      "conflict_id": "conflict:9cc1c3b62a1661fce44cb8e8",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Oleoducto (infraestructura energética) nombrado en una lista de oposiciones de FIMA; fuera de alcance y mención no focal."
+    },
+    {
+      "conflict_id": "conflict:6373c11e9e642ffb643aa6e2",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Enea aparece en una sola pasada de una nota sobre el Comité de Ministros/Collahuasi; disputa ambiental (tarántula) y de trazado vial mencionada de paso, sin doc focal (dudo, elijo menos favorable)."
+    },
+    {
+      "conflict_id": "conflict:6b146050be140b9782c2c89b",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Proyecto hídrico de gran escala nombrado en un resumen de noticias empresariales; fuera de alcance y sin disputa descrita en el documento."
+    },
+    {
+      "conflict_id": "conflict:c92d2d262f61916d50aa2fce",
+      "muestra": "stress",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real tratada por el documento, pero figura como mención no focal, el label \"Campus Bellavista\" es distinto y es la misma disputa que los registros Dardignac 44 y USS Bellavista (duplicado)."
+    },
+    {
+      "conflict_id": "conflict:3e23d361809b02364140018e",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "La Remodelación San Borja se nombra solo como referencia de altura y en una audiencia de lobby; sin disputa propia."
+    },
+    {
+      "conflict_id": "conflict:565b67e6cd3510e5c8007445",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "comuna_incorrecta",
+      "respaldo_correcto": "no",
+      "motivo": "La Cumbre Oriente está en Colina, fuera de la Provincia de Santiago; la disputa (parcelación en APE) es real pero el doc es mención y el proyecto queda fuera de alcance territorial."
+    },
+    {
+      "conflict_id": "conflict:096b03fb4a60bf851480d472",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Población Alessandri se cita como ejemplo positivo de barrio y en una descripción de Zona Típica; no hay disputa propia."
+    },
+    {
+      "conflict_id": "conflict:3f2b44b0f3662be6cb1a9328",
+      "muestra": "stress",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no hay fuente que leer."
+    },
+    {
+      "conflict_id": "conflict:1572da16f13a6ee99f7353d3",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "El documento trata del mall Cencosud Shopping Vitacura, no de Florida Center (La Florida); proyecto ajeno y doc no focal."
+    },
+    {
+      "conflict_id": "conflict:6727ecf3ec49c88fe43ff767",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Nota sobre una iniciativa estudiantil de rescate patrimonial de la ex Escuela Normal (Usach); no hay disputa y el nombre del proyecto no coincide."
+    },
+    {
+      "conflict_id": "conflict:621aa093177bae49d388ea69",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Puente en Chiloé mencionado en una agenda ministerial; fuera de alcance territorial y temático."
+    },
+    {
+      "conflict_id": "conflict:c5edeedd1a95758242e0534b",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención en una entrevista sobre reconstrucción post 18-O; sin disputa inmobiliaria."
+    },
+    {
+      "conflict_id": "conflict:f823e835d7d0594939e2471e",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Plaza del Río está en Concepción y se cita como ejemplo de edificio dañado por el 27/F; fuera de alcance territorial y sin disputa."
+    },
+    {
+      "conflict_id": "conflict:fadeef8f1150d06117b17312",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Proyecto citado como ejemplo en un reportaje general del boom inmobiliario de Estación Central; no se describe disputa concreta y el doc no es focal (dudo, elijo menos favorable)."
+    },
+    {
+      "conflict_id": "conflict:88f708dc9c96a345b2d9a6c0",
+      "muestra": "stress",
+      "veredicto": "no_verificable",
+      "categoria": null,
+      "respaldo_correcto": "no_evaluable",
+      "motivo": "El conflicto no tiene documentos asociados; no hay fuente que leer."
+    },
+    {
+      "conflict_id": "conflict:2e924e571e55e9f03ac1e272",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "La disputa descrita es la de la Villa Militar del Este (Las Condes); la Villa Militar del Oeste solo aparece como ejemplo de cesión fiscal; mención no focal."
+    }
+  ]
+}

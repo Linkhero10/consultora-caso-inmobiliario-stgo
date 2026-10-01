@@ -47,6 +47,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger("classify")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import CLASSIFICATION_DIR, REVIEW_SAMPLES_DIR  # noqa: E402
 SCHEMA_PATH = PROJECT_ROOT / "config" / "classification_schema.json"
 PROMPT_PATH = PROJECT_ROOT / "config" / "classifier_prompt.md"
 ENV_PATH = PROJECT_ROOT / ".env"
@@ -58,9 +59,9 @@ CONTRACT_VERSION = "v5.2.3"
 
 CONTENT_DIR = PROJECT_ROOT / "Fuentes" / "fulltext" / "content"
 DEDUPE_MANIFEST_PATH = PROJECT_ROOT / "Fuentes" / "fulltext" / "dedupe_manifest.jsonl"
-OUTPUT_DIR = PROJECT_ROOT / "Auditoria" / "clasificacion"
+OUTPUT_DIR = CLASSIFICATION_DIR
 CLASSIFICATIONS_PATH = OUTPUT_DIR / "classifications.jsonl"
-REVIEW_ARTIFACT_PATH = PROJECT_ROOT / "Auditoria" / "muestras_control" / "review_sample_classify.json"
+REVIEW_ARTIFACT_PATH = REVIEW_SAMPLES_DIR / "review_sample_classify.json"
 DOCUMENTOS_LARGOS_PATH = OUTPUT_DIR / "documentos_largos_apartados.jsonl"
 SOCIAL_TRUNCADO_PATH = PROJECT_ROOT / "Fuentes" / "fulltext" / "social_truncado_apartados.jsonl"
 
@@ -410,7 +411,7 @@ def _existing_property_without_urban_intervention(mention: dict) -> bool:
     )
 
 
-def _apply_scope_gate_v2(parsed: dict, source_text: str, scope: str) -> dict:
+def _apply_scope_gate_with_property_veto(parsed: dict, source_text: str, scope: str) -> dict:
     """Aplica el veto de inmueble existente sin intervención urbana sobre el gate base."""
     result = _apply_scope_gate_base(parsed, source_text, scope)
     if parsed.get("decision") == "include" and _existing_property_without_urban_intervention(parsed):
@@ -472,12 +473,12 @@ def _broad_unknown_object_is_admissible(parsed: dict, quality: dict) -> bool:
     )
 
 
-def _apply_scope_gate_v3(parsed: dict, source_text: str, scope: str) -> dict:
+def _apply_scope_gate(parsed: dict, source_text: str, scope: str) -> dict:
     """Aplica suficiencia/limpieza de citas y la excepción de objeto amplio sobre el gate anterior."""
     if scope not in SCOPES:
         raise ValueError(f"scope no soportado: {scope}")
 
-    result = _apply_scope_gate_v2(parsed, source_text, scope)
+    result = _apply_scope_gate_with_property_veto(parsed, source_text, scope)
     quality = _quote_quality(parsed, source_text)
     result["evidence_action_quotes_verified"] = quality["accion"]["flags"]
     result["evidence_object_quotes_verified"] = quality["objeto"]["flags"]
@@ -618,7 +619,7 @@ def _short_geography_quote_flags(parsed: dict[str, Any], source_text: str) -> tu
     return flags, bool(flags) and any(flags)
 
 
-def _quote_quality_v4(parsed: dict[str, Any], source_text: str) -> dict[str, dict[str, Any]]:
+def _quote_quality_with_short_geography(parsed: dict[str, Any], source_text: str) -> dict[str, dict[str, Any]]:
     quality = _quote_quality(parsed, source_text)
     geo_flags, geo_short_ok = _short_geography_quote_flags(parsed, source_text)
     if geo_short_ok:
@@ -671,8 +672,8 @@ def apply_scope_gate(parsed: dict[str, Any], source_text: str, scope: str) -> di
     """Gate de alcance completo -- envuelve las capas anteriores con
     normalización geográfica conservadora. Función pública usada por el
     resto del pipeline."""
-    result = _apply_scope_gate_v3(parsed, source_text, scope)
-    quality = _quote_quality_v4(parsed, source_text)
+    result = _apply_scope_gate(parsed, source_text, scope)
+    quality = _quote_quality_with_short_geography(parsed, source_text)
     result["evidence_geo_quotes_verified"] = quality["geografica"]["flags"]
     result["evidence_geo_verified"] = quality["geografica"]["sufficient"]
     result["short_geography_quote_accepted"] = quality["short_geography_quote_accepted"]

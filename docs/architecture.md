@@ -27,17 +27,23 @@ ACTOR / ENTIDAD (institución nacional consolidada cuando la evidencia lo permit
     ▼
 COMUNA / MANZANA CENSAL (comuna resuelta de forma determinista por case_mention;
     │                     project_mention_geography vincula proyecto→case_mention→comuna
-    │                     con el mismo mecanismo que Fix 1D usa para el respaldo de CONFLICT)
+    │                     con el mismo vínculo que usa el respaldo de CONFLICT)
     │  publicación (src/build_dashboard.py, luego src/generate_run_manifest.py)
     ▼
 DASHBOARD PÚBLICO (docs/index.html) + MANIFIESTO DE AUDITORÍA (audit/run_manifest.json)
 ```
 
-Orden real de ejecución (ver README.md para el bloque de comandos completo):
-`build_enrichment_tables.py` → `build_projects.py` → `resolve_project_review.py` →
-`build_conflicts.py` → `build_actor_registry.py` → `build_actor_network.py` →
-`apply_actor_registry_to_network.py` → `build_geography.py` → `build_geography_manzana.py` →
-`build_dashboard.py` → `generate_run_manifest.py` (siempre el último paso que toca el warehouse).
+Orden de ejecución: una sola definición, `src/rebuild.py` (`python src/rebuild.py --list`); README y una
+prueba (`tests/test_rebuild.py`) lo verifican. `generate_run_manifest.py` es el último paso que toca el warehouse.
+
+## Niveles de reproducibilidad
+
+| Nivel | Qué es | Dónde vive | Cómo se recupera |
+|---|---|---|---|
+| Raíz externa | Corpus de terceros, clasificación y extracción por LLM | `intermediate/` y `Fuentes/` (no versionados) | Requiere el corpus y la API (costo real) |
+| Raíz publicada | Tablas que esas etapas produjeron | `data/warehouse.sqlite` | `python src/extract_stage_warehouse.py --stage enrichment` |
+| Derivado | Proyectos, casos, conflictos, actores, geografía, tablero | `data/`, `audit/`, `docs/` | `python src/rebuild.py` |
+| Decisiones humanas | Identidad, unidad de caso, elegibilidad, correcciones de índice | `config/` (llaveadas por ID, con evidencia) | Versionadas |
 
 Ver `docs/methodology.md` para los criterios de cada capa, el gate documental y qué queda
 deliberadamente sin resolver.
@@ -55,10 +61,13 @@ deliberadamente sin resolver.
 - **Las relaciones tipadas no fusionan identidades.** `project_relation` registra, por
   ejemplo, que un desarrollo urbano tiene un plan maestro asociado; conserva ambos
   `project_id` y `case_id`, y exige URL, localizador y cita de fuente.
-- **El respaldo documental no se confunde con un vínculo directo ausente.** `conflict_evidence_backing`
-  registra coincidencias verificadas a nivel de documento/case_mention; cuando el documento contiene
-  varios casos se conserva una señal explícita de ambigüedad y la cobertura del conflicto puede ser
-  total, parcial o ninguna.
+- **El vínculo se captura en la extracción.** El modelo declara a qué `case_mention` pertenece cada proyecto
+  (`case_mention_index`); `conflict_evidence_backing` conserva la cadena hasta la cita literal y la cobertura del
+  conflicto puede ser total, parcial o ninguna. Sin índice no hay respaldo.
+- **Las decisiones humanas son datos, no código.** Viven en `config/`, llaveadas por identificador estable, con
+  evidencia y validación al cargar.
+- **Lo que se muestra se genera.** Cifras, manifiesto y orden de reconstrucción salen del warehouse o de una única
+  definición; las pruebas fallan si se desincronizan. Ver [estándares](standards.md).
 
 ## Base de datos
 
@@ -79,6 +88,7 @@ enrichment_document, enrichment_actor,
   enrichment_institution, enrichment_event,
   enrichment_evidence,
   enrichment_project_mention           -- salida cruda del enriquecimiento LLM
+release_metadata                      -- versión de la release
 territory, geocoded_location,
   geocoded_location_conflict,
   project_mention_geography,

@@ -1,12 +1,12 @@
-"""Fix 1E (2026-09-24): detecta case_mentions duplicadas/casi-duplicadas
+"""detecta case_mentions duplicadas/casi-duplicadas
 DENTRO del mismo documento, generadas por classify.py (Etapa 1) sin ningun
 paso de deduplicacion. Confirmado leyendo classify.py completo: una sola
 llamada LLM por documento genera la lista de case_mentions; nada compara una
 mencion contra otra del mismo documento despues.
 
-Causa raiz documentada en las 2 rondas de revision ciega de Sol sobre v3.3
-(2026-09-24): la mayoria de los desacuerdos reales entre Sol y el modelo se
-explicaban por esto, no por errores de v3.3. Ejemplo extremo real: el
+Causa raiz documentada en las 2 rondas de revision ciega de la revisión sobre la extraccion vigente
+(2026-09-24): la mayoria de los desacuerdos reales entre la revisión y el modelo se
+explicaban por esto, no por errores de la extraccion vigente. Ejemplo extremo real: el
 humedal de Quilicura tiene 5 case_mentions identicas (mismo objeto, misma
 comuna, mismo include), solo distinguidas por que frase del texto citan.
 
@@ -14,12 +14,12 @@ Este detector es 100% retroactivo y aditivo -- NUNCA borra, renumera ni
 reescribe ningun case_mention_id/mention_index/evidence_id existente. Eso es
 deliberado: renumerar romperia el hash sha256 pinneado en build_conflicts.py
 (CLASSIFICATIONS_SHA256_EXPECTED) y cada case_mention_id ya referenciado por
-evidence, por las 330 respuestas de v3.3 ya validadas por Sol, y por
+evidence, por las 330 respuestas de la extraccion vigente ya validadas por la revisión, y por
 conflict_evidence_backing. Solo agrega una tabla nueva
 (case_mention_duplicate_link) que registra que grupos de case_mentions del
 mismo documento describen, con alta confianza, el mismo objeto real.
 
-Mismo principio "nunca fuzzy" ya congelado en build_conflicts.py (Fix 1A):
+Mismo principio "nunca fuzzy" ya congelado en build_conflicts.py:
 dos criterios deterministas, nunca similitud difusa/embeddings."""
 
 from __future__ import annotations
@@ -36,12 +36,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_conflicts import _norm, UnionFind  # noqa: E402 -- reutiliza, no reimplementa
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from paths import CLASSIFICATIONS_PATH  # noqa: E402
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-CLASSIFICATIONS_PATH = PROJECT_ROOT / "Auditoria" / "clasificacion" / "classifications.jsonl"
 CLASSIFICATIONS_SHA256_EXPECTED = "fc96bf57a34e13a10016087efe856a30ce83b37e6a7af87631af57469d597af7"
 AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "case_mention_duplicates_report.json"
 
-DETECTOR_VERSION = "exact_object_or_quote_substring_v1"
+DETECTOR_VERSION = "exact_object_or_quote_substring"
 MIN_QUOTE_LEN = 8  # citas mas cortas que esto son demasiado genericas para un match seguro
 
 
@@ -127,7 +127,7 @@ def main() -> int:
         print(
             f"{CLASSIFICATIONS_PATH} cambio de contenido (sha256 actual={actual_sha256}, "
             f"esperado={CLASSIFICATIONS_SHA256_EXPECTED}). Abortando -- ver mismo guardrail en "
-            "build_conflicts.py::load_v3_3_verified_links().",
+            "build_conflicts.py::load_verified_links().",
             file=sys.stderr,
         )
         return 1
@@ -164,7 +164,7 @@ def main() -> int:
     for row in all_rows:
         if row["case_mention_id"] not in known_case_mention_ids:
             # documento en classifications.jsonl que no llego al warehouse
-            # (ej. filtrado antes de build_entity_tables_v1.py) -- se omite,
+            # (ej. filtrado antes de el constructor de tablas de entidad) -- se omite,
             # nunca se inserta una fila que violaria la FK.
             n_skipped_unknown += 1
             continue
@@ -189,7 +189,7 @@ def main() -> int:
 
     report = {
         "detector_version": DETECTOR_VERSION,
-        "fuente": str(CLASSIFICATIONS_PATH.relative_to(PROJECT_ROOT)),
+        "fuente": CLASSIFICATIONS_PATH.name,
         "classifications_sha256": actual_sha256,
         "n_case_mentions_total": n_case_mentions_total,
         "n_grupos_total": n_groups_total,

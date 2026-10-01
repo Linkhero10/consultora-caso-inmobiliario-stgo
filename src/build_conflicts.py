@@ -1,184 +1,68 @@
-"""Construye la capa CONFLICT: unidad sociologica de disputa, separada de
-PROJECT/PROJECT_PHASE/CASE (identidad fisica/historica de proyecto, ya
-cerrada). Motivacion y diseno acordados con la revisión (2026-09-18), tras la
-auditoria de los 63 documentos 'caso_unico' con >1 case_id:
+"""Construye la capa CONFLICT: la unidad sociologica de disputa, separada de la identidad fisica de
+proyecto (PROJECT / PROJECT_PHASE / CASE).
 
-    project.case_id resuelve identidad de PROYECTO, no la unidad
-    narrativa de CONFLICTO de un documento. Un solo conflicto puede
-    involucrar legitimamente 2+ case_id (ej. cementerio Parque Santiago
-    de Huechuraba vs. trazado del Teleferico Bicentenario: 2 proyectos
-    reales y distintos, 1 solo conflicto judicial). En el otro extremo,
-    un mismo territorio/actor colectivo puede sostener VARIOS conflictos
-    distintos a lo largo del tiempo sin que eso los convierta en el mismo
-    caso (ej. Poblacion La Victoria: toma de terreno fundacional 1957 vs.
-    protesta contemporanea contra Rancagua Express).
-
-Objeto de prueba adversarial explicito (pedido por la revisión): el esquema debe
-poder representar AMBOS extremos sin forzar una decision en el segundo
-caso, que queda deliberadamente sin resolver como PENDIENTE humano.
+`project.case_id` resuelve la identidad de un PROYECTO, no la unidad narrativa de CONFLICTO de un
+documento. Un solo conflicto puede involucrar legitimamente 2+ `case_id` (el cementerio Parque
+Santiago de Huechuraba y el trazado del Teleferico Bicentenario son dos proyectos y un solo litigio).
+En el otro extremo, un mismo territorio o actor colectivo puede sostener VARIOS conflictos distintos a
+lo largo del tiempo sin que eso los vuelva el mismo (Poblacion La Victoria: la toma de terreno
+fundacional de 1957 y la protesta contemporanea contra Rancagua Express). El esquema debe poder
+representar ambos extremos; el segundo queda como pendiente humano, nunca se resuelve por inercia.
 
 ## Esquema
 
-- conflict: unidad de conflicto. conflict_id es un hash ESTABLE de los
-  case_id agrupados (nunca un label de texto libre -- ese fue exactamente
-  el problema que la revisión senalo con `conflict_id_sugerido` en el paquete de
-  63: dos personas pueden escribir el mismo conflicto con 2 strings
-  distintos). `label` es solo para lectura humana, no es identidad.
-- conflict_case: que case_id componen un conflict_id (1 fila = trivial;
-  2+ filas = conflicto multi-proyecto evidenciado).
-- conflict_project: que project_id (via su case_id) componen el
-  conflicto -- vista materializada de conflict_case + project, para no
-  tener que hacer el join cada vez.
-- document_conflict: que documentos discuten cada conflicto, con rol
-  (focal / co_focal / contextual_mention / panoramic_mention /
-  mentioned_unreviewed) y `source` que distingue evidencia revisada a
-  mano (conflict_unit_63_sol) de derivacion mecanica del resto del
-  corpus (trivial_from_project_mention).
-- conflict_relation: relaciones ENTRE conflictos que NO implican fusion
-  -- ej. 'same_territorial_actor_pending_review' para Poblacion La
-  Victoria / Rancagua Express. Nunca se auto-resuelve a un merge.
-- conflict_episode: tabla creada VACIA a proposito. Poblarla exige
-  extraer fechas por episodio desde enrichment_event con el mismo
-  rigor de verificacion de citas que el resto del pipeline -- eso es
-  trabajo separado, no inventado aqui solo para "llenar la tabla".
+- conflict: unidad de conflicto. `conflict_id` es un hash ESTABLE de los case_id agrupados, nunca un
+  label de texto libre (dos personas pueden escribir el mismo conflicto con dos strings distintos).
+  `label` es solo para lectura humana, no es identidad.
+- conflict_case: que case_id componen un conflict_id (1 fila = trivial; 2+ = multi-proyecto evidenciado).
+- conflict_project: que project_id (via su case_id) componen el conflicto.
+- document_conflict: que documentos discuten cada conflicto, con rol (focal / co_focal /
+  contextual_mention / panoramic_mention / mentioned_unreviewed) y `source`, que distingue evidencia
+  revisada a mano (`conflict_unit_review`) de derivacion mecanica (`trivial_from_project_mention`).
+- conflict_relation: relaciones ENTRE conflictos que NO implican fusion. Nunca se auto-resuelve a un merge.
+- conflict_episode: tabla creada VACIA a proposito. Poblarla exige extraer fechas por episodio con el
+  mismo rigor de verificacion de citas que el resto del pipeline; es trabajo separado.
 
 ## Orden de pipeline
 
-Este script debe correr SIEMPRE al final de la cadena, despues de
-build_case_project_bridge.py y resolve_project_review_queue.py (lee la
-tabla `project.case_id` ya fusionada). Si se vuelve a correr
-build_case_project_bridge.py despues de este script, las tablas CONFLICT
-se pierden (ese script copia el warehouse fuente completo) -- hay que
-volver a correr resolve_project_review_queue.py y luego este script.
+Este script corre siempre despues de `resolve_project_review.py` (lee `project.case_id` ya fusionado) y
+reescribe solo las tablas CONFLICT dentro de `data/warehouse.sqlite`. `src/rebuild.py` fija el orden.
 
 ## Algoritmo de agrupacion
 
 1. Union-find sobre TODOS los case_id del registro de proyectos.
-2. Para cada uno de los 63 documentos clasificados por la revisión
-   (conflict_unit_63), cada relacion `relaciones_case_groups_sol` con
-   relacion=='mismo_conflicto' UNE sus case_id (con o sin
-   project_relation especifico -- parent_subproject/phase/
-   distinct_conflict_objects son todas variantes de "es el mismo
-   conflicto"). relacion in ('focal','contextual','conflictos_distintos')
-   NUNCA une -- esa es precisamente la distincion que motiva esta capa.
-3. Cualquier case_id no tocado por una union 'mismo_conflicto' queda como
-   conflicto trivial de 1 solo case_id (cobertura total del corpus,
-   sin inventar estructura donde no hay evidencia de que haga falta).
-4. document_conflict para los 63 documentos evidenciados usa las mismas
-   relaciones_case_groups_sol (fuente humana verificada). Para el resto
-   del corpus (project_mention_resolved), se deriva mecanicamente: el
-   project_id cuyo raw_nombre_proyecto coincide exactamente con
-   nombre_proyecto (el foco declarado del documento) se marca 'focal';
-   cualquier otro project_id mencionado en el mismo documento se marca
-   'mentioned_unreviewed' -- rotulado asi a proposito para no aparentar
-   el mismo nivel de confianza que la revision humana de los 63.
+2. Para cada documento de la revision manual de unidades (`config/conflict_unit_review.json`), cada
+   relacion `mismo_conflicto` UNE sus case_id. Las relaciones focal / contextual / conflictos_distintos
+   NUNCA unen: esa es precisamente la distincion que motiva esta capa.
+3. Todo case_id no tocado por una union queda como conflicto trivial de un solo case_id (cobertura total
+   del corpus, sin inventar estructura donde no hay evidencia de que haga falta).
+4. `document_conflict` para los documentos revisados usa esas mismas relaciones. Para el resto del
+   corpus se deriva mecanicamente: el project_id cuyo nombre coincide exactamente con `nombre_proyecto`
+   (el foco declarado del documento) se marca `focal`; cualquier otro proyecto mencionado se marca
+   `mentioned_unreviewed`, rotulado asi a proposito para no aparentar la confianza de la revision humana.
 
-## Respaldo de evidencia (Fix 1A, 2026-09-22)
+## Respaldo de evidencia
 
-Validacion externa ampliada (N=150, Sol) midio 42.0% de error grave sobre el
-universo real de conflictos -- mucho mas alto que el 24% de la auditoria
-original de 50/63, porque esa muestra anterior solo cubria documentos ya
-senalados para revision, no una muestra aleatoria del universo completo.
-Causa raiz rastreada y verificada a mano contra 2 casos reales ("Museo de
-la Memoria y Derechos Humanos en Punta Arenas", "Proyecto Tunel
-Internacional Paso Las Lenas"): el bloque de arriba (linea ~217, antes de
-este fix) tomaba TODO case_id de `project` sin excepcion y lo promovia a
-conflicto trivial -- sin comprobar nunca que ese project_id correspondiera
-a un case_mention real, incluido, con evidencia de "objeto" que lo
-respalde. Un nombre de proyecto mencionado solo de pasada (biografia de un
-arquitecto, comparacion de otro articulo) se volvia un "conflicto" con la
-misma jerarquia que uno real. La medición exploratoria inicial (595/990
-proyectos y 573/819 conflictos triviales sin respaldo) quedó superada por
-el reporte generado desde el warehouse vigente; nunca debe tratarse como
-una cifra congelada.
+Un conflicto trivial solo cuenta como respaldado si alguna mencion de sus proyectos apunta, por el
+`case_mention_index` que el modelo eligio en la extraccion y que el pipeline verifico, a una
+`case_mention` incluida con al menos una cita de `objeto` verificada (subcadena literal del texto).
+Fuente autoritativa: `evidence` (tiene `case_mention_id` real) mas `case_mention.decision_final_amplio`.
 
-Fuente autoritativa del respaldo documental: `evidence` (tiene
-`case_mention_id` real) + `case_mention.decision_final_amplio='include'`
--- nunca `enrichment_evidence` (no conserva ese vinculo). Candidato a
-respaldo solo si ademas `evidence.quote_role='objeto'` AND
-`evidence.verified=1`. `project_mention_resolved`/`project`/`case_id`
-siguen interviniendo para llegar hasta ahi (son la fuente autoritativa,
-no la UNICA tabla tocada).
+`conflict_evidence_backing` conserva la cadena completa hasta la cita (nunca solo una bandera).
+`conflict.respaldo_evidencia` es el estado derivado, con CHECK explicito: 'respaldo_exact_quote_detectado'
+si existe al menos una fila de respaldo y 'sin_respaldo_exact_quote_detectado' si no. Nada se borra: el
+universo completo de `conflict` se preserva y la bandera solo decide que cuenta en el universo analitico
+conservador. La ausencia de respaldo NO demuestra que el conflicto sea falso.
 
-Matching: substring exacto normalizado en cualquier direccion
-(`exact_substring_v1`), NUNCA fuzzy. Congelado a proposito durante Fix 1A
--- las matrices de calibracion de abajo describen exactamente esta regla;
-agregar minimo de caracteres, limites de token, stopwords, embeddings o
-excepciones manuales seria `exact_substring_v2` y exige re-medir las
-matrices desde cero.
+Una `case_mention` que la clasificacion dejo `uncertain`/`exclude` pero que su documento trata como el
+objeto de una disputa concreta puede respaldar el conflicto solo por adjudicacion manual explicita
+(`config/case_mention_eligibility_adjudications.json`); queda visible en `match_method` y nunca modifica
+`case_mention.decision_final_amplio`. Compartir un grupo de duplicados NO transfiere evidencia entre
+menciones: el detector agrupa por texto y puede juntar proyectos distintos.
 
-Metricas de calibracion (medidas sobre la misma N=150 que informo el
-diseno del detector -- son CALIBRACION, no validacion externa; requieren
-un holdout nuevo, independiente, antes de tratarlas como desempeno fuera
-de muestra):
-- Contra `error_grave`: TP=49, FP=27, FN=14, TN=60 -> precision 64.5%,
-  recall 77.8%.
-- Contra `falso_positivo_inclusion` UNION `etiqueta_no_coincide_con_evidencia`
-  (las 2 categorias que este detector ataca): TP=44, FP=32, FN=4, TN=70 ->
-  precision 57.9%, recall 91.7%.
-Interpretacion: recall alto, precision moderada -- sirve para priorizar
-revision y construir un universo analitico conservador, NUNCA para
-declarar que un conflicto sin respaldo es falso. ~1 de cada 3 marcados
-"sin respaldo" resulta legitimo en la calibracion.
-
-[PREFLIGHT, 2026-09-22] Al implementar el detector real y cruzarlo contra
-los 150 veredictos, aparecio una discrepancia de exactamente 1 caso
-("calle Toro Mazotte") en ambas matrices frente a los numeros calculados
-a mano durante el diseno (65.3%/58.7% de precision). Investigado antes de
-aceptar cualquier numero: el script de calibracion original OLVIDABA el
-filtro `evidence.verified=1` (una cita de ese conflicto, no verificada,
-calzaba por substring y se conto como respaldo valido). La implementacion
-real de este archivo SI exige verified=1, tal como exige el diseno
-acordado -- es la implementacion la correcta, no el calculo de calibracion
-original. Las cifras de arriba ya estan corregidas (64.5%/57.9%); nunca se
-modifico el detector para ajustarse a un numero previo.
-
-Aplicado UNIFORMEMENTE a conflictos triviales y multi-case, sin excepcion
-para `n_case_ids > 1`: la validacion demostro que esa excepcion habria
-sido incorrecta (Aeropuerto Los Cerrillos y Aldea del Encuentro, ambos
-`n_case_ids=2` de la revision humana de los 63, resultaron `error_grave`
-en la validacion N=150 -- que un grupo de case_id haya pasado por
-revision humana confirma la UNION de casos, no garantiza que el conflicto
-resultante este bien construido).
-
-Provenance completo en `conflict_evidence_backing` (nunca solo una
-bandera): cada fila que respalda un conflicto queda trazable hasta la
-cita literal que lo justifica. `conflict.respaldo_evidencia` es el estado
-derivado (con CHECK explicito, nunca un TEXT abierto sin control) --
-'respaldo_exact_quote_detectado' si existe >=1 fila de respaldo,
-'sin_respaldo_exact_quote_detectado' si no. Nada se borra: el universo
-completo de `conflict` se preserva integro, la bandera solo decide que
-cuenta en el universo analitico conservador del dashboard.
-
-## Fix 1B (2026-09-22): resultado de la adjudicacion de los 15 conflictos_distintos_fusionados
-
-De los 15 conflictos marcados `conflictos_distintos_fusionados` en la validacion N=150, 11 se
-cerraron sin cambios de codigo: en todos ellos, el "conflicto mezclado" solo aparecia mezclado si
-se contaban documentos con rol `mentioned_unreviewed`/`panoramic_mention`/`contextual_mention`,
-que el dashboard publico ya excluye de la evidencia mostrada
-(`document_conflict_case_safe` exige `role IN ('focal','co_focal')`); los documentos realmente
-focales de esos 11 describian consistentemente el mismo proyecto.
-
-Los 4 restantes (todos `n_case_ids=2`, provenientes de la misma relacion `mismo_conflicto` humana
-del paquete de 63 documentos) se enviaron a adjudicacion externa. Resultado: 3 mantienen la union
-(Aeropuerto Los Cerrillos/Ciudad Portal Bicentenario, Loteo S1/S2, Ciudad Parque Bicentenario -- en
-los tres, el documento fundador de la union describe coherentemente una sola trayectoria
-conflictiva) y 1 (Hospital Ochagavia) revelo un problema real, pero NO en la capa CONFLICT: el
-documento fundador de esa union ("El espacio y la memoria...") es coherente por si solo (un mismo
-inmueble, hospital -> reconversion comercial), pero un SEGUNDO documento ("Pedro Aguirre Cerda toma
-medidas...") aparecia como evidencia focal del mismo conflicto por una atribucion de
-`nombre_proyecto` aguas arriba (clasificacion LLM) que no correspondia a su contenido real
-(anteproyectos genericos de altura, no la reconversion especifica del sitio). Separar los case_id
-en CONFLICT no habria resuelto esto -- solo habria desplazado el documento mal atribuido bajo la
-etiqueta "Nucleo Ochagavia" en vez de "Hospital Ochagavia". Se corrigio en la capa correcta
-(`document_case_unit.correccion_nombre_proyecto=''`, protegido con `tiene_error=1` explicito contra
-reclasificacion silenciosa) sin tocar la union de case_id. Ver
-`tests/test_build_conflicts.py::test_hospital_ochagavia_pac_document_no_longer_focal`.
-
-Resultado neto: 0/15 correcciones en la capa de agrupacion CONFLICT propiamente dicha; 1/15
-correccion en la capa de clasificacion de documento (`document_case_unit`), fuera del alcance de
-este modulo. El documento mal clasificado queda registrado como caso de prueba para Fix 1C
-(falsos positivos de `nombre_proyecto` en el clasificador aguas arriba).
+La asociacion proyecto -> mencion que produce el modelo se valido con dos rondas de revision ciega
+independiente (0 fabricaciones en 809 evaluaciones); ver `audit/validation_summary.json`. Un respaldo
+verificado prueba que la mencion existe y tiene cita literal, no que el conflicto este bien delimitado.
 """
 
 import hashlib
@@ -197,35 +81,23 @@ from historical_case_publication_gate import conflict_topology_fingerprint
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WAREHOUSE = PROJECT_ROOT / "data" / "warehouse.sqlite"
-CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline_v1.json"
-CLASSIFIED_63 = PROJECT_ROOT / "Auditoria" / "validacion_humana_v3_2" / "paquete_revision_conflict_unit_63_clasificado_sol.json"
+CASE_BASELINE = PROJECT_ROOT / "config" / "project_case_baseline.json"
+CONFLICT_UNIT_REVIEW = PROJECT_ROOT / "config" / "conflict_unit_review.json"
 AUDIT_REPORT_PATH = PROJECT_ROOT / "audit" / "conflict_evidence_backing_report.json"
 HISTORICAL_CASE_PREFLIGHT_REPORT_PATH = PROJECT_ROOT / "audit" / "historical_case_reference_preflight.json"
-HISTORICAL_CASE_ID_RESOLUTIONS_PATH = PROJECT_ROOT / "config" / "historical_case_id_resolutions_v1.json"
+HISTORICAL_CASE_ID_RESOLUTIONS_PATH = PROJECT_ROOT / "config" / "historical_case_id_resolutions.json"
 
-DETECTOR_VERSION = "exact_substring_v1"
-MATCH_METHOD = "normalized_bidirectional_substring"
-BACKING_SCOPE = "document_level_case_mention_without_project_link"
-
-# Fix 1D (2026-09-24): fuente de verdad verificada, no heuristica -- ver
-# _project_backing_evidence() y load_v3_3_verified_links() mas abajo.
-DETECTOR_VERSION_V3_3 = "v3_3_verified_index"
-MATCH_METHOD_V3_3 = "model_verified_case_mention_index"
-BACKING_SCOPE_V3_3 = "mention_level_verified_index"
-# [2026-09-29] Adjudicacion humana de elegibilidad: una case_mention que etapa 1 dejo uncertain/exclude pero cuyo
+# Unico metodo de respaldo: el `case_mention_index` que el modelo eligio en la extraccion y el pipeline
+# verifico. No hay heuristica de texto de respaldo; una mencion sin indice queda sin respaldo.
+DETECTOR_VERSION = "verified_index"
+MATCH_METHOD = "model_verified_case_mention_index"
+BACKING_SCOPE = "mention_level_verified_index"
+# Adjudicacion humana de elegibilidad: una case_mention que la clasificacion dejo uncertain/exclude pero cuyo
 # documento la trata como el objeto de una disputa concreta puede respaldar el conflicto. Solo afecta este
 # respaldo, nunca case_mention.decision_final_amplio, y queda visible en match_method.
-CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH = PROJECT_ROOT / "config" / "case_mention_eligibility_adjudications_v1.json"
-MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY = "v3_3_verified_index_adjudicated_eligibility"
-
-# Metricas de calibracion (N=150, Sol) -- ver docstring del modulo. Fijas
-# porque dependen de veredictos humanos externos, no se recalculan corriendo
-# este script; se citan tal cual en el reporte de auditoria.
-CALIBRATION_ERROR_GRAVE = {"tp": 49, "fp": 27, "fn": 14, "tn": 60, "precision": 0.645, "recall": 0.778}
-CALIBRATION_TARGET_CATEGORIES = {
-    "target": ["falso_positivo_inclusion", "etiqueta_no_coincide_con_evidencia"],
-    "tp": 44, "fp": 32, "fn": 4, "tn": 70, "precision": 0.579, "recall": 0.917,
-}
+CONFLICT_MERGE_DECISIONS_PATH = PROJECT_ROOT / "config" / "conflict_merge_decisions.json"
+CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH = PROJECT_ROOT / "config" / "case_mention_eligibility_adjudications.json"
+MATCH_METHOD_ADJUDICATED_ELIGIBILITY = "adjudicated_eligibility"
 
 
 def _norm(value: str) -> str:
@@ -233,25 +105,13 @@ def _norm(value: str) -> str:
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
-def load_v3_3_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], int | None]:
-    """[REESCRITO 2026-09-26, migracion v3.2->v3.3 completa] dict[(document_id,
-    nombre_normalizado)] -> case_mention_index (o None si v3.3 determino
-    explicitamente que ningun case_mention es el objeto de esa mencion).
+def load_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], int | None]:
+    """dict[(document_id, nombre_normalizado)] -> case_mention_index, o None si el modelo determino que ninguna
+    case_mention es el objeto de esa mencion.
 
-    Antes (Fix 1D, 2026-09-24) esta funcion releia los 3 JSONL crudos de
-    v3.3 en cada corrida y traducia por URL, porque el vinculo solo existia
-    ahi -- nunca se habia materializado en el warehouse, y project_mention_
-    resolved (que alimenta mentions_by_project) todavia se construia desde
-    v3.2, una corrida LLM SEPARADA cuyo nombre de proyecto podia no
-    coincidir textualmente con el de v3.3 (15.6% de discrepancia medida
-    empiricamente). Desde que build_projects.py tambien se migro a v3.3
-    (mismo dia), project_mention_resolved y enrichment_project_mention
-    vienen de la MISMA fuente -- el nombre coincide por construccion, y el
-    dato ya esta materializado en enrichment_project_mention.case_mention_
-    index (build_enrichment_tables.py). Se consulta directo, ya no hace
-    falta releer archivos ni bridging por URL. Se conserva _norm() en la
-    clave (nunca se compara crudo) como salvaguarda de espacios/mayusculas/
-    acentos, no como bridge entre dos corridas distintas."""
+    El vinculo esta materializado en `enrichment_project_mention` (lo escribe `build_enrichment_tables.py` desde la
+    extraccion) y `project_mention_resolved` sale de la MISMA fuente, asi que el nombre coincide por construccion.
+    La clave se normaliza (`_norm`) solo como salvaguarda de espacios, mayusculas y acentos."""
     links: dict[tuple[str, str], int | None] = {}
     for document_id, nombre_proyecto, case_mention_index in conn.execute(
         "SELECT document_id, nombre_proyecto, case_mention_index FROM enrichment_project_mention"
@@ -266,12 +126,49 @@ def load_v3_3_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], 
     return links
 
 
+def load_conflict_merge_decisions(conn: sqlite3.Connection, path: Path | None = None) -> list[tuple[str, str]]:
+    """Pares de case_id que deben quedar en el MISMO conflicto, segun decisiones humanas versionadas.
+
+    Cada decision esta llaveada por la pareja exacta de `project_id` (nunca por nombre ni por `case_id`, que cambia al
+    fusionar proyectos), declara `mismo_conflicto` y cita la evidencia literal (documento + cita). Falla cerrado ante
+    datos incompletos o proyectos inexistentes. Solo UNE conflictos; separar proyectos o cambiar su identidad es otra capa."""
+    path = Path(path) if path is not None else CONFLICT_MERGE_DECISIONS_PATH
+    if not path.exists():
+        return []
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "conflict_merge_decisions":
+        raise ValueError("schema_version de conflict_merge_decisions no reconocido")
+    case_by_project = dict(conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL"))
+    seen: set[tuple[str, str]] = set()
+    pairs: list[tuple[str, str]] = []
+    for entry in payload.get("decisions", []):
+        ids = entry.get("project_ids")
+        if not isinstance(ids, list) or len(ids) != 2 or ids[0] == ids[1]:
+            raise ValueError(f"decision de fusion de conflictos sin dos project_id distintos: {entry.get('decision_id')!r}")
+        key = tuple(sorted(ids))
+        if key in seen:
+            raise ValueError(f"decision de fusion duplicada para {key!r}")
+        seen.add(key)
+        if entry.get("decision") != "mismo_conflicto" or not entry.get("rationale"):
+            raise ValueError(f"decision de fusion invalida (solo 'mismo_conflicto', con motivo): {entry.get('decision_id')!r}")
+        evidence = entry.get("evidence")
+        if not isinstance(evidence, list) or not evidence or any(not e.get("document_id") or not e.get("cita") for e in evidence):
+            raise ValueError(f"decision de fusion sin evidencia literal: {entry.get('decision_id')!r}")
+        for pid in ids:
+            if pid not in case_by_project:
+                raise ValueError(f"decision de fusion apunta a un project_id inexistente: {pid!r}")
+        case_a, case_b = case_by_project[ids[0]], case_by_project[ids[1]]
+        if case_a != case_b:
+            pairs.append((case_a, case_b))
+    return pairs
+
+
 def load_case_mention_eligibility_adjudications(conn: sqlite3.Connection, path: Path) -> dict[str, dict]:
     """Lee y valida las adjudicaciones de elegibilidad contra el warehouse; falla cerrado."""
     if not path.exists():
         return {}
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "case_mention_eligibility_adjudications_v1":
+    if payload.get("schema_version") != "case_mention_eligibility_adjudications":
         raise ValueError("schema_version de case_mention_eligibility_adjudications no reconocido")
     result: dict[str, dict] = {}
     for entry in payload.get("adjudications", []):
@@ -303,27 +200,15 @@ def _project_backing_evidence(
     mentions_by_project: dict[str, list[dict]],
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
-    v3_3_links_by_docid: dict[tuple[str, str], int | None],
+    verified_links_by_docid: dict[tuple[str, str], int | None],
     adjudicated_cms: frozenset[str] | None = None,
 ) -> list[dict]:
-    """Todas las filas de respaldo encontradas para este proyecto -- nunca
-    solo un booleano. Cada fila es provenance completo: exactamente que
-    cita, de que case_mention, de que documento, justifica el vinculo.
+    """Todas las filas de respaldo de este proyecto -- nunca solo un booleano. Cada fila es provenance completo:
+    exactamente que cita, de que case_mention y de que documento justifica el vinculo.
 
-    [RETIRADO 2026-09-26, migracion v3.2->v3.3 completa] La rama
-    `exact_substring_v1` (heuristica de texto, Fix 1A, precision 44-56%)
-    se elimino de aqui. Motivo verificado empiricamente, no asumido: con el
-    100% del corpus productivo (934/934 documentos) ahora en v3.3, una
-    reconstruccion completa con AMBOS caminos activos dejo 0 filas de
-    conflict_evidence_backing con detector_version='exact_substring_v1' --
-    ya no existe ningun proyecto mencionado sin cobertura de v3.3, asi que
-    el fallback nunca se ejercitaba. Se documenta la medicion en
-    audit/validation_summary.json (migracion_v3_2_a_v3_3_completa_2026-09-26)
-    en vez de conservar codigo muerto. Si en el futuro se agregan documentos
-    nuevos SIN pasar por el enrichment v3.3, esta funcion los dejara sin
-    respaldo (nunca None por None): es la decision correcta -- v3.3 ya
-    decidio explicitamente cuando no hay vinculo claro, adivinar por
-    substring era justamente el problema que v3.3 vino a eliminar."""
+    Una mencion respalda solo por el `case_mention_index` verificado que el modelo le asigno, y solo si esa
+    case_mention esta incluida y tiene al menos una cita de `objeto` verificada. Sin indice (None) no hay respaldo:
+    el modelo decidio explicitamente que no hay vinculo claro, y adivinarlo por texto fue el problema original."""
     adjudicated_cms = adjudicated_cms or frozenset()
     rows = []
     for mention in mentions_by_project.get(project_id, []):
@@ -333,7 +218,7 @@ def _project_backing_evidence(
         if not pn:
             continue
 
-        idx = v3_3_links_by_docid.get((document_id, pn))
+        idx = verified_links_by_docid.get((document_id, pn))
         if idx is None:
             continue
 
@@ -349,18 +234,18 @@ def _project_backing_evidence(
                         "evidence_id": ev["evidence_id"],
                         "raw_nombre_proyecto": raw_nombre_proyecto,
                         "quote_text": ev["quote_text"],
-                        "backing_scope": BACKING_SCOPE_V3_3,
+                        "backing_scope": BACKING_SCOPE,
                         "document_case_mention_count": len(doc_included),
                         "document_object_case_mention_count": 1,
                         "ambiguous_multi_case_document": 0,
                         "duplicate_group_mixed_decision": 0,
-                        "detector_version": DETECTOR_VERSION_V3_3,
-                        "match_method": MATCH_METHOD_V3_3_ADJUDICATED_ELIGIBILITY if case_mention_id in adjudicated_cms else MATCH_METHOD_V3_3,
+                        "detector_version": DETECTOR_VERSION,
+                        "match_method": MATCH_METHOD_ADJUDICATED_ELIGIBILITY if case_mention_id in adjudicated_cms else MATCH_METHOD,
                     }
                 )
         # No se hereda evidencia de otra case_mention por compartir grupo de
         # duplicados. El grupo es una señal para revision, no una relacion
-        # project -> case_mention. Solo la asignacion v3.3 exacta, junto con
+        # project -> case_mention. Solo la asignacion la extraccion vigente exacta, junto con
         # su propia elegibilidad y evidencia de objeto verificada, respalda.
     return rows
 
@@ -405,13 +290,13 @@ class UnionFind:
             self.parent[ra] = rb
 
 
-def load_classified_63() -> list[dict]:
-    if not CLASSIFIED_63.exists():
-        raise FileNotFoundError(f"CLASSIFIED_63 requerido para construir CONFLICT: {CLASSIFIED_63}")
-    payload = json.loads(CLASSIFIED_63.read_text(encoding="utf-8"))
+def load_conflict_unit_review() -> list[dict]:
+    if not CONFLICT_UNIT_REVIEW.exists():
+        raise FileNotFoundError(f"CONFLICT_UNIT_REVIEW requerido para construir CONFLICT: {CONFLICT_UNIT_REVIEW}")
+    payload = json.loads(CONFLICT_UNIT_REVIEW.read_text(encoding="utf-8"))
     documentos = payload.get("documentos") if isinstance(payload, dict) else None
     if not isinstance(documentos, list):
-        raise ValueError(f"CLASSIFIED_63 debe contener una lista 'documentos': {CLASSIFIED_63}")
+        raise ValueError(f"CONFLICT_UNIT_REVIEW debe contener una lista 'documentos': {CONFLICT_UNIT_REVIEW}")
     return documentos
 
 
@@ -477,9 +362,9 @@ def expected_case_id_aliases_from_baseline(
 ) -> tuple[dict[str, str], str]:
     """Deriva el único alias de baseline permitido y comprueba sus hashes."""
     payload = json.loads(baseline_path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "project_case_baseline_v1":
+    if payload.get("schema_version") != "project_case_baseline":
         raise ValueError("schema_version de project_case_baseline no reconocido")
-    _validate_sha256_field(payload, "source_warehouse_sha256")
+    _validate_sha256_field(payload, "source_content_sha256")
     rows = payload.get("projects")
     if not isinstance(rows, list):
         raise ValueError("baseline.projects debe ser una lista")
@@ -603,7 +488,7 @@ def collect_unresolved_historical_case_ids(
     if references["unsupported_relations"]:
         unsupported = references["unsupported_relations"]
         raise ValueError(
-            "relacion_case_groups_sol contiene relaciones desconocidas; "
+            "relacion_case_groups contiene relaciones desconocidas; "
             "preflight bloqueado: "
             + ", ".join(
                 f"{row.get('relation')!r} en {row.get('document_id')!r}"
@@ -622,11 +507,11 @@ def collect_unresolved_historical_case_ids(
 def load_historical_case_id_resolutions(
     path: Path = HISTORICAL_CASE_ID_RESOLUTIONS_PATH,
 ) -> tuple[dict[str, str], set[str]]:
-    """Lee resoluciones citadas de historical_case_id huérfanos de CLASSIFIED_63.
+    """Lee resoluciones citadas de historical_case_id huérfanos de CONFLICT_UNIT_REVIEW.
 
     Devuelve (resolved_aliases, non_resolvable_ids). `resolved_aliases` son
     alias historical_case_id->case_id vigente, cada uno citando el grado y la
-    justificación que Sol ya escribió en CLASSIFIED_63 (nunca se reinterpreta
+    justificación que la revisión ya escribió en CONFLICT_UNIT_REVIEW (nunca se reinterpreta
     esa decisión, solo se repara el destino tras fusiones posteriores).
     `non_resolvable_ids` son IDs investigados contra el warehouse real sin
     ningún anclaje vivo disponible -- se preservan como referencia histórica
@@ -668,7 +553,7 @@ def analyze_historical_case_references(
     nueva/desconocida falla cerrada como bloqueante.
 
     `non_resolvable_historical_ids` son IDs investigados y confirmados sin
-    ningún anclaje vivo disponible (ver historical_case_id_resolutions_v1.json)
+    ningún anclaje vivo disponible (ver historical_case_id_resolutions.json)
     -- se preservan como referencia histórica explícita en vez de bloquear
     indefinidamente. Nunca se infiere esta lista por ausencia de alias; debe
     venir de una investigación documentada aparte."""
@@ -678,7 +563,7 @@ def analyze_historical_case_references(
     unsupported_relations: list[dict] = []
     for doc in documentos_63:
         groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
-        for relation_index, relation in enumerate(doc.get("relaciones_case_groups_sol", [])):
+        for relation_index, relation in enumerate(doc.get("relaciones_case_groups", [])):
             relation_type = relation.get("relacion")
             relation_case_ids = relation.get("case_ids", [])
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
@@ -700,7 +585,7 @@ def analyze_historical_case_references(
                     continue
                 if relation_type in RELACIONES_QUE_CAMBIAN_TOPOLOGIA and historical_id in non_resolvable:
                     # Investigado y confirmado sin ningun anclaje vivo disponible (ver
-                    # historical_case_id_resolutions_v1.json) -- se preserva explicitamente
+                    # historical_case_id_resolutions.json) -- se preserva explicitamente
                     # en vez de bloquear indefinidamente. Nunca se le asigna un destino.
                     impact_scope = "confirmed_non_resolvable_historical_reference"
                     topology_blocking = False
@@ -789,10 +674,10 @@ def build_historical_case_reference_rows(
     rows = []
     for doc in documentos_63:
         groups = {row.get("case_id"): row for row in doc.get("case_groups", [])}
-        for relation_index, relation in enumerate(doc.get("relaciones_case_groups_sol", [])):
+        for relation_index, relation in enumerate(doc.get("relaciones_case_groups", [])):
             relation_type = relation.get("relacion")
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
-                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+                raise ValueError(f"relacion_case_groups desconocida: {relation_type!r}")
             for historical_id in relation.get("case_ids", []):
                 resolved_id = aliases.get(historical_id, historical_id)
                 if resolved_id in current_case_ids:
@@ -830,7 +715,7 @@ def build_historical_case_reference_rows(
                         "case_ids_json": json.dumps(relation.get("case_ids", []), ensure_ascii=False),
                         "impact_scope": impact_scope,
                         "status": "preserved_unresolved_not_projected",
-                        "source": "conflict_unit_63_historical_reference",
+                        "source": "conflict_unit_review_historical_reference",
                     }
                 )
     return rows
@@ -889,11 +774,14 @@ def split_case_ids_for_projection(
     return sorted(set(projected)), sorted(set(unresolved))
 
 
-def _sha256_file_if_present(path: Path) -> str | None:
+def _sha256_file_if_present(path: Path, text: bool = True) -> str | None:
+    """SHA-256 del archivo. Los archivos de texto se normalizan a LF (la huella no depende de la configuracion de
+    git del equipo); un archivo binario (`text=False`) se hashea tal cual."""
     path = Path(path)
     if not path.is_file():
         return None
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    data = path.read_bytes()
+    return hashlib.sha256(data.replace(b"\r\n", b"\n") if text else data).hexdigest()
 
 
 def load_unresolved_project_identity_blockers(conn: sqlite3.Connection) -> list[dict]:
@@ -948,12 +836,12 @@ def load_unresolved_project_identity_blockers(conn: sqlite3.Connection) -> list[
 
 
 def build_historical_case_preflight_report(
-    analysis: dict[str, list[dict]], classified_path: Path = CLASSIFIED_63, warehouse_path: Path = WAREHOUSE
+    analysis: dict[str, list[dict]], classified_path: Path = CONFLICT_UNIT_REVIEW, warehouse_path: Path = WAREHOUSE
 ) -> dict:
     """Reporte durable de bloqueo, separado del reporte de una build exitosa."""
     blockers = analysis["topology_blockers"]
     return {
-        "schema_version": "historical_case_reference_preflight_v1",
+        "schema_version": "historical_case_reference_preflight",
         "run_id": datetime.now(timezone.utc).isoformat(),
         "status": "blocked_before_database_write" if blockers else "topology_preflight_passed",
         "policy": {
@@ -965,7 +853,7 @@ def build_historical_case_preflight_report(
         },
         "source_hashes": {
             "classified_63_sha256": _sha256_file_if_present(classified_path),
-            "warehouse_file_sha256": _sha256_file_if_present(warehouse_path),
+            "warehouse_file_sha256": _sha256_file_if_present(warehouse_path, text=False),
             "preflight_script_sha256": _sha256_file_if_present(Path(__file__)),
         },
         "n_unresolved_ids": len(analysis["all_unresolved"]),
@@ -1000,22 +888,23 @@ def build_case_groups(
     documentos_63: list[dict],
     case_id_alias: dict[str, str] | None = None,
     non_resolvable_historical_ids: set[str] | None = None,
+    extra_merges: list[tuple[str, str]] | None = None,
 ) -> dict[str, list[str]]:
     """case_id -> lista ordenada de case_id de su grupo (incluyendose a si
     mismo si es trivial). Los IDs históricos se remapean explícitamente; un
     ID desconocido falla, en vez de desaparecer silenciosamente -- salvo que
     esté en `non_resolvable_historical_ids` (investigado y confirmado sin
-    anclaje vivo, ver historical_case_id_resolutions_v1.json), en cuyo caso
+    anclaje vivo, ver historical_case_id_resolutions.json), en cuyo caso
     esa relación puntual se omite en vez de forzar un destino inventado."""
     uf = UnionFind(all_case_ids)
     current_ids = set(all_case_ids)
     aliases = case_id_alias or {}
     non_resolvable = non_resolvable_historical_ids or set()
     for doc in documentos_63:
-        for rel in doc.get("relaciones_case_groups_sol", []):
+        for rel in doc.get("relaciones_case_groups", []):
             relation_type = rel.get("relacion")
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
-                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+                raise ValueError(f"relacion_case_groups desconocida: {relation_type!r}")
             if relation_type not in RELACIONES_QUE_UNEN:
                 continue
             if non_resolvable & set(rel["case_ids"]):
@@ -1023,6 +912,10 @@ def build_case_groups(
             ids = remap_historical_case_ids(rel["case_ids"], current_ids, aliases)
             for cid in ids[1:]:
                 uf.union(ids[0], cid)
+
+    for case_a, case_b in extra_merges or []:
+        if case_a in current_ids and case_b in current_ids:
+            uf.union(case_a, case_b)
 
     groups: dict[str, list[str]] = defaultdict(list)
     for cid in all_case_ids:
@@ -1041,7 +934,7 @@ def build_conflict_relations(
     marcado explicitamente por la revisión como posible trayectoria longitudinal
     compartiendo territorio/actor.
 
-    [CORREGIDO 2026-09-18, hallazgo real de la revisión] La v1 marcaba
+    La v1 marcaba
     review_status='pending_human_decision' para LOS 3 documentos D por
     igual, aunque 2 de ellos (UPC, Recuperacion de barrios) YA fueron
     adjudicados explicitamente en apply_conflict_unit_gate_decisions.py
@@ -1055,7 +948,7 @@ def build_conflict_relations(
     la relacion queda 'resolved_keep_separate'; si sigue en 'caso_unico',
     sigue 'pending_human_decision'.
 
-    [CORREGIDO 2026-09-18, hallazgo menor de la revisión] Antes, si 2+ documentos
+    Antes, si 2+ documentos
     evidenciaban el mismo par de conflictos, solo se conservaba el primer
     'note' encontrado (provenance perdido). Ahora se acumulan todos los
     documentos de evidencia por par en 'documentos_evidencia'."""
@@ -1064,10 +957,10 @@ def build_conflict_relations(
     for doc in documentos_63:
         gate_status = gate_status_by_document.get(doc["document_id"], "caso_unico")
         review_status = "pending_human_decision" if gate_status == "caso_unico" else "resolved_keep_separate"
-        for rel in doc.get("relaciones_case_groups_sol", []):
+        for rel in doc.get("relaciones_case_groups", []):
             relation_type = rel.get("relacion")
             if relation_type not in RELACIONES_CASE_CONOCIDAS:
-                raise ValueError(f"relacion_case_groups_sol desconocida: {relation_type!r}")
+                raise ValueError(f"relacion_case_groups desconocida: {relation_type!r}")
             if relation_type != "conflictos_distintos":
                 continue
             if non_resolvable & set(rel["case_ids"]):
@@ -1100,7 +993,7 @@ def build_conflict_relations(
                         {
                             "document_id": doc["document_id"],
                             "title": doc["title"],
-                            "justificacion_sol": doc["justificacion_sol"],
+                            "justificacion": doc["justificacion"],
                             "gate_status_al_construir": gate_status,
                         }
                     )
@@ -1119,7 +1012,7 @@ def _build_conflict_backing(
     mentions_by_project: dict[str, list[dict]],
     included_by_doc: dict[str, list[str]],
     objeto_by_cm: dict[str, list[dict]],
-    v3_3_links_by_docid: dict[tuple[str, str], int | None],
+    verified_links_by_docid: dict[tuple[str, str], int | None],
     adjudicated_cms: frozenset[str] | None = None,
 ) -> tuple[str | None, str, list[dict]]:
     """Aplica el detector de respaldo a TODOS los proyectos de un conflicto
@@ -1130,7 +1023,7 @@ def _build_conflict_backing(
     backed_projects: list[tuple[str, str]] = []
     backing_rows: list[dict] = []
     for pid, canonical_name in projects:
-        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, adjudicated_cms)
+        rows = _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, verified_links_by_docid, adjudicated_cms)
         if rows:
             backed_projects.append((pid, canonical_name))
             case_id_of_pid = case_id_by_project[pid]
@@ -1156,7 +1049,7 @@ def _build_conflict_backing(
                     }
                 )
 
-    # Label: preferir canonical_name entre proyectos RESPALDADOS (Fix 1A,
+    # Label: preferir canonical_name entre proyectos RESPALDADOS (la revision de respaldo,
     # corrige etiqueta_no_coincide_con_evidencia -- 27/63 error_grave en la
     # validacion N=150). Fallback explicito al mecanismo anterior (primero
     # alfabetico entre TODOS) solo si ningun proyecto tiene respaldo.
@@ -1214,9 +1107,9 @@ def _build_conflicts(conn: sqlite3.Connection):
     project_identity_blockers = load_unresolved_project_identity_blockers(conn)
 
     all_case_ids = sorted({r[0] for r in conn.execute("SELECT DISTINCT case_id FROM project WHERE case_id IS NOT NULL")})
-    documentos_63 = load_classified_63()
+    documentos_63 = load_conflict_unit_review()
 
-    # Precomputo unico para el detector de respaldo (Fix 1A) -- sin cascada
+    # Precomputo unico para el detector de respaldo -- sin cascada
     # de queries por conflicto. Fuente autoritativa: evidence + case_mention
     # (nunca enrichment_evidence, que no conserva case_mention_id).
     included_by_doc: dict[str, list[str]] = defaultdict(list)
@@ -1238,9 +1131,9 @@ def _build_conflicts(conn: sqlite3.Connection):
         mentions_by_project[pid].append({"document_id": doc_id, "raw_nombre_proyecto": raw_name})
     case_id_by_project: dict[str, str] = dict(conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL"))
 
-    # v3.3 (2026-09-26): case_mention_index ya esta materializado en
+    # la extraccion vigente (2026-09-26): case_mention_index ya esta materializado en
     # enrichment_project_mention -- se consulta directo, sin releer JSONL.
-    v3_3_links_by_docid = load_v3_3_verified_links(conn)
+    verified_links_by_docid = load_verified_links(conn)
 
     alias_table_exists = conn.execute(
         "SELECT 1 FROM sqlite_master WHERE type='table' AND name='case_id_alias'"
@@ -1297,7 +1190,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     ]
     report_analysis = {**reference_analysis, "topology_blockers": all_topology_blockers}
     preflight_report = build_historical_case_preflight_report(
-        report_analysis, classified_path=CLASSIFIED_63, warehouse_path=WAREHOUSE
+        report_analysis, classified_path=CONFLICT_UNIT_REVIEW, warehouse_path=WAREHOUSE
     )
     preflight_report["n_confirmed_non_resolvable_historical_references"] = len(non_resolvable_historical_ids)
     preflight_report["project_identity_review_gate"] = {
@@ -1317,6 +1210,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     case_groups = build_case_groups(
         all_case_ids, documentos_63, case_id_alias=case_id_alias,
         non_resolvable_historical_ids=non_resolvable_historical_ids,
+        extra_merges=load_conflict_merge_decisions(conn),
     )
     case_id_to_conflict = {}
     conflict_rows = []
@@ -1329,13 +1223,13 @@ def _build_conflicts(conn: sqlite3.Connection):
             members,
         ).fetchall()
 
-        # Detector de respaldo (Fix 1A): aplicado UNIFORMEMENTE, sin
+        # Detector de respaldo: aplicado UNIFORMEMENTE, sin
         # excepcion para n_case_ids>1 -- ver docstring del modulo (Aeropuerto
         # Los Cerrillos y Aldea del Encuentro, ambos multi-case revisados,
         # resultaron error_grave en la validacion N=150).
         label, respaldo_evidencia, backing_rows = _build_conflict_backing(
             conflict_id, projects, case_id_by_project, mentions_by_project, included_by_doc, objeto_by_cm,
-            v3_3_links_by_docid, adjudicated_cms
+            verified_links_by_docid, adjudicated_cms
         )
         conflict_evidence_backing_rows.extend(backing_rows)
         backing_summary = _backing_summary(projects, backing_rows)
@@ -1345,8 +1239,8 @@ def _build_conflicts(conn: sqlite3.Connection):
                 "conflict_id": conflict_id,
                 "label": label,
                 "n_case_ids": len(members),
-                "origen": "conflict_unit_63_evidence" if len(members) > 1 else "trivial_single_case",
-                "confidence": "alta_revisado_por_sol" if len(members) > 1 else "baja_derivado_mecanicamente",
+                "origen": "conflict_unit_review_evidence" if len(members) > 1 else "trivial_single_case",
+                "confidence": "alta_revisado_manualmente" if len(members) > 1 else "baja_derivado_mecanicamente",
                 "respaldo_evidencia": respaldo_evidencia,
                 **backing_summary,
             }
@@ -1372,7 +1266,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         non_resolvable_historical_ids=non_resolvable_historical_ids,
     )
 
-    # [CORREGIDO 2026-09-18, bug real de la revisión] role tenia 2 fallas: (1)
+    # role tenia 2 fallas: (1)
     # relaciones 'mismo_proyecto' (alias de identidad de proyecto, ya
     # resuelto en project_review_queue) caian en el default
     # 'mentioned_unreviewed' en vez de ignorarse -- no describen una
@@ -1409,12 +1303,12 @@ def _build_conflicts(conn: sqlite3.Connection):
     documentos_63_ids = {doc["document_id"] for doc in documentos_63}
     for doc in documentos_63:
         por_conflicto: dict[str, dict] = {}
-        for rel in doc.get("relaciones_case_groups_sol", []):
+        for rel in doc.get("relaciones_case_groups", []):
             relacion = rel.get("relacion")
             if relacion == "mismo_proyecto":
                 continue  # identidad de proyecto (alias), no evidencia de conflicto
             if relacion not in RELACIONES_CASE_CONOCIDAS:
-                raise ValueError(f"relacion_case_groups_sol desconocida: {relacion!r}")
+                raise ValueError(f"relacion_case_groups desconocida: {relacion!r}")
             role = ROLE_BY_RELACION.get(relacion, "mentioned_unreviewed")
             remapped_case_ids, unresolved_case_ids = split_case_ids_for_projection(
                 rel["case_ids"], set(case_id_to_conflict), case_id_alias
@@ -1443,15 +1337,15 @@ def _build_conflicts(conn: sqlite3.Connection):
                     "conflict_id": cflt,
                     "role": info["role"],
                     "evidence_json": json.dumps(
-                        {"relaciones": info["evidence"], "justificacion_sol": doc["justificacion_sol"]},
+                        {"relaciones": info["evidence"], "justificacion": doc["justificacion"]},
                         ensure_ascii=False,
                     ),
-                    "source": "conflict_unit_63_sol",
+                    "source": "conflict_unit_review",
                     "unidad_caso_tipo": gate_status_by_document.get(doc["document_id"], doc["unidad_caso_tipo"]),
                 }
             )
 
-    # [CORREGIDO 2026-09-18, hallazgo real de la revisión] usaba directamente
+    # usaba directamente
     # enrichment_document.nombre_proyecto para decidir cual mencion es
     # 'focal', ignorando las 9 correcciones humanas de nombre_proyecto ya
     # guardadas en document_case_unit.correccion_nombre_proyecto.
@@ -1471,13 +1365,19 @@ def _build_conflicts(conn: sqlite3.Connection):
         LEFT JOIN document_case_unit g ON g.document_id = pmr.document_id
         """
     ).fetchall()
+    reviewed_pairs = {(r["document_id"], r["conflict_id"]) for r in document_conflict_rows}
     for document_id, raw_nombre, project_id, case_id, nombre_proyecto_focal, unidad_caso_tipo in rows:
-        if document_id in documentos_63_ids:
-            continue  # ya cubierto por evidencia humana, no duplicar con derivacion mecanica
         cflt = case_id_to_conflict.get(case_id)
         if cflt is None:
             continue
-        role = "focal" if raw_nombre == nombre_proyecto_focal else "mentioned_unreviewed"
+        if document_id in documentos_63_ids:
+            # La revision humana decide los roles de este documento. Un conflicto que la revision no toca igual
+            # tiene al documento como fuente de sus menciones: se conserva el vinculo, nunca como focal.
+            if (document_id, cflt) in reviewed_pairs:
+                continue
+            role = "mentioned_unreviewed"
+        else:
+            role = "focal" if raw_nombre == nombre_proyecto_focal else "mentioned_unreviewed"
         document_conflict_rows.append(
             {
                 "document_id": document_id,
@@ -1503,6 +1403,8 @@ def _build_conflicts(conn: sqlite3.Connection):
         """
         DROP VIEW IF EXISTS actor_event_project_link_conflict_safe;
         DROP VIEW IF EXISTS actor_event_project_link_conflict_extended;
+        DROP VIEW IF EXISTS conflict_conservative;
+        DROP TABLE IF EXISTS conflict_scope;
         DROP VIEW IF EXISTS document_conflict_case_safe;
         DROP VIEW IF EXISTS document_conflict_case_extended;
         DROP TABLE IF EXISTS conflict_relation;
@@ -1566,13 +1468,13 @@ def _build_conflicts(conn: sqlite3.Connection):
             orden INTEGER
         );
 
-        -- [AGREGADO Fix 1A, 2026-09-22] Provenance completo del respaldo de
+        -- Provenance completo del respaldo de
         -- evidencia -- nunca solo una bandera. Cada fila es una cita literal
         -- que justifica que un project_id (y por lo tanto el conflict_id que
         -- lo contiene) tiene un case_mention incluido y verificado detras.
         -- Ausencia de filas para un conflict_id = sin_respaldo_exact_quote_detectado.
         -- detector_version separado de match_method a proposito: manana puede
-        -- existir exact_substring_v2 con varios tipos de match, y la fila debe
+        -- existir otro detector textual con varios tipos de match, y la fila debe
         -- ser autosuficiente sin volver a consultar evidence.
         CREATE TABLE conflict_evidence_backing (
             conflict_id TEXT NOT NULL REFERENCES conflict(conflict_id),
@@ -1598,7 +1500,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         CREATE INDEX idx_conflict_backing_case_mention ON conflict_evidence_backing(case_mention_id);
         CREATE INDEX idx_conflict_backing_document ON conflict_evidence_backing(document_id);
 
-        -- [CORREGIDO 2026-09-18, hallazgo real de revisión] la primera version
+        -- la primera version
         -- solo filtraba unidad_caso_tipo='caso_unico', pero dentro de un
         -- documento caso_unico siguen existiendo document_conflict con
         -- role='mentioned_unreviewed' (mencion mecanica sin revisar) o
@@ -1625,7 +1527,7 @@ def _build_conflicts(conn: sqlite3.Connection):
             SELECT * FROM document_conflict
             WHERE unidad_caso_tipo = 'caso_unico' AND role IN ('focal', 'co_focal', 'contextual_mention');
 
-        -- [AGREGADO 2026-09-18] Base para la red ACTOR<->CONFLICT (siguiente
+        -- Base para la red ACTOR<->CONFLICT (siguiente
         -- paso pedido en revisión tras cerrar CONFLICT v1): mismo estandar de
         -- evidencia a nivel de mencion de actor que actor_event_project_link_case_safe
         -- (resolution_status='resolved_explicit'), pero agrupando por
@@ -1722,14 +1624,13 @@ def _build_conflicts(conn: sqlite3.Connection):
     n_projects_total = len(case_id_by_project)
     n_projects_with_backing = sum(
         1 for pid in case_id_by_project
-        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, v3_3_links_by_docid, adjudicated_cms)
+        if _project_backing_evidence(pid, mentions_by_project, included_by_doc, objeto_by_cm, verified_links_by_docid, adjudicated_cms)
     )
     backing_rows_by_detector: dict[str, int] = defaultdict(int)
     conflicts_with_backing_by_detector: dict[str, set] = defaultdict(set)
     for row in conflict_evidence_backing_rows:
         backing_rows_by_detector[row["detector_version"]] += 1
         conflicts_with_backing_by_detector[row["detector_version"]].add(row["conflict_id"])
-    conflicts_backed_by_both = conflicts_with_backing_by_detector[DETECTOR_VERSION] & conflicts_with_backing_by_detector[DETECTOR_VERSION_V3_3]
     summary = {
         "n_conflicts_total": len(conflict_rows),
         "n_case_mention_eligibility_adjudications": len(eligibility_adjudications),
@@ -1742,7 +1643,7 @@ def _build_conflicts(conn: sqlite3.Connection):
         ),
         "n_conflict_project_links": len(conflict_project_rows),
         "n_document_conflict_links": len(document_conflict_rows),
-        "n_document_conflict_from_sol_evidence": sum(1 for r in document_conflict_rows if r["source"] == "conflict_unit_63_sol"),
+        "n_document_conflict_from_review": sum(1 for r in document_conflict_rows if r["source"] == "conflict_unit_review"),
         "n_document_conflict_trivial": sum(1 for r in document_conflict_rows if r["source"] == "trivial_from_project_mention"),
         "n_historical_case_references_preserved_unprojected": n_historical_references_persisted,
         "historical_case_reference_impact_scope_counts": dict(historical_reference_scope_counts),
@@ -1758,9 +1659,8 @@ def _build_conflicts(conn: sqlite3.Connection):
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
     audit_report = {
-        "detector_version": DETECTOR_VERSION_V3_3,
-        "backing_scope": BACKING_SCOPE_V3_3,
-        "backing_scope_note": "[ACTUALIZADO 2026-09-26] v3_3_verified_index es el UNICO detector activo desde la migracion completa v3.2->v3.3: enrichment_project_mention.case_mention_index vincula cada mencion de proyecto a su case_mention real, ya no hay adivinanza documental.",
+        "detector_version": DETECTOR_VERSION,
+        "backing_scope": BACKING_SCOPE,
         "projects_total": n_projects_total,
         "projects_with_backing": n_projects_with_backing,
         "projects_without_backing": n_projects_total - n_projects_with_backing,
@@ -1787,17 +1687,12 @@ def _build_conflicts(conn: sqlite3.Connection):
         "backing_rows_via_mixed_duplicate_group_decision": sum(
             1 for row in conflict_evidence_backing_rows if row["duplicate_group_mixed_decision"]
         ),
-        "calibration_n": 150,
-        "calibration_error_grave": CALIBRATION_ERROR_GRAVE,
-        "calibration_target_categories": CALIBRATION_TARGET_CATEGORIES,
-        "detector_versions": [DETECTOR_VERSION, DETECTOR_VERSION_V3_3],
+        "detector_versions": [DETECTOR_VERSION],
         "backing_rows_by_detector": dict(backing_rows_by_detector),
         "conflicts_with_backing_by_detector": {
             DETECTOR_VERSION: len(conflicts_with_backing_by_detector[DETECTOR_VERSION]),
-            DETECTOR_VERSION_V3_3: len(conflicts_with_backing_by_detector[DETECTOR_VERSION_V3_3]),
-            "ambos": len(conflicts_backed_by_both),
         },
-        "v3_3_integration_note": "detector_version='v3_3_verified_index' usa el case_mention_index verificado por 2 rondas de revision ciega externa (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). [ACTUALIZADO 2026-09-26] 'exact_substring_v1' (heuristica original de Fix 1A) se retiro del codigo vivo: con el 100% del corpus productivo en v3.3, una reconstruccion completa con ambos caminos activos midio 0 filas reales para ese detector -- se conserva la clave en este reporte con valor 0 por continuidad historica, nunca vuelve a producir filas.",
+        "backing_method_note": "El respaldo usa el case_mention_index que el modelo eligio y el pipeline verifico; la asociacion se valido con dos rondas de revision ciega independiente (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). Un proyecto mencionado sin indice no tiene respaldo: no se adivina por texto.",
     }
     warehouse_hash = hash_committed_warehouse(conn, WAREHOUSE)
     audit_report["warehouse_sha256"] = warehouse_hash["sha256"]

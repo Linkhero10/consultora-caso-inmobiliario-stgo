@@ -132,8 +132,7 @@ def _resolve_actor_name(raw_name: str, identity_map: dict[str, dict[str, str]]) 
 
 
 def _backed_conflict_ids(con: sqlite3.Connection) -> set[str]:
-    """conflict_id con respaldo_evidencia='respaldo_exact_quote_detectado'
-    (Fix 1A) -- universo analitico conservador. Si la columna no existe
+    """conflict_id con respaldo_evidencia='respaldo_exact_quote_detectado' -- universo analitico conservador. Si la columna no existe
     (warehouse mas simple, ej. fixtures de test), se trata como si nada
     tuviera respaldo detectado (conservador por default, nunca al reves)."""
     if not _table_or_view_exists(con, "conflict") or not _column_exists(con, "conflict", "respaldo_evidencia"):
@@ -149,13 +148,13 @@ def _column_exists(con: sqlite3.Connection, table: str, column: str) -> bool:
 
 
 def _projects_verified_by_comuna(con: sqlite3.Connection) -> dict[str, set[str]]:
-    """[Fix 1F, 2026-09-26] codigo_comuna_ine -> set(project_id) usando
+    """codigo_comuna_ine -> set(project_id) usando
     SOLO menciones con vinculo verificado proyecto->case_mention->comuna
     (project_mention_geography, match_method directo o adjudicacion de grupo
     revisada manualmente y limitada a geografia -- ver
     src/build_geography.py::build_project_mention_geography()).
     Reemplaza la aproximacion vieja (cualquier mencion del documento
-    atribuida a la comuna del documento) por el mismo mecanismo que Fix 1D
+    atribuida a la comuna del documento) por el mismo mecanismo que la revision de respaldo
     ya uso para el respaldo de CONFLICT. Si la tabla no existe (warehouse
     mas simple, ej. fixtures de test que no corren build_geography.py),
     devuelve vacio -- nunca cae de vuelta al metodo viejo en silencio."""
@@ -205,7 +204,7 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
         by_comuna_conflicts_backed[code].update(conflicts_here & backed_conflict_ids)
         by_comuna_actors[code].update(doc_to_actors.get(document_id, set()))
 
-    # Fix 1A: dos universos explicitos, nunca uno silencioso -- n_conflicts_total
+    # la revision de respaldo: dos universos explicitos, nunca uno silencioso -- n_conflicts_total
     # (todo lo que document_conflict_case_safe vincula a esta comuna) vs.
     # n_conflicts_backed (el subconjunto con respaldo exacto de evidencia
     # detectado, ver build_conflicts.py). El mapa/resumen nunca deben
@@ -229,12 +228,12 @@ def build_territories(con: sqlite3.Connection) -> list[dict[str, Any]]:
                 "geometry": json.loads(t["geometry_json"]),
                 "n_conflicts_total": n_conflicts_total,
                 "n_conflicts_backed": n_conflicts_backed,
-                # [Fix 1F, 2026-09-26 -- cierra el hallazgo de 2026-09-24] Antes
+                # Antes
                 # "n_projects_mentioned": cualquier mencion de proyecto en un documento
                 # (project_mention_resolved, sin filtrar relevancia/foco) atribuida a la
                 # comuna del documento -- no era territorio validado (mismo problema de
-                # raiz que Fix 1D resolvio para el respaldo de conflictos en su momento).
-                # Con el 100% del corpus en v3.3 (migracion 2026-09-26), cada mencion de
+                # raiz que la revision de respaldo resolvio para el respaldo de conflictos en su momento).
+                # Con el 100% del corpus en la extraccion vigente (migracion 2026-09-26), cada mencion de
                 # proyecto tiene (o no) un vinculo verificado a un case_mention real con su
                 # PROPIA comuna resuelta (ver build_geography.py::build_project_mention_geography(),
                 # match_method='direct'/'via_reviewed_duplicate_group') -- compartir
@@ -350,7 +349,7 @@ def build_conflicts(con: sqlite3.Connection) -> list[dict[str, Any]]:
     for row in _rows(con, "SELECT document_id, quote_role, quote_text FROM evidence WHERE verified = 1"):
         evidence_by_doc[row["document_id"]].append(row)
 
-    # Fix 1A seguimiento (2026-09-23): el detector de respaldo busca evidencia
+    # el detector de respaldo busca evidencia
     # en CUALQUIER documento que mencione el proyecto (nunca solo los
     # focales de este conflicto -- ver docstring de build_conflicts.py). Sin
     # este fallback, ~1/3 de los conflictos "con respaldo detectado" mostraban
@@ -484,7 +483,7 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
     return {
         "n_documents": n_documents,
         "n_case_mentions": n_case_mentions,
-        # Fix 1A: dos universos explicitos -- nunca redefinir "n_conflicts"
+        # la revision de respaldo: dos universos explicitos -- nunca redefinir "n_conflicts"
         # para que signifique solo el subconjunto respaldado sin decirlo.
         "n_conflicts_total": len(conflicts),
         "n_conflicts_evidence_backed": n_conflicts_evidence_backed,
@@ -494,11 +493,11 @@ def build_summary(con: sqlite3.Connection, territories: list[dict[str, Any]], co
         "n_evidence_verified": n_evidence_verified,
         "n_comunas_con_conflictos": sum(1 for t in territories if t["n_conflicts_total"] > 0),
         "n_manzanas_censales": n_manzanas_censales,
-        # [Fix 1F, 2026-09-26] n_projects (arriba, total del corpus) es un conteo
+        # n_projects (arriba, total del corpus) es un conteo
         # directo del registro de proyectos -- valido. territories[].n_projects_verified
         # (por comuna) ahora TAMBIEN es territorio validado: usa el vinculo verificado
         # proyecto->case_mention->comuna (build_geography.py::build_project_mention_geography(),
-        # mismo mecanismo que Fix 1D uso para el respaldo de CONFLICT), no la comuna del
+        # mismo mecanismo que la revision de respaldo uso para el respaldo de CONFLICT), no la comuna del
         # documento como proxy. Ver nota completa en el codigo de build_territories().
         "nota_metodologica_geografia_proyectos": "n_projects_verified por comuna usa menciones con índice del modelo y comuna resuelta, o una adjudicación manual explícita limitada a identidad geográfica. Compartir un grupo de duplicados no basta para transferir comuna; los grupos sin adjudicación, índices nulos y menciones sin comuna resuelta se excluyen. No se usa la comuna del documento como proxy. Ver audit/project_mention_geography_report.json.",
     }

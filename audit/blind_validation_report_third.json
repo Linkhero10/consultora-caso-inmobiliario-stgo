@@ -1,0 +1,44 @@
+{
+  "universo_conservador_del_producto": {
+    "n_verificables": 50,
+    "correcto": 18,
+    "error_menor": 19,
+    "error_grave": 13,
+    "error_grave_pct": 0.26,
+    "error_grave_ic95": [
+      0.159,
+      0.396
+    ],
+    "correcto_o_menor_pct": 0.74,
+    "correcto_o_menor_ic95": [
+      0.604,
+      0.841
+    ]
+  },
+  "respaldo_pero_alcance_rechazado": {
+    "n_verificables": 20,
+    "correcto": 1,
+    "error_menor": 3,
+    "error_grave": 16,
+    "error_grave_pct": 0.8,
+    "error_grave_ic95": [
+      0.584,
+      0.919
+    ],
+    "correcto_o_menor_pct": 0.2,
+    "correcto_o_menor_ic95": [
+      0.081,
+      0.416
+    ]
+  },
+  "comparacion": {
+    "universo_con_respaldo_solo_muestra_1": "bueno 56 %",
+    "universo_con_respaldo_solo_muestra_2": "bueno 57 %"
+  },
+  "revisor": "claude-sonnet-5-5 (ciego)",
+  "notas": [
+    "Muestra tomada del warehouse con el filtro de alcance aplicado (config/conflict_scope_decisions.json).",
+    "main = 50 al azar del universo conservador (respaldo y alcance aprobado); stress = 20 al azar de los conflictos con respaldo que el filtro rechaza.",
+    "Sin solapamiento con las muestras 1 y 2. Un solo revisor (modelo); criterio estricto."
+  ]
+}
