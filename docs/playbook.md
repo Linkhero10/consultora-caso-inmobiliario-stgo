@@ -75,6 +75,22 @@ para esa corrida (E14).
     el resultado de la validación y los límites conocidos. Tras fusionar, completa el manifiesto:
     `python src/generate_run_manifest.py --release-commit <SHA>`.
 
+## Filtro de alcance con un modelo de decisión (piloto)
+
+La validación ciega mostró que el error grave del producto es sobre todo de **alcance** (disputa inexistente, tema fuera
+del estudio). Eso es clasificación con opciones fijas, no extracción. `src/scope_jev.py` prueba un modelo de decisión (Jev,
+vía OpenRouter, con la misma `OPENROUTER_API_KEY`; entrada US$0,042 por millón de tokens, salida gratis) con tres preguntas
+tipadas: ¿disputa concreta?, ¿tema?, ¿qué foco tiene el proyecto?. **No sirve para extraer** citas ni nombres: la extracción
+sigue siendo del LLM.
+
+1. Ensayo (sin gasto, estima el costo): `python src/scope_jev.py --eval-blind`.
+2. Corrida pagada, con autorización explícita y tope: `python src/scope_jev.py --eval-blind --confirm-paid-run --max-cost-usd 0.50`.
+3. Lee `intermediate/scope/blind_eval_report.json`: de lo que pasa el filtro, cuánto es correcto; cuánto error grave se
+   filtra; cuántos buenos se pierden. Los umbrales de `RULE` son hipótesis: calibrarlos con datos etiquetados antes de usar el
+   filtro en el pipeline.
+4. Solo si supera al criterio actual en una muestra ciega **distinta** de la usada para calibrar, integrarlo como puerta
+   antes de crear el conflicto (E4: una heurística no es una puerta hasta medir su precisión).
+
 ## Ampliar con documentos nuevos
 
 1. Descubre y descarga los documentos nuevos; clasifícalos (paso 7) — solo los nuevos.
