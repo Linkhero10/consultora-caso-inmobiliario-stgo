@@ -71,7 +71,16 @@ infraestructura energética): un problema del filtro de alcance de la clasificac
 80 conflictos no tenían ningún documento asociado (defecto de construcción, 43 de 817, ya corregido). Una segunda lectura de los veredictos graves con respaldo confirmó 12 de 15; 3 son discutibles por alcance (tomas de terreno, patrimonio, espacio público), de modo que el error grave con respaldo estaría entre 35 % y 44 %. Límites: un solo revisor de la misma familia de modelos que el pipeline,
 criterio estricto y muestra pequeña; replicar con un revisor humano externo.
 
-## 7. Límites vigentes
+## 7. Segunda validación ciega y filtro de alcance
+
+Una segunda muestra independiente (57 aleatorios y 17 dirigidos; sin solapamiento con la primera) reproduce el resultado: 58 %
+de error grave en la muestra aleatoria (IC 95 % 45–70 %) y 43 % entre los conflictos con respaldo. Un filtro de alcance con un
+modelo de decisión (Jev; disputa concreta, tema y foco), con la regla fijada en la primera muestra y evaluada sin cambios en la
+segunda, complementa al respaldo: exigir ambos eleva la proporción de conflictos correctos o con error menor de 57 % a 77 %
+(84 % en la muestra de calibración) a costa de perder ~19 % de los buenos. Detalle y límites en
+`audit/scope_filter_report.json`. Es una medición: el filtro todavía no forma parte del pipeline.
+
+## 8. Límites vigentes
 
 - Las muestras anteriores miden estados previos del sistema; el vínculo proyecto → mención tiene su propia validación
   (0 fabricaciones en 809 evaluaciones).

@@ -79,12 +79,12 @@ para esa corrida (E14).
 
 La validación ciega mostró que el error grave del producto es sobre todo de **alcance** (disputa inexistente, tema fuera
 del estudio). Eso es clasificación con opciones fijas, no extracción. `src/scope_jev.py` prueba un modelo de decisión (Jev,
-vía OpenRouter, con la misma `OPENROUTER_API_KEY`; entrada US$0,042 por millón de tokens, salida gratis) con tres preguntas
+vía Requesty, modelo fijo `typesafe/jev-1.13.0`, con la misma `REQUESTY_API_KEY` de la extracción; ~US$0,04 por millón de tokens de entrada; la corrida de las dos muestras costó menos de US$0,01) con tres preguntas
 tipadas: ¿disputa concreta?, ¿tema?, ¿qué foco tiene el proyecto?. **No sirve para extraer** citas ni nombres: la extracción
 sigue siendo del LLM.
 
 1. Ensayo (sin gasto, estima el costo): `python src/scope_jev.py --eval-blind`.
-2. Corrida pagada, con autorización explícita y tope: `python src/scope_jev.py --eval-blind --confirm-paid-run --max-cost-usd 0.50`.
+2. Corrida pagada, con autorización explícita y tope: `python src/scope_jev.py --eval-blind --confirm-paid-run --max-cost-usd 0.50 --workers 50`. Para otra muestra: `--sample-dir <carpeta>`.
 3. Lee `intermediate/scope/blind_eval_report.json`: de lo que pasa el filtro, cuánto es correcto; cuánto error grave se
    filtra; cuántos buenos se pierden. Los umbrales de `RULE` son hipótesis: calibrarlos con datos etiquetados antes de usar el
    filtro en el pipeline.

@@ -1,0 +1,50 @@
+{
+  "modelo": "typesafe/jev-1.13.0 (vía Requesty)",
+  "descripcion": "Filtro de alcance con un modelo de decisión (disputa concreta, tema, foco), evaluado contra dos validaciones ciegas independientes. La regla se fijó con la primera muestra (calibración) y se evaluó SIN cambios en una segunda muestra fresca, sin solapamiento.",
+  "regla": {
+    "min_disputa": 0.5,
+    "tema": "inmobiliario_urbano",
+    "foco_excluido": "mencion_de_paso"
+  },
+  "costo_total_usd": 0.009318,
+  "muestra_1_calibracion": {
+    "n": 73,
+    "pasa_y_correcto_o_menor": 17,
+    "pasa_y_grave": 11,
+    "rechaza_y_grave": 42,
+    "rechaza_y_correcto_o_menor": 3,
+    "precision_de_lo_que_pasa": 0.607,
+    "error_grave_que_se_filtra": 0.792,
+    "buenos_que_se_pierden": 0.15
+  },
+  "muestra_2_fresca": {
+    "n": 74,
+    "pasa_y_correcto_o_menor": 22,
+    "pasa_y_grave": 15,
+    "rechaza_y_grave": 31,
+    "rechaza_y_correcto_o_menor": 6,
+    "precision_de_lo_que_pasa": 0.595,
+    "error_grave_que_se_filtra": 0.674,
+    "buenos_que_se_pierden": 0.214
+  },
+  "combinado_con_el_respaldo_del_sistema": {
+    "muestra_1": {
+      "solo_respaldo": "19/34 correctos o con error menor (56 %)",
+      "respaldo_y_jev": "16/19 (84 %)",
+      "solo_jev": "17/28 (61 %)"
+    },
+    "muestra_2_fresca": {
+      "solo_respaldo": "21/37 (57 %)",
+      "respaldo_y_jev": "17/22 (77 %)",
+      "solo_jev": "22/37 (59 %)"
+    }
+  },
+  "conclusion": "El respaldo de evidencia y el filtro de alcance se complementan: exigir ambos sube la proporción de conflictos correctos o con error menor de ~57 % a ~77 % en la muestra fresca, a costa de perder ~19 % de los buenos. Ninguno de los dos solo supera ~60 %.",
+  "limites": [
+    "Una muestra de 74 y otra de 73 unidades; intervalos amplios.",
+    "El revisor de ambas muestras es el mismo modelo (no humano), con criterio estricto.",
+    "La regla es una hipótesis con umbrales fijos; no se ajustó en la muestra fresca.",
+    "Aún no está integrado al pipeline: es una medición, no un cambio al producto."
+  ],
+  "uso": "python src/scope_jev.py --eval-blind --sample-dir <carpeta de una muestra ciega> --confirm-paid-run --max-cost-usd <tope> --workers 50"
+}

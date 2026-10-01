@@ -86,6 +86,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--verdicts", type=Path, default=DEFAULT_VERDICTS)
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+    parser.add_argument("--output", type=Path, default=REPORT_PATH)
     args = parser.parse_args()
     payload = json.loads(args.verdicts.read_text(encoding="utf-8"))
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
@@ -106,7 +107,7 @@ def main() -> int:
             for v in payload["verdicts"]
         ],
     }
-    REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "veredictos"}, ensure_ascii=False, indent=2))
     return 0
 

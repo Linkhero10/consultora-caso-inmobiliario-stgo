@@ -1,0 +1,694 @@
+{
+  "revisor": "claude-sonnet-5-5",
+  "warehouse_sha256_de_la_muestra": "89da58c38d5dd1b5975e2b56519fc51ccf3fce97c70085ba03fa3d627d0b07f4",
+  "semilla": "validation-1.0-second",
+  "ciega": true,
+  "limites": [
+    "Un solo revisor, de la misma familia de modelos que construyo el pipeline: no es una validacion humana externa.",
+    "Criterio estricto: ante la duda se elige el veredicto menos favorable.",
+    "Los conflictos sin documentos asociados no se pueden verificar."
+  ],
+  "muestra_aleatoria": {
+    "todos": {
+      "n": 57,
+      "correcto": 13,
+      "error_menor": 11,
+      "error_grave": 33,
+      "no_verificable": 0,
+      "n_verificables": 57,
+      "error_grave_pct": 0.579,
+      "error_grave_ic95": [
+        0.45,
+        0.698
+      ],
+      "correcto_o_menor_pct": 0.421,
+      "correcto_o_menor_ic95": [
+        0.302,
+        0.55
+      ]
+    },
+    "con_respaldo_del_sistema": {
+      "n": 37,
+      "correcto": 12,
+      "error_menor": 9,
+      "error_grave": 16,
+      "no_verificable": 0,
+      "n_verificables": 37,
+      "error_grave_pct": 0.432,
+      "error_grave_ic95": [
+        0.287,
+        0.591
+      ],
+      "correcto_o_menor_pct": 0.568,
+      "correcto_o_menor_ic95": [
+        0.409,
+        0.713
+      ]
+    },
+    "sin_respaldo_del_sistema": {
+      "n": 20,
+      "correcto": 1,
+      "error_menor": 2,
+      "error_grave": 17,
+      "no_verificable": 0,
+      "n_verificables": 20,
+      "error_grave_pct": 0.85,
+      "error_grave_ic95": [
+        0.64,
+        0.948
+      ],
+      "correcto_o_menor_pct": 0.15,
+      "correcto_o_menor_ic95": [
+        0.052,
+        0.36
+      ]
+    }
+  },
+  "muestra_dirigida_sin_respaldo": {
+    "n": 17,
+    "correcto": 1,
+    "error_menor": 3,
+    "error_grave": 13,
+    "no_verificable": 0,
+    "n_verificables": 17,
+    "error_grave_pct": 0.765,
+    "error_grave_ic95": [
+      0.527,
+      0.904
+    ],
+    "correcto_o_menor_pct": 0.235,
+    "correcto_o_menor_ic95": [
+      0.096,
+      0.473
+    ],
+    "nota": "dirigida; no estima prevalencia"
+  },
+  "acuerdo_respaldo": {
+    "sistema_con_respaldo|no": 24,
+    "sistema_con_respaldo|si": 13,
+    "sistema_sin_respaldo|no": 37
+  },
+  "conflictos_sin_documentos": 0,
+  "categorias_de_error": {
+    "sin_disputa_real": 24,
+    "fuera_de_alcance": 19,
+    "otro": 8,
+    "label_no_coincide": 6,
+    "proyecto_ajeno": 2,
+    "disputas_distintas_fusionadas": 1
+  },
+  "veredictos": [
+    {
+      "conflict_id": "conflict:d17adbad0c78c5a26e033cd3",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Solo mención incidental en un perfil de un empresario; no hay documento focal ni disputa concreta definida sobre un proyecto."
+    },
+    {
+      "conflict_id": "conflict:ff6a35fc1d1ccd0736afb6a4",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Conflicto de concesión hospitalaria (infraestructura de salud), fuera del alcance inmobiliario/urbano."
+    },
+    {
+      "conflict_id": "conflict:9527479ae03bb1f5c60fff82",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Maratué está en Puchuncaví (Valparaíso), fuera de la Provincia de Santiago; solo menciones, sin focal."
+    },
+    {
+      "conflict_id": "conflict:21ec4857466d19c5d8bbe472",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Lampa está fuera de la Provincia de Santiago; mención de pasada en nota sobre Pudahuel."
+    },
+    {
+      "conflict_id": "conflict:2e63fde08991189d1776179d",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Entrevista sobre plan de reconstrucción; no hay disputa, solo mención."
+    },
+    {
+      "conflict_id": "conflict:f18485ca6f92d9e846bfeef9",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Decreto municipal que aprueba un cierre de pasaje a solicitud de vecinos; trámite administrativo sin conflicto."
+    },
+    {
+      "conflict_id": "conflict:a1e796b9a99c40b3e8439c7d",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Aparece solo en una lista de casos de una presentación sobre permisos de BNUP; sin disputa descrita."
+    },
+    {
+      "conflict_id": "conflict:df81347c6c222b0f5a06c44c",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "si",
+      "motivo": "Ensayo académico sobre el Hospital Ochagavía y su transformación inmobiliaria (Núcleo Ochagavía); disputa más histórica/memorial que conflicto concreto acotado."
+    },
+    {
+      "conflict_id": "conflict:e7996c5c33e0f4367c0dcabc",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (Villa San Luis, Las Condes) pero el label es el lote y todos los documentos son menciones, sin focal."
+    },
+    {
+      "conflict_id": "conflict:6cf92217ace56da87cc57d9e",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Conflicto por peaje de concesión vial, no inmobiliario/urbano en el sentido del estudio."
+    },
+    {
+      "conflict_id": "conflict:81e041dc9e39527d84c42b14",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Anuncio de ensanche vial contra la congestión; obra de vialidad sin disputa inmobiliaria."
+    },
+    {
+      "conflict_id": "conflict:5d14b75f5e9777901f626315",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Nota sobre investigación por corrupción de alcaldes; el complejo es solo mención, no conflicto urbano."
+    },
+    {
+      "conflict_id": "conflict:b0e227ef027b83fec31b9661",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real vecinos vs. obra; el único documento trata el caso aunque está marcado como mención, sin focal."
+    },
+    {
+      "conflict_id": "conflict:aeb8a38c9e7db81d06a24348",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real en Pudahuel, pero el segundo documento (lobby Macul) trata otro Lider ajeno; sin focal."
+    },
+    {
+      "conflict_id": "conflict:049e087d3677f66ea3639e3c",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Solo mención como alternativa de relocalización; sin disputa propia."
+    },
+    {
+      "conflict_id": "conflict:0f41db4474a59fc842d06934",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Conflicto sobre agua potable municipal (SMAPA), fuera de alcance temático."
+    },
+    {
+      "conflict_id": "conflict:c41637f9f85345e6b025e842",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Conflicto real de Estación Central, pero label genérico y único documento panorámico (columna de opinión); sin focal."
+    },
+    {
+      "conflict_id": "conflict:4470f2d1ae3650f6f1d27213",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Disputa vecinal vs. proyecto Torres Plaza Egaña en Ñuñoa; el documento focal la describe."
+    },
+    {
+      "conflict_id": "conflict:64ec0d19b0702b0f1f55f351",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Quiebra de una inmobiliaria, sin disputa urbana ni vecinal."
+    },
+    {
+      "conflict_id": "conflict:4554014390894bdba5682570",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Decreto normativo del PRC sin disputa descrita en el texto."
+    },
+    {
+      "conflict_id": "conflict:014886d2d4597f60195cf9ff",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención de pasada en reportaje sobre Amazon; sin disputa del parque."
+    },
+    {
+      "conflict_id": "conflict:7c8f83f534b405d7cf4420f6",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Resolución de selección de proyectos DS19; sin disputa."
+    },
+    {
+      "conflict_id": "conflict:edf0a6f4506f8d2355849f48",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (CAB Recoleta, fallo Corte Suprema) pero label fragmentario; sin focal."
+    },
+    {
+      "conflict_id": "conflict:1bd97f4cef96a0fbd28733ee",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "El label es un proyecto hipotético mencionado al pasar; la disputa real es la venta de un paño al municipio de Las Condes."
+    },
+    {
+      "conflict_id": "conflict:31b16800e23e6340301aceca",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Label es un proyecto pasado mencionado de paso; el texto trata otra disputa (bosque, calles, Gesterra)."
+    },
+    {
+      "conflict_id": "conflict:f54f3d86688bd4611be7b0a3",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Data center en Padre Hurtado (fuera de Provincia de Santiago) y tema de infraestructura/ambiental; solo mención."
+    },
+    {
+      "conflict_id": "conflict:e311461a7d73f0e6ffe1711d",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "si",
+      "motivo": "Subestación eléctrica en Puente Alto (Provincia Cordillera), fuera de alcance territorial y temático."
+    },
+    {
+      "conflict_id": "conflict:4ee050a8b6703005a143bf98",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa patrimonial real en Santiago, pero el documento es una columna panorámica multicaso; sin focal."
+    },
+    {
+      "conflict_id": "conflict:6bc043e78378112b2e9e93d2",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real de edificios sin recepción en Estación Central; los dos documentos la tratan aunque sin rol focal."
+    },
+    {
+      "conflict_id": "conflict:1e672705284c340c61f5e4cd",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "proyecto_ajeno",
+      "respaldo_correcto": "no",
+      "motivo": "La denuncia es sobre el permiso de PDUC Urbanya, no Ciudad Lo Aguirre; label/proyecto no corresponde."
+    },
+    {
+      "conflict_id": "conflict:99e836748f18ebd04c92e970",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Solo una audiencia de lobby; sin disputa documentada."
+    },
+    {
+      "conflict_id": "conflict:b39aded19fb314f3d62e6285",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Procedimiento de invalidación de CIP en Enea Fase IV (Pudahuel) tras dictámenes de Contraloría; focal y mención lo respaldan."
+    },
+    {
+      "conflict_id": "conflict:16e8d76b0a675db36aeb6728",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención descriptiva histórica en revista de patrimonio; sin disputa propia."
+    },
+    {
+      "conflict_id": "conflict:938f82193852580f98bb2217",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "disputas_distintas_fusionadas",
+      "respaldo_correcto": "si",
+      "motivo": "Conflicto de usos de suelo en Diez de Julio dentro del PRC; label cubre solo una de las dos modificaciones listadas."
+    },
+    {
+      "conflict_id": "conflict:29d97afc83e5cad20b3c410f",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa patrimonial real, pero el label (Villa O’Higgins) es una de varias villas del barrio; sin focal."
+    },
+    {
+      "conflict_id": "conflict:3b496b3c323c7521b93fceea",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Patente de local nocturno por ruidos; fuera del alcance y mención contextual."
+    },
+    {
+      "conflict_id": "conflict:9030e18f446a42d738d10bfc",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real por permiso 12/16 mal otorgado en Providencia (Roberto del Río 1641); el documento CIPER la trata aunque sin rol focal."
+    },
+    {
+      "conflict_id": "conflict:9b1c883380c833b26acd23cf",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa patrimonial real en Santiago, pero la fuente es una columna que mezcla varios casos y no hay focal."
+    },
+    {
+      "conflict_id": "conflict:1f7b12096d28c4113ea8880a",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Permiso de torre de 38 pisos cuestionado en la polémica de guetos verticales; real y en alcance, sin documento focal."
+    },
+    {
+      "conflict_id": "conflict:f5bf2ade07749de3f4c374a2",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (monumento histórico y torres, Villa San Luis) tratada por el documento, sin rol focal; posible duplicado de Lote 18-A."
+    },
+    {
+      "conflict_id": "conflict:0a6816805c37c5bf5f3a85d8",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Conflicto vecinal/legal Zoccalo en Vitacura bien documentado en varios focales."
+    },
+    {
+      "conflict_id": "conflict:754fc48a4f98dd8eff8c389e",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Solicitud de fiscalización por accesibilidad dentro de un listado multicaso; disputa débil, sin focal."
+    },
+    {
+      "conflict_id": "conflict:2dab4b4fb8f376b7acb4a0ac",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Anteproyecto de anexo escolar en Lo Barnechea con oposición vecinal; el focal lo describe."
+    },
+    {
+      "conflict_id": "conflict:1c29999a289b1ccaf3a19366",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Proyecto de obras hidráulicas del MOP con demora ambiental; sin disputa inmobiliaria/urbana, fuera de alcance temático."
+    },
+    {
+      "conflict_id": "conflict:3cdb247dc7570d004b82088b",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Disputa real por conos de sombra y permiso de las 4 torres de Plaza Egaña en Ñuñoa; posible duplicado del conflicto Torres Plaza Egaña."
+    },
+    {
+      "conflict_id": "conflict:f424cf69bae7036071be7593",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Disputa concreta por destino de un block en Ñuñoa (vivienda social vs. venta); focal la trata."
+    },
+    {
+      "conflict_id": "conflict:c5de9cc3363d2387f7833166",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Invalidación del permiso del proyecto inmobiliario en Santa Laura (Independencia); focal."
+    },
+    {
+      "conflict_id": "conflict:624c751a9920a985b1bb07b5",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Expediente de solicitud de protección patrimonial sin disputa descrita con un proyecto o actor."
+    },
+    {
+      "conflict_id": "conflict:95570591bca5f64db3600278",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención biográfica histórica; sin disputa."
+    },
+    {
+      "conflict_id": "conflict:ed1b8a1254816b8369219257",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Aparece solo en una lista de temas de una presentación sobre permisos de BNUP; sin disputa."
+    },
+    {
+      "conflict_id": "conflict:2acb5c9ead32126b6d03920a",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (áreas de preservación sobre cota 1000) pero el proyecto Mirador Pie Andino está en Colina, fuera de la Provincia de Santiago; solo documentos no focales."
+    },
+    {
+      "conflict_id": "conflict:9bef2853e03e825f1376ed21",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención en nota sobre inversiones del juez Muñoz; no hay disputa sobre Eco Irarrával."
+    },
+    {
+      "conflict_id": "conflict:ea8335e287db1341987b2e7f",
+      "muestra": "main",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "si",
+      "motivo": "Oposición vecinal a construcción en altura en San Joaquín; el focal describe la disputa."
+    },
+    {
+      "conflict_id": "conflict:a3a7fde2dce2af170a8bb80b",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Daño estructural por terremoto 2010 de un edificio; no es disputa urbana/inmobiliaria del período y es solo mención."
+    },
+    {
+      "conflict_id": "conflict:c7fd2553686b92af21862a51",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención en una lista genérica en columna sobre Huechuraba; sin disputa específica documentada."
+    },
+    {
+      "conflict_id": "conflict:d844fdf611db8665cdd0f2a6",
+      "muestra": "main",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "si",
+      "motivo": "Disputa real en Quilicura, pero centrada en una planta de aguas servidas ligada al loteo; label no neutral y mezcla planta y loteo."
+    },
+    {
+      "conflict_id": "conflict:9cc73eb28ad3e0bf5e0106da",
+      "muestra": "main",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Solo una audiencia de lobby; sin disputa."
+    },
+    {
+      "conflict_id": "conflict:bc29be75d804d118753ece6e",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Autopista concesionada y peaje; no es conflicto inmobiliario/urbano del estudio y solo mención en columna."
+    },
+    {
+      "conflict_id": "conflict:70852c3d45c9659e343dc2ce",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Respuesta a oficio parlamentario sobre un jardín infantil en Iquique; fuera de la Provincia de Santiago y sin disputa."
+    },
+    {
+      "conflict_id": "conflict:3af9021ba8279294ed52f26d",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Proyecto en Papudo (Valparaíso), fuera de la Provincia de Santiago."
+    },
+    {
+      "conflict_id": "conflict:118f259e371999ce3ce92b42",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Mención de origen del boom inmobiliario en una crónica; sin disputa sobre el complejo."
+    },
+    {
+      "conflict_id": "conflict:384ffd80c646ff04ee61069d",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Edificio descrito en una crónica sobre vivir en un gueto vertical; no hay disputa específica del proyecto."
+    },
+    {
+      "conflict_id": "conflict:fdc042473129dfb896a7f4a0",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Saqueo durante el estallido; nada que ver con conflicto inmobiliario/urbano."
+    },
+    {
+      "conflict_id": "conflict:cfda4b1bb8ddc9c43b83746a",
+      "muestra": "stress",
+      "veredicto": "correcto",
+      "categoria": null,
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real por permisos de edificación en terrenos del parque en Pudahuel, tratada por el documento aunque sin rol focal."
+    },
+    {
+      "conflict_id": "conflict:5329b2378f45086ecbd1aae4",
+      "muestra": "stress",
+      "veredicto": "error_menor",
+      "categoria": "label_no_coincide",
+      "respaldo_correcto": "no",
+      "motivo": "Disputa real (Su Ksa, Estación Central) pero el label es solo una calle y la fuente es nota panorámica; sin focal."
+    },
+    {
+      "conflict_id": "conflict:7f39ddd7ec4bd9d7d427278c",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Solo una audiencia de lobby sobre trámite de recepción; sin disputa."
+    },
+    {
+      "conflict_id": "conflict:d6cbfe0ed726e0087a81408f",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Referencia histórica de 2008 en nota sobre el boom inmobiliario; fuera del período y sin disputa actual del edificio."
+    },
+    {
+      "conflict_id": "conflict:68c1148f121cbf50caed200f",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Mall Barón está en Valparaíso, fuera de la Provincia de Santiago."
+    },
+    {
+      "conflict_id": "conflict:ae2770f1332a4de175326595",
+      "muestra": "stress",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Caso real de permiso caducado en Vitacura, pero se trata de un párrafo en una columna que mezcla casos; label descriptivo y sin focal."
+    },
+    {
+      "conflict_id": "conflict:36317cbd57aecac78bba510e",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Censura de arte lumínico sobre un edificio; no es conflicto inmobiliario/urbano."
+    },
+    {
+      "conflict_id": "conflict:738101f22d143cfa783b33e0",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Mención en acta de sesión de la Cámara; proyecto minero, sin relación con el alcance."
+    },
+    {
+      "conflict_id": "conflict:af1f195fc616bc8811faf470",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "sin_disputa_real",
+      "respaldo_correcto": "no",
+      "motivo": "Edificio mencionado como parte de la crónica de guetos verticales; no hay disputa específica sobre Alameda Plaza."
+    },
+    {
+      "conflict_id": "conflict:96e590eb85e8d9409a2e230d",
+      "muestra": "stress",
+      "veredicto": "error_grave",
+      "categoria": "fuera_de_alcance",
+      "respaldo_correcto": "no",
+      "motivo": "Parque Centenario de Buenos Aires, mencionado como ejemplo internacional."
+    },
+    {
+      "conflict_id": "conflict:144db04a08c8a818b2e9e1fb",
+      "muestra": "stress",
+      "veredicto": "error_menor",
+      "categoria": "otro",
+      "respaldo_correcto": "no",
+      "motivo": "Perfil de la reinvención de Plaza Egaña; corresponde al mismo conflicto Torres Plaza Egaña y la fuente no es focal."
+    }
+  ]
+}

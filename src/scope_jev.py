@@ -10,8 +10,8 @@ probabilidades y no genera texto. NO sirve para extraer citas ni nombres; la ext
 Este modulo:
 - construye, para un conflicto (o una mencion), un `state` acotado (nombre del proyecto, titulo y fragmentos del texto
   alrededor de cada mencion) y tres preguntas tipadas (`QUESTIONS`);
-- llama a `POST /api/alpha/decisions` de OpenRouter (modelo `typesafe/jev-1.13`; precio de lista US$0,042 por millon de
-  tokens de entrada, salida gratis) con la misma clave `OPENROUTER_API_KEY` de la extraccion;
+- llama al endpoint de chat de Requesty (`/v1/chat/completions`, modelo versionado `typesafe/jev-1.13.0`, formato de
+  respuesta `questions`; ~US$0,04 por millon de tokens de entrada) con la clave `REQUESTY_API_KEY` de la extraccion;
 - aplica una regla de decision con umbrales EXPLICITOS (`RULE`), que son hipotesis a calibrar, no verdad;
 - evalua contra los veredictos de la validacion ciega (`--eval-blind`).
 
@@ -19,7 +19,7 @@ Guardrails (como `enrich.py`): sin `--confirm-paid-run` solo hay ensayo (cuenta 
 API); `--max-cost-usd` es obligatorio en una corrida pagada; cada respuesta se guarda (cache) para no pagar dos veces.
 
     python src/scope_jev.py --eval-blind                                  # ensayo: costo estimado
-    python src/scope_jev.py --eval-blind --confirm-paid-run --max-cost-usd 0.50
+    python src/scope_jev.py --eval-blind --confirm-paid-run --max-cost-usd 0.50 --workers 50
 """
 
 from __future__ import annotations
@@ -31,6 +31,8 @@ import re
 import sys
 import time
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
 from typing import Any
 
 import requests
@@ -41,9 +43,10 @@ from paths import INTERMEDIATE_DIR, PROJECT_ROOT, REVIEW_SAMPLES_DIR  # noqa: E4
 
 logger = logging.getLogger("scope_jev")
 
-ENDPOINT = "https://openrouter.ai/api/alpha/decisions"
-MODEL = "typesafe/jev-1.13"
-PRICE_PER_INPUT_TOKEN_USD = 0.042 / 1_000_000
+ENDPOINT = "https://router.requesty.ai/v1/chat/completions"
+MODEL = "typesafe/jev-1.13.0"  # version fija, no un alias: el comportamiento no debe cambiar entre corridas
+ENV_KEY = "REQUESTY_API_KEY"
+PRICE_PER_INPUT_TOKEN_USD = 0.04 / 1_000_000
 CHARS_PER_TOKEN = 3.5  # estimacion conservadora para espanol
 MAX_STATE_CHARS = 60_000  # ~17k tokens: bien bajo el limite de 32k de estado + preguntas
 SNIPPET_RADIUS = 900  # caracteres a cada lado de cada mencion del proyecto
@@ -135,8 +138,15 @@ def estimate_cost_usd(state: dict[str, Any]) -> float:
 
 
 def call_jev(state: dict[str, Any], api_key: str, sleep=time.sleep, max_retries: int = 4) -> dict[str, Any]:
-    """Una llamada con reintentos ante 429/5xx/red. Devuelve {'answers', 'cost'} o {'error', 'cost'}."""
-    payload = {"model": MODEL, "state": state, "questions": QUESTIONS}
+    """Una llamada con reintentos ante 429/5xx/red. Devuelve {'answers', 'cost'} o {'error', 'cost'}.
+
+    Requesty expone Jev como chat: el estado va como JSON en el mensaje del usuario, las preguntas en
+    `response_format` (type `questions`) y las respuestas vuelven como JSON dentro del mensaje del asistente."""
+    payload = {
+        "model": MODEL,
+        "messages": [{"role": "user", "content": json.dumps(state, ensure_ascii=False)}],
+        "response_format": {"type": "questions", "questions": QUESTIONS},
+    }
     for attempt in range(max_retries + 1):
         try:
             resp = requests.post(ENDPOINT, headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
@@ -148,22 +158,27 @@ def call_jev(state: dict[str, Any], api_key: str, sleep=time.sleep, max_retries:
                 continue
             resp.raise_for_status()
             data = resp.json()
-            return {"answers": data["answers"], "cost": float((data.get("usage") or {}).get("cost") or 0.0), "model": data.get("model")}
+            answers = json.loads(data["choices"][0]["message"]["content"])
+            if not isinstance(answers, dict) or "disputa_concreta" not in answers:
+                return {"error": "respuesta_sin_las_preguntas", "cost": float((data.get("usage") or {}).get("cost") or 0.0)}
+            return {"answers": answers, "cost": float((data.get("usage") or {}).get("cost") or 0.0), "model": data.get("model")}
         except requests.exceptions.RequestException as exc:
             if attempt == max_retries:
                 return {"error": f"conexion: {exc}"[:200], "cost": 0.0}
             sleep(2 ** attempt)
-        except (KeyError, ValueError) as exc:
+        except (KeyError, IndexError, ValueError) as exc:
             return {"error": f"respuesta_inesperada: {exc}"[:200], "cost": 0.0}
     return {"error": "reintentos_agotados", "cost": 0.0}
 
 
-def _load_blind_units() -> list[dict[str, Any]]:
+def _load_blind_units(sample_dir: Path | None = None) -> list[dict[str, Any]]:
     """Unidades de la validacion ciega: un conflicto = un proyecto (el primero) y sus documentos con texto completo."""
-    sample_dir = REVIEW_SAMPLES_DIR / "blind_validation"
+    sample_dir = sample_dir or REVIEW_SAMPLES_DIR / "blind_validation"
     verdicts = {v["conflict_id"]: v for v in json.loads((sample_dir / "verdicts.json").read_text(encoding="utf-8"))["verdicts"]}
     units = []
     for name in ("sample_main", "sample_stress"):
+        if not (sample_dir / f"{name}.json").exists():
+            continue
         for conflict in json.loads((sample_dir / f"{name}.json").read_text(encoding="utf-8")):
             docs = []
             for doc in conflict["documents"]:
@@ -199,15 +214,18 @@ def evaluate(results: list[dict[str, Any]]) -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--eval-blind", action="store_true", help="evalua contra los veredictos de la validacion ciega")
+    parser.add_argument("--eval-blind", action="store_true", help="evalua contra los veredictos de una validacion ciega")
+    parser.add_argument("--sample-dir", type=Path, default=None, help="carpeta de la muestra (por defecto, blind_validation)")
     parser.add_argument("--confirm-paid-run", action="store_true", help="autoriza llamadas reales (pagadas) a la API")
     parser.add_argument("--max-cost-usd", type=float, default=None)
+    parser.add_argument("--workers", type=int, default=50)
     args = parser.parse_args(argv)
     if not args.eval_blind:
         parser.error("por ahora solo esta implementado --eval-blind (piloto de calibracion)")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-    units = _load_blind_units()
+    sample_dir = args.sample_dir or REVIEW_SAMPLES_DIR / "blind_validation"
+    units = _load_blind_units(sample_dir)
     states = {u["unit_id"]: build_state(u["project"], u["documents"]) for u in units if u["documents"]}
     estimate = sum(estimate_cost_usd(s) for s in states.values())
     logger.info("Unidades: %d (con texto: %d) | costo estimado: US$%.4f", len(units), len(states), estimate)
@@ -217,40 +235,50 @@ def main(argv: list[str] | None = None) -> int:
     if args.max_cost_usd is None:
         logger.error("--max-cost-usd es obligatorio en una corrida pagada")
         return 1
-    api_key = load_env(ENV_PATH).get("OPENROUTER_API_KEY", "")
+    api_key = load_env(ENV_PATH).get(ENV_KEY, "")
     if not api_key:
-        logger.error("OPENROUTER_API_KEY vacia")
+        logger.error("%s vacia", ENV_KEY)
         return 1
 
     SCOPE_DIR.mkdir(parents=True, exist_ok=True)
-    cache_path = SCOPE_DIR / "blind_eval_cache.jsonl"
+    cache_path = SCOPE_DIR / f"{sample_dir.name}_cache.jsonl"
     cache = {}
     if cache_path.exists():
         for line in cache_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 row = json.loads(line)
                 cache[row["unit_id"]] = row
-    total_cost, results = 0.0, []
-    with cache_path.open("a", encoding="utf-8") as out:
-        for unit in units:
-            if unit["unit_id"] not in states:
-                continue
-            row = cache.get(unit["unit_id"])
-            if row is None:
-                if total_cost >= args.max_cost_usd:
-                    logger.warning("LIMITE DE GASTO ALCANZADO (US$%.4f); se detiene.", total_cost)
-                    break
-                response = call_jev(states[unit["unit_id"]], api_key)
-                total_cost += response.get("cost", 0.0)
-                if "error" in response:
-                    logger.warning("Fallo %s: %s", unit["unit_id"][-8:], response["error"])
-                    continue
-                row = {"unit_id": unit["unit_id"], "answers": response["answers"], "cost": response["cost"], "model": response.get("model")}
+    pending = [u for u in units if u["unit_id"] in states and u["unit_id"] not in cache]
+    lock, spent, errors = Lock(), {"cost": 0.0}, []
+
+    def work(unit):
+        # el tope se revisa antes de someter cada unidad: lo ya en vuelo termina igual
+        with lock:
+            if spent["cost"] >= args.max_cost_usd:
+                return None
+        response = call_jev(states[unit["unit_id"]], api_key)
+        with lock:
+            spent["cost"] += response.get("cost", 0.0)
+        if "error" in response:
+            errors.append((unit["unit_id"], response["error"]))
+            return None
+        return {"unit_id": unit["unit_id"], "answers": response["answers"], "cost": response["cost"], "model": response.get("model")}
+
+    with cache_path.open("a", encoding="utf-8") as out, ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for row in pool.map(work, pending):
+            if row is not None:
+                cache[row["unit_id"]] = row
                 out.write(json.dumps(row, ensure_ascii=False) + "\n")
                 out.flush()
-            results.append({"unit_id": unit["unit_id"], "veredicto": unit["veredicto"], "decision": decide(row["answers"])})
-    report = {"modelo": MODEL, "regla": RULE, "costo_usd": round(total_cost, 6), "n": len(results), **evaluate(results)}
-    (SCOPE_DIR / "blind_eval_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for unit_id, error in errors:
+        logger.warning("Fallo %s: %s", unit_id[-8:], error)
+    results = [
+        {"unit_id": u["unit_id"], "veredicto": u["veredicto"], "decision": decide(cache[u["unit_id"]]["answers"])}
+        for u in units if u["unit_id"] in cache
+    ]
+    report = {"modelo": MODEL, "regla": RULE, "costo_usd_de_esta_corrida": round(spent["cost"], 6), "n": len(results),
+              "errores": len(errors), **evaluate(results)}
+    (SCOPE_DIR / f"{sample_dir.name}_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 

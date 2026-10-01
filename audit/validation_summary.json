@@ -61,6 +61,53 @@
       }
     },
     {
+      "id": "segunda_validacion_ciega_y_filtro_de_alcance",
+      "que_mide": "Replica de la validación ciega con una muestra fresca (sin solapamiento) y prueba de un filtro de alcance con un modelo de decisión",
+      "metodo": "Segunda muestra aleatoria (57) más dirigida (17), mismo protocolo y mismo tipo de revisor; el filtro (Jev, regla fijada en la primera muestra) se evaluó sin cambios",
+      "n": 74,
+      "resultado_muestra_aleatoria": {
+        "todos": {
+          "n_verificables": 57,
+          "correcto": 13,
+          "error_menor": 11,
+          "error_grave": 33,
+          "error_grave_pct": 0.579,
+          "error_grave_ic95": [
+            0.45,
+            0.698
+          ]
+        },
+        "con_respaldo_del_sistema": {
+          "n_verificables": 37,
+          "correcto": 12,
+          "error_menor": 9,
+          "error_grave": 16,
+          "error_grave_pct": 0.432,
+          "error_grave_ic95": [
+            0.287,
+            0.591
+          ]
+        },
+        "sin_respaldo_del_sistema": {
+          "n_verificables": 20,
+          "correcto": 1,
+          "error_menor": 2,
+          "error_grave": 17,
+          "error_grave_pct": 0.85,
+          "error_grave_ic95": [
+            0.64,
+            0.948
+          ]
+        }
+      },
+      "hallazgos": [
+        "La segunda muestra reproduce la primera: ~43 % de error grave entre los conflictos con respaldo (44 % antes).",
+        "Exigir respaldo de evidencia Y que el filtro de alcance apruebe sube la proporción de correctos o con error menor de 57 % a 77 % en la muestra fresca (84 % en la de calibración), perdiendo ~19 % de los buenos."
+      ],
+      "limites": "Mismo tipo de revisor (modelo) en ambas muestras; muestras pequeñas; el filtro no está integrado al pipeline.",
+      "reporte": "audit/blind_validation_report_second.json y audit/scope_filter_report.json"
+    },
+    {
       "id": "muestra_inicial_n50",
       "que_mide": "Calidad de los registros con extracción estructurada, unidad documento frente a unidad conflicto",
       "metodo": "Muestra aleatoria estratificada (escala de conflicto x posible truncamiento), semilla fija, revisada caso por caso",

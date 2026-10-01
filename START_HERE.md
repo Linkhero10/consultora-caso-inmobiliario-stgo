@@ -32,7 +32,7 @@ Cita siempre el hash del warehouse al usar los datos. Las cifras de arriba se ge
 
 **Calidad medida (validación ciega de extremo a extremo).** En una muestra aleatoria de 56 conflictos verificables, el 44 % de los
 que tienen respaldo de evidencia y el 100 % de los que no lo tienen fueron error grave para un revisor independiente y estricto.
-Usa el universo con respaldo y trátalo como candidato a revisión, no como verdad. Detalle y límites en
+Una segunda muestra independiente lo confirmó (43 %). Exigir además la aprobación de un filtro de alcance (Jev) sube la proporción de correctos o con error menor de 57 % a 77 % (`audit/scope_filter_report.json`), aunque aún no está integrado al pipeline. Usa el universo con respaldo y trátalo como candidato a revisión, no como verdad. Detalle y límites en
 [`audit/blind_validation_report.json`](audit/blind_validation_report.json) y en el
 [informe de calidad de datos](audit/data_quality_report.md).
 

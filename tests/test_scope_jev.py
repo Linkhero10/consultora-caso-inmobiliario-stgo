@@ -52,16 +52,37 @@ class _Resp:
         return self._body
 
 
+def _chat(answers, cost=0.00002):
+    import json
+    return {"choices": [{"message": {"content": json.dumps(answers)}}], "usage": {"cost": cost}, "model": "jev-1.13.0"}
+
+
 def test_call_retries_rate_limit_and_reads_cost(monkeypatch):
-    seq = iter([_Resp(429), _Resp(200, {"answers": _answers(), "usage": {"cost": 0.00002}, "model": "typesafe/jev-1.13-x"})])
+    seq = iter([_Resp(429), _Resp(200, _chat(_answers()))])
     monkeypatch.setattr(sj.requests, "post", lambda *a, **k: next(seq))
     out = sj.call_jev({"proyecto": "x"}, "key", sleep=lambda s: None)
     assert out["cost"] == pytest.approx(0.00002) and "answers" in out
 
 
+def test_call_sends_the_pinned_model_and_questions_format(monkeypatch):
+    seen = {}
+
+    def fake_post(url, headers, json, timeout):
+        seen.update(url=url, payload=json)
+        return _Resp(200, _chat(_answers()))
+
+    monkeypatch.setattr(sj.requests, "post", fake_post)
+    sj.call_jev({"proyecto": "x"}, "key")
+    assert seen["url"].endswith("/v1/chat/completions")
+    assert seen["payload"]["model"] == "typesafe/jev-1.13.0"
+    assert seen["payload"]["response_format"]["type"] == "questions"
+
+
 def test_call_reports_unexpected_shape_and_persistent_failure(monkeypatch):
-    monkeypatch.setattr(sj.requests, "post", lambda *a, **k: _Resp(200, {"sin": "answers"}))
+    monkeypatch.setattr(sj.requests, "post", lambda *a, **k: _Resp(200, {"sin": "choices"}))
     assert sj.call_jev({}, "key", sleep=lambda s: None)["error"].startswith("respuesta_inesperada")
+    monkeypatch.setattr(sj.requests, "post", lambda *a, **k: _Resp(200, _chat({"otra": 1})))
+    assert sj.call_jev({}, "key", sleep=lambda s: None)["error"] == "respuesta_sin_las_preguntas"
     monkeypatch.setattr(sj.requests, "post", lambda *a, **k: _Resp(503))
     assert sj.call_jev({}, "key", sleep=lambda s: None, max_retries=1)["error"] == "http_503"
 
@@ -80,7 +101,7 @@ def test_evaluation_counts_the_four_cells():
 
 
 def test_dry_run_never_calls_the_api(monkeypatch):
-    monkeypatch.setattr(sj, "_load_blind_units", lambda: [{"unit_id": "u", "project": "P", "documents": [{"title": "t", "text": "P texto", "role": "focal"}], "veredicto": "correcto"}])
+    monkeypatch.setattr(sj, "_load_blind_units", lambda sample_dir=None: [{"unit_id": "u", "project": "P", "documents": [{"title": "t", "text": "P texto", "role": "focal"}], "veredicto": "correcto"}])
     monkeypatch.setattr(sj.requests, "post", lambda *a, **k: pytest.fail("un ensayo no debe llamar a la API"))
     assert sj.main(["--eval-blind"]) == 0
     assert sj.main(["--eval-blind", "--confirm-paid-run"]) == 1  # sin tope de gasto no corre
