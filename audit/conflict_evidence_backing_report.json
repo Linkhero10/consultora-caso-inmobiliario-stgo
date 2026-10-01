@@ -4,19 +4,19 @@
   "projects_total": 942,
   "projects_with_backing": 595,
   "projects_without_backing": 347,
-  "conflicts_total": 817,
-  "trivial_conflicts_total": 802,
-  "trivial_conflicts_without_backing": 311,
-  "conflicts_with_backing": 506,
-  "conflicts_without_backing": 311,
+  "conflicts_total": 762,
+  "trivial_conflicts_total": 713,
+  "trivial_conflicts_without_backing": 309,
+  "conflicts_with_backing": 453,
+  "conflicts_without_backing": 309,
   "backing_rows": 1769,
   "backing_rows_detected_raw": 1769,
   "backing_rows_persisted": 1769,
   "backing_rows_deduplicated": 0,
   "coverage_backing": {
-    "total": 481,
-    "parcial": 25,
-    "ninguna": 311
+    "total": 427,
+    "parcial": 26,
+    "ninguna": 309
   },
   "conflicts_with_ambiguous_multi_case_backing": 0,
   "conflicts_with_mixed_duplicate_group_backing": 0,
@@ -28,10 +28,10 @@
     "verified_index": 1769
   },
   "conflicts_with_backing_by_detector": {
-    "verified_index": 506
+    "verified_index": 453
   },
   "backing_method_note": "El respaldo usa el case_mention_index que el modelo eligio y el pipeline verifico; la asociacion se valido con dos rondas de revision ciega independiente (0 fabricaciones en 809 evaluaciones, ver audit/validation_summary.json). Un proyecto mencionado sin indice no tiene respaldo: no se adivina por texto.",
-  "warehouse_sha256": "81ec43ddec5ba6c611c88c9703557aed68d84f46d00c7b605cf8c324860e4569",
+  "warehouse_sha256": "3795fa0562a01cd221943f13d7177b03daf51878090889f01a9142c8f540562c",
   "sqlite_journal_mode": "delete",
   "wal_checkpoint": null
 }

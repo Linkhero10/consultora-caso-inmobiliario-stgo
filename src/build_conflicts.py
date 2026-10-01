@@ -95,6 +95,7 @@ BACKING_SCOPE = "mention_level_verified_index"
 # Adjudicacion humana de elegibilidad: una case_mention que la clasificacion dejo uncertain/exclude pero cuyo
 # documento la trata como el objeto de una disputa concreta puede respaldar el conflicto. Solo afecta este
 # respaldo, nunca case_mention.decision_final_amplio, y queda visible en match_method.
+CONFLICT_MERGE_DECISIONS_PATH = PROJECT_ROOT / "config" / "conflict_merge_decisions.json"
 CASE_MENTION_ELIGIBILITY_ADJUDICATIONS_PATH = PROJECT_ROOT / "config" / "case_mention_eligibility_adjudications.json"
 MATCH_METHOD_ADJUDICATED_ELIGIBILITY = "adjudicated_eligibility"
 
@@ -123,6 +124,43 @@ def load_verified_links(conn: sqlite3.Connection) -> dict[tuple[str, str], int |
             )
         links[key] = case_mention_index
     return links
+
+
+def load_conflict_merge_decisions(conn: sqlite3.Connection, path: Path | None = None) -> list[tuple[str, str]]:
+    """Pares de case_id que deben quedar en el MISMO conflicto, segun decisiones humanas versionadas.
+
+    Cada decision esta llaveada por la pareja exacta de `project_id` (nunca por nombre ni por `case_id`, que cambia al
+    fusionar proyectos), declara `mismo_conflicto` y cita la evidencia literal (documento + cita). Falla cerrado ante
+    datos incompletos o proyectos inexistentes. Solo UNE conflictos; separar proyectos o cambiar su identidad es otra capa."""
+    path = Path(path) if path is not None else CONFLICT_MERGE_DECISIONS_PATH
+    if not path.exists():
+        return []
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "conflict_merge_decisions":
+        raise ValueError("schema_version de conflict_merge_decisions no reconocido")
+    case_by_project = dict(conn.execute("SELECT project_id, case_id FROM project WHERE case_id IS NOT NULL"))
+    seen: set[tuple[str, str]] = set()
+    pairs: list[tuple[str, str]] = []
+    for entry in payload.get("decisions", []):
+        ids = entry.get("project_ids")
+        if not isinstance(ids, list) or len(ids) != 2 or ids[0] == ids[1]:
+            raise ValueError(f"decision de fusion de conflictos sin dos project_id distintos: {entry.get('decision_id')!r}")
+        key = tuple(sorted(ids))
+        if key in seen:
+            raise ValueError(f"decision de fusion duplicada para {key!r}")
+        seen.add(key)
+        if entry.get("decision") != "mismo_conflicto" or not entry.get("rationale"):
+            raise ValueError(f"decision de fusion invalida (solo 'mismo_conflicto', con motivo): {entry.get('decision_id')!r}")
+        evidence = entry.get("evidence")
+        if not isinstance(evidence, list) or not evidence or any(not e.get("document_id") or not e.get("cita") for e in evidence):
+            raise ValueError(f"decision de fusion sin evidencia literal: {entry.get('decision_id')!r}")
+        for pid in ids:
+            if pid not in case_by_project:
+                raise ValueError(f"decision de fusion apunta a un project_id inexistente: {pid!r}")
+        case_a, case_b = case_by_project[ids[0]], case_by_project[ids[1]]
+        if case_a != case_b:
+            pairs.append((case_a, case_b))
+    return pairs
 
 
 def load_case_mention_eligibility_adjudications(conn: sqlite3.Connection, path: Path) -> dict[str, dict]:
@@ -850,6 +888,7 @@ def build_case_groups(
     documentos_63: list[dict],
     case_id_alias: dict[str, str] | None = None,
     non_resolvable_historical_ids: set[str] | None = None,
+    extra_merges: list[tuple[str, str]] | None = None,
 ) -> dict[str, list[str]]:
     """case_id -> lista ordenada de case_id de su grupo (incluyendose a si
     mismo si es trivial). Los IDs históricos se remapean explícitamente; un
@@ -873,6 +912,10 @@ def build_case_groups(
             ids = remap_historical_case_ids(rel["case_ids"], current_ids, aliases)
             for cid in ids[1:]:
                 uf.union(ids[0], cid)
+
+    for case_a, case_b in extra_merges or []:
+        if case_a in current_ids and case_b in current_ids:
+            uf.union(case_a, case_b)
 
     groups: dict[str, list[str]] = defaultdict(list)
     for cid in all_case_ids:
@@ -1167,6 +1210,7 @@ def _build_conflicts(conn: sqlite3.Connection):
     case_groups = build_case_groups(
         all_case_ids, documentos_63, case_id_alias=case_id_alias,
         non_resolvable_historical_ids=non_resolvable_historical_ids,
+        extra_merges=load_conflict_merge_decisions(conn),
     )
     case_id_to_conflict = {}
     conflict_rows = []

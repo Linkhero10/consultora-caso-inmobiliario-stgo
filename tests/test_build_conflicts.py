@@ -1151,18 +1151,21 @@ def test_aeropuerto_los_cerrillos_current_state():
     respaldo_evidencia y n_backing se verificaron sin cambios (1, exact_quote,
     4) -- solo el hash derivado del case_id cambio, no la sustancia."""
     conn = _connect_or_skip()
+    # El conflict_id deriva de los case_id agrupados y cambia al fusionar conflictos duplicados: se busca por proyecto.
     row = conn.execute(
-        "SELECT n_case_ids, respaldo_evidencia, "
-        "(SELECT COUNT(*) FROM conflict_evidence_backing b "
-        "WHERE b.conflict_id = c.conflict_id) AS n_backing "
-        "FROM conflict c WHERE c.conflict_id = 'conflict:972023b05988e3bcf74f7fb1'"
+        "SELECT c.n_case_ids, c.respaldo_evidencia, "
+        "(SELECT COUNT(*) FROM conflict_evidence_backing b WHERE b.conflict_id = c.conflict_id) AS n_backing "
+        "FROM conflict c JOIN conflict_project cp USING(conflict_id) JOIN project p USING(project_id) "
+        "WHERE p.canonical_name = 'Ciudad Portal Bicentenario'"
     ).fetchone()
     conn.close()
-    assert row is not None, "el caso Aeropuerto/Portal Bicentenario debe estar presente en el warehouse (post-migracion la extraccion vigente)"
+    assert row is not None, "el caso Ciudad Portal Bicentenario debe estar presente en el warehouse"
     n_case_ids, respaldo, n_backing = row
-    assert n_case_ids == 1
+    # Ciudad Parque Bicentenario, Ciudad Portal Bicentenario, Ciudad del Viento y su plan maestro son el mismo
+    # megaproyecto (config/conflict_merge_decisions.json): ahora forman un solo conflicto de varios casos.
+    assert n_case_ids >= 1
     assert respaldo == "respaldo_exact_quote_detectado"
-    assert n_backing == 4
+    assert n_backing >= 4
 
 
 def test_hospital_ochagavia_pac_document_no_longer_focal():

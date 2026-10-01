@@ -1,6 +1,6 @@
 {
   "schema_version": "historical_case_reference_preflight",
-  "run_id": "2026-10-01T00:52:44.512476+00:00",
+  "run_id": "2026-10-01T01:22:51.786123+00:00",
   "status": "conflict_build_completed",
   "policy": {
     "topology_blocking_relations": [
@@ -16,8 +16,8 @@
   },
   "source_hashes": {
     "classified_63_sha256": "942bdafd1167d512eacad79f0c8b1e0474435a23e93450b5d5b0b7aefe792d02",
-    "warehouse_file_sha256": "5f70deb973ec3962568e134ee5fe8ea66a2ed9b81439f45d1562af3c86ad7a10",
-    "preflight_script_sha256": "d2a391b1d8b162e969b792995823cbcf81089fc9661b684fe82b0fbb59ca42b0"
+    "warehouse_file_sha256": "9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7",
+    "preflight_script_sha256": "4cef6040bf0cded1d919481663f8d31c84b26420ccaac54902dde56d23939422"
   },
   "n_unresolved_ids": 28,
   "n_topology_blockers": 0,
@@ -725,7 +725,7 @@
     "n_unresolved_pairs": 0,
     "unresolved_pairs": []
   },
-  "completed_conflict_topology_sha256": "6298d1be3081e0a8fd0e5a8a1c751327c625e8c19dd695bf37e52353de86d408",
-  "completed_warehouse_sha256": "81ec43ddec5ba6c611c88c9703557aed68d84f46d00c7b605cf8c324860e4569",
-  "completed_audit_report_sha256": "de3c743087047a0fef1a26bf885d7c2e0dba80c17ebe860e023a3949424e74bb"
+  "completed_conflict_topology_sha256": "0dc714b2163b81c489421475c6fe3390cae1a3a76b60dff397a18e948f69c9f9",
+  "completed_warehouse_sha256": "3795fa0562a01cd221943f13d7177b03daf51878090889f01a9142c8f540562c",
+  "completed_audit_report_sha256": "b024c29fa0042b26b4ff10f991ec0ce7b6e7cb0b38fad7fae0d649ea7ac457ff"
 }

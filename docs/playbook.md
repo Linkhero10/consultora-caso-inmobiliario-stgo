@@ -53,6 +53,12 @@ para esa corrida (E14).
     `config/project_mention_index_corrections.json` (con cita); elegibilidad de una mención excluida:
     `config/case_mention_eligibility_adjudications.json`; geografía de una mención en grupo de duplicados:
     `config/reviewed_duplicate_group_geography_links.json`. Una adjudicación resuelve una cosa, no transfiere el resto.
+13b. **Conflictos duplicados.** Una misma disputa puede aparecer como varios conflictos (alias, componentes, edificios de un mismo
+    fallo). Genera parejas candidatas (respaldo compartido, documentos compartidos, etiquetas parecidas), adjudícalas con evidencia
+    literal siguiendo `docs/protocolo_adjudicacion_duplicados.md` y registra las fusiones en
+    `config/conflict_merge_decisions.json` (pareja de `project_id`, motivo, cita literal). Compartir un artículo, una inmobiliaria o un
+    tribunal NO basta; ante la duda, no fusionar. Tras fusionar, vuelve a clasificar el alcance
+    (`python src/scope_jev.py --classify-conflicts ...`) porque los conflictos fusionados tienen otro `conflict_id`.
 14. **Verifica.** `python -m pytest -q` debe quedar en verde, incluidas higiene, orden, cifras y versión. Gate: el bloque de
     cifras de README/START_HERE coincide con el warehouse (`python src/render_docs_stats.py --check`).
 

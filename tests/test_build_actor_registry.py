@@ -246,7 +246,7 @@ def test_conflictos_unicos_safe_uses_exact_actor_to_conflict_link_not_whole_docu
     esperado = {
         "Servicio de Evaluación Ambiental (SEA)": 11,
         "Consejo de Monumentos Nacionales (CMN)": 5,
-        "Consejo de Defensa del Estado (CDE)": 2,
+        "Consejo de Defensa del Estado (CDE)": 3,  # 2 -> 3 tras fusionar conflictos duplicados
         "Superintendencia del Medio Ambiente (SMA)": 5,
         "Ministerio de Vivienda y Urbanismo (MINVU)": 8,
         "Contraloría General de la República": 12,

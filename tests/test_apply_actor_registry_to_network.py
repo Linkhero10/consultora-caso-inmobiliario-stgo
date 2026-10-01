@@ -119,7 +119,8 @@ def test_contraloria_ties_with_corte_suprema_after_resolution():
 
     contraloria_entity = next(eid for eid, label in entity_label.items() if "Contraloría General" in label)
     assert bip_resolved.degree(contraloria_entity) == 12
-    assert bip_resolved.degree("corte suprema") == 11
+    # 11 -> 12 tras fusionar conflictos duplicados: Contraloria y Corte Suprema vuelven a empatar.
+    assert bip_resolved.degree("corte suprema") == 12
 
 
 def test_untouched_actors_have_perfect_rank_correlation():

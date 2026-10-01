@@ -117,13 +117,16 @@ def test_seremi_bienes_nacionales_is_the_real_conflict_collapse_example():
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
-    assert dec["n_actores_caida_solo_por_fusion_case_conflict"] == 1
+    # 1 -> 4: la fusion de conflictos duplicados (config/conflict_merge_decisions.json) consolida mas actores bajo un
+    # mismo conflict_id; Seremi de Bienes Nacionales sigue siendo uno de ellos.
+    assert dec["n_actores_caida_solo_por_fusion_case_conflict"] == 4
     # 67 -> 66: el documento de Poblacion La Victoria salio del gate
     # caso_unico (decision versionada, multiples_casos_documentados) y sus vinculos de actor dejan la
     # vista case_safe; un actor menos cae solo por el gate documental.
     # 66 -> 67: 'Lote 18-A' pasa a ser un proyecto propio (normalizacion
     # corregida) y un actor mas cae solo por el gate documental.
-    assert dec["n_actores_caida_solo_por_gate_documental"] == 67
+    # 67 -> 58: al fusionar conflictos duplicados, mas caidas se explican por la fusion (4) y por ambos efectos (6).
+    assert dec["n_actores_caida_solo_por_gate_documental"] == 58
 
     # Corte Suprema: siempre esta en el top-15 de mayor caida total, y su
     # caida es integra del gate documental, no de fusionar case_id.
@@ -173,9 +176,11 @@ def test_decompose_reports_excluded_generic_nodes_explicitly():
     conn.close()
     dec = acn.decompose_gate_vs_conflict_collapse(bip_case_old, bip_case_matched, bip_conflict)
 
-    assert dec["n_actores_comparables_en_los_3_universos"] == 688
-    assert dec["n_nodos_genericos_excluidos_case_matched"] == 19
-    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 19
+    # 688 -> 742 por la fusion de conflictos duplicados.
+    assert dec["n_actores_comparables_en_los_3_universos"] == 742
+    # 19 -> 20 genericos excluidos por la fusion de conflictos duplicados.
+    assert dec["n_nodos_genericos_excluidos_case_matched"] == 20
+    assert dec["n_nodos_genericos_excluidos_conflict_safe"] == 20
     assert all("::" in n for n in dec["nodos_genericos_excluidos_case_matched"])
     assert all("::" in n for n in dec["nodos_genericos_excluidos_conflict_safe"])
 

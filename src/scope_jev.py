@@ -297,6 +297,8 @@ def main_classify_conflicts(args) -> int:
     if not api_key:
         logger.error("%s vacia", ENV_KEY)
         return 1
+    live_ids = {u["unit_id"] for u in units}
+    previous = {k: v for k, v in previous.items() if k in live_ids}  # descarta decisiones de conflictos que ya no existen
     decisions, cost, errors = classify_conflicts(units, {k: {**v, "signature": v["signature"]} for k, v in previous.items()}, api_key, args.workers, args.max_cost_usd)
     for unit_id, error in errors:
         logger.warning("Fallo %s: %s", unit_id[-8:], error)

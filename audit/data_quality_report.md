@@ -95,7 +95,16 @@ conflictos con respaldo que el filtro descarta; sin solapamiento con las anterio
 El error grave del universo recomendado baja de ~43 % (solo respaldo) a 26 %, y lo que el filtro descarta es en su gran mayoría
 malo. Límites: un revisor (modelo), muestras de 50 y 20, y una regla fija; falta replicar con un revisor humano externo.
 
-## 9. Límites vigentes
+## 9. Conflictos duplicados
+
+Los revisores ciegos señalaron conflictos que eran la misma disputa con nombres distintos (Ciudad del Niño, los «edificios
+fantasmas» de Estación Central, el Conjunto Armónico Bellavista, Villa San Luis, Plaza Egaña). Se generaron 144 parejas candidatas y
+dos revisores independientes las adjudicaron con evidencia literal (verificada por script): 71 `mismo_conflicto`, 65 `distintos` y 8
+`no_decidible`. Las decisiones viven en `config/conflict_merge_decisions.json`, llaveadas por pareja de `project_id`, y
+`build_conflicts.py` las aplica uniendo los casos. Efecto: 817 → 762 conflictos y universo conservador de 327 → 286. Límites:
+adjudicación asistida por modelos; ante la duda no se fusiona; el universo resultante no se volvió a validar con una muestra ciega.
+
+## 10. Límites vigentes
 
 - Las muestras anteriores miden estados previos del sistema; el vínculo proyecto → mención tiene su propia validación
   (0 fabricaciones en 809 evaluaciones).

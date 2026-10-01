@@ -149,6 +149,20 @@
       "reporte": "audit/blind_validation_report_third.json"
     },
     {
+      "id": "adjudicacion_de_conflictos_duplicados",
+      "que_mide": "Conflictos que son la misma disputa del mundo real escrita con nombres distintos o partida en piezas",
+      "metodo": "144 parejas candidatas (señales: respaldo de evidencia compartido, 2 o más documentos compartidos, etiquetas parecidas) adjudicadas por dos revisores independientes (modelos, sin acceso entre sí) con evidencia literal; cada cita se verificó por script contra el texto fuente y los casos discutibles se releyeron",
+      "n": 144,
+      "resultado": {
+        "mismo_conflicto": 71,
+        "distintos": 65,
+        "no_decidible": 8
+      },
+      "efecto": "Conflictos 817 -> 762; universo conservador 327 -> 286. Los grupos señalados por los revisores ciegos (Ciudad del Niño, edificios fantasmas de Estación Central, Conjunto Armónico Bellavista, Villa San Luis, Plaza Egaña) quedan como un solo conflicto; Sheraton sigue en 3 por falta de evidencia.",
+      "limites": "Adjudicación asistida por modelos, no humana; 8 parejas no decidibles quedan separadas (ante la duda no se fusiona); el universo fusionado no se volvió a validar con una muestra ciega nueva.",
+      "decisiones": "config/conflict_merge_decisions.json"
+    },
+    {
       "id": "muestra_inicial_n50",
       "que_mide": "Calidad de los registros con extracción estructurada, unidad documento frente a unidad conflicto",
       "metodo": "Muestra aleatoria estratificada (escala de conflicto x posible truncamiento), semilla fija, revisada caso por caso",

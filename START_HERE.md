@@ -9,13 +9,13 @@ composición del corpus, sigue con el [README](README.md).
 | Dato | Valor |
 |---|---|
 | Versión de la release | 1.0.0 |
-| SHA-256 de `data/warehouse.sqlite` | `9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7` |
+| SHA-256 de `data/warehouse.sqlite` | `92b8766d7b0fab4fcb59b6082758c408930d2a05df05270bb41b7b3ce0e08a70` |
 | Integridad | `integrity_check=ok`, 0 violaciones de FK |
 | Documentos del corpus | 3.884 (934 con extracción estructurada) |
-| Proyectos · casos · conflictos | 942 · 835 · 817 |
+| Proyectos · casos · conflictos | 942 · 835 · 762 |
 | Cola de identidad de proyectos | 258 pares: 119 fusionados, 139 separados, 0 abiertos |
-| Conflictos con respaldo de evidencia | 506 de 817 (311 sin respaldo detectado) |
-| Conflictos con respaldo Y alcance aprobado (universo conservador) | 327 |
+| Conflictos con respaldo de evidencia | 453 de 762 (309 sin respaldo detectado) |
+| Conflictos con respaldo Y alcance aprobado (universo conservador) | 286 |
 | Menciones de proyecto sin vínculo a una `case_mention` | 201 |
 | Referencias históricas preservadas | 31 (5 confirmadas como no resolubles) |
 <!-- stats:end -->

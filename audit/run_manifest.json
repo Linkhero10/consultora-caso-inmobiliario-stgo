@@ -5,17 +5,17 @@
   "generator": "src/generate_run_manifest.py",
   "warehouse": {
     "path": "data/warehouse.sqlite",
-    "sha256": "9c1a5939004815cd6495efecec414ed71a8d6edbe47fb5ef3dd106c97d0742a7",
+    "sha256": "92b8766d7b0fab4fcb59b6082758c408930d2a05df05270bb41b7b3ce0e08a70",
     "integrity_check": "ok",
     "foreign_key_check_violations": 0,
     "counts": {
-      "conflict_scope": 817,
+      "conflict_scope": 762,
       "document": 3884,
       "project": 942,
-      "conflict": 817,
+      "conflict": 762,
       "conflict_case": 835,
       "conflict_project": 942,
-      "document_conflict": 1245,
+      "document_conflict": 1199,
       "conflict_relation": 2,
       "conflict_evidence_backing": 1769,
       "actor_registry": 6,
@@ -35,14 +35,14 @@
       "all_detector_versions": [
         "verified_index"
       ],
-      "generated_from_warehouse_sha256": "81ec43ddec5ba6c611c88c9703557aed68d84f46d00c7b605cf8c324860e4569",
+      "generated_from_warehouse_sha256": "3795fa0562a01cd221943f13d7177b03daf51878090889f01a9142c8f540562c",
       "report_path": "audit/conflict_evidence_backing_report.json"
     }
   },
   "conflict_publication_gate": {
     "status": "ready",
     "preflight_status": "conflict_build_completed",
-    "topology_sha256": "6298d1be3081e0a8fd0e5a8a1c751327c625e8c19dd695bf37e52353de86d408",
+    "topology_sha256": "0dc714b2163b81c489421475c6fe3390cae1a3a76b60dff397a18e948f69c9f9",
     "preflight_report": "audit/historical_case_reference_preflight.json"
   },
   "tests": {
@@ -50,7 +50,7 @@
     "ci_workflow": ".github/workflows/tests.yml",
     "note": "El conteo exacto de tests cambia con cada commit -- ver el ultimo run de la pestana Actions del repositorio para el resultado vigente, no hardcodear aqui."
   },
-  "parent_commit_at_generation": "a590d4110fea4784f510a72d134f7a97ed68383a",
+  "parent_commit_at_generation": "2dce06ab33d2d3e007de0dc9fcc6cb2d370f0604",
   "release_commit": null,
   "note": "Manifiesto generado por src/generate_run_manifest.py contra el warehouse vigente; nunca se edita a mano. tests/test_run_manifest.py verifica en CI que el SHA-256 registrado coincide con data/warehouse.sqlite."
 }

@@ -4,6 +4,15 @@
   "model": "typesafe/jev-1.13.0",
   "decisions": [
     {
+      "conflict_id": "conflict:000ec14a76487259100acff3",
+      "signature": "c8c8f9450b21addd91d02bf55967ba4c5526df396690f19edc4021af1c5ccfcf",
+      "disputa": 0.96,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.86
+    },
+    {
       "conflict_id": "conflict:004a6a629ead126762d437f9",
       "signature": "886f5a0d7774b4b9ec71dbf2660b2bf1a017f344b16577c0d3c8003d46f9e842",
       "disputa": 0.91,
@@ -76,15 +85,6 @@
       "foco_confianza": 0.14
     },
     {
-      "conflict_id": "conflict:023f1d2199294e46f4e46c27",
-      "signature": "2c90b6a57ccfc4f63559eb1e1c96bcd50f345b338560a9c2c371dfbf10d2f330",
-      "disputa": 0.82,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.94
-    },
-    {
       "conflict_id": "conflict:0263d3acd185d1629e521aa8",
       "signature": "24efa9661bf814c8a88b9edd09a21b6674c1370392749117ff1f868fbb43eca5",
       "disputa": 0.21,
@@ -139,15 +139,6 @@
       "foco_confianza": 0.27
     },
     {
-      "conflict_id": "conflict:0456c96129329c72338ff3b1",
-      "signature": "468a1645adc8cb64a80489bbeea9b94d38093948019f33c06d7382e6d301b572",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.88
-    },
-    {
       "conflict_id": "conflict:049e087d3677f66ea3639e3c",
       "signature": "218bb65f80270b564361cfb68615b6e7fa35681bdb984040b70bab3fe19d20b1",
       "disputa": 0.08,
@@ -191,15 +182,6 @@
       "tema_confianza": 0.93,
       "foco": "secundario",
       "foco_confianza": 0.53
-    },
-    {
-      "conflict_id": "conflict:075ea8e93ab222c86ffb914c",
-      "signature": "cfa9df10c9298ad6953cfab56091f2cc558b18e7954029d7366922ef8c4a1030",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:09149c5276f7d0d40e84900b",
@@ -265,15 +247,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:0af5c4e2708ccb0b7ea25562",
-      "signature": "eba66788510c326a84250f3d7f7508b5618c641b808d90242682e6b2a640b6ef",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.35
-    },
-    {
       "conflict_id": "conflict:0b53552057e343ad6d8e77f8",
       "signature": "570a40da2f2cd40305899f1dc9731a8aec4c6cee8de9f1157ea84518d4844cb4",
       "disputa": 0.93,
@@ -328,24 +301,6 @@
       "foco_confianza": 0.85
     },
     {
-      "conflict_id": "conflict:0cf159baa5dd2f27cee346ec",
-      "signature": "21ba5514fb504539c4777e4e4fa2f71ae721f8ebfa6a78b27731da96847fa0a6",
-      "disputa": 0.98,
-      "tema": "infraestructura_energia_ambiental",
-      "tema_confianza": 0.19,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:0cfbbee35e10d05be09ab4f3",
-      "signature": "c6d7a7e2a5349d05260e833142f3b0f4719abb10357a2bd0a7e5d77198e12fc7",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.58,
-      "foco": "principal",
-      "foco_confianza": 0.96
-    },
-    {
       "conflict_id": "conflict:0d71c7a681614df68bf381cc",
       "signature": "ab3144408974fc9674451bd5d259dad9f311ee25e45c084a94dac8f0f0dea5d8",
       "disputa": 0.97,
@@ -373,15 +328,6 @@
       "foco_confianza": 0.58
     },
     {
-      "conflict_id": "conflict:0df7118a9bc4244d2af24fea",
-      "signature": "ef13392724a96183acd48121d78292a949d36a3361002ef1cfa292f0b88f49f1",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.49
-    },
-    {
       "conflict_id": "conflict:0e308c5b7815570c9082d791",
       "signature": "abc6c2a6f729b5619d42200c454793c430df9c898d12b4be30d4cb58a36f89b6",
       "disputa": 0.05,
@@ -407,15 +353,6 @@
       "tema_confianza": 0.71,
       "foco": "principal",
       "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:0edc961caf30eb98270d5f0b",
-      "signature": "3734a20cc8c8bbdadd5f821a028621eb28b3a8cb68f11c5d81699f7aac156799",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
     },
     {
       "conflict_id": "conflict:0f06d36e369b984bb11d573a",
@@ -470,15 +407,6 @@
       "tema_confianza": 0.97,
       "foco": "principal",
       "foco_confianza": 0.81
-    },
-    {
-      "conflict_id": "conflict:10b8ffcc1fe7c2ba915185a5",
-      "signature": "604cec8cf689ab5198d8b799591c8b959f37d2714caeb3abb1188040d080955f",
-      "disputa": 0.37,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.93,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.65
     },
     {
       "conflict_id": "conflict:10f7b4e2e5dad17f53c0bd92",
@@ -697,15 +625,6 @@
       "foco_confianza": 0.67
     },
     {
-      "conflict_id": "conflict:1715bca2184bedea76167cc6",
-      "signature": "8b2e6e7361f5c36c48746b2e3ba5c44067a2c168bd687d313bfc90c30014a6e8",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:17268960f60a65db214ff36c",
       "signature": "8b262fc6a38d1ec79bac3cf241d1054de83c352b3951bb87612bff9943452d90",
       "disputa": 0.97,
@@ -742,15 +661,6 @@
       "foco_confianza": 0.96
     },
     {
-      "conflict_id": "conflict:19327c9070c23ef70d61120c",
-      "signature": "0c801fb1ed8651065f8c199c50270a9786597fc5814a86b64f9e4b2eeb9eab52",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.66
-    },
-    {
       "conflict_id": "conflict:19b9d1633dfaaad4ea9517ba",
       "signature": "b6f59dd603208aad4a7b04155b75aa0a4e71b9b67fa9b5f670b2780661649f2c",
       "disputa": 0.97,
@@ -778,6 +688,15 @@
       "foco_confianza": 0.25
     },
     {
+      "conflict_id": "conflict:1a301f576e1ec913c398112d",
+      "signature": "dfbf1368966ebd66b39385dfbdcb5ba3c6718ff18f66b9a1d20fe4642e9b1920",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
+    },
+    {
       "conflict_id": "conflict:1a5537646eae72ea17ec7d8c",
       "signature": "978f4fbed40d98fc4eac28efc502c9fcac5fe5df7ad39267af0657a810a16303",
       "disputa": 0.07,
@@ -794,6 +713,15 @@
       "tema_confianza": 0.99,
       "foco": "secundario",
       "foco_confianza": 0.52
+    },
+    {
+      "conflict_id": "conflict:1b4e8f446bc520e720eafda9",
+      "signature": "b495454d0d4a62e1ac0a5d0e8d59d29d1cfbb6e5db8f88879e95a79e012567cf",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:1b859a8e175ba9e247ef47df",
@@ -886,24 +814,6 @@
       "foco_confianza": 0.94
     },
     {
-      "conflict_id": "conflict:1d9755efb742e38272bf1b4a",
-      "signature": "5ba8ec57862c2bc167eb96b2df6676846d841e6ed0871f1f5fca05fc63521b79",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
-    },
-    {
-      "conflict_id": "conflict:1d99d8b3eff42806d1de0a3e",
-      "signature": "49cf3cc85e482e565c7147ed8972d8ff72e2a5d1f05900455bdfdef77be704b6",
-      "disputa": 0.15,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.8
-    },
-    {
       "conflict_id": "conflict:1dc615fa25308594dea700b5",
       "signature": "0cf817e6f62075a42940db2d18c0b86fbbdf84e8caf1c17b113d9d032b61c48c",
       "disputa": 0.68,
@@ -949,6 +859,15 @@
       "foco_confianza": 0.71
     },
     {
+      "conflict_id": "conflict:1eb5c4967d91aec235efe951",
+      "signature": "a2e368f93cf5c0ec2f027f8c59e16fbb275a131b78a6d0affc85c74547c6ae0e",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.95
+    },
+    {
       "conflict_id": "conflict:1f42cfccfc0026fa86a895dc",
       "signature": "678af979e0696994f87b2e6471a9221d296475490b5784ff87db21bf0bf5b130",
       "disputa": 0.96,
@@ -967,6 +886,15 @@
       "foco_confianza": 0.71
     },
     {
+      "conflict_id": "conflict:2044c6007ed6d8dc5723551d",
+      "signature": "8150548b44da3cfbf6a39531c70d131dcbdaef6ffdfae17bb26c16f3c6703aa2",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
+    },
+    {
       "conflict_id": "conflict:204dee34f112297d45950efe",
       "signature": "7353bbb4cf0519cc947b95cfe06cf08893aac2009651d4e3baa9238107e93157",
       "disputa": 0.93,
@@ -983,15 +911,6 @@
       "tema_confianza": 0.95,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.86
-    },
-    {
-      "conflict_id": "conflict:2075deba782e1e4aafc81d30",
-      "signature": "1ccfded627e484570de21afe7e3a37d3a00d3a65ef2de43ee521f54625e6b691",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.32
     },
     {
       "conflict_id": "conflict:20bee5f18cdd1dd17b34bf77",
@@ -1057,15 +976,6 @@
       "foco_confianza": 0.84
     },
     {
-      "conflict_id": "conflict:221cf54d3790b7f7b42104cd",
-      "signature": "107e6df14d09d90db14daef9a105c12582fd2b0a89fd8d91885d4e1a01a28471",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:2272621ff103e56feffaf759",
       "signature": "fca1530b05ee17907f3608148a89afcfd5faef630f595de1b2e8545d4bd0ed54",
       "disputa": 0.95,
@@ -1073,6 +983,15 @@
       "tema_confianza": 0.91,
       "foco": "secundario",
       "foco_confianza": 0.66
+    },
+    {
+      "conflict_id": "conflict:22ca90beeabf1d56d21a4e5d",
+      "signature": "0dcc77a6e5ada4cfc795db166a1aebe0ea6aeb08642693896751f707aaf8cd2f",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.59,
+      "foco": "principal",
+      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:23121996b8296d055148af91",
@@ -1156,6 +1075,15 @@
       "foco_confianza": 1
     },
     {
+      "conflict_id": "conflict:27527c3100ddbd48b8e7e6af",
+      "signature": "e8c53054de4e75890cc8feb714fb4808cc2ed5c8cb44bf49152194f5d212817d",
+      "disputa": 0.97,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.95,
+      "foco": "principal",
+      "foco_confianza": 0.89
+    },
+    {
       "conflict_id": "conflict:28e08f09e95fdb2381cd6f7c",
       "signature": "d50adee47adef547ea4ff2e7d0ab8640b5e43326081c65e4403b721da2107720",
       "disputa": 0.97,
@@ -1163,6 +1091,15 @@
       "tema_confianza": 0.96,
       "foco": "principal",
       "foco_confianza": 0.9
+    },
+    {
+      "conflict_id": "conflict:29d72c133b691634a29fc836",
+      "signature": "f3600c5fa95238e4f2086061403a6558b3ee7e1b38139aed04f23432c3e2c666",
+      "disputa": 0.77,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.98,
+      "foco": "secundario",
+      "foco_confianza": 0.17
     },
     {
       "conflict_id": "conflict:29d97afc83e5cad20b3c410f",
@@ -1199,15 +1136,6 @@
       "tema_confianza": 1,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.81
-    },
-    {
-      "conflict_id": "conflict:2c65ea534ba17a526816a153",
-      "signature": "8b173e27ada45f5591e18dcb83bc56b65a5d41d8f90026d4b99352b027e606e2",
-      "disputa": 0.86,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.83,
-      "foco": "principal",
-      "foco_confianza": 0.71
     },
     {
       "conflict_id": "conflict:2caeaaa4df792ecc1a022d5f",
@@ -1318,6 +1246,15 @@
       "foco_confianza": 0.24
     },
     {
+      "conflict_id": "conflict:2ea44580bfcc198733e08155",
+      "signature": "06c6ec8f89a318554f098a0848807a145e2bdbd47f40ad104d02df3609c4d674",
+      "disputa": 0.99,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
+    },
+    {
       "conflict_id": "conflict:2ee13a8bbcf3ae969be37b36",
       "signature": "3458aee437f158f8e43d9de38fc0ccc2f2e6757d79fc24d66f8555c8e85d5254",
       "disputa": 0.96,
@@ -1361,15 +1298,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.99
-    },
-    {
-      "conflict_id": "conflict:313446c989804abd7c4245f4",
-      "signature": "6a0dc6c369015670a0de1407ebb706afb5b2372c7c5ca3bc1e3e6dee0e0f1c3b",
-      "disputa": 0.9,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.94,
-      "foco": "secundario",
-      "foco_confianza": 0.41
     },
     {
       "conflict_id": "conflict:314c1b0e50a3d42b620a5906",
@@ -1426,24 +1354,6 @@
       "foco_confianza": 0.62
     },
     {
-      "conflict_id": "conflict:32034b8cbd059cd5bd52a7fa",
-      "signature": "54b73bb34b9868f60eb617c953390e54299bd4388eb769887540becbb1b0cbc9",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.99
-    },
-    {
-      "conflict_id": "conflict:32c85bd711159a0a8bfc6f1c",
-      "signature": "1d97313e3c2798623010189f66f6c14580fef495d292c8aa889f1b5330e70cfb",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.61,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:33390dcc0bf3aae76e9a31dd",
       "signature": "e3c40ca32b3eed9f8fda14c08ada9ecb2db910b02ae9a0dbc2272fef80c1f80c",
       "disputa": 0.98,
@@ -1460,6 +1370,15 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.35
+    },
+    {
+      "conflict_id": "conflict:3352fd0e2c5ac87f58384690",
+      "signature": "071e00abcaf4847be925ef01ab09670ead2e44d6f71ee5d22af83dfc32807274",
+      "disputa": 0.93,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:33a74389f8fe65b2bbc7a12f",
@@ -1498,15 +1417,6 @@
       "foco_confianza": 0.2
     },
     {
-      "conflict_id": "conflict:34c241172fbd5c4fab07936a",
-      "signature": "0ca62d47eb9e8ae8427d9fb16310984382ace314a0be05e8bc8c95a89801945e",
-      "disputa": 0.18,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "secundario",
-      "foco_confianza": 0.52
-    },
-    {
       "conflict_id": "conflict:34e114676a6c072110ad650b",
       "signature": "0b14053c9a06de7bc240d3773fc928cd502c54704e4c9fa89642724a38bf8e57",
       "disputa": 0.7,
@@ -1534,15 +1444,6 @@
       "foco_confianza": 0.49
     },
     {
-      "conflict_id": "conflict:36b15b6e4ee7d9105a971a0a",
-      "signature": "214a3403f49b65543bbee9ba0fe85b5b5a903d6ce64f7c2e3d038c4d082e2bd7",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.67
-    },
-    {
       "conflict_id": "conflict:36b40958331e8eda0d909e7d",
       "signature": "e7b6c72205230944768da3f5e41ff7534bcf1a3c78d3e95e295ba2d9f3e64064",
       "disputa": 0.94,
@@ -1550,6 +1451,15 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.57
+    },
+    {
+      "conflict_id": "conflict:36f0d5e7854129ed544780d2",
+      "signature": "69ddbe2ecec5e5526a302c292c0c1d611f6f58f79feeeeb34fdbb4d8a5071355",
+      "disputa": 0.97,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "secundario",
+      "foco_confianza": 0.59
     },
     {
       "conflict_id": "conflict:37130175e65398670fdfa909",
@@ -1660,15 +1570,6 @@
       "foco_confianza": 0.34
     },
     {
-      "conflict_id": "conflict:3b1876230111ca78b5d98d42",
-      "signature": "f64190bff5fcb3059a6a7ff624b185d5c111a24c044281a43456a77cd05aa2a7",
-      "disputa": 0.28,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.47
-    },
-    {
       "conflict_id": "conflict:3b3b120604417682aab2aaf5",
       "signature": "ed903a2122ff0738c55807f69ed0b68ad4ba3a94df79054fffe20bca5cb6bb08",
       "disputa": 0.09,
@@ -1703,15 +1604,6 @@
       "tema_confianza": 0.8,
       "foco": "principal",
       "foco_confianza": 0.99
-    },
-    {
-      "conflict_id": "conflict:3c49b969781714b817852fb3",
-      "signature": "2630b9312ad55d413f84cd5c79f77996dc8750f822cb7ae7ae5074111bf00a01",
-      "disputa": 0.92,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.86,
-      "foco": "secundario",
-      "foco_confianza": 0.9
     },
     {
       "conflict_id": "conflict:3cb406c10722cdc97c740183",
@@ -1840,15 +1732,6 @@
       "foco_confianza": 0.84
     },
     {
-      "conflict_id": "conflict:3f8a9e75fb065315a18fa722",
-      "signature": "0ff306e293c3e36374fee42db9c823248db0e4d0bee67df0ee27741cad71cf85",
-      "disputa": 0.03,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:3fcc41a1fde837356b5af49b",
       "signature": "cbda49e7088ec332f471063e54ee6045f91503146873041fc6e28855d1d134e9",
       "disputa": 0.41,
@@ -1856,15 +1739,6 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.61
-    },
-    {
-      "conflict_id": "conflict:40409751ccb910a1ce72055a",
-      "signature": "448ef49efaababa0bd0f68fc989b6922e3028d6e2036557c0d07764b2219abb0",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.87
     },
     {
       "conflict_id": "conflict:40bd9f4a4bdd68b31ecea01f",
@@ -1930,15 +1804,6 @@
       "foco_confianza": 0.37
     },
     {
-      "conflict_id": "conflict:432b6faec46da86cb7bc52cc",
-      "signature": "2bf557a7d7fbcc96fa207162b28e2e08ee6d10ade6f8d3246b425af8f28119c7",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.42
-    },
-    {
       "conflict_id": "conflict:4368dd226ec5eebe5bf5813e",
       "signature": "b26f51ff51d5aa9282dfdba10e413aff8b834a5bfe0dde2a147b0ad8d5cba16f",
       "disputa": 0.38,
@@ -1957,15 +1822,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:43f34f1d9b113eaefe2bc1d8",
-      "signature": "683a4dce29482d8d43c55e2011e21361f805877c45ac5ddaf11759398c9c91a9",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 0.99
-    },
-    {
       "conflict_id": "conflict:44589ca1f0798c36e96fb077",
       "signature": "092c4063f48c79217472df2d21d23a4cde310b41c72e8a2c481ed3faffd75790",
       "disputa": 0.18,
@@ -1973,15 +1829,6 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.38
-    },
-    {
-      "conflict_id": "conflict:4470f2d1ae3650f6f1d27213",
-      "signature": "2ec6c69efc7a23377e74e16843ce5cdb70b7ae19a92ebf6e89a31a04c5b30684",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:452e0c854815cd053f5582a2",
@@ -2200,15 +2047,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:4c2e5cdb5623f4f6a0936a40",
-      "signature": "a97010b1665d01d0d3ac9dd95ec3eba425b95f2c7c2ab55c55f7b3aa9731e387",
-      "disputa": 0.92,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.8
-    },
-    {
       "conflict_id": "conflict:4c3456950eadc0243dbc2176",
       "signature": "697216227a09452b0b7988497a93247b9e21697adbf4f484c3ae13d634a2af21",
       "disputa": 0.98,
@@ -2236,30 +2074,12 @@
       "foco_confianza": 0.93
     },
     {
-      "conflict_id": "conflict:4e5e66af387bbd4bcb9d5cf8",
-      "signature": "3c8f0fb0f79e73652c81507a133e1acca28dd5b655858bb958d8b4f3d5a4a284",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.97
-    },
-    {
       "conflict_id": "conflict:4e843e253baed30e4153d0c6",
       "signature": "318721b4b1a4113e9209d3727211ab2a63e728befd5a969a5481cb4b49691095",
       "disputa": 0.14,
       "tema": "inmobiliario_urbano",
       "tema_confianza": 0.67,
       "foco": "mencion_de_paso",
-      "foco_confianza": 0.97
-    },
-    {
-      "conflict_id": "conflict:4ee050a8b6703005a143bf98",
-      "signature": "5528ce2797c8a11ccaed4455bbd016b2fd0a65d0d8b4129571b86f2803daee6e",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
       "foco_confianza": 0.97
     },
     {
@@ -2288,6 +2108,15 @@
       "tema_confianza": 0.99,
       "foco": "principal",
       "foco_confianza": 0.43
+    },
+    {
+      "conflict_id": "conflict:5053d36e75bd11d3c16042ed",
+      "signature": "b3d593fff18b38e83215216f7ce0e9766b15d61db5b3beae44ba487d1086c3ec",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.67
     },
     {
       "conflict_id": "conflict:5068df051778fce340d561f2",
@@ -2459,15 +2288,6 @@
       "tema_confianza": 0.99,
       "foco": "principal",
       "foco_confianza": 0.18
-    },
-    {
-      "conflict_id": "conflict:55c16518ca48b389d6bf69f1",
-      "signature": "d7740b0a8566fd2d2af39a5fd8f242c32be92a4af92970a5312a6aa55d198b66",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.16
     },
     {
       "conflict_id": "conflict:56144ac4ee1120b6311a19a5",
@@ -2659,15 +2479,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:5d0c22386d0fe7a16604e55d",
-      "signature": "3dc49b4d30cb3abf0ca6b7fbd35dc94727e330b728d025ce6aed981d30b60de3",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:5d14b75f5e9777901f626315",
       "signature": "7fe0479f3c1a11196263614bfd9c78d724ff5157415c199c4d23da6309057238",
       "disputa": 0.38,
@@ -2702,15 +2513,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.98
-    },
-    {
-      "conflict_id": "conflict:5ec145f64603968164159d4b",
-      "signature": "e598bf9ce8f519a2f49c42f515621b7afe3484dd5070d550b16b55b19965028a",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.99
     },
     {
       "conflict_id": "conflict:5ed76c064b42eed947a73ea1",
@@ -2749,6 +2551,15 @@
       "foco_confianza": 0.45
     },
     {
+      "conflict_id": "conflict:5f9bf6129e7763e7ffe1bf86",
+      "signature": "61d030aa087b070c545a0f05b4c4b7835bd9eeb8bd6470cd057ea63787822aa7",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.98
+    },
+    {
       "conflict_id": "conflict:6004f67b0c08081834e9f5ee",
       "signature": "04a4f2283d6bac1927296ba95be66fa3d715ea229b443009259308c21f48af3f",
       "disputa": 0.21,
@@ -2765,15 +2576,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:61a57859108f4a17f91a7a6b",
-      "signature": "a5655b945d198f32228e94f8e6399f5f368b4eac39ee07c9c8f68f68fd08911e",
-      "disputa": 0.82,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
     },
     {
       "conflict_id": "conflict:61ab337b7af1bf6e7ed24665",
@@ -2812,21 +2614,21 @@
       "foco_confianza": 0.99
     },
     {
-      "conflict_id": "conflict:62628601f5ca73b4ef3af011",
-      "signature": "23b68038c22f59ebfcf6881e3a542f08112492351922d65feea1532d4177be88",
-      "disputa": 0.77,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.33
-    },
-    {
       "conflict_id": "conflict:62a3426c304ea6e024909cc7",
       "signature": "0908bcb2ef7f234b6449f6df431a106bfab63f6dbbd3db167b1a65bcbc18b1a1",
       "disputa": 0.96,
       "tema": "inmobiliario_urbano",
       "tema_confianza": 0.38,
       "foco": "secundario",
+      "foco_confianza": 0.92
+    },
+    {
+      "conflict_id": "conflict:62cc7ef37704c107866324a1",
+      "signature": "feb9e6b09533e040db26d976183d623991044ffe6fc3ad0f1f97165ca965f526",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.99,
+      "foco": "principal",
       "foco_confianza": 0.92
     },
     {
@@ -2846,15 +2648,6 @@
       "tema_confianza": 0.69,
       "foco": "principal",
       "foco_confianza": 0.57
-    },
-    {
-      "conflict_id": "conflict:6355d61f378f537b107621c3",
-      "signature": "ff38c33ee3ce38a2aac38fc3c184790b0396ca882f56498b128b97dbd90c9055",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.97
     },
     {
       "conflict_id": "conflict:63613ac90691de8b7da00d0a",
@@ -2891,24 +2684,6 @@
       "tema_confianza": 0.74,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.56
-    },
-    {
-      "conflict_id": "conflict:63d772d8891b7fcefb46d834",
-      "signature": "95c4b2685311d47630acade5f711cde29b54e290356c4b2dde1c70b831ea5057",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:63e81b4742e04d9981b9cf0a",
-      "signature": "a1cbef88aa67c0ab3c4c86d73857c88fe8c69659f361721a9afb9bfd6140df7c",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:63f3ffc1608bf4e5e1ee8ed1",
@@ -2954,6 +2729,15 @@
       "tema_confianza": 0.58,
       "foco": "secundario",
       "foco_confianza": 0.34
+    },
+    {
+      "conflict_id": "conflict:650d98d210f810b88e53b8fe",
+      "signature": "eea8c29cdfa645dc13d47e7f554bd7b202f946339f73a4ea1c46ca026f094012",
+      "disputa": 0.95,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.86
     },
     {
       "conflict_id": "conflict:65513678645ac10b9d5dfbcb",
@@ -3010,6 +2794,24 @@
       "foco_confianza": 0.43
     },
     {
+      "conflict_id": "conflict:692830db340673e33c57094c",
+      "signature": "083a84cbc9e7e2ce6af28a2f35457c895d5748cc2562aa47b989c75e438208fc",
+      "disputa": 0.97,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "secundario",
+      "foco_confianza": 0.67
+    },
+    {
+      "conflict_id": "conflict:697d40653fdebd2adcbded41",
+      "signature": "d7740b0a8566fd2d2af39a5fd8f242c32be92a4af92970a5312a6aa55d198b66",
+      "disputa": 0.93,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "mencion_de_paso",
+      "foco_confianza": 0.22
+    },
+    {
       "conflict_id": "conflict:6a1b55de3a6e35aac6f84b8a",
       "signature": "3f4a81a3a50198245b7f24aa6c123fe2def009d167b4bad71b2bb28c447fe26a",
       "disputa": 0.98,
@@ -3062,15 +2864,6 @@
       "tema_confianza": 0.96,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.53
-    },
-    {
-      "conflict_id": "conflict:6bc043e78378112b2e9e93d2",
-      "signature": "f774d269f79f5cc156c9a7c5ed373709224f56f863388d92949214bcfe5d722d",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.4
     },
     {
       "conflict_id": "conflict:6bf61da172bd9ed94bbcbf9b",
@@ -3136,15 +2929,6 @@
       "foco_confianza": 0.96
     },
     {
-      "conflict_id": "conflict:6d566ba784159e2c4e38a224",
-      "signature": "9d106e56cbcb3337069ab210ee36f1c6f4adcb0ee55a800aa0211c2f45e2ffe2",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:6dc73d8f11ab6cda0812f086",
       "signature": "bff1c9ff7df73a8ea2155e71c943756c4ed019f5c90793b9c577fe8b459e4d92",
       "disputa": 0.62,
@@ -3152,15 +2936,6 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.45
-    },
-    {
-      "conflict_id": "conflict:6dfa57ba77aecc30080ec4e4",
-      "signature": "6c9c76b4dbb2f8ddaf54469deaf2c1ea59e1374fa0ef1333d52ab33d11768408",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.97,
-      "foco": "principal",
-      "foco_confianza": 0.96
     },
     {
       "conflict_id": "conflict:6ea7a8a48657cf54b6ad4c3d",
@@ -3179,15 +2954,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.94
-    },
-    {
-      "conflict_id": "conflict:6f8b0e8f0101aa403a4c2106",
-      "signature": "b3d593fff18b38e83215216f7ce0e9766b15d61db5b3beae44ba487d1086c3ec",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.62
     },
     {
       "conflict_id": "conflict:6f9b995f5a5254b4fbd9e75b",
@@ -3242,15 +3008,6 @@
       "tema_confianza": 0.79,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.73
-    },
-    {
-      "conflict_id": "conflict:7086a22f920d49cea85174e2",
-      "signature": "feb9e6b09533e040db26d976183d623991044ffe6fc3ad0f1f97165ca965f526",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 0.95
     },
     {
       "conflict_id": "conflict:710fceda2d5940e807303c23",
@@ -3397,15 +3154,6 @@
       "foco_confianza": 0.23
     },
     {
-      "conflict_id": "conflict:77c2b918a3c42b4f99319362",
-      "signature": "cb682edc0132b9ba67f8a9c1bd20a798d28edc8cdf2739f404281bce7e5a5607",
-      "disputa": 0.84,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:77fa6b9583747a9731bc585e",
       "signature": "50f94ee109d9af3b72c5e20abfb737966db4c5d0431e7b7c52c6db4592d39d7e",
       "disputa": 0.05,
@@ -3451,6 +3199,15 @@
       "foco_confianza": 0.79
     },
     {
+      "conflict_id": "conflict:79969814a5309e1048985e71",
+      "signature": "976fb63b9f7b81a442833b8216845d929f5513bd43166709078952a459328062",
+      "disputa": 0.82,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.97
+    },
+    {
       "conflict_id": "conflict:79fdb35fae4535f0ea56055c",
       "signature": "b8c5b88a59c4c33c298bf39684db3774edfae7afa4d2f99f688ff70f605436af",
       "disputa": 0.95,
@@ -3492,15 +3249,6 @@
       "disputa": 0.03,
       "tema": "inmobiliario_urbano",
       "tema_confianza": 0.93,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:7bf0886422c306d40df39b6a",
-      "signature": "6c4c3ed6195807d416456fdbb42d0dbb842ad5204584c2ac9a7bdf604ae30c01",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 1
     },
@@ -3721,15 +3469,6 @@
       "foco_confianza": 0.9
     },
     {
-      "conflict_id": "conflict:826e9a86605d6f6ea354b159",
-      "signature": "22070eff38d7b1e3fbd616e4bd078b7d1ef24fa13c720da384848e99a4d546c3",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.37
-    },
-    {
       "conflict_id": "conflict:83db6d9fb2156d8a892c5461",
       "signature": "e36ef4793892444ff8a19ed02f528906c0c140d84580bb2ff8515e3a1041e930",
       "disputa": 0.09,
@@ -3838,15 +3577,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:8801b9f18bf04d115ef1d5e7",
-      "signature": "34a304db49e568dee104eba3a5dfb47565b7a7439439f957568fb86a2e651ce2",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.77
-    },
-    {
       "conflict_id": "conflict:882546605c6423eba005fc91",
       "signature": "bc7d258045eec1c893be8eaf51e413af469d626220ccfb5a7ebbfc34478f1b6d",
       "disputa": 0.97,
@@ -3854,6 +3584,15 @@
       "tema_confianza": 0.83,
       "foco": "principal",
       "foco_confianza": 0.87
+    },
+    {
+      "conflict_id": "conflict:882c8e10a67fc2469cbc185b",
+      "signature": "22070eff38d7b1e3fbd616e4bd078b7d1ef24fa13c720da384848e99a4d546c3",
+      "disputa": 0.96,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.53
     },
     {
       "conflict_id": "conflict:8841bf5de14b51bbed285357",
@@ -3874,22 +3613,13 @@
       "foco_confianza": 0.53
     },
     {
-      "conflict_id": "conflict:88e9ef8b7642d910cfdff812",
-      "signature": "6d68d1064a76444f5db1e7c5f6753627d304d96db120f9eeb1400b7dbdb1ca47",
-      "disputa": 0.95,
+      "conflict_id": "conflict:8890f75dc24fd0bac33451c3",
+      "signature": "dbef7a9787490dcc4f63eb9ed485dd6fdca14f2f81313bfb07101e2514e5c577",
+      "disputa": 0.38,
       "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:88f708dc9c96a345b2d9a6c0",
-      "signature": "f3491ff875d02b9ed6f8dd35fe6bfff8aa684a30cfc7ea4f139081ff2e02bd80",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.97,
-      "foco": "principal",
-      "foco_confianza": 0.89
+      "tema_confianza": 0.87,
+      "foco": "secundario",
+      "foco_confianza": 0.77
     },
     {
       "conflict_id": "conflict:8994d92550b5fd589550c7f5",
@@ -3910,15 +3640,6 @@
       "foco_confianza": 0.96
     },
     {
-      "conflict_id": "conflict:8a1cd5848200505f86a15b49",
-      "signature": "1238db2da6dd9a8ff279337924531ace0326ef8a5deba04d237b11a7aa6d6521",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
-    },
-    {
       "conflict_id": "conflict:8a9c91ccb19e7b74bfddf4df",
       "signature": "c0b3053935061063fa9fede45c720944d269cbd6d403bf0d20a828aacc6f77f3",
       "disputa": 0.89,
@@ -3937,13 +3658,13 @@
       "foco_confianza": 0.98
     },
     {
-      "conflict_id": "conflict:8b41b0338319dbfa75aa1a66",
-      "signature": "3af0dc468cf6b9dde9c4d5f728fb61e34f5e2bbf8282925a8e3521afbf586442",
-      "disputa": 0.97,
+      "conflict_id": "conflict:8b1e01497d37bb836f9732ff",
+      "signature": "2d186174437bc4eb0f9169c5b65c10a0d6b1662dc079f269f9e5c5b15455421d",
+      "disputa": 0.98,
       "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.67,
+      "tema_confianza": 0.71,
       "foco": "principal",
-      "foco_confianza": 1
+      "foco_confianza": 0.89
     },
     {
       "conflict_id": "conflict:8b6b01f15ba9ef324a4ce269",
@@ -4126,15 +3847,6 @@
       "foco_confianza": 0.48
     },
     {
-      "conflict_id": "conflict:938835a0f982a09a9514599b",
-      "signature": "c6090e1db7578f80ad3e3f12b888fab82b7a49939d7268c8909c3955276ef1e1",
-      "disputa": 0.13,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.96
-    },
-    {
       "conflict_id": "conflict:938f82193852580f98bb2217",
       "signature": "84042805f3ba404bb90c0280fcd29fa99e59a18a57a6a15c54e1f2f4ff0165d1",
       "disputa": 0.92,
@@ -4261,24 +3973,6 @@
       "foco_confianza": 0.99
     },
     {
-      "conflict_id": "conflict:95c59285f2e30f1fd6f32cb5",
-      "signature": "a5aaf79d0a40d9f553ceef273b07a7e1cb6ecfe290a4311bdab0a0f842ae0d10",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.96,
-      "foco": "principal",
-      "foco_confianza": 0.97
-    },
-    {
-      "conflict_id": "conflict:9633d9e95b45ab23f3235d75",
-      "signature": "0895fc14ac6783834f06de77057f71ebb384d3a0d925388b3d567356190bd631",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:96736e84941916cf99a415be",
       "signature": "448a30a09e425bf000767658d52c0e6858e441f58507ebe6a7acd425068a6f64",
       "disputa": 0.08,
@@ -4304,15 +3998,6 @@
       "tema_confianza": 1,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.49
-    },
-    {
-      "conflict_id": "conflict:972023b05988e3bcf74f7fb1",
-      "signature": "2389887e50d250677edae4d07acb5f975bc96ae9e11380e189ba513107ca5f68",
-      "disputa": 0.96,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.89
     },
     {
       "conflict_id": "conflict:973dd3addff6dbef5446b7ee",
@@ -4396,6 +4081,15 @@
       "foco_confianza": 0.2
     },
     {
+      "conflict_id": "conflict:9a6130c44c3b8c2ff9a834a5",
+      "signature": "293766f67fb4ef3b7053d6dd42d88c6a943baed5cafbdecbfb0cfec2d84ac1cf",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.92
+    },
+    {
       "conflict_id": "conflict:9a8d96df84d573eda9d5dac8",
       "signature": "027a44e47b419fa0810d481e3132ecde2a8c1c29819990d5172c8363558af075",
       "disputa": 0.19,
@@ -4430,15 +4124,6 @@
       "tema_confianza": 1,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.4
-    },
-    {
-      "conflict_id": "conflict:9b36a6d51b5276b8f630ba15",
-      "signature": "948b9097c362be1cd98248319eb644a3fbac5baa552453bcaa4c425c892f31a6",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.78
     },
     {
       "conflict_id": "conflict:9b7bcb6101c19ab25fd737cf",
@@ -4576,15 +4261,6 @@
       "foco_confianza": 0.55
     },
     {
-      "conflict_id": "conflict:9db6f8bd22f424bbbe911a2e",
-      "signature": "7fb4fa275d41b3d38c999884e18883722d2fd36873f1486d8c61cb16d3822428",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.97,
-      "foco": "principal",
-      "foco_confianza": 0.44
-    },
-    {
       "conflict_id": "conflict:9ea7eca1b00e9564c922c788",
       "signature": "51a35f954b9e6a517254e8aadbbd1f6f5b0e75c4b8e3eef80dd8ef9a36c76e9d",
       "disputa": 0.69,
@@ -4619,15 +4295,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.82
-    },
-    {
-      "conflict_id": "conflict:9f9c880350bba43f7928fa6a",
-      "signature": "f851fa17202d37b06d74c447e594bbf14bd1e7ad892774aaa1b23f09e7b9ebfb",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:9fba736786fdb532afc8b5cd",
@@ -4720,15 +4387,6 @@
       "foco_confianza": 0.58
     },
     {
-      "conflict_id": "conflict:a2f5c5cbf6f34d49fb12d8b5",
-      "signature": "bfda3d0d0bb50c59a9ae48a12de2006e24b04dabe8b235e2a1b8ac65fdd20a94",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:a30a754f416bdea627669d33",
       "signature": "9973ddc227f5bf215d824b9095d3efb4d8da99862e9ec71cfe5f630a4a3271d8",
       "disputa": 0.98,
@@ -4783,15 +4441,6 @@
       "foco_confianza": 0.51
     },
     {
-      "conflict_id": "conflict:a564e9c83afbb07273906a48",
-      "signature": "217a219d8f5574b84c51a3eacd59ecef792e98dea550984867e1e3312b73fc60",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 0.97
-    },
-    {
       "conflict_id": "conflict:a56df1728b8cd479fbcf1329",
       "signature": "82301a7f974d13c6e82afd2f4a1a49d86e6cc48aa3764182af820364fe3f100f",
       "disputa": 0.27,
@@ -4817,15 +4466,6 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.58
-    },
-    {
-      "conflict_id": "conflict:a7dec95d3f946bf238f5147a",
-      "signature": "81fb95b0fe039ecd8922e1718c35ba4e4a5e97edbfbfae5b28c096c9ba0aa577",
-      "disputa": 0.1,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.92,
-      "foco": "secundario",
-      "foco_confianza": 0.27
     },
     {
       "conflict_id": "conflict:a9254d791021ba8d95831b0e",
@@ -4909,15 +4549,6 @@
       "foco_confianza": 0.51
     },
     {
-      "conflict_id": "conflict:add7e5e9acec32ab295868af",
-      "signature": "a9d97ed934a4fecf50fad6b3860d822b3409909d886eb9dfbdb783f3c4332186",
-      "disputa": 0.86,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.23
-    },
-    {
       "conflict_id": "conflict:ae2770f1332a4de175326595",
       "signature": "4fb746bf007407f98373551ba7d8a4058ec0456f174883340f04d2f76ff445ea",
       "disputa": 0.9,
@@ -4934,24 +4565,6 @@
       "tema_confianza": 1,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.91
-    },
-    {
-      "conflict_id": "conflict:ae7477b7f226a61cfd0aa6b5",
-      "signature": "8e63e4f08a324a5eb37699c2ed5393a67e0b5bba3b30cb82317567a082524b2a",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.34
-    },
-    {
-      "conflict_id": "conflict:aeb8a38c9e7db81d06a24348",
-      "signature": "f69e5080baa1927a021f7632eb332f5b1dcdee822fbf847d65f70a8a105cadeb",
-      "disputa": 0.87,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.25
     },
     {
       "conflict_id": "conflict:af1f195fc616bc8811faf470",
@@ -5062,6 +4675,24 @@
       "foco_confianza": 0.86
     },
     {
+      "conflict_id": "conflict:b3c102d4a0e2c4217517359d",
+      "signature": "92148135840d7d1b69c80e6109c83013a5b517e37bda6b09119b957b1240114d",
+      "disputa": 0.99,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.99
+    },
+    {
+      "conflict_id": "conflict:b3caaf30950a7a9ba962d66f",
+      "signature": "b9fe2066f0a34122afcb05b7b781e5f67f6cfab1dd6e1a3c45467093a6df116b",
+      "disputa": 0.9,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.61
+    },
+    {
       "conflict_id": "conflict:b44d72b55751f8a11c94ce12",
       "signature": "e8be98f2d0a62f36a523687402af6d76e388bb6ed371910fa7ec4d8e688fb7d7",
       "disputa": 0.93,
@@ -5107,6 +4738,15 @@
       "foco_confianza": 0.51
     },
     {
+      "conflict_id": "conflict:b700d09377c57ffecae7819b",
+      "signature": "56f12d1ac91a9d6f1ea33afb83328e78af39c55c1165e30191ca01aa5cccf0de",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.99
+    },
+    {
       "conflict_id": "conflict:b71d625bda7515df2dc67828",
       "signature": "e311eae013ac916be606a57dd98050902e68779f3c14b79e742e7ac12bb7f462",
       "disputa": 0.97,
@@ -5143,15 +4783,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:b816a24c9878c97166377550",
-      "signature": "91133c6f6a5233aa2a46b1fc4ea69691e8574b0577e8d3f3a1f357debcf268c0",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.77
-    },
-    {
       "conflict_id": "conflict:b8264dfc74cdc3950f0bacc6",
       "signature": "a1c78ce1a4da685aad6f3b07f04ea14c4b4bb10f5f053e2dcdeb9be7575b40ed",
       "disputa": 0.1,
@@ -5168,6 +4799,15 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.99
+    },
+    {
+      "conflict_id": "conflict:b9bf99031ef3ca34fccca67e",
+      "signature": "209ba56bf7f379dacd2e5933e38c9ef05408767c5ebe1665e6b149d0e4e2de46",
+      "disputa": 0.99,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:baf0aab54a8554d22dce0856",
@@ -5395,15 +5035,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:c34f48e8d891cfb1ef22a1ac",
-      "signature": "526b50021ef356f002e2bb2166ded21ff2a7a0ea355591d311371ab626d3e8bb",
-      "disputa": 0.4,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "mencion_de_paso",
-      "foco_confianza": 0.29
-    },
-    {
       "conflict_id": "conflict:c375ff41fcdbe3e536dce20a",
       "signature": "9be6aeea93b0409d5ab76d0c95be639b5f38f06c5f66ba64f3e3fa6783aef6eb",
       "disputa": 0.23,
@@ -5420,15 +5051,6 @@
       "tema_confianza": 1,
       "foco": "secundario",
       "foco_confianza": 0.38
-    },
-    {
-      "conflict_id": "conflict:c40cfdfcf472a3b1151d2728",
-      "signature": "ea1e1d2600c19040a6eed133d7c5f8d47acce81328b9163e1593cb15ac6582b1",
-      "disputa": 0.79,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.82,
-      "foco": "secundario",
-      "foco_confianza": 0.32
     },
     {
       "conflict_id": "conflict:c41637f9f85345e6b025e842",
@@ -5476,6 +5098,15 @@
       "foco_confianza": 1
     },
     {
+      "conflict_id": "conflict:c5388c0656781afa7724baa3",
+      "signature": "a5aaf79d0a40d9f553ceef273b07a7e1cb6ecfe290a4311bdab0a0f842ae0d10",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.96,
+      "foco": "principal",
+      "foco_confianza": 0.95
+    },
+    {
       "conflict_id": "conflict:c57c0ec6661ac72c560f3498",
       "signature": "17b7a87c7c99ab23264a31c45ddc42ace4c2c11cb1b463236f3ca41f078bafde",
       "disputa": 0.98,
@@ -5492,15 +5123,6 @@
       "tema_confianza": 0.81,
       "foco": "secundario",
       "foco_confianza": 0.54
-    },
-    {
-      "conflict_id": "conflict:c5de9cc3363d2387f7833166",
-      "signature": "eaf2a363f5262514d9fb0fcf7020d539796dfdaea8509f1b0bd8aac3346975d1",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
     },
     {
       "conflict_id": "conflict:c5edeedd1a95758242e0534b",
@@ -5755,22 +5377,13 @@
       "foco_confianza": 0.37
     },
     {
-      "conflict_id": "conflict:ce620e3108e17ba0be55e37e",
-      "signature": "eea8c29cdfa645dc13d47e7f554bd7b202f946339f73a4ea1c46ca026f094012",
-      "disputa": 0.96,
+      "conflict_id": "conflict:cf3d93dd77468b0ab6854ed7",
+      "signature": "be909a339067d57a76c989aed3040521397627d0c44d85d8b6003d648e022391",
+      "disputa": 0.89,
       "tema": "inmobiliario_urbano",
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.85
-    },
-    {
-      "conflict_id": "conflict:cee2b288bb18a67933b750be",
-      "signature": "55bb4687559cdd9086f2ca8e991992f5504d7e9f6cc377df0781095e233f70aa",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
     },
     {
       "conflict_id": "conflict:cfda4b1bb8ddc9c43b83746a",
@@ -5863,6 +5476,15 @@
       "foco_confianza": 0.62
     },
     {
+      "conflict_id": "conflict:d12d7bb565c14b7bf2609b3c",
+      "signature": "34a304db49e568dee104eba3a5dfb47565b7a7439439f957568fb86a2e651ce2",
+      "disputa": 0.97,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.81
+    },
+    {
       "conflict_id": "conflict:d14d139f0eb71f2bf632a399",
       "signature": "0986a9cb6f598821b824668a8d172051052ebd058aa9f2c05feb9d79d6f9ff36",
       "disputa": 0.08,
@@ -5906,15 +5528,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.99
-    },
-    {
-      "conflict_id": "conflict:d33c2cba54b4117d6df59a83",
-      "signature": "dbef7a9787490dcc4f63eb9ed485dd6fdca14f2f81313bfb07101e2514e5c577",
-      "disputa": 0.41,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.88,
-      "foco": "secundario",
-      "foco_confianza": 0.72
     },
     {
       "conflict_id": "conflict:d34780647b65a860793a03d9",
@@ -5962,15 +5575,6 @@
       "foco_confianza": 0.94
     },
     {
-      "conflict_id": "conflict:d43fbed05dc5889fbc6fb24a",
-      "signature": "0197d4b0e4a85521afdf1c12363569894e112030a890251bd405c52fdaea73a7",
-      "disputa": 0.94,
-      "tema": "infraestructura_energia_ambiental",
-      "tema_confianza": 0.56,
-      "foco": "principal",
-      "foco_confianza": 0.48
-    },
-    {
       "conflict_id": "conflict:d460390c2f6067a2038e1b1b",
       "signature": "bf77e9b9ec53271d0ea4e45698f64883a8ffb3cca4377ce50dddc13ebe22da1d",
       "disputa": 0.91,
@@ -5978,15 +5582,6 @@
       "tema_confianza": 0.66,
       "foco": "secundario",
       "foco_confianza": 0.85
-    },
-    {
-      "conflict_id": "conflict:d52839e92e3b2a613bfee4cc",
-      "signature": "505efed8df8ceb7aa10e82da96a4f8b0a2806b44a12f837f7ba87f5a2cee6511",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.82
     },
     {
       "conflict_id": "conflict:d5c2529cbc9aad27caec1374",
@@ -6001,15 +5596,6 @@
       "conflict_id": "conflict:d5f3f8457d7b50fe0fe6f25c",
       "signature": "de467978a0077ef766391148ba6df6142f9b806f260488f2bd21f2f028c770fa",
       "disputa": 0.46,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:d65c6690f5f35f7445ec5921",
-      "signature": "be4b1371ae4f68276098048c9b6df394c7efd327492879f2df69c2feb502e7f8",
-      "disputa": 0.98,
       "tema": "inmobiliario_urbano",
       "tema_confianza": 1,
       "foco": "principal",
@@ -6043,15 +5629,6 @@
       "foco_confianza": 0.28
     },
     {
-      "conflict_id": "conflict:d7d97eddbbff883301ac89f8",
-      "signature": "f01b9fa36d7151e6ca6abbae250f50a3ff02b7ed69a8ba73848adb5124c389c8",
-      "disputa": 0.94,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.98
-    },
-    {
       "conflict_id": "conflict:d844fdf611db8665cdd0f2a6",
       "signature": "928bb07aba5bbc473da9a6547e491cc0c047c37e1c3581c7524ed86e28a10a43",
       "disputa": 0.98,
@@ -6059,24 +5636,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:d8b06a3ecad8faa4dc92ac8d",
-      "signature": "e62143406810d159d232548b2571de3f9d0e5be27a452ed9c997dae916873e6f",
-      "disputa": 0.84,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.94
-    },
-    {
-      "conflict_id": "conflict:d8b838cbce7d01c0bc08aa7f",
-      "signature": "c5e8b2ab7dea017a05ab70ea7c1e9a1c6e278d3acf7cc0ee0cd32a28020703da",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.24
     },
     {
       "conflict_id": "conflict:d8e7850b922b800231e415a1",
@@ -6095,6 +5654,15 @@
       "tema_confianza": 0.98,
       "foco": "secundario",
       "foco_confianza": 0.06
+    },
+    {
+      "conflict_id": "conflict:d977874379485d2d45bf833e",
+      "signature": "8c8539d745f0ac6fabafe6cee06a50d8099434c210d7b3057a1fab27c210143a",
+      "disputa": 0.93,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.95
     },
     {
       "conflict_id": "conflict:d9a6cb261557453b85cb57eb",
@@ -6268,15 +5836,6 @@
       "foco_confianza": 0.9
     },
     {
-      "conflict_id": "conflict:de6e5975c105cb26ec239627",
-      "signature": "0dda97802725d67bcafa96dc3251676d753f09d6f4284e97572887d782faa59a",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:deb3d5f0a1e96a5aa868797f",
       "signature": "eeee41f7efd41fa5ebf7fc0b8526603ff967398863361975643892aab62faeef",
       "disputa": 0.98,
@@ -6430,15 +5989,6 @@
       "foco_confianza": 0.95
     },
     {
-      "conflict_id": "conflict:e42fba736352998306a0ef0a",
-      "signature": "87493c9dd79406d2434438ce53af5e13fe16d64ed2d8e13e2efe0e5f19320c8f",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:e43a8a658650cffc8bc63ef7",
       "signature": "680cf41613a0e22691e37292e6e54ac420404eabc9eb1460db314ebb3914e38f",
       "disputa": 0.84,
@@ -6556,15 +6106,6 @@
       "foco_confianza": 0.19
     },
     {
-      "conflict_id": "conflict:e7996c5c33e0f4367c0dcabc",
-      "signature": "dfe0c1207e1fbc189c8c7ff6c47249bf439291d3409cfa073dce10af7f080b7c",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:e7b2d982031400b92cdff0b7",
       "signature": "fb28706007bfea4891d1b75dbe08e143724476b26d53eb331ca90e2527357192",
       "disputa": 0.98,
@@ -6637,15 +6178,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:e9d019d0178662d23550dd08",
-      "signature": "bead6cdb37b9ffaa4e8d3966b9a59b4a4d2921e941275c08cfd38abb5b214f46",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.93
-    },
-    {
       "conflict_id": "conflict:e9d72ed648c0bfb2cd9b5774",
       "signature": "fb2a90fa1b6438d1d6e821906285f007e3d3140b9f317aedbb765c099b0d56ff",
       "disputa": 0.07,
@@ -6698,15 +6230,6 @@
       "tema_confianza": 0.71,
       "foco": "principal",
       "foco_confianza": 1
-    },
-    {
-      "conflict_id": "conflict:ec435f4660fcb0ba84c561d5",
-      "signature": "2a14ef979d61adaab0a01faf3f0578ddc218d02ece058252d69e4d3ad75f2311",
-      "disputa": 0.97,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.65
     },
     {
       "conflict_id": "conflict:ece53e04ebf1ca6f1fad890a",
@@ -6871,6 +6394,24 @@
       "foco_confianza": 0.99
     },
     {
+      "conflict_id": "conflict:f18c1dac9689a992e8d1898f",
+      "signature": "468a1645adc8cb64a80489bbeea9b94d38093948019f33c06d7382e6d301b572",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.89
+    },
+    {
+      "conflict_id": "conflict:f279426a70f19e9b0dc0ce95",
+      "signature": "b6dc67c3bfd077a974a8c53c0b1f639ecf2d7c0a5722b52ba32680a77df4cb30",
+      "disputa": 0.97,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.94
+    },
+    {
       "conflict_id": "conflict:f27cb6277cb41b2b4ca2e823",
       "signature": "b97a0639a324580d5e84de416d1350f8150cba9996475e088550e49489aa6b8e",
       "disputa": 0.98,
@@ -6889,22 +6430,13 @@
       "foco_confianza": 0.24
     },
     {
-      "conflict_id": "conflict:f3435590a96822a2f2570ab8",
-      "signature": "44c551cc4a1808f2215df48b5a27ddc25273c93db2d3229b4fdf876bfbbacd9d",
-      "disputa": 0.08,
+      "conflict_id": "conflict:f29abdd61787bc7466ba8140",
+      "signature": "ea1e1d2600c19040a6eed133d7c5f8d47acce81328b9163e1593cb15ac6582b1",
+      "disputa": 0.77,
       "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.99,
-      "foco": "principal",
-      "foco_confianza": 0.98
-    },
-    {
-      "conflict_id": "conflict:f351781eca8b3fbbd131d6b7",
-      "signature": "d062459faef094d9f50c26e21ab90abcc44651df0d4fb6e9f639c439f3ca48ee",
-      "disputa": 0.99,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
+      "tema_confianza": 0.77,
+      "foco": "secundario",
+      "foco_confianza": 0.33
     },
     {
       "conflict_id": "conflict:f3dbe457351f94369a01edad",
@@ -6934,15 +6466,6 @@
       "foco_confianza": 0.32
     },
     {
-      "conflict_id": "conflict:f424cf69bae7036071be7593",
-      "signature": "9011ba77e519e50459f2b3272fa2ccef2664c265eca7b9aa48c3f4ba692c5fa2",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:f4359fd90e726fa73496f959",
       "signature": "c455419155815c9ecc35082bcee43a912d5690b9babde27724a0bdc24766423d",
       "disputa": 0.96,
@@ -6959,6 +6482,15 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 1
+    },
+    {
+      "conflict_id": "conflict:f523261ac8523a4c85a6e57e",
+      "signature": "c491cd1d6c627700881b3a39982c39bcf93883ee4ae7ba108d695e272d069b11",
+      "disputa": 0.99,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 0.99,
+      "foco": "principal",
+      "foco_confianza": 0.98
     },
     {
       "conflict_id": "conflict:f54f3d86688bd4611be7b0a3",
@@ -6986,15 +6518,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.92
-    },
-    {
-      "conflict_id": "conflict:f5da36f5f447421eb15ca435",
-      "signature": "56f12d1ac91a9d6f1ea33afb83328e78af39c55c1165e30191ca01aa5cccf0de",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.99
     },
     {
       "conflict_id": "conflict:f5ebef585119090298ea9f92",
@@ -7105,15 +6628,6 @@
       "foco_confianza": 1
     },
     {
-      "conflict_id": "conflict:f85459618b327ab10c2225b8",
-      "signature": "2d186174437bc4eb0f9169c5b65c10a0d6b1662dc079f269f9e5c5b15455421d",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 0.69,
-      "foco": "principal",
-      "foco_confianza": 0.9
-    },
-    {
       "conflict_id": "conflict:f86f0c8965d5c94a56ad18ca",
       "signature": "ad02f1edd6b8c0b04ddd90adb2a88f2d05083f85fe03b219d5daee32ed833fdf",
       "disputa": 0.98,
@@ -7139,6 +6653,15 @@
       "tema_confianza": 0.24,
       "foco": "mencion_de_paso",
       "foco_confianza": 0.23
+    },
+    {
+      "conflict_id": "conflict:f99630dc752cdd25aea5c722",
+      "signature": "e36b5eb888faf23b9e6e845a6d2fa8021f07e106fb485d2b64e404af085faa75",
+      "disputa": 0.98,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.64
     },
     {
       "conflict_id": "conflict:fa443be302517d953d83428b",
@@ -7195,15 +6718,6 @@
       "foco_confianza": 0.77
     },
     {
-      "conflict_id": "conflict:fb6f7593b9f9beb4e278cf62",
-      "signature": "3b3bd9c04521b7a81155d5b619cc07cb4cde343d97b634bf2251299daec247c8",
-      "disputa": 0.98,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 1
-    },
-    {
       "conflict_id": "conflict:fbcfcde22d054b5eac2e6190",
       "signature": "e013b4944e2f9a1b6d185b01756da80bae982038eec5b2e44cf5b3e633bea327",
       "disputa": 0.97,
@@ -7211,15 +6725,6 @@
       "tema_confianza": 0.92,
       "foco": "principal",
       "foco_confianza": 0.93
-    },
-    {
-      "conflict_id": "conflict:fbdc9524badd412a701af1bd",
-      "signature": "a3d16009e52bd4941aac78b809c2b0206eaf2efd1dbc5f762f9685a830efa9e0",
-      "disputa": 0.81,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "principal",
-      "foco_confianza": 0.39
     },
     {
       "conflict_id": "conflict:fc2d73e3c7c6fda99e6fe156",
@@ -7285,6 +6790,15 @@
       "foco_confianza": 1
     },
     {
+      "conflict_id": "conflict:fdbfa12a2bb4c42d9831bca9",
+      "signature": "0f381072cebc41fadfd0d3632147158ed1ee8341e32a31765bcf8af8a1d47fdd",
+      "disputa": 0.99,
+      "tema": "inmobiliario_urbano",
+      "tema_confianza": 1,
+      "foco": "principal",
+      "foco_confianza": 0.97
+    },
+    {
       "conflict_id": "conflict:fdc042473129dfb896a7f4a0",
       "signature": "5d03bbe5a9ecdf802a5f5a37cad49604a92394129d4ec6f0e08608448dfda042",
       "disputa": 0.09,
@@ -7319,15 +6833,6 @@
       "tema_confianza": 1,
       "foco": "principal",
       "foco_confianza": 0.89
-    },
-    {
-      "conflict_id": "conflict:fee19578dd94d6e87327387a",
-      "signature": "5bf82698317d65b59ae38d823d154fa8555be13d29f979ddec128fa7f9fb82de",
-      "disputa": 0.95,
-      "tema": "inmobiliario_urbano",
-      "tema_confianza": 1,
-      "foco": "secundario",
-      "foco_confianza": 0.51
     },
     {
       "conflict_id": "conflict:ff3fab4f5bd9680bdd72050a",
